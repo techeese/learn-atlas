@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 4 — Interactive visualizations embedded inline in the lessons they illustrate (understandability)
+Wired the 10 Lab widgets into 13 lessons across all 6 topics via `<div data-viz>` — e.g. the vector-add
+widget now sits inside "Vectors and Vector Operations", the matrix-transform widget in "Matrices as Linear
+Transformations" and "Determinants", gradient-descent in "Optimization" and the DL "Optimizers" lesson,
+the gridworld in "Value Iteration", embeddings in the DL and LLM embedding lessons. Re-serialized each
+per-topic data file (content preserved; idempotent). Verified: syntax green, all routes errs=0, the inline
+canvas hydrates, math intact, legible at 390px. Now learners manipulate a concept right where they read it.
+
 ## iter 3 — Knowledge Map redesigned as a radial Constellation (UI / visualization)
 Owner ask: make the map game-like. Replaced the 6-column layout with a radial skill-tree — a central glowing
 ATLAS hub, the 6 subjects as colored sectors radiating outward (foundations near the core, advanced concepts

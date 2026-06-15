@@ -8,8 +8,9 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the live q
 done items move to CHANGELOG and out; new ideas land in the backlog.
 
 ## Now (highest priority)
-- Embed Visualization-Lab widgets inline in the lessons they illustrate (`<div data-viz>`).
-- Embed runnable code exercises (`<div data-code>`) in algorithm/DL lessons.
+- Embed runnable code exercises (`<div data-code>`) in algorithm/DL lessons (with `data-expected`).
+- More inline visualizations: build NEW widgets for high-value concepts that lack one
+  (PCA/eigenbasis, convolution, attention heatmap, Bayes, MDP policy iteration) and embed them.
 
 ## Improvement compass — rotate; broken always wins; biggest value first
 1. **Content details** — depth, accuracy, missing sub-topics, new lessons/modules, worked examples.
