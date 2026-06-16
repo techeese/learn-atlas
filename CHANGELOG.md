@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 22 — Wire existing visualizations into more lessons (understandability)
+Several lessons taught a concept an existing widget illustrates but didn't embed it. Added 5 inline embeds:
+the eigenvector widget in Diagonalization, the sorting visualizer in Linear-Time Sorts, the derivative widget
+in Differentiation Rules, and the gridworld in both Policies/Value-Functions and Policy-Iteration. errs=0,
+all 4 spot-checked lessons hydrate their inline canvas.
+
 ## iter 21 — Worked examples now span all six topics (content)
 Extended iter 18's Examples tab to every subject: 12 more worked examples across determinants, optimization
 & gradient-descent intuition, binary search (a full trace + the O(log n) argument), SGD updates with a note
