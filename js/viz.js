@@ -947,4 +947,70 @@
     draw();
   });
 
+  /* ========================================================
+     21. Decoding — temperature + nucleus (top-p) sampling
+     ======================================================== */
+  register({ id: 'llm-decoding', topic: 'llm', title: 'Decoding: Temperature & Top-p', blurb: 'Reshape a next-token distribution with temperature, then watch the nucleus (top-p) keep only the head of the distribution.' },
+  function (root) {
+    const W = 560, H = 380, padL = 34, padR = 16, padB = 54, padT = 30;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const MONO = "JetBrains Mono, monospace", DISP = "Fraunces, Georgia, serif";
+    // a fixed next-token scenario after the prompt "The sky is __"
+    const toks = ["blue", "clear", "grey", "falling", "the", "42"];
+    const logits = [4.0, 3.0, 1.7, 1.2, 0.6, -1.0];
+    let T = 1.0, topp = 1.0;
+    slider(ctl, { label: 'temperature', min: 0.1, max: 3.0, step: 0.1, value: T, fmt: v => v.toFixed(1), onInput: v => { T = v; draw(); } });
+    slider(ctl, { label: 'top-p (nucleus)', min: 0.1, max: 1.0, step: 0.05, value: topp, fmt: v => v.toFixed(2), onInput: v => { topp = v; draw(); } });
+    function softmax() {
+      const zs = logits.map(z => z / T), mx = Math.max.apply(null, zs);
+      const ex = zs.map(z => Math.exp(z - mx)); const s = ex.reduce((a, b) => a + b, 0);
+      return ex.map(e => e / s);
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const probs = softmax();
+      // order tokens by probability (descending) so the nucleus is the left prefix
+      const order = probs.map((pr, i) => i).sort((a, b) => probs[b] - probs[a]);
+      // nucleus: smallest prefix whose cumulative prob >= topp
+      let cum = 0, nucleusCount = 0;
+      for (let k = 0; k < order.length; k++) { cum += probs[order[k]]; nucleusCount = k + 1; if (cum >= topp - 1e-9) break; }
+      const maxP = Math.max.apply(null, probs);
+      const plotW = W - padL - padR, plotH = H - padT - padB, n = order.length, slot = plotW / n, bw = slot * 0.62;
+      // baseline
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      let entropy = 0; probs.forEach(pr => { if (pr > 1e-12) entropy -= pr * Math.log2(pr); });
+      order.forEach((idx, rank) => {
+        const pr = probs[idx], x = padL + rank * slot + (slot - bw) / 2, h = (pr / maxP) * plotH, y = H - padB - h;
+        const inNucleus = rank < nucleusCount;
+        ctx.fillStyle = inNucleus ? p.gold : p.panel2;
+        ctx.strokeStyle = inNucleus ? p.gold : p.line; ctx.lineWidth = 1.5;
+        ctx.fillRect(x, y, bw, h); ctx.strokeRect(x, y, bw, h);
+        // prob label on top
+        ctx.fillStyle = inNucleus ? p.gold : p.mute; ctx.font = '11px ' + MONO; ctx.textAlign = 'center';
+        ctx.fillText((pr * 100).toFixed(1) + '%', x + bw / 2, y - 6);
+        // token label below
+        ctx.fillStyle = inNucleus ? p.ink : p.mute; ctx.font = '12px ' + MONO;
+        ctx.fillText('"' + toks[idx] + '"', x + bw / 2, H - padB + 18);
+      });
+      // nucleus boundary marker
+      if (nucleusCount < n) {
+        const bx = padL + nucleusCount * slot;
+        ctx.strokeStyle = p.rust; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(bx, padT - 6); ctx.lineTo(bx, H - padB); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = p.rust; ctx.font = '10px ' + MONO; ctx.textAlign = 'left';
+        ctx.fillText('top-p cutoff →', padL + 4, padT - 12);
+      }
+      ctx.textAlign = 'left';
+      const lbl = T <= 0.4 ? '<span style="color:' + p.gold + '">near-greedy</span> (sharp, repetitive)' :
+        T >= 1.6 ? '<span style="color:' + p.rust + '">high temperature</span> (flat, chaotic)' :
+        '<span style="color:' + p.sage + '">balanced</span>';
+      info.innerHTML = `T = <b>${T.toFixed(1)}</b> · top-p = <b>${topp.toFixed(2)}</b> · ${lbl} · entropy ${entropy.toFixed(2)} bits<br>` +
+        `<span style="color:${p.gold}">gold</span> = the <b>${nucleusCount}</b> token${nucleusCount === 1 ? '' : 's'} in the nucleus you sample from (renormalized); ` +
+        `the rest are cut. Lower T sharpens toward greedy; higher T flattens; smaller top-p keeps only the head.`;
+    }
+    draw();
+  });
+
 })();

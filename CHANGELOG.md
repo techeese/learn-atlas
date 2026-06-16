@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 67 — Decoding playground visualization: temperature + top-p nucleus (visualizations)
+A new interactive widget (`llm-decoding`, the 21st) for the highest-leverage inference-time knob in applied
+LLM work — and `l-decoding-strategies` ("Decoding Strategies and Sampling") had no visual. It shows a fixed
+next-token distribution (after the prompt "The sky is __") as a bar chart sorted by probability, with two
+sliders: **temperature** reshapes the softmax (low → sharp/near-greedy, high → flat/chaotic) and **top-p**
+draws a red cutoff line and highlights the **nucleus** (the gold head of the distribution you actually sample
+from, renormalized) while dimming the truncated tail. A live readout reports T, top-p, a regime label, the
+distribution's entropy in bits, and how many tokens survive. Embedded in the decoding lesson + the Lab; it also
+picks up iter 66's a11y treatment (canvas `role="img"` + label, named sliders) automatically via `hydrateViz`.
+Synchronous initial `draw()`. SW cache → `atlas-v13`. Verified: renders in Lab (T/top-p driven live) + the
+embedded canvas hydrates with aria in the lesson, scales at 390px, all-routes errs=0, `node gate.js` ALL GREEN.
+
 ## iter 66 — Accessibility: screen-reader names for the 20 visualizations + slider labels; SW cache catch-up (accessibility)
 First non-content iteration after both owner sweeps — rotating to **accessibility**, untouched since iter 11
 despite ~9 interactive features added since. The 20 canvas widgets were invisible to screen readers (canvas
