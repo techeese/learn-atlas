@@ -1245,7 +1245,10 @@
     let sel = 0, results = [];
     function render() {
       const q = inp.value.trim().toLowerCase();
-      results = (q ? idx.filter(x => x.t.toLowerCase().includes(q) || x.sub.toLowerCase().includes(q)) : idx).slice(0, 50);
+      if (q) {
+        const score = x => { const t = x.t.toLowerCase(); if (t === q) return 0; if (t.startsWith(q)) return 1; if (t.indexOf(q) >= 0) return 2; if ((x.sub || "").toLowerCase().indexOf(q) >= 0) return 3; return 9; };
+        results = idx.map((x, i) => ({ x, s: score(x), i })).filter(o => o.s < 9).sort((a, b) => a.s - b.s || a.i - b.i).map(o => o.x).slice(0, 50);
+      } else results = idx.slice(0, 50);
       if (sel >= results.length) sel = Math.max(0, results.length - 1);
       list.innerHTML = results.length ? results.map((r, i) => `<div class="palette-item ${i === sel ? "sel" : ""}" data-i="${i}"><span class="pi-ico">${r.icon}</span><span class="pi-main"><span class="pi-t">${esc(r.t)}</span><span class="pi-sub">${esc(r.sub)}</span></span>${r.ext ? '<span class="pi-ext">↗</span>' : ""}</div>`).join("") : '<div class="palette-empty">No matches</div>';
       list.querySelectorAll(".palette-item").forEach(e => e.addEventListener("click", () => go(parseInt(e.dataset.i, 10))));

@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 33 — Relevance ranking in the ⌘K command palette (UX)
+The palette indexes ~190 items (lessons, glossary terms, widgets, pages, references) but showed matches in raw
+order. Added scoring — exact title match → title prefix → title contains → sub/category contains — so the best
+hit leads. Searching "vector" now surfaces the Vector glossary term, then "Vectors and Vector Operations",
+then the Vector Addition widget. Gate ALL GREEN, errs=0.
+
 ## iter 32 — Graceful PWA update prompt (distribution)
 Since the loop ships to the live site constantly, installed/returning PWA users could sit on cached content.
 The service worker now WAITS instead of skip-waiting on install, and the page detects an installed-but-waiting
