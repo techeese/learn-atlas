@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 15 — New visualization: convolution & feature maps (visualizations)
+Built dl-convolution, the core CNN operation. An 8×8 input (a bright square) with a selectable 3×3 kernel
+(vertical/horizontal edge, blur, sharpen, identity); Play/Step slides the receptive field cell-by-cell,
+computing each feature-map value as Σ(kernel × patch) and coloring it green (+) / red (−) so edge kernels
+visibly light up the square's borders. Embedded in the Convolution lesson. Lab catalog 13 → 14. errs=0.
+
 ## iter 14 — New visualization: PCA / principal components (visualizations)
 Built la-pca, the LA→ML bridge concept. Tilt (angle) and stretch a 64-point data cloud; the widget computes
 the covariance, finds its eigenvectors analytically, and draws PC1 (gold, max-variance axis) + PC2 (sage),
