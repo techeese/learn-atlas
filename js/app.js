@@ -83,6 +83,7 @@
   function dayNumber() { const d = new Date(); return Math.floor(Date.parse(d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0") + "T00:00:00") / 86400000); }
   function mulberry(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
   function isReady(id) { return !Store.isLessonDone(id) && learningPath(id).every(p => p.lesson.id === id || Store.isLessonDone(p.lesson.id)); }
+  function readySet() { const s = new Set(); C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (isReady(l.id)) s.add(l.id); }))); return s; }
   function dailyConcept() {
     const all = []; C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => all.push(l.id))));
     if (!all.length) return null;
@@ -446,9 +447,14 @@
     const btn = document.getElementById("complete-btn");
     btn.addEventListener("click", () => {
       const was = Store.isLessonDone(lesson.id);
+      const before = was ? null : readySet();
       Store.completeLesson(lesson.id);
       btn.textContent = "✓ Completed";
-      if (!was) toast("✨", "+50 XP", "Lesson complete: " + lesson.title);
+      if (!was) {
+        toast("✨", "+50 XP", "Lesson complete: " + lesson.title);
+        const newly = before ? [...readySet()].filter(id => !before.has(id)).map(id => index()[id]).filter(Boolean) : [];
+        if (newly.length) toast("🔓", "Unlocked " + newly.length + " concept" + (newly.length > 1 ? "s" : ""), newly[0].lesson.title + (newly.length > 1 ? " · +" + (newly.length - 1) + " more" : ""));
+      }
       flushAchievements();
       renderChrome();
     });

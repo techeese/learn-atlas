@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 46 — "Unlocked" feedback when a lesson opens new concepts (gamification / learning flow)
+Completing a lesson now tells you what it opened up: if it was the last missing prerequisite for other
+concepts, a "🔓 Unlocked N concept(s): <title>" toast fires alongside the +50 XP — concrete momentum feedback
+(it computes the ready-frontier before/after completion). Verified: finishing "Vectors and Vector Operations"
+correctly unlocks "Dot Product, Norms, and Angles". errs=0, gate ALL GREEN.
+
 ## iter 45 — "Start here" markers on the course page (learning flow)
 Completing the ready-frontier trio (map iter 43, daily concept iter 44): the course page now flags the
 lesson(s) you're ready to start — not done, all prerequisites met — with a gold "▶ start here" badge and a
