@@ -39,6 +39,11 @@
     { id: "visualizer",  icon: "🎛️", name: "Visualizer",       desc: "Open an interactive visualization." },
     { id: "pathfinder",  icon: "🧭", name: "Pathfinder",       desc: "Open a guided learning path." },
     { id: "coder",       icon: "💻", name: "Hello, World",     desc: "Run code in the playground." },
+    { id: "mastered-one",icon: "🏔️", name: "Mastery",          desc: "Reach 80% mastery on a concept." },
+    { id: "module-master",icon:"📗", name: "Module Master",    desc: "Complete every lesson in a module." },
+    { id: "all-topics",  icon: "🌍", name: "Renaissance",      desc: "Study a lesson in all six topics." },
+    { id: "century",     icon: "💯", name: "Centurion",        desc: "Review 100 flashcards." },
+    { id: "streak30",    icon: "🗓️", name: "Devoted",          desc: "Reach a 30-day streak." },
     { id: "polymath",    icon: "👑", name: "Polymath",        desc: "Reach the final level." }
   ];
 
@@ -119,6 +124,7 @@
     if (diff === 1 && state.streak % 7 === 0) state.freezes = Math.min(3, num(state.freezes) + 1);
     if (state.streak >= 3) unlock("streak3");
     if (state.streak >= 7) unlock("streak7");
+    if (state.streak >= 30) unlock("streak30");
     save();
   }
   function freezeJustUsed() { const v = _freezeJustUsed; _freezeJustUsed = false; return v; }
@@ -182,6 +188,10 @@
       unlock("first-step");
       if (Object.keys(state.lessons).length >= 10) unlock("ten-lessons");
       checkCourseCompletion();
+      if (window.COURSES) {
+        for (const c of window.COURSES) for (const m of c.modules) if (m.lessons.length && m.lessons.every(l => state.lessons[l.id])) unlock("module-master");
+        if (window.COURSES.every(c => c.modules.some(m => m.lessons.some(l => state.lessons[l.id])))) unlock("all-topics");
+      }
     }
     save();
   }
@@ -236,7 +246,9 @@
     else if (ev && typeof ev.correct === "boolean") { s = ev.correct ? Math.min(1, s + 0.13 * (1 - s) + 0.03) : Math.max(0, s - 0.12); m.n++; }
     else if (ev && typeof ev.grade === "number") { s = Math.max(0, Math.min(1, s + [-0.10, 0.04, 0.08, 0.12][ev.grade])); m.n++; }
     m.s = s; m.ts = Date.now();
-    state.mastery[lessonId] = m; save();
+    state.mastery[lessonId] = m;
+    if (effectiveMastery(lessonId) >= 0.8) unlock("mastered-one");
+    save();
   }
   function effectiveMastery(lessonId) {
     const m = state.mastery[lessonId]; if (!m) return 0;
@@ -298,6 +310,7 @@
     addXP(XP.cardReview);
     bumpMastery(String(cardId).split(":")[0], { grade: grade });
     if (state.cardsReviewed >= 25) unlock("cards25");
+    if (state.cardsReviewed >= 100) unlock("century");
     save();
   }
   function cardDue(cardId) {

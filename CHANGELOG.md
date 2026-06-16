@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 28 — Five milestone achievements for long-term goals (gamification)
+The achievement set had no long-horizon goals. Added 5 (15 → 20): Mastery (80% on a concept), Module Master
+(finish every lesson in a module), Renaissance (study all six topics), Centurion (review 100 flashcards),
+and Devoted (30-day streak) — each wired to its real trigger in the store (mastery bump, lesson complete,
+card grade, streak). Logic-tested: all fire from real actions; Achievements page renders 20, errs=0.
+
 ## iter 27 — "Connections" footer turns the dependency graph into in-lesson navigation (understandability)
 Each lecture now ends with a Connections block: "Builds on" (the lesson's direct prerequisites, incl.
 cross-topic ones) and "Leads to" (lessons that depend on it, computed as reverse edges) as color-coded
