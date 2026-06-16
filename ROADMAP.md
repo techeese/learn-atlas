@@ -18,6 +18,14 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
   - Onboarding/first-visit tour, better empty states, a hover-glossary of key terms.
   - (DONE iter 11: accessibility — reduced-motion, focus-visible, ARIA, skip link, live-region toasts.)
 
+## Perf notes (iter 58)
+First-load path optimized: all 13 data/logic scripts are `defer` (parallel fetch, ordered exec); fonts load
+via a `<link>` (not a chained `@import`); `preconnect` to jsdelivr + Google Fonts. Remaining lever if load
+ever feels heavy: the 6 topic data files total ~3.5 MB and are parsed eagerly — Pages already gzips them
+(whitespace ≈ free on the wire), so the real cost is parse/execute. Lazy-loading per-topic content is the
+big swing but RISKY (search/map/allQuestions/dailyConcept iterate `window.COURSES`); only attempt with a
+shared "topics index" (id/title/blurb/color) loaded first + full lessons on demand. Not worth it yet.
+
 ## Improvement compass — rotate; broken always wins; biggest value first
 1. **Content details** — depth, accuracy, missing sub-topics, new lessons/modules, worked examples.
 2. **UI / UX** — layout, typography, spacing, color, polish, delight.

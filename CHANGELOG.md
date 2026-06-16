@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 58 — Faster first load: defer scripts, parallelize fonts, preconnect CDNs (performance)
+The examples sweep grew the data layer to ~3.5 MB across 13 scripts that were loaded as plain (render-order,
+sequential) `<script>` tags. Three safe wins: (1) added `defer` to all 13 data/logic scripts — the browser now
+fetches them in parallel and executes them in document order after parse instead of one-at-a-time as the parser
+hits them (and KaTeX, also deferred earlier in the document, is now guaranteed ready before `app.js` boots, so
+the very first lesson typesets without the retry). (2) Moved the Google-Fonts load from a chained `@import`
+inside `styles.css` (CSS must download first, *then* the fonts are discovered) to a `<link>` in `<head>`, so
+fonts download in parallel with the stylesheet. (3) Added `preconnect`/crossorigin hints for `cdn.jsdelivr.net`,
+`fonts.googleapis.com`, and `fonts.gstatic.com` to pay the DNS+TLS cost up front. No behavior change. SW cache
+→ `atlas-v10`. Verified: app boots and renders under defer (errs=0 across 13 routes), a lesson typesets 420
+KaTeX spans (math intact) with glossary tooltips still wrapping, the dashboard renders with the correct fonts
+(no visual regression), `node gate.js` ALL GREEN.
+
 ## iter 57 — Inline glossary tooltips in lessons (understandability)
 "Understand faster": the first occurrence of each glossary term in a lecture now gets a dotted underline and a
 hover/tap definition popup (with its own KaTeX rendered), so you can recall what "eigenvalue" or "span" means

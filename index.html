@@ -12,6 +12,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Atlas" />
 
+  <!-- speed up the third-party connections we always make (CDN + fonts) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- fonts: discovered immediately as a <link> (was a chained @import inside styles.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+
   <!-- KaTeX for math typesetting -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
@@ -84,20 +92,20 @@
     </div>
   </div>
 
-  <!-- data + logic (classic scripts, order matters; work on file:// and Pages) -->
-  <script src="data/linear-algebra.js"></script>
-  <script src="data/calculus.js"></script>
-  <script src="data/algorithms.js"></script>
-  <script src="data/deep-learning.js"></script>
-  <script src="data/reinforcement-learning.js"></script>
-  <script src="data/llm.js"></script>
-  <script src="data/prereqs.js"></script>
-  <script src="data/references.js"></script>
-  <script src="data/glossary.js"></script>
-  <script src="js/viz.js"></script>
-  <script src="js/playground.js"></script>
-  <script src="js/store.js"></script>
-  <script src="js/app.js"></script>
+  <!-- data + logic — `defer`: fetched in parallel, executed in document order after parse, before DOMContentLoaded -->
+  <script defer src="data/linear-algebra.js"></script>
+  <script defer src="data/calculus.js"></script>
+  <script defer src="data/algorithms.js"></script>
+  <script defer src="data/deep-learning.js"></script>
+  <script defer src="data/reinforcement-learning.js"></script>
+  <script defer src="data/llm.js"></script>
+  <script defer src="data/prereqs.js"></script>
+  <script defer src="data/references.js"></script>
+  <script defer src="data/glossary.js"></script>
+  <script defer src="js/viz.js"></script>
+  <script defer src="js/playground.js"></script>
+  <script defer src="js/store.js"></script>
+  <script defer src="js/app.js"></script>
 
   <!-- PWA: offline app shell + graceful update prompt (only over http/https; no-op on file://) -->
   <script>
