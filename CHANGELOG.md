@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 65 — Question-bank growth: +76 MCQs across LLMs — SWEEP COMPLETE, every lesson at 12 (content; owner-requested)
+The bank-growth sweep finishes with LLMs: +4 MCQs on each of the 19 lessons (8 → 12; LLM 152 → 228). With this,
+**every one of the 113 lessons across all six topics now holds exactly 12 fact-checked MCQs — 1,356 total,
+up from 897 at iter 59** (avg verified at 12.00/lesson by a site-wide script). This delivers, end to end, the
+owner's most-repeated request ("add more and more and more questions … think again until I pass, not casual
+remembering"): with 12 distinct, position-shuffled questions per lesson plus Mastery mode (wrong answers
+re-queue until passed), a learner can no longer coast on memorizing answer positions. Every one of the ~459
+new questions was authored to test understanding (computational + misconception-bait) and **independently
+re-solved by an adversarial verifier** that fixed real defects across the sweep (self-contradictory stems,
+duplicate/ambiguous correct choices, wrong answer keys, malformed KaTeX). LLM topics: chain-rule LM definition,
+BPE encoding order, KV-cache/quantization roofline, decoding/temperature, in-context learning, RAG metrics,
+hallucination & eval statistics, and frontier safety. Verified: the multihead LLM quiz now offers 12 MCQs and
+answers cleanly (errs=0 across routes), `node gate.js` ALL GREEN (1,356 MCQs, answer ranges + structure validated).
+
 ## iter 64 — Question-bank growth: +75 MCQs across Reinforcement Learning, all lessons now at 12 (content; owner-requested)
 Bank-growth sweep reaches Reinforcement Learning. Upgraded the generator to **target a per-lesson count** (12)
 rather than a flat +4, so the two historically-thin lessons get topped all the way up: rl-td-learning 5 → 12

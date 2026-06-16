@@ -60,15 +60,16 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
 - Prefer the **biggest-value** move; a bold swing (new pillar, overhaul) beats a tidy tweak when warranted.
 - **Broken always wins**: a real bug / console error / broken render preempts everything.
 
-## Owner priority — question-bank growth sweep (in progress, iter 60+)
-Owner's most-repeated ask: "more and more and more questions … think again until I pass." Growing every lesson
-from 8 → 12 MCQs, topic by topic, via author→adversarial-verify (verification is CRITICAL — a wrong answer key
-teaches the wrong thing; iter 60 caught a self-contradictory stem + bad KaTeX + wrong explanations). Tooling:
-`/tmp/gen_mcq_wf.js <topicId> <noun> <addN>` → `Workflow({scriptPath})` → `/tmp/inject_mcq.js <topicId> <out>`
-(APPENDS to existing `l.mcq`, validates each item) → gate → quiz-render check. DONE: Linear Algebra (iter 60, +64), Calculus (iter 61, +88), Algorithms (iter 62, +80), Deep Learning
-(iter 63, +76), Reinforcement Learning (iter 64, +75, target-12 so thin lessons topped up) — all at 12/lesson;
-site-wide 1,280 MCQs. NEXT: **LLMs — the last topic; after it the bank sweep is COMPLETE** (every lesson at 12).
-Use `/tmp/gen_mcq_target_wf.js <topicId> <noun> 12` (targets 12/lesson, the better generator).
+## Owner priority — question-bank growth sweep ✅ COMPLETE (iters 60–65)
+Owner's most-repeated ask: "more and more and more questions … think again until I pass." Grew every lesson to
+12 MCQs via author→adversarial-verify (verification was CRITICAL — a wrong answer key teaches the wrong thing;
+the verify pass caught self-contradictory stems, ambiguous/duplicate correct choices, wrong keys, bad KaTeX).
+DONE: LA (60, +64), Calculus (61, +88), Algorithms (62, +80), Deep Learning (63, +76), RL (64, +75, target-12
+so thin lessons topped up), LLMs (65, +76). **Final: every one of the 113 lessons at exactly 12 MCQs; 1,356
+site-wide (was 897).** Reusable tooling if more are ever needed: `/tmp/gen_mcq_target_wf.js <topicId> <noun>
+<target>` → `Workflow` → `/tmp/inject_mcq.js <topicId> <out>` (appends + validates) → gate → quiz check.
+→ **Both owner content sweeps are now COMPLETE** (examples 47–52, questions 60–65). Loop returns to the broader
+compass (UI/viz/animations/gamification/understandability/accessibility/perf), rotating per anti-monotony.
 
 ## Owner priority — worked examples sweep ✅ COMPLETE (iters 47–52)
 "Examples when we need it." Added 2 verified worked examples to every lesson that warranted them, all six

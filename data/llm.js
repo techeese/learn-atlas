@@ -105,6 +105,50 @@
               ],
               "answer": 0,
               "explain": "The chain rule is a piece of elementary probability that holds exactly with no approximation, rewriting any joint distribution as a product of next-token conditionals so we never store the full joint table. It does not change vocabulary size, makes no grammaticality guarantee, and is an identity, not a limiting approximation."
+            },
+            {
+              "q": "A language model assigns a sentence $x$ a probability $P_\\theta(x) = 0$. According to the lesson's definition of a language model as a probability distribution over $\\mathcal{V}^*$, what does this formally imply?",
+              "choices": [
+                "The model is broken, since a valid distribution must assign every sequence a strictly positive probability.",
+                "The model considers $x$ impossible — it predicts that string will never be produced — which is fine for the constraints but usually undesirable for a real-language model.",
+                "The probabilities of all other sequences must now be renormalized to exclude $x$.",
+                "It is impossible, because the chain-rule factorization can never output a probability of exactly 0."
+              ],
+              "answer": 1,
+              "explain": "A probability distribution only requires values in $[0,1]$ summing to 1, so assigning $0$ to a sequence is perfectly legal — it just means the model deems that string impossible. The distractor about strict positivity confuses 'valid distribution' with 'good language model'; nothing forbids a zero, though zeroing out grammatical sentences is a modeling flaw (and is why smoothing/softmax outputs are used in practice)."
+            },
+            {
+              "q": "An autoregressive model factorizes $P_\\theta(x_1,\\ldots,x_T)$ via the chain rule into $T$ conditional factors. For a length-5 sequence, the model gives the conditionals $0.5, 0.4, 0.5, 0.2, 0.5$. What joint probability does it assign to this sequence?",
+              "choices": [
+                "$0.5 + 0.4 + 0.5 + 0.2 + 0.5 = 2.1$",
+                "$\\frac{0.5+0.4+0.5+0.2+0.5}{5} = 0.42$",
+                "$0.5 \\times 0.4 \\times 0.5 \\times 0.2 \\times 0.5 = 0.01$",
+                "$\\max(0.5, 0.4, 0.5, 0.2, 0.5) = 0.5$"
+              ],
+              "answer": 2,
+              "explain": "The chain rule turns the joint into a product of per-token conditionals, so the joint is $0.5\\cdot0.4\\cdot0.5\\cdot0.2\\cdot0.5 = 0.01$. Summing or averaging the factors (the tempting distractors) is wrong — probabilities of a conjunction multiply, which is also why long sequences get astronomically small joint probabilities and we work in log-space."
+            },
+            {
+              "q": "Two language models $A$ and $B$ are trained on the same data. Model $A$ assigns the held-out test corpus a higher total probability than model $B$. Based on the lesson, which model is the better estimate of $P^*$?",
+              "choices": [
+                "Model $A$, because it places more probability mass on the sequences humans actually wrote.",
+                "Model $B$, because lower probability on the test set means it is less likely to be overfit.",
+                "It cannot be determined; total probability says nothing about how good a model is.",
+                "Model $B$, because a good model should spread probability evenly across all of $\\mathcal{V}^*$."
+              ],
+              "answer": 0,
+              "explain": "The model is 'good' when high-probability sequences under $P_\\theta$ are the ones humans would actually write, so assigning more mass to real held-out text (equivalently, lower perplexity) signals a closer fit to $P^*$. The 'spread evenly' distractor inverts the goal — a uniform distribution is maximally ignorant, not better."
+            },
+            {
+              "q": "A student claims: 'Because $\\sum_{x \\in \\mathcal{V}^*} P_\\theta(x) = 1$, longer sequences must always be assigned lower probability than shorter ones.' What is the correct response?",
+              "choices": [
+                "Correct — each additional token multiplies in a factor $\\le 1$, so probability strictly decreases with length within any fixed-length set.",
+                "Correct — the normalization constraint forces a monotonic penalty on sequence length.",
+                "Incorrect — the sum is over all sequences of all lengths in $\\mathcal{V}^*$, so a long, highly predictable sequence can have higher probability than a short, surprising one.",
+                "Incorrect — the constraint actually requires the probabilities to sum to 1 separately for each length $T$."
+              ],
+              "answer": 2,
+              "explain": "The normalization is over the entire set $\\mathcal{V}^*$ of all finite sequences, not within each length, so nothing forces longer-equals-smaller across lengths; a fluent long sentence can outscore a short gibberish one. The claim conflates the per-step multiplication of $\\le 1$ factors (true only when comparing prefixes of the same string) with a universal rule about length."
             }
           ],
           "flashcards": [
@@ -256,6 +300,50 @@
               ],
               "answer": 0,
               "explain": "Because the training corpus was English-heavy, few merges cover those byte patterns, so each multi-byte character remains fragmented into several base-byte tokens, inflating the token count for the same meaning."
+            },
+            {
+              "q": "A BPE tokenizer's learned merge list is, in order: (1) <code>a b -> ab</code>, (2) <code>c d -> cd</code>, (3) <code>ab c -> abc</code>. You encode the fresh symbol string <code>a b c d</code>. Which tokens result, and why?",
+              "choices": [
+                "<code>[a, b, c, d]</code> — none of the rules can fire because this exact string was never seen during training",
+                "<code>[ab, cd]</code> — the encoder greedily picks whichever merges remove the most symbols, so it prefers two 2-symbol tokens",
+                "<code>[abc, d]</code> — rule 3 has the longest left side, so the encoder applies it first to capture <code>abc</code>",
+                "<code>[ab, cd]</code> — rules fire in learned order: rule 1 gives <code>ab c d</code>, rule 2 gives <code>ab cd</code>; rule 3 (<code>ab c</code>) then cannot fire because <code>c</code> is now fused inside <code>cd</code>, so encoding stops"
+              ],
+              "answer": 3,
+              "explain": "Encoding replays merges strictly in learned priority order. After rule 1 (-> <code>ab c d</code>) and rule 2 (-> <code>ab cd</code>), the <code>c</code> that rule 3's <code>ab c</code> pair needs no longer exists as a free adjacency, so rule 3 cannot fire and the result is <code>[ab, cd]</code>. Choice 2 lands on the same tokens for the wrong reason — BPE never optimizes for 'fewest tokens'; it mechanically applies rules in order."
+            },
+            {
+              "q": "A common misconception is that BPE encoding scans a word and greedily replaces the longest substring that exists in the vocabulary. Why is this an incorrect description of how standard BPE encoding actually works?",
+              "choices": [
+                "BPE encoding applies the learned merge rules in their training (priority) order, building pieces bottom-up from base symbols; it does not search the vocabulary for the longest matching substring",
+                "BPE encoding really is longest-match, and the merge-order story only describes training, not encoding",
+                "BPE encoding tries every possible segmentation and keeps the one with the highest corpus likelihood",
+                "BPE encoding never merges at inference time; it only looks each whole word up in a fixed dictionary"
+              ],
+              "answer": 0,
+              "explain": "Standard BPE encoding starts from individual base symbols and applies the ordered merge rules greedily by rule priority, fusing pairs upward — it is not a longest-substring dictionary lookup (that is closer to how WordPiece is often implemented). Likelihood-maximizing segmentation describes the Unigram model, not BPE."
+            },
+            {
+              "q": "Tokenizers like GPT-2 (<code>Ġ</code>), SentencePiece (<code>▁</code>), and the lesson's toy BPE (<code>·</code> end-of-word marker) all attach an explicit symbol to encode word boundaries or leading spaces. What is the primary purpose of doing this?",
+              "choices": [
+                "To reduce vocabulary size by removing the need to store whitespace characters",
+                "To let the tokenizer distinguish a fragment's position/spacing (e.g. <code>st</code> ending a word vs. inside one, or <code>\"hello\"</code> vs. <code>\" hello\"</code>) and make detokenization exactly reversible",
+                "To guarantee that every word maps to exactly one token regardless of frequency",
+                "To force the model to treat spaces as <UNK> so they are ignored during attention"
+              ],
+              "answer": 1,
+              "explain": "Marking boundaries/leading spaces lets the same character sequence receive different tokens depending on context (word-internal vs. word-final, or whether a space precedes it), which improves the learned units and makes detokenization unambiguous and lossless. It does not shrink the vocabulary or guarantee one token per word."
+            },
+            {
+              "q": "Some recent tokenizers deliberately split every digit of a number into its own token (so <code>4567</code> becomes <code>4</code>,<code>5</code>,<code>6</code>,<code>7</code>) instead of letting frequency-based BPE fuse digits into chunks like <code>456</code>+<code>7</code>. Why does this design help with arithmetic?",
+              "choices": [
+                "It shortens the sequence, so the $O(n^2)$ attention cost of long numbers drops",
+                "It makes each number a single token, so the model memorizes its value directly",
+                "It exposes consistent per-digit, place-value structure so the model can learn column-wise operations like carrying, instead of seeing irregular frequency-driven chunk boundaries",
+                "It guarantees numbers never become <UNK> tokens, which frequency-based BPE cannot promise"
+              ],
+              "answer": 2,
+              "explain": "Frequency-based merges split numbers inconsistently (e.g. <code>1234567</code> might become <code>123</code>+<code>4567</code>), hiding clean place-value structure; forcing single-digit tokens gives a uniform per-digit representation the model can align into columns to learn carrying. Per-digit splitting actually lengthens the sequence (so choice 1 is backwards), and byte-level BPE already prevents <UNK> for digits."
             }
           ],
           "flashcards": [
@@ -407,6 +495,50 @@
               ],
               "answer": 1,
               "explain": "Softmax is invariant to adding a constant to all logits, so subtracting the max leaves the output identical while capping the largest exponentiated term at $1$, avoiding overflow (the log-sum-exp/max-subtraction trick)."
+            },
+            {
+              "q": "An embedding layer maps token IDs to vectors via the matrix $E \\in \\mathbb{R}^{V \\times d}$. For a single token ID $i$, the embedding lookup $E_{i,:}$ is mathematically equivalent to which operation?",
+              "choices": [
+                "Multiplying the one-hot vector $e_i \\in \\mathbb{R}^V$ by $E$, i.e. $e_i^\\top E$",
+                "Taking the softmax over row $i$ of $E$",
+                "Averaging all $V$ rows of $E$ weighted by token ID $i$",
+                "Computing the dot product of $E$ with itself along the vocabulary axis"
+              ],
+              "answer": 0,
+              "explain": "Selecting row $i$ of $E$ is exactly $e_i^\\top E$, since the one-hot vector $e_i$ picks out the $i$-th row; this is why a lookup table is just an optimized matrix multiply and the embedding can be learned by gradient descent. The other options describe operations that don't isolate a single row."
+            },
+            {
+              "q": "A model dimension is $d = 512$ and the final hidden vector $h_t$ has been computed. The output head $W \\in \\mathbb{R}^{V \\times d}$ produces logits $z = W h_t$ for $V = 50{,}000$ tokens. How many scalar multiply-add operations does this matrix-vector product require (ignoring the softmax)?",
+              "choices": [
+                "$50{,}000$",
+                "$512$",
+                "$50{,}000 \\times 512 = 25{,}600{,}000$",
+                "$50{,}000 + 512 = 50{,}512$"
+              ],
+              "answer": 2,
+              "explain": "Each of the $V = 50{,}000$ logits is a dot product of $h_t$ with one row of $W$, costing $d = 512$ multiply-adds, so the total is $V \\times d = 25{,}600{,}000$. This O($Vd$) cost is why the output projection over a large vocabulary is one of the most expensive single layers in a language model."
+            },
+            {
+              "q": "A student claims: \"Softmax just normalizes the logits so they sum to 1, so I could equivalently divide each logit by the sum of all logits ($p_j = z_j / \\sum_k z_k$) and skip the exponential.\" Why is this wrong?",
+              "choices": [
+                "Dividing by the sum is actually faster and gives identical results, so the student is correct",
+                "It would only fail when all logits are positive; for positive logits the two methods agree",
+                "The exponential guarantees all outputs are positive and amplifies differences multiplicatively; raw normalization breaks (or goes negative) whenever logits are negative or near zero",
+                "Softmax does not require the outputs to sum to 1, so normalization is unnecessary altogether"
+              ],
+              "answer": 2,
+              "explain": "Logits can be any real number, so $\\sum_k z_k$ can be zero or negative and individual ratios can become negative or undefined, violating the axioms of a probability distribution. The $\\exp$ maps every logit to a strictly positive number and turns additive logit gaps into multiplicative odds, which plain division cannot do."
+            },
+            {
+              "q": "Two tokens, \"happy\" and \"joyful,\" are near-synonyms. After training a well-fit model, what do we expect about their rows in the embedding matrix $E$, and why?",
+              "choices": [
+                "Their embedding vectors point in similar directions (high cosine similarity), because tokens used in similar contexts get pulled toward similar representations during training",
+                "Their embedding vectors are orthogonal, because each token must occupy a unique dimension",
+                "Their embeddings are identical bit-for-bit, because synonyms share the same meaning",
+                "Their embeddings have similar magnitudes but random directions, because only the norm encodes frequency"
+              ],
+              "answer": 0,
+              "explain": "The whole point of learned dense embeddings (vs. one-hot) is that semantically/distributionally similar tokens end up with similar vectors, typically measured by high cosine similarity. They are not identical (distinct tokens with distinct usage) and not orthogonal, which is precisely the limitation of one-hot vectors that embeddings overcome."
             }
           ],
           "flashcards": [
@@ -564,6 +696,50 @@
               ],
               "answer": 0,
               "explain": "Since $Q = (cX)W^Q = c(XW^Q)$ and similarly for $K$, each is scaled by $c$, making $QK^\\top$ scale by $c^2$."
+            },
+            {
+              "q": "A token's attention output is computed as $\\text{softmax}\\!\\left(\\frac{QK^\\top}{\\sqrt{d_k}}\\right)V$. If two distinct value vectors $v_i$ and $v_j$ are identical ($v_i = v_j$) but their keys $k_i \\neq k_j$ differ, how does swapping the attention weight between positions $i$ and $j$ affect a query's output?",
+              "choices": [
+                "The output is unchanged, because the value contributed by either position is identical",
+                "The output flips sign, because the keys point in different directions",
+                "The output becomes zero, since the duplicated values cancel",
+                "The output changes proportionally to $\\|k_i - k_j\\|$, because keys determine the contribution"
+              ],
+              "answer": 0,
+              "explain": "The output is a weighted sum of value vectors; if $v_i = v_j$, then putting weight on $i$ versus $j$ contributes the identical vector either way, so the output is unchanged. Keys only influence the weights (which sum to 1 here), not the per-position contributed content once that content is the same."
+            },
+            {
+              "q": "You compute self-attention for a sequence of $n=4$ tokens with $d_k = 64$. To get the full output matrix, what is the per-row interpretation of the matrix product $A V$, where $A = \\text{softmax}(QK^\\top/\\sqrt{d_k}) \\in \\mathbb{R}^{4\\times 4}$ and $V \\in \\mathbb{R}^{4 \\times d_v}$?",
+              "choices": [
+                "Each output row is the value vector of the single token with the highest attention score",
+                "Each output row is a weighted average of all four value vectors, with weights given by that token's row of $A$",
+                "Each output column is a weighted average of the four query vectors",
+                "Each output row is the elementwise product of a query vector and a value vector"
+              ],
+              "answer": 1,
+              "explain": "Row $t$ of $A V$ equals $\\sum_j A_{tj} v_j$, i.e. a convex combination of all value rows weighted by token $t$'s attention distribution. It is a soft average, not a hard pick of the top-scoring token (that would be hard attention / argmax, not softmax)."
+            },
+            {
+              "q": "A student claims: 'Because attention uses a softmax, the output for each token must always be close to the value of whichever token it attends to most strongly.' When is this claim most clearly false?",
+              "choices": [
+                "When $d_k$ is very large, since scaling forces a one-hot distribution",
+                "When all the value vectors $v_j$ are orthonormal",
+                "When the attention logits are nearly equal, so the softmax is close to uniform and the output is an average of many values",
+                "When the query and key projections are tied ($W^Q = W^K$)"
+              ],
+              "answer": 2,
+              "explain": "If the logits are close to equal, softmax yields a near-uniform distribution and the output is an average over many values, not close to any single value, refuting the claim. Tied projections or orthonormal values do not by themselves force the distribution toward one-hot; large $d_k$ without the $\\sqrt{d_k}$ scaling tends to sharpen, not soften, attention."
+            },
+            {
+              "q": "In the attention matrix $A = \\text{softmax}(QK^\\top/\\sqrt{d_k})$, the softmax is applied row-wise (over keys). What goes wrong if it were mistakenly applied column-wise (over queries) instead?",
+              "choices": [
+                "Nothing changes, since softmax is symmetric in its arguments",
+                "Each token's output would no longer be a proper weighted average over the other tokens, because its attention weights would not sum to 1",
+                "The output would still be valid but $d_v$ would have to equal $d_k$",
+                "Scores would become negative and the output would be undefined"
+              ],
+              "answer": 1,
+              "explain": "Row-wise softmax makes each token's weights over the keys sum to 1, giving a genuine weighted average of values per output row. Column-wise normalization would instead make the columns sum to 1, so an individual token's weights across the other tokens would not sum to 1 and the output would no longer be a convex combination of values."
             }
           ],
           "flashcards": [
@@ -715,6 +891,50 @@
               ],
               "answer": 0,
               "explain": "The heads are concatenated to width $h \\cdot d_v = d_{\\text{model}}$ and then transformed by a single shared output projection $W^O$."
+            },
+            {
+              "q": "A decoder-only Transformer has $n_{\\text{layers}} = 32$ layers, $d_{\\text{model}} = 4096$, and stores its KV cache in 2 bytes per value (fp16). For a single sequence (batch $=1$) of length $2048$, roughly how large is the KV cache? Use the lesson's size estimate $2 \\times n_{\\text{layers}} \\times d_{\\text{model}} \\times \\text{seq\\_len} \\times \\text{batch} \\times \\text{bytes}$.",
+              "choices": [
+                "About $1.1$ GB",
+                "About $0.5$ GB",
+                "About $34$ MB",
+                "About $17$ GB"
+              ],
+              "answer": 0,
+              "explain": "$2 \\times 32 \\times 4096 \\times 2048 \\times 1 \\times 2 \\approx 1.07 \\times 10^9$ bytes $\\approx 1.1$ GB. The lesson notes $h \\times d_k = d_{\\text{model}}$, so the per-head split does not change the count; the distractors drop the factor of 2 (for K and V) or the bytes-per-value factor."
+            },
+            {
+              "q": "In multi-head attention, the $h$ head outputs are concatenated and then multiplied by a single learned matrix $W^O$. Why is this final projection $W^O$ necessary rather than just using the raw concatenation as the block's output?",
+              "choices": [
+                "It re-applies the softmax across the concatenated vector so the output is a probability distribution",
+                "It rescales the output back to unit norm, which concatenation destroys",
+                "It restores the width to $d_{\\text{model}}$, since concatenating $h$ heads of width $d_v$ produces a vector that is too wide otherwise",
+                "It lets the model mix and recombine the separately-computed head read-outs into a single shared representation, since concatenation alone keeps each head's output isolated in its own block of coordinates"
+              ],
+              "answer": 3,
+              "explain": "Concatenation just stacks each head's output in disjoint coordinate blocks; $W^O$ learns to blend information across heads. The width is already $h \\cdot d_v = d_{\\text{model}}$ after concatenation, so the 'restore the width' option is wrong, and $W^O$ is a linear map with no softmax or norm constraint."
+            },
+            {
+              "q": "A student claims that because each of the $h$ heads attends to different positions, the model uses $h$ separate softmax computations per token. Is this correct, and what is the relationship between heads and softmax?",
+              "choices": [
+                "Correct: each head computes its own independent row-wise softmax over its own $d_k$-dimensional scores, so there are $h$ distinct attention distributions per query position",
+                "Incorrect: all heads share one softmax that is computed once over the full $d_{\\text{model}}$-dimensional scores",
+                "Incorrect: the softmax is applied only after the heads are concatenated, producing one distribution per token",
+                "Correct, but only during training; at inference the KV cache collapses the $h$ softmaxes into one"
+              ],
+              "answer": 0,
+              "explain": "Each head runs $\\text{Attention}(QW_i^Q, KW_i^K, VW_i^V)$ in its own subspace, so each computes its own $\\text{seq} \\times \\text{seq}$ score matrix and its own row-wise softmax — that independence is exactly what lets heads specialize. The softmax operates over keys (one distribution per query per head), never over the feature dimension, so the shared-softmax and post-concat options are wrong."
+            },
+            {
+              "q": "For the worked 3-token example, the masked-and-softmaxed first row is exactly $[1, 0, 0]$ regardless of the raw scores $S_{11}, S_{12}, S_{13}$. What is the underlying reason this row is data-independent?",
+              "choices": [
+                "Because the first token's query vector is initialized to zero before training",
+                "Because the causal mask sends $S_{12}$ and $S_{13}$ to $-\\infty$, leaving the first token with only one finite logit ($S_{11}$), and softmax over a single value is always 1",
+                "Because the diagonal of the attention matrix is forced to 1 by the $W^O$ projection",
+                "Because dividing by $\\sqrt{d_k}$ zeros out the off-diagonal scores in the first row"
+              ],
+              "answer": 1,
+              "explain": "Position 1 may only attend to position 1 ($j \\le i = 1$), so positions 2 and 3 get $-\\infty$ and post-softmax weight 0, leaving a single finite logit whose softmax is necessarily 1 no matter its value. This is purely the mask structure, not initialization, $W^O$, or the $\\sqrt{d_k}$ scaling (which divides all scores uniformly and cannot zero them)."
             }
           ],
           "flashcards": [
@@ -866,6 +1086,50 @@
               ],
               "answer": 0,
               "explain": "Post-LN models are notoriously hard to train and warmup is used to avoid the optimization blowing up early in training."
+            },
+            {
+              "q": "LLaMA-style models replace LayerNorm with RMSNorm, which drops the mean-subtraction step and computes $\\text{RMSNorm}(x) = \\gamma \\odot \\frac{x}{\\sqrt{\\frac{1}{d}\\sum_i x_i^2 + \\epsilon}}$. What does the fact that RMSNorm matches LayerNorm's quality most directly suggest?",
+              "choices": [
+                "Re-centering the activations matters less than re-scaling them for stabilizing the residual stream",
+                "Normalization is unnecessary in pre-LN architectures and can be removed entirely",
+                "The learned bias $\\beta$ is the most important parameter in a normalization layer",
+                "RMSNorm computes statistics across the batch, making it more robust than LayerNorm"
+              ],
+              "answer": 0,
+              "explain": "RMSNorm keeps the re-scaling (dividing by the root-mean-square) but discards mean-centering and the bias, yet performs comparably, which is evidence that re-scaling does the stabilizing work. RMSNorm is still per-token, not per-batch, so the batch-statistics claim is false."
+            },
+            {
+              "q": "A SwiGLU FFN uses three weight matrices ($W_1$, $V$, $W_2$) instead of the two in a standard FFN. The lesson notes implementations shrink the hidden width to about $d_{ff} \\approx \\frac{2}{3}\\cdot 4d = \\frac{8}{3}d$. Why is this shrink applied?",
+              "choices": [
+                "A gated activation requires a smaller hidden dimension or it would diverge during training",
+                "To keep the total FFN parameter count roughly matched to a standard $4\\times$ FFN despite the added third matrix",
+                "Because $\\frac{8}{3}d$ is the largest width that still fits in GPU memory for large models",
+                "To halve the expansion ratio, since gating doubles the effective capacity per neuron"
+              ],
+              "answer": 1,
+              "explain": "The extra matrix $V$ adds parameters, so $d_{ff}$ is reduced by a factor of $\\frac{2}{3}$ to keep the three-matrix SwiGLU's parameter budget comparable to a two-matrix $4\\times$ FFN. It is a parameter-matching convention, not a stability or memory requirement."
+            },
+            {
+              "q": "The FFN is described as 'position-wise' and is applied independently and identically to every position. Which statement correctly characterizes what this means for how information flows through a block?",
+              "choices": [
+                "The FFN mixes information across tokens, complementing attention's within-token computation",
+                "The FFN shares its weights across positions but applies a different transformation to each position based on its index",
+                "The FFN cannot move information between token positions; only the attention sub-layer does cross-token mixing",
+                "Being position-wise means the FFN injects positional encodings into each token's representation"
+              ],
+              "answer": 2,
+              "explain": "'Position-wise' means the same MLP is applied to each token's vector in isolation, so the FFN does no cross-token communication — that is exclusively attention's job ('mix, then mull'). The tempting first option reverses the roles of the two sub-layers."
+            },
+            {
+              "q": "Every Transformer block maps an input of shape $n \\times d$ to an output of the same shape $n \\times d$. Why is preserving this shape essential to the architecture?",
+              "choices": [
+                "It guarantees the attention scores stay normalized as a valid probability distribution",
+                "It keeps the residual-stream width $d$ a fixed interface so identical-structure blocks can be stacked and each can add to the same stream",
+                "It is required for LayerNorm to compute correct per-feature statistics across the sequence",
+                "It ensures the number of parameters is identical in every block of the network"
+              ],
+              "answer": 1,
+              "explain": "Shape invariance means the residual stream is a fixed-width 'bus' that every block reads from and adds back into, which is exactly what lets identical-structure blocks compose freely to arbitrary depth. Parameter counts can differ per block and are not what shape preservation guarantees."
             }
           ],
           "flashcards": [
@@ -1017,6 +1281,50 @@
               ],
               "answer": 1,
               "explain": "An RNN's step-by-step recurrence makes position structural ('three steps after the start'), and a CNN's fixed-width kernels make locality and relative offset structural — properties the Transformer traded away for parallelism. Choice 0 swaps the two architectures."
+            },
+            {
+              "q": "Sinusoidal encodings represent position $p$ at frequency $\\omega_k$ by the pair $(\\sin(\\omega_k p), \\cos(\\omega_k p))$. Why does this construction let a model recover the *offset* between two positions via a fixed linear map (independent of the absolute positions)?",
+              "choices": [
+                "Because $\\sin$ and $\\cos$ are bounded in $[-1,1]$, so all positions live on the unit circle",
+                "Because shifting the position by $\\Delta$ is a rotation: $(\\sin\\omega_k(p+\\Delta), \\cos\\omega_k(p+\\Delta))$ is a rotation of $(\\sin\\omega_k p,\\cos\\omega_k p)$ by the angle $\\omega_k\\Delta$, the same matrix for any $p$",
+                "Because the dot product of two sinusoidal vectors equals exactly $p - q$ after normalization",
+                "Because using base $10000$ guarantees every position gets a unique encoding within the context window"
+              ],
+              "answer": 1,
+              "explain": "By the angle-addition formulas, advancing the phase by $\\Delta$ applies the rotation matrix $R(\\omega_k\\Delta)$, which depends only on $\\Delta$ (not on $p$) — this is precisely the property RoPE exploits explicitly. Boundedness and uniqueness are true but do not give the linear offset map, and the dot product does not equal $p-q$."
+            },
+            {
+              "q": "A model trained with sinusoidal encodings using base $10000$ is evaluated on sequences far longer than seen in training. Compared to learned absolute embeddings, sinusoidal encodings are often described as 'extrapolating better.' What is the most accurate statement about this?",
+              "choices": [
+                "Sinusoidal encodings are defined by a fixed formula for every integer position, so positions beyond training length still receive well-defined, smoothly varying vectors rather than undefined ones",
+                "Sinusoidal encodings guarantee that attention scores at length 100k are identical to those at training length",
+                "Sinusoidal encodings make the model fully permutation-invariant, removing any dependence on length",
+                "Sinusoidal encodings store a separate learned vector for each possible position up to infinity"
+              ],
+              "answer": 0,
+              "explain": "The deterministic formula yields a defined vector at any integer position, unlike a learned table that has no entry beyond its trained range — that is the basis of the extrapolation claim. It does not guarantee identical scores at extreme lengths (high-frequency components still drift out of distribution), it does not restore permutation invariance, and it stores no per-position learned vectors."
+            },
+            {
+              "q": "RoPE injects position by rotating query and key sub-vectors before the dot product. For a 2D sub-vector at frequency $\\omega$, query at position $m$ becomes $R(m\\omega)q$ and key at position $n$ becomes $R(n\\omega)k$. What does their dot product equal?",
+              "choices": [
+                "$q^\\top k$ scaled by $\\cos(m\\omega)\\cos(n\\omega)$, which depends on $m$ and $n$ separately",
+                "$q^\\top R((m+n)\\omega)\\, k$, depending on the sum of positions",
+                "$q^\\top R((n-m)\\omega)\\, k$, depending only on the relative position $n-m$",
+                "$\\|q\\|\\,\\|k\\|$, independent of position entirely"
+              ],
+              "answer": 2,
+              "explain": "Since rotation matrices satisfy $R(a)^\\top R(b) = R(b-a)$, we get $(R(m\\omega)q)^\\top(R(n\\omega)k) = q^\\top R((n-m)\\omega)k$, which depends only on $n-m$ — the defining feature of RoPE. The sum-of-positions and the position-independent norm answers misapply the rotation algebra."
+            },
+            {
+              "q": "A practitioner reasons: 'RoPE rotates the embeddings, so it must increase or change their length, which is why it encodes position.' Why is this reasoning flawed?",
+              "choices": [
+                "Rotations are norm-preserving, so $\\|R(\\theta)x\\| = \\|x\\|$; position is encoded in the *relative angle* between query and key, not in any change of magnitude",
+                "It is correct — RoPE scales vectors by the position index $m$ to mark earlier vs. later tokens",
+                "RoPE actually adds a position vector to the embedding, so the magnitude grows linearly with position",
+                "Rotations change the vector's direction randomly, so length differences are what carry the signal"
+              ],
+              "answer": 0,
+              "explain": "Rotation matrices are orthogonal and preserve norm, so lengths are unchanged; the positional signal lives in the rotation angle, which alters the *relative* orientation between rotated queries and keys. RoPE multiplicatively rotates (it does not additively inject a vector like sinusoidal encodings, nor does it scale magnitudes by position)."
             }
           ],
           "flashcards": [
@@ -1174,6 +1482,50 @@
               ],
               "answer": 0,
               "explain": "The bet is that since all those capabilities help predict the next token, scaling next-token prediction over enough data and compute forces the model to learn them as a side effect."
+            },
+            {
+              "q": "Using the rule of thumb $C \\approx 6ND$, suppose you have a fixed compute budget but decide to double your model's parameter count $N$ while keeping $C$ unchanged. What must happen to the number of training tokens $D$?",
+              "choices": [
+                "$D$ must be halved, because $C \\approx 6ND$ is fixed so $N$ and $D$ trade off inversely",
+                "$D$ can stay the same, since doubling $N$ doubles capacity without affecting data needs",
+                "$D$ must also double, because larger models always require more data",
+                "$D$ must quadruple, because compute scales with $N^2$"
+              ],
+              "answer": 0,
+              "explain": "With $C \\approx 6ND$ held fixed, $N$ and $D$ are inversely proportional, so doubling $N$ forces $D$ to halve. The distractors ignore that the budget $C$ is fixed; compute scales linearly (not quadratically) in $N$ under this rule."
+            },
+            {
+              "q": "A model achieves an average cross-entropy loss (in nats) of $\\mathcal{L} = \\ln 8 \\approx 2.08$ on held-out text. Using perplexity $= e^{\\mathcal{L}}$, what does this tell you about the model's predictions?",
+              "choices": [
+                "The model assigns probability $1/8$ to the correct next token on average",
+                "The model is, on average, as uncertain as if choosing uniformly among 8 tokens",
+                "The model has an 8% chance of predicting the next token correctly",
+                "The vocabulary effectively contains only 8 tokens"
+              ],
+              "answer": 1,
+              "explain": "Perplexity $e^{\\mathcal{L}} = e^{\\ln 8} = 8$ is the effective branching factor: the model is on average as uncertain as a uniform choice over 8 options. Perplexity is a geometric-mean uncertainty measure, not the literal probability of the true token nor a fixed accuracy or vocabulary size."
+            },
+            {
+              "q": "Chinchilla-style compute-optimal scaling suggests training near roughly 20 tokens per parameter. A team has a model that already reaches strong loss, and they have lots of spare compute. They decide to keep the model size fixed and simply train for many more epochs over the same fixed dataset. Why is this often a poor use of the extra compute?",
+              "choices": [
+                "Extra epochs increase $N$, which violates the $6ND$ budget",
+                "Repeating the same tokens yields diminishing returns and risks memorization, rather than the fresh-data gains scaling laws assume",
+                "Perplexity is undefined once a model sees a token more than once",
+                "Compute-optimal training requires that $D$ never exceed $N$"
+              ],
+              "answer": 1,
+              "explain": "Scaling laws assume largely unique data; re-reading the same fixed corpus gives diminishing returns and can cause memorization rather than genuine learning, so the marginal compute is poorly spent. Epochs do not change $N$, perplexity is well-defined regardless of repetition, and compute-optimal $D$ is typically far larger than $N$ (about 20x)."
+            },
+            {
+              "q": "The lesson decomposes the $6N$ FLOPs-per-token figure as $2N$ for the forward pass and $4N$ for the backward pass. A student claims that at inference time (generation only, no training) you should therefore budget about $6N$ FLOPs per generated token. What is the best correction?",
+              "choices": [
+                "Inference costs about $6N$ per token, same as training, because the architecture is identical",
+                "Inference costs about $4N$ per token, because the backward pass is cheaper than the forward pass",
+                "Inference costs about $2N$ per token, because generation needs only the forward pass; the $4N$ backward cost applies only during training",
+                "Inference costs more than $6N$ per token, because generation must run the model autoregressively"
+              ],
+              "answer": 2,
+              "explain": "The backward pass ($4N$) exists only to compute gradients during training; pure generation runs just the forward pass, so it is about $2N$ FLOPs per token. The student double-counts the backward pass, which is never executed at inference."
             }
           ],
           "flashcards": [
@@ -1325,6 +1677,50 @@
               ],
               "answer": 1,
               "explain": "bf16 keeps fp32's exponent range (8 exponent bits) but uses fewer mantissa bits (7 vs 23), giving large dynamic range (fewer overflow/underflow NaNs) plus faster, memory-lighter matrix multiplications, while leaving the loss and optimizer unchanged."
+            },
+            {
+              "q": "You train with a cosine schedule that warms up over the first 2000 steps to a peak LR of $3\\times10^{-4}$, then decays to a floor of $3\\times10^{-5}$ over the remaining steps. Midway through training you decide to extend the run from 100k to 200k total steps without restarting. What is the most important consequence of this naive change for the schedule?",
+              "choices": [
+                "The warmup phase is automatically re-run, causing a second LR spike at step 100k",
+                "The cosine decay is recomputed against the new horizon, so the LR at any given step is higher than originally planned and the model spends much longer at high LR",
+                "Nothing changes; cosine decay is independent of the total step count",
+                "The floor LR of $3\\times10^{-5}$ is reached twice as fast, prematurely freezing training"
+              ],
+              "answer": 1,
+              "explain": "Cosine decay is parameterized by the fraction step/total_steps, so doubling total_steps stretches the curve: at any fixed step the LR is now higher than before and the LR stays elevated far longer. Warmup is not re-triggered, and the schedule is definitely not independent of the horizon."
+            },
+            {
+              "q": "During training the gradient global norm is usually around $0.4$, but on one batch it spikes to $50$. With `clip_grad_norm_(..., max_norm=1.0)`, by what factor is EACH gradient component scaled on that spiking batch, and what happens to a normal batch with norm $0.4$?",
+              "choices": [
+                "Spiking batch: each component multiplied by $1/50$; normal batch ($0.4$): left unchanged",
+                "Spiking batch: each component clamped to $\\pm 1.0$; normal batch: each component clamped to $\\pm 1.0$",
+                "Spiking batch: each component multiplied by $1/50$; normal batch ($0.4$): scaled up by $1/0.4$",
+                "Spiking batch: norm set to $1.0$ by subtracting a constant; normal batch: left unchanged"
+              ],
+              "answer": 0,
+              "explain": "Global-norm clipping rescales the whole gradient vector by max_norm/norm only when norm exceeds max_norm, preserving direction: here $1.0/50 = 1/50$. A norm of $0.4 < 1.0$ is below the threshold so it is untouched (clipping never amplifies small gradients), and it does not clamp per-element to $\\pm 1.0$."
+            },
+            {
+              "q": "A colleague claims AdamW's per-parameter adaptive scaling means the global learning rate barely matters, so warmup and cosine decay are mostly cosmetic. What is the best rebuttal grounded in how Adam normalizes updates?",
+              "choices": [
+                "AdamW does not actually adapt per parameter; only the global LR controls step size, so the schedule is everything",
+                "Adam normalizes each update to roughly unit scale (gradient divided by its RMS), so the effective step size is set almost entirely by the global LR, making warmup and decay essential",
+                "The schedule only affects weight decay in AdamW, which is decoupled, so it has no effect on the gradient-driven update",
+                "Adaptive scaling makes early steps tiny automatically, so warmup is redundant even if decay still matters"
+              ],
+              "answer": 1,
+              "explain": "Because Adam divides each gradient by an estimate of its own root-mean-square, the update magnitude per parameter is normalized toward order 1, so the actual displacement is governed by the global LR multiplier; that is exactly why warmup (early estimates are noisy/biased) and decay (anneal near a minimum) are critical. The decoupled decay claim is wrong and the 'unit-scale updates make warmup redundant' reasoning ignores that early second-moment estimates are unreliable."
+            },
+            {
+              "q": "Early in training, AdamW's bias-corrected second-moment estimate $\\hat{v}_t$ can be very small for a parameter whose gradients have been near zero, then that parameter suddenly receives a large gradient. Why does this scenario motivate both the $\\epsilon$ in the denominator and LR warmup?",
+              "choices": [
+                "$\\epsilon$ and warmup both exist purely to prevent the loss from becoming negative",
+                "A tiny $\\hat{v}_t$ makes the update $\\propto g/(\\sqrt{\\hat{v}_t}+\\epsilon)$ blow up; $\\epsilon$ floors the denominator and warmup keeps the global LR small while the variance estimates are still unreliable",
+                "A tiny $\\hat{v}_t$ shrinks the update to zero, so $\\epsilon$ and warmup are needed to amplify it back to a usable size",
+                "Bias correction already fixes the small-$\\hat{v}_t$ problem, so $\\epsilon$ and warmup only matter in late training"
+              ],
+              "answer": 1,
+              "explain": "When $\\hat{v}_t$ is near zero, dividing the gradient by $\\sqrt{\\hat{v}_t}$ produces an enormous step; $\\epsilon$ caps the denominator from below and warmup holds the overall LR down during the noisy early phase when these estimates are least trustworthy. The opposite claim (update shrinks to zero) inverts the math, and bias correction adjusts the magnitude of $\\hat{v}_t$ but does not stop it from being genuinely tiny."
             }
           ],
           "flashcards": [
@@ -1476,6 +1872,50 @@
               ],
               "answer": 0,
               "explain": "Since $L \\propto N^{-\\alpha_N}$, scaling $N$ by 10 multiplies the reducible loss by $10^{-\\alpha_N} = 10^{-0.1} \\approx 0.79$, a constant multiplicative drop per decade."
+            },
+            {
+              "q": "The heuristic $C \\approx 6ND$ comes from counting FLOPs per parameter per token. Where does the 6 come from?",
+              "choices": [
+                "2 FLOPs for the forward pass plus 4 for the backward pass per parameter per token",
+                "6 separate matrix multiplies inside each transformer block",
+                "2 for forward and 2 for backward, times a 1.5x overhead for attention",
+                "6 bytes per parameter in mixed-precision training"
+              ],
+              "answer": 0,
+              "explain": "Each parameter does ~1 multiply-add (2 FLOPs) per token in the forward pass; the backward pass costs about twice that (~4 FLOPs) because it computes gradients w.r.t. both activations and weights. So 2N + 4N = 6N per token, giving C = 6ND. The factor is about passes, not the number of matmuls or memory."
+            },
+            {
+              "q": "You have a fixed budget of $C = 1.2\\times10^{24}$ FLOPs and want a compute-optimal model. Using $D \\approx 20N$ and $C \\approx 6ND$, roughly how many parameters $N$ should the model have?",
+              "choices": [
+                "~$10^{12}$ (a trillion)",
+                "~$3\\times10^{10}$ (30 billion)",
+                "~$10^{11}$ (100 billion)",
+                "~$2\\times10^{12}$ (two trillion)"
+              ],
+              "answer": 2,
+              "explain": "Substituting $D = 20N$ gives $C = 6N(20N) = 120N^2$, so $N = \\sqrt{C/120} = \\sqrt{1.2\\times10^{24}/120} = \\sqrt{10^{22}} = 10^{11}$. The other values either ignore the 120 factor or solve for $D$ instead of $N$."
+            },
+            {
+              "q": "Chinchilla says ~20 tokens per parameter is compute-optimal. Yet production labs routinely train smaller models on far more than 20 tokens/param. Why is this not a contradiction?",
+              "choices": [
+                "The 20:1 rule only holds for models under 10B parameters; above that the optimal ratio falls",
+                "Chinchilla minimizes training compute, but overtraining a smaller model lowers the per-query inference cost paid forever at deployment",
+                "Adding more data past 20 tokens/param always lowers training loss faster, so it is strictly better",
+                "More tokens are needed to avoid overfitting once the irreducible floor is reached"
+              ],
+              "answer": 1,
+              "explain": "Chinchilla optimizes the one-time training-compute spend. In deployment you pay inference compute per query indefinitely, so it is rational to overtrain a smaller (cheaper-to-serve) model past 20:1, accepting a slightly suboptimal training run. The 20:1 ratio does not depend on a 10B cutoff, and the choice is an economic trade-off, not about overfitting."
+            },
+            {
+              "q": "A capability scores near-random across several model sizes, then jumps to high accuracy at a larger scale — apparent 'emergence.' What does the lesson say is the most careful interpretation?",
+              "choices": [
+                "It proves loss itself is discontinuous, contradicting the smooth power law",
+                "It is entirely a measurement artifact that disappears under any metric",
+                "The smooth loss curve is the substrate, but the underlying parameters change abruptly at that scale",
+                "It is partly a measurement artifact of harsh metrics, yet real threshold behavior on some skills also remains"
+              ],
+              "answer": 3,
+              "explain": "The lesson stresses both caveats: sharp jumps are often exaggerated by discontinuous metrics like exact-match (so smoother metrics reveal gradual improvement), but even granting that, crossing a scale threshold genuinely makes some new behaviors reliable. It is not purely an artifact, and loss stays smooth throughout."
             }
           ],
           "flashcards": [
@@ -1633,6 +2073,50 @@
               ],
               "answer": 1,
               "explain": "The lesson says continued pretraining feeds raw, unlabeled domain text with no instruction/answer and scores all tokens to inject knowledge/style, whereas SFT uses (instruction, response) pairs with loss masked to the response to shape behavior."
+            },
+            {
+              "q": "During SFT on a chat example, the prompt tokens (system + user turns) are typically masked out of the loss while only the assistant's completion contributes gradients. Suppose instead you accidentally compute the loss over ALL tokens, including the prompt. What is the most likely consequence?",
+              "choices": [
+                "Training becomes impossible because the prompt tokens have no valid next-token targets",
+                "The model also learns to generate/imitate user prompts, diluting the signal for producing good assistant responses",
+                "The loss is mathematically identical, so behavior is unchanged",
+                "The model will refuse to answer because system prompts cannot be differentiated"
+              ],
+              "answer": 1,
+              "explain": "Including the prompt in the loss makes the model spend capacity learning to reproduce user/system text rather than focusing on assistant responses, which is why the standard practice is to mask the prompt span. The objective is still well-defined (option 0 is wrong) and the loss is not identical to the masked version (option 2 is wrong)."
+            },
+            {
+              "q": "You fine-tune a base model into an assistant using SFT, then notice it has become noticeably worse at a niche coding library it handled well before SFT. Which explanation is most consistent with the lesson's framing of SFT?",
+              "choices": [
+                "SFT changed the objective function, so the model can no longer model code",
+                "SFT shifted the model's output distribution toward the instruction-following data, and knowledge under-represented there can fade (forgetting)",
+                "SFT permanently deletes the pretraining weights and replaces them with the SFT dataset",
+                "SFT only adds new tokens to the vocabulary and cannot affect existing capabilities"
+              ],
+              "answer": 1,
+              "explain": "SFT is distribution engineering: it nudges the same model toward the SFT data distribution, so capabilities thinly represented in that data can degrade (catastrophic forgetting). The objective never changes (option 0) and weights are updated, not deleted or merely vocabulary-extended (options 2 and 3)."
+            },
+            {
+              "q": "Consider one SFT training example formatted with a chat template: a 40-token user prompt followed by a 60-token assistant answer, with the prompt masked. If the per-token cross-entropy is computed only over scored tokens, the example's loss is the average over how many tokens?",
+              "choices": [
+                "100 tokens (the entire sequence)",
+                "40 tokens (the prompt only)",
+                "60 tokens (the assistant answer only)",
+                "1 token (only the final end-of-turn token)"
+              ],
+              "answer": 2,
+              "explain": "Only the assistant completion contributes to the loss when the prompt is masked, so the average is taken over the 60 answer tokens. Counting all 100 (option 0) ignores masking, and the loss is over the unmasked completion, not the prompt or a single token."
+            },
+            {
+              "q": "A practitioner claims: \"Instruction tuning works because each desired task (summarize, translate, answer questions) must appear explicitly in the SFT data, so the model memorizes a lookup of task to behavior.\" Why is this view mistaken?",
+              "choices": [
+                "The model does learn a literal lookup table, so the claim is actually correct",
+                "SFT teaches the general format and intent of following instructions, letting the model leverage pretrained abilities to generalize to unseen tasks",
+                "Instruction tuning replaces the pretraining knowledge entirely, so no lookup is needed",
+                "Each task requires a separate fine-tuned model, so generalization never occurs"
+              ],
+              "answer": 1,
+              "explain": "Instruction tuning generalizes precisely because it teaches the behavior of responding to instructions, activating capabilities already present from pretraining, rather than memorizing a per-task mapping. The other options misstate SFT as a lookup table, as wholesale knowledge replacement, or as requiring one model per task."
             }
           ],
           "flashcards": [
@@ -1784,6 +2268,50 @@
               ],
               "answer": 0,
               "explain": "The lesson presents the InstructGPT/ChatGPT recipe as three ordered stages: SFT first to get a starting policy, then reward modeling on preference comparisons, then PPO optimization against that reward model under a KL penalty. The other orderings scramble these dependencies (you need a reward model before PPO can optimize against it, and SFT supplies the starting policy and reference)."
+            },
+            {
+              "q": "For a prompt $x$ with $\\beta = 0.5$, a frozen reference and the current policy assign these sequence log-probabilities: winner $y_w$ has $\\log\\pi_{\\text{ref}} = -6.0,\\ \\log\\pi_\\theta = -7.0$; loser $y_l$ has $\\log\\pi_{\\text{ref}} = -5.0,\\ \\log\\pi_\\theta = -5.0$. Using the DPO implicit reward $\\hat r_\\theta(x,y) = \\beta(\\log\\pi_\\theta - \\log\\pi_{\\text{ref}})$, what is the implicit-reward margin $\\hat r_w - \\hat r_l$, and is the model currently ordering the pair correctly?",
+              "choices": [
+                "$-0.5$; the model wrongly ranks the loser above the winner",
+                "$+0.5$; the model correctly prefers the winner",
+                "$0.0$; the model is exactly indifferent between the two",
+                "$-1.0$; the model strongly prefers the loser"
+              ],
+              "answer": 0,
+              "explain": "$\\hat r_w = 0.5(-7.0-(-6.0)) = -0.5$ and $\\hat r_l = 0.5(-5.0-(-5.0)) = 0$, so the margin is $-0.5 - 0 = -0.5$: the implicit reward is higher for the loser, meaning the model currently misranks the pair (and the gradient weight $\\sigma(\\hat r_l-\\hat r_w)=\\sigma(0.5)>0.5$ is large, pushing hard to fix it)."
+            },
+            {
+              "q": "The KL-constrained RLHF objective has the closed-form optimum $\\pi^*(y\\mid x) = \\tfrac{1}{Z(x)}\\,\\pi_{\\text{ref}}(y\\mid x)\\,\\exp(r(x,y)/\\beta)$. If we have this exact formula, why can't we just compute $\\pi^*$ directly and skip both PPO and DPO?",
+              "choices": [
+                "Because the reward $r(x,y)$ is non-differentiable, so the exponential cannot be evaluated",
+                "Because the formula is only the optimum for the unregularized objective, not the KL-penalized one",
+                "Because the partition function $Z(x)$ sums over all possible responses, which is astronomically large and intractable",
+                "Because $\\pi_{\\text{ref}}$ is frozen and therefore cannot be sampled from"
+              ],
+              "answer": 2,
+              "explain": "The closed form is exact, but the normalizer $Z(x)=\\sum_y \\pi_{\\text{ref}}(y\\mid x)\\exp(r(x,y)/\\beta)$ sums over the combinatorial space of all responses, so it cannot be computed; this intractable $Z(x)$ is exactly why an iterative method (PPO) was needed, and DPO's whole trick is making it cancel."
+            },
+            {
+              "q": "A practitioner wants the DPO-trained policy to follow the preference data more aggressively and drift further from the reference model. According to the lesson, how should they change $\\beta$, and what is $\\beta$'s role here?",
+              "choices": [
+                "Increase $\\beta$; in DPO $\\beta$ is the learning rate that scales the gradient step size",
+                "Decrease $\\beta$; $\\beta$ is the temperature in the implicit reward, and smaller $\\beta$ pulls harder toward the preferences and further from the reference",
+                "Increase $\\beta$; a larger KL coefficient forces the policy to deviate more from $\\pi_{\\text{ref}}$",
+                "Decrease $\\beta$; $\\beta$ controls the number of preference pairs sampled per update"
+              ],
+              "answer": 1,
+              "explain": "$\\beta$ is the temperature in $\\hat r_\\theta = \\beta\\log(\\pi_\\theta/\\pi_{\\text{ref}})$ and plays the role of the KL coefficient; smaller $\\beta$ means a weaker leash, so the policy moves further from $\\pi_{\\text{ref}}$ toward the preferences. The tempting distractor flips the direction — a larger KL coefficient keeps the policy closer to the reference, not further."
+            },
+            {
+              "q": "A team replaces PPO-RLHF with DPO and assumes the policy will explore and improve beyond the responses in their preference dataset, just as the online RL loop did. Why is this assumption mistaken?",
+              "choices": [
+                "DPO optimizes a completely different objective than PPO, so its solutions are unrelated to the RLHF optimum",
+                "DPO is off-policy: it only ever sees the fixed preference pairs and never samples fresh responses, so it cannot push down mass on out-of-dataset outputs the way on-policy PPO can",
+                "DPO still requires a separate reward model to score newly generated samples during training",
+                "DPO discards the reference model, so it has no anchor and always diverges from $\\pi_{\\text{ref}}$"
+              ],
+              "answer": 1,
+              "explain": "PPO is on-policy (it generates fresh samples and gets new reward judgments, enabling exploration and reward-model generalization), whereas DPO is off-policy and trains only on the fixed pairs, so it can overfit stale responses and has no mechanism to suppress out-of-dataset junk. Note DPO targets the same KL-constrained BT objective and uses no separate reward model, ruling out the other options."
             }
           ],
           "flashcards": [
@@ -1935,6 +2463,50 @@
               ],
               "answer": 0,
               "explain": "LoRA assumes that the needed weight update is approximately low-rank, which holds when lightly adapting a strong base (style, narrow domain, many swappable adapters). Teaching large amounts of fundamentally new knowledge or absorbing a drastic distribution shift can require a high effective rank, so full fine-tuning is usually the better fit there."
+            },
+            {
+              "q": "You serve 50 customers, each with their own LoRA adapter, from a single shared 7B base model on one GPU. Compared to deploying 50 fully fine-tuned copies, what does this multi-tenant LoRA setup let you do that full fine-tuning fundamentally cannot?",
+              "choices": [
+                "Run the forward pass with strictly fewer FLOPs per token, since the low-rank adapters replace the base matrix multiplications",
+                "Load the 14 GB base into GPU memory exactly once and hot-swap only the small per-customer adapters, even batching different customers together",
+                "Eliminate the need to load the base weights at all, because each adapter already encodes the full task behavior",
+                "Avoid storing any per-customer parameters, since all 50 customers share the identical merged weight matrix"
+              ],
+              "answer": 1,
+              "explain": "LoRA's additive, frozen-base design means one ~14 GB base is resident once and tiny A,B adapters are swapped per request, so you can even keep many tenants on one GPU; full fine-tuning needs a separate full weight set per customer. The FLOPs claim is wrong (adapters add a small term on top of the base matmul, they don't replace it), and the base must still be loaded since W_0 x dominates the forward pass."
+            },
+            {
+              "q": "An engineer claims: \"LoRA's whole point is that it shrinks the memory needed to hold the model itself during training, since we only keep the small matrices A and B in GPU memory.\" What is the precise error in this reasoning?",
+              "choices": [
+                "A and B are actually larger than W_0 once you account for the scaling factor alpha/r, so memory grows",
+                "The full frozen base W_0 must still reside in GPU memory for the forward and backward passes; LoRA shrinks optimizer state, not the base footprint (that is what QLoRA addresses)",
+                "LoRA does shrink the base footprint, because freezing W_0 lets the framework discard it after the first forward pass",
+                "The error is the scaling: with alpha/r applied, the base weights are recomputed each step, so no memory is saved at all"
+              ],
+              "answer": 1,
+              "explain": "Standard LoRA leaves the entire base W_0 loaded (you still compute W_0 x every step), so the base memory is unchanged; what collapses is the optimizer/gradient state, which is allocated only for the tiny trainable A,B. Compressing the still-loaded base is precisely the gap QLoRA fills with 4-bit NF4. The tempting wrong answer confuses LoRA's optimizer savings with base-footprint savings."
+            },
+            {
+              "q": "You apply LoRA with rank $r = 16$ to a non-square feed-forward weight $W_0 \\in \\mathbb{R}^{8192 \\times 2048}$. How many trainable parameters does this single adapter add?",
+              "choices": [
+                "$8192 \\times 2048 = 16{,}777{,}216$",
+                "$16 \\times (8192 + 2048) = 163{,}840$",
+                "$2 \\times 16 \\times 8192 = 262{,}144$",
+                "$16 \\times 8192 \\times 2048 \\approx 2.68 \\times 10^8$"
+              ],
+              "answer": 1,
+              "explain": "For $W_0 \\in \\mathbb{R}^{d \\times k}$ the factors are $B \\in \\mathbb{R}^{d \\times r}$ and $A \\in \\mathbb{R}^{r \\times k}$, giving $r(d+k) = 16(8192+2048) = 163{,}840$ trainable parameters. Choice 0 is the full-update count $dk$, and choice 2 wrongly uses the square-matrix shortcut $2rd$ (valid only when $d = k$), which over-counts here because $k \\ne d$."
+            },
+            {
+              "q": "In QLoRA the frozen base is stored in 4-bit NF4 while the adapters $A$ and $B$ stay in higher precision (e.g., bf16). Why does keeping the base in lossy 4 bits not derail training the way you might fear?",
+              "choices": [
+                "NF4 is lossless for normally distributed weights, so the base incurs no quantization error in the first place",
+                "Gradients are never computed for the base, so its fixed quantization error becomes part of a constant offset that the trainable high-precision adapters simply learn to compensate around",
+                "The base is dequantized to bf16 and permanently overwritten after the first step, so its 4-bit form is discarded before any gradients flow",
+                "The alpha/r scaling renormalizes the quantized base each step, canceling the 4-bit rounding error exactly"
+              ],
+              "answer": 1,
+              "explain": "Because W_0 is frozen and receives no gradient, its quantization error is a fixed, constant perturbation; the high-precision adapters A,B are optimized on top of that fixed base and learn to work around it, so quality loss is negligible. NF4 is still lossy (just well-matched to a normal distribution), the base is dequantized on the fly per block but not permanently overwritten, and alpha/r scales the delta BA, not the base's rounding error."
             }
           ],
           "flashcards": [
@@ -2092,6 +2664,50 @@
               ],
               "answer": 0,
               "explain": "Greedy's determinism, speed, and lack of bookkeeping make it ideal for tasks with a single correct answer, where its global myopia is rarely a problem."
+            },
+            {
+              "q": "At one decoding step the model is very confident: the top token has probability $0.97$ and the remaining mass is spread thinly over hundreds of tokens. You apply top-$k$ with $k=50$ and, separately, top-$p$ with $p=0.9$. How do the two candidate sets compare?",
+              "choices": [
+                "Top-$k$ keeps 50 tokens (49 of them low-quality tail), while top-$p$ keeps just the single confident token — top-$p$ adapts to the model's confidence",
+                "Both keep exactly one token, because the $0.97$ token already dominates either threshold",
+                "Top-$p$ keeps 50 tokens and top-$k$ keeps one, since $p=0.9 > k=50$ in magnitude",
+                "Top-$k$ keeps one token and top-$p$ keeps 50, because cumulative-mass cutoffs are always more permissive than count cutoffs"
+              ],
+              "answer": 0,
+              "explain": "A fixed count of $k=50$ admits 49 unreliable tail tokens even when the model is sure, whereas top-$p=0.9$ stops as soon as cumulative mass reaches $0.9$ — which the single $0.97$ token already exceeds, so the nucleus is just that one token. This adaptivity to per-step confidence is exactly why nucleus sampling is preferred."
+            },
+            {
+              "q": "You decode with a fixed top-$p=0.9$ and observe that raising the temperature $\\tau$ tends to enlarge the nucleus (more tokens survive the cutoff). What is the correct explanation?",
+              "choices": [
+                "Higher $\\tau$ multiplies every probability by $\\tau$, so more tokens individually exceed the $0.9$ threshold",
+                "Higher $\\tau$ flattens the distribution, so more tokens are needed before the cumulative mass first reaches $p=0.9$",
+                "Higher $\\tau$ re-ranks the tokens, promoting tail tokens above the mode and changing which ones enter the nucleus",
+                "Higher $\\tau$ has no effect on the nucleus because top-$p$ is applied before temperature scaling"
+              ],
+              "answer": 1,
+              "explain": "Temperature reshapes the distribution toward uniform (it does not re-rank tokens or scale probabilities by $\\tau$), so probability mass is spread out and you must accumulate over more tokens to reach the cumulative threshold $p$, enlarging the nucleus. Temperature and top-$p$ therefore compound to control diversity together."
+            },
+            {
+              "q": "Beam search scores candidate sequences with length normalization $\\text{score}(y_{1:T}) = \\frac{1}{T^\\alpha}\\sum_{t=1}^{T}\\log p_\\theta(y_t\\mid y_{<t},x)$. Why is the $\\frac{1}{T^\\alpha}$ factor included rather than just using the raw sum of log-probabilities?",
+              "choices": [
+                "It converts log-probabilities back into ordinary probabilities so the scores can be compared across beams",
+                "It increases numerical precision by keeping all scores positive and avoiding underflow",
+                "Without it, longer sequences accumulate more negative log-prob terms and are unfairly penalized, biasing the search toward short outputs",
+                "It guarantees beam search returns the exact global argmax sequence regardless of beam width $k$"
+              ],
+              "answer": 2,
+              "explain": "Each additional token adds another non-positive $\\log p_\\theta$ term, so a raw sum makes longer sequences score worse purely because of length; dividing by $T^\\alpha$ normalizes this so short outputs are not unfairly favored. Beam search still only approximates (never guarantees) the global argmax, and log-space is what prevents underflow, not the $1/T^\\alpha$ term."
+            },
+            {
+              "q": "A colleague claims that 'setting a high enough temperature can make the model output a token that greedy decoding would never reach, while top-$k$ and top-$p$ only ever shrink the set of possible tokens.' Which assessment is correct?",
+              "choices": [
+                "Correct: high temperature can introduce entirely new tokens not present in the logits, whereas truncation only removes tokens",
+                "Wrong on both counts: temperature can promote a token to the top of the ranking, and top-$p$ can add tokens that greedy would skip",
+                "Wrong about temperature: it never adds or removes any token from contention (it only reshapes probabilities), but right that top-$k$/top-$p$ only ever remove tokens from the candidate set",
+                "Correct about truncation but wrong about temperature: temperature changes the token ranking, so it can make a different token the most likely"
+              ],
+              "answer": 2,
+              "explain": "Temperature only rescales logits ($p_i \\propto p_i^{1/\\tau}$); it never changes the ranking and never removes a token from contention — the most likely token stays most likely — so it cannot reach a token that already had zero support, nor invent new ones. Top-$k$ and top-$p$ are the methods that actually truncate, only ever removing tail tokens from the candidate set."
             }
           ],
           "flashcards": [
@@ -2243,6 +2859,50 @@
               ],
               "answer": 1,
               "explain": "Because the task specification lives in the prompt rather than the parameters, one set of pretrained weights can be steered to many different tasks."
+            },
+            {
+              "q": "A team uses an LLM with a fixed context window of 8,192 tokens. Their few-shot prompt currently holds 60 demonstrations, and accuracy is good. A teammate proposes pushing to 400 demonstrations to keep improving. Setting aside cost, what is the most fundamental limit on this strategy?",
+              "choices": [
+                "Each new demonstration permanently updates the model's weights, so eventually the model overfits to the demonstrations",
+                "The demonstrations plus the query must fit inside the context window, so there is a hard token budget that caps how many examples the model can condition on",
+                "Adding more than ~256 demonstrations triggers gradient descent inside the forward pass, which destabilizes training",
+                "In-context learning ignores all but the final demonstration, so adding more examples cannot change behavior at all"
+              ],
+              "answer": 1,
+              "explain": "In-context learning works by conditioning on tokens in the context window, so every demonstration consumes part of a finite token budget shared with the query; once full, no more examples fit. Few-shot ICL involves no weight updates and no gradient descent at inference, and the model conditions on all in-context tokens, not just the last example."
+            },
+            {
+              "q": "Chain-of-thought helps a model answer 'A shop has 3 boxes of 12 apples; it sells 17. How many remain?' Which explanation best matches WHY emitting intermediate tokens like '3 times 12 is 36, minus 17 is 19' raises accuracy, in terms of next-token prediction?",
+              "choices": [
+                "The intermediate tokens become extra training labels that fine-tune the model on arithmetic during the forward pass",
+                "Writing the steps lets the model retrieve the memorized answer to this exact problem from its training set",
+                "Each emitted reasoning token is fed back as input, giving later predictions more relevant context and effectively more sequential computation to condition on before the final answer",
+                "The reasoning tokens increase the model's parameter count, so it can represent multiplication more precisely"
+              ],
+              "answer": 2,
+              "explain": "An LLM does a bounded amount of computation per token; by generating reasoning tokens that are appended to the input, it spreads a multi-step problem across many forward passes and conditions each later step on its own earlier work. No weights, parameters, or training labels change at inference, and the gain is not mere memorized retrieval."
+            },
+            {
+              "q": "A developer puts the rule 'Always reply in valid JSON and never apologize' in the same user turn as the question, but the model frequently ignores it after a few exchanges. According to the system/user/assistant role structure, what is the most likely fix?",
+              "choices": [
+                "Move the persistent rule into the system role, which is intended to set durable, high-priority instructions that govern the whole conversation",
+                "Delete the assistant role entirely so the model stops overriding the rule with its own prior turns",
+                "Repeat the rule inside the assistant role, since the assistant role is where instructions are enforced",
+                "Lower the temperature to 0, because role structure only matters when sampling is stochastic"
+              ],
+              "answer": 0,
+              "explain": "The system role exists to carry durable, high-priority instructions that persist across the conversation, whereas a rule buried in one user turn competes with later user messages and gets diluted. The assistant role is the model's own output (not an instruction channel), and temperature is unrelated to which role an instruction belongs in."
+            },
+            {
+              "q": "Which scenario is a genuine example of in-context learning rather than ordinary instruction following or fine-tuning?",
+              "choices": [
+                "A model is trained for another epoch on 1,000 labeled sentiment pairs, then classifies new reviews",
+                "Without any examples, a prompt says 'Classify the sentiment of this review as positive or negative,' and the model answers",
+                "A prompt shows three reviews each paired with a 'positive' or 'negative' label, then a fourth unlabeled review, and the model infers the labeling pattern to classify it",
+                "An engineer edits the model's output-layer weights so the logit for 'positive' is boosted"
+              ],
+              "answer": 2,
+              "explain": "In-context learning means the model infers the task from demonstrations placed in the context window, with no weight updates, which is exactly the few-shot labeled-examples case. Training another epoch and editing weights both change parameters, and the zero-shot instruction-only case is instruction following with no in-context demonstrations to learn from."
             }
           ],
           "flashcards": [
@@ -2394,6 +3054,50 @@
               ],
               "answer": 1,
               "explain": "The cache lets you compute $q, k, v$ for only the new position, append that $k, v$, and then attend $q_i$ over all stored $k_j, v_j$ for $j \\le i$."
+            },
+            {
+              "q": "A 70B-parameter model is served in FP16 (2 bytes/weight) with batch size 1, and decode is purely memory-bandwidth-bound on reading the weights each step. You switch to weight-only int4 quantization (0.5 bytes/weight), dequantizing to FP16 on the fly so the matrix math still runs in FP16. Approximately how does per-token decode latency change?",
+              "choices": [
+                "It drops to about $1/4$, because the dominant cost is reading weights from memory and you now move ~4x fewer bytes per step",
+                "It is essentially unchanged, because the arithmetic still runs in FP16 and arithmetic was the bottleneck",
+                "It drops to about $1/16$, because both the bytes moved and the FLOPs shrink by 4x each",
+                "It increases, because the on-the-fly dequantization adds overhead that outweighs the smaller weights"
+              ],
+              "answer": 0,
+              "explain": "Decode at batch 1 is bound by streaming the weights from HBM; cutting bytes/weight 4x (FP16 to int4) cuts the dominant memory traffic ~4x, so latency falls to roughly 1/4. The math staying in FP16 does not matter because arithmetic was never the bottleneck, and dequant overhead is negligible against the weight-read savings."
+            },
+            {
+              "q": "A practitioner claims: \"Decode is memory-bound, so increasing the batch size from 1 to 32 will make each user's tokens arrive about 32x faster.\" What is the correct critique?",
+              "choices": [
+                "Correct: batching reduces the bytes moved per token, so per-token latency drops by the batch factor",
+                "Wrong: batching raises arithmetic intensity and boosts aggregate throughput, but it does not lower any single user's per-token latency (and can slightly increase it)",
+                "Wrong: batching only helps prefill, never decode, so it changes neither latency nor throughput",
+                "Correct in spirit, but the speedup is limited to about 2x because of the roofline ridge point"
+              ],
+              "answer": 1,
+              "explain": "Batching amortizes one weight read across many sequences, raising arithmetic intensity and total tokens/sec (throughput), but the wall-clock time of a step is not reduced for any individual user; per-token latency stays the same or slightly worsens. Confusing throughput gains with latency gains is the classic mistake."
+            },
+            {
+              "q": "Your deployment is dominated by very long contexts (tens of thousands of tokens per request), and profiling shows HBM is saturated by the KV cache rather than by reading the model weights. Which optimization most directly attacks this specific bottleneck?",
+              "choices": [
+                "Speculative decoding with a small draft model",
+                "Weight-only int4 quantization of the model parameters",
+                "Quantizing the KV cache to int8/int4 (and/or using GQA)",
+                "FP16 quantization-aware training of the weights"
+              ],
+              "answer": 2,
+              "explain": "The long-context memory tax is the size and bandwidth of the KV cache, which grows linearly with context; quantizing the cache (and shrinking it with GQA) directly cuts those bytes. Weight quantization and speculative decoding target weight-read traffic and sequential-step count, not the cache that is actually saturating memory here."
+            },
+            {
+              "q": "In speculative decoding, suppose you swap in a draft model that is small and fast but proposes tokens the target almost always rejects (very low acceptance rate $\\alpha$). What happens to correctness and to speed, compared with ordinary decoding by the target alone?",
+              "choices": [
+                "Output quality degrades because low-quality drafts contaminate the target's distribution",
+                "Output stays exactly target-distributed (lossless), but speed degrades toward (or slightly below) ordinary decoding because few drafted tokens are accepted",
+                "Both quality and speed improve, since any draft model guarantees a net speedup",
+                "Output becomes the average of the draft and target distributions, trading quality for speed"
+              ],
+              "answer": 1,
+              "explain": "The rejection-sampling verification keeps the output exactly distributed as the target regardless of draft quality, so it is always lossless. A poor draft simply yields few accepted tokens, so you approach one target token per target pass (plus draft overhead) and gain little or nothing in speed."
             }
           ],
           "flashcards": [
@@ -2551,6 +3255,50 @@
               ],
               "answer": 0,
               "explain": "The lesson frames a spectrum: a single call is a pure function, RAG is a fixed two-step workflow that you orchestrate (always retrieve then generate), and an agent is a loop the model itself orchestrates, choosing actions until the goal is met. Agents trade predictability for flexibility (so they are not more predictable), agents are built on the tool-use loop (so they do use tools), and the offline/online split is unrelated to this distinction."
+            },
+            {
+              "q": "An embedding model produces unit-normalized vectors ($\\lVert q\\rVert=\\lVert c\\rVert=1$). For a query $q$, chunk A has dot product $q\\cdot c_A = 0.81$ and chunk B has $q\\cdot c_B = 0.62$. Using the lesson's metrics, which statement is correct?",
+              "choices": [
+                "Because vectors are normalized, cosine similarity equals the dot product, so A ranks above B and is also nearer in squared Euclidean distance",
+                "B ranks above A because a smaller dot product means a smaller (better) cosine distance",
+                "You cannot rank them without recomputing the full cosine formula with the norms",
+                "A and B tie, since cosine ignores magnitude and both vectors have length 1"
+              ],
+              "answer": 0,
+              "explain": "When vectors are unit-normalized, $\\text{cos}(q,c)=q\\cdot c$, so the higher dot product (A, 0.81) is the better match; the lesson also notes ranking by cosine then equals ranking by smallest squared Euclidean distance. Higher cosine means closer, so B does not win, and no recomputation with norms is needed."
+            },
+            {
+              "q": "A team needs a chatbot that always answers HR questions strictly from the company's current policy PDF, with a source citation for every claim, and the policy is edited every few weeks. Which approach best fits, per the lesson?",
+              "choices": [
+                "Fine-tune the base model on the policy PDF whenever it changes",
+                "Rely on the base model's parametric knowledge and add a longer system prompt",
+                "Use RAG: index the policy into a vector store and retrieve grounding chunks at query time",
+                "Increase the model's parameter count so it can memorize the policy verbatim"
+              ],
+              "answer": 2,
+              "explain": "RAG gives current, precise, attributable answers and lets you update facts with a database write rather than a training run. Fine-tuning bakes in style/behavior but does not provide fresh swappable facts or citations, and parametric knowledge is frozen, lossy, and unattributable."
+            },
+            {
+              "q": "A developer claims RAG eliminated hallucination but the bot still gives a wrong answer, citing chunk [2]. Given the lesson, what is the most likely cause?",
+              "choices": [
+                "RAG mathematically guarantees zero hallucination, so the citation must be fabricated",
+                "Retrieval surfaced an irrelevant or wrong chunk, so the model was grounded in bad evidence ('garbage in, garbage out')",
+                "Cosine similarity was used instead of Euclidean distance, which always returns wrong chunks",
+                "The embedding dimension $d$ was too large, which forces the model to invent facts"
+              ],
+              "answer": 1,
+              "explain": "The lesson stresses RAG shrinks but does not eliminate hallucination, and that output quality depends on retrieval quality: fetch the wrong chunk and the model reasons over wrong evidence. The other options misstate the guarantees and the role of the metric and dimension."
+            },
+            {
+              "q": "Per the lesson, why is RAG implementable as just one tool inside the more general tool-calling framework?",
+              "choices": [
+                "Because tool calling is a strict subset of RAG that only works on documents",
+                "Because RAG retrains the model's weights, which is what every tool call also does",
+                "Because a tool call is the only way to compute cosine similarity over a vector store",
+                "Because both ground the model in outside information; you can expose retrieval as a search_documents(query) tool the model calls when it needs evidence"
+              ],
+              "answer": 3,
+              "explain": "The lesson frames tool use as the general pattern of letting an LLM reach outside itself, with RAG as the special case of reaching into a document store; you can wrap retrieval as a search_documents tool. Tool calling is the more general case (not a subset of RAG), and neither retrains the weights."
             }
           ],
           "flashcards": [
@@ -2702,6 +3450,50 @@
               ],
               "answer": 0,
               "explain": "The loss is the negative log-likelihood (cross-entropy), so minimizing it maximizes the probability assigned to the actual next tokens — with no truth term anywhere in the objective."
+            },
+            {
+              "q": "A factual Q&A system is hallucinating fabricated citations at temperature $\\tau = 1.0$. An engineer proposes raising the temperature to $\\tau = 1.5$ to \"make the model more careful.\" Using the temperature softmax $p_i = \\frac{\\exp(z_i/\\tau)}{\\sum_j \\exp(z_j/\\tau)}$, what will actually happen?",
+              "choices": [
+                "The fabrications will likely get worse, because higher $\\tau$ flattens the distribution and raises the chance of sampling low-probability, less-supported tokens",
+                "The fabrications will disappear, because higher $\\tau$ sharpens the model's confidence in the correct token",
+                "Nothing changes, because temperature only affects generation speed, not which tokens are sampled",
+                "The model will refuse to answer, because $\\tau > 1$ forces an abstention token"
+              ],
+              "answer": 0,
+              "explain": "Raising $\\tau$ divides the logits by a larger number, flattening the softmax and giving more mass to the tail — the opposite of 'careful.' For factual tasks you want lower temperature (or greedy) decoding; high $\\tau$ is for creativity, which is just hallucination you asked for."
+            },
+            {
+              "q": "A retrieval pipeline grounds the model by prepending the single most relevant document to a long context, but the answer it needs is in a passage placed in the exact middle of a very long prompt. The model still misses it. According to the lesson, which limitation best explains this — and what is the cleanest fix?",
+              "choices": [
+                "Knowledge cutoff; retrain the model on newer data",
+                "Prompt sensitivity; append 'Let's think step by step'",
+                "Exposure bias; lower the temperature during decoding",
+                "The 'lost in the middle' effect; move the key passage to the start or end of the context"
+              ],
+              "answer": 3,
+              "explain": "Models reliably retrieve information at the start or end of a long context far better than information buried in the middle, so repositioning the key passage directly addresses the failure. Knowledge cutoff and exposure bias describe different mechanisms, and the info is already in-context so retraining is unnecessary."
+            },
+            {
+              "q": "A summarization model produces a faithful, factually correct paraphrase of a reference, but it shares almost no $n$-grams with the reference text. It is scored with ROUGE/BLEU. What does the lesson predict about this score, and why is that a problem?",
+              "choices": [
+                "BLEU/ROUGE measure semantic truth directly, so a faithful paraphrase always scores near the maximum",
+                "BLEU/ROUGE reward $n$-gram overlap, so the correct paraphrase scores poorly while a fluent-but-wrong answer reusing reference words could score higher — a poor proxy for faithfulness or factuality",
+                "The score is undefined because BLEU/ROUGE require multiple-choice format",
+                "ROUGE penalizes fluency, so the more fluent paraphrase is automatically scored lower"
+              ],
+              "answer": 1,
+              "explain": "Overlap metrics reward surface $n$-gram match with the reference, so they miss correct paraphrases and can reward text that copies words but is wrong. That makes them a weak proxy for either faithfulness or factuality."
+            },
+            {
+              "q": "On a 4-option benchmark with $N = 2000$ questions, a model scores $\\hat{p} = 0.80$. Using the binomial standard error $\\mathrm{SE} = \\sqrt{\\hat{p}(1-\\hat{p})/N}$, roughly one SE corresponds to how many accuracy points, and what is the main takeaway for ranking two close models?",
+              "choices": [
+                "About $\\pm 0.9$ points (one SE); a sub-point gap between two models on the same questions is within noise, so a paired test plus confidence intervals are needed before ranking",
+                "About $\\pm 9$ points (one SE); any difference under 10 points is meaningless",
+                "About $\\pm 0.04$ points; gaps of even 0.1 points are decisive because $N$ is large",
+                "The SE cannot be computed without knowing the random-guessing baseline of 25%"
+              ],
+              "answer": 0,
+              "explain": "$\\mathrm{SE} = \\sqrt{0.8 \\cdot 0.2 / 2000} = \\sqrt{0.00008} \\approx 0.0089$, i.e. about $\\pm 0.9$ points. Small gaps are on the order of the uncertainty, so confidence intervals and a paired (McNemar-style) test are required; the baseline matters for interpreting absolute skill, not for computing the SE."
             }
           ],
           "flashcards": [
@@ -2853,6 +3645,50 @@
               ],
               "answer": 0,
               "explain": "The lesson distinguishes them precisely this way: the jailbreak attacker is the user (a compliance issue), while injection arises when untrusted data is treated as trusted instructions (an authentication/authority issue)."
+            },
+            {
+              "q": "An agentic email assistant is hit with a prompt injection hidden in an incoming email instructing it to forward all threads to an external address. The team has instruction-hierarchy training, an output classifier, and a sandbox where the mail tool physically cannot send to arbitrary external addresses without human confirmation. The lesson calls one of these the 'load-bearing' defense. Which is it, and on what grounds?",
+              "choices": [
+                "Instruction-hierarchy training, because it teaches the model that retrieved data is not commands and thus stops the injection at its source",
+                "The output classifier, because catching the malicious action before it executes is the only layer that scales to novel attacks",
+                "The sandbox / least-privilege constraint, because it limits the *impact* of a breach rather than its *probability*, and you should assume the language layer will eventually be defeated",
+                "All three are equally load-bearing, since defense-in-depth means no single layer dominates"
+              ],
+              "answer": 2,
+              "explain": "The lesson's worked example identifies the capability constraint as load-bearing: language-layer defenses (hierarchy training, classifiers) only lower the probability of obeying the injection, while the sandbox lowers the impact, and robust agent safety prioritizes containing impact because the language layer should be assumed breakable."
+            },
+            {
+              "q": "A team safety-tunes a model and is thrilled that it now refuses a far wider range of prompts than before. A nurse then complains it refuses to discuss medication dosages. Using the lesson's framing, what does this most directly illustrate?",
+              "choices": [
+                "A prompt-injection vulnerability, since the nurse's legitimate request was hijacked by untrusted data",
+                "The helpfulness-vs-harmlessness Pareto trade-off: pushing refusals up to reduce harm necessarily costs helpfulness (over-refusal), so safety tuning is a frontier search, not a binary switch",
+                "Reward hacking, since the model found inputs where the reward model scored refusals too highly",
+                "A scalable-oversight failure, since human raters could not evaluate the nurse's medical request"
+              ],
+              "answer": 1,
+              "explain": "Over-refusal of a benign expert request is the harmlessness side of the helpfulness/harmlessness trade-off the lesson describes; cranking refusals up reduces jailbreak risk but sacrifices helpfulness, and tuning is the search for a Pareto frontier rather than an on/off switch."
+            },
+            {
+              "q": "A reviewer claims: 'Inner alignment is solved as soon as we have a perfect reward signal, because the model will then optimize exactly the objective we wrote down.' Why does the lesson reject this?",
+              "choices": [
+                "Because a perfect reward signal is impossible, so the premise never holds and the claim is vacuous",
+                "Because even with a perfect reward signal, gradient descent may select a *correlated proxy* objective (e.g., sycophancy) that matches on training data but diverges off-distribution; optimizing an objective is not the same as internalizing it",
+                "Because the KL penalty would prevent the policy from ever reaching the reward signal's optimum",
+                "Because a perfect reward signal forces the model into reward hacking by Goodhart's law"
+              ],
+              "answer": 1,
+              "explain": "The lesson distinguishes inner from outer alignment precisely here: a perfect reward signal addresses outer alignment, but gradient descent can still learn a correlated proxy (like 'sound agreeable' instead of 'be correct') that coincides on the training set yet diverges off-distribution, so there is no guarantee the learned objective equals the trained-for one."
+            },
+            {
+              "q": "Frontier models add multimodality (a vision encoder maps images into the same embedding space as text 'soft tokens') and long context (hundreds of thousands of tokens). An attacker typesets a malicious instruction as an image and places it deep in the middle of a very long document the model is asked to summarize. Which pair of frontier-specific risks does this most directly exploit?",
+              "choices": [
+                "MoE router load imbalance and the test-time scaling law",
+                "The $O(n^2)$ attention cost and reward hacking under distribution shift",
+                "The expanded multimodal attack surface (injections hidden in pixels evade text-only filters) and the 'lost in the middle' positional bias (mid-document instructions may or may not fire)",
+                "Outer-alignment misspecification and the helpfulness/harmlessness Pareto trade-off"
+              ],
+              "answer": 2,
+              "explain": "Typesetting an instruction into an image exploits the multiplied multimodal attack surface (a payload the vision stack reads but text filters miss), and burying it mid-document exploits 'lost in the middle,' the positional bias where models reliably attend to the start and end of long contexts but degrade in the middle."
             }
           ],
           "flashcards": [
