@@ -313,6 +313,15 @@
     if (state.cardsReviewed >= 100) unlock("century");
     save();
   }
+  // projected next-review interval (days) for each grade, WITHOUT mutating — mirrors gradeCard()
+  function projectInterval(cardId, grade) {
+    const c = state.cards[cardId] || { ease: 2.5, interval: 0, due: 0, reps: 0 };
+    if (grade === 0) return 0;
+    const reps = num(c.reps) + 1;
+    if (reps === 1) return grade === 3 ? 2 : 1;
+    if (reps === 2) return grade === 3 ? 5 : 3;
+    return Math.max(1, Math.round(num(c.interval) * num(c.ease || 2.5)));
+  }
   function cardDue(cardId) {
     const c = state.cards[cardId];
     if (!c) return true;            // never seen = due
@@ -356,7 +365,7 @@
     get raw() { return state; },
     save, addXP, levelInfo,
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
-    gradeCard, cardDue,
+    gradeCard, cardDue, projectInterval,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, topicMastery, markKnown,
     getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed, setLastLesson,
     unlock, drainUnlocked, drainLevelUps,

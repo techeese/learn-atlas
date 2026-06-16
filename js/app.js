@@ -548,14 +548,15 @@
       if (!flipped) {
         slot.innerHTML = `<div class="flash-hint">Tap the card — or press <kbd>Space</kbd> — to reveal the answer</div>`;
       } else {
+        const iv = g => { const d = Store.projectInterval(cards[i].id, g); return d <= 0 ? "soon" : d === 1 ? "1d" : d + "d"; };
         slot.innerHTML = `
           <div class="flash-grade">
-            <button class="grade-btn again" data-g="0">Again</button>
-            <button class="grade-btn hard"  data-g="1">Hard</button>
-            <button class="grade-btn good"  data-g="2">Good</button>
-            <button class="grade-btn easy"  data-g="3">Easy</button>
+            <button class="grade-btn again" data-g="0">Again<small>${iv(0)}</small></button>
+            <button class="grade-btn hard"  data-g="1">Hard<small>${iv(1)}</small></button>
+            <button class="grade-btn good"  data-g="2">Good<small>${iv(2)}</small></button>
+            <button class="grade-btn easy"  data-g="3">Easy<small>${iv(3)}</small></button>
           </div>
-          <div class="flash-hint">How well did you recall it? <kbd>1</kbd>–<kbd>4</kbd> grade · this schedules the next review.</div>`;
+          <div class="flash-hint">How well did you recall it? <kbd>1</kbd>–<kbd>4</kbd> grade · the time under each shows when you'll see it again.</div>`;
         slot.querySelectorAll(".grade-btn").forEach(b => b.addEventListener("click", () => {
           Store.gradeCard(cards[i].id, parseInt(b.dataset.g, 10));
           reviewed++; i++; draw(); renderChrome(); flushAchievements();

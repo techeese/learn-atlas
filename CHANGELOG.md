@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 34 — Anki-style interval previews on flashcard grades (spaced repetition)
+The Again/Hard/Good/Easy buttons gave no sense of *when* you'd see a card again. Each now shows its projected
+next-review interval under the label (e.g. Hard 1d · Good 3d · Easy 5d), via a non-mutating `projectInterval`
+that mirrors the SM-2 scheduler — so grading is informed, like Anki. Logic unit-tested clean (fresh→1/1/2,
+then 3/3/5, then 8/8/8; Easy ≥ Good ≥ Hard always). Gate ALL GREEN, render errs=0.
+
 ## iter 33 — Relevance ranking in the ⌘K command palette (UX)
 The palette indexes ~190 items (lessons, glossary terms, widgets, pages, references) but showed matches in raw
 order. Added scoring — exact title match → title prefix → title contains → sub/category contains — so the best
