@@ -266,7 +266,9 @@
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px" class="reveal">
         <a class="btn primary" href="#/review" data-route>⚡ Review ${st.dueCount} due card${st.dueCount === 1 ? "" : "s"}</a>
         <a class="btn" href="#/test" data-route>📝 Spawn a test</a>
+        <a class="btn ghost" href="#/map" data-route>🗺️ Knowledge Map</a>
         <a class="btn ghost" href="#/lab" data-route>🎛️ Visualization Lab</a>
+        <a class="btn ghost" href="#/glossary" data-route>📔 Glossary</a>
         <a class="btn ghost" href="#/library" data-route>📚 References</a>
       </div>
 

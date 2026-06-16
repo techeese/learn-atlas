@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 38 — Surface the Knowledge Map & Glossary on the dashboard (UX / discoverability)
+The dashboard's quick-action row promoted Review/Test/Lab/Library but not two of the most useful pages.
+Added 🗺️ Knowledge Map and 📔 Glossary so they're reachable in one tap from the home screen (they were only
+in the sidebar / ⌘K). Gate ALL GREEN, errs=0.
+
 ## iter 37 — Visualization Lab links each widget to its lesson (understandability / navigation)
 The Lab was a dead-end — you could play with a widget but not jump to where it's taught. Each lab card now
 shows "↳ <lesson title>", and a widget's page has a "📖 Read the lesson: <title> →" button (plus the topic
