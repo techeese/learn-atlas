@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 31 — Hardening pass + a committed content gate (workflow / tooling)
+A maturity checkpoint after 24 autonomous iterations: full regression audit — old-shape save migrates safely
+(all numbers finite), and all 30 routes + 18 widgets render with errs=0 and zero viz-hydration failures.
+Since the audit was clean, institutionalized it: added `gate.js` (run `node gate.js`) which validates the whole
+data layer — no duplicate lesson ids, every MCQ answer in range, flashcards well-formed, every embedded
+`data-viz` id is a real widget, every prereq id resolves. Prints a summary + ALL GREEN; the loop's Step-3
+check now runs it. Current gate: 6 topics · 113 lessons · 897 MCQs · 678 flashcards · 18 widgets, all green.
+
 ## iter 30 — Reading text-size control (accessibility / reading comfort)
 Long study sessions get an in-app text-size preference (A− / A / A+ in Settings) that scales the lesson prose
 via a `--read-scale` CSS variable, persisted to localStorage and applied on boot — independent of UI chrome
