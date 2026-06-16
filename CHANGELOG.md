@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 59 — Backpropagation visualization: the chain rule on a computational graph (visualizations)
+A new interactive widget (`dl-backprop`, the 20th) for the concept DL learners struggle with most — and it had
+a dedicated lesson ("Backpropagation: The Chain Rule at Scale") with no visual. It lays out the computational
+graph of $L=(w\cdot x-y)^2$ as boxes (w, x, y → ×→ −→ ()²) wired with arrows labeled by each **local
+derivative**. Every node shows its **forward value in gold** and its **gradient ∂L/∂· in rust**; sliders for
+w, x, y recompute both passes live. The takeaway is made explicit: $\partial L/\partial w = 2e\cdot x$ is
+exactly the number gradient descent subtracts from w, and the whole backward pass costs ≈ one forward pass.
+Embedded in the backprop lesson and in the Visualization Lab. Synchronous initial `draw()`. SW cache →
+`atlas-v11`. Verified: renders in Lab (w changed live) + embedded canvas hydrates in the lesson, scales at
+390px (`max-width:100%`), all-routes errs=0, `node gate.js` ALL GREEN (data-viz id validated).
+
 ## iter 58 — Faster first load: defer scripts, parallelize fonts, preconnect CDNs (performance)
 The examples sweep grew the data layer to ~3.5 MB across 13 scripts that were loaded as plain (render-order,
 sequential) `<script>` tags. Three safe wins: (1) added `defer` to all 13 data/logic scripts — the browser now

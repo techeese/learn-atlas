@@ -889,4 +889,61 @@
     regenY(); fit(); draw();
   });
 
+  /* ========================================================
+     20. Backpropagation — the chain rule on a computational graph
+     ======================================================== */
+  register({ id: 'dl-backprop', topic: 'deep-learning', title: 'Backpropagation', blurb: 'Watch the loss L=(w·x−y)² flow forward, then gradients flow back via the chain rule. ∂L/∂w is exactly the number gradient descent uses.' },
+  function (root) {
+    const W = 600, H = 380, BW = 96, BH = 58;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const DISP = "Fraunces, Georgia, serif", MONO = "JetBrains Mono, monospace";
+    let w = 2, x = 1.5, y = 1;
+    slider(ctl, { label: 'w', min: -3, max: 3, step: 0.5, value: w, fmt: v => v.toFixed(1), onInput: v => { w = v; draw(); } });
+    slider(ctl, { label: 'x', min: -3, max: 3, step: 0.5, value: x, fmt: v => v.toFixed(1), onInput: v => { x = v; draw(); } });
+    slider(ctl, { label: 'y (target)', min: -3, max: 3, step: 0.5, value: y, fmt: v => v.toFixed(1), onInput: v => { y = v; draw(); } });
+    function rr(X, Y, w2, h2, r) { ctx.beginPath(); ctx.moveTo(X + r, Y); ctx.arcTo(X + w2, Y, X + w2, Y + h2, r); ctx.arcTo(X + w2, Y + h2, X, Y + h2, r); ctx.arcTo(X, Y + h2, X, Y, r); ctx.arcTo(X, Y, X + w2, Y, r); ctx.closePath(); }
+    const N = {
+      w: { cx: 82, cy: 70 }, x: { cx: 82, cy: 195 }, y: { cx: 82, cy: 318 },
+      mul: { cx: 250, cy: 132 }, sub: { cx: 410, cy: 210 }, sq: { cx: 545, cy: 210 }
+    };
+    function box(p, n, title, val, grad) {
+      const X = n.cx - BW / 2, Y = n.cy - BH / 2;
+      ctx.fillStyle = p.panel; ctx.strokeStyle = p.line; ctx.lineWidth = 1.5; rr(X, Y, BW, BH, 9); ctx.fill(); ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.fillStyle = p.ink; ctx.font = '600 12px ' + DISP; ctx.fillText(title, n.cx, Y + 16);
+      ctx.fillStyle = p.gold; ctx.font = '12px ' + MONO; ctx.fillText(val, n.cx, Y + 33);
+      ctx.fillStyle = p.rust; ctx.font = '10.5px ' + MONO; ctx.fillText(grad, n.cx, Y + 49);
+    }
+    function edge(p, a, b, label) {
+      const x1 = a.cx + BW / 2, y1 = a.cy, x2 = b.cx - BW / 2, y2 = b.cy;
+      arrow(ctx, x1, y1, x2, y2, p.mute, 1.8);
+      if (label) { ctx.fillStyle = p.soft; ctx.font = '10px ' + MONO; ctx.textAlign = 'center'; ctx.fillText(label, (x1 + x2) / 2, (y1 + y2) / 2 - 6); }
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const prod = w * x, err = prod - y, loss = err * err;
+      const gErr = 2 * err, gProd = gErr, gW = gProd * x, gX = gProd * w, gY = -gErr;
+      // forward edges + local derivatives
+      edge(p, N.w, N.mul, '∂p/∂w=x=' + x.toFixed(1));
+      edge(p, N.x, N.mul, '∂p/∂x=w=' + w.toFixed(1));
+      edge(p, N.mul, N.sub, '∂e/∂p=1');
+      edge(p, N.y, N.sub, '∂e/∂y=−1');
+      edge(p, N.sub, N.sq, '∂L/∂e=2e=' + gErr.toFixed(1));
+      // nodes (value in gold = forward, grad in rust = backward)
+      box(p, N.w, 'w', '= ' + w.toFixed(1), '∂L/∂w=' + gW.toFixed(2));
+      box(p, N.x, 'x', '= ' + x.toFixed(1), '∂L/∂x=' + gX.toFixed(2));
+      box(p, N.y, 'y', '= ' + y.toFixed(1), '∂L/∂y=' + gY.toFixed(2));
+      box(p, N.mul, '× : p=w·x', '= ' + prod.toFixed(2), '∂L/∂p=' + gProd.toFixed(2));
+      box(p, N.sub, '− : e=p−y', '= ' + err.toFixed(2), '∂L/∂e=' + gErr.toFixed(2));
+      box(p, N.sq, '( )² : L=e²', 'L = ' + loss.toFixed(2), '∂L/∂L=1');
+      ctx.textAlign = 'left';
+      info.innerHTML = `<b style="color:${p.gold}">Forward →</b> w·x=${prod.toFixed(2)}, −y=${err.toFixed(2)}, squared = <b>L=${loss.toFixed(2)}</b>. ` +
+        `<b style="color:${p.rust}">← Backward</b> seeds ∂L/∂L=1 and multiplies by each local derivative (the chain rule): ` +
+        `<b style="color:${p.rust}">∂L/∂w = 2e·x = ${gW.toFixed(2)}</b> — exactly the gradient that gradient descent subtracts from w. The whole backward pass costs about one forward pass.`;
+    }
+    draw();
+  });
+
 })();

@@ -46,8 +46,8 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
 - ~~"Explain it back" — free-text recall with self-grading (Feynman technique).~~ **DONE iter 53** (Recall tab; self-graded against the lesson's flashcards, feeds mastery + XP). Future: optional AI grading when the tutor lands.
 - Per-concept difficulty rating + adaptive question selection in tests.
 - Interleaved review sessions (mix topics) beyond the SRS queue.
-- More viz ideas (most originals shipped — 19 widgets now incl. overfitting/bias–variance iter 54): a
-  backprop computational-graph walk, softmax-temperature reshaping (LLM decoding), MDP policy-iteration.
+- More viz ideas (20 widgets now; overfitting iter 54, backprop graph iter 59): softmax-temperature
+  reshaping (LLM decoding, fits `l-decoding-strategies`), MDP policy-iteration, a BPE-merge animation.
 - Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.
 - Reduced-motion + high-contrast accessibility modes.
 - Search ranking improvements (fuzzy, recency, mastery-weighted) in ⌘K.
