@@ -434,8 +434,10 @@
         <button class="btn primary" id="complete-btn">${done ? "✓ Completed" : "Mark complete (+50 XP)"}</button>
         ${prev ? `<a class="btn ghost" href="#/lesson/${course.id}/${prev.id}" data-route>← ${esc(prev.title)}</a>` : ""}
         ${next ? `<a class="btn" href="#/lesson/${course.id}/${next.id}" data-route>${esc(next.title)} →</a>` : `<a class="btn" href="#/course/${course.id}" data-route>Back to course →</a>`}
+        <button class="btn ghost" id="print-lesson" style="margin-left:auto">🖨️ Print</button>
       </div>
       ${lessonConnections(lesson.id)}`;
+    const pl = document.getElementById("print-lesson"); if (pl) pl.addEventListener("click", () => window.print());
     const area = document.getElementById("notes-area");
     let nt; area.addEventListener("input", () => { clearTimeout(nt); nt = setTimeout(() => { Store.setNote(lesson.id, area.value); const s = document.getElementById("notes-saved"); s.textContent = "saved ✓"; setTimeout(() => s.textContent = "", 1500); }, 500); });
     const btn = document.getElementById("complete-btn");

@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 42 — Printable lessons (UX / content)
+A "🖨️ Print" button on the lecture produces a clean, paper-friendly printout — the lecture text, math, and
+worked examples in dark-on-white — with all the interactive chrome (sidebar, tabs, notes, widgets, code
+blocks, nav, connections) stripped via print CSS. Reuses the pipeline that already powers cheatsheet printing.
+Good for offline study and annotation. Verified: button present, errs=0, gate ALL GREEN, print-to-PDF
+generates a 246 KB document cleanly (visual PDF inspection unavailable — poppler not installed).
+
 ## iter 41 — Independent MCQ correctness audit: 0 errors found (content quality)
 A second, independent adversarial pass over the question bank: a 6-agent workflow (one subject-expert
 professor per topic) re-derived the answer to a 72-MCQ sample (≈12 per topic, spread across lessons) and

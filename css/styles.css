@@ -751,4 +751,14 @@ kbd { font-family: var(--font-mono); background: var(--panel-2); border: 1px sol
   .cs-front { color: #000 !important; } .cs-back { color: #333 !important; }
   .katex, .cs-card * { color: #111 !important; }
   .cs-grid { grid-template-columns: 1fr 1fr; }
+  /* printable lessons: keep the lecture + examples, drop everything interactive */
+  .crumbs, .tabs, .notes-box, .lesson-actions, .connections, .path-banner, .viz, [data-viz], .viz-controls, .pg, [data-code] { display: none !important; }
+  .page-head h2, .page-head .eyebrow { color: #111 !important; }
+  .prose { max-width: none !important; color: #1a1a1a !important; font-size: 12pt !important; }
+  .prose h3, .prose h4, .prose strong { color: #000 !important; }
+  .prose p, .prose li { color: #222 !important; }
+  .prose code, .prose pre { background: #f2f2f2 !important; color: #111 !important; border-color: #ddd !important; }
+  .callout { background: #f6f6f6 !important; border-color: #999 !important; }
+  .callout *, .hw-item *, .katex { color: #111 !important; }
+  .hw-item { border: 1px solid #ccc !important; background: #fff !important; break-inside: avoid; }
 }
