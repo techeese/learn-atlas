@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 7 — Question bank expansion: Linear Algebra doubled to 128 MCQs (content / owner ask)
+Owner wants an ever-growing bank so retries can't be memorized. Authored + adversarially verified (32-agent
+workflow, every answer-index re-derived) 4 NEW MCQs per Linear Algebra lesson — 64 added across 16 lessons,
+taking LA from 64 → 128 MCQs (8 per lesson) and the whole bank from 452 → 516. New questions are
+non-duplicate, mix computational + conceptual, with misconception distractors. Verified: 0 bad indices,
+0 dupes, all routes errs=0. (Loop will rotate to the next topic each pass.)
+
 ## iter 6 — Mastery mode: wrong answers re-queue until you pass (gamification / new functionality)
 OWNER ASK — "think again until I pass, not casual remembering." The Spawn-a-Test page now has a default-on
 **Mastery mode**: every question you miss goes to the back of the queue and keeps coming back until you
