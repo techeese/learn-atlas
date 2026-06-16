@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 20 — New visualization: Bayes' theorem & base rates (visualizations)
+Built calc-bayes for one of the least-intuitive ideas in probability/ML. A 400-person grid splits into
+true-positives (gold), false alarms (violet), missed cases (rust), true-negatives; sliders for base rate,
+sensitivity, and specificity recompute it live and report P(condition | +). It makes the base-rate fallacy
+visceral — at a 5% prior with a 90/90 test, only ~32% of positives are real. Embedded in the
+Improper-Integrals (probability connections) lesson. Lab catalog 14 → 15. errs=0.
+
 ## iter 19 — "Continue where you left off" resume card (UX / retention)
 Lowering the friction to return: the store now remembers the last lesson you opened (`lastLesson`), and the
 dashboard surfaces a prominent "Continue" card (topic · module · lesson, with a Resume button) above the
