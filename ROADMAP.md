@@ -51,20 +51,22 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
 - Prefer the **biggest-value** move; a bold swing (new pillar, overhaul) beats a tidy tweak when warranted.
 - **Broken always wins**: a real bug / console error / broken render preempts everything.
 
-## Owner priority — worked examples sweep (in progress)
-"Examples when we need it." Adding 2 verified worked examples to every lesson that lacks them, topic by topic
-via the author→adversarial-verify workflow. DONE: Linear Algebra (iter 47, 9), Calculus (iter 48, all 20), Algorithms (iter 49, all 18),
-Deep Learning (iter 50, all 17), Reinforcement Learning (iter 51, all 16). NEXT: LLMs — the LAST topic;
-after it the sweep is COMPLETE and the loop rotates back to the broader compass (UI/viz/new features have
-been quiet since iter 46). Reuse
-`/tmp/gen_examples_wf.js <topicId> <noun>` → `Workflow({scriptPath})` →
-`/tmp/inject_examples.js <topicId> <outputFile>` → gate → all-routes → 390px. Re-running the generator
-after a partial inject re-bakes ONLY the still-missing lessons (handy for retrying failures).
-Skip purely-conceptual lessons (the verify step returns none for them, as 5 LA lessons correctly did).
-**Landmine (iter 50):** a few very matrix/token-heavy lessons (DL RNN + attention) reliably STALLED the
-workflow author agent on all 6 retries (~3h wasted, 180s no-progress each). If a lesson fails twice, don't
-re-run the workflow — author those 1–2 examples DIRECTLY in the main loop (use a node script with
-`String.raw` so LaTeX backslashes stay literal) and have ONE Agent adversarially re-derive the numbers.
+## Owner priority — worked examples sweep ✅ COMPLETE (iters 47–52)
+"Examples when we need it." Added 2 verified worked examples to every lesson that warranted them, all six
+topics, via the author→adversarial-verify workflow. DONE: Linear Algebra (47), Calculus (48), Algorithms (49),
+Deep Learning (50), Reinforcement Learning (51), LLMs (52). **Final: 108/113 lessons carry worked examples,
+218 total** (the 5 without are purely-conceptual LA lessons the verifier correctly skipped).
+→ **The loop now rotates back to the broader compass** — UI/UX, visualizations, animations, new functionality,
+and gamification have been quiet since iter 46. Pick the biggest-value non-content move next (and honor
+anti-monotony: content/examples ran 6 iterations straight under the owner-ask exemption).
+Reusable pipeline if more content is ever needed: `/tmp/gen_examples_wf.js <topicId> <noun>` →
+`Workflow({scriptPath})` → `/tmp/inject_examples.js <topicId> <outputFile>` → gate → all-routes → 390px.
+Re-running the generator after a partial inject re-bakes ONLY the still-missing lessons (good for retries).
+**Landmines from the sweep:** (1) matrix/token-heavy lessons (DL RNN+attention, LLM multi-head) STALL the
+workflow author agent on all 6 retries (~3h wasted) — author those DIRECTLY with a `String.raw` node script
++ one verify Agent. (2) The generator's verify prompt said "no raw HTML", so some authors emitted markdown
+`**bold**` which does NOT render (Examples tab uses innerHTML; KaTeX ignores `**`) — fixed 219 spans in
+iter 52. If the pipeline is reused, make the author/verify prompts mandate `<strong>`/`<em>`, never markdown.
 
 ## Notes / discoveries
 - **Architecture review (iter 36):** layer discipline is clean — content in `data/*.js`, visualizations in

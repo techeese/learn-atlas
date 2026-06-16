@@ -5,9 +5,10 @@
 A gamified, self-hosted study site for the topics you're learning alongside a full-time job:
 **Linear Algebra, Calculus, Algorithms, Deep Learning, Reinforcement Learning, and LLMs**.
 
-Currently **113 lessons · 897 fact-checked MCQs · 678 flashcards · 337 homework problems · 18 interactive
-visualizations**, each lesson with rendered math, worked examples, and spaced-repetition cards — wrapped in
-an XP / level / streak / mastery / achievement system designed to make hard ideas *click* and *stick*.
+Currently **113 lessons · 897 fact-checked MCQs · 678 flashcards · 337 homework problems · 218 worked
+examples · 18 interactive visualizations**, each lesson with rendered math, step-by-step worked examples, and
+spaced-repetition cards — wrapped in an XP / level / streak / mastery / achievement system designed to make
+hard ideas *click* and *stick*.
 
 Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys to GitHub Pages on push.
 

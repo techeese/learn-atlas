@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 52 — Worked examples for all 18 LLM lessons + a markdown-bold render fix (content; owner-requested) — SWEEP COMPLETE
+Finishes the examples sweep: every LLM lesson that lacked examples now has 2 (36 total) — sequence
+probability via the chain rule, softmax over logits, BPE merge tracing, embeddings/output head,
+**multi-head + causal masking** (computed end to end), the transformer block, positional encoding/RoPE,
+pretraining objective & data, AdamW/stability, scaling laws, SFT, RLHF/DPO, LoRA param counts, decoding
+& sampling, in-context learning & chain-of-thought, KV-cache/GQA memory & bandwidth, RAG cosine retrieval
++ a ReAct tool-use trace, hallucination taxonomy & calibration, and a safety base-rate guardrail
+calculation. 17 lessons via a 34-agent author→verify workflow; the matrix-heavy multi-head lesson (which
+stalled the workflow agent for DL attention in iter 50) was authored directly and independently re-derived
+(ALL CORRECT) — the iter-50 self-correction working as intended.
+**Also fixed a real shipping render bug:** several example authors emitted markdown `**bold**`, but the
+Examples tab renders via `innerHTML`, so KaTeX leaves `**` untouched and it showed as literal asterisks in
+expanded solutions. Converted **219** markdown-bold spans to `<strong>` across Linear Algebra (78),
+Calculus (128), Reinforcement Learning (8), and LLMs (5); Algorithms/DL were already clean. (Slipped past
+iters 47–48 because those screenshots only showed collapsed examples.)
+**Sweep totals: 108/113 lessons now carry worked examples — 218 in all** (the 5 without are purely-conceptual
+LA lessons the verifier correctly skipped). Verified: expanded calculus solution now renders bold correctly,
+LLM BPE + multi-head examples render desktop & 390px mobile, `node gate.js` ALL GREEN, all-routes errs=0.
+
 ## iter 51 — Worked examples for all 16 Reinforcement Learning lessons (content; owner-requested)
 Examples sweep reaches Reinforcement Learning: every one of the 16 lessons that lacked examples now has 2
 (32 total) — evaluative vs instructive feedback, modeling an MDP + computing returns, Bellman backups &
