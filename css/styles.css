@@ -641,6 +641,20 @@ body::after {
 .pg-check.ok { color: var(--sage); } .pg-check.no { color: var(--rust); }
 
 /* ============================================================
+   Level-up celebration
+   ============================================================ */
+.levelup-ov { position: fixed; inset: 0; z-index: 260; display: grid; place-items: center; background: rgba(0,0,0,.55); backdrop-filter: blur(4px); animation: fade .25s; }
+.levelup-card {
+  text-align: center; background: linear-gradient(160deg, var(--panel), var(--panel-2));
+  border: 1.5px solid var(--gold); border-radius: 20px; padding: 38px 46px;
+  box-shadow: 0 0 60px -16px var(--gold), 0 30px 70px -30px var(--shadow); animation: rise .4s both;
+}
+.levelup-card .lu-glyph { font-size: 44px; color: var(--gold); filter: drop-shadow(0 0 14px var(--gold)); }
+.levelup-card .lu-eyebrow { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin: 10px 0 4px; }
+.levelup-card .lu-lvl { font-family: var(--font-disp); font-size: 22px; color: var(--ink-soft); }
+.levelup-card .lu-name { font-family: var(--font-disp); font-size: 40px; font-weight: 600; color: var(--ink); margin: 2px 0 22px; letter-spacing: -.5px; }
+
+/* ============================================================
    Command palette (⌘K)
    ============================================================ */
 .palette-scrim { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.5); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: flex-start; padding-top: 12vh; animation: fade .15s; }

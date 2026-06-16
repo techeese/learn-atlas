@@ -123,10 +123,16 @@
   function markKnown(lessonId) { if (!lessonId) return; state.mastery[lessonId] = { s: 0.65, ts: Date.now(), n: 1 }; save(); }
 
   // ---- XP / level ------------------------------------------------------
+  const levelUps = [];
+  function levelNumFor(xp) { let lvl = 1; for (let i = 0; i < LEVELS.length; i++) if (xp >= LEVELS[i].t) lvl = i + 1; return lvl; }
+  function drainLevelUps() { return levelUps.splice(0, levelUps.length); }
   function addXP(amount) {
     amount = num(amount);
+    const before = levelNumFor(state.xp);
     state.xp += amount;
+    const after = levelNumFor(state.xp);
     if (amount > 0) { const t = todayStr(); state.activity[t] = num(state.activity[t]) + amount; }
+    if (after > before) for (let lv = before + 1; lv <= after; lv++) levelUps.push({ level: lv, name: (LEVELS[lv - 1] || {}).name || "" });
     const lv = levelInfo();
     if (lv.level >= 4) unlock("scholar");
     if (lv.level >= LEVELS.length) unlock("polymath");
@@ -337,7 +343,7 @@
     gradeCard, cardDue,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, topicMastery, markKnown,
     getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed,
-    unlock, drainUnlocked,
+    unlock, drainUnlocked, drainLevelUps,
     stats, courseProgress, resetAll, touchStreak
   };
 })();

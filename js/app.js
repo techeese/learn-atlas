@@ -106,6 +106,36 @@
   }
   function flushAchievements() {
     Store.drainUnlocked().forEach(a => toast(a.icon, "Achievement unlocked", a.name));
+    const lus = Store.drainLevelUps ? Store.drainLevelUps() : [];
+    if (lus.length) levelUpCelebrate(lus[lus.length - 1]); // celebrate the highest reached
+  }
+
+  // ---------- juice: confetti + level-up celebration (respects reduced-motion) ----------
+  function reducedMotion() { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } }
+  function confetti() {
+    if (reducedMotion()) return;
+    const cv = document.createElement("canvas"), W = cv.width = window.innerWidth, H = cv.height = window.innerHeight;
+    cv.style.cssText = "position:fixed;inset:0;z-index:250;pointer-events:none";
+    document.body.appendChild(cv);
+    const ctx = cv.getContext("2d"), cols = ["#e0a458", "#88a37a", "#9a8bc4", "#d2715a", "#f1e8da"];
+    const ps = Array.from({ length: 130 }, () => ({ x: Math.random() * W, y: -20 - Math.random() * H * 0.3, vx: (Math.random() - 0.5) * 3.4, vy: 2 + Math.random() * 4.5, s: 4 + Math.random() * 6, c: cols[Math.floor(Math.random() * cols.length)], r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3 }));
+    let t = 0, raf;
+    function frame() {
+      t++; ctx.clearRect(0, 0, W, H);
+      ps.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.05; p.r += p.vr; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.globalAlpha = Math.max(0, 1 - t / 170); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s); ctx.restore(); });
+      if (t < 170) raf = requestAnimationFrame(frame); else cv.remove();
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function levelUpCelebrate(info) {
+    confetti();
+    const ov = document.createElement("div"); ov.className = "levelup-ov";
+    ov.innerHTML = `<div class="levelup-card"><div class="lu-glyph">⬆</div><div class="lu-eyebrow">Level Up</div><div class="lu-lvl">Level ${info.level}</div><div class="lu-name">${esc(info.name)}</div><button class="btn primary" id="lu-close">Keep going →</button></div>`;
+    document.body.appendChild(ov);
+    const close = () => ov.remove();
+    ov.addEventListener("click", e => { if (e.target === ov) close(); });
+    ov.querySelector("#lu-close").addEventListener("click", close);
+    document.addEventListener("keydown", function esc2(e) { if (e.key === "Escape") { close(); document.removeEventListener("keydown", esc2); } });
   }
 
   // ---------- chrome (sidebar + topbar) ----------
@@ -421,6 +451,7 @@
         <button class="btn primary" id="retry">↻ Retry quiz</button>
       </div>`;
       document.getElementById("retry").addEventListener("click", () => { i = 0; correct = 0; draw(); });
+      if (pct === 100) confetti();
       flushAchievements();
       renderChrome();
     }
@@ -476,7 +507,7 @@
           <div class="flash-hint">How well did you recall it? This schedules the next review.</div>`;
         slot.querySelectorAll(".grade-btn").forEach(b => b.addEventListener("click", () => {
           Store.gradeCard(cards[i].id, parseInt(b.dataset.g, 10));
-          reviewed++; i++; draw(); renderChrome();
+          reviewed++; i++; draw(); renderChrome(); flushAchievements();
         }));
       }
     }
@@ -669,7 +700,7 @@
       </div></div>`;
       bindGo();
       document.getElementById("md-again").addEventListener("click", () => { location.hash = "#/test"; });
-      flushAchievements(); renderChrome();
+      confetti(); flushAchievements(); renderChrome();
     }
     draw();
   }

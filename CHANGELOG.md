@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 12 — Juice: level-up celebration + confetti (animations)
+Added a delight beat. The store now detects level-ups (XP crossing a rank threshold) and queues them;
+flushAchievements fires a centered "Level N · <rank name>" celebration modal with a 130-particle confetti
+burst. Confetti also fires on a perfect (100%) quiz and on clearing a Mastery drill. All of it respects
+prefers-reduced-motion (no-op when the user asks for less motion). Verified: errs=0; granting XP across the
+150-point threshold pops the "Level 2 · Apprentice" celebration.
+
 ## iter 11 — Accessibility pass (accessibility)
 Rotated to a neglected area. Added: a `prefers-reduced-motion` media query that disables reveals/transitions/
 animations for users who ask for less motion; `:focus-visible` outlines on every interactive element
