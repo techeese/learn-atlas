@@ -54,7 +54,9 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
 ## Owner priority — worked examples sweep (in progress)
 "Examples when we need it." Adding 2 verified worked examples to every lesson that lacks them, topic by topic
 via the author→adversarial-verify workflow. DONE: Linear Algebra (iter 47, 9), Calculus (iter 48, all 20), Algorithms (iter 49, all 18),
-Deep Learning (iter 50, all 17). NEXT: Reinforcement Learning, then LLMs — reuse
+Deep Learning (iter 50, all 17), Reinforcement Learning (iter 51, all 16). NEXT: LLMs — the LAST topic;
+after it the sweep is COMPLETE and the loop rotates back to the broader compass (UI/viz/new features have
+been quiet since iter 46). Reuse
 `/tmp/gen_examples_wf.js <topicId> <noun>` → `Workflow({scriptPath})` →
 `/tmp/inject_examples.js <topicId> <outputFile>` → gate → all-routes → 390px. Re-running the generator
 after a partial inject re-bakes ONLY the still-missing lessons (handy for retrying failures).

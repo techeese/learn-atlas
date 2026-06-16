@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 51 — Worked examples for all 16 Reinforcement Learning lessons (content; owner-requested)
+Examples sweep reaches Reinforcement Learning: every one of the 16 lessons that lacked examples now has 2
+(32 total) — evaluative vs instructive feedback, modeling an MDP + computing returns, Bellman backups &
+value/policy iteration, Monte-Carlo returns, TD(0) updates, SARSA vs Q-learning updates (on- vs off-policy),
+n-step/eligibility traces & GAE over a rollout, value approximation, DQN targets, REINFORCE/policy-gradient,
+actor-critic advantages, the PPO clipped surrogate (both advantage signs), ε-greedy + Thompson-sampling
+exploration with regret, reward-hacking & observation normalization, and sequential credit assignment. Each
+is a full step-by-step `{title, body, solution}` with KaTeX behind a "Show working" reveal. Authored then
+adversarially verified by a 32-agent workflow that re-derived every value (caught & fixed real issues: a PPO
+example body that contradicted its own solution, a confusing Bellman line). RL examples 2 → 34 (182 site-wide).
+Verified: SARSA/Q-learning + Bellman examples render desktop & 390px mobile, `node gate.js` ALL GREEN,
+all-routes errs=0.
+
 ## iter 50 — Worked examples for all 17 Deep Learning lessons (content; owner-requested)
 Examples sweep reaches Deep Learning: every one of the 17 lessons that lacked examples now has 2 (34 total) —
 empirical vs true risk & the generalization gap, a neuron/MLP forward pass in matrix form, activation/loss
