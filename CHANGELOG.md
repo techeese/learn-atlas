@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 17 — Glossary of key terms (understandability / content)
+Added a searchable Glossary (data/glossary.js): 48 hand-curated, plain-language definitions of the core
+concepts across all six subjects (8 each — e.g. span, eigenvector, chain rule, Big-O, backprop, Bellman
+equation, attention), with KaTeX math, topic-colored chips, and live search over term/definition/topic.
+New "Glossary" nav item + route; every term is also searchable in the ⌘K palette. sw.js cache → atlas-v4.
+Verified: errs=0, 48 terms render, search filters correctly.
+
 ## iter 16 — Flow reflection + responsive Knowledge Map on mobile (mobile / UI)
 ~10-iteration flow reflection: rotation is healthy (content 7–9 · viz 10/14/15 · a11y 11 · juice 12 ·
 onboarding 13) and a 390px audit found the platform holds up well (intro, lessons, tests, widgets all

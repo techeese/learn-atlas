@@ -858,6 +858,35 @@
     bindGo(); hydrateViz(app);
   }
 
+  // ---------- glossary ----------
+  function viewGlossary() {
+    const g = window.GLOSSARY || [];
+    const topicName = id => id === "general" ? "General" : (findCourse(id) || {}).title || id;
+    const topicColor = id => id === "general" ? "var(--gold)" : (findCourse(id) || {}).color || "var(--gold)";
+    function render(q) {
+      q = (q || "").trim().toLowerCase();
+      const items = g.filter(e => !q || e.term.toLowerCase().includes(q) || e.def.toLowerCase().includes(q) || topicName(e.topic).toLowerCase().includes(q))
+        .slice().sort((a, b) => a.term.localeCompare(b.term));
+      document.getElementById("gloss-list").innerHTML = items.length ? items.map(e => `
+        <div class="gloss-item">
+          <div class="gloss-term">${esc(e.term)} <span class="gloss-topic" style="color:${topicColor(e.topic)};border-color:${topicColor(e.topic)}">${esc(topicName(e.topic))}</span></div>
+          <div class="gloss-def">${e.def}</div>
+        </div>`).join("") : emptyState("🔍", "No terms match “" + esc(q) + "”.");
+      typeset();
+    }
+    app.innerHTML = `
+    <div class="view">
+      <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Glossary</div>
+      <div class="page-head reveal"><div class="eyebrow">${g.length} key terms</div><h2>The <em>Glossary</em></h2>
+      <p>Fast, plain-language definitions of the core concepts across all six subjects. Search, or skim to refresh.</p></div>
+      <input class="gloss-search" id="gloss-search" placeholder="Search terms…" aria-label="Search glossary">
+      <div id="gloss-list" class="gloss-grid reveal"></div>
+    </div>`;
+    bindGo();
+    document.getElementById("gloss-search").addEventListener("input", e => render(e.target.value));
+    render("");
+  }
+
   // ---------- library (all references) ----------
   function viewLibrary() {
     const refs = window.REFERENCES || {};
@@ -1157,7 +1186,8 @@
       c.modules.forEach(m => m.lessons.forEach(l => out.push({ t: l.title, sub: c.title, hash: "#/lesson/" + c.id + "/" + l.id, icon: "📖" })));
     });
     (window.VIZ_CATALOG || []).forEach(v => out.push({ t: v.title, sub: "Visualization", hash: "#/lab/" + v.id, icon: "🎛️" }));
-    [["Dashboard", "#/", "⌂"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Library", "#/library", "📚"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
+    [["Dashboard", "#/", "⌂"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Glossary", "#/glossary", "📔"], ["Library", "#/library", "📚"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
+    (window.GLOSSARY || []).forEach(e => out.push({ t: e.term, sub: "Glossary", hash: "#/glossary", icon: "📔" }));
     Object.keys(window.REFERENCES || {}).forEach(k => (window.REFERENCES[k] || []).forEach(r => out.push({ t: r.title, sub: "Reference · " + r.by, hash: r.url, ext: true, icon: "🔖" })));
     return out;
   }
@@ -1206,6 +1236,7 @@
     else if (parts[0] === "map") viewMap();
     else if (parts[0] === "playground") viewPlayground();
     else if (parts[0] === "library") viewLibrary();
+    else if (parts[0] === "glossary") viewGlossary();
     else if (parts[0] === "cheatsheet") viewCheatsheet(parts[1]);
     else if (parts[0] === "placement") viewPlacement(parts[1]);
     else if (parts[0] === "path") viewPath(parts[1], parts[2]);
