@@ -82,16 +82,19 @@
   // ---------- deterministic daily concept ----------
   function dayNumber() { const d = new Date(); return Math.floor(Date.parse(d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0") + "T00:00:00") / 86400000); }
   function mulberry(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function isReady(id) { return !Store.isLessonDone(id) && learningPath(id).every(p => p.lesson.id === id || Store.isLessonDone(p.lesson.id)); }
   function dailyConcept() {
     const all = []; C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => all.push(l.id))));
     if (!all.length) return null;
     const rng = mulberry(dayNumber() + 7);
     const undone = all.filter(id => !Store.isLessonDone(id));
-    // 35% chance: surface an "advanced" concept the learner hasn't reached yet
-    const advanced = undone.length && rng() < 0.35;
-    const pool = advanced ? undone : all;
-    const id = pool[Math.floor(rng() * pool.length)];
-    return { node: index()[id], advanced };
+    const ready = undone.filter(isReady);
+    const stretch = undone.filter(id => ready.indexOf(id) < 0); // not-yet-reachable concepts
+    let id, advanced = false;
+    if (stretch.length && rng() < 0.25) { id = stretch[Math.floor(rng() * stretch.length)]; advanced = true; } // occasional peek ahead
+    else if (ready.length) { id = ready[Math.floor(rng() * ready.length)]; }                                    // prefer an actionable concept
+    else { const pool = undone.length ? undone : all; id = pool[Math.floor(rng() * pool.length)]; advanced = !!undone.length; }
+    return { node: index()[id], advanced, ready: ready.indexOf(id) >= 0 };
   }
 
   // ---------- toast ----------
@@ -212,12 +215,12 @@
       <div class="cotd reveal" style="--c:${cd.node.course.color}" data-go="#/lesson/${cd.node.course.id}/${cd.node.lesson.id}">
         <div class="cotd-side">
           <div class="cotd-ico" style="color:${cd.node.course.color};border-color:${cd.node.course.color}">${esc(cd.node.course.icon)}</div>
-          <div class="cotd-tag">Concept of the Day${cd.advanced ? ` · <span style="color:var(--gold)">a stretch ↗</span>` : ""}</div>
+          <div class="cotd-tag">Concept of the Day${cd.advanced ? ` · <span style="color:var(--gold)">a stretch ↗</span>` : cd.ready ? ` · <span style="color:var(--sage)">ready ✓</span>` : ""}</div>
         </div>
         <div class="cotd-body">
           <div class="cotd-course">${esc(cd.node.course.title)} · ${esc(cd.node.module.title)}</div>
           <h3>${esc(cd.node.lesson.title)}</h3>
-          <p>${cd.advanced ? "A peek ahead — something you haven't reached yet. Curiosity is rewarded." : "Today's pick to keep your mind moving. A few minutes is enough."}</p>
+          <p>${cd.advanced ? "A peek ahead — something you haven't reached yet. Curiosity is rewarded." : cd.ready ? "All its prerequisites are done — you're ready for this one." : "Today's pick to keep your mind moving. A few minutes is enough."}</p>
           <span class="btn primary" style="pointer-events:none">Study now →</span>
         </div>
       </div>` : "";

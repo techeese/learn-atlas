@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 44 — Concept of the Day prefers an actionable concept (learning flow)
+The daily pick was purely random, often surfacing something you're not ready for. It now prefers a concept
+on your **"ready to learn" frontier** (prerequisites satisfied, not started) and labels it "ready ✓" with
+"all its prerequisites are done", while keeping an occasional (~25%) "a stretch ↗" peek ahead. So the
+dashboard's daily nudge is something you can actually start today. Deterministic per day; errs=0, gate ALL GREEN.
+
 ## iter 43 — "Ready to learn" frontier on the Knowledge Map (learning flow)
 The Constellation showed mastery, but not *what to learn next*. Now any concept whose prerequisites are all
 complete but which you haven't started gets a pulsing gold dashed ring (and a legend count), so the map
