@@ -105,6 +105,50 @@
               ],
               "answer": 0,
               "explain": "$\\Omega(n\\log n)$ is a lower bound on the problem itself: the worst-case cost grows at least as fast as $n\\log n$, so no comparison sort can beat that rate. An upper-bound (never-exceed) statement would be Big-O, not $\\Omega$, and the bound is about the worst case, not all inputs."
+            },
+            {
+              "q": "Saying $f(n) = \\Theta(g(n))$ is equivalent to which combined statement?",
+              "choices": [
+                "$f(n) = O(g(n))$ AND $f(n) = \\Omega(g(n))$",
+                "$f(n) = O(g(n))$ OR $f(n) = \\Omega(g(n))$",
+                "$f(n) = o(g(n))$ AND $f(n) = \\omega(g(n))$",
+                "$f(n) = O(g(n))$ but NOT $f(n) = \\Omega(g(n))$"
+              ],
+              "answer": 0,
+              "explain": "$\\Theta$ is a tight, two-sided bound: $g$ is both an asymptotic upper bound ($O$) and an asymptotic lower bound ($\\Omega$). The 'OR' version is too weak, and $o$/$\\omega$ are strict and mutually exclusive, so they can never both hold."
+            },
+            {
+              "q": "An algorithm runs in $\\Theta(n^2)$ time. A student concludes: 'Therefore it can never run faster than $\\Theta(n^2)$ on any specific input.' Why is this reasoning flawed?",
+              "choices": [
+                "$\\Theta$ describes the growth of a chosen complexity measure (e.g. worst case) as a function of $n$, not the cost of every individual input; a particular input can finish far sooner",
+                "$\\Theta$ only bounds the algorithm from above, so faster inputs are always allowed",
+                "$\\Theta(n^2)$ secretly means the same as $O(n^2)$, which says nothing about lower bounds",
+                "Constant factors hidden in $\\Theta$ can make any single input take exactly $n^2$ steps"
+              ],
+              "answer": 0,
+              "explain": "Asymptotic bounds describe how a summary measure (such as worst-case time) scales with $n$; a specific easy input (e.g. an already-sorted array for some algorithms) can run much faster. $\\Theta$ is genuinely two-sided, so the claim that it only bounds from above is also wrong."
+            },
+            {
+              "q": "What is the tightest bound for $T(n) = 5n^2 + 100n\\log n + 3000$?",
+              "choices": [
+                "$\\Theta(n^2)$",
+                "$\\Theta(n^2 \\log n)$",
+                "$\\Theta(n)$",
+                "$\\Theta(n\\log n)$"
+              ],
+              "answer": 0,
+              "explain": "The fastest-growing term is $5n^2$, and constant factors plus lower-order terms ($100n\\log n$, the constant $3000$) are dropped, giving $\\Theta(n^2)$. Multiplying by $\\log n$ ($\\Theta(n^2\\log n)$) overstates the growth, while $\\Theta(n)$ and $\\Theta(n\\log n)$ both understate it since $n^2$ grows strictly faster than $n\\log n$."
+            },
+            {
+              "q": "Algorithm A is $\\Theta(n)$ and algorithm B is $\\Theta(n^2)$. For the input size $n = 5$ you actually need to handle, which statement is guaranteed by these bounds alone?",
+              "choices": [
+                "Nothing is guaranteed about $n = 5$; asymptotic bounds only constrain behavior for sufficiently large $n$, so B could easily be faster at $n = 5$",
+                "A must be faster than B at $n = 5$, since $n < n^2$",
+                "A and B must take the same time at $n = 5$ because both ignore constants",
+                "B must be faster, because higher-degree polynomials have smaller constants"
+              ],
+              "answer": 0,
+              "explain": "Asymptotic notation hides constants and only promises behavior as $n \\to \\infty$ (beyond some threshold $n_0$); at a small fixed $n=5$ a $\\Theta(n^2)$ routine with tiny constants can beat a $\\Theta(n)$ one with huge constants. The crossover where A wins may lie above $n=5$."
             }
           ],
           "flashcards": [
@@ -256,6 +300,50 @@
               ],
               "answer": 2,
               "explain": "Binary search makes a single recursive call ($a=1$) on a half-sized input ($b=2$) with constant local work ($f(n)=\\Theta(1)$), yielding $T(n)=T(n/2)+\\Theta(1)$."
+            },
+            {
+              "q": "Consider $T(n) = 2T(n/2) + n^3$. Comparing $f(n) = n^3$ against $n^{\\log_b a} = n^{\\log_2 2} = n$, which Master Theorem case applies and what is the solution?",
+              "choices": [
+                "Case 1, $T(n) = \\Theta(n)$, because the work is dominated by the leaves",
+                "Case 2, $T(n) = \\Theta(n^3 \\log n)$, because $f(n)$ and $n^{\\log_b a}$ grow at the same rate",
+                "Case 3, $T(n) = \\Theta(n^3)$, because $f(n)$ grows polynomially faster than $n^{\\log_b a}$ and the regularity condition holds",
+                "The Master Theorem does not apply because $f(n)$ is a polynomial of degree higher than 1"
+              ],
+              "answer": 2,
+              "explain": "Here $n^{\\log_b a} = n$, and $f(n) = n^3 = \\Omega(n^{1+\\epsilon})$ grows polynomially faster, with $2(n/2)^3 = n^3/4 \\le c\\,n^3$ satisfying regularity, so Case 3 gives $T(n) = \\Theta(f(n)) = \\Theta(n^3)$. The root's work dominates, not the leaves (ruling out Case 1)."
+            },
+            {
+              "q": "A student claims that in $T(n) = a\\,T(n/b) + f(n)$, increasing the branching factor $a$ from 2 to 4 (keeping $b = 2$) always increases the asymptotic running time. For which recurrence is this claim WRONG?",
+              "choices": [
+                "$T(n) = a\\,T(n/2) + n^3$, where the answer stays $\\Theta(n^3)$ whether $a = 2$ or $a = 4$",
+                "$T(n) = a\\,T(n/2) + n$, where the answer changes from $\\Theta(n \\log n)$ to $\\Theta(n^2)$",
+                "$T(n) = a\\,T(n/2) + 1$, where the answer changes from $\\Theta(n)$ to $\\Theta(n^2)$",
+                "$T(n) = a\\,T(n/2) + n^2$, where the answer changes from $\\Theta(n^2)$ to $\\Theta(n^2 \\log n)$"
+              ],
+              "answer": 0,
+              "explain": "For $f(n) = n^3$, $n^{\\log_2 a}$ is $n$ (a=2) or $n^2$ (a=4), both dominated by $n^3$, so the answer stays $\\Theta(n^3)$ either way (Case 3). In the other recurrences $f(n)$ is small enough that increasing $a$ raises $n^{\\log_2 a}$ and changes the leaf-dominated answer."
+            },
+            {
+              "q": "For $T(n) = 9T(n/3) + n^2$, evaluate the cost at each level of the recursion tree. What pattern do the per-level costs follow, and what does this imply about the case?",
+              "choices": [
+                "Each level costs more than the one above by a factor of 9, so the leaves dominate (Case 1)",
+                "Each level costs the same, $n^2$, so the total is $\\Theta(n^2 \\log n)$ (Case 2)",
+                "Each level costs less than the one above, so the root dominates (Case 3)",
+                "The first level costs $n^2$ and every subsequent level costs $\\Theta(1)$ (Case 1)"
+              ],
+              "answer": 1,
+              "explain": "Level $i$ has $9^i$ nodes each costing $(n/3^i)^2 = n^2/9^i$, so each level costs exactly $n^2$; with $\\log_3 n$ levels the total is $\\Theta(n^2 \\log n)$, which is Case 2 since $n^{\\log_3 9} = n^2 = f(n)$."
+            },
+            {
+              "q": "Two algorithms have recurrences $T_A(n) = 2T(n/2) + \\Theta(n)$ and $T_B(n) = 2T(n/2) + \\Theta(n^2)$. A classmate reasons that $T_B$ must be slower because it does more work, then concludes $T_B(n) = \\Theta(n^2 \\log n)$. What is the actual solution for $T_B$, and where did the reasoning go wrong?",
+              "choices": [
+                "$\\Theta(n^2 \\log n)$; the reasoning is correct because each of the $\\log n$ levels does $n^2$ work",
+                "$\\Theta(n^2 \\log n)$; the $\\log n$ factor comes from the merge cost being superlinear",
+                "$\\Theta(n^2)$; the per-level costs form a decreasing geometric series dominated by the root's $\\Theta(n^2)$ term",
+                "$\\Theta(n^3)$; squaring the merge work also squares the depth contribution"
+              ],
+              "answer": 2,
+              "explain": "For $T_B$, $n^{\\log_b a} = n$ while $f(n) = n^2$ dominates polynomially (Case 3), so $T_B(n) = \\Theta(n^2)$ with no log factor; the level costs $n^2, n^2/2, n^2/4, \\dots$ form a geometric series summing to $\\Theta(n^2)$. The classmate wrongly assumed every level costs the full $n^2$ as in $T_A$'s balanced Case 2."
             }
           ],
           "flashcards": [
@@ -407,6 +495,50 @@
               ],
               "answer": 0,
               "explain": "An invariant must be established at initialization and preserved by maintenance at the reference point before each guard test; checking only the final state is just inspecting the output, not proving correctness. Without init+maintenance, you have not shown the property holds throughout the iterations."
+            },
+            {
+              "q": "You prove a loop invariant's initialization and maintenance correctly, but the invariant you chose is so weak that, combined with the loop's exit condition, it does not imply the algorithm's postcondition. What does this tell you?",
+              "choices": [
+                "The proof is invalid because maintenance secretly failed",
+                "The proof is structurally sound but useless — a correct invariant must be strong enough that invariant-plus-exit-condition yields the desired result",
+                "The base case (initialization) must have been skipped",
+                "Loop invariants cannot prove postconditions; only induction on input size can"
+              ],
+              "answer": 1,
+              "explain": "Initialization and maintenance can both hold for a true-but-too-weak invariant; the missing piece is that termination must let you conclude the postcondition, so the invariant has to be chosen strong enough. The other options misattribute the gap to a failed step rather than to invariant selection."
+            },
+            {
+              "q": "Consider summing an array: before each iteration $i$ (1-indexed, $i$ ranging from 1 to $n+1$), the invariant is \"$s$ equals the sum of $A[1..i-1]$.\" For the maintenance step you must show that:",
+              "choices": [
+                "The invariant holds when $i = 1$, i.e. $s = 0$",
+                "Assuming $s = \\sum_{j=1}^{i-1} A[j]$ at the start of iteration $i$, after executing $s \\mathrel{+}= A[i]$ it equals $\\sum_{j=1}^{i} A[j]$, matching the invariant for $i+1$",
+                "When the loop exits at $i = n+1$, $s = \\sum_{j=1}^{n} A[j]$",
+                "$s$ never exceeds the maximum element of $A$"
+              ],
+              "answer": 1,
+              "explain": "Maintenance is the inductive step: assume the invariant before iteration $i$, then show the body re-establishes it for the next iteration ($i+1$). Choice 0 is initialization, choice 2 is termination, and choice 3 is not the invariant at all."
+            },
+            {
+              "q": "A common claim is \"strong induction is more powerful than ordinary induction, so some statements provable by strong induction cannot be proved by ordinary induction.\" Why is this misleading?",
+              "choices": [
+                "Strong induction has no base case, so it actually proves strictly fewer statements",
+                "They are logically equivalent — any strong-induction proof can be mechanically converted to an ordinary-induction proof (e.g. by strengthening the hypothesis to \"$P$ holds for all values up to $k$\"); strong induction is a convenience, not extra deductive power",
+                "Ordinary induction can only handle linear recurrences, while strong induction handles all recurrences",
+                "Strong induction requires proving infinitely many base cases, making it weaker in practice"
+              ],
+              "answer": 1,
+              "explain": "Strong and ordinary induction are interderivable: take $Q(n) = $ \"$P(m)$ for all $m \\le n$\" and an ordinary-induction proof of $Q$ yields the strong-induction conclusion. The 'more powerful' framing confuses convenience with logical strength."
+            },
+            {
+              "q": "Why is the loop invariant for a recursive divide-and-conquer routine usually phrased as an induction on input size rather than on a loop counter?",
+              "choices": [
+                "Recursive procedures have no notion of state changing across iterations, so loop invariants are mathematically undefined for them",
+                "Recursion has no explicit loop variable; the natural quantity that decreases toward a base case is the subproblem size, so the inductive hypothesis is best stated over smaller instances",
+                "Induction on size is required because recursion always halves the input exactly",
+                "Loop invariants and induction are unrelated, so recursion must use a fundamentally different proof technique"
+              ],
+              "answer": 1,
+              "explain": "A recursive call's correctness rests on assuming correctness for smaller inputs, so induction on subproblem size is the natural framing — there is no loop counter to track. The lesson stresses that invariants and induction are the same idea, so the claim they are unrelated (choice 3) is wrong, and choice 2 wrongly assumes exact halving."
             }
           ],
           "flashcards": [
@@ -564,6 +696,50 @@
               ],
               "answer": 0,
               "explain": "A stack only touches one end, so appending and removing at the end of a dynamic array gives $O(1)$ amortized push/pop with no shifting and the best cache behavior; pushing/popping at index 0 would force $\\Theta(n)$ shifts."
+            },
+            {
+              "q": "A dynamic array uses the standard doubling strategy: when it fills, it allocates a new block of twice the capacity and copies all elements over. After many appends the *amortized* cost per append is $O(1)$. What property of the doubling makes the total copying work across $n$ appends only $O(n)$?",
+              "choices": [
+                "The copies form a geometric series $1 + 2 + 4 + \\dots + n$ whose sum is $\\Theta(n)$, so the rare expensive resizes are paid for by the many cheap appends.",
+                "Each resize copies only the newly added elements, never the old ones, so copying is $O(1)$ every time.",
+                "Doubling guarantees a resize happens at most $O(\\log n)$ times and each resize is $O(1)$, giving $O(\\log n)$ total.",
+                "The operating system copies the block in hardware, so resize cost does not count toward the asymptotic bound."
+              ],
+              "answer": 0,
+              "explain": "Resizes happen at sizes $1, 2, 4, \\dots$ and each copies that many elements; the geometric sum $1+2+\\dots+n < 2n = \\Theta(n)$, so total work is linear and amortized cost is $O(1)$. The 'copies only the newly added elements' option is wrong because each resize re-copies *all* current elements, not just the new ones. The '$O(\\log n)$ resizes each costing $O(1)$' option is wrong because, although there are indeed $\\Theta(\\log n)$ resizes, each one copies up to the current size, so it costs far more than $O(1)$; the work is dominated by the final resize alone."
+            },
+            {
+              "q": "You must store a collection where you frequently insert and delete elements in the *middle* given a pointer/reference to the node, and you never need random indexed access. Which layout is the better fit and why?",
+              "choices": [
+                "Array, because contiguous memory always wins on cache locality regardless of the operation mix.",
+                "Array, because middle insertion is $O(1)$ once you have computed the address with $b + s \\cdot i$.",
+                "Doubly linked list, because given a node reference you can splice in or out in $O(1)$ by rewiring a constant number of pointers, with no shifting.",
+                "Doubly linked list, because it also provides $O(1)$ random access by index just like an array."
+              ],
+              "answer": 2,
+              "explain": "With a node reference in hand, a doubly linked list splices an element in or out by updating a fixed number of neighbor pointers, which is $O(1)$ and avoids shifting. An array must shift up to $n$ elements on a middle insert ($\\Theta(n)$), and the address formula only gives fast *read/write* at a known index, not cheap insertion; linked lists do not give $O(1)$ random indexing."
+            },
+            {
+              "q": "A ring-buffer (circular) queue is backed by an array of capacity $C = 8$, and the number of stored elements is computed as $(\\texttt{tail} - \\texttt{head} + C) \\bmod C$. If $\\texttt{head} = 6$ and $\\texttt{tail} = 2$ (and the queue is known to be non-empty), how many elements does it currently hold, and which array slots are occupied?",
+              "choices": [
+                "$2$ elements, in slots $6$ and $7$.",
+                "$4$ elements, in slots $6, 7, 0, 1$ (the buffer has wrapped around the end).",
+                "$6$ elements, in slots $2, 3, 4, 5, 6, 7$.",
+                "$8$ elements, because $\\texttt{head} > \\texttt{tail}$ means the buffer is full."
+              ],
+              "answer": 1,
+              "explain": "$(2 - 6 + 8) \\bmod 8 = 4 \\bmod 8 = 4$, so the queue holds 4 elements. Reading forward from $\\texttt{head}=6$ they occupy slots $6, 7$, then wrap to $0, 1$, stopping just before $\\texttt{tail}=2$. The modular formula is exactly what handles this wrap, so $\\texttt{head} > \\texttt{tail}$ does not mean full."
+            },
+            {
+              "q": "A student claims: \"A stack and a queue are fundamentally different *data structures*, so they require fundamentally different memory layouts.\" Why is this a misconception according to the one-idea framing?",
+              "choices": [
+                "Because stacks must use linked lists and queues must use arrays, which is the only valid pairing.",
+                "Because a stack is LIFO and a queue is FIFO, which forces stacks into contiguous memory and queues into pointer-based memory.",
+                "Because both are *access policies* (which end you may touch) layered on top of either a contiguous array or a pointer-based linked list; the policy is independent of the physical layout.",
+                "Because stacks and queues are actually identical once implemented, so the LIFO/FIFO distinction does not exist."
+              ],
+              "answer": 2,
+              "explain": "Stacks (LIFO) and queues (FIFO) are access disciplines that can each be built on either physical layout, so they are not a separate third layout. The tempting distractors wrongly bind a policy to one specific layout, but the LIFO/FIFO rule is about *which end you touch*, independent of contiguous-vs-pointer storage; and the policies are genuinely distinct, so they are not identical."
             }
           ],
           "flashcards": [
@@ -715,6 +891,50 @@
               ],
               "answer": 2,
               "explain": "Open addressing requires $\\alpha \\le 1$ since every element lives in the array itself, whereas separate chaining stores chains per slot, supports $\\alpha > 1$, and degrades gracefully with expected cost $O(1 + \\alpha)$."
+            },
+            {
+              "q": "In double hashing with $h(k,j) = (h_1(k) + j\\cdot h_2(k)) \\bmod m$, suppose you carelessly let $h_2(k)$ return $0$ for some key $k$ whose home slot $h_1(k)$ is already occupied. What goes wrong?",
+              "choices": [
+                "Every probe revisits the same occupied slot $h_1(k)$, so the insert loops forever (or fails) instead of finding an open slot.",
+                "The key is silently placed in slot $0$ regardless of $h_1(k)$.",
+                "Nothing — the scheme just degenerates gracefully into linear probing.",
+                "It causes secondary clustering identical to quadratic probing."
+              ],
+              "answer": 0,
+              "explain": "With $h_2(k)=0$ the step size is zero, so $h(k,j)=h_1(k)$ for every $j$ — the probe sequence never moves off the (occupied) home slot. This is why $h_2(k)$ must be nonzero (and coprime to $m$) so the sequence visits all slots; it does not reduce to linear probing, which needs a step of $1$, not $0$."
+            },
+            {
+              "q": "A student claims: 'Switching from a fixed deterministic hash to a universal family makes collisions impossible, so chains will all have length at most 1.' What is the correct view?",
+              "choices": [
+                "Correct — universality means $\\Pr[h(k_1)=h(k_2)] = 0$ for distinct keys.",
+                "Incorrect — universal hashing only bounds the collision probability to at most $1/m$, so collisions still occur; it merely guarantees expected $O(1+\\alpha)$ chains even on adversarial keys.",
+                "Correct — but only when the load factor satisfies $\\alpha < 1$.",
+                "Incorrect — universal hashing actually increases the number of collisions to defeat the adversary."
+              ],
+              "answer": 1,
+              "explain": "Universality bounds the pairwise collision probability by $1/m$ (not $0$); by the pigeonhole principle and the birthday effect, collisions are still inevitable. Its real payoff is moving the randomness from the input to the algorithm, so expected chain length stays $O(1+\\alpha)$ even against an adversary who cannot predict which $h$ was chosen."
+            },
+            {
+              "q": "Using quadratic probing $h(k,j) = (h'(k) + j^2) \\bmod 11$ with $h'(k)=4$, and suppose slots $4$ and $5$ are already occupied. Which slot does the key land in?",
+              "choices": [
+                "Slot 5, because that is the next contiguous open position after the home slot.",
+                "Slot 6, computed as $(4 + 2) \\bmod 11$.",
+                "Slot 8, computed as $(4 + 2^2) \\bmod 11 = (4+4) \\bmod 11$.",
+                "Slot 4, since the home slot is recomputed and reused."
+              ],
+              "answer": 2,
+              "explain": "Probe $j=0$ gives $4$ (taken), $j=1$ gives $(4+1)=5$ (taken), $j=2$ gives $(4+4)=8$ (open) — so the key lands in slot 8. Quadratic probing jumps in growing steps $j^2$, so it skips past the immediate neighbors rather than scanning contiguously like linear probing."
+            },
+            {
+              "q": "You must store $n = 3m$ items in a table of $m$ slots (load factor $\\alpha = 3$), and pointer overhead is acceptable. A teammate insists open addressing is fine 'as long as we accept slow lookups.' Why is this wrong, and what is the right choice?",
+              "choices": [
+                "Open addressing works fine at $\\alpha = 3$; it just needs more tombstones to compensate.",
+                "Open addressing is impossible here because it requires $\\alpha \\le 1$ (you cannot fit more items than slots); separate chaining, whose cost is $O(1+\\alpha)$, handles $\\alpha > 1$ gracefully.",
+                "Both fail at $\\alpha = 3$; you must resize until $\\alpha < 1$ before either scheme works.",
+                "Separate chaining also caps at $\\alpha = 1$, so neither scheme can store $3m$ items."
+              ],
+              "answer": 1,
+              "explain": "Open addressing stores every element inside the array, so it categorically cannot hold more items than slots — $\\alpha \\le 1$ is a hard structural limit, not a speed trade-off. Separate chaining uses external lists, so it tolerates $\\alpha > 1$ with expected cost $O(1+\\alpha)$, making it the correct choice when items far exceed slots and pointer overhead is acceptable."
             }
           ],
           "flashcards": [
@@ -866,6 +1086,50 @@
               ],
               "answer": 0,
               "explain": "The heap property says nothing about left-vs-right sibling ordering, so a search has no comparison rule to choose a single branch and may need to examine every node, giving $O(n)$."
+            },
+            {
+              "q": "You insert the keys $1, 2, 3, 4, 5$ into an initially empty, unbalanced BST in that exact order. What is the height of the resulting tree (counting edges on the longest root-to-leaf path), and what does this say about worst-case BST search?",
+              "choices": [
+                "Height 4; the tree degenerates into a linked list, so search is $O(n)$",
+                "Height 2; the tree stays roughly balanced, so search is $O(\\log n)$",
+                "Height 0; all keys collide at the root, so search is $O(1)$",
+                "Height 5; search becomes $O(n \\log n)$ because of repeated comparisons"
+              ],
+              "answer": 0,
+              "explain": "Inserting already-sorted keys makes each new key larger than all existing ones, so every node becomes the right child of the previous one, producing a chain of 5 nodes (4 edges). This degenerate shape is exactly why plain BSTs need balancing: search degrades to $O(n)$."
+            },
+            {
+              "q": "A correct binary max-heap of distinct keys is given. Where is the second-largest element guaranteed to be located?",
+              "choices": [
+                "At the root, since the heap keeps the two largest at the top",
+                "Among the children of the root (index 1 or 2 in a 0-indexed array)",
+                "At a leaf node, since smaller elements sink toward the bottom",
+                "Anywhere in the tree; the heap property says nothing about its position"
+              ],
+              "answer": 1,
+              "explain": "Every element is smaller than the root, so the second-largest cannot be the root; but any node smaller than the second-largest cannot be its ancestor, meaning the second-largest must be a direct child of the root. The tempting distractor (\"anywhere\") ignores that the heap property forces the second-largest just below the maximum."
+            },
+            {
+              "q": "Both AVL trees and red-black trees keep operations at $O(\\log n)$. A teammate claims an AVL tree's height is always strictly less than a red-black tree's height for the same set of keys. Why is this claim wrong?",
+              "choices": [
+                "Red-black trees are not actually balanced, so the comparison is meaningless",
+                "Both guarantee the same exact height because both are binary search trees",
+                "AVL trees enforce a tighter height bound on average but red-black trees are shorter in the worst case",
+                "Height depends on insertion order and the specific keys, so neither is universally shorter; AVL only guarantees a tighter worst-case height bound (about $1.44\\log n$ vs roughly $2\\log n$)"
+              ],
+              "answer": 3,
+              "explain": "AVL's stricter balancing gives a smaller worst-case height bound, but for any particular key set and insertion order either tree could end up shorter, so no universal per-instance ordering holds. The claim confuses a worst-case bound with an always-true comparison."
+            },
+            {
+              "q": "You must repeatedly extract the minimum element and also occasionally delete an arbitrary element by value from a collection of $n$ items. Comparing a binary min-heap to a balanced BST, which structure better supports BOTH operations efficiently?",
+              "choices": [
+                "The binary heap, because both extract-min and arbitrary deletion are $O(1)$",
+                "The balanced BST, because find-min and arbitrary deletion are both $O(\\log n)$ once the element's position is known",
+                "The binary heap, because heaps are always faster than trees for any operation",
+                "Neither; both require $O(n)$ time for extract-min"
+              ],
+              "answer": 1,
+              "explain": "A balanced BST supports find-min in $O(\\log n)$ (leftmost node) and deletion of a located key in $O(\\log n)$, whereas a heap must first do an $O(n)$ search to find an arbitrary value before deleting it. The distractor wrongly assumes heap operations are uniformly cheap, ignoring that arbitrary-value lookup in a heap is $O(n)$."
             }
           ],
           "flashcards": [
@@ -1023,6 +1287,50 @@
               ],
               "answer": 0,
               "explain": "You stable-sort by the secondary key (first name) first, then by the primary key (last name); the final stable pass groups by last name while preserving the first-name order within each group."
+            },
+            {
+              "q": "A colleague claims their sort runs in $O(n)$ on any array of $n$ doubles by first scanning to find the min and max, then bucketing. You point out this is fine only under certain assumptions. Which statement is the most accurate critique within the lesson's framework?",
+              "choices": [
+                "A min/max scan is itself a comparison sort, so it is already bound by $\\Omega(n\\log n)$",
+                "Bucketing exploits key values as indices, so it leaves the comparison model and its $O(n)$ claim is not contradicted by the $\\Omega(n\\log n)$ bound — but it relies on the keys' distribution/range, not on comparisons alone",
+                "Finding min and max takes $\\Omega(n\\log n)$, so the overall claim is impossible",
+                "Doubles cannot be bucketed at all, so the algorithm is simply incorrect"
+              ],
+              "answer": 1,
+              "explain": "Bucketing uses key values to compute array positions, which steps outside the comparison-only model, so the $\\Omega(n\\log n)$ bound does not apply; its linear time depends on assumptions about the key range/distribution, not on comparisons. Finding min/max is $O(n)$, not $\\Omega(n\\log n)$, ruling out the other options."
+            },
+            {
+              "q": "The decision-tree argument gives a height of at least $\\lceil \\log_2(n!) \\rceil$ comparisons. Using Stirling's approximation, $\\log_2(n!)$ is asymptotically closest to which expression?",
+              "choices": [
+                "$n^2/2$",
+                "$n\\log_2 n - n\\log_2 e + O(\\log n)$",
+                "$2^n$",
+                "$\\log_2 n$"
+              ],
+              "answer": 1,
+              "explain": "Stirling gives $\\ln n! = n\\ln n - n + O(\\ln n)$, so $\\log_2 n! = n\\log_2 n - n\\log_2 e + O(\\log n)$, whose leading term $n\\log_2 n$ yields the $\\Omega(n\\log n)$ bound. The $n^2/2$ count is the number of comparisons in bubble sort, not the information-theoretic minimum."
+            },
+            {
+              "q": "Suppose someone proposes a comparison sort and argues it averages only $0.5\\,n$ comparisons over all $n!$ input permutations, beating $n\\log n$. What does the decision-tree model tell us is wrong with this claim?",
+              "choices": [
+                "The average path length (external path length / number of leaves) of a binary tree with $n!$ leaves is still $\\Omega(n\\log n)$, so no comparison sort can average fewer than that many comparisons",
+                "The $\\Omega(n\\log n)$ bound only constrains the worst case, so a $0.5\\,n$ average is perfectly consistent with it",
+                "Average-case analysis is meaningless because inputs are never uniformly distributed",
+                "Such a sort must be unstable, which violates the comparison model"
+              ],
+              "answer": 0,
+              "explain": "A binary tree with $n!$ leaves has average root-to-leaf depth $\\Omega(\\log(n!)) = \\Omega(n\\log n)$, so the average number of comparisons is also lower-bounded, not just the worst case. The tempting answer that the bound is worst-case-only is the misconception: the leaf-counting argument forces an average-case bound too."
+            },
+            {
+              "q": "You sort $n=8$ already-sorted distinct keys with a textbook mergesort and, separately, with Lomuto-pivot quicksort that always picks the last element as pivot. Comparing only the number of element-to-element comparisons, what do you expect?",
+              "choices": [
+                "Both perform about the same because both are $\\Theta(n\\log n)$ on sorted input",
+                "Quicksort makes far fewer comparisons because the array is already sorted",
+                "Mergesort makes roughly $\\Theta(n\\log n)$ comparisons while quicksort degrades to roughly $\\Theta(n^2)$ on this sorted input",
+                "Mergesort makes $\\Theta(n^2)$ comparisons because merging a sorted array is wasteful"
+              ],
+              "answer": 2,
+              "explain": "On already-sorted input the last-element Lomuto pivot is always the maximum, producing maximally unbalanced partitions and $\\Theta(n^2)$ comparisons, while mergesort stays $\\Theta(n\\log n)$ regardless of input order. The trap is assuming sorted input is the easy case for quicksort — for this pivot rule it is the worst case."
             }
           ],
           "flashcards": [
@@ -1174,6 +1482,50 @@
               ],
               "answer": 0,
               "explain": "With groups of 3 the recursive fractions sum to exactly $1$ rather than below it, so the work no longer shrinks geometrically and the recurrence solves to $\\omega(n)$ (specifically $\\Theta(n\\log n)$) instead of $O(n)$."
+            },
+            {
+              "q": "You need to sort $n$ integers in the range $\\{0,\\dots,k\\}$ with counting sort. For the algorithm to run in $O(n)$ time, which condition on $k$ is required?",
+              "choices": [
+                "$k = O(\\log n)$, so the count array fits in a logarithmic number of slots",
+                "$k = O(n)$, so the count array and the prefix-sum pass cost $O(n)$",
+                "$k = O(n \\log n)$, matching the comparison-sort lower bound",
+                "$k = O(1)$, since otherwise the tally step is not constant per element"
+              ],
+              "answer": 1,
+              "explain": "Counting sort costs $O(n + k)$: $O(n)$ to tally and place, plus $O(k)$ to build and scan the count array. This is $O(n)$ exactly when $k = O(n)$. If $k$ is much larger than $n$ (e.g. the full 64-bit range), the $O(k)$ term dominates and memory blows up."
+            },
+            {
+              "q": "A radix sort processes $b$-bit keys by splitting each key into digits of $r$ bits and running a stable counting sort per digit. The total cost is roughly $\\Theta\\!\\left(\\frac{b}{r}(n + 2^r)\\right)$. For fixed $n$ and $b$, why does choosing $r \\approx \\log_2 n$ minimize the running time?",
+              "choices": [
+                "It makes the number of passes $b/r$ equal to exactly one, eliminating the outer loop",
+                "It forces $2^r = n$, so the per-pass count array costs $O(n)$ — matching the $O(n)$ placement cost rather than dwarfing or being dwarfed by it",
+                "It guarantees each digit is distinct, which is what stability requires",
+                "It reduces the comparison count below the $\\Omega(n\\log n)$ lower bound"
+              ],
+              "answer": 1,
+              "explain": "Making $r \\approx \\log_2 n$ sets $2^r \\approx n$, balancing the two terms in each pass so the count array ($2^r$) and the placement work ($n$) are the same order; pushing $r$ higher makes $2^r$ explode, pushing it lower adds more passes. Radix sort is not comparison-based, so the $\\Omega(n\\log n)$ bound never applied."
+            },
+            {
+              "q": "A classmate claims: \"The $\\Omega(n\\log n)$ comparison lower bound proves no algorithm can sort faster than $n\\log n$, so counting sort's $O(n)$ claim must be wrong.\" What is the precise flaw in this reasoning?",
+              "choices": [
+                "The lower bound is only $\\Omega(n)$, not $\\Omega(n\\log n)$, so $O(n)$ is consistent with it",
+                "Counting sort still performs $\\Omega(n\\log n)$ comparisons internally; its $O(n)$ figure ignores them",
+                "The lower bound applies only to algorithms whose sole operation on keys is pairwise comparison; counting sort uses keys as array indices, escaping the decision-tree model",
+                "Stirling's approximation overestimates $\\log(n!)$, so the true bound is below linear"
+              ],
+              "answer": 2,
+              "explain": "The decision-tree argument bounds only comparison-based sorts, where each step learns at most one bit by comparing two keys. Counting sort uses key values directly as indices (a non-comparison operation), so the $n!$-leaf decision tree does not model it and the bound does not apply."
+            },
+            {
+              "q": "Bucket sort runs in $O(n)$ expected time when $n$ inputs are drawn i.i.d. uniformly from $[0,1)$ and distributed into $n$ equal-width buckets. You instead receive inputs drawn from a sharply peaked distribution where 90% of values fall in $[0, 0.1)$. With the same uniform bucketing, what is the worst-case asymptotic running time?",
+              "choices": [
+                "$O(n)$ still, because the total number of elements across all buckets is always $n$",
+                "$O(n \\log n)$, because the algorithm silently degrades to a comparison sort",
+                "$O(n^2)$, because one bucket can receive $\\Theta(n)$ elements and insertion-sorting it costs $\\Theta(n^2)$",
+                "$O(n + k)$, where $k$ is the number of distinct values, by reduction to counting sort"
+              ],
+              "answer": 2,
+              "explain": "Bucket sort's $O(n)$ analysis relies on the uniformity assumption that keeps each bucket's expected size $O(1)$; with a skewed distribution a single bucket can hold $\\Theta(n)$ elements, and insertion-sorting that bucket alone costs $\\Theta(n^2)$. The 'total is still $n$' answer ignores that cost is quadratic within an overloaded bucket, not linear."
             }
           ],
           "flashcards": [
@@ -1325,6 +1677,50 @@
               ],
               "answer": 1,
               "explain": "Each iteration strictly shrinks the half-open interval, and the loop exits precisely when $\\text{lo} = \\text{hi}$, meaning the interval is empty and the boundary has been pinned down."
+            },
+            {
+              "q": "A student copies the half-open <code>lower_bound</code> body but writes the loop as <code>while (lo <= hi)</code> instead of <code>while (lo < hi)</code>, keeping <code>hi = mid</code> on the true branch. What is the consequence when the search reaches a single-element interval where <code>a[mid] >= x</code>?",
+              "choices": [
+                "The loop infinite-loops, because <code>hi = mid</code> never shrinks the interval once $\\text{lo} = \\text{hi} = \\text{mid}$ but the condition $\\text{lo} \\le \\text{hi}$ stays true.",
+                "It still terminates correctly but returns an index one too large.",
+                "It terminates one iteration early, missing the boundary element.",
+                "It throws an out-of-bounds error because <code>mid</code> exceeds $n$."
+              ],
+              "answer": 0,
+              "explain": "With $\\text{lo} = \\text{hi}$ the condition $\\text{lo} \\le \\text{hi}$ still holds, $\\text{mid} = \\text{lo}$, the true branch sets $\\text{hi} = \\text{mid} = \\text{lo}$, and nothing changes — an infinite loop. The half-open convention requires <code>lo < hi</code> precisely so the empty interval ends the loop; pairing <code>hi = mid</code> with <code>lo <= hi</code> is the classic infinite-loop bug the checklist warns about."
+            },
+            {
+              "q": "For a sorted array, <code>upper_bound(x)</code> is described as \"identical to <code>lower_bound</code> but with <code>a[mid] <= x</code> in place of <code>a[mid] < x</code>.\" What monotone predicate $P(i)$ is <code>upper_bound</code> actually finding the flip point of?",
+              "choices": [
+                "$P(i) \\equiv (a[i] = x)$, the first index equal to $x$.",
+                "$P(i) \\equiv (a[i] > x)$, the first index strictly greater than $x$.",
+                "$P(i) \\equiv (a[i] \\ge x)$, the first index at least $x$.",
+                "$P(i) \\equiv (a[i] < x)$, the last index strictly less than $x$."
+              ],
+              "answer": 1,
+              "explain": "<code>upper_bound</code> returns the first index with $a[i] > x$, so its predicate is $a[i] > x$ (false then true). Choice with $a[i] \\ge x$ is <code>lower_bound</code>'s predicate, and $a[i] = x$ is not monotone, so neither can be the flip point <code>upper_bound</code> computes."
+            },
+            {
+              "q": "Using the conveyor-belt code, you must ship weights $w = [3, 2, 2, 4, 1]$ within $D = 2$ days. The answer-search runs over $[\\text{lo}, \\text{hi}]$ with $\\text{lo} = \\max_i w_i$ and $\\text{hi} = \\sum_i w_i$. What is the initial interval, and is capacity $c = 7$ feasible?",
+              "choices": [
+                "$[3, 12]$, and $c = 7$ is feasible (it ships in 2 days: $3{+}2{+}2$ then $4{+}1$).",
+                "$[4, 12]$, and $c = 7$ is infeasible (it needs 3 days).",
+                "$[4, 12]$, and $c = 7$ is feasible (it ships in 2 days: $3{+}2{+}2$ then $4{+}1$).",
+                "$[3, 11]$, and $c = 7$ is feasible but not minimal; the minimum is $6$."
+              ],
+              "answer": 2,
+              "explain": "$\\max_i w_i = 4$ and $\\sum_i w_i = 12$, so the interval is $[4, 12]$. With $c = 7$ the greedy sweep loads $3{+}2{+}2 = 7$ (day 1), then $4{+}1 = 5$ (day 2), using exactly $2 \\le D$ days, so it is feasible. The interval starting at $3$ is wrong because a single package of weight $4$ would never fit."
+            },
+            {
+              "q": "You want the LARGEST value $t$ such that a property $Q(t)$ holds, and $Q$ is monotone: once $Q(t)$ is true it stays true for all smaller $t$ (true for low $t$, false for high $t$). A student reuses the <code>lower_bound</code>-style loop verbatim (<code>if (Q(mid)) hi = mid; else lo = mid + 1;</code>). Why does this return the wrong answer?",
+              "choices": [
+                "It is fine; the same loop finds both the smallest-true and largest-true boundaries.",
+                "It returns the largest $t$ but off by one, since <code>lo = mid + 1</code> overshoots.",
+                "It finds the first index where $Q$ is true, but here $Q$ is true-then-false, so it returns the low end instead of the high boundary; the branch directions must be swapped.",
+                "It loops forever because a true-then-false predicate has no flip point."
+              ],
+              "answer": 2,
+              "explain": "The <code>lower_bound</code> template assumes a false-then-true predicate and returns the first true index; a true-then-false predicate flips the other way, so keeping <code>hi = mid</code> on the true branch drives the search toward the wrong end. You must adapt the branches (e.g. <code>if (Q(mid)) lo = mid; else hi = mid - 1;</code>) to track the last-true boundary. A true-then-false predicate is perfectly monotone and does have a flip point, so it does not loop forever."
             }
           ],
           "flashcards": [
@@ -1482,6 +1878,50 @@
               ],
               "answer": 1,
               "explain": "The lesson frames recursion as automatic 'free labor' while the divide and combine determine both the algorithm's insight and the sum of per-level costs that fixes its running time."
+            },
+            {
+              "q": "You are designing a divide-and-conquer algorithm and have two candidate designs for the same problem of size $n$: Design A splits into 9 subproblems of size $n/3$ with a $\\Theta(n^2)$ combine; Design B splits into 2 subproblems of size $n/2$ with a $\\Theta(n^{1.5})$ combine. Which has the better asymptotic running time?",
+              "choices": [
+                "Design A, because $\\Theta(n^2)$ — the combine dominates and equals $n^{\\log_3 9}=n^2$, so $T(n)=\\Theta(n^2\\log n)$, which beats B",
+                "Design B, because $T(n)=\\Theta(n^{1.5})$ — the combine $n^{1.5}$ dominates over $n^{\\log_2 2}=n$",
+                "They tie at $\\Theta(n^2\\log n)$ since both are in the balanced Master-Theorem regime",
+                "Design A, because more subproblems always means the recursion explores the input more finely and converges faster"
+              ],
+              "answer": 1,
+              "explain": "For B, $n^{\\log_b a}=n^{\\log_2 2}=n^1$ and $f(n)=n^{1.5}$ dominates, giving $T(n)=\\Theta(n^{1.5})$ (leaf-light, root-heavy). For A, $n^{\\log_3 9}=n^2$ matches the combine, giving $\\Theta(n^2\\log n)$ — strictly worse than B's $n^{1.5}$."
+            },
+            {
+              "q": "A student claims: 'Divide and conquer always gives a speedup, because cutting the problem in half cuts the work in half at each step.' What is the flaw in this reasoning?",
+              "choices": [
+                "There is no flaw — halving the input necessarily halves the total work, so D&C is always at least as fast",
+                "The flaw is that recursion has function-call overhead, so D&C is slower in practice but the asymptotics still always improve",
+                "The flaw is assuming subproblems are always independent; if they overlap, D&C is still optimal but just needs memoization",
+                "The flaw is that the total work depends on the branching factor $a$ and the combine cost $f(n)$, not just the halving; e.g. $T(n)=4T(n/2)+\\Theta(n)=\\Theta(n^2)$ is no faster than the naive approach"
+              ],
+              "answer": 3,
+              "explain": "Total cost is governed by $a$, $b$, and $f(n)$ together, not by 'halving' alone. With enough branching (e.g. $a=4, b=2$) the leaves dominate and you get $\\Theta(n^2)$, no better than brute force — which is exactly why Karatsuba's reduction from 4 to 3 subproblems matters."
+            },
+            {
+              "q": "Consider the recurrence $T(n) = 2T(n/2) + \\Theta(n^2)$. Which best describes where the work concentrates in the recursion tree, and the resulting bound?",
+              "choices": [
+                "The work is spread evenly across all $\\log n$ levels, giving $\\Theta(n^2 \\log n)$",
+                "The leaves dominate, giving $\\Theta(n)$ since there are $n$ base cases each costing $\\Theta(1)$",
+                "The root dominates: work per level shrinks geometrically downward, so $T(n)=\\Theta(n^2)$",
+                "The recurrence is invalid because the combine cost exceeds the input size"
+              ],
+              "answer": 2,
+              "explain": "Here $n^{\\log_b a}=n^{\\log_2 2}=n$, and $f(n)=n^2$ grows faster, so this is the root-heavy regime: each level down does $1/2$ the work of the one above ($2\\cdot(n/2)^2 = n^2/2$), summing to $\\Theta(n^2)$. The top level alone dominates the total."
+            },
+            {
+              "q": "Two divide-and-conquer algorithms for the same task have recurrences $T_1(n)=8T(n/2)+\\Theta(n^2)$ and $T_2(n)=7T(n/2)+\\Theta(n^2)$ (this is exactly the Strassen-vs-naive matrix-multiply situation). What are their asymptotic costs, and what does the comparison illustrate?",
+              "choices": [
+                "$T_1=\\Theta(n^3)$ and $T_2=\\Theta(n^{\\log_2 7})\\approx\\Theta(n^{2.81})$; dropping just one subproblem changes the dominant term and beats the cubic bound",
+                "Both are $\\Theta(n^3)$ since the $\\Theta(n^2)$ combine is identical; the subproblem count only affects constants",
+                "$T_1=\\Theta(n^2\\log n)$ and $T_2=\\Theta(n^2\\log n)$; both are combine-dominated, so they tie",
+                "$T_2$ is slower because 7 is not a power of 2, forcing uneven subproblem sizes"
+              ],
+              "answer": 0,
+              "explain": "$n^{\\log_2 8}=n^3$ dominates the $\\Theta(n^2)$ combine, so $T_1=\\Theta(n^3)$; reducing to 7 subproblems gives $n^{\\log_2 7}\\approx n^{2.81}$, still dominating the combine, so $T_2=\\Theta(n^{2.81})$. This shows that shaving the branching factor $a$ — not the combine — is what breaks the cubic barrier, the heart of Strassen's algorithm."
             }
           ],
           "flashcards": [
@@ -1633,6 +2073,50 @@
               ],
               "answer": 1,
               "explain": "If an optimal solution containing $g$ exists, committing to $g$ cannot sacrifice optimality, which is precisely what justifies never reconsidering the choice. It does not eliminate the remaining subproblem (which still must be solved) nor replace optimal substructure (both properties are required)."
+            },
+            {
+              "q": "You run the activity-selection greedy (repeatedly pick the compatible activity with the earliest finish time) on the intervals $[1,4], [3,5], [0,6], [5,7], [3,8], [5,9], [6,10], [8,11], [8,12], [2,13], [12,14]$. How many activities does it select?",
+              "choices": [
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "answer": 1,
+              "explain": "Greedy picks $[1,4]$ (finish 4), then $[5,7]$ (finish 7), then $[8,11]$ (finish 11), then $[12,14]$ — 4 activities. The earliest-finish rule maximizes the cardinality; choosing $[0,6]$ first (a tempting earliest-start choice) would block more activities and yields fewer."
+            },
+            {
+              "q": "A standard exchange argument proves greedy optimality by taking an optimal solution $O$ that disagrees with the greedy choice $g$ and modifying it. What modification does the argument make, and why must it preserve optimality?",
+              "choices": [
+                "It swaps $g$ into $O$ in place of whatever element $O$ chose first; this can only improve or tie because $g$ was the locally best choice, so the result is still optimal and now agrees with greedy",
+                "It deletes $g$ from $O$ and re-runs dynamic programming on the remainder, which is faster than greedy",
+                "It adds $g$ to $O$ as an extra element, increasing the solution's size beyond optimal and proving greedy wins",
+                "It proves $O$ never existed, since any optimal solution must already equal the greedy output exactly"
+              ],
+              "answer": 0,
+              "explain": "The exchange argument substitutes $g$ for $O$'s first element and shows the swap keeps the solution feasible and no worse, so an optimal solution containing $g$ exists. Adding $g$ as extra (choice C) would violate feasibility/budget, and optimal solutions need not be unique (choice D)."
+            },
+            {
+              "q": "For making change with coin denominations $\\{1, 3, 4\\}$ and target amount $6$, the greedy 'take the largest coin that fits' algorithm gives which result, and is it optimal?",
+              "choices": [
+                "Greedy gives $4+1+1$ (3 coins), which is optimal",
+                "Greedy gives $4+1+1$ (3 coins), but the optimum is $3+3$ (2 coins), so greedy is not optimal here",
+                "Greedy gives $3+3$ (2 coins), which is optimal",
+                "Greedy gives $4+1+1$ (3 coins) and no 2-coin solution exists"
+              ],
+              "answer": 1,
+              "explain": "Greedy grabs $4$, then $1+1$, using 3 coins, but $3+3$ uses only 2. This denomination set lacks the structure that makes the greedy coin-change choice safe, so greedy is suboptimal even though it always terminates with a valid answer."
+            },
+            {
+              "q": "Greedy gave the correct answer on every test case a student tried for their new problem. What is the most accurate conclusion they can draw about whether greedy is actually optimal?",
+              "choices": [
+                "Passing many test cases is essentially a proof, since a counterexample would almost certainly have appeared by now",
+                "Nothing is established without a correctness proof (e.g. exchange argument or greedy-choice property); empirical success on samples does not rule out a counterexample",
+                "It proves the greedy-choice property holds but not optimal substructure",
+                "It guarantees correctness on all inputs below the largest tested size, but not larger ones"
+              ],
+              "answer": 1,
+              "explain": "Empirical success is not a proof; greedy correctness must be argued via the greedy-choice property plus optimal substructure (or an exchange argument). Counterexamples can hide at any input size and need not be small, so neither a size bound (D) nor 'almost certainly' (A) is justified."
             }
           ],
           "flashcards": [
@@ -1784,6 +2268,50 @@
               ],
               "answer": 1,
               "explain": "Bellman used 'programming' in the sense of tabulation/planning (and partly because it sounded impressive to funders), not in the sense of writing software."
+            },
+            {
+              "q": "You compute longest-common-subsequence lengths in a 2D table $dp[i][j]$ filling rows top-to-bottom, left-to-right. To reduce memory to $O(\\min(m,n))$ using two rolling rows, what is the essential requirement that makes this valid?",
+              "choices": [
+                "The recurrence for $dp[i][j]$ depends only on entries in the current and previous row (and the current row to the left), so all earlier rows are never read again",
+                "The table must be symmetric, $dp[i][j]=dp[j][i]$, so half the entries can be discarded",
+                "Each cell depends on the diagonal $dp[i-1][j-1]$ only, so a single 1D array suffices with no overwrite hazard",
+                "LCS has no overlapping subproblems beyond two rows, so the rest of the table is wasted space"
+              ],
+              "answer": 0,
+              "explain": "Rolling-array compression is valid exactly when a cell's dependencies are confined to a bounded window of recent rows; LCS reads only row $i-1$ and the current row, so older rows can be dropped. The table is not symmetric in general, and the recurrence depends on left and up cells too (not the diagonal alone)."
+            },
+            {
+              "q": "A student claims any recursive function can be sped up to polynomial time just by adding memoization. Which problem best refutes this claim?",
+              "choices": [
+                "Computing the $n$-th Fibonacci number, where memoization gives $O(n)$",
+                "Enumerating all $n!$ permutations of a list, where the 'subproblems' (each distinct permutation) never recur",
+                "0/1 knapsack, which memoization reduces to $O(nW)$",
+                "Matrix-chain multiplication, which memoization reduces to $O(n^3)$"
+              ],
+              "answer": 1,
+              "explain": "Memoization only helps when subproblems overlap and are few; generating all $n!$ permutations has $n!$ distinct outputs with no repetition, so caching saves nothing and the cost stays factorial. Fibonacci, knapsack, and matrix-chain all have polynomially-many overlapping subproblems, which is why memoization works for them."
+            },
+            {
+              "q": "For coins $\\{1,2,5\\}$ and amount $A=11$, you fill $dp[a]=\\min_i\\big(dp[a-c_i]+1\\big)$ for $a=0\\dots 11$ with $dp[0]=0$. What is $dp[11]$ (minimum number of coins)?",
+              "choices": [
+                "2",
+                "4",
+                "3",
+                "5"
+              ],
+              "answer": 2,
+              "explain": "The optimum is $5+5+1=3$ coins, so $dp[11]=3$. The DP confirms this by combining $dp[6]=2$ (i.e. $5+1$) with one more coin, never beating the $5+5+1$ decomposition."
+            },
+            {
+              "q": "In a tabulated (bottom-up) DP, what determines a correct order in which to fill the table?",
+              "choices": [
+                "Always smallest index to largest index, since DP tables are filled in increasing order by definition",
+                "Any order works, because each cell stores its own answer independently of the others",
+                "A topological order of the subproblem dependency graph, so every cell is computed only after all subproblems it reads from are already filled",
+                "Reverse order of the recursion's call stack, regardless of which cells each entry depends on"
+              ],
+              "answer": 2,
+              "explain": "Bottom-up filling is valid precisely when each entry is computed after everything it depends on, i.e. in a topological order of the dependency DAG. Plain increasing-index order only works when dependencies happen to point to smaller indices, and 'any order' fails because cells reference each other."
             }
           ],
           "flashcards": [
@@ -1935,6 +2463,50 @@
               ],
               "answer": 1,
               "explain": "Brute force visits all leaves (complete candidates), whereas backtracking works node by node and skips entire subtrees once a partial solution is shown to be hopeless."
+            },
+            {
+              "q": "In 0/1-knapsack branch-and-bound, two valid upper-bound functions are available at each node: bound $A$ is the *fractional* (greedy, density-ordered) relaxation, and bound $B$ simply sums the values of all remaining unselected items regardless of capacity. Both are admissible upper bounds. Which is the better choice for pruning, and why?",
+              "choices": [
+                "Bound $B$, because summing all remaining values is cheaper to compute than running the greedy relaxation",
+                "Bound $A$, because a *tighter* (smaller) valid upper bound is at least as likely to fall at or below the incumbent and thus prune at least as many nodes",
+                "They prune identically, since both are valid upper bounds for the same subtree",
+                "Bound $B$, because a looser upper bound never risks discarding the optimal solution"
+              ],
+              "answer": 1,
+              "explain": "For a maximization problem a node is pruned when its upper bound does not exceed the incumbent; a smaller (tighter) bound crosses that threshold more often, so the fractional bound $A$ dominates the loose sum-of-all bound $B$. Both are sound (neither discards the optimum), so safety does not distinguish them, and cheaper-to-compute does not help if it barely prunes."
+            },
+            {
+              "q": "Consider the 4-queens state-space tree where level $k$ chooses the column for the queen in row $k$. A naive backtracker that only checks column conflicts (not diagonals) would still expand the partial board [row 1 -> col 1, row 2 -> col 2]. Why does a *correct* backtracker prune this node immediately?",
+              "choices": [
+                "Because columns 1 and 2 are adjacent, which always wastes board space",
+                "Because the two queens lie on the same diagonal (|1-2| = |1-2|), violating feasibility, so the entire subtree below this node can be cut",
+                "Because no solution to 4-queens ever places a queen in column 1",
+                "Because the partial board is already a leaf and must be a complete failed candidate"
+              ],
+              "answer": 1,
+              "explain": "Queens at (1,1) and (2,2) satisfy $|r_i-r_j| = |c_i-c_j|$, so they share a diagonal and the partial board is infeasible; pruning here removes every completion of this two-queen prefix. The node is at level 2, not a leaf, and column 1 does appear in valid 4-queens solutions, so the other options are false."
+            },
+            {
+              "q": "A student claims: \"Backtracking and dynamic programming both prune work, so they are essentially the same technique with different names.\" What is the key conceptual error?",
+              "choices": [
+                "DP prunes by reusing solutions to *overlapping subproblems* (memoization), whereas backtracking prunes by discarding subtrees that *cannot* yield a feasible/optimal solution; these are different mechanisms",
+                "Backtracking is always exponential while DP is always polynomial, so they can never solve the same problem",
+                "DP never builds solutions incrementally, whereas backtracking always does",
+                "Backtracking explores a tree and DP explores a graph, but both visit exactly the same number of states"
+              ],
+              "answer": 0,
+              "explain": "DP saves work by caching and reusing answers to recurring subproblems, while backtracking saves work by feasibility/bound pruning of subtrees it can rule out — distinct ideas, even when both apply. The other claims are false: backtracking can be polynomial when pruning is strong, it builds incrementally just like a DP recurrence, and the two do not visit identical state counts."
+            },
+            {
+              "q": "Best-first branch-and-bound expands the live node with the most promising bound first, while depth-first branch-and-bound dives to a leaf before backtracking. A common belief is that best-first is *strictly* better because it expands fewer nodes. What is the real trade-off the lesson's framework implies?",
+              "choices": [
+                "Best-first is strictly better in every respect and should always be preferred",
+                "Depth-first finds the optimal solution but best-first may return a suboptimal one",
+                "Best-first can expand fewer nodes but must store many live nodes (large memory), whereas depth-first reaches a feasible incumbent quickly with little memory, which can then prune aggressively",
+                "Depth-first cannot use bounds at all; only best-first supports branch-and-bound pruning"
+              ],
+              "answer": 2,
+              "explain": "Best-first often minimizes node expansions but keeps a priority queue of live nodes whose size can blow up in memory; depth-first uses stack-depth memory and quickly obtains an incumbent that tightens pruning. Both are correct (return the optimum) and both use bounds, so the trade-off is node count versus memory, not correctness."
             }
           ],
           "flashcards": [
@@ -2087,6 +2659,50 @@
               ],
               "answer": 1,
               "explain": "In an undirected graph an edge between $i$ and $j$ is bidirectional, so $A_{ij} = A_{ji}$ for all pairs, which is exactly the statement $A = A^\\top$."
+            },
+            {
+              "q": "You run BFS from a source $s$ on an undirected graph stored as an adjacency list, with $n$ vertices and $m$ edges, using a queue and a visited array. What is the tight worst-case running time?",
+              "choices": [
+                "$O(n^2)$ because every vertex may be compared against every other",
+                "$O(n + m)$ because each vertex is enqueued once and each edge is scanned a constant number of times",
+                "$O(m \\log n)$ because the queue operations dominate",
+                "$O(n \\cdot m)$ because each of the $n$ vertices scans all $m$ edges"
+              ],
+              "answer": 1,
+              "explain": "With an adjacency list, each vertex is enqueued/dequeued once ($O(n)$) and each edge is examined a constant number of times across all neighbor scans ($O(m)$ total, $2m$ for undirected), giving $O(n+m)$. The $O(n^2)$ answer is the cost on an adjacency MATRIX, not a list; BFS uses no priority queue, so the $\\log n$ factor is spurious."
+            },
+            {
+              "q": "A team stores a directed graph as an adjacency matrix and is surprised BFS runs much slower than the $O(n+m)$ they expected, even though the graph is sparse ($m \\ll n^2$). Why?",
+              "choices": [
+                "The matrix makes edge-existence queries slow, bottlenecking the queue",
+                "To list a vertex's neighbors, BFS must scan a full row of $n$ entries, so traversal costs $\\Theta(n^2)$ regardless of sparsity",
+                "BFS is inherently $\\Theta(n^2)$ and the representation is irrelevant",
+                "Adjacency matrices cannot represent directed graphs, forcing extra work"
+              ],
+              "answer": 1,
+              "explain": "On a matrix, finding the neighbors of a vertex requires scanning its entire row of $n$ cells, so visiting all $n$ vertices costs $\\Theta(n^2)$ even when most cells are 0. Edge-existence is actually $O(1)$ on a matrix (not the bottleneck), and BFS is $O(n+m)$ only on an adjacency list."
+            },
+            {
+              "q": "On an UNDIRECTED graph, you run DFS and encounter edge $(u,v)$ where $v$ is GRAY (currently on the recursion stack) and $v$ is not the parent of $u$. What does this tell you?",
+              "choices": [
+                "The graph contains a cycle",
+                "Edge $(u,v)$ is a cross edge and is harmless",
+                "The graph is necessarily disconnected",
+                "$v$ was already finished, so $(u,v)$ is a forward edge"
+              ],
+              "answer": 0,
+              "explain": "A back edge to a GRAY (still-active) ancestor that is not the immediate parent closes a cycle, so the undirected graph has a cycle. Cross edges do not occur in undirected DFS, and GRAY means active/on-stack (not finished), so the forward-edge claim is wrong."
+            },
+            {
+              "q": "You convert an undirected adjacency list with $m$ edges into the corresponding adjacency matrix and count the number of 1-entries. How many are there, and what is the sum of all vertex degrees?",
+              "choices": [
+                "$m$ ones and total degree $m$, since each edge is one entry",
+                "$2m$ ones and total degree $2m$, since each undirected edge appears in both endpoints' rows",
+                "$n^2$ ones and total degree $n^2$, since the matrix is $n \\times n$",
+                "$m$ ones and total degree $2m$, since the matrix stores each edge once"
+              ],
+              "answer": 1,
+              "explain": "Each undirected edge $\\{i,j\\}$ sets both $A_{ij}=1$ and $A_{ji}=1$, so there are $2m$ ones; by the handshake lemma the degree sum is also $2m$. Storing only $m$ ones would describe a directed graph, breaking the symmetry $A=A^\\top$."
             }
           ],
           "flashcards": [
@@ -2238,6 +2854,50 @@
               ],
               "answer": 1,
               "explain": "A negative cycle in shortest paths corresponds to an infinitely improving loop in value iteration, and just as $w \\ge 0$ rules this out for Dijkstra, the discount factor $\\gamma < 1$ in the update $c(s,a) + \\gamma V(s')$ is the mechanism that guarantees the Bellman update converges."
+            },
+            {
+              "q": "You run the single-source DAG shortest-path algorithm: topologically sort the vertices, then relax all outgoing edges of each vertex in that order. Why does relaxing edges in topological order guarantee correct distances after just one pass over the vertices?",
+              "choices": [
+                "Because the graph has no negative edges, so each $d[v]$ can only be updated downward once",
+                "Because by the time a vertex $u$ is processed, every vertex that could lie before $u$ on a shortest path has already been finalized, so $d[u]$ is already correct",
+                "Because topological order visits vertices in increasing distance from the source, exactly like Dijkstra's greedy order",
+                "Because each edge is relaxed $|V|-1$ times across the single pass, matching Bellman-Ford"
+              ],
+              "answer": 1,
+              "explain": "In topological order all predecessors of $u$ (anything that can reach $u$) appear before $u$, so $d[u]$ has received every relevant relaxation and is final before its own edges are relaxed. The Dijkstra distractor is wrong: topological order is by dependency, not by distance, which is exactly why this works even with negative edges."
+            },
+            {
+              "q": "Bellman-Ford does its $|V|-1$ relaxation passes, then a final detection pass relaxes every edge once more. During this detection pass the edge $(u,v)$ succeeds in lowering $d[v]$ (i.e. $d[u]+w(u,v) < d[v]$). What does this single successful relaxation tell you?",
+              "choices": [
+                "Nothing conclusive yet; you must rerun all $|V|-1$ passes to confirm",
+                "It only means vertex $v$ is unreachable from the source",
+                "The graph contains a negative-weight cycle reachable from the source",
+                "The graph is a DAG, since only DAGs allow improvement after convergence"
+              ],
+              "answer": 2,
+              "explain": "After $|V|-1$ passes all distances are final if no negative cycle exists, so any further improvement is impossible unless a reachable negative cycle keeps driving distances down. A DAG would have fully converged, so the DAG option is exactly backwards."
+            },
+            {
+              "q": "On a graph with $|V|=10^4$ vertices and $|E|=10^5$ edges, all weights non-negative, you must compute single-source shortest paths and you care about asymptotic running time. Which algorithm and bound is the best fit?",
+              "choices": [
+                "Bellman-Ford, $O(|V|\\cdot|E|)$, because it is the most general",
+                "Topological-sort shortest paths, $O(|V|+|E|)$, since it is linear",
+                "Heap-based Dijkstra, $O((|V|+|E|)\\log|V|)$",
+                "Heap-based Dijkstra, $O(|V|^2)$, because every vertex examines every other"
+              ],
+              "answer": 2,
+              "explain": "With non-negative weights and a general (possibly cyclic) graph, binary-heap Dijkstra runs in $O((|V|+|E|)\\log|V|)$, far better than Bellman-Ford's $O(|V|\\cdot|E|)$. The topological-sort bound only applies to DAGs, and $O(|V|^2)$ is the array (non-heap) Dijkstra variant, not the heap-based one described."
+            },
+            {
+              "q": "After any of these algorithms finishes, you reconstruct the shortest path to $v$ by following $\\pi[v], \\pi[\\pi[v]], \\dots$ back to $s$. What does relaxation do to $\\pi$ that makes this reconstruction correct?",
+              "choices": [
+                "Whenever relaxing $(u,v)$ improves $d[v]$, it sets $\\pi[v]=u$, so $\\pi$ always records the predecessor on the current best path to $v$",
+                "It sets $\\pi[v]$ to the vertex with the globally smallest $d$ value at that moment",
+                "It appends $u$ to a list stored at $v$, so $\\pi[v]$ holds the entire path prefix",
+                "It updates $\\pi[u]=v$ to record that $u$ now points forward toward $v$"
+              ],
+              "answer": 0,
+              "explain": "Relaxation sets $\\pi[v]=u$ precisely when $d[u]+w(u,v)$ beats $d[v]$, so $\\pi[v]$ always names the predecessor of the best-known path; following $\\pi$ backward retraces that path. Storing whole prefixes would waste space, and pointing $\\pi[u]=v$ reverses the direction needed for backward reconstruction."
             }
           ],
           "flashcards": [
@@ -2389,6 +3049,50 @@
               ],
               "answer": 0,
               "explain": "Kruskal adds edges from cheapest to most expensive, each union merging two components, which exactly mirrors single-linkage merging the two closest clusters at each step."
+            },
+            {
+              "q": "You run Kruskal on a graph and, partway through, you examine edge $e=(u,v)$ with $u$ and $v$ already in the same component. The lesson says skipping $e$ \"loses nothing\" and cites the cycle property. Which statement justifies the skip most precisely?",
+              "choices": [
+                "Adding $e$ would create a cycle, and since every earlier (lighter) edge on that cycle was already accepted, $e$ is the unique maximum-weight edge on the cycle, so it is in no MST",
+                "Adding $e$ would create a cycle, and any edge that closes a cycle is automatically the heaviest globally",
+                "$e$ must be skipped because $u$ and $v$ being connected means $e$ has weight $0$",
+                "Skipping $e$ is a heuristic that usually works but can occasionally miss the true MST"
+              ],
+              "answer": 0,
+              "explain": "Because Kruskal processes edges in increasing weight order, every other edge on the cycle $e$ would close was accepted earlier and is therefore $\\le w(e)$, making $e$ a maximum-weight edge on that cycle; the cycle property says such an edge is in no MST. It is the heaviest on *that* cycle, not necessarily globally, and the rule is exact, not heuristic."
+            },
+            {
+              "q": "Prim's loop is famously \"nearly the same code\" as Dijkstra's, differing only in the key it minimizes. A student sets $\\text{key}[v]$ to the *accumulated distance from the start vertex along the tree* (Dijkstra-style) instead of the weight of the single cheapest edge from $v$ into the current tree. What goes wrong?",
+              "choices": [
+                "Nothing — both keys produce the same tree because the start vertex is arbitrary",
+                "The algorithm now computes a shortest-path tree rooted at the start, which generally is not a minimum spanning tree",
+                "It still finds an MST but runs slower by a $\\log V$ factor",
+                "It fails to terminate because accumulated distances can grow without bound"
+              ],
+              "answer": 1,
+              "explain": "Using accumulated distance from the source turns Prim into Dijkstra, which builds a shortest-path tree minimizing path lengths from one vertex, not total edge weight. The two trees differ in general (a shortest-path tree need not be an MST), so the result is simply the wrong optimization target."
+            },
+            {
+              "q": "Using only union by rank (no path compression), the lesson states a tree whose root has rank $k$ contains at least $2^k$ nodes. From this fact, what is the tightest worst-case bound on the height of any union-find tree built over $n$ elements, and why?",
+              "choices": [
+                "$O(\\sqrt{n})$, because rank grows like the square root of the subtree size",
+                "$O(n)$, because chains can still form when ranks happen to be equal",
+                "$O(\\alpha(n))$, the inverse-Ackermann bound, which holds even without path compression",
+                "$O(\\log n)$, because a root of rank $k$ needs $\\ge 2^k$ nodes, so $2^k \\le n$ forces $k \\le \\log_2 n$, and height never exceeds rank"
+              ],
+              "answer": 3,
+              "explain": "Since a rank-$k$ root governs $\\ge 2^k$ nodes, $2^k \\le n$ gives $k \\le \\log_2 n$; because height is bounded by rank, every tree has height $O(\\log n)$. The $O(\\alpha(n))$ bound is amortized and requires path compression too, so it does not apply to union-by-rank alone."
+            },
+            {
+              "q": "In the lesson's worked example, Kruskal returned edges $\\{$B-C, D-E, C-D, D-F, A-B$\\}$ while Prim (from A) returned $\\{$A-B, B-C, C-D, D-E, D-F$\\}$ — different edge sets, both of total weight 14. What does this most directly demonstrate?",
+              "choices": [
+                "The graph has multiple distinct MSTs because some edge weights are tied, so a graph's MST need not be unique unless all weights are distinct",
+                "One of the two algorithms made an error, since a correct MST is always unique",
+                "Kruskal and Prim optimize different objectives, so their outputs are expected to differ in weight",
+                "The difference proves the graph is disconnected"
+              ],
+              "answer": 0,
+              "explain": "The graph has tied weight-3 edges (C-D, D-F, E-F), so more than one spanning tree achieves the minimum total weight 14; both outputs are valid MSTs. Uniqueness is guaranteed only when all edge weights are distinct, and both algorithms always return optima of equal weight."
             }
           ],
           "flashcards": [
@@ -2546,6 +3250,50 @@
               ],
               "answer": 1,
               "explain": "Since the input size is the number of bits $n \\approx \\log_2 N$, an algorithm costing $\\Theta(N)$ steps costs $\\Theta(2^n)$ steps, which is exponential in $n$ and therefore fails the polynomial-in-input-size requirement for P. Such 'pseudo-polynomial' running times look polynomial only in the value $N$, not in its bit-length."
+            },
+            {
+              "q": "You want to prove that a new decision problem $B$ is NP-hard. A classmate proposes: \"Take a known NP-complete problem like 3-SAT, and give a polynomial-time function $f$ such that $x \\in B \\iff f(x) \\in \\text{3-SAT}$ — i.e. reduce $B$ to 3-SAT.\" Does this argument establish that $B$ is NP-hard?",
+              "choices": [
+                "Yes — exhibiting any polynomial-time reduction involving $B$ and a known NP-complete problem proves $B$ is NP-hard.",
+                "No — this shows $B \\le_p \\text{3-SAT}$, which only proves $B$ is no harder than 3-SAT (so $B \\in \\text{NP}$ at best); to prove $B$ hard you must reduce 3-SAT *to* $B$.",
+                "Yes — because reductions are transitive, the direction of $f$ does not affect the conclusion.",
+                "No — because 3-SAT may not reduce to $B$, you should instead reduce $B$ to the halting problem."
+              ],
+              "answer": 1,
+              "explain": "The reduction is backwards: $B \\le_p \\text{3-SAT}$ means a fast solver for 3-SAT would solve $B$, so $B$ is *at most* as hard as 3-SAT (placing it in NP), not hard. To prove $B$ is NP-hard you need $\\text{3-SAT} \\le_p B$, showing a solver for $B$ would crack the known-hard problem."
+            },
+            {
+              "q": "Suppose tomorrow someone publishes a correct $O(n^3)$ algorithm for VERTEX COVER (a single NP-complete problem). Which conclusion follows, and why?",
+              "choices": [
+                "Only VERTEX COVER and problems that reduce to it would gain fast algorithms; SUBSET-SUM and 3-SAT could still require exponential time.",
+                "Nothing about other problems follows, because each NP-complete problem has its own independent gadget construction.",
+                "Every problem in NP would have a polynomial-time algorithm, so $\\mathbf{P} = \\mathbf{NP}$, because every NP problem reduces in polynomial time to any NP-complete problem.",
+                "It would prove $\\mathbf{P} \\ne \\mathbf{NP}$, since VERTEX COVER was believed to require exponential time."
+              ],
+              "answer": 2,
+              "explain": "By definition every problem in NP reduces in polynomial time to any NP-complete problem; composing that reduction with the new fast algorithm solves every NP problem in polynomial time, giving $\\mathbf{P}=\\mathbf{NP}$. The 'stand or fall together' property is exactly why one fast algorithm collapses the whole class, not just one problem."
+            },
+            {
+              "q": "The lesson notes a greedy algorithm that repeatedly picks *both* endpoints of an uncovered edge yields a vertex cover within a factor 2 of optimal. For a graph whose true minimum vertex cover has size 40, what does this 2-approximation guarantee about the cover the algorithm returns?",
+              "choices": [
+                "It returns a cover of size at most 80, with no promise it is optimal.",
+                "It returns the optimal cover of size 40, just twice as slowly as an exact method.",
+                "It returns a cover of size at most 42, since the additive error is bounded by 2.",
+                "It returns a cover of size at least 80, since the algorithm overshoots the optimum."
+              ],
+              "answer": 0,
+              "explain": "A factor-2 (multiplicative) approximation guarantees the output is at most $2 \\times 40 = 80$, but offers no claim of optimality. The distractors confuse a multiplicative ratio with an additive bound, or wrongly assume approximation yields the exact optimum."
+            },
+            {
+              "q": "Graph isomorphism (GI) is in NP but, per the lesson, is *not known* to be in P and *not known* to be NP-complete. A colleague argues: \"Every hard-looking NP problem must be NP-complete, so GI is NP-complete.\" What is the flaw in this reasoning?",
+              "choices": [
+                "GI is actually NP-hard but not in NP, so it cannot be NP-complete.",
+                "Unless $\\mathbf{P} = \\mathbf{NP}$, NP contains 'intermediate' problems that are neither in P nor NP-complete (Ladner's theorem), and GI is a leading candidate; membership in NP plus apparent difficulty does not imply NP-completeness.",
+                "GI must be in P, because every problem with a polynomial-time verifier is automatically solvable in polynomial time.",
+                "The reasoning is correct: any problem in NP without a known polynomial algorithm is by definition NP-complete."
+              ],
+              "answer": 1,
+              "explain": "Assuming $\\mathbf{P} \\ne \\mathbf{NP}$, NP is not partitioned into just P and NP-complete; intermediate problems exist (Ladner's theorem) and GI is the classic candidate. Being in NP and lacking a known fast algorithm does not make a problem NP-complete — that requires a proof that every NP problem reduces to it."
             }
           ],
           "flashcards": [
@@ -2697,6 +3445,50 @@
               ],
               "answer": 1,
               "explain": "The approximation ratio is a worst-case, instance-independent guarantee that holds for every input, not an average-case or probabilistic one."
+            },
+            {
+              "q": "Suppose you run a Monte Carlo algorithm that returns the correct answer with probability $\\ge \\tfrac{2}{3}$ on each independent run, and you can cheaply verify whether any given output is correct. To boost the success probability to at least $1 - \\delta$, roughly how many independent runs do you need?",
+              "choices": [
+                "$\\Theta(1/\\delta)$ runs, because the failure probability shrinks linearly with the number of runs",
+                "$\\Theta(\\log(1/\\delta))$ runs, because each run cuts the residual failure probability by a constant factor",
+                "$\\Theta(1/\\delta^2)$ runs, by a Chernoff/concentration bound on the empirical success rate",
+                "A single run already suffices, since $\\tfrac{2}{3} > \\tfrac{1}{2}$ guarantees correctness"
+              ],
+              "answer": 1,
+              "explain": "Each independent run fails with probability $\\le \\tfrac{1}{3}$, so $k$ runs all fail with probability $\\le (1/3)^k$; setting $(1/3)^k \\le \\delta$ gives $k = \\Theta(\\log(1/\\delta))$. The $1/\\delta$ and $1/\\delta^2$ answers confuse geometric amplification with additive or variance-based bounds, and a single run gives no high-probability guarantee."
+            },
+            {
+              "q": "An engineer runs the 2-approximation matching algorithm for Vertex Cover on a particular graph and finds it returns a cover of size exactly 40. Which conclusion is rigorously justified by the 2-approximation guarantee alone?",
+              "choices": [
+                "$\\text{OPT} = 20$, since the algorithm always returns exactly twice the optimum",
+                "$\\text{OPT} \\le 40$, but the guarantee gives no nontrivial lower bound on $\\text{OPT}$",
+                "$\\text{OPT} \\ge 20$, since the returned cover has size at most $2\\,\\text{OPT}$",
+                "$\\text{OPT} \\ge 40$, because any cover the algorithm finds is a lower bound on the optimum"
+              ],
+              "answer": 2,
+              "explain": "From $40 = |C| \\le 2\\,\\text{OPT}$ we get $\\text{OPT} \\ge 20$; also $\\text{OPT} \\le 40$ trivially since $C$ is a valid cover. The tempting wrong answer treats the ratio as exact equality, but a 2-approximation only bounds, never pins down, $\\text{OPT}$."
+            },
+            {
+              "q": "For the greedy Set Cover analysis, the $H_n \\le \\ln n + 1$ ratio is shown to be essentially the best possible for any polynomial-time algorithm (assuming P $\\neq$ NP). What does this imply about searching for a constant-factor approximation for general Set Cover?",
+              "choices": [
+                "Such an algorithm is provably impossible in polynomial time unless P $=$ NP, so the logarithmic factor is inherent",
+                "It exists but requires randomization rather than a greedy choice",
+                "It is still open; the $H_n$ bound only reflects greedy's weakness, not a hardness limit",
+                "It exists for instances where every set has bounded size, and that case is all that matters"
+              ],
+              "answer": 0,
+              "explain": "Set Cover has a matching hardness result: no polynomial-time $(1-\\epsilon)\\ln n$-approximation exists unless P $=$ NP, so the $\\ln n$ factor is intrinsic, not an artifact of greedy. The distractor that it is 'just greedy's weakness' is the common misconception the hardness theorem refutes."
+            },
+            {
+              "q": "A randomized algorithm has worst-case running time $O(n^2)$ but expected running time $O(n \\log n)$ over its internal coin flips, and always returns the correct answer. Which classification and reasoning is correct?",
+              "choices": [
+                "Monte Carlo, because randomness can make it slow on some coin-flip sequences",
+                "Las Vegas, because it is always correct and randomness only affects the running time",
+                "Neither, because a truly randomized algorithm must sometimes return a wrong answer",
+                "Monte Carlo, because its expected time differs from its worst-case time"
+              ],
+              "answer": 1,
+              "explain": "A Las Vegas algorithm is always correct, with randomness affecting only resource usage (here, running time) — exactly this case, like randomized quicksort. The Monte Carlo distractors wrongly tie the label to running-time variability rather than to the possibility of an incorrect output."
             }
           ],
           "flashcards": [
@@ -2848,6 +3640,50 @@
               ],
               "answer": 0,
               "explain": "A trie merges shared prefixes into common paths, so $k$ words with overlapping prefixes do not pay for $k$ separate independent traversals."
+            },
+            {
+              "q": "During KMP search you have matched $q=5$ characters of $P=\\texttt{ABABA}$ (so $\\pi=[0,0,1,2,3]$) when the next text character mismatches $P[5]$. To how many matched characters does $q$ fall back, and what guarantees those characters still align with the text without any re-comparison?",
+              "choices": [
+                "$q\\to 0$; KMP always discards all progress and restarts the pattern after a mismatch",
+                "$q\\to 4$; it simply decrements $q$ by one and re-tests the previous character",
+                "$q\\to 3$; the prefix $\\texttt{ABA}$ of length $\\pi[4]=3$ is a border, so it already matched the same text earlier",
+                "$q\\to 3$; but the algorithm must re-read 3 text characters to confirm the new alignment"
+              ],
+              "answer": 2,
+              "explain": "On a mismatch after $q$ matches, KMP sets $q\\to\\pi[q-1]=\\pi[4]=3$, reusing the longest border $\\texttt{ABA}$ which is simultaneously a prefix and suffix of the matched region, so those 3 characters are guaranteed to coincide with the text already matched. It is not a reset to 0 (that is the naive algorithm), nor a decrement by one, and crucially no text characters are re-read."
+            },
+            {
+              "q": "An adversary gets to choose the text $T$ and pattern $P$ knowing your fixed Rabin-Karp base $b$ and modulus $M$. What is the worst-case running time they can force, and why does it not contradict the usual $O(n+m)$ claim?",
+              "choices": [
+                "$\\Theta(nm)$, because the adversary can make every window's hash collide with $h(P)$, forcing a full $O(m)$ character check at each of the $n$ positions",
+                "$\\Theta(n+m)$, because the rolling hash makes each window $O(1)$ regardless of the inputs",
+                "$\\Theta(n\\log m)$, because verifying a hash hit costs $O(\\log m)$ via binary search",
+                "$\\Theta(m^2)$, because recomputing the pattern hash dominates"
+              ],
+              "answer": 0,
+              "explain": "A fixed deterministic hash lets an adversary engineer collisions on every window, so each of the $n$ positions triggers an $O(m)$ verification, giving $\\Theta(nm)$. The $O(n+m)$ figure is only an expected bound that assumes collisions are rare (large random-ish $M$), which is why production code randomizes the base; the rolling step is $O(1)$ but verification is not free."
+            },
+            {
+              "q": "You need a data structure over a dictionary of $N$ words that supports both exact-membership lookup and 'list all words beginning with a given prefix.' Why is a hash set a poor fit where a trie excels, despite both giving $O(L)$ exact lookup?",
+              "choices": [
+                "A hash set uses more memory per word than a trie in every case",
+                "A hash set's exact lookup is actually $O(L\\log N)$, slower than the trie's $O(L)$",
+                "A trie answers exact lookup in $O(1)$ while a hash set needs $O(L)$",
+                "A hash set scatters keys by their full-string hash, so it cannot enumerate keys sharing a prefix without scanning all $N$ entries, whereas a trie groups them under one shared path"
+              ],
+              "answer": 3,
+              "explain": "Hashing destroys any ordering or prefix relationship between keys, so retrieving all words with a given prefix requires scanning the entire set; a trie stores shared prefixes along a common path, so a prefix query lands on one node whose subtree holds exactly the matching words. Both do offer $O(L)$ exact lookup, so the difference is capability (prefix queries), not the exact-lookup cost."
+            },
+            {
+              "q": "Aho-Corasick is described as 'a trie augmented with KMP-style failure links.' What problem do these failure links solve that a plain trie cannot, and what classic idea do they generalize?",
+              "choices": [
+                "They compress non-branching chains to save memory, generalizing Patricia/radix tries",
+                "They mark word-ends so prefixes like $\\texttt{car}$ inside $\\texttt{card}$ are still recognized, generalizing the is_word flag",
+                "They let one text pass match all dictionary words simultaneously by redirecting, after a mismatch, to the longest proper suffix of the consumed text that is also a trie prefix — generalizing KMP's prefix function to many patterns",
+                "They randomize child pointers to avoid adversarial worst cases, generalizing Rabin-Karp's randomized base"
+              ],
+              "answer": 2,
+              "explain": "A plain trie can only follow exact downward edges; failure links let the automaton, on a mismatch, jump to the node spelling the longest proper suffix of the text consumed so far that is still a trie prefix, so a single text pass matches every dictionary word at once. This is exactly KMP's prefix-function idea (longest border) lifted from one pattern to a whole set, not memory compression or word-end marking."
             }
           ],
           "flashcards": [
@@ -2999,6 +3835,50 @@
               ],
               "answer": 1,
               "explain": "The identity isolates the cross-term $-2XY^\\top$ as a single dense GEMM that BLAS libraries and GPUs run with cache-friendly SIMD and parallel execution, slashing the constant factor (often ~100x) while the big-O stays $O(nd)$ per pair; the norms are cheap, and both forms are exact."
+            },
+            {
+              "q": "For a strongly convex loss with condition number $\\kappa = \\ell/\\mu = 100$, gradient descent at the safe step size achieves the linear rate $(1-\\mu/\\ell)^t$. Roughly how many iterations are needed to shrink the suboptimality $L(\\theta_t)-L(\\theta^\\star)$ by a factor of $e$ (one $e$-fold)?",
+              "choices": [
+                "About $\\kappa = 100$ iterations, because the contraction per step is $1-1/\\kappa$",
+                "About $\\log\\kappa \\approx 5$ iterations",
+                "About $\\kappa^2 = 10^4$ iterations",
+                "About $\\sqrt{\\kappa} = 10$ iterations, matching accelerated methods"
+              ],
+              "answer": 0,
+              "explain": "Each step multiplies the gap by $(1-\\mu/\\ell)=1-1/\\kappa$, and $(1-1/\\kappa)^t\\approx e^{-t/\\kappa}$, so $t\\approx\\kappa=100$ steps give one $e$-fold reduction. The $\\sqrt{\\kappa}$ rate belongs to accelerated/momentum methods, not plain gradient descent."
+            },
+            {
+              "q": "A team rewrites their pairwise-distance kernel using the identity $\\|x_i-y_j\\|^2 = \\|x_i\\|^2 + \\|y_j\\|^2 - 2\\,x_i^\\top y_j$ and routes the cross-term through a GEMM call, getting a 50x speedup over the naive triple loop. What is the correct way to describe this gain in complexity terms?",
+              "choices": [
+                "The asymptotic time dropped from $O(n^2 d)$ to $O(n^2 \\log d)$",
+                "The big-O is unchanged; the win is entirely in the constant factor (SIMD, cache locality, GPU parallelism)",
+                "The matrix form reduces the operation count, doing asymptotically fewer multiply-adds",
+                "The identity removes the dependence on $d$, making distance computation $O(1)$ per pair"
+              ],
+              "answer": 1,
+              "explain": "Both forms do $\\Theta(d)$ multiply-adds per pair, so the asymptotic cost is identical; the speedup comes from expressing the cross-term as a dense GEMM that BLAS/GPUs execute with SIMD and cache-friendly access — a constant-factor win, not a better big-O."
+            },
+            {
+              "q": "k-means and Lloyd's algorithm minimize the within-cluster sum of squares but only reach a local optimum. A practitioner runs Lloyd's once from random centroids and gets a poor clustering. Which fix most directly addresses the root cause, and why?",
+              "choices": [
+                "Increase the number of iterations $I$, since more passes always escape local optima",
+                "Switch the assignment metric from Euclidean to cosine distance to reshape the objective",
+                "Use k-means++ seeding (or several random restarts), because the local optimum reached is determined by initialization",
+                "Lower $k$, because fewer clusters guarantees the global optimum is found"
+              ],
+              "answer": 2,
+              "explain": "Lloyd's monotonically decreases the objective to a local optimum whose quality is dictated by where the centroids start, so spreading initial seeds with k-means++ (which gives an $O(\\log k)$ approximation guarantee) or doing restarts is the direct fix. More iterations only refine the same basin, and changing $k$ or the metric changes the problem rather than the seeding issue."
+            },
+            {
+              "q": "In log space the Viterbi recurrence is $\\log\\delta_t(j)=\\log B_j(x_t)+\\max_i[\\log\\delta_{t-1}(i)+\\log A_{ij}]$, while the forward algorithm needs <code>log-sum-exp</code> instead of a plain max. Why can Viterbi use a bare max but forward cannot just sum the logs directly?",
+              "choices": [
+                "Because $\\log$ distributes over $\\max$ (so $\\log\\max = \\max\\log$) but not over $+$, so a sum of probabilities cannot be written as a sum of their logs",
+                "Because forward probabilities are larger than Viterbi probabilities and overflow instead of underflow",
+                "Because the max operation is associative while addition of probabilities is not",
+                "Because Viterbi works in the $(+,\\times)$ semiring and forward in the $(\\max,\\times)$ semiring"
+              ],
+              "answer": 0,
+              "explain": "$\\log(\\max_i p_i)=\\max_i\\log p_i$, so taking the max commutes cleanly into log space, but $\\log(\\sum_i p_i)\\neq\\sum_i\\log p_i$, forcing forward to recover the sum via log-sum-exp ($\\log\\sum_i e^{a_i}$). The semiring labels in the last option are also swapped — Viterbi is $(\\max,\\times)$ and forward is $(+,\\times)$."
             }
           ],
           "flashcards": [

@@ -5,7 +5,7 @@
 A gamified, self-hosted study site for the topics you're learning alongside a full-time job:
 **Linear Algebra, Calculus, Algorithms, Deep Learning, Reinforcement Learning, and LLMs**.
 
-Currently **113 lessons · 1,049 fact-checked MCQs · 678 flashcards · 337 homework problems · 218 worked
+Currently **113 lessons · 1,129 fact-checked MCQs · 678 flashcards · 337 homework problems · 218 worked
 examples · 20 interactive visualizations**, each lesson with rendered math, step-by-step worked examples, and
 spaced-repetition cards — wrapped in an XP / level / streak / mastery / achievement system designed to make
 hard ideas *click* and *stick*.
@@ -21,7 +21,7 @@ Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys
 - **Recall ("explain it back")** — a free-recall study mode per lesson: write the whole concept from a blank page, then self-check against the lesson's key points and score yourself. Active recall done right — it feeds mastery and earns XP. (The Feynman technique, built in.)
 - **Homework** — practice problems with progressive hints and full solutions.
 - **Visualization Lab — 20 interactive widgets**: drag vectors, morph space with a 2×2 matrix, eigenvectors, the derivative, gradient descent (1-D and a 2-D contour map), sorting, Big-O growth, activation functions, a neural-net forward pass, an attention heatmap, PCA, convolution & feature maps, RNN unrolling, a gridworld solved by value iteration, embedding arithmetic, Bayes & base rates, k-means clustering, an overfitting / bias–variance polynomial-fit demo, and a backpropagation computational-graph walkthrough. Each is embedded inline in the lesson it illustrates, and embeddable anywhere with `<div data-viz="ID"></div>`.
-- **Spawn a Test (Mastery mode)** — build a custom exam from the 1,049-question bank; scope it to *only what you've completed*, your *weak spots*, a topic, or everything; 5/10/20/40 questions. **Mastery mode (default on)** re-queues every wrong answer until you get it right — no casual remembering.
+- **Spawn a Test (Mastery mode)** — build a custom exam from the 1,129-question bank; scope it to *only what you've completed*, your *weak spots*, a topic, or everything; 5/10/20/40 questions. **Mastery mode (default on)** re-queues every wrong answer until you get it right — no casual remembering.
 - **Mastery model** — every concept tracks a decaying mastery score (from quizzes, flashcards, tests). Drives per-lesson mastery bars, a mastery distribution, "weak spots", smarter tests, and the Knowledge Map colors. Turns "I read it" into "I know it."
 - **Knowledge Constellation** — a radial map of all 113 concepts branching out from a central hub (foundations near the core, advanced toward the rim), cross-topic prerequisites arcing through the middle, nodes colored by mastery; hover to trace dependencies, click to open. Fits-to-width on mobile.
 - **Learning paths + per-lesson Connections** — every lesson knows its prerequisites; open a concept's path for the ordered chain from the beginning, and each lecture ends with "Builds on / Leads to" chips to navigate the graph while reading.

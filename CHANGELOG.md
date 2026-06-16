@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 62 — Question-bank growth: +80 MCQs across Algorithms (content; owner-requested)
+Bank-growth sweep reaches Algorithms: +4 MCQs on each of the 20 lessons (8 → 12/lesson; algorithms 160 → 240,
+**site-wide 1,049 → 1,129**). The adversarial verify pass keeps paying off on this topic's subtle bounds: it
+caught a distractor `Θ(n²+n log n+1)` that denotes the **same set** as the correct answer `Θ(n²)` (a genuine
+second-correct-answer, replaced with `Θ(n log n)`), and two Master-Theorem distractors stating **factually wrong
+asymptotics** (e.g. claiming $aT(n/2)+n$ at $a{=}2$ is $\Theta(n)$ rather than $\Theta(n\log n)$) — corrected
+before injection. Verified: an algorithms quiz now offers 12 MCQs and answers cleanly (errs=0 across routes),
+`node gate.js` ALL GREEN.
+
 ## iter 61 — Question-bank growth: +88 MCQs across Calculus (content; owner-requested)
 Bank-growth sweep continues to Calculus: +4 MCQs on each of the 22 lessons (8 → 12/lesson; calculus 176 → 264,
 **site-wide 961 → 1,049 — past 1,000**). Same author→adversarial-verify pipeline; the verify pass again earned
