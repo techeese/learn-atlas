@@ -852,11 +852,24 @@
   // ---------- interactive viz hydration ----------
   function hydrateViz(root) {
     if (!window.VIZ) return;
+    const meta = id => (window.VIZ_CATALOG || []).find(v => v.id === id);
     (root || app).querySelectorAll("[data-viz]").forEach(node => {
       const id = node.getAttribute("data-viz");
       if (node.dataset.vizDone) return;
       node.dataset.vizDone = "1"; node.classList.add("viz");
-      if (window.VIZ[id]) { try { window.VIZ[id](node); Store.unlock("visualizer"); flushAchievements(); } catch (e) { node.innerHTML = '<div class="viz-note">Visualization failed to load.</div>'; } }
+      if (window.VIZ[id]) {
+        try {
+          window.VIZ[id](node); Store.unlock("visualizer"); flushAchievements();
+          // accessibility: name the visualization for screen readers (canvas content is otherwise invisible)
+          const m = meta(id);
+          if (m) {
+            node.setAttribute("role", "group");
+            node.setAttribute("aria-label", "Interactive visualization: " + m.title);
+            const cv = node.querySelector("canvas");
+            if (cv) { cv.setAttribute("role", "img"); cv.setAttribute("aria-label", m.title + " — " + m.blurb); }
+          }
+        } catch (e) { node.innerHTML = '<div class="viz-note">Visualization failed to load.</div>'; }
+      }
       else node.innerHTML = `<div class="viz-note">Unknown visualization: ${esc(id)}</div>`;
     });
   }

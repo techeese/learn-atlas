@@ -32,8 +32,9 @@
     const wrap = el('label', 'viz-slider', parent);
     el('span', 'viz-slab', wrap).textContent = o.label;
     const inp = el('input', null, wrap); inp.type = 'range'; inp.min = o.min; inp.max = o.max; inp.step = o.step != null ? o.step : 1; inp.value = o.value;
+    inp.setAttribute('aria-label', o.label);                 // accessible name for screen readers
     const val = el('span', 'viz-sval', wrap);
-    const upd = () => { val.textContent = o.fmt ? o.fmt(parseFloat(inp.value)) : inp.value; };
+    const upd = () => { const txt = o.fmt ? o.fmt(parseFloat(inp.value)) : inp.value; val.textContent = txt; inp.setAttribute('aria-valuetext', String(txt)); };
     inp.addEventListener('input', () => { upd(); o.onInput(parseFloat(inp.value)); }); upd();
     return inp;
   }

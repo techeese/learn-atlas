@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 66 — Accessibility: screen-reader names for the 20 visualizations + slider labels; SW cache catch-up (accessibility)
+First non-content iteration after both owner sweeps — rotating to **accessibility**, untouched since iter 11
+despite ~9 interactive features added since. The 20 canvas widgets were invisible to screen readers (canvas
+content has no accessible representation). Now, in the single `hydrateViz` chokepoint, each visualization's
+**canvas gets `role="img"` + a descriptive `aria-label`** (its title + blurb), and the container becomes a
+labeled `role="group"` ("Interactive visualization: <title>") — so a screen-reader user knows what each widget
+shows and that they've entered an interactive region. Also gave every `VIZUtil.slider` range input an
+`aria-label` (its control name) and a live `aria-valuetext` (the formatted value, e.g. "d=10" not "10"). No
+visual change. **Also a correctness catch-up:** the `data/*.js` files are in the service-worker `ASSETS`, but
+the iters 60–65 MCQ edits never bumped the cache, so offline/PWA users were still on the old 897-question bank.
+Bumping `CACHE` to `atlas-v12` now refreshes every asset (all 1,356 MCQs + this iteration). Recorded the
+"bump CACHE on any cached-asset change, not just new files" rule in the loop playbook. Verified via DOM dump:
+canvas `role="img"` + aria-label present, container `group` labeled, both sliders carry aria-labels, errs=0
+across 8 routes, viz renders unchanged, `node gate.js` ALL GREEN.
+
 ## iter 65 — Question-bank growth: +76 MCQs across LLMs — SWEEP COMPLETE, every lesson at 12 (content; owner-requested)
 The bank-growth sweep finishes with LLMs: +4 MCQs on each of the 19 lessons (8 → 12; LLM 152 → 228). With this,
 **every one of the 113 lessons across all six topics now holds exactly 12 fact-checked MCQs — 1,356 total,
