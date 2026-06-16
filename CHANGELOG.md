@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 29 — New visualization: k-means clustering (visualizations)
+Built algo-kmeans for the flagship unsupervised-learning idea. Three gaussian blobs; Lloyd's algorithm
+alternates assign (color each point by nearest centroid) and update (move each centroid to its cluster mean),
+animating to convergence with a live inertia readout and a k selector (2–4). Embedded in the Algorithmic
+Foundations of ML lesson. Lab catalog 17 → 18. errs=0.
+
 ## iter 28 — Five milestone achievements for long-term goals (gamification)
 The achievement set had no long-horizon goals. Added 5 (15 → 20): Mastery (80% on a concept), Module Master
 (finish every lesson in a module), Renaissance (study all six topics), Centurion (review 100 flashcards),

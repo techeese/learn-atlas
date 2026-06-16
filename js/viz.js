@@ -776,4 +776,43 @@
     reset();
   });
 
+  /* ========================================================
+     18. k-means clustering (Lloyd's algorithm)
+     ======================================================== */
+  register({ id: 'algo-kmeans', topic: 'algorithms', title: 'k-Means Clustering', blurb: "Watch Lloyd's algorithm assign points to centroids and re-center until the clusters settle." },
+  function (root) {
+    const W = 540, H = 380, xmin = -5, xmax = 5, ymin = -5, ymax = 5;
+    const { c, ctx } = canvas(root, W, H);
+    const X = x => 30 + (x - xmin) / (xmax - xmin) * (W - 60), Y = y => H - 30 - (y - ymin) / (ymax - ymin) * (H - 60);
+    function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+    const centers = [[-2.3, -1.2], [2.2, 1.8], [0.3, -2.9]], pts = [];
+    centers.forEach(ct => { for (let i = 0; i < 26; i++) pts.push([ct[0] + gauss() * 0.8, ct[1] + gauss() * 0.8]); });
+    const COL = ['#e0a458', '#88a37a', '#9a8bc4', '#d2715a', '#c98fb0'];
+    let k = 3, cents = [], assign = [], iter = 0, runH = null;
+    const ctl = controls(root);
+    select(ctl, { label: 'k', value: '3', options: ['2', '3', '4'].map(v => ({ value: v, label: v })), onChange: v => { k = +v; reset(); } });
+    const btns = controls(root);
+    button(btns, '▶ Run', () => { if (runH) { runH.stop(); runH = null; } else { let f = 0; runH = loop(() => { if (f++ % 30 === 0) step(); }); } }, 'primary');
+    button(btns, 'Step', () => step());
+    button(btns, '↻ Reset', () => reset());
+    const info = note(root);
+    function reset() { if (runH) { runH.stop(); runH = null; } cents = []; const used = []; while (cents.length < k) { const i = Math.floor(Math.random() * pts.length); if (used.indexOf(i) < 0) { used.push(i); cents.push(pts[i].slice()); } } assign = pts.map(() => -1); iter = 0; draw(true); }
+    function step() {
+      assign = pts.map(p => { let bi = 0, bd = 1e9; cents.forEach((ct, ci) => { const d = (p[0] - ct[0]) ** 2 + (p[1] - ct[1]) ** 2; if (d < bd) { bd = d; bi = ci; } }); return bi; });
+      let moved = false;
+      for (let ci = 0; ci < k; ci++) { const mem = pts.filter((p, i) => assign[i] === ci); if (mem.length) { const mx = mem.reduce((a, p) => a + p[0], 0) / mem.length, my = mem.reduce((a, p) => a + p[1], 0) / mem.length; if (Math.abs(mx - cents[ci][0]) > 1e-4 || Math.abs(my - cents[ci][1]) > 1e-4) moved = true; cents[ci] = [mx, my]; } }
+      iter++; if (!moved && iter > 1 && runH) { runH.stop(); runH = null; }
+      draw(moved);
+    }
+    function inertia() { let s = 0; pts.forEach((p, i) => { if (assign[i] >= 0) { const ct = cents[assign[i]]; s += (p[0] - ct[0]) ** 2 + (p[1] - ct[1]) ** 2; } }); return s; }
+    function draw(moved) {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      pts.forEach((pt, i) => { ctx.fillStyle = assign[i] >= 0 ? COL[assign[i]] : p.mute; ctx.globalAlpha = 0.85; ctx.beginPath(); ctx.arc(X(pt[0]), Y(pt[1]), 4, 0, 7); ctx.fill(); }); ctx.globalAlpha = 1;
+      cents.forEach((ct, ci) => { const x = X(ct[0]), y = Y(ct[1]); ctx.strokeStyle = COL[ci]; ctx.fillStyle = p.bg; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, 9, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = COL[ci]; ctx.font = 'bold 12px JetBrains Mono, monospace'; ctx.textAlign = 'center'; ctx.fillText('✕', x, y + 4); });
+      const conv = iter > 1 && moved === false;
+      info.innerHTML = `k=${k} · iteration ${iter} · inertia ${inertia().toFixed(1)} ${conv ? '· <span style="color:' + p.sage + '">converged ✓</span>' : ''} — each step assigns points to the nearest centroid, then moves each centroid to its cluster's mean.`;
+    }
+    reset();
+  });
+
 })();
