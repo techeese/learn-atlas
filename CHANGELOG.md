@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 23 — New visualization: RNN unrolling & memory (visualizations)
+Built dl-rnn for the recurrent-network idea. The network is unrolled across 6 time steps (input → hidden →
+output rows) with the recurrent edge h_{t-1}→h_t drawn explicitly and an animated pulse along the hidden
+chain. An impulse enters at t=1 and the hidden state $h_t=\\tanh(w_x x_t + w_h h_{t-1})$ carries it forward,
+decaying by the recurrence weight; a slider for $w_h$ shows short vs long memory. Embedded in the RNN/LSTM/GRU
+lesson. Lab catalog 15 → 16. errs=0.
+
 ## iter 22 — Wire existing visualizations into more lessons (understandability)
 Several lessons taught a concept an existing widget illustrates but didn't embed it. Added 5 inline embeds:
 the eigenvector widget in Diagonalization, the sorting visualizer in Linear-Time Sorts, the derivative widget

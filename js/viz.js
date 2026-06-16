@@ -706,4 +706,38 @@
     draw();
   });
 
+  /* ========================================================
+     16. Recurrent networks — unrolling & memory
+     ======================================================== */
+  register({ id: 'dl-rnn', topic: 'deep-learning', title: 'Recurrent Networks: Unrolling & Memory', blurb: 'An impulse enters at step 1; watch the hidden state carry it forward — crank the recurrence weight for longer memory.' },
+  function (root) {
+    const W = 540, H = 340, T = 6;
+    const { c, ctx } = canvas(root, W, H);
+    const x = [1, 0, 0, 0, 0, 0]; let wh = 0.7, wx = 2.0, phase = 0;
+    const ctl = controls(root);
+    slider(ctl, { label: 'recurrence wₕ (memory)', min: 0, max: 1, step: 0.05, value: wh, fmt: v => v.toFixed(2), onInput: v => { wh = v; } });
+    const info = note(root);
+    const colX = t => 64 + t * (W - 120) / (T - 1);
+    function hidden() { const h = []; let prev = 0; for (let t = 0; t < T; t++) { const v = Math.tanh(wx * x[t] + wh * prev); h.push(v); prev = v; } return h; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const h = hidden(), yX = H - 56, yH = H / 2, yY = 74;
+      for (let t = 1; t < T; t++) { ctx.strokeStyle = p.gold; ctx.globalAlpha = 0.5; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(colX(t - 1), yH); ctx.lineTo(colX(t), yH); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+      for (let t = 1; t < T; t++) { const x1 = colX(t - 1), x2 = colX(t); ctx.fillStyle = p.gold; ctx.globalAlpha = 0.6; ctx.beginPath(); ctx.arc(x1 + (x2 - x1) * phase, yH, 2.2, 0, 7); ctx.fill(); }
+      ctx.globalAlpha = 1;
+      for (let t = 0; t < T; t++) {
+        ctx.strokeStyle = p.line; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(colX(t), yX - 13); ctx.lineTo(colX(t), yH + 16); ctx.moveTo(colX(t), yH - 16); ctx.lineTo(colX(t), yY + 10); ctx.stroke();
+        ctx.fillStyle = x[t] ? p.sage : p.panel2; ctx.beginPath(); ctx.arc(colX(t), yX, 12, 0, 7); ctx.fill(); ctx.fillStyle = x[t] ? p.bg : p.mute; ctx.font = '10px JetBrains Mono, monospace'; ctx.textAlign = 'center'; ctx.fillText(x[t], colX(t), yX + 4);
+        const v = h[t]; ctx.fillStyle = v >= 0 ? _mix(p.panel, p.sage, Math.min(1, v)) : _mix(p.panel, p.rust, Math.min(1, -v)); ctx.beginPath(); ctx.arc(colX(t), yH, 16, 0, 7); ctx.fill(); ctx.strokeStyle = p.line; ctx.lineWidth = 1.5; ctx.stroke(); ctx.fillStyle = Math.abs(v) > 0.5 ? p.bg : p.ink; ctx.fillText(v.toFixed(2), colX(t), yH + 4);
+        ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(colX(t), yY, 9, 0, 7); ctx.fill();
+        ctx.fillStyle = p.mute; ctx.font = '10px JetBrains Mono, monospace'; ctx.fillText('t=' + (t + 1), colX(t), H - 20);
+      }
+      ctx.fillStyle = p.mute; ctx.textAlign = 'left'; ctx.font = '10px JetBrains Mono, monospace'; ctx.fillText('y', 12, yY + 4); ctx.fillText('h', 12, yH + 4); ctx.fillText('x', 12, yX + 4);
+      info.innerHTML = `hₜ = tanh(wₓ·xₜ + <b style="color:${p.gold}">wₕ</b>·hₜ₋₁). The impulse at t=1 ${wh > 0.6 ? 'persists across steps — long memory' : wh > 0.3 ? 'fades gradually' : 'is quickly forgotten'}; the recurrent weight <b style="color:${p.gold}">wₕ=${wh.toFixed(2)}</b> controls how long the state remembers.`;
+    }
+    draw();
+    loop(() => { phase = (phase + 0.02) % 1; draw(); });
+  });
+
 })();
