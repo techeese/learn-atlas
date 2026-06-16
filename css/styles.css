@@ -629,6 +629,9 @@ body::after {
 .map-hub-bg { fill: var(--panel); stroke: var(--gold); stroke-width: 2; filter: drop-shadow(0 0 16px color-mix(in srgb, var(--gold) 50%, transparent)); }
 .map-hub-t { font-family: var(--font-disp); font-size: 18px; font-weight: 700; fill: var(--gold); letter-spacing: 2px; }
 .map-hub-s { font-family: var(--font-mono); font-size: 10px; fill: var(--ink-mute); }
+.map-ready-ring { animation: mapPulse 1.8s ease-in-out infinite; transform-origin: center; }
+@keyframes mapPulse { 0%, 100% { stroke-opacity: .35; } 50% { stroke-opacity: 1; } }
+.map-dot-ready { border: 1.5px dashed var(--gold); background: transparent !important; box-sizing: border-box; }
 .map-edge { fill: none; stroke: var(--line); stroke-width: 1.5; transition: stroke .2s, opacity .2s; }
 .map-edge.lit { stroke: var(--gold); stroke-width: 2.5; }
 .map-node { cursor: pointer; }

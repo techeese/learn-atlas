@@ -1070,12 +1070,16 @@
       edges += `<path class="map-edge" data-to="${n.id}" data-from="${pid}" d="M ${a.x.toFixed(1)} ${a.y.toFixed(1)} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}"></path>`;
     }));
     // nodes (dots only; hover shows the caption)
-    let circles = "";
+    let circles = "", readyCount = 0;
     nodes.forEach(n => {
       const eff = Store.effectiveMastery(n.id), lvl = Store.masteryLevel(eff), done = Store.isLessonDone(n.id);
-      circles += `<g class="map-node" data-id="${n.id}" data-go="#/lesson/${n.c.id}/${n.l.id}" transform="translate(${n.x.toFixed(1)} ${n.y.toFixed(1)})">
+      // "ready to learn" = not done, but every prerequisite (in-course + cross-topic) is complete
+      const ready = !done && learningPath(n.id).every(p => p.lesson.id === n.id || Store.isLessonDone(p.lesson.id));
+      if (ready) readyCount++;
+      circles += `<g class="map-node ${ready ? "ready" : ""}" data-id="${n.id}" data-go="#/lesson/${n.c.id}/${n.l.id}" transform="translate(${n.x.toFixed(1)} ${n.y.toFixed(1)})">
+        ${ready ? `<circle class="map-ready-ring" r="12" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="3 3"></circle>` : ""}
         <circle r="7" fill="${lvl.color}" stroke="${done ? "var(--ink)" : "var(--bg)"}" stroke-width="${done ? 2 : 1.5}"></circle>
-        <title>${esc(n.l.title)} — ${esc(n.c.title)}</title>
+        <title>${esc(n.l.title)} — ${esc(n.c.title)}${ready ? " (ready to learn)" : ""}</title>
       </g>`;
     });
     // rim labels per topic
@@ -1090,7 +1094,8 @@
       <text class="map-hub-t" x="${cx}" y="${cy - 2}" text-anchor="middle">ATLAS</text>
       <text class="map-hub-s" x="${cx}" y="${cy + 15}" text-anchor="middle">${nodes.length} concepts</text></g>`;
     const legend = [["Mastered", "var(--sage)"], ["Proficient", "var(--gold)"], ["Learning", "var(--violet)"], ["Seen", "var(--ink-mute)"], ["New", "var(--line)"]]
-      .map(([t, c]) => `<span class="map-leg"><span class="map-dot" style="background:${c}"></span>${t}</span>`).join("");
+      .map(([t, c]) => `<span class="map-leg"><span class="map-dot" style="background:${c}"></span>${t}</span>`).join("")
+      + `<span class="map-leg"><span class="map-dot map-dot-ready"></span>Ready to learn${readyCount ? " (" + readyCount + ")" : ""}</span>`;
     app.innerHTML = `
     <div class="view" style="max-width:none">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Knowledge Map</div>

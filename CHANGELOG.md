@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 43 — "Ready to learn" frontier on the Knowledge Map (learning flow)
+The Constellation showed mastery, but not *what to learn next*. Now any concept whose prerequisites are all
+complete but which you haven't started gets a pulsing gold dashed ring (and a legend count), so the map
+answers "what's actionable right now?" — your learning frontier at a glance. The pulse respects reduced-motion.
+Verified: errs=0, gate ALL GREEN; completing 3 foundational lessons surfaced 6 ready concepts with rings.
+
 ## iter 42 — Printable lessons (UX / content)
 A "🖨️ Print" button on the lecture produces a clean, paper-friendly printout — the lecture text, math, and
 worked examples in dark-on-white — with all the interactive chrome (sidebar, tabs, notes, widgets, code
