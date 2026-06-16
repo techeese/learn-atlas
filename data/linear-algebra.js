@@ -1,5 +1,5 @@
 /* Atlas course — Linear Algebra
-   Generated & adversarially fact-checked + inline visualizations & an expanded question bank. Edit freely; loaded via index.html. */
+   Generated & adversarially fact-checked + inline visualizations, worked examples & an expanded question bank. Edit freely; loaded via index.html. */
 (window.COURSES = window.COURSES || []).push(
 {
   "id": "linear-algebra",
@@ -1411,6 +1411,23 @@
               "prompt": "Let $A = \\begin{bmatrix} 3 & 0 \\\\ 0 & 3 \\end{bmatrix}$. Find its eigenvalues and describe its eigenspace(s). How does this differ from the shear $\\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\end{bmatrix}$, which also has a single repeated eigenvalue?",
               "hint": "Compute $\\det(A - \\lambda I)$, then solve $(A - \\lambda I)v = 0$. Pay attention to the dimension of the null space (the geometric multiplicity).",
               "solution": "For $A = 3I$: $\\det(A - \\lambda I) = (3-\\lambda)^2 = 0 \\Rightarrow \\lambda = 3$ with algebraic multiplicity 2. Solving $(A - 3I)v = 0$ gives the equation $0 = 0$, so EVERY vector in $\\mathbb{R}^2$ is an eigenvector: the eigenspace is all of $\\mathbb{R}^2$ (geometric multiplicity 2). $A$ scales every direction by 3 — a uniform dilation — and is trivially diagonalizable (it is already diagonal).\n\nContrast: the shear $S = \\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\end{bmatrix}$ also has one repeated eigenvalue ($\\lambda = 1$, algebraic multiplicity 2), but $(S - I)v = 0$ gives $\\begin{bmatrix} 0 & 1 \\\\ 0 & 0 \\end{bmatrix}v = 0 \\Rightarrow y = 0$, so the eigenspace is only the $x$-axis (geometric multiplicity 1 < 2). The shear is DEFECTIVE and cannot be diagonalized. Same repeated eigenvalue, completely different eigenstructure — the difference is geometric multiplicity."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Eigenvalues of a 2×2",
+              "body": "Find the eigenvalues of $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$.",
+              "solution": "Solve the characteristic equation $\\det(A-\\lambda I)=(2-\\lambda)^2-1=0$. So $(2-\\lambda)^2=1\\Rightarrow 2-\\lambda=\\pm1\\Rightarrow \\lambda=1$ and $\\lambda=3$."
+            },
+            {
+              "title": "Finding an eigenvector",
+              "body": "For the same $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$, find an eigenvector for $\\lambda=3$.",
+              "solution": "Solve $(A-3I)\\mathbf{v}=\\begin{bmatrix}-1&1\\\\1&-1\\end{bmatrix}\\mathbf{v}=\\mathbf{0}$. Both rows give $-v_1+v_2=0$, i.e. $v_1=v_2$. So $\\mathbf{v}=\\begin{bmatrix}1\\\\1\\end{bmatrix}$ (or any nonzero multiple)."
+            },
+            {
+              "title": "A shear: repeated eigenvalue",
+              "body": "What are the eigenvalues of the shear $\\begin{bmatrix}1&1\\\\0&1\\end{bmatrix}$, and is it diagonalizable?",
+              "solution": "$\\det(A-\\lambda I)=(1-\\lambda)^2=0\\Rightarrow \\lambda=1$ (repeated). The eigenvectors solve $\\begin{bmatrix}0&1\\\\0&0\\end{bmatrix}\\mathbf{v}=0\\Rightarrow v_2=0$, so they are only multiples of $\\begin{bmatrix}1\\\\0\\end{bmatrix}$. With just one independent eigenvector, it is NOT diagonalizable."
             }
           ]
         },

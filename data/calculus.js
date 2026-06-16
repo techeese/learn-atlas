@@ -1,5 +1,5 @@
 /* Atlas course — Calculus
-   Generated & adversarially fact-checked + an expanded question bank. Edit freely; loaded via index.html. */
+   Generated & adversarially fact-checked + inline visualizations, worked examples & an expanded question bank. Edit freely; loaded via index.html. */
 (window.COURSES = window.COURSES || []).push(
 {
   "id": "calculus",
@@ -988,6 +988,23 @@
               "prompt": "A 3-layer network has local per-layer derivative magnitudes (loss-to-pre-activation) of approximately $0.5$, $0.5$, and $0.5$. Using the chain-rule product intuition, estimate the gradient magnitude reaching the first layer relative to the loss, and state one architectural change that would mitigate the problem you observe.",
               "hint": "The gradient reaching the earliest layer is the product of all the local derivatives along the path. Then think about what keeps each local factor near 1.",
               "solution": "The gradient to the first layer scales like the product $0.5\\times 0.5\\times 0.5 = 0.125$, so it is about $\\tfrac{1}{8}$ the strength of the signal at the output — a vanishing-gradient effect that worsens exponentially with depth ($0.5^L$). Mitigations include: using ReLU activations (derivative exactly 1 on the active region, so the factor doesn't shrink), adding residual/skip connections (which inject a '+1' path keeping a derivative term near 1), better weight initialization (e.g., He/Xavier to keep each factor near 1), or normalization layers (batch/layer norm) to stabilize the per-layer scale."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Power of a function",
+              "body": "Differentiate $f(x)=(3x^2+1)^4$.",
+              "solution": "Outer function $u^4$ has derivative $4u^3$; inner $u=3x^2+1$ has derivative $6x$. Chain rule: $f'(x)=4(3x^2+1)^3\\cdot 6x=24x(3x^2+1)^3$."
+            },
+            {
+              "title": "Trig composite",
+              "body": "Differentiate $f(x)=\\sin(x^2)$.",
+              "solution": "Outer $\\sin u\\to\\cos u$, inner $x^2\\to 2x$: $f'(x)=\\cos(x^2)\\cdot 2x=2x\\cos(x^2)$."
+            },
+            {
+              "title": "Exponential composite",
+              "body": "Differentiate $f(x)=e^{\\sin x}$.",
+              "solution": "Outer $e^u\\to e^u$, inner $\\sin x\\to\\cos x$: $f'(x)=e^{\\sin x}\\cos x$."
             }
           ]
         },

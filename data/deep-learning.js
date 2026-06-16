@@ -1,5 +1,5 @@
 /* Atlas course — Deep Learning
-   Generated & adversarially fact-checked + inline visualizations & an expanded question bank. Edit freely; loaded via index.html. */
+   Generated & adversarially fact-checked + inline visualizations, worked examples & an expanded question bank. Edit freely; loaded via index.html. */
 (window.COURSES = window.COURSES || []).push(
 {
   "id": "deep-learning",
@@ -710,6 +710,18 @@
               "prompt": "Consider $L = \\sigma(wx + b)$ where $\\sigma$ is the sigmoid. With $w=1, x=2, b=-1$, compute the forward value and then $\\partial L/\\partial w$ and $\\partial L/\\partial b$ using the cached-output form of the sigmoid derivative.",
               "hint": "$\\sigma'(z) = \\sigma(z)(1-\\sigma(z))$, and the forward output IS $\\sigma(z)$, so reuse it rather than recomputing exponentials.",
               "solution": "Forward: $z = wx+b = 1\\cdot 2 + (-1) = 1$. $L = \\sigma(1) = 1/(1+e^{-1}) \\approx 0.7311$. Backward: $\\bar L = 1$. Through sigmoid, local derivative uses the cached output: $\\bar z = \\bar L\\cdot L(1-L) = 0.7311(1-0.7311) \\approx 0.7311\\cdot 0.2689 \\approx 0.1966$. Through $z = wx+b$ with cached $x=2$: $\\partial L/\\partial w = \\bar z\\cdot x \\approx 0.1966\\cdot 2 \\approx 0.3932$; $\\partial L/\\partial b = \\bar z\\cdot 1 \\approx 0.1966$. The point: caching $L=\\sigma(z)$ on the forward pass lets the backward pass get $\\sigma'$ with one multiply and no extra exponential."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Gradient through one weight",
+              "body": "For loss $L=(y-\\hat{y})^2$ with prediction $\\hat{y}=wx$, and $x=2$, $w=3$, target $y=5$, compute $\\partial L/\\partial w$.",
+              "solution": "Forward: $\\hat{y}=wx=6$, $L=(5-6)^2=1$. Backward by chain rule: $\\dfrac{\\partial L}{\\partial \\hat{y}}=2(\\hat{y}-y)=2(6-5)=2$, and $\\dfrac{\\partial \\hat{y}}{\\partial w}=x=2$, so $\\dfrac{\\partial L}{\\partial w}=2\\cdot 2=4$. A step of gradient descent: $w\\leftarrow 3-\\eta\\cdot 4$."
+            },
+            {
+              "title": "Why cache the forward pass?",
+              "body": "Why does backpropagation store the activations computed during the forward pass?",
+              "solution": "Each weight's gradient is built from the inputs/activations it multiplied going forward (e.g. $\\partial\\hat{y}/\\partial w=x$). Caching those values lets the backward pass reuse them instead of recomputing, so backprop costs about the same as a single forward pass."
             }
           ]
         },

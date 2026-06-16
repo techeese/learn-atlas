@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 18 — Worked examples activate the Examples tab (content)
+The per-lesson Examples tab existed but was empty. Hand-wrote 10 worked examples (problem → revealable
+solution) across four flagship lessons: eigenvalues/eigenvectors (incl. a non-diagonalizable shear), the
+chain rule (3 composites), dynamic programming (Fibonacci + coin-change, with why greedy fails), and
+backprop (a numeric gradient through one weight + why activations are cached). KaTeX math incl. matrices.
+Verified: errs=0, the Examples tab appears and the working reveals with correct rendering.
+
 ## iter 17 — Glossary of key terms (understandability / content)
 Added a searchable Glossary (data/glossary.js): 48 hand-curated, plain-language definitions of the core
 concepts across all six subjects (8 each — e.g. span, eigenvector, chain rule, Big-O, backprop, Bellman

@@ -1,5 +1,5 @@
 /* Atlas course — Algorithms
-   Generated & adversarially fact-checked + an expanded question bank. Edit freely; loaded via index.html. */
+   Generated & adversarially fact-checked + inline visualizations, worked examples & an expanded question bank. Edit freely; loaded via index.html. */
 (window.COURSES = window.COURSES || []).push(
 {
   "id": "algorithms",
@@ -1695,6 +1695,18 @@
               "prompt": "Longest Common Subsequence. For $X=$ 'ABCBDAB' and $Y=$ 'BDCAB', (a) state the recurrence, (b) compute the LCS length, and (c) give one actual LCS string via backpointer reconstruction.",
               "hint": "$dp[i][j]=dp[i-1][j-1]+1$ on a match, else $\\max(dp[i-1][j], dp[i][j-1])$. After filling, start at $dp[m][n]$; on a match step diagonally and emit the character, otherwise move to the larger of the up/left neighbors.",
               "solution": "(a) $dp[i][j]=0$ if $i=0$ or $j=0$; $=dp[i-1][j-1]+1$ if $x_i=y_j$; else $\\max(dp[i-1][j], dp[i][j-1])$. (b) Filling the 8x6 table gives $dp[7][5]=4$, so LCS length = 4. (c) Reconstructing from $dp[7][5]$ yields the subsequence 'BCAB' (length 4), which is a subsequence of both X='ABCBDAB' and Y='BDCAB'. Another valid LCS is 'BDAB'; any correct length-4 common subsequence earns full credit."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Fibonacci, bottom-up",
+              "body": "Use bottom-up DP to compute $F_6$, and state the time and space complexity.",
+              "solution": "Start $dp=[0,1]$ and apply $dp[i]=dp[i-1]+dp[i-2]$: $0,1,1,2,3,5,8$, so $F_6=8$. Each of the $n$ entries is computed once, so it is $O(n)$ time. Keeping only the last two values makes it $O(1)$ space."
+            },
+            {
+              "title": "Coin change (fewest coins)",
+              "body": "With coins $\\{1,3,4\\}$, what is the minimum number of coins to make 6?",
+              "solution": "Let $dp[a]=1+\\min_{c}dp[a-c]$. Then $dp[0..6]=0,1,2,1,1,2,2$. For $a=6$: $1+\\min(dp[5],dp[3],dp[2])=1+\\min(2,1,2)=2$ — e.g. $3+3$. Answer: 2 coins. (Greedy '4 then 1+1' would give 3, which is why DP is needed.)"
             }
           ]
         },
