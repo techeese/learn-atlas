@@ -197,6 +197,16 @@
     const lv = Store.levelInfo();
     const goal = Store.raw.goalXp || 50, today = Store.todayXP(), goalPct = Math.min(100, Math.round(today / goal * 100));
     const weak = Store.weakSpots();
+    // "continue where you left off"
+    let contHtml = "";
+    const last = Store.raw.lastLesson;
+    if (last) { const [lc, ll] = last.split("/"); const node = findLesson(lc, ll);
+      if (node) { const done = Store.isLessonDone(ll);
+        contHtml = `<div class="cotd reveal" style="--c:${node.course.color}" data-go="#/lesson/${lc}/${ll}">
+          <div class="cotd-side"><div class="cotd-ico" style="color:${node.course.color};border-color:${node.course.color}">↩</div><div class="cotd-tag">Continue</div></div>
+          <div class="cotd-body"><div class="cotd-course">${esc(node.course.title)} · ${esc(node.module.title)}</div><h3>${esc(node.lesson.title)}</h3>
+          <p>${done ? "Revisit this lesson, or jump to its quiz, flashcards & examples." : "Pick up right where you left off."}</p>
+          <span class="btn primary" style="pointer-events:none">Resume →</span></div></div>`; } }
     const cd = dailyConcept();
     const cdHtml = cd ? `
       <div class="cotd reveal" style="--c:${cd.node.course.color}" data-go="#/lesson/${cd.node.course.id}/${cd.node.lesson.id}">
@@ -250,6 +260,7 @@
         ${weak.length ? `<a class="btn" href="#/test" data-route style="margin-left:auto">Drill weak spots →</a>` : ""}
       </div>
 
+      ${contHtml}
       ${cdHtml}
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px" class="reveal">
@@ -347,6 +358,7 @@
     const found = findLesson(cid, lid);
     if (!found) return view404();
     const { course, lesson } = found;
+    Store.setLastLesson(cid + "/" + lid);
     const all = flatLessons(course);
     const idx = all.findIndex(l => l.id === lid);
     const prev = all[idx - 1], next = all[idx + 1];

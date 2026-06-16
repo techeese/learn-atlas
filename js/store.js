@@ -58,7 +58,8 @@
       notes: {},            // lessonId -> free text note
       goalXp: 50,           // daily XP goal
       activity: {},         // "YYYY-MM-DD" -> xp earned that day (study heatmap)
-      freezes: 1            // streak-freeze tokens
+      freezes: 1,           // streak-freeze tokens
+      lastLesson: null      // "courseId/lessonId" — resume point
     };
   }
 
@@ -95,6 +96,7 @@
       base.goalXp = num(s.goalXp) || 50;
       base.activity = s.activity || {};
       base.freezes = Number.isFinite(s.freezes) ? s.freezes : 1;
+      base.lastLesson = s.lastLesson || null;
     }
     return base;
   }
@@ -121,6 +123,7 @@
   }
   function freezeJustUsed() { const v = _freezeJustUsed; _freezeJustUsed = false; return v; }
   function markKnown(lessonId) { if (!lessonId) return; state.mastery[lessonId] = { s: 0.65, ts: Date.now(), n: 1 }; save(); }
+  function setLastLesson(key) { if (state.lastLesson !== key) { state.lastLesson = key; save(); } }
 
   // ---- XP / level ------------------------------------------------------
   const levelUps = [];
@@ -342,7 +345,7 @@
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
     gradeCard, cardDue,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, topicMastery, markKnown,
-    getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed,
+    getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed, setLastLesson,
     unlock, drainUnlocked, drainLevelUps,
     stats, courseProgress, resetAll, touchStreak
   };

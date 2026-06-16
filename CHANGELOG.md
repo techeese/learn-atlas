@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 19 — "Continue where you left off" resume card (UX / retention)
+Lowering the friction to return: the store now remembers the last lesson you opened (`lastLesson`), and the
+dashboard surfaces a prominent "Continue" card (topic · module · lesson, with a Resume button) above the
+Concept of the Day. Directly serves the "want to come back" goal. NaN-safe schema add. Verified: errs=0,
+visiting a lesson then returning shows the card resolving to that exact lesson.
+
 ## iter 18 — Worked examples activate the Examples tab (content)
 The per-lesson Examples tab existed but was empty. Hand-wrote 10 worked examples (problem → revealable
 solution) across four flagship lessons: eigenvalues/eigenvectors (incl. a non-diagonalizable shear), the
