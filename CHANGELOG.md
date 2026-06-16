@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 25 — Ranks ladder on the Progress page (gamification)
+The 10-rank journey (Novice → Polymath) was only ever glimpsed as the current rank in the topbar. Added a
+full Ranks ladder to Progress: every rank with its XP threshold, reached ones lit with a gold badge, the
+current one highlighted ("★ you are here"), and locked ones dimmed — so the path ahead is visible and
+motivating. Verified: errs=0, 10 ranks render, current/reached/locked states correct (Student at 500 XP).
+
 ## iter 24 — Keyboard shortcuts for the study loop (UX / accessibility)
 A single global key handler speeds up daily practice without touching the mouse: press 1–4 (or a–d) to
 answer any MCQ (quiz, custom test, mastery drill), Space to flip a flashcard then 1–4 to grade it, and Enter

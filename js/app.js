@@ -1130,6 +1130,16 @@
       <div class="page-head reveal" style="margin:24px 0 16px"><h2 style="font-size:24px">By topic</h2></div>
       <div class="reveal" style="max-width:700px">${perCourse}</div>
 
+      <div class="page-head reveal" style="margin:24px 0 14px"><h2 style="font-size:24px">Ranks</h2></div>
+      <div class="ranks reveal">${Store.LEVELS.map((L, i) => {
+        const reached = lv.level >= i + 1, current = lv.level === i + 1;
+        return `<div class="rank-row ${reached ? "reached" : ""} ${current ? "current" : ""}">
+          <div class="rank-num">${i + 1}</div>
+          <div class="rank-main"><span class="rank-name">${esc(L.name)}</span><span class="rank-xp">${L.t.toLocaleString()} XP</span></div>
+          <div class="rank-state">${current ? "★ you are here" : reached ? "✓" : "🔒"}</div>
+        </div>`;
+      }).join("")}</div>
+
       <div class="page-head reveal" style="margin:24px 0 14px"><h2 style="font-size:24px">Settings</h2></div>
       <div class="settings-box reveal">
         <label class="viz-slider" style="gap:10px">Daily XP goal
