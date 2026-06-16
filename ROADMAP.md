@@ -12,7 +12,7 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
   (iter 6) recycles misses until passed. Standing low-priority job: keep topping up weak/thin lessons toward
   ~10/lesson over time, but this is no longer the lead — INTERLEAVE it with the rest of the compass now.
 - **NOW INTERLEAVE (bank goal met):** rotate the compass — new visualizations for concepts that lack one
-  (PCA/eigenbasis, convolution, attention heatmap, MDP policy iteration, Bayes), more inline viz/code embeds,
+  (PCA/eigenbasis, convolution, MDP policy iteration, Bayes; DONE: neural-net forward pass, attention heatmap), more inline viz/code embeds,
   UI/animation polish, accessibility (reduced-motion, ARIA, focus), onboarding/empty-states, a glossary.
 - More inline visualizations: build NEW widgets for high-value concepts that lack one
   (PCA/eigenbasis, convolution, attention heatmap, Bayes, MDP policy iteration) and embed them.

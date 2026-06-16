@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 10 — Two new interactive visualizations: neural-net forward pass + attention heatmap (visualizations)
+Interleaving off the question-bank run: built two widgets that filled the biggest viz gaps. **Neural Network
+Forward Pass** (dl-neural-net) — drag 3 inputs, watch weighted sums → ReLU hidden → softmax outputs with
+green/red signed edges and animated signal flow; embedded in the Neuron/MLP lesson. **Self-Attention Heatmap**
+(llm-attention) — a 7-word sentence where each row is a word's attention over the others ("it" → "cat"),
+hover to read weights; embedded in the DL attention lesson and the LLM self-attention lesson. Lab catalog
+10 → 12. Verified: all routes errs=0, both widgets hydrate inline and in the Lab.
+
 ## iter 9 — Question bank: batched expansion of the remaining 4 topics (content / owner ask)
 Finished the bank-doubling goal in one batched pass: a 150-agent author+verify workflow added ~4 new
 adversarially-checked MCQs to each of the 75 lessons in algorithms, deep learning, RL, and LLMs — 293 added
