@@ -1,5 +1,5 @@
 /* Atlas course — Reinforcement Learning
-   Generated & adversarially fact-checked + an expanded question bank. Edit freely; loaded via index.html. */
+   Generated & adversarially fact-checked + inline visualizations, worked examples & an expanded question bank. Edit freely; loaded via index.html. */
 (window.COURSES = window.COURSES || []).push(
 {
   "id": "reinforcement-learning",
@@ -710,6 +710,18 @@
               "prompt": "Policy iteration evaluates the current policy to convergence before each improvement, while value iteration improves after a single evaluation sweep. (a) Give one scenario where policy iteration converges in fewer iterations of the outer loop, and explain why this does not necessarily mean it is faster in wall-clock time. (b) Explain why 'modified policy iteration' (doing $k$ evaluation sweeps per improvement, $1 < k < \\infty$) can be a good practical compromise.",
               "hint": "Count total backups, not just outer-loop iterations. Each full evaluation in policy iteration is itself many sweeps. Think about what the extra evaluation sweeps buy you per improvement.",
               "solution": "(a) Policy iteration typically needs very few outer iterations because each greedy improvement is based on a fully accurate $v_\\pi$, so it can make large, well-informed policy changes; for small MDPs it often converges in a handful of policy updates. But each of those outer iterations hides a complete policy evaluation, which is itself an iterative process of many Bellman-expectation sweeps. Value iteration's outer 'iterations' are single cheap sweeps. So the right cost measure is the total number of backups: policy iteration's few outer steps can involve far more total backups than value iteration's many cheap sweeps, meaning fewer outer iterations does not imply less total computation or wall-clock time.\n(b) Modified policy iteration runs $k$ evaluation sweeps per improvement. With $k=1$ it is value iteration; with $k=\\infty$ it is policy iteration. Intermediate $k$ captures the benefits of both: a few evaluation sweeps make $v$ accurate enough that the greedy improvement is more informative than value iteration's single-sweep estimate (fewer wasted improvements), yet you avoid the cost of driving evaluation all the way to convergence each round. Empirically a moderate $k$ often minimizes total backups, which is why it is a common practical choice and why GPI is described as a spectrum rather than two discrete algorithms."
+            }
+          ],
+          "examples": [
+            {
+              "title": "One Bellman backup",
+              "body": "A non-terminal state's best action gives reward $r=0$ and lands (deterministically) in a state worth $V=10$. With $\\gamma=0.9$, what's the updated value?",
+              "solution": "$V \\leftarrow r + \\gamma \\max_{a'} V(s') = 0 + 0.9\\cdot10 = 9$. Value iteration applies this backup to every state until the values stop changing."
+            },
+            {
+              "title": "Why discount?",
+              "body": "Why must $\\gamma<1$ for an infinite-horizon task?",
+              "solution": "With $\\gamma<1$ the geometric series $\\sum_k \\gamma^k r$ converges to a finite return even over infinitely many steps, so values are well-defined and the iteration contracts to a unique fixed point."
             }
           ]
         }

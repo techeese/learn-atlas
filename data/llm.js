@@ -1,5 +1,5 @@
 /* Atlas course — Large Language Models
-   Generated & adversarially fact-checked + inline visualizations & an expanded question bank. Edit freely; loaded via index.html. */
+   Generated & adversarially fact-checked + inline visualizations, worked examples & an expanded question bank. Edit freely; loaded via index.html. */
 (window.COURSES = window.COURSES || []).push(
 {
   "id": "llm",
@@ -571,6 +571,18 @@
               "prompt": "A colleague proposes removing the value projection $W^V$ and using the raw embeddings $X$ directly as values (keeping learned $W^Q$ and $W^K$). Give one concrete reason this reduces the model's expressive power.",
               "hint": "Recall that attention decouples 'how relevant a token is to retrieve from' (key/query) from 'what content it contributes' (value). What flexibility do you lose by tying value content to the raw input?",
               "solution": "Without $W^V$, the content a token contributes is forced to be its raw embedding, so the only thing the model can learn for the 'what to pass along' part is fixed to the input representation. With a learned $W^V$, the model can project values into a different subspace — emphasizing, suppressing, or recombining features that are useful as <em>content</em>, independently of what makes a token a good <em>match</em>. For instance, a token might be highly relevant to attend to (strong key-query alignment) yet the useful information to extract is a transformed, lower-dimensional, or rotated view of its embedding; $W^V$ provides exactly that degree of freedom, and removing it collapses two independent learnable functions (relevance vs. content) into one, strictly shrinking the hypothesis space. It also forces $d_v = d_{\\text{model}}$, removing the ability to choose the value/output dimension (important for multi-head attention, where each head uses a small $d_v$)."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Attention is a weighted average",
+              "body": "If the softmaxed attention weights for a query are $[0.1, 0.7, 0.2]$ over value vectors $v_1,v_2,v_3$, what does attention output?",
+              "solution": "The output is $0.1\\,v_1 + 0.7\\,v_2 + 0.2\\,v_3$ — a convex combination of the values, here dominated by $v_2$. Attention is exactly a learned weighted average of the value vectors."
+            },
+            {
+              "title": "Why divide by √dₖ?",
+              "body": "Why does scaled dot-product attention divide the scores by $\\sqrt{d_k}$?",
+              "solution": "Dot products grow with dimension $d_k$, which would push softmax into saturated regions with vanishing gradients. Dividing by $\\sqrt{d_k}$ keeps the scores at a stable scale so training stays well-conditioned."
             }
           ]
         },

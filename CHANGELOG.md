@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 21 — Worked examples now span all six topics (content)
+Extended iter 18's Examples tab to every subject: 12 more worked examples across determinants, optimization
+& gradient-descent intuition, binary search (a full trace + the O(log n) argument), SGD updates with a note
+on momentum, a Bellman backup + why γ<1, and self-attention (attention as a weighted average + why ÷√dₖ).
+Ten lessons now carry worked examples, at least one per topic. Verified: errs=0, RL & LLM Examples tabs
+render with correct math.
+
 ## iter 20 — New visualization: Bayes' theorem & base rates (visualizations)
 Built calc-bayes for one of the least-intuitive ideas in probability/ML. A 400-person grid splits into
 true-positives (gold), false alarms (violet), missed cases (rust), true-negatives; sliders for base rate,

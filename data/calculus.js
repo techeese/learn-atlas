@@ -1568,6 +1568,18 @@
               "hint": "Compute $L'(w) = kw$, substitute into the update to get $w_{t+1}$ as a constant times $w_t$. Convergence of a geometric recursion $w_{t+1} = r\\,w_t$ requires $|r| < 1$.",
               "solution": "(a) $L'(w) = kw$, so the update is $w_{t+1} = w_t - \\eta(k w_t) = (1 - \\eta k)\\,w_t$. (b) Setting $L'(w)=kw=0$ gives $w^* = 0$; since $L''(w)=k>0$, this is a minimum (the bottom of the bowl). (c) The recursion $w_{t+1} = (1-\\eta k)w_t$ is geometric with ratio $r = 1 - \\eta k$, so $w_t = (1-\\eta k)^t w_0$. This converges to $0 = w^*$ iff $|1 - \\eta k| < 1$, i.e. $-1 < 1 - \\eta k < 1$, which gives $0 < \\eta k < 2$, i.e. $\\eta < 2/k$. Interpretation: the curvature $k = L''$ caps the safe step size. If $\\eta > 2/k$ the factor $|1-\\eta k|>1$ and the iterates overshoot and diverge; if $\\eta = 1/k$ you land exactly on $w^*$ in a single step. This is the same $f''$ from the second-derivative test now governing how fast you may descend."
             }
+          ],
+          "examples": [
+            {
+              "title": "Minimize a quadratic",
+              "body": "Find the minimum of $f(x)=x^2-4x+7$.",
+              "solution": "Set $f'(x)=2x-4=0\\Rightarrow x=2$. Since $f''(x)=2>0$ it's a minimum; $f(2)=4-8+7=3$."
+            },
+            {
+              "title": "A gradient-descent step",
+              "body": "For $f(x)=x^2$ starting at $x=5$ with learning rate $\\eta=0.1$, what is $x$ after one step?",
+              "solution": "$f'(x)=2x$, so $x\\leftarrow 5-0.1\\cdot(2\\cdot5)=5-1=4$. Each step moves toward the minimum at $0$."
+            }
           ]
         },
         {

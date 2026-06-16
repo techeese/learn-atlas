@@ -862,6 +862,18 @@
               "hint": "Compute $m_1,v_1$, then bias-correct with $(1-\\beta_1^1)$ and $(1-\\beta_2^1)$, then apply $\\theta_1=\\theta_0-\\eta\\,\\hat m_1/(\\sqrt{\\hat v_1}+\\epsilon)$. Watch the sign.",
               "solution": "$m_1=0.1\\cdot(-3)=-0.3$; $v_1=0.001\\cdot 9=0.009$. Bias-correct: $\\hat m_1=-0.3/0.1=-3$; $\\hat v_1=0.009/0.001=9$. Step ratio: $\\hat m_1/(\\sqrt{\\hat v_1}+\\epsilon)=-3/(3+10^{-8})\\approx -1$. So $\\theta_1=0-0.01\\cdot(-1)=+0.01$. The magnitude is $\\approx\\eta=0.01$ because at $t=1$ bias correction gives $\\hat m_1=g_1$ and $\\hat v_1=g_1^2$, so the ratio is $g_1/|g_1|=\\pm 1$ — the gradient's scale cancels, leaving a step of size $\\eta$ in the direction opposite the gradient. This scale-invariance is Adam's hallmark and why $\\eta\\approx 10^{-3}$ works across many problems."
             }
+          ],
+          "examples": [
+            {
+              "title": "One SGD step",
+              "body": "Loss $L=(w-3)^2$, current $w=0$, learning rate $\\eta=0.1$. Compute the updated $w$.",
+              "solution": "$\\dfrac{dL}{dw}=2(w-3)=2(0-3)=-6$. Update: $w\\leftarrow 0-0.1\\cdot(-6)=0.6$, moving toward the minimum at $w=3$."
+            },
+            {
+              "title": "What momentum adds",
+              "body": "In one sentence, why does momentum speed up gradient descent?",
+              "solution": "It accumulates an exponentially-decaying average of past gradients (a velocity), so it keeps moving fast along consistent directions and damps oscillations across steep, narrow valleys."
+            }
           ]
         },
         {

@@ -1267,6 +1267,18 @@
               "hint": "Compute the determinant as a function of $t$, set it to zero. The structure suggests factoring; try subtracting one row from the others first to simplify.",
               "solution": "Subtract row 1 from rows 2 and 3 (this doesn't change the determinant): $\\begin{bmatrix}t&1&1\\\\1-t&t-1&0\\\\1-t&0&t-1\\end{bmatrix}$. Alternatively expand directly: $\\det = t(t^2-1) - 1(t-1) + 1(1-t) = t^3 - t - (t-1) - (t-1) = t^3 - 3t + 2$. Factor: $t^3-3t+2=(t-1)(t^2+t-2)=(t-1)(t-1)(t+2)=(t-1)^2(t+2)$. This is zero when $t=1$ (the matrix becomes all 1's, rank 1) or $t=-2$. So the matrix is singular for $t=1$ and $t=-2$."
             }
+          ],
+          "examples": [
+            {
+              "title": "Compute a 2×2 determinant",
+              "body": "Evaluate $\\det\\begin{bmatrix}3&2\\\\1&4\\end{bmatrix}$.",
+              "solution": "$ad-bc = 3\\cdot4 - 2\\cdot1 = 12-2 = 10$. Since it's nonzero, the matrix is invertible and scales areas by 10."
+            },
+            {
+              "title": "When is it singular?",
+              "body": "For which $k$ is $\\begin{bmatrix}k&2\\\\2&k\\end{bmatrix}$ singular (non-invertible)?",
+              "solution": "Set the determinant to zero: $k^2-4=0\\Rightarrow k=\\pm2$. At those values the columns are linearly dependent."
+            }
           ]
         }
       ]

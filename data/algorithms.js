@@ -1273,6 +1273,18 @@
               "hint": "There are three independent issues: how lo is updated, the midpoint formula, and the choice of initial hi / loop condition. Ask which of these prevents the interval from shrinking when only two elements remain.",
               "solution": "Three bugs:\n\n1) Infinite loop (the hang). The false branch sets lo = mid, not lo = mid + 1. When hi - lo == 1, mid == lo, so lo = mid leaves lo unchanged and the interval never shrinks -> infinite loop. Fix: lo = mid + 1.\n\n2) Overflow. mid = (lo + hi) / 2 can overflow for large indices. Fix: mid = lo + (hi - lo) / 2.\n\n3) Wrong bounds / convention mismatch. With hi = a.size() - 1 and condition lo <= hi, the code mixes a closed interval with half-open updates and can never return the valid answer n (insertion at the end). The clean fix is the half-open convention: hi = a.size(), condition lo < hi.\n\nCorrected version:\n\nint lb(vector<int>& a, int x){\n    int lo = 0, hi = (int)a.size();   // half-open [lo, hi)\n    while (lo < hi){\n        int mid = lo + (hi - lo) / 2; // overflow-safe\n        if (a[mid] < x) lo = mid + 1; // mid ruled out\n        else hi = mid;                // mid is a candidate\n    }\n    return lo;                        // can return a.size()\n}\n\nThis terminates because every iteration strictly shrinks hi - lo, and it correctly returns the first index with a[i] >= x (or n if none)."
             }
+          ],
+          "examples": [
+            {
+              "title": "Trace a search",
+              "body": "Find 7 in $[1,3,5,7,9,11]$ (0-indexed) with binary search.",
+              "solution": "lo=0, hi=5, mid=2 → a[2]=5 < 7, so lo=3. mid=4 → a[4]=9 > 7, so hi=3. mid=3 → a[3]=7 = target → return index 3."
+            },
+            {
+              "title": "Why O(log n)?",
+              "body": "Why is binary search $O(\\log n)$, and how many steps for $n=1024$?",
+              "solution": "Each comparison halves the remaining range, so it takes about $\\log_2 n$ steps. For $n=1024=2^{10}$, that's 10 steps."
+            }
           ]
         }
       ]
