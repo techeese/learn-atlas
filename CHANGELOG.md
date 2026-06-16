@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 45 — "Start here" markers on the course page (learning flow)
+Completing the ready-frontier trio (map iter 43, daily concept iter 44): the course page now flags the
+lesson(s) you're ready to start — not done, all prerequisites met — with a gold "▶ start here" badge and a
+subtle highlighted row, so within a topic you can see exactly where to pick up. errs=0, gate ALL GREEN
+(a fresh user sees it on the first lesson).
+
 ## iter 44 — Concept of the Day prefers an actionable concept (learning flow)
 The daily pick was purely random, often surfacing something you're not ready for. It now prefers a concept
 on your **"ready to learn" frontier** (prerequisites satisfied, not started) and labels it "ready ✓" with
