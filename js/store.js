@@ -44,7 +44,12 @@
     { id: "all-topics",  icon: "🌍", name: "Renaissance",      desc: "Study a lesson in all six topics." },
     { id: "century",     icon: "💯", name: "Centurion",        desc: "Review 100 flashcards." },
     { id: "streak30",    icon: "🗓️", name: "Devoted",          desc: "Reach a 30-day streak." },
-    { id: "polymath",    icon: "👑", name: "Polymath",        desc: "Reach the final level." }
+    { id: "polymath",    icon: "👑", name: "Polymath",        desc: "Reach the final level." },
+    { id: "recaller",    icon: "🧠", name: "Explain It Back",  desc: "Self-score your first free recall." },
+    { id: "total-recall",icon: "🎓", name: "Total Recall",     desc: "Recall every key point of a lesson." },
+    { id: "deep-diver",  icon: "🧗", name: "Deep Diver",       desc: "Reach 80% mastery on 10 concepts." },
+    { id: "well-rounded",icon: "⚖️", name: "Well-Rounded",     desc: "Reach Proficient mastery in all six subjects." },
+    { id: "half-century",icon: "🏅", name: "Half-Century",     desc: "Complete 50 lessons." }
   ];
 
   function blank() {
@@ -187,6 +192,7 @@
       bumpMastery(lessonId, "lecture");
       unlock("first-step");
       if (Object.keys(state.lessons).length >= 10) unlock("ten-lessons");
+      if (Object.keys(state.lessons).length >= 50) unlock("half-century");
       checkCourseCompletion();
       if (window.COURSES) {
         for (const c of window.COURSES) for (const m of c.modules) if (m.lessons.length && m.lessons.every(l => state.lessons[l.id])) unlock("module-master");
@@ -248,6 +254,12 @@
     m.s = s; m.ts = Date.now();
     state.mastery[lessonId] = m;
     if (effectiveMastery(lessonId) >= 0.8) unlock("mastered-one");
+    if (window.COURSES) {
+      let nMastered = 0;
+      for (const c of window.COURSES) for (const mm of c.modules) for (const l of mm.lessons) if (effectiveMastery(l.id) >= 0.8) nMastered++;
+      if (nMastered >= 10) unlock("deep-diver");
+      if (window.COURSES.length >= 6 && window.COURSES.every(c => topicMastery(c.id) >= 0.55)) unlock("well-rounded");
+    }
     save();
   }
   function effectiveMastery(lessonId) {

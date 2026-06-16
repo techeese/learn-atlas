@@ -734,7 +734,8 @@
         </div>`;
       const sb = body.querySelector("#recall-score"); if (sb) sb.disabled = true;
       document.getElementById("recall-again").addEventListener("click", () => renderRecall(body, course, lesson));
-      if (pct === 100) confetti();
+      Store.unlock("recaller");
+      if (pct === 100) { Store.unlock("total-recall"); confetti(); }
       flushAchievements();
       renderChrome();
     }
@@ -1255,11 +1256,14 @@
         <div class="a-ico">${a.icon}</div>
         <div><div class="a-t">${a.name}</div><div class="a-d">${a.desc}</div></div>
       </div>`).join("");
-    const got = Object.keys(have).length;
+    const total = Store.ACHIEVEMENTS.length;
+    const got = Store.ACHIEVEMENTS.filter(a => have[a.id]).length;
+    const pct = Math.round(got / total * 100);
     app.innerHTML = `
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Achievements</div>
-      <div class="page-head reveal"><div class="eyebrow">${got} of ${Store.ACHIEVEMENTS.length} unlocked</div><h2>Hall of <em>Achievements</em></h2></div>
+      <div class="page-head reveal"><div class="eyebrow">${got} of ${total} unlocked · ${pct}%</div><h2>Hall of <em>Achievements</em></h2></div>
+      <div class="ach-progress reveal"><div class="ach-progress-fill" style="width:${pct}%"></div></div>
       <div class="ach-grid reveal">${grid}</div>
     </div>`;
     bindGo();

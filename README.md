@@ -32,7 +32,7 @@ Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys
 - **Spaced repetition done right** — SM-2 scheduling with Anki-style interval previews on the grade buttons, a global **Daily Review** with a due-load forecast (now / 24h / 7 days), and weak concepts that resurface automatically.
 - **Concept of the Day** + **"Continue where you left off"** resume card on the dashboard.
 - **Daily goal + activity heatmap + streak freezes**; **Cheatsheets** (print/PDF); **Placement diagnostic** to skip ahead; **Progress export/import**; **Library** of curated references.
-- **Gamification** — XP, 10 named levels (Novice → Polymath) shown as a ranks ladder, daily streak, **20 achievements**, and a level-up confetti celebration.
+- **Gamification** — XP (with a floating "+XP" reward burst and an animated level ring), 10 named levels (Novice → Polymath) shown as a ranks ladder, daily streak, **25 achievements** with a collection-progress bar, and a level-up confetti celebration.
 - **Accessible** — reduced-motion support, focus-visible, ARIA + live regions, a skip link, and an adjustable reading text size.
 - **Installable PWA / offline** — add to home screen; app shell + content cached; a graceful "new version available" prompt on updates.
 - **First-visit tour**, **two themes** (Ink / Parchment).

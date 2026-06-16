@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 56 — Five new achievements (incl. the Recall pillar) + a collection-progress bar (gamification)
+The badge set predated several features — most notably the iter-53 Recall pillar earned no recognition. Added
+five achievements (20 → 25): **Explain It Back** (score your first free recall), **Total Recall** (recall 100%
+of a lesson's key points), **Deep Diver** (80% mastery on 10 concepts), **Well-Rounded** (Proficient mastery
+in all six subjects), and **Half-Century** (50 lessons). Wired their triggers — recall ones in `scoreRecall`,
+the mastery ones inside `bumpMastery` (counts mastered concepts + checks per-topic mastery each bump), and
+Half-Century in `completeLesson`. The Achievements page now shows a **collection-progress bar** (X of 25 ·
+%) so the meta-game has a visible goal. State-safe (achievements use the existing `achievements` field; old
+saves just show the new badges locked). SW cache → `atlas-v8`. Verified on a clean profile: scoring a recall
+fires the "Explain It Back" + "Total Recall" unlock toasts, Achievements renders with the progress bar
+(desktop & 390px, "0 of 25"), all-routes errs=0, `node gate.js` ALL GREEN.
+
 ## iter 55 — XP-reward juice: floating "+XP", animated level ring, stat count-up (animations / juice)
 Made the core reward loop *feel* rewarding. Earning XP (lesson, quiz, recall, etc.) now (1) floats a gold
 "+N XP" chip up from the topbar level ring, (2) gives the ring a springy pop and smoothly fills its
