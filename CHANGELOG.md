@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 30 — Reading text-size control (accessibility / reading comfort)
+Long study sessions get an in-app text-size preference (A− / A / A+ in Settings) that scales the lesson prose
+via a `--read-scale` CSS variable, persisted to localStorage and applied on boot — independent of UI chrome
+and browser zoom. Verified: errs=0, A+ sets the scale to 1.15 and it sticks.
+
 ## iter 29 — New visualization: k-means clustering (visualizations)
 Built algo-kmeans for the flagship unsupervised-learning idea. Three gaussian blobs; Lloyd's algorithm
 alternates assign (color each point by nearest centroid) and update (move each centroid to its cluster mean),

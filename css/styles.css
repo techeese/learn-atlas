@@ -278,7 +278,7 @@ body::after {
 .tab .badge { font-family: var(--font-mono); font-size: 10px; background: var(--panel-2); padding: 1px 6px; border-radius: 10px; border:1px solid var(--line); }
 
 /* reading content */
-.prose { max-width: 760px; }
+.prose { max-width: 760px; font-size: calc(17px * var(--read-scale, 1)); }
 .prose h3 { font-family: var(--font-disp); font-size: 26px; font-weight: 500; margin: 30px 0 12px; letter-spacing: -.3px; }
 .prose h4 { font-family: var(--font-disp); font-size: 19px; font-weight: 600; margin: 24px 0 8px; color: var(--gold); }
 .prose p { margin: 13px 0; color: var(--ink-soft); }

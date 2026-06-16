@@ -1161,6 +1161,11 @@
           <input id="goal-input" type="number" min="10" step="10" value="${Store.raw.goalXp}" style="width:90px">
           <button class="btn" id="goal-save">Save</button>
         </label>
+        <div class="viz-slider" style="gap:10px;margin-top:14px"><span class="viz-slab">Reading text size</span>
+          <button class="btn ghost rs-btn" data-rs="0.9">A−</button>
+          <button class="btn ghost rs-btn" data-rs="1">A</button>
+          <button class="btn ghost rs-btn" data-rs="1.15">A+</button>
+        </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
           <button class="btn ghost" id="export-btn">⬇ Export progress</button>
           <button class="btn ghost" id="import-btn">⬆ Import progress</button>
@@ -1170,6 +1175,7 @@
       </div>
     </div>`;
     bindGo();
+    app.querySelectorAll(".rs-btn").forEach(b => b.addEventListener("click", () => { localStorage.setItem("atlas.textScale", b.dataset.rs); applyTextScale(); toast("🔠", "Text size set", "Reading text scaled to " + Math.round(b.dataset.rs * 100) + "%"); }));
     document.getElementById("heatmap").appendChild(buildHeatmap());
     document.getElementById("goal-save").addEventListener("click", () => { Store.setGoal(parseInt(document.getElementById("goal-input").value, 10)); toast("🎯", "Goal updated", "Daily target set to " + Store.raw.goalXp + " XP"); });
     document.getElementById("export-btn").addEventListener("click", () => {
@@ -1337,9 +1343,12 @@
     if (e.key === "Enter") { const nb = document.getElementById("t-next") || document.querySelector("#md-next .btn, #next-slot .btn"); if (nb) { e.preventDefault(); nb.click(); } }
   }
 
+  function applyTextScale() { try { document.documentElement.style.setProperty("--read-scale", localStorage.getItem("atlas.textScale") || "1"); } catch (e) {} }
+
   // ---------- boot ----------
   function boot() {
     Store.touchStreak();           // count today toward streak on open
+    applyTextScale();
     initTheme();
     initMobile();
     window.addEventListener("hashchange", router);
