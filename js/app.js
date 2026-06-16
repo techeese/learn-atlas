@@ -375,7 +375,8 @@
       nEx ? { id: "examples", label: "Examples", icon: "🔍", badge: nEx } : null,
       nMcq ? { id: "quiz", label: "Quiz", icon: "✎", badge: nMcq } : null,
       nCards ? { id: "cards", label: "Flashcards", icon: "🃏", badge: nCards } : null,
-      nHw ? { id: "homework", label: "Homework", icon: "✦", badge: nHw } : null
+      nHw ? { id: "homework", label: "Homework", icon: "✦", badge: nHw } : null,
+      nCards ? { id: "recall", label: "Recall", icon: "🧠" } : null
     ].filter(Boolean);
 
     // prerequisite path: lessons that come before this one and aren't done yet
@@ -407,6 +408,7 @@
       else if (name === "quiz") renderQuiz(body, lesson);
       else if (name === "cards") renderCards(body, lesson);
       else if (name === "homework") renderHomework(body, lesson);
+      else if (name === "recall") renderRecall(body, course, lesson);
     }
     document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => setTab(t.dataset.tab)));
     setTab("lecture");
@@ -621,6 +623,85 @@
       });
     });
     typeset();
+  }
+
+  // ---------- recall ("explain it back" — free recall) ----------
+  function renderRecall(body, course, lesson) {
+    const cards = lesson.flashcards || [];
+    if (!cards.length) { body.innerHTML = emptyState("🧠", "Add flashcards to a lesson to unlock free-recall practice."); return; }
+    body.innerHTML = `
+      <div class="recall reveal">
+        <div class="recall-intro">
+          <h3>🧠 Explain it back</h3>
+          <p>Look away from the lecture and write everything you can about <b>${esc(lesson.title)}</b> from memory — the definition, the intuition, the key formulas, and when you'd reach for it. Recalling from a <em>blank page</em> is the single strongest way to find what you don't actually know yet — far better than re-reading.</p>
+        </div>
+        <textarea id="recall-area" class="recall-area" placeholder="Start typing your explanation from memory… (saved to your lesson notes on this device)">${esc(Store.getNote(lesson.id))}</textarea>
+        <div class="recall-bar">
+          <span id="recall-saved" class="recall-saved"></span>
+          <button class="btn primary" id="recall-check">Check myself against ${cards.length} key point${cards.length === 1 ? "" : "s"} →</button>
+        </div>
+        <div id="recall-rubric"></div>
+      </div>`;
+
+    const area = body.querySelector("#recall-area");
+    let nt;
+    area.addEventListener("input", () => {
+      clearTimeout(nt);
+      nt = setTimeout(() => { Store.setNote(lesson.id, area.value); const s = body.querySelector("#recall-saved"); if (s) { s.textContent = "saved ✓"; setTimeout(() => s.textContent = "", 1500); } }, 500);
+    });
+    body.querySelector("#recall-check").addEventListener("click", revealRubric);
+    typeset();
+
+    function revealRubric() {
+      const rub = body.querySelector("#recall-rubric");
+      rub.innerHTML = `
+        <div class="recall-rubric reveal">
+          <p class="rubric-hint">Tick every point you genuinely covered <em>before</em> peeking — honest gaps are exactly what to restudy. Reveal any answer to compare your wording.</p>
+          ${cards.map((c, i) => `
+            <div class="rubric-item">
+              <label class="rubric-pt"><input type="checkbox" data-rp="${i}"><span>${c.front}</span></label>
+              <button class="btn ghost rubric-reveal" data-rb="${i}">show answer</button>
+              <div class="rubric-ans" id="rub-ans-${i}"></div>
+            </div>`).join("")}
+          <div class="recall-score-bar">
+            <button class="btn primary" id="recall-score">Score my recall (<span id="rp-count">0</span>/${cards.length})</button>
+          </div>
+          <div id="recall-result"></div>
+        </div>`;
+      rub.querySelectorAll(".rubric-reveal").forEach(b => b.addEventListener("click", () => {
+        const i = b.dataset.rb;
+        document.getElementById("rub-ans-" + i).innerHTML = `<div class="hw-sol"><div class="sl">Answer</div>${cards[i].back}</div>`;
+        b.style.display = "none"; typeset();
+      }));
+      const upd = () => { const n = rub.querySelectorAll("input[data-rp]:checked").length; const c = document.getElementById("rp-count"); if (c) c.textContent = n; };
+      rub.querySelectorAll("input[data-rp]").forEach(cb => cb.addEventListener("change", upd));
+      rub.querySelector("#recall-score").addEventListener("click", scoreRecall);
+      body.querySelector("#recall-check").disabled = true;
+      typeset();
+    }
+
+    function scoreRecall() {
+      const total = cards.length;
+      const covered = body.querySelectorAll("input[data-rp]:checked").length;
+      Store.touchStreak();
+      for (let k = 0; k < covered; k++) Store.bumpMastery(lesson.id, { correct: true });   // reward demonstrated recall; missed points simply aren't credited
+      const xp = covered * 6 + (covered === total ? 20 : 0);
+      Store.addXP(xp);
+      const pct = Math.round((covered / total) * 100);
+      const msg = pct === 100 ? "Total recall — you can teach this. 🎓" : pct >= 60 ? "Strong. Re-read the points you left unticked, then recall again." : "Now you know exactly what to restudy. Re-read the lecture, then come back and recall.";
+      document.getElementById("recall-result").innerHTML = `
+        <div class="recall-done reveal">
+          <div class="big">${covered}/${total}</div>
+          <p style="color:var(--ink-soft)">${msg}</p>
+          <p class="recall-xp">+${xp} XP</p>
+          <button class="btn" id="recall-again">↻ Recall again</button>
+        </div>`;
+      const sb = body.querySelector("#recall-score"); if (sb) sb.disabled = true;
+      document.getElementById("recall-again").addEventListener("click", () => renderRecall(body, course, lesson));
+      if (pct === 100) confetti();
+      flushAchievements();
+      renderChrome();
+    }
   }
 
   // ---------- global review (all due cards) ----------

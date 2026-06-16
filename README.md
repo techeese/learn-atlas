@@ -18,6 +18,7 @@ Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys
 - **Examples** — an optional per-lesson tab of worked examples with revealable working.
 - **Quizzes** — instant feedback + explanations; earns XP, perfect-score bonus.
 - **Flashcards** — SM-2-style spaced repetition. A global **Daily Review** surfaces every card that's due across all topics.
+- **Recall ("explain it back")** — a free-recall study mode per lesson: write the whole concept from a blank page, then self-check against the lesson's key points and score yourself. Active recall done right — it feeds mastery and earns XP. (The Feynman technique, built in.)
 - **Homework** — practice problems with progressive hints and full solutions.
 - **Visualization Lab — 18 interactive widgets**: drag vectors, morph space with a 2×2 matrix, eigenvectors, the derivative, gradient descent (1-D and a 2-D contour map), sorting, Big-O growth, activation functions, a neural-net forward pass, an attention heatmap, PCA, convolution & feature maps, RNN unrolling, a gridworld solved by value iteration, embedding arithmetic, Bayes & base rates, and k-means clustering. Each is embedded inline in the lesson it illustrates, and embeddable anywhere with `<div data-viz="ID"></div>`.
 - **Spawn a Test (Mastery mode)** — build a custom exam from the 897-question bank; scope it to *only what you've completed*, your *weak spots*, a topic, or everything; 5/10/20/40 questions. **Mastery mode (default on)** re-queues every wrong answer until you get it right — no casual remembering.

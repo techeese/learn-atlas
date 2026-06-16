@@ -580,11 +580,31 @@ body::after {
 .notes-box { margin-top: 34px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; max-width: 760px; }
 .notes-head { font-family: var(--font-disp); font-size: 15px; color: var(--ink-soft); margin-bottom: 10px; }
 .notes-head span { color: var(--sage); font-size: 12px; margin-left: 8px; }
-#notes-area {
+#notes-area, .recall-area {
   width: 100%; min-height: 110px; resize: vertical; background: var(--bg-2); color: var(--ink);
   border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-family: var(--font-body); font-size: 15px; line-height: 1.6;
 }
-#notes-area:focus { outline: none; border-color: var(--gold-deep); }
+#notes-area:focus, .recall-area:focus { outline: none; border-color: var(--gold-deep); }
+
+/* ---- Recall ("explain it back") ---- */
+.recall { max-width: 780px; }
+.recall-intro h3 { font-family: var(--font-disp); font-size: 22px; margin: 0 0 8px; }
+.recall-intro p { color: var(--ink-soft); line-height: 1.7; margin: 0 0 16px; }
+.recall-area { min-height: 200px; }
+.recall-bar { display: flex; align-items: center; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
+.recall-saved { color: var(--sage); font-size: 13px; }
+.recall-rubric { margin-top: 26px; }
+.rubric-hint { color: var(--ink-mute); font-size: 14px; margin: 0 0 14px; }
+.rubric-item { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.rubric-pt { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 15px; color: var(--ink); line-height: 1.55; }
+.rubric-pt input { margin-top: 4px; width: 17px; height: 17px; accent-color: var(--gold-deep); flex: none; cursor: pointer; }
+.rubric-reveal { margin: 8px 0 0 27px; font-size: 13px; padding: 4px 10px; }
+.rubric-ans { margin-left: 27px; }
+.recall-score-bar { margin-top: 22px; }
+.recall-done { text-align: center; padding: 26px 0 6px; }
+.recall-done .big { font-family: var(--font-disp); font-size: 56px; font-weight: 600; color: var(--gold); }
+.recall-done p { margin: 6px auto 14px; max-width: 460px; }
+.recall-xp { color: var(--ink-mute) !important; }
 
 .dist-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; max-width: 700px; }
 .dist-cell { background: var(--panel); border: 1px solid var(--line); border-radius: 11px; padding: 16px; text-align: center; }

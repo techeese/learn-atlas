@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 53 — "Explain it back": a free-recall (Feynman) study mode (new functionality)
+First non-content iteration since the examples sweep, and a direct answer to the owner's deepest learning ask
+("not casual remembering — I have to think again until I pass"): a new **Recall** tab on every lesson with
+flashcards. You write an explanation of the whole concept from a blank page (the strongest form of active
+recall), then reveal the lesson's flashcards as a self-check rubric — tick each point you genuinely covered,
+peek at any answer to compare wording, and score yourself. Covered points feed the decaying **mastery** model
+(demonstrated recall raises mastery; missed points simply aren't credited, since free recall is a high bar)
+and award XP (+6/point, +20 for a clean sweep, confetti at 100%); the written recall auto-saves to your lesson
+notes. Built entirely in `app.js` + `css/styles.css` reusing existing primitives (`getNote/setNote`,
+`bumpMastery`, `addXP`, `touchStreak`) — no new state fields, so old saves load unchanged. Bumped the service
+worker cache to `atlas-v5` so PWA/offline users get the update. Verified: full flow (write → check → reveal →
+score 4/6) runs errs=0, renders desktop & 390px mobile, `node gate.js` ALL GREEN, all-routes errs=0.
+
 ## iter 52 — Worked examples for all 18 LLM lessons + a markdown-bold render fix (content; owner-requested) — SWEEP COMPLETE
 Finishes the examples sweep: every LLM lesson that lacked examples now has 2 (36 total) — sequence
 probability via the chain rule, softmax over logits, BPE merge tracing, embeddings/output head,

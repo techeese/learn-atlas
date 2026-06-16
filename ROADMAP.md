@@ -35,7 +35,7 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
 ## Backlog (ideas — mine these; add as you discover more)
 - AI tutor / infinite practice (opt-in, bring-your-own Claude API key). [owner deferred for now]
 - Glossary with hover-definitions of key terms across lessons.
-- "Explain it back" — free-text recall with self/AI grading (Feynman technique).
+- ~~"Explain it back" — free-text recall with self-grading (Feynman technique).~~ **DONE iter 53** (Recall tab; self-graded against the lesson's flashcards, feeds mastery + XP). Future: optional AI grading when the tutor lands.
 - Per-concept difficulty rating + adaptive question selection in tests.
 - Interleaved review sessions (mix topics) beyond the SRS queue.
 - More viz: PCA/eigenbasis, convolution, backprop graph, attention heatmap, MDP policy-iteration, Bayes.
