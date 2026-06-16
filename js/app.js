@@ -383,6 +383,24 @@
     const c = findCourse(id);
     if (!c) return view404();
     const p = Store.courseProgress(id);
+    // per-course mastery distribution + a "continue / start next" target
+    const flatC = flatLessons(c);
+    const dist = { mastered: 0, proficient: 0, learning: 0, seen: 0, unseen: 0 };
+    flatC.forEach(l => { dist[Store.masteryLevel(Store.effectiveMastery(l.id)).key]++; });
+    const segDefs = [["mastered", "Mastered", "var(--sage)"], ["proficient", "Proficient", "var(--gold)"], ["learning", "Learning", "var(--violet)"], ["seen", "Seen", "var(--ink-mute)"], ["unseen", "New", "var(--line)"]];
+    const distSegs = segDefs.filter(s => dist[s[0]] > 0);
+    const masteryBar = `
+      <div class="course-overview reveal">
+        <div class="co-bar" role="img" aria-label="Mastery distribution: ${segDefs.filter(s => dist[s[0]] > 0).map(s => dist[s[0]] + " " + s[1]).join(", ")}">
+          ${distSegs.map(s => `<span class="co-seg" style="flex:${dist[s[0]]};background:${s[2]}"></span>`).join("") || `<span class="co-seg" style="flex:1;background:var(--line)"></span>`}
+        </div>
+        <div class="co-legend">${distSegs.map(s => `<span><i style="background:${s[2]}"></i>${dist[s[0]]} ${s[1]}</span>`).join("")}</div>
+      </div>`;
+    let nextL = flatC.find(l => isReady(l.id)) || flatC.find(l => !Store.isLessonDone(l.id));
+    let nextVerb = p.done > 0 ? "Continue" : "Start";
+    if (!nextL) { nextL = flatC.slice().sort((a, b) => Store.effectiveMastery(a.id) - Store.effectiveMastery(b.id))[0]; nextVerb = "Review weakest"; }
+    const remMin = flatC.filter(l => !Store.isLessonDone(l.id)).reduce((a, l) => a + (l.minutes || 10), 0);
+    const nextCta = nextL ? `<a class="btn primary" href="#/lesson/${c.id}/${nextL.id}" data-route>▶ ${nextVerb}: ${esc(nextL.title)}</a>` : "";
     const modules = c.modules.map((m, mi) => {
       const rows = m.lessons.map(l => {
         const done = Store.isLessonDone(l.id);
@@ -425,11 +443,14 @@
         </div>
       </div>
       <p style="color:var(--ink-soft);max-width:640px;margin:-14px 0 28px" class="reveal">${esc(c.blurb)}</p>
-      <div class="mini-bar reveal" style="height:8px;margin-bottom:18px;max-width:none"><div class="mini-fill" style="width:${p.pct}%;background:${c.color}"></div></div>
-      <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px">
+      <div class="mini-bar reveal" style="height:8px;margin-bottom:14px;max-width:none"><div class="mini-fill" style="width:${p.pct}%;background:${c.color}"></div></div>
+      ${masteryBar}
+      <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;align-items:center">
+        ${nextCta}
         <a class="btn ghost" href="#/cheatsheet/${c.id}" data-route>📄 Cheatsheet</a>
         <a class="btn ghost" href="#/placement/${c.id}" data-route>🎚️ Placement test</a>
         <a class="btn ghost" href="#/test" data-route>📝 Quiz me</a>
+        ${remMin > 0 ? `<span class="viz-note" style="margin-left:auto">~${remMin} min of reading left</span>` : `<span class="viz-note" style="margin-left:auto;color:var(--sage)">✓ all lessons complete</span>`}
       </div>
       ${modules}
       ${refsBlock(c.id, "References for " + c.title)}

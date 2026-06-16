@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 69 — Course-page overview: mastery distribution + "continue/start next" CTA (UI/UX)
+The course page is the main navigation hub into each topic's now-large content, but its header only showed a
+flat progress %. Added an at-a-glance **mastery distribution bar** — a segmented strip showing how many of the
+topic's lessons are New / Seen / Learning / Proficient / Mastered, with a small legend (and a `role="img"`
+label for screen readers) — so you can see where your knowledge actually stands, not just how many lessons
+you've opened. Added a prominent **"▶ Continue / Start: <next lesson>" CTA** that jumps straight to your
+ready-frontier (or first unstarted) lesson — no scrolling to find where you left off — plus a **"~N min of
+reading left"** readout (or a "✓ all lessons complete" note). Pure UI/UX, no new state. SW cache → `atlas-v15`.
+Verified: renders with a multi-segment distribution + "Continue" CTA when there's progress (desktop) and a
+single-segment "Start" CTA on a fresh profile (390px mobile); errs=0 across 9 routes; `node gate.js` ALL GREEN.
+
 ## iter 68 — "Daily Mix": a one-click guided study session (new functionality)
 For a busy self-learner the hardest part is deciding *what* to do in a spare 15 minutes — the dashboard's
 entry points (resume, due cards, weak-spot drill, concept of the day) are all there but scattered. Daily Mix
