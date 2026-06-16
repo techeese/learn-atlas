@@ -20,9 +20,10 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <button class="skip-link" id="skip-link">Skip to content</button>
   <div class="shell">
     <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar" aria-label="Sidebar">
       <div class="brand" onclick="location.hash='#/'">
         <div class="glyph">A</div>
         <div>
@@ -31,8 +32,8 @@
         </div>
       </div>
 
-      <nav class="nav">
-        <a href="#/" data-route><span class="i">⌂</span> Dashboard</a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#/" data-route><span class="i" aria-hidden="true">⌂</span> Dashboard</a>
         <a href="#/review" data-route><span class="i">⚡</span> Daily Review</a>
         <a href="#/test" data-route><span class="i">📝</span> Spawn a Test</a>
         <a href="#/lab" data-route><span class="i">🎛️</span> Visualization Lab</a>
@@ -58,7 +59,7 @@
     <!-- Main -->
     <div class="main">
       <header class="topbar">
-        <button class="menu-btn" id="menu-btn">☰</button>
+        <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-controls="sidebar">☰</button>
         <div class="level-badge">
           <div class="level-ring" id="ring"><span id="ring-num">1</span></div>
           <div class="level-meta">
@@ -77,7 +78,7 @@
         </div>
       </header>
 
-      <main id="app"></main>
+      <main id="app" tabindex="-1" aria-label="Main content"></main>
     </div>
   </div>
 

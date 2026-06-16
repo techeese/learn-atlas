@@ -11,11 +11,12 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
 - **QUESTION BANK — phase 1 DONE (iters 7–9): all 6 topics at ~8 MCQs/lesson, bank 452 → 897.** Mastery mode
   (iter 6) recycles misses until passed. Standing low-priority job: keep topping up weak/thin lessons toward
   ~10/lesson over time, but this is no longer the lead — INTERLEAVE it with the rest of the compass now.
-- **NOW INTERLEAVE (bank goal met):** rotate the compass — new visualizations for concepts that lack one
-  (PCA/eigenbasis, convolution, MDP policy iteration, Bayes; DONE: neural-net forward pass, attention heatmap), more inline viz/code embeds,
-  UI/animation polish, accessibility (reduced-motion, ARIA, focus), onboarding/empty-states, a glossary.
-- More inline visualizations: build NEW widgets for high-value concepts that lack one
-  (PCA/eigenbasis, convolution, attention heatmap, Bayes, MDP policy iteration) and embed them.
+- **NOW INTERLEAVE (bank goal met):** rotate the compass each iteration — don't repeat an area twice running.
+  - New visualizations for concepts that lack one: PCA/eigenbasis, convolution, MDP policy iteration, Bayes,
+    RNN unrolling. (DONE: neural-net forward pass, attention heatmap, + the original 10.)
+  - UI/animation polish & juice (confetti on level-up, XP-gain float, smoother transitions).
+  - Onboarding/first-visit tour, better empty states, a hover-glossary of key terms.
+  - (DONE iter 11: accessibility — reduced-motion, focus-visible, ARIA, skip link, live-region toasts.)
 
 ## Improvement compass — rotate; broken always wins; biggest value first
 1. **Content details** — depth, accuracy, missing sub-topics, new lessons/modules, worked examples.

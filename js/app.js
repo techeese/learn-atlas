@@ -97,7 +97,7 @@
   // ---------- toast ----------
   let toastWrap;
   function toast(icon, title, desc) {
-    if (!toastWrap) { toastWrap = document.createElement("div"); toastWrap.className = "toast-wrap"; document.body.appendChild(toastWrap); }
+    if (!toastWrap) { toastWrap = document.createElement("div"); toastWrap.className = "toast-wrap"; toastWrap.setAttribute("role", "status"); toastWrap.setAttribute("aria-live", "polite"); document.body.appendChild(toastWrap); }
     const el = document.createElement("div");
     el.className = "toast";
     el.innerHTML = `<div class="t-ico">${icon}</div><div><div class="t-t">${esc(title)}</div><div class="t-d">${esc(desc)}</div></div>`;
@@ -129,9 +129,9 @@
     // highlight active nav
     const hash = location.hash || "#/";
     document.querySelectorAll("[data-route]").forEach(a => {
-      a.classList.toggle("active", a.getAttribute("href") === hash ||
-        (hash.startsWith("#/course/") && a.getAttribute("href") === hash) ||
-        (a.getAttribute("href") === "#/" && hash === "#/"));
+      const active = a.getAttribute("href") === hash || (a.getAttribute("href") === "#/" && hash === "#/");
+      a.classList.toggle("active", active);
+      if (active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
     });
   }
 
@@ -1202,6 +1202,7 @@
     window.addEventListener("hashchange", router);
     window.addEventListener("keydown", e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openPalette(); } });
     const sb = document.getElementById("search-btn"); if (sb) sb.addEventListener("click", openPalette);
+    const skip = document.getElementById("skip-link"); if (skip) skip.addEventListener("click", () => { app.focus(); app.scrollIntoView(); });
     router();
     flushAchievements();
     if (Store.freezeJustUsed()) toast("❄️", "Streak saved!", "A freeze covered the day you missed.");

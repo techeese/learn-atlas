@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 11 — Accessibility pass (accessibility)
+Rotated to a neglected area. Added: a `prefers-reduced-motion` media query that disables reveals/transitions/
+animations for users who ask for less motion; `:focus-visible` outlines on every interactive element
+(nav, buttons, choices, cards, tabs) for keyboard users; a "Skip to content" link; `aria-current="page"`
+on the active nav item; `aria-label`s on the icon-only menu button and nav landmarks; `aria-hidden` on
+decorative glyphs; and a polite `aria-live` region for toasts so achievements are announced to screen readers.
+Verified: all routes errs=0, aria-current + skip link working, no visual regression.
+
 ## iter 10 — Two new interactive visualizations: neural-net forward pass + attention heatmap (visualizations)
 Interleaving off the question-bank run: built two widgets that filled the biggest viz gaps. **Neural Network
 Forward Pass** (dl-neural-net) — drag 3 inputs, watch weighted sums → ReLU hidden → softmax outputs with
