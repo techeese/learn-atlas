@@ -362,7 +362,8 @@
       ${cdHtml}
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px" class="reveal">
-        <a class="btn primary" href="#/review" data-route>⚡ Review ${st.dueCount} due card${st.dueCount === 1 ? "" : "s"}</a>
+        <a class="btn primary" href="#/session" data-route>🎯 Start Daily Mix</a>
+        <a class="btn" href="#/review" data-route>⚡ Review ${st.dueCount} due card${st.dueCount === 1 ? "" : "s"}</a>
         <a class="btn" href="#/test" data-route>📝 Spawn a test</a>
         <a class="btn ghost" href="#/map" data-route>🗺️ Knowledge Map</a>
         <a class="btn ghost" href="#/lab" data-route>🎛️ Visualization Lab</a>
@@ -627,7 +628,8 @@
     runFlashcards(body, cards, "Lesson flashcards");
   }
 
-  function runFlashcards(body, cards, label) {
+  function runFlashcards(body, cards, label, opts) {
+    opts = opts || {};
     if (!cards.length) { body.innerHTML = emptyState("🃏", "No flashcards here yet."); return; }
     let i = 0, flipped = false, reviewed = 0;
     function draw() {
@@ -682,9 +684,12 @@
         <h3 style="font-family:var(--font-disp);font-size:28px;margin:12px 0">Deck cleared</h3>
         <p style="color:var(--ink-soft)">Reviewed ${reviewed} card${reviewed === 1 ? "" : "s"} · +${reviewed * 4} XP</p>
         <p style="color:var(--ink-mute);margin-top:6px">Spaced-repetition will resurface them when it's time.</p>
-        <button class="btn primary" id="again-deck" style="margin-top:18px">↻ Run deck again</button>
+        ${opts.onDone
+          ? `<button class="btn primary" id="deck-continue" style="margin-top:18px">${esc(opts.continueLabel || "Continue →")}</button>`
+          : `<button class="btn primary" id="again-deck" style="margin-top:18px">↻ Run deck again</button>`}
       </div>`;
-      document.getElementById("again-deck").addEventListener("click", () => { i = 0; reviewed = 0; draw(); });
+      if (opts.onDone) document.getElementById("deck-continue").addEventListener("click", opts.onDone);
+      else document.getElementById("again-deck").addEventListener("click", () => { i = 0; reviewed = 0; draw(); });
       flushAchievements();
     }
     draw();
@@ -830,6 +835,66 @@
     bindGo();
     if (due.length) runFlashcards(document.getElementById("review-body"), shuffle(due), "Due across all topics");
     else document.getElementById("review-body").innerHTML = emptyState("✅", "Inbox zero. Your memory is up to date.");
+  }
+
+  // ---------- Daily Mix: a one-click guided session (review → quiz → next lesson) ----------
+  function viewSession() {
+    // phase 1: due flashcards (capped)
+    const due = [];
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => (l.flashcards || []).forEach((card, i) => {
+      const id = l.id + ":" + i; if (Store.cardDue(id)) due.push({ c: card, id });
+    }))));
+    const cardMix = shuffle(due).slice(0, 8);
+    // phase 2: quiz — prefer weak spots, else recently-completed material
+    const weak = {}; Store.weakSpots().forEach(w => weak[w.lessonId] = 1);
+    let qpool = allQuestions().filter(q => weak[q.lessonId]); let qLabel = "weak spots";
+    if (qpool.length < 4) {
+      const done = {}; C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (Store.isLessonDone(l.id)) done[l.id] = 1; })));
+      const dp = allQuestions().filter(q => done[q.lessonId]);
+      if (dp.length >= 4) { qpool = dp; qLabel = "recent material"; }
+    }
+    const quizMix = shuffle(qpool).slice(0, 6);
+    // phase 3: a concrete next lesson to learn
+    const cd = dailyConcept(); const nextLesson = cd && cd.node ? cd.node : null;
+
+    const seq = [];
+    if (cardMix.length) seq.push("cards");
+    if (quizMix.length >= 3) seq.push("quiz");
+    seq.push("finish");
+    let step = 0;
+    const names = { cards: "🃏 Review", quiz: "✎ Quiz", finish: "🎉 Done" };
+    const stepsBar = active => `<div class="sess-steps reveal">${seq.map(k => `<span class="sess-step ${k === active ? "active" : seq.indexOf(k) < seq.indexOf(active) ? "done" : ""}">${names[k]}</span>`).join("")}</div>`;
+    const crumb = `<div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Daily Mix</div>`;
+
+    function adv() { step++; go(); }
+    function go() {
+      const key = seq[step];
+      if (key === "cards") {
+        app.innerHTML = `<div class="view">${crumb}<div class="page-head reveal"><div class="eyebrow">Daily Mix</div><h2>Warm up: <em>due flashcards</em></h2><p>${cardMix.length} card${cardMix.length === 1 ? "" : "s"} due. Grade honestly, then we'll move to a quick quiz.</p></div>${stepsBar("cards")}<div id="sess-body"></div></div>`;
+        bindGo();
+        runFlashcards(document.getElementById("sess-body"), cardMix, "Daily Mix · review", { onDone: adv, continueLabel: seq[step + 1] === "quiz" ? "Continue to quiz →" : "Finish →" });
+      } else if (key === "quiz") {
+        runTest(quizMix, "Daily Mix · " + qLabel, { onDone: adv });
+      } else {
+        const lc = nextLesson ? nextLesson.course.id : null, ll = nextLesson ? nextLesson.lesson.id : null;
+        const didWork = cardMix.length || quizMix.length >= 3;
+        app.innerHTML = `<div class="view">${crumb}
+          <div class="page-head reveal"><div class="eyebrow">Daily Mix complete</div><h2>${didWork ? "Nice work today 🎉" : "Ready to learn"}</h2></div>
+          ${stepsBar("finish")}
+          <div class="sess-done reveal">
+            <div class="sess-done-ico">${didWork ? "🎯" : "📖"}</div>
+            <p>${didWork
+              ? `You cleared ${cardMix.length} due card${cardMix.length === 1 ? "" : "s"}${quizMix.length >= 3 ? ` and a ${quizMix.length}-question quiz` : ""}. Keep the streak alive.`
+              : "Nothing was due to review yet — the best move is to learn something new."}</p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+              ${nextLesson ? `<a class="btn primary" href="#/lesson/${lc}/${ll}" data-route>▶ Learn next: ${esc(nextLesson.lesson.title)}</a>` : ""}
+              <a class="btn ghost" href="#/" data-route>Back to dashboard</a>
+            </div>
+          </div></div>`;
+        bindGo();
+      }
+    }
+    go();
   }
 
   // ---------- examples tab ----------
@@ -1003,7 +1068,7 @@
         <div class="big">${pct}%</div>
         <p style="color:var(--ink-soft);font-size:18px">${correct} of ${items.length} correct · ${esc(label)}</p>
         <p style="color:var(--ink-mute);margin:6px 0 20px">+${correct * 8}${items.length >= 10 && correct === items.length ? " +50 perfect bonus" : ""} XP</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn primary" id="t-again">↻ New test</button><a class="btn ghost" href="#/" data-route>Done</a></div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">${opts.onDone ? `<button class="btn primary" id="t-continue">Continue →</button>` : `<button class="btn primary" id="t-again">↻ New test</button><a class="btn ghost" href="#/" data-route>Done</a>`}</div>
       </div>
       <div class="hw reveal" style="margin-top:30px"><div class="module-head"><span class="mnum">📋</span><h3>Review</h3></div>
         ${items.map((it, k) => { const ok = answers[k] === it.q.answer; return `<div class="hw-item" style="border-color:${ok ? "var(--sage-deep)" : "var(--rust)"}">
@@ -1014,7 +1079,8 @@
         </div>`; }).join("")}
       </div></div>`;
       bindGo();
-      document.getElementById("t-again").addEventListener("click", () => { location.hash = "#/test"; });
+      if (opts.onDone) document.getElementById("t-continue").addEventListener("click", opts.onDone);
+      else document.getElementById("t-again").addEventListener("click", () => { location.hash = "#/test"; });
       flushAchievements(); renderChrome(); typeset();
     }
     function finishPlacement() {
@@ -1463,7 +1529,7 @@
       c.modules.forEach(m => m.lessons.forEach(l => out.push({ t: l.title, sub: c.title, hash: "#/lesson/" + c.id + "/" + l.id, icon: "📖" })));
     });
     (window.VIZ_CATALOG || []).forEach(v => out.push({ t: v.title, sub: "Visualization", hash: "#/lab/" + v.id, icon: "🎛️" }));
-    [["Dashboard", "#/", "⌂"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Glossary", "#/glossary", "📔"], ["Library", "#/library", "📚"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
+    [["Dashboard", "#/", "⌂"], ["Daily Mix", "#/session", "🎯"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Glossary", "#/glossary", "📔"], ["Library", "#/library", "📚"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
     (window.GLOSSARY || []).forEach(e => out.push({ t: e.term, sub: "Glossary", hash: "#/glossary", icon: "📔" }));
     Object.keys(window.REFERENCES || {}).forEach(k => (window.REFERENCES[k] || []).forEach(r => out.push({ t: r.title, sub: "Reference · " + r.by, hash: r.url, ext: true, icon: "🔖" })));
     return out;
@@ -1511,6 +1577,7 @@
     else if (parts[0] === "course") viewCourse(parts[1]);
     else if (parts[0] === "lesson") viewLesson(parts[1], parts[2]);
     else if (parts[0] === "review") viewReview();
+    else if (parts[0] === "session") viewSession();
     else if (parts[0] === "test") viewTest();
     else if (parts[0] === "lab") parts[1] ? viewLabItem(parts[1]) : viewLab();
     else if (parts[0] === "map") viewMap();

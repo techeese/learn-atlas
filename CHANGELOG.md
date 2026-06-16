@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 68 — "Daily Mix": a one-click guided study session (new functionality)
+For a busy self-learner the hardest part is deciding *what* to do in a spare 15 minutes — the dashboard's
+entry points (resume, due cards, weak-spot drill, concept of the day) are all there but scattered. Daily Mix
+(new `#/session` route, a "🎯 Start Daily Mix" button on the dashboard + ⌘K) chains them into one guided flow
+with a step indicator: **(1) Review** up to 8 due flashcards → **(2) Quiz** a 6-question check drawn from your
+weak spots (falling back to recently-completed material) → **(3) Next** a concrete "Learn next" lesson from the
+ready frontier. The sequence adapts — phases with nothing to do are skipped (a brand-new user with no due cards
+or completed lessons goes straight to a lesson suggestion). Built by adding a small `onDone` callback to the
+existing `runFlashcards` and `runTest` engines (so each phase's result screen offers "Continue →" instead of
+"retry") and an orchestrating `viewSession()` — no duplication of the card/quiz logic, and no new persisted
+state. SW cache → `atlas-v14`. Verified with a polling driver through the entire flow: cards → quiz → finish
+all reached with errs=0; renders desktop + 390px; the adaptive skip works; `node gate.js` ALL GREEN.
+
 ## iter 67 — Decoding playground visualization: temperature + top-p nucleus (visualizations)
 A new interactive widget (`llm-decoding`, the 21st) for the highest-leverage inference-time knob in applied
 LLM work — and `l-decoding-strategies` ("Decoding Strategies and Sampling") had no visual. It shows a fixed
