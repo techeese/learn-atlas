@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 14 — New visualization: PCA / principal components (visualizations)
+Built la-pca, the LA→ML bridge concept. Tilt (angle) and stretch a 64-point data cloud; the widget computes
+the covariance, finds its eigenvectors analytically, and draws PC1 (gold, max-variance axis) + PC2 (sage),
+reporting the % variance PC1 captures. "Project onto PC1" drops a perpendicular from every point to the axis
+(violet) — the literal 1-D dimensionality reduction. Embedded in the Low-Rank/PCA lesson. Lab catalog 12 → 13.
+Verified: errs=0, widget renders and the projection path works.
+
 ## iter 13 — Onboarding: first-visit welcome tour (understandability)
 A new learner now gets oriented instead of dropped into a feature-dense app. A first-visit modal introduces
 Atlas and its four pillars — Learn (lessons + viz), Master (Mastery-mode tests), Navigate (Knowledge
