@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 47 — Worked examples for 9 Linear Algebra lessons (content; owner-requested)
+"Examples when we need it": added 18 worked examples (2 each) to nine LA lessons that had none —
+la-vectors-operations, la-dot-product-norms, la-span-independence, la-inverse-and-systems,
+la-orthonormal-gram-schmidt, la-matrix-multiplication, la-projection-least-squares, la-basis-dimension,
+la-matrices-as-transformations. Each is `{title, body, solution}` with KaTeX-rendered working behind a
+"Show working" reveal. Authored then adversarially verified by a workflow; 5 purely-conceptual LA lessons
+correctly received none. LA examples 5 → 23 (40 total). Verified: Examples tab renders on
+la-matrix-multiplication (screenshot), `node gate.js` ALL GREEN, all-routes errs=0.
+
 ## iter 46 — "Unlocked" feedback when a lesson opens new concepts (gamification / learning flow)
 Completing a lesson now tells you what it opened up: if it was the last missing prerequisite for other
 concepts, a "🔓 Unlocked N concept(s): <title>" toast fires alongside the +50 XP — concrete momentum feedback
