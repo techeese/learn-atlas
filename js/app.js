@@ -729,7 +729,7 @@
       const masteredN = total - remaining.size;
       app.innerHTML = `
       <div class="view"><div class="quiz reveal">
-        <div class="q-progress">${esc(label)} · Mastery mode — <b style="color:var(--sage)">${masteredN}/${total} mastered</b>${queue.length > 1 ? ` · ${queue.length} in queue` : ""}</div>
+        <div class="q-progress">${esc(label)} · Mastery mode — <b style="color:var(--sage)">${masteredN}/${total} mastered</b>${queue.length > 1 ? ` · ${queue.length} in queue` : ""} · <kbd>1</kbd>–<kbd>4</kbd> answer</div>
         <div class="mastery-track"><div class="mastery-track-fill" style="width:${Math.round(masteredN / total * 100)}%"></div></div>
         <div class="q-stem">${q.q}</div>
         <div class="choices">${q.choices.map((ch, ci) => `<button class="choice" data-ci="${ci}"><span class="key">${String.fromCharCode(65 + ci)}</span><span>${ch}</span></button>`).join("")}</div>
@@ -777,7 +777,7 @@
       const q = items[i].q;
       app.innerHTML = `
       <div class="view"><div class="quiz reveal">
-        <div class="q-progress">${esc(label)} · Question ${i + 1} of ${items.length}</div>
+        <div class="q-progress">${esc(label)} · Question ${i + 1} of ${items.length} · <kbd>1</kbd>–<kbd>4</kbd> answer · <kbd>↵</kbd> next</div>
         <div class="q-stem">${q.q}</div>
         <div class="choices">${q.choices.map((ch, ci) => `<button class="choice ${answers[i] === ci ? "sel" : ""}" data-ci="${ci}"><span class="key">${String.fromCharCode(65 + ci)}</span><span>${ch}</span></button>`).join("")}</div>
         <div style="display:flex;gap:12px;margin-top:26px;flex-wrap:wrap">
