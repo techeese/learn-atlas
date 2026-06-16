@@ -52,4 +52,13 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
 - **Broken always wins**: a real bug / console error / broken render preempts everything.
 
 ## Notes / discoveries
+- **Architecture review (iter 36):** layer discipline is clean — content in `data/*.js`, visualizations in
+  `js/viz.js` (818 ln, cohesive registry of 18 widgets), playground in `js/playground.js`, state + SM-2 +
+  mastery in `js/store.js` (374 ln), all app/router/views in `js/app.js` (1381 ln), styles in `css/styles.css`.
+  `js/app.js` is the only large file; it's ONE IIFE whose ~40 view/helper functions share closure vars
+  (`app`, `esc`, `C`, `index`, `bindGo`, `typeset`, `flushAchievements`, …), so a split needs a shared-context
+  object — high-coupling, partially unverifiable (render behavior), low immediate value. **Verdict: healthy;
+  no clean+safe+worthwhile extraction now. Defer the shared-context split until app.js becomes painful** (the
+  overlay layer — confetti/levelup/intro/palette/studyKeys — is the cleanest future leaf). `node gate.js`
+  guards the data layer.
 - (loop appends findings here)

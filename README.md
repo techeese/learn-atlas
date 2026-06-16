@@ -1,11 +1,15 @@
 # Atlas — Personal Learning Codex
 
+**Live: https://techeese.github.io/learn-atlas/**
+
 A gamified, self-hosted study site for the topics you're learning alongside a full-time job:
 **Linear Algebra, Calculus, Algorithms, Deep Learning, Reinforcement Learning, and LLMs**.
 
-Each topic has lectures (with rendered math), multiple-choice quizzes, spaced-repetition
-flashcards, and homework with hints + solutions — wrapped in an XP / level / streak /
-achievement system to keep you coming back.
+Currently **113 lessons · 897 fact-checked MCQs · 678 flashcards · 337 homework problems · 18 interactive
+visualizations**, each lesson with rendered math, worked examples, and spaced-repetition cards — wrapped in
+an XP / level / streak / mastery / achievement system designed to make hard ideas *click* and *stick*.
+
+Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys to GitHub Pages on push.
 
 ## Features
 
@@ -14,25 +18,26 @@ achievement system to keep you coming back.
 - **Quizzes** — instant feedback + explanations; earns XP, perfect-score bonus.
 - **Flashcards** — SM-2-style spaced repetition. A global **Daily Review** surfaces every card that's due across all topics.
 - **Homework** — practice problems with progressive hints and full solutions.
-- **Visualization Lab** — interactive canvas widgets: drag vectors, morph space with a 2×2 matrix, watch gradient descent overshoot, animate sorting, solve a gridworld with value iteration, explore embedding arithmetic, and more. Embed any widget in a lesson with `<div data-viz="ID"></div>`.
-- **Spawn a Test** — build a custom exam on demand from the question bank. By default it draws **only from lessons you've completed**, so you're never tested on what you haven't seen. Scope by topic or everything; 5/10/20 questions; full review afterwards.
-- **Learning paths (knowledge dependencies)** — every lesson knows its prerequisites (explicit `prereqs` + the lessons before it in its course). Open any concept's path to get the ordered chain to learn from the beginning.
-- **Concept of the Day** — a deterministic daily pick on the dashboard, with a chance to surface an advanced concept you haven't reached yet.
-- **Mastery model** — every concept tracks a decaying mastery score (from quizzes, flashcards, tests). Drives per-lesson mastery bars, a mastery distribution, "weak spots", and the Knowledge Map colors. Turns "I read it" into "I know it."
-- **Knowledge Map** — a visual graph of every concept and its prerequisites, nodes colored by your mastery; hover to trace a concept's dependency chain, click to open.
-- **Code Playground** — run real **Python** (via Pyodide, incl. numpy) and **JavaScript** in the browser. Embed an exercise in a lesson with `<div data-code="python" data-expected="...">starter</div>`.
-- **Command palette (⌘K / Ctrl+K)** — fuzzy search across all concepts, visualizations, pages, and references.
-- **Per-lesson notes** — your own notes on each lesson, saved locally.
-- **Daily goal + activity heatmap** — set a daily XP target; a GitHub-style heatmap shows your study streak.
-- **Streak freezes** — earn a freeze every 7-day streak; it auto-covers a single missed day so your streak survives.
-- **Cheatsheets** — a printable, per-topic quick-reference auto-built from the flashcards (Print / Save-PDF).
-- **Placement diagnostic** — a quick per-topic test that marks concepts you already know, so you can skip ahead.
-- **Progress export / import** — download your progress as JSON and restore it on another device.
-- **Installable PWA / offline** — add to home screen; the app shell + content are cached for offline study (CDN extras like Pyodide need a connection).
-- **Library** — a curated set of the best external references (book/video/course/paper/interactive) per topic.
-- **Gamification** — XP, 10 named levels (Novice → Polymath), daily streak, 16 achievements.
-- **Two themes** — "Ink" (dark academia) and "Parchment" (light), toggle in the sidebar.
-- **Zero build step.** Pure HTML/CSS/JS. All progress saved in your browser's `localStorage`.
+- **Visualization Lab — 18 interactive widgets**: drag vectors, morph space with a 2×2 matrix, eigenvectors, the derivative, gradient descent (1-D and a 2-D contour map), sorting, Big-O growth, activation functions, a neural-net forward pass, an attention heatmap, PCA, convolution & feature maps, RNN unrolling, a gridworld solved by value iteration, embedding arithmetic, Bayes & base rates, and k-means clustering. Each is embedded inline in the lesson it illustrates, and embeddable anywhere with `<div data-viz="ID"></div>`.
+- **Spawn a Test (Mastery mode)** — build a custom exam from the 897-question bank; scope it to *only what you've completed*, your *weak spots*, a topic, or everything; 5/10/20/40 questions. **Mastery mode (default on)** re-queues every wrong answer until you get it right — no casual remembering.
+- **Mastery model** — every concept tracks a decaying mastery score (from quizzes, flashcards, tests). Drives per-lesson mastery bars, a mastery distribution, "weak spots", smarter tests, and the Knowledge Map colors. Turns "I read it" into "I know it."
+- **Knowledge Constellation** — a radial map of all 113 concepts branching out from a central hub (foundations near the core, advanced toward the rim), cross-topic prerequisites arcing through the middle, nodes colored by mastery; hover to trace dependencies, click to open. Fits-to-width on mobile.
+- **Learning paths + per-lesson Connections** — every lesson knows its prerequisites; open a concept's path for the ordered chain from the beginning, and each lecture ends with "Builds on / Leads to" chips to navigate the graph while reading.
+- **Code Playground** — run real **Python** (via Pyodide, incl. numpy) and **JavaScript** in the browser; in-lesson exercises self-check with `<div data-code="python" data-expected="...">starter</div>`.
+- **Glossary** — 48 plain-language definitions of the core terms across all six topics, searchable (and in ⌘K).
+- **Command palette (⌘K / Ctrl+K)** — relevance-ranked search across concepts, visualizations, pages, glossary terms, and references.
+- **Keyboard shortcuts** — 1–4 to answer any MCQ, Space to flip flashcards (then 1–4 to grade), Enter to advance.
+- **Spaced repetition done right** — SM-2 scheduling with Anki-style interval previews on the grade buttons, a global **Daily Review** with a due-load forecast (now / 24h / 7 days), and weak concepts that resurface automatically.
+- **Concept of the Day** + **"Continue where you left off"** resume card on the dashboard.
+- **Daily goal + activity heatmap + streak freezes**; **Cheatsheets** (print/PDF); **Placement diagnostic** to skip ahead; **Progress export/import**; **Library** of curated references.
+- **Gamification** — XP, 10 named levels (Novice → Polymath) shown as a ranks ladder, daily streak, **20 achievements**, and a level-up confetti celebration.
+- **Accessible** — reduced-motion support, focus-visible, ARIA + live regions, a skip link, and an adjustable reading text size.
+- **Installable PWA / offline** — add to home screen; app shell + content cached; a graceful "new version available" prompt on updates.
+- **First-visit tour**, **two themes** (Ink / Parchment).
+- **Tooling** — `node gate.js` validates the whole data layer (no dup ids, MCQ answer ranges, flashcards, `data-viz` ids, prereq ids).
+- **Zero build step.** Pure HTML/CSS/JS; all progress in your browser's `localStorage`.
+
+This platform is maintained by an autonomous improvement loop (`/improve-atlas`); see `CHANGELOG.md` for the per-iteration history and `ROADMAP.md` for the queue.
 
 ## Run it locally
 
