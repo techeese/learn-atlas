@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 37 — Visualization Lab links each widget to its lesson (understandability / navigation)
+The Lab was a dead-end — you could play with a widget but not jump to where it's taught. Each lab card now
+shows "↳ <lesson title>", and a widget's page has a "📖 Read the lesson: <title> →" button (plus the topic
+link), resolved by scanning lesson content for the embedded `data-viz` id. All 18 widgets link correctly.
+Gate ALL GREEN, errs=0.
+
+## iter 36 — README brought current + architecture review (docs / maintenance)
+Updated the stale README to the real platform (18 widgets, 20 achievements, 897 MCQs, Mastery mode, the radial
+Constellation, glossary, keyboard shortcuts, connections, ranks ladder, SRS interval previews + forecast,
+accessibility, the PWA update prompt, `gate.js`, and the live URL). Logged an architecture review in ROADMAP:
+layers are clean, `app.js` is large but cohesive (one IIFE with shared closures), so the shared-context split
+is deferred until it's painful. Docs-only at runtime; gate ALL GREEN.
+
 ## iter 35 — Review-load forecast on the Daily Review (spaced repetition)
 Pairs with iter 34's interval previews: the Daily Review now opens with a forecast strip — due now / next 24h
 / next 7 days / cards in rotation — computed from each card's stored due date, so you can see your upcoming

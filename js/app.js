@@ -864,6 +864,12 @@
   }
 
   // ---------- visualization lab ----------
+  // first lesson that embeds a given widget
+  function vizLesson(vizId) {
+    let found = null;
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (!found && (l.content || "").indexOf('data-viz="' + vizId + '"') >= 0) found = { course: c, lesson: l }; })));
+    return found;
+  }
   function viewLab() {
     const cat = window.VIZ_CATALOG || [];
     const byTopic = {};
@@ -871,7 +877,8 @@
     const groups = C().map(c => {
       const items = byTopic[c.id] || []; if (!items.length) return "";
       return `<div class="module reveal"><div class="module-head"><span class="mnum" style="color:${c.color}">${esc(c.icon)}</span><h3>${esc(c.title)}</h3></div>
-        <div class="lab-grid">${items.map(v => `<a class="lab-card" href="#/lab/${v.id}" data-route style="--c:${c.color}"><h4>${esc(v.title)}</h4><p>${esc(v.blurb)}</p><span class="lab-go">Open ↗</span></a>`).join("")}</div></div>`;
+        <div class="lab-grid">${items.map(v => { const vl = vizLesson(v.id);
+          return `<a class="lab-card" href="#/lab/${v.id}" data-route style="--c:${c.color}"><h4>${esc(v.title)}</h4><p>${esc(v.blurb)}</p>${vl ? `<span class="lab-in">↳ ${esc(vl.lesson.title)}</span>` : ""}<span class="lab-go">Open ↗</span></a>`; }).join("")}</div></div>`;
     }).join("");
     app.innerHTML = `
     <div class="view">
@@ -891,7 +898,10 @@
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; <a href="#/lab" data-route>Lab</a> &nbsp;›&nbsp; ${esc(meta.title)}</div>
       <div class="page-head reveal"><div class="eyebrow" style="color:${course ? course.color : "var(--gold)"}">${course ? esc(course.title) : "Visualization"}</div><h2>${esc(meta.title)}</h2><p>${esc(meta.blurb)}</p></div>
       <div class="viz reveal" data-viz="${esc(id)}"></div>
-      ${course ? `<a class="btn ghost reveal" href="#/course/${course.id}" data-route style="margin-top:24px">Study ${esc(course.title)} →</a>` : ""}
+      <div class="lesson-actions">
+        ${(() => { const vl = vizLesson(id); return vl ? `<a class="btn primary" href="#/lesson/${vl.course.id}/${vl.lesson.id}" data-route>📖 Read the lesson: ${esc(vl.lesson.title)} →</a>` : ""; })()}
+        ${course ? `<a class="btn ghost" href="#/course/${course.id}" data-route>All of ${esc(course.title)} →</a>` : ""}
+      </div>
     </div>`;
     bindGo(); hydrateViz(app);
   }
