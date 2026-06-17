@@ -2,6 +2,29 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 214 — Deeper dives for the LLM track + homework celebration fix (understandability · correctness)
+The LLMs topic — the owner's frontier interest — had just **1** "Deeper dive" (it sat in the self-attention lesson),
+while it holds some of the hardest "but *why* that detail?" ideas in modern AI. Added **3** (1 → 4), each a
+`<details class="deep-dive">` on a concept learners most often take on faith:
+- **`l-multihead-and-causal-masking`** — *why attention divides by $\sqrt{d_k}$*: dot products of $d_k$ unit-variance
+  terms have SD $\sqrt{d_k}$, so unscaled scores saturate the softmax (near one-hot, vanishing gradient); dividing by
+  $\sqrt{d_k}$ restores variance ≈1 so heads of any width stay trainable. That's why it's *scaled* dot-product attention.
+- **`l-inference-efficiency`** — *why the KV-cache turns $O(n^3)$ generation into $O(n^2)$*: causal keys/values for the
+  prefix never change, so cache them and attend only the new query — $O(t)$ per step instead of $O(t^2)$; the memory
+  cost is exactly what motivates multi-query/grouped-query attention and cache quantization.
+- **`l-rlhf-and-preference-optimization`** — *how DPO drops the reward model and the RL loop*: the KL-regularized optimum
+  $\pi^\star \propto \pi_{\text{ref}}\exp(r/\beta)$ inverts to express the reward as a policy log-ratio; substituting into
+  the Bradley–Terry loss cancels the normalizer, leaving a single supervised loss on preference pairs.
+**Also fixed a real correctness gap:** the homework "Show solution" handler awarded XP but never called
+`flushAchievements()` — the lone XP path that didn't — so the **Homework-Hero** unlock was silent and (since iter 212)
+the **daily-goal celebration** couldn't fire from homework. Added the call; now every XP-earning action surfaces its
+rewards consistently.
+Injected byte-stably (no-op guard; `String.raw` LaTeX; even-`$` parity + no-raw-markdown pre-checks). Verified:
+`gate.js` ALL GREEN incl. render-hazard lints (2,368 MCQs · 45 widgets); the √d_k dive renders **katex=23, kErr=0,
+errs=0** and fires the **deep-thinker** achievement; the DPO dive (most complex LaTeX) renders **kErr=0/errs=0**;
+all-routes smoke (11 routes incl. all 3 lessons + a homework lesson) **errs=0/kErr=0**. (No money/`<`-in-math, so
+neither render landmine applies.) SW cache `atlas-v156` → `atlas-v157`.
+
 ## iter 213 — Fundamental Theorem of Calculus visualizer: area accumulates (visualizations)
 New widget **`calc-ftc-accumulation`** (the **45th**), embedded in `c-fundamental-theorem` right after the
 "Accumulation Function" section. The FTC is arguably the single most important result in all of calculus, and it had

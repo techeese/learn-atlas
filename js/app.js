@@ -1062,7 +1062,7 @@
       body.querySelector(`[data-sol="${i}"]`).addEventListener("click", () => {
         Store.revealHomework(lesson.id + ":hw" + i);
         document.getElementById("sol-" + i).innerHTML = `<div class="hw-sol"><div class="sl">Solution</div>${h.solution}</div>`;
-        typeset(); renderChrome();
+        typeset(); renderChrome(); flushAchievements();   // surface the Homework-Hero unlock + any daily-goal celebration
       });
     });
     typeset();
