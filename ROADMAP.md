@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 173: MCQ arc → Deep Learning·Generative Models 12→16 (+12, bank →2,132). All 3 lessons (autoencoders-vae/
+   gans/diffusion). ★★ DEEP LEARNING COMPLETE — all 22 DL lessons / 7 modules at 16. Arc has finished 4/7 topics
+   (Algorithms, LA, Calculus, DL). Adversarial agent ALL PASS; positions balanced 3/3/3/3 (distinct patterns); render
+   "of 16" errs=0; SW →v116. ARC REMAINING: Reinforcement Learning, LLMs, Probability & Statistics.
    ✅ iter 172: KL-divergence viz (`dl-kl-divergence`, **39th widget**, visualizations — non-content). Adjustable
    Gaussian posterior q vs fixed prior N(0,1); live KL(q‖p) (the VAE regularizer) + KL(p‖q) asymmetry; "match the
    prior" button drives KL→0 (closed-form, no trained model). Embedded in `dl-autoencoders-vae` (generative module).

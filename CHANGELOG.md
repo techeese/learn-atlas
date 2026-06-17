@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 173 — MCQ arc → Deep Learning · Generative Models 12 → 16 — ★ DEEP LEARNING COMPLETE (content — owner's #1 ask)
+The arc finishes DL's seventh and final module, *Generative Models*. All **three** lessons go 12 → 16 (**+12, bank
+2,120 → 2,132**), stating the bedrock the existing 12 assumed:
+- **Autoencoders & VAEs**: the autoencoder's encoder→bottleneck→decoder structure / generative vs. discriminative /
+  the reparameterization trick's *form* ($z=\mu+\sigma\odot\varepsilon$) / the ELBO's two terms (reconstruction − KL).
+- **GANs**: the generator + discriminator structure / what "adversarial" means (the minimax game) / the equilibrium
+  ($p_g=p_{\text{data}}$, $D\equiv\tfrac12$) / what *mode collapse* is.
+- **Diffusion Models**: the core idea (fixed forward noising + learned reverse denoising) / the forward process /
+  how generation runs (denoise from pure noise) / the training objective (predict the noise $\varepsilon$ with MSE).
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,132 MCQs** (position-bias note even
+  dropped 11→10 lessons — the balanced additions de-skewed another); direct key-dump confirms answer indices map to
+  the intended choices, **balanced 3/3/3/3** with three *distinct* per-lesson patterns (0,2,1,3 / 3,1,2,0 / 1,3,0,2);
+  an independent adversarial fact-check agent returned **ALL PASS** (it validated the ELBO phrasing and the standard
+  DDPM ε-prediction parameterization); render-checks on the GANs and Diffusion quizzes → `errs=0 | "Question 1 of 16"
+  | rawDollars=0 kErr=0`; all-routes smoke (12, incl. the VAE lesson now carrying the iter-172 KL viz) `errs=0`. SW
+  cache **v115 → v116**; README 2,120 → 2,132.
+- ★★ **DEEP LEARNING IS NOW COMPLETE** — all **22 DL lessons across all 7 modules** are at 16 MCQs. The 12→16 arc has
+  now finished **4 of 7 topics** (Algorithms, Linear Algebra, Calculus, Deep Learning). Remaining: Reinforcement
+  Learning, LLMs, Probability & Statistics.
+
 ## iter 172 — KL-divergence visualization (`dl-kl-divergence`, the 39th widget) (visualizations)
 KL divergence is everywhere in this curriculum — the VAE's latent regularizer, PPO's trust region, the cross-entropy/
 LM objective — yet it's abstract and famously *asymmetric*, and had no viz. New `dl-kl-divergence` widget makes it

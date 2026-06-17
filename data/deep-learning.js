@@ -4726,6 +4726,50 @@
               ],
               "answer": 3,
               "explain": "Under an explicit reconstruction likelihood (e.g. squared error), when the model is uncertain the loss is minimized by predicting the mean of plausible pixel values, which appears blurry — the price of the VAE's stable training. This averaging effect, not the reparameterization noise or bottleneck size per se, is the textbook cause."
+            },
+            {
+              "q": "What is the structure of an autoencoder?",
+              "choices": [
+                "An encoder that compresses the input into a low-dimensional latent code, followed by a decoder that reconstructs the input from that code — trained to minimize reconstruction error",
+                "Two networks competing in a minimax game",
+                "A fixed process that adds noise plus a learned process that removes it",
+                "A single classifier that maps each input directly to a label"
+              ],
+              "answer": 0,
+              "explain": "An autoencoder has two halves: an encoder $z=f_\\phi(x)$ that squeezes $x$ through a narrow bottleneck into a latent code, and a decoder $\\hat x=g_\\theta(z)$ that rebuilds $x$. Trained on a reconstruction loss like $\\lVert x-\\hat x\\rVert^2$, the bottleneck forces it to learn the data's efficient, recurring structure."
+            },
+            {
+              "q": "How do generative models differ from discriminative models?",
+              "choices": [
+                "They are always larger and slower than discriminative models",
+                "They require labeled data, whereas discriminative models never do",
+                "They learn the structure/distribution of the data itself so they can create new, realistic samples — rather than only mapping an input $x$ to a label $y$",
+                "They can only classify inputs, never produce new ones"
+              ],
+              "answer": 2,
+              "explain": "A discriminative model learns $p(y\\mid x)$ — given an input, predict a label. A generative model learns the data distribution itself (so it can sample brand-new faces, molecules, sentences). Autoencoders, VAEs, GANs, and diffusion models are all generative."
+            },
+            {
+              "q": "The VAE's reparameterization trick writes the sampled latent code as...",
+              "choices": [
+                "$z = \\mu \\cdot \\sigma$, with no noise term at all",
+                "$z = \\mu + \\sigma\\odot\\varepsilon$ with $\\varepsilon\\sim\\mathcal{N}(0,I)$ — making $z$ a differentiable function of $\\mu,\\sigma$ plus external noise",
+                "$z =$ a fresh random draw that depends on neither $\\mu$ nor $\\sigma$",
+                "$z =$ the raw input $x$ passed straight through unchanged"
+              ],
+              "answer": 1,
+              "explain": "You can't backpropagate through \"sample $z\\sim\\mathcal{N}(\\mu,\\sigma^2)$\" directly. The trick moves the randomness outside the network: $z=\\mu+\\sigma\\odot\\varepsilon$ with $\\varepsilon\\sim\\mathcal{N}(0,I)$, so gradients flow through the deterministic $\\mu$ and $\\sigma$ while $\\varepsilon$ supplies the noise."
+            },
+            {
+              "q": "The VAE's training objective (the ELBO) is made of which two terms?",
+              "choices": [
+                "A generator loss and a discriminator loss",
+                "A noise-prediction MSE and a timestep embedding",
+                "Only a reconstruction term, nothing else",
+                "A reconstruction term (decode $z$ back to $x$) minus a KL term that pulls the encoder's posterior toward the prior $\\mathcal{N}(0,I)$"
+              ],
+              "answer": 3,
+              "explain": "The ELBO $=\\mathbb{E}_{q_\\phi(z\\mid x)}[\\log p_\\theta(x\\mid z)] - D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z))$. The first term rewards faithful reconstruction; the second regularizes each encoded distribution toward the standard-normal prior so the latent space is smooth and gap-free — exactly what lets you generate by sampling $z\\sim\\mathcal{N}(0,I)$."
             }
           ],
           "flashcards": [
@@ -4921,6 +4965,50 @@
               ],
               "answer": 1,
               "explain": "A GAN samples by one pass through $G$, whereas diffusion needs tens-to-thousands of sequential denoising steps, making GANs much faster at inference. The other options are false: diffusion (not GANs) covers modes better and uses a smooth MSE loss; the 'no discriminator at inference' point is true of GANs but is not the latency advantage being asked about (diffusion has no discriminator at all)."
+            },
+            {
+              "q": "A GAN consists of which two components, and what does each do?",
+              "choices": [
+                "An encoder and a decoder that reconstruct the input through a bottleneck",
+                "A fixed noising process and a learned denoising network",
+                "Two identical classifiers trained on the same labels",
+                "A generator that maps random noise to fake samples, and a discriminator that estimates the probability a sample is real — trained adversarially against each other"
+              ],
+              "answer": 3,
+              "explain": "The generator $G$ turns noise $z\\sim\\mathcal{N}(0,I)$ into fakes $G(z)$; the discriminator $D$ outputs $D(x)\\in[0,1]$, the probability that $x$ is real. $G$ never sees real data directly — it learns only through the gradient $D$ relays, so $D$ acts as a learned, adaptive loss function for $G$."
+            },
+            {
+              "q": "What does the \"adversarial\" in Generative Adversarial Network refer to?",
+              "choices": [
+                "Adding adversarial perturbations (noise) to the input images",
+                "The two networks playing a minimax game — the generator tries to fool the discriminator while the discriminator tries to catch the fakes",
+                "Training on a dataset of deliberately hostile, adversarially-collected examples",
+                "A regularizer that penalizes large weights"
+              ],
+              "answer": 1,
+              "explain": "\"Adversarial\" = the two-player minimax game $\\min_G\\max_D V(D,G)$. Like a forger versus a detective, each network's improvement raises the bar for the other; as they co-evolve, the forgeries get sharper."
+            },
+            {
+              "q": "At a GAN's theoretical optimum, what happens?",
+              "choices": [
+                "The discriminator reaches 100% accuracy on every real and fake sample",
+                "The generator's loss reaches exactly zero",
+                "The generator's distribution matches the true data distribution and the discriminator is reduced to guessing ($D\\equiv\\tfrac12$)",
+                "Both networks lose all gradient and their weights freeze at their initial values"
+              ],
+              "answer": 2,
+              "explain": "When the forger becomes perfect ($p_g=p_{\\text{data}}$), the two \"piles of sand\" coincide and no boundary separates them — the best the detective can do is output $\\tfrac12$ everywhere. Generator-matched-to-data with discriminator-at-chance is the fixed point."
+            },
+            {
+              "q": "What is \"mode collapse\" in GAN training?",
+              "choices": [
+                "The generator producing only a few outputs that reliably fool the discriminator, ignoring the diversity of the real data",
+                "The discriminator forgetting how to classify real data",
+                "The loss curve collapsing to zero so training halts",
+                "The latent noise vector shrinking to all zeros"
+              ],
+              "answer": 0,
+              "explain": "Mode collapse is a failure of diversity: $G$ finds a handful of outputs that consistently beat $D$ and emits only those (e.g. one kind of face). The standard objective doesn't penalize it because fooling $D$ sample-by-sample says nothing about covering the whole data distribution."
             }
           ],
           "flashcards": [
@@ -5116,6 +5204,50 @@
               ],
               "answer": 1,
               "explain": "Each example has a concrete target — the actual noise $\\varepsilon$ added — so training is ordinary supervised regression that simply descends, with no second network creating a moving target. This absence of a minimax game is exactly why diffusion avoids GAN-style oscillation and mode collapse."
+            },
+            {
+              "q": "What is the core idea of a diffusion model?",
+              "choices": [
+                "Two networks compete so a forger learns to fool a detective",
+                "Gradually destroy data by adding noise over many steps (a fixed forward process), and train a network to reverse it step by step — then generate by denoising from pure noise",
+                "Compress data through a bottleneck and decode it back",
+                "Predict the next token from the tokens that precede it"
+              ],
+              "answer": 1,
+              "explain": "Diffusion \"learns to generate by learning to destroy\": a fixed forward process drowns data in noise, and a learned network reverses that decay one small step at a time. Run the reversal from pure noise and a coherent sample is sculpted out of static."
+            },
+            {
+              "q": "The forward (noising) process of a diffusion model is...",
+              "choices": [
+                "A learned network that compresses the data into a latent code",
+                "The step in which the model predicts the clean image in one shot",
+                "An adversarial game played against a discriminator",
+                "A fixed (non-learned) process that adds a little Gaussian noise at each of $T$ steps, turning a data point into essentially pure $\\mathcal{N}(0,I)$ noise"
+              ],
+              "answer": 3,
+              "explain": "The forward process is fixed, not trained: $q(x_t\\mid x_{t-1})=\\mathcal{N}(\\sqrt{1-\\beta_t}\\,x_{t-1},\\beta_t I)$. By $t=T$ almost all structure is gone and $x_T$ is essentially standard normal. Its one-shot form lets you jump to any $t$ directly during training."
+            },
+            {
+              "q": "To generate a new sample with a trained diffusion model, you...",
+              "choices": [
+                "Start from pure Gaussian noise and iteratively apply the denoising network, removing a sliver of noise at each step until a clean sample emerges",
+                "Pass a class label through a decoder in a single forward step",
+                "Sample a latent $z$ and decode it once, as a VAE does",
+                "Run the fixed forward noising process forward in time"
+              ],
+              "answer": 0,
+              "explain": "Generation runs the arrow backward: draw $x_T\\sim\\mathcal{N}(0,I)$, then loop $t=T,\\dots,1$ using $\\varepsilon_\\theta(x_t,t)$ to estimate and partially remove the noise (re-adding a touch except at the last step), ending at a clean $x_0$. The cost is many network passes — the speed bottleneck fast samplers attack."
+            },
+            {
+              "q": "What does a diffusion model's network learn to predict, and with what loss?",
+              "choices": [
+                "The next pixel autoregressively, trained with cross-entropy",
+                "The probability a sample is real, trained with a minimax loss",
+                "The noise $\\varepsilon$ that was added to a noised input, trained with a simple mean-squared-error regression — no discriminator, no minimax",
+                "The class label of the image, trained with softmax cross-entropy"
+              ],
+              "answer": 2,
+              "explain": "Training is a plain regression: take a clean $x_0$, a random $t$, form $x_t$ with the one-shot formula, and have the network predict the added noise, minimizing $\\lVert\\varepsilon-\\varepsilon_\\theta(x_t,t)\\rVert^2$. One smoothly-descending loss — no adversarial game — is why diffusion trains far more stably than a GAN."
             }
           ],
           "flashcards": [
