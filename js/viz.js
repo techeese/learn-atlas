@@ -2974,4 +2974,58 @@
     draw();                                                    // synchronous first paint
   });
 
+  /* ========================================================
+     50. Signal propagation across depth: vanishing / exploding (Deep Learning)
+     ===================================================== */
+  register({ id: 'dl-signal-propagation', topic: 'deep-learning', title: 'Why Initialization Matters: Signal Across Depth', blurb: 'Each layer multiplies the typical size of the signal by a gain g set by how big the weights are. Drag g: a touch below 1 and the signal vanishes to nothing across depth; a touch above 1 and it explodes. Good initialization (Xavier/He) is the art of keeping g ≈ 1, so the signal — and its gradients — survive deep networks.' },
+  function (root) {
+    const W = 560, H = 360, MONO = "JetBrains Mono, monospace", L = 24, MAXLOG = 4;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let g = 1.0;
+    const padL = 40, padR = 16, padT = 26, padB = 38;
+    const plotW = W - padL - padR, plotH = H - padT - padB, midY = padT + plotH / 2, bw = plotW / (L + 1);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // signal RMS after layer i = g^i ; plot log10 from a center baseline (preserved = flat at center)
+      // healthy band: |log10(RMS)| <= 1 (within ~10x)
+      const bandH = (1 / MAXLOG) * (plotH / 2);
+      ctx.fillStyle = p.sage; ctx.globalAlpha = 0.10; ctx.fillRect(padL, midY - bandH, plotW, 2 * bandH); ctx.globalAlpha = 1;
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, midY); ctx.lineTo(W - padR, midY); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '9px ' + MONO; ctx.textAlign = 'left'; ctx.fillText('signal preserved (×1)', padL + 3, midY - 4);
+      const lg = Math.log10(g);
+      let finalLog = 0;
+      for (let i = 0; i <= L; i++) {
+        const vlog = i * lg; finalLog = i === L ? vlog : finalLog;
+        const cl = Math.max(-1, Math.min(1, vlog / MAXLOG));
+        const x = padL + i * bw + bw * 0.12, bwid = bw * 0.76, y = midY - cl * (plotH / 2);
+        const danger = Math.abs(vlog) > 2;
+        ctx.fillStyle = i === 0 ? p.gold : (danger ? p.rust : p.sage); ctx.globalAlpha = i === 0 ? 1 : 0.9;
+        if (y <= midY) ctx.fillRect(x, y, bwid, midY - y); else ctx.fillRect(x, midY, bwid, y - midY);
+        ctx.globalAlpha = 1;
+      }
+      // axis labels
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'center';
+      for (let i = 0; i <= L; i += 4) ctx.fillText(i, padL + i * bw + bw * 0.5, H - padB + 14);
+      ctx.fillText('layer depth →', padL + plotW / 2, H - 6);
+      ctx.textAlign = 'right'; ctx.fillStyle = p.rust; ctx.font = '9px ' + MONO;
+      ctx.fillText('explode ↑', W - padR, padT + 8); ctx.fillText('vanish ↓', W - padR, H - padB - 4);
+      // note
+      const finalRMS = Math.pow(g, L);
+      const fmt = finalRMS >= 1000 || finalRMS < 0.001 ? finalRMS.toExponential(1) : finalRMS.toFixed(3);
+      const verdict = Math.abs(finalLog) < 0.5 ? `<span style="color:${p.sage}">stays healthy</span> — signal and gradients survive all ${L} layers (this is what good init buys you).`
+        : (g < 1 ? `<span style="color:${p.rust}">vanishes</span> — by layer ${L} the signal is ×${fmt}, so gradients underflow to ~0 and early layers stop learning.`
+          : `<span style="color:${p.rust}">explodes</span> — by layer ${L} the signal is ×${fmt}, so activations and gradients blow up (NaNs).`);
+      info.innerHTML = `Per-layer gain <b>g = ${g.toFixed(3)}</b>. After ${L} layers the signal is multiplied by g<sup>${L}</sup> = <b>×${fmt}</b>, so it ${verdict} Because the effect is <b>exponential in depth</b>, even g = 0.9 or 1.1 is fatal deep enough — which is why <b>variance-preserving</b> initialization (Xavier for tanh, He for ReLU) aims for g ≈ 1, and why residual connections and normalization exist to hold it there.`;
+    }
+    slider(ctl, { label: 'per-layer gain g', min: 0.7, max: 1.4, step: 0.01, value: g, fmt: v => 'g=' + v.toFixed(2), onInput: v => { g = v; draw(); } });
+    button(ctl, 'too small (0.85)', function () { g = 0.85; draw(); });
+    button(ctl, 'good init (1.0)', function () { g = 1.0; draw(); });
+    button(ctl, 'too big (1.15)', function () { g = 1.15; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Signal-propagation visualizer: bars show the log of the activation RMS after each of 24 layers, given a per-layer gain g. At g=1 the bars stay flat on the center line (signal preserved); below 1 they descend (vanishing) and above 1 they rise (exploding), exponentially in depth. A slider sets g.');
+    draw();                                                    // synchronous first paint
+  });
+
 })();

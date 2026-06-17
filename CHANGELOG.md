@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 229 — Signal-propagation / initialization explorer — the 50th widget (visualizations)
+New widget **`dl-signal-propagation`** (the **50th** — a round milestone), embedded in
+`dl-initialization-and-vanishing-gradients` after the He-init section (it had a deep-dive but no viz). Makes the
+exponential-in-depth heart of vanishing/exploding gradients tangible.
+- Bars show the activation RMS after each of 24 layers, given a per-layer **gain g** (how much the weights scale the
+  signal): plotted on a log scale from a center "preserved (×1)" line. At **g = 1** the bars stay flat; **below 1** they
+  descend (vanish); **above 1** they rise (explode) — exponentially, so even g = 0.9 or 1.1 is fatal deep enough.
+- A **g slider** plus **too small (0.85)** / **good init (1.0)** / **too big (1.15)** presets. The note reports the
+  signal multiplier g²⁴ and a verdict (healthy / vanishes / explodes), tying it back to why Xavier/He aim for g ≈ 1 and
+  why normalization + residuals exist.
+Math validated in node (g=1→×1.0; g=0.85→×0.020; g=1.15→×28.6). Note uses plain HTML (`g<sup>24</sup>`), not `$…$`.
+Verified: `gate.js` ALL GREEN (**50 widgets**, embed resolves); Lab-route run — flat/vanish/explode presets all correct,
+**err=0**; all-routes smoke (10 routes incl. `#/lab/dl-signal-propagation` + the embedded lesson) **errs=0/kErr=0**;
+mobile 390px scales. SW cache `atlas-v171` → `atlas-v172`.
+
 ## iter 228 — Mastery/progress bars sweep up from empty on load (animation/juice)
 Freshest-lane pick (animation was last at iter 212). The course and Progress pages already cascade-count their stats and
 sweep the daily-goal ring, but the **mastery/progress bars snapped to their value statically**. Now they **animate from

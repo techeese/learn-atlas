@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 229: **New viz `dl-signal-propagation` — 50th widget** (visualizations). In dl-initialization-and-vanishing-gradients
+   (had deep-dive, no viz). Per-layer gain g → activation RMS across 24 layers on a log scale: g=1 flat, below vanishes,
+   above explodes (exponential in depth). g slider + too-small/good/too-big presets; note shows g²⁴ + verdict. Math
+   node-validated (g0.85→×0.020; g1.15→×28.6). Verified: gate GREEN (50 widgets); presets correct err=0; smoke errs=0/kErr=0
+   (10 routes); mobile scales. SW →v172. ★ Lab milestone: 50 visualizations.
    ✅ iter 228: **Mastery/progress bars sweep up from 0 on load** (animation/juice — freshest lane, last animation iter 212).
    `sweepBars()` resets each `.mastery-fill` to 0% then restores its inline target on a double-rAF (the existing
    `transition:width .5s` animates it); reduced-motion safe; no new CSS. Module bars given `.mastery-fill` so they sweep too.
