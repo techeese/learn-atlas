@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 202: MCQ arc → **PS·Distributions 12→16** (all 5 lessons — Bernoulli/Binomial, Poisson, Geometric/waiting,
+   Uniform/Exponential, Normal; +20, bank →2,324). Adversarial ALL 20 PASS (arithmetic re-checked); positions balanced
+   0/1/2/3; byte-stable inject; gate GREEN incl. new render-hazard lints (cleared all 20); Poisson+Normal quizzes
+   render "of 16" rawDollars=0 kErr=0; all-routes errs=0; SW →v145. **PS now 2/5 modules.** REMAINING: PS Joint,
+   Inference/Estimation, Hypothesis-Testing.
    ✅ iter 201: **Corpus render-hazard audit + permanent gate lints** (workflow/quality — non-content). Whole-corpus
    static scan (17,964 strings) for silent render-wrong patterns; found+fixed 3 (a `**markdown**` MCQ stem → `<strong>`;
    2 bare `$500` money → `\$`). Added `gate.js` lints: odd unescaped-`$` parity + raw `**`/`__` outside code/math —

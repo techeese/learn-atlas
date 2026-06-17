@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 202 — MCQ arc → PS Distributions module 12→16 (content — owner's #1 ask)
+The 12→16 arc's largest module yet: **Probability & Statistics → Common Distributions**, all **5 lessons 12 → 16
+MCQs** (+20; bank **2,304 → 2,324**). New foundational questions, adversarially fact-checked with arithmetic
+re-verified (**ALL 20 PASS**), answer positions balanced 0/1/2/3 with distinct, non-marching per-lesson patterns:
+- **Bernoulli/Binomial**: $\mathbb{E}=np$, $\text{Var}=np(1-p)$ computed; a BINS "fixed-$n$" violation (stop-on-3rd-head
+  → negative binomial); why the mean needs no independence but the variance does; Bernoulli $=\text{Bin}(1,p)$.
+- **Poisson**: the law-of-rare-events limit ($n\to\infty,p\to0,np=\lambda$); the overdispersion diagnostic
+  (Var$\gg$mean ⇒ Poisson wrong); relative spread $1/\sqrt\lambda$; a PMF computation.
+- **Geometric**: why "geometric" (the series sums to 1); the condition-on-first-trial mean derivation; negative-binomial
+  mean $r/p$; its continuous counterpart = Exponential.
+- **Uniform/Exponential**: Uniform variance $(b-a)^2/12$; the Poisson-counts/Exponential-waits duality; the Exponential
+  density's shape (peak at 0); Exponential mean $1/\lambda$ & variance $1/\lambda^2$.
+- **Normal**: inflection points at $\mu\pm\sigma$; z-score comparison across different-unit tests; an empirical-rule
+  tail ($P(Z<-1)\approx16\%$); a standardize-then-empirical-rule interval ($\mu\pm2\sigma\approx95\%$).
+
+**PS now 2/5 modules at 16** (Foundations ✓, Distributions ✓). Arc: 6/7 topics done; **PS 2/5**.
+Verified: adversarial ALL 20 PASS (arithmetic re-checked); `gate.js` ALL GREEN incl. the new iter-201 render-hazard
+lints (7 topics · 148 lessons · **2,324 MCQs**) — the lints cleared all 20 new items; indices 0/1/2/3-balanced;
+byte-stable injection; Poisson & Normal quizzes render "Question 1 of 16" rawDollars=0 kErr=0; all-routes smoke (10
+routes) errs=0; Bernoulli quiz screenshot clean. SW cache `atlas-v144` → `atlas-v145`.
+
 ## iter 201 — Corpus render-hazard audit + permanent gate lints (workflow / quality — non-content)
 The iter-200 money-`\$` garble had been latent **~117 iterations** because hand render-checks only cover the lessons
 a turn touches. Ran a **whole-corpus static audit** (all 17,964 content strings across 148 lessons) for the silent

@@ -1111,6 +1111,50 @@
               ],
               "answer": 3,
               "explain": "Variance $np(1-p)$ is maximal at $p=0.5$ ($10\\cdot0.25=2.5$) and shrinks toward the extremes: at $p=0.9$ it is $10(0.9)(0.1)=0.9$. A near-certain outcome carries little uncertainty, so the spread drops; variance can never be negative."
+            },
+            {
+              "answer": 2,
+              "q": "For $X \\sim \\text{Bin}(20, 0.3)$, what are the mean and variance?",
+              "choices": [
+                "Mean $0.3$, variance $0.21$ (the per-trial values).",
+                "Mean $6$, variance $\\sqrt{4.2} \\approx 2.05$.",
+                "Mean $np = 6$, variance $np(1-p) = 20(0.3)(0.7) = 4.2$.",
+                "Mean $20$, variance $20$."
+              ],
+              "explain": "A Binomial is a sum of $n$ independent Bernoulli($p$) indicators, so $\\mathbb{E}[X]=np=20(0.3)=6$ and (variances add under independence) $\\text{Var}(X)=np(1-p)=20(0.3)(0.7)=4.2$. Choice B confuses variance with standard deviation; A gives the per-trial moments."
+            },
+            {
+              "answer": 3,
+              "q": "You flip a coin repeatedly and stop as soon as you get your 3rd head, recording the total number of flips. Why is that count NOT Binomial?",
+              "choices": [
+                "The trials aren't binary — \"heads/tails\" is two outcomes, which violates the Binary condition.",
+                "The trials aren't independent, since later flips depend on earlier ones.",
+                "The success probability $p$ changes from flip to flip.",
+                "The number of trials is not fixed in advance — you stop based on the outcomes (waiting for the 3rd success), so $n$ is random. (This is a negative-binomial count, not Binomial.)"
+              ],
+              "explain": "Binomial requires the BINS conditions, including a Number of trials fixed ahead of time. Here you keep flipping until the 3rd head, so the trial count is itself random — a stopping rule, not a fixed $n$. That makes it a negative-binomial random variable. (Binary, Independent, and Same-$p$ all still hold for a fair coin.)"
+            },
+            {
+              "answer": 1,
+              "q": "For a Binomial, $\\mathbb{E}[X]=np$ follows from linearity of expectation, but $\\text{Var}(X)=np(1-p)$ requires an extra assumption the mean did not. Which assumption, and why?",
+              "choices": [
+                "The mean secretly needs independence too; both formulas require it equally.",
+                "Variance needs the trials to be independent (so the cross-covariances vanish and variances add); linearity of expectation holds even for dependent variables, so the mean needs no such assumption.",
+                "Variance needs the trials to be identically distributed, while the mean does not.",
+                "Variance needs $n$ to be large (a normal approximation); the mean is exact for any $n$."
+              ],
+              "explain": "Expectation is linear unconditionally: $\\mathbb{E}[\\sum X_i]=\\sum\\mathbb{E}[X_i]=np$ regardless of dependence. But $\\text{Var}(\\sum X_i)=\\sum\\text{Var}(X_i)$ only when the covariance terms are zero — i.e. when the trials are independent. With independence, $\\text{Var}(X)=np(1-p)$."
+            },
+            {
+              "answer": 0,
+              "q": "How is the Bernoulli($p$) distribution related to the Binomial?",
+              "choices": [
+                "Bernoulli($p$) is exactly $\\text{Bin}(1, p)$ — the single-trial special case; a Binomial($n,p$) is the sum of $n$ independent Bernoulli($p$) trials.",
+                "Bernoulli is the continuous version of the Binomial.",
+                "Bernoulli($p$) equals $\\text{Bin}(p, n)$ with the arguments swapped.",
+                "They are unrelated — Bernoulli counts failures, Binomial counts successes."
+              ],
+              "explain": "A Bernoulli trial is one yes/no experiment; summing $n$ independent Bernoulli($p$) indicators gives Binomial($n,p$). So Bernoulli($p$) is precisely the $n=1$ case, $\\text{Bin}(1,p)$, with mean $p$ and variance $p(1-p)$."
             }
           ],
           "flashcards": [
@@ -1306,6 +1350,50 @@
               ],
               "answer": 1,
               "explain": "A constant rate means arrivals are spread uniformly in expectation, so any 30-minute slice averages $6 \\times \\frac{1}{2} = 3$. The count varies randomly around its mean, so it is not fixed at exactly 6, nor capped, nor dependent on prior arrivals."
+            },
+            {
+              "answer": 1,
+              "q": "The lesson derives Poisson as a limiting case of the Binomial (the \"law of rare events\"). Which limit produces it?",
+              "choices": [
+                "$n \\to \\infty$ with $p$ held fixed, so $np \\to \\infty$.",
+                "$n \\to \\infty$ and $p \\to 0$ together, with the product $np = \\lambda$ held fixed.",
+                "$p \\to 1$ with $n$ fixed, so successes become certain.",
+                "$n \\to 0$ and $p \\to \\infty$ with $n/p$ fixed."
+              ],
+              "explain": "Split a window into $n$ tiny slices, each with success probability $p$ and at most one event; the count is $\\text{Bin}(n,p)$. Letting $n\\to\\infty$, $p\\to 0$ with $np=\\lambda$ fixed, $\\binom{n}{k}p^k(1-p)^{n-k}\\to \\frac{\\lambda^k e^{-\\lambda}}{k!}$. Many trials, each rarely succeeding, give Poisson counts."
+            },
+            {
+              "answer": 0,
+              "q": "You model daily counts as Poisson, but the data's sample variance is about 5× its sample mean. What does this most likely indicate?",
+              "choices": [
+                "Overdispersion — a plain Poisson model is probably wrong, because Poisson forces $\\text{Var}(X)=\\mathbb{E}[X]=\\lambda$ (variance and mean equal).",
+                "The data fits Poisson perfectly, since the variance should be the square of the mean.",
+                "The rate $\\lambda$ must be negative.",
+                "Nothing — Poisson allows variance and mean to differ freely."
+              ],
+              "explain": "A defining feature of the Poisson is $\\text{Var}(X)=\\mathbb{E}[X]=\\lambda$ — variance equals mean. If the observed variance greatly exceeds the mean (overdispersion), that assumption is violated and a plain Poisson is a poor fit (a negative-binomial model is a common alternative)."
+            },
+            {
+              "answer": 3,
+              "q": "For Poisson($\\lambda$), $\\sigma = \\sqrt{\\lambda}$. As $\\lambda$ grows, how does the *relative* spread (coefficient of variation $\\sigma/\\mathbb{E}[X]$) behave?",
+              "choices": [
+                "It grows like $\\sqrt{\\lambda}$, so busier systems are proportionally noisier.",
+                "It stays constant at 1, regardless of $\\lambda$.",
+                "It grows linearly with $\\lambda$.",
+                "It shrinks like $1/\\sqrt{\\lambda}$, so busier systems (large $\\lambda$) are proportionally *more* predictable."
+              ],
+              "explain": "The coefficient of variation is $\\sigma/\\mathbb{E}[X] = \\sqrt{\\lambda}/\\lambda = 1/\\sqrt{\\lambda}$. The absolute spread $\\sqrt{\\lambda}$ grows with $\\lambda$, but relative to the mean it shrinks — a system averaging 10,000 events/day is proportionally far steadier than one averaging 4."
+            },
+            {
+              "answer": 2,
+              "q": "Radioactive decays are detected at an average rate of $\\lambda = 3$ per second. What is the probability of detecting exactly 2 in a given second? (Use $e^{-3} \\approx 0.0498$.)",
+              "choices": [
+                "$\\frac{3^2}{2!} = 4.5$",
+                "$e^{-3} \\approx 0.0498$",
+                "$\\frac{3^2 e^{-3}}{2!} = \\frac{9(0.0498)}{2} \\approx 0.224$",
+                "$\\frac{2^3 e^{-3}}{3!} \\approx 0.066$"
+              ],
+              "explain": "$P(X=k)=\\frac{\\lambda^k e^{-\\lambda}}{k!}$. With $\\lambda=3, k=2$: $\\frac{3^2 e^{-3}}{2!} = \\frac{9\\cdot 0.0498}{2} \\approx 0.224$, about a 22% chance. Choice A drops the $e^{-\\lambda}$ (and exceeds 1); choice D swaps $\\lambda$ and $k$."
             }
           ],
           "flashcards": [
@@ -1501,6 +1589,50 @@
               ],
               "answer": 0,
               "explain": "By memorylessness $P(X > 3+4 \\mid X > 3) = P(X > 4) = (0.75)^4 \\approx 0.316$; equivalently $(0.75)^7 / (0.75)^3 = (0.75)^4$. Using $(0.75)^7$ ignores the conditioning, and $(0.75)^{10}$ wrongly adds the exponents."
+            },
+            {
+              "answer": 3,
+              "q": "Why is the Geometric distribution called \"geometric\"?",
+              "choices": [
+                "Because its PMF graph is a geometric shape (a triangle).",
+                "Because it describes geometric figures like circles and squares.",
+                "Because the mean $1/p$ is the geometric mean of the trials.",
+                "Because its PMF values $(1-p)^{k-1}p$ for $k=1,2,3,\\dots$ form a geometric series (each term a constant ratio $(1-p)$ times the previous), and that series sums to 1."
+              ],
+              "explain": "The probabilities $p, (1-p)p, (1-p)^2 p, \\dots$ are a geometric sequence with common ratio $1-p$. Their sum is $p\\cdot\\frac{1}{1-(1-p)}=1$ (a geometric series), which is exactly why the distribution bears that name."
+            },
+            {
+              "answer": 2,
+              "q": "A slick way to show $\\mathbb{E}[X]=1/p$ for $X\\sim\\text{Geometric}(p)$ conditions on the first trial. Which equation captures that argument?",
+              "choices": [
+                "$\\mathbb{E}[X] = p\\cdot 0 + (1-p)\\cdot 1$, averaging the success and failure values.",
+                "$\\mathbb{E}[X] = \\sum_k k^2 (1-p)^{k-1}p$, the second moment.",
+                "$\\mathbb{E}[X] = p\\cdot 1 + (1-p)(1 + \\mathbb{E}[X])$ — with prob $p$ you finish in 1 trial; with prob $1-p$ you've used 1 trial and start over — which solves to $1/p$.",
+                "$\\mathbb{E}[X] = 1 - (1-p)^{\\mathbb{E}[X]}$, the survival equation."
+              ],
+              "explain": "Condition on the first trial: success (prob $p$) finishes in exactly 1 step; failure (prob $1-p$) wastes a step and, by memorylessness, restarts the same wait, contributing $1+\\mathbb{E}[X]$. So $\\mathbb{E}[X]=p(1)+(1-p)(1+\\mathbb{E}[X])$, which solves to $\\mathbb{E}[X]=1/p$."
+            },
+            {
+              "answer": 0,
+              "q": "A salesperson closes each independent call with probability $p=0.2$. Let $Y$ be the number of calls until the 3rd sale (negative binomial). What is $\\mathbb{E}[Y]$?",
+              "choices": [
+                "$r/p = 3/0.2 = 15$ calls, since $Y$ is the sum of 3 independent Geometric($0.2$) waits.",
+                "$1/p = 5$ calls.",
+                "$3 \\times 0.2 = 0.6$ calls.",
+                "$3$ calls, one per sale."
+              ],
+              "explain": "Waiting for the $r$-th success is a sum of $r$ independent geometric waits, each with mean $1/p$, so $\\mathbb{E}[Y]=r/p$. Here $3/0.2=15$ calls on average. ($1/p=5$ is the mean wait for just the first sale.)"
+            },
+            {
+              "answer": 1,
+              "q": "The Geometric is the unique *discrete* memoryless distribution. What is its *continuous* counterpart?",
+              "choices": [
+                "The Normal distribution.",
+                "The Exponential distribution — the unique continuous memoryless distribution, modeling the waiting *time* until a randomly-arriving event.",
+                "The Uniform distribution.",
+                "The Binomial distribution."
+              ],
+              "explain": "Memorylessness — the remaining wait being independent of how long you've already waited — is shared by exactly two distributions: the Geometric (discrete, counting trials) and the Exponential (continuous, measuring time). The Exponential is the geometric's continuous cousin."
             }
           ],
           "flashcards": [
@@ -1696,6 +1828,50 @@
               ],
               "answer": 2,
               "explain": "By symmetry the midpoint is the median, so $F\\left(\\frac{a+b}{2}\\right) = \\frac{(a+b)/2 - a}{b-a} = \\frac{(b-a)/2}{b-a} = \\frac{1}{2}$. The value $\\frac{1}{b-a}$ is the density height, not the accumulated probability."
+            },
+            {
+              "answer": 1,
+              "q": "For $X \\sim \\text{Uniform}(0, 12)$, what is the variance?",
+              "choices": [
+                "$\\frac{a+b}{2} = 6$ (that's the mean, not the variance).",
+                "$\\frac{(b-a)^2}{12} = \\frac{12^2}{12} = 12$.",
+                "$\\frac{1}{b-a} = \\frac{1}{12}$ (that's the density height).",
+                "$\\frac{12^2}{2} = 72$."
+              ],
+              "explain": "The continuous Uniform on $[a,b]$ has variance $\\frac{(b-a)^2}{12}$. With $a=0,b=12$: $\\frac{144}{12}=12$. (The mean is $\\frac{a+b}{2}=6$ and the density height is $\\frac{1}{b-a}=\\frac{1}{12}$ — different quantities.)"
+            },
+            {
+              "answer": 3,
+              "q": "In a Poisson process of rate $\\lambda$, how do the Poisson and Exponential distributions relate?",
+              "choices": [
+                "They are the same distribution under two names.",
+                "Poisson measures waiting times; Exponential counts events.",
+                "Exponential gives the count and Poisson gives the time, but only when $\\lambda < 1$.",
+                "Poisson counts *how many* events occur in a fixed window (count $\\sim \\text{Poisson}(\\lambda t)$); Exponential measures *how long* between consecutive events (interarrival time $\\sim \\text{Exponential}(\\lambda)$) — two views of one random clock."
+              ],
+              "explain": "A Poisson process has two linked descriptions: the number of events in an interval of length $t$ is $\\text{Poisson}(\\lambda t)$ (how many), and the gap between consecutive events is $\\text{Exponential}(\\lambda)$ (how long). \"No event by time $t$\" ($N(t)=0$) has probability $e^{-\\lambda t}$ — exactly the Exponential survival function — which is how the two connect."
+            },
+            {
+              "answer": 0,
+              "q": "For $T \\sim \\text{Exponential}(\\lambda)$ with density $f(t)=\\lambda e^{-\\lambda t}$ ($t\\ge 0$), where is the density largest, and what does that imply?",
+              "choices": [
+                "Largest at $t = 0$ and monotonically decaying — short waits are the most common, but a long right tail allows occasional long waits.",
+                "Largest at $t = 1/\\lambda$ (the mean), so waits near the mean are most common.",
+                "Largest as $t \\to \\infty$, so long waits are the most common.",
+                "Constant for all $t \\ge 0$, just like a uniform density."
+              ],
+              "explain": "$f(t)=\\lambda e^{-\\lambda t}$ is maximized at $t=0$ (value $\\lambda$) and decreases monotonically. So the most probable outcome is a *short* wait, yet the exponential tail means long waits still happen occasionally — the mean $1/\\lambda$ sits to the right of the (zero) mode."
+            },
+            {
+              "answer": 2,
+              "q": "Server response time is $T \\sim \\text{Exponential}(\\lambda = 0.5)$ per second. What are its mean and variance?",
+              "choices": [
+                "Mean $0.5$, variance $0.25$.",
+                "Mean $2$, variance $2$.",
+                "Mean $\\frac{1}{\\lambda} = 2$ s, variance $\\frac{1}{\\lambda^2} = 4$ s$^2$.",
+                "Mean $0.5$, variance $0.5$."
+              ],
+              "explain": "For Exponential($\\lambda$), $\\mathbb{E}[T]=1/\\lambda$ and $\\text{Var}(T)=1/\\lambda^2$ (so $\\sigma=1/\\lambda$, equal to the mean). With $\\lambda=0.5$: mean $=2$ s, variance $=1/0.25=4$ s$^2$. Note variance equals mean only for the *Poisson*, not the Exponential."
             }
           ],
           "flashcards": [
@@ -1891,6 +2067,50 @@
               ],
               "answer": 1,
               "explain": "The Central Limit Theorem states that sums or averages of many independent random variables approach a normal distribution regardless of the original shape. The Law of Large Numbers concerns the average converging to the mean, not the bell shape of its distribution."
+            },
+            {
+              "answer": 2,
+              "q": "On the normal density curve, what is special about the points $x = \\mu \\pm \\sigma$?",
+              "choices": [
+                "They are where the density equals zero.",
+                "They are the two peaks of a (bimodal) curve.",
+                "They are the *inflection points*, where the curve switches from concave-down (near the peak) to concave-up (out in the tails).",
+                "They are where the density equals 1."
+              ],
+              "explain": "A normal curve has a single peak at $\\mu$; one standard deviation out, at $x=\\mu\\pm\\sigma$, the curvature changes sign — concave-down between them, concave-up beyond. These inflection points are a visual read of $\\sigma$: wider spacing means a larger spread."
+            },
+            {
+              "answer": 1,
+              "q": "Maria scored 82 on a biology test ($N(70, 6^2)$) and 88 on a chemistry test ($N(80, 10^2)$). Relative to each class, on which did she do better?",
+              "choices": [
+                "Chemistry — 88 is a higher raw score than 82.",
+                "Biology — her z-scores are $z_{\\text{bio}}=\\frac{82-70}{6}=2.0$ vs $z_{\\text{chem}}=\\frac{88-80}{10}=0.8$, so biology is further above its mean in standard-deviation units.",
+                "They are exactly equal, since both are above their class means.",
+                "Chemistry — it has the larger standard deviation, so more spread means a better result."
+              ],
+              "explain": "Standardizing puts both on one ruler: $z_{\\text{bio}}=12/6=2.0$, $z_{\\text{chem}}=8/10=0.8$. A higher z-score means further above the class average in SD units, so Maria's biology result (2 SD above) is the stronger relative performance — even though its raw score is lower."
+            },
+            {
+              "answer": 3,
+              "q": "Using the 68–95–99.7 rule, approximately what is $P(Z < -1)$ for the standard normal?",
+              "choices": [
+                "$68\\%$, the mass within one standard deviation.",
+                "$32\\%$, the total mass outside $\\pm 1\\sigma$.",
+                "$2.5\\%$.",
+                "About $16\\%$ — outside $\\mu\\pm 1\\sigma$ lies $\\approx 32\\%$, split evenly between the two tails by symmetry."
+              ],
+              "explain": "About 68% lies within $|z|\\le 1$, leaving $\\approx 32\\%$ in the two tails combined; by symmetry each tail holds half, $\\approx 16\\%$. So $P(Z<-1)\\approx 0.16$. (The $2.5\\%$ figure is the *two*-sigma tail, $P(Z<-2)$.)"
+            },
+            {
+              "answer": 0,
+              "q": "Adult heights are $N(170, 10^2)$ cm. Using the empirical rule, roughly what fraction are between 150 cm and 190 cm?",
+              "choices": [
+                "About $95\\%$ — those bounds are $z = \\frac{150-170}{10} = -2$ and $z = \\frac{190-170}{10} = +2$, i.e. $\\mu \\pm 2\\sigma$.",
+                "About $68\\%$, since any symmetric interval captures roughly two-thirds.",
+                "About $99.7\\%$.",
+                "About $50\\%$, since the interval is centered on the mean."
+              ],
+              "explain": "Standardize the bounds: $150\\to z=-2$ and $190\\to z=+2$, so the interval is exactly $\\mu\\pm 2\\sigma$. The empirical rule puts $\\approx 95\\%$ of a normal distribution within two standard deviations of the mean."
             }
           ],
           "flashcards": [
