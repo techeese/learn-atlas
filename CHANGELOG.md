@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 117 — Q-Learning Gridworld — a 31st visualization: an agent that LEARNS (visualizations)
+The RL topic had a gridworld viz, but it ran **value iteration** — model-based dynamic programming that computes the
+answer offline. There was nothing showing the heart of RL: an agent **learning from its own experience**. Added
+**`rl-q-learning`**, embedded in the "SARSA, Q-Learning, and On- vs Off-Policy" lesson. The agent starts knowing
+nothing, explores **ε-greedily**, and updates Q-values from each transition with the off-policy TD target
+$Q(s,a)\leftarrow Q(s,a)+\alpha[r+\gamma\max_{a'}Q(s',a')-Q(s,a)]$ — no model of the world. Controls: **Play/Pause**
+(auto-steps the agent so you can watch it stumble around), **Step**, **⚡ Train 200** (fast-trains, then redraws the
+converged policy), **Reset**, and **ε / α / γ** sliders. Cells show the learned state-value max$_a$Q with a heat colour;
+gold arrows show the greedy policy; after training they snap into a path from START to the goal that routes around the
+wall and the −1 pit. Reuses the existing gridworld drawing conventions; animation runs through a single `VIZUtil.loop`
+(Play), so nothing leaks across navigations. SW cache → `atlas-v61`; README 30 → 31 widgets (+Lab blurb). Verified:
+`node gate.js` ALL GREEN (31 widgets); an in-browser run is **errs=0** — the Lab item renders a canvas + 3 sliders + 4
+buttons, **Train 200 advances episodes 0 → 200**, Step moves the agent, and the widget also hydrates inline in the
+lesson; desktop + 390px screenshots show the trained value gradient (0.62 → 1.00 toward the goal) and policy arrows with
+no overflow; stray Chrome cleaned up.
+
 ## iter 116 — Knowledge-Map keyboard navigation (accessibility) — closes the last mouse-only surface
 The radial Knowledge Constellation (148 concept nodes) was the one major interactive surface still **mouse-only** —
 iter 110 made the clickable cards keyboard-operable but explicitly deferred the SVG map (148 raw tab stops would be

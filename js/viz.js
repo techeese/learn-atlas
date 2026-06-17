@@ -1591,4 +1591,92 @@
     loop(() => { marker += 0.004; if (marker > 1) marker = 0; draw(); });
   });
 
+  /* ========================================================
+     31. Q-learning gridworld — an agent LEARNS a policy from experience (RL)
+     ======================================================== */
+  register({ id: 'rl-q-learning', topic: 'reinforcement-learning', title: 'Q-Learning Gridworld', blurb: 'Watch an agent learn by trial and error: it explores ε-greedily and updates Q-values from its own experience (no model of the world). Train it and watch the policy arrows snap toward the goal.' },
+  function (root) {
+    const cols = 5, rows = 5, cell = 70, W = cols * cell, H = rows * cell;
+    const { ctx } = canvas(root, W, H);
+    // '.'=empty '#'=wall 'G'=goal(+1) 'P'=pit(-1) 'S'=start
+    const map = ['....G', '.###.', '...#.', '.#P#.', 'S....'];
+    let Sr = 4, Sc = 0;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) if (map[r][c] === 'S') { Sr = r; Sc = c; }
+    let eps = 0.2, alpha = 0.5, gamma = 0.9;
+    let Q, episodes, agent, totalR, lastEpR, playH = null;
+    function reset() {
+      Q = Array.from({ length: rows }, () => Array.from({ length: cols }, () => [0, 0, 0, 0]));
+      episodes = 0; agent = null; totalR = 0; lastEpR = null;
+      if (playH) { playH.stop(); playH = null; }
+      draw();
+    }
+    function nextState(r, c, a) {
+      const nr = r + [-1, 0, 1, 0][a], nc = c + [0, 1, 0, -1][a];
+      if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || map[nr][nc] === '#') return [r, c];
+      return [nr, nc];
+    }
+    function greedyA(r, c) { const q = Q[r][c]; let ba = 0; for (let a = 1; a < 4; a++) if (q[a] > q[ba]) ba = a; return ba; }
+    function rewardOf(ch) { return ch === 'G' ? 1 : ch === 'P' ? -1 : -0.04; }
+    // one Q-learning update from (r,c); returns [nr,nc,terminal]
+    function qstep(r, c) {
+      const a = Math.random() < eps ? Math.floor(Math.random() * 4) : greedyA(r, c);
+      const [nr, nc] = nextState(r, c, a), ch = map[nr][nc];
+      const terminal = ch === 'G' || ch === 'P', reward = rewardOf(ch);
+      const maxNext = terminal ? 0 : Math.max(Q[nr][nc][0], Q[nr][nc][1], Q[nr][nc][2], Q[nr][nc][3]);
+      Q[r][c][a] += alpha * (reward + gamma * maxNext - Q[r][c][a]);   // off-policy TD target uses max
+      return [nr, nc, terminal, reward];
+    }
+    function stepOnce() {                                  // animated single step
+      if (!agent) { agent = { r: Sr, c: Sc, steps: 0 }; totalR = 0; }
+      const [nr, nc, terminal, reward] = qstep(agent.r, agent.c);
+      totalR += reward; agent = { r: nr, c: nc, steps: agent.steps + 1 };
+      if (terminal || agent.steps >= 80) { episodes++; lastEpR = totalR; agent = null; }
+      draw();
+    }
+    function train(n) {                                    // fast: run n full episodes, no animation
+      for (let e = 0; e < n; e++) {
+        let r = Sr, c = Sc, steps = 0, term = false;
+        while (steps < 200 && !term) { const res = qstep(r, c); r = res[0]; c = res[1]; term = res[2]; steps++; }
+        episodes++;
+      }
+      agent = null; draw();
+    }
+    function stateValue(r, c) { return Math.max(Q[r][c][0], Q[r][c][1], Q[r][c][2], Q[r][c][3]); }
+    function mix(a, b, t) { const pa = hx(a), pb = hx(b); return `rgb(${Math.round(pa[0] + (pb[0] - pa[0]) * t)},${Math.round(pa[1] + (pb[1] - pa[1]) * t)},${Math.round(pa[2] + (pb[2] - pa[2]) * t)})`; }
+    function hx(h) { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(x => x + x).join(''); if (!/^[0-9a-f]{6}$/i.test(h)) return [40, 35, 31]; return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H);
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+        const ch = map[r][c], x = c * cell, y = r * cell, v = stateValue(r, c);
+        let bg = p.panel;
+        if (ch === '#') bg = p.line;
+        else if (ch === 'G') bg = p.sage;
+        else if (ch === 'P') bg = p.rust;
+        else { const t = Math.max(-1, Math.min(1, v)); bg = t >= 0 ? mix(p.panel, p.sage, t * 0.8) : mix(p.panel, p.rust, -t * 0.8); }
+        ctx.fillStyle = bg; ctx.fillRect(x + 2, y + 2, cell - 4, cell - 4);
+        ctx.strokeStyle = p.bg; ctx.lineWidth = 2; ctx.strokeRect(x + 2, y + 2, cell - 4, cell - 4);
+        if (ch !== '#') { ctx.fillStyle = p.ink; ctx.font = '12px JetBrains Mono, monospace'; ctx.textAlign = 'center'; ctx.fillText(ch === 'G' ? '+1' : ch === 'P' ? '−1' : v.toFixed(2), x + cell / 2, y + cell / 2 + 4); }
+        if (ch === '.' || ch === 'S') { const a = greedyA(r, c); const ang = [-Math.PI / 2, 0, Math.PI / 2, Math.PI][a]; ctx.save(); ctx.translate(x + cell / 2, y + cell - 14); ctx.rotate(ang); arrow(ctx, -9, 0, 9, 0, p.gold, 1.6); ctx.restore(); }
+        if (ch === 'S') { ctx.fillStyle = p.violet; ctx.font = '10px JetBrains Mono'; ctx.textAlign = 'center'; ctx.fillText('START', x + cell / 2, y + 16); }
+      }
+      if (agent) { ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(agent.c * cell + cell / 2, agent.r * cell + cell / 2 - 4, 12, 0, 7); ctx.fill(); ctx.fillStyle = p.bg; ctx.font = '13px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('🤖', agent.c * cell + cell / 2, agent.r * cell + cell / 2); }
+      info.innerHTML = `episodes: <b>${episodes}</b> &nbsp;·&nbsp; ε=${eps.toFixed(2)} α=${alpha.toFixed(2)} γ=${gamma.toFixed(2)}${lastEpR != null ? ` &nbsp;·&nbsp; last return: <b style="color:${lastEpR > 0 ? p.sage : p.rust}">${lastEpR.toFixed(2)}</b>` : ''}<br>Numbers are learned state-values max<sub>a</sub>Q(s,a); arrows are the greedy policy. Untrained, the agent wanders; train it and the arrows line up toward the goal while avoiding the pit.`;
+    }
+    const sl = controls(root);
+    slider(sl, { label: 'ε explore', min: 0, max: 0.6, step: 0.02, value: eps, fmt: v => v.toFixed(2), onInput: v => { eps = v; } });
+    slider(sl, { label: 'α rate', min: 0.05, max: 0.9, step: 0.05, value: alpha, fmt: v => v.toFixed(2), onInput: v => { alpha = v; } });
+    slider(sl, { label: 'γ discount', min: 0.5, max: 0.99, step: 0.01, value: gamma, fmt: v => v.toFixed(2), onInput: v => { gamma = v; } });
+    const btns = controls(root);
+    const playBtn = button(btns, '▶ Play', () => {
+      if (playH) { playH.stop(); playH = null; playBtn.innerHTML = '▶ Play'; return; }
+      playBtn.innerHTML = '⏸ Pause'; let f = 0;
+      playH = loop(() => { if (f++ % 9 === 0) stepOnce(); });
+    }, 'primary');
+    button(btns, 'Step', () => { if (playH) { playH.stop(); playH = null; playBtn.innerHTML = '▶ Play'; } stepOnce(); });
+    button(btns, '⚡ Train 200', () => { if (playH) { playH.stop(); playH = null; playBtn.innerHTML = '▶ Play'; } train(200); });
+    button(btns, '↻ Reset', () => { playBtn.innerHTML = '▶ Play'; reset(); });
+    const info = note(root);
+    reset();
+  });
+
 })();

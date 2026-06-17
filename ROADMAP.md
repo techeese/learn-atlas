@@ -70,6 +70,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    smoother-landscape; KKT = complementary slackness) → 9 deeper-dives site-wide (directive 3).
    ✅ iter 116: Knowledge-Map keyboard navigation (roving tabindex + arrows + Enter, ARIA labels, gold focus ring) —
    closes the last mouse-only surface. The whole UI is now keyboard-operable.
+   ✅ iter 117: Q-Learning Gridworld (rl-q-learning, 31st viz) — an agent that learns a policy from experience
+   (ε-greedy + off-policy TD), embedded in the SARSA/Q-Learning lesson.
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
    already memoized; staggered page-entrance already exists (CSS :nth-child reveal delays). So perf/mobile/transitions
    have little headroom. NEGLECTED areas still worth a pass: onboarding refresh, SVG Knowledge-Map keyboard nav
@@ -138,8 +140,8 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
 - ~~Interleaved review sessions (mix topics) beyond the SRS queue.~~ **partly DONE iter 68** — Daily Mix (`#/session`) chains due cards + a weak-spot quiz + a next lesson into one guided flow.
 - More viz ideas (29 widgets now; CLT iter 74, normal-explorer iter 76, covariance-scatter iter 79, CI-coverage
   iter 84, diffusion noising iter 89, convex-landscape/GD-trap iter 92, hypothesis-test/p-value iter 98, BPE-merge
-  trainer iter 105, LR-schedule explorer iter 112): MDP policy-iteration, a VAE latent-space explorer, a GAN
-  training-dynamics demo, a Q-learning/SARSA path demo (would pair with the RL deepening).
+  trainer iter 105, LR-schedule explorer iter 112, Q-learning gridworld iter 117): MDP policy-iteration, a VAE
+  latent-space explorer, a GAN training-dynamics demo, a beam-search/decoding tree.
   NOTE: viz blurbs AND notes are NOT KaTeX-typeset (the Lab shows them raw) — use plain unicode (xₜ, √, ε, ᾱ), not $...$.
 - Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.
 - Reduced-motion + high-contrast accessibility modes.
