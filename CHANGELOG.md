@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 90 — Calculus — NEW advanced module: Convex & Constrained Optimization (3 lessons) (content; "deepen the existing six") — 10-iter checkpoint
+Checkpoint review (iters 81–89): heavily content (PS Modules 4–5 + their MCQs, DL generative module + MCQs) plus two
+viz and one accessibility ship; the deepen-the-six rotation had only touched Deep Learning. This iteration continues
+that rotation into **Calculus**, whose curriculum ended at the multivariable bridge with no optimization *theory* — the
+foundation of all of ML. New 7th module:
+**(1) Convex Sets, Convex Functions & Why They Matter** — convex sets, the chord definition, the $f''\ge0$ / PSD-Hessian
+tests, the headline payoff (every local min is global), Jensen's inequality, and convex vs non-convex ML losses.
+**(2) Gradient Descent on Convex Functions** — why convexity makes GD's output trustworthy, $L$-smoothness and the
+$\eta\le1/L$ step ceiling, strong convexity, convergence rates ($O(1/k)$ vs linear), the condition number $\kappa=L/\mu$,
+and why deep nets work despite non-convexity.
+**(3) Constrained Optimization & Lagrange Multipliers** — the tangency condition $\nabla f=\lambda\nabla g$, the
+Lagrangian, the multiplier as a shadow price, a glimpse of KKT (complementary slackness), and the SVM / regularization
+connections.
+Each is a full KaTeX lecture + 6 flashcards + 3 homework + 2 worked examples; MCQs deferred to the pipeline. Calculus is
+now a **7-module, 21-lesson** course. Site: **139 lessons · 835 flashcards · 415 homework · 270 examples**. SW cache →
+`atlas-v34`; README counts refreshed (lessons/concepts 136→139). Verified: `node gate.js` ALL GREEN (7 topics · 139
+lessons); all three lessons render math with **katex-error=0** (the $\nabla f=\lambda\nabla g$ condition confirmed
+visually); course/cheatsheet/map + lessons smoke errs=0; legible at 390px; stray Chrome cleaned up.
+
 ## iter 89 — Diffusion noising/denoising visualization (visualizations; owner depth direction)
 A new interactive widget (`dl-diffusion`, the 26th) that makes the diffusion forward/reverse process *visible* and
 pairs with the new Generative Models module. 700 points form structured "data" (an Archimedean spiral); each carries a

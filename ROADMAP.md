@@ -31,7 +31,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
 2. **Deepen the existing six** — add ADVANCED lessons/modules (not just more of the same; go further than the
    current depth) where each topic has frontier/advanced gaps. IN PROGRESS:
    ✅ iter 87: Deep Learning → new "Generative Models" module (Autoencoders/VAEs, GANs, Diffusion). ✅ iter 88: all 3
-   generative lessons to 12 MCQs (+36; DL topic now 264 / site 1,632) — DL fully complete again. REMAINING advanced gaps
+   generative lessons to 12 MCQs (+36; DL topic now 264 / site 1,632) — DL fully complete again.
+   ✅ iter 90: Calculus → new "Convex & Constrained Optimization" module (convexity, GD convergence, Lagrange
+   multipliers) — content+cards+homework+examples, NO MCQs yet (add via pipeline next). REMAINING advanced gaps
    to mine, one topic per rotation:
    Calculus → convex optimization / Lagrange multipliers (constrained optimization); Linear Algebra → matrix calculus
    (gradients of vector/matrix expressions) or pseudoinverse/ridge; Algorithms → amortized analysis or max-flow/min-cut;
