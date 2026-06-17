@@ -410,6 +410,19 @@ body::after {
 #read-progress.on { opacity: 1; }
 #read-progress .rp-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold-deep, var(--gold)), var(--gold)); box-shadow: 0 0 8px -1px color-mix(in srgb, var(--gold) 70%, transparent); }
 @media (prefers-reduced-motion: no-preference) { #read-progress .rp-fill { transition: width .12s linear; } }
+/* back-to-top button (appears after scrolling down a screen) */
+.to-top {
+  position: fixed; right: 20px; bottom: 20px; z-index: 50;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--panel); color: var(--gold);
+  font-size: 20px; line-height: 1; cursor: pointer;
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease, border-color .15s;
+  box-shadow: 0 4px 18px var(--shadow);
+}
+.to-top.on { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { border-color: var(--gold); color: var(--gold); }
+.to-top:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 /* inline Quick Check — low-stakes retrieval at the end of the lecture (testing effect, in-flow) */
 #quick-check {

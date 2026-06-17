@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 230 — Back-to-top button on long pages (UI/UX)
+Freshest lane (UI/UX, last ~iter 208). The site has many long pages — lessons, the 50-widget Lab, the 55-achievement
+Hall — but no quick way back to the top once you've scrolled down. Added a floating **back-to-top button** (bottom-right,
+circular, gold ↑) that fades in past ~600px of scroll and smooth-scrolls to the top on click.
+Implementation reuses the **exact mechanism of the shipping reading-progress bar**: one global button created in
+`initReadProgress`, toggled by `updateToTop()` inside the same rAF-throttled scroll handler that drives the progress bar
+(reading the same `document.scrollingElement`), and hidden on every route change (router). Smooth scroll respects
+`prefers-reduced-motion`. Small reusable CSS (`.to-top` / `.to-top.on`), z-index below the mobile sidebar so it never
+covers the menu.
+Verified: `gate.js` ALL GREEN; all-routes smoke (10 routes) **errs=0/kErr=0** with the button present as a **single
+global instance** (`toTopBtn=1`); at the top of a page the button is correctly hidden (`.on`=false); the visual renders
+(forced-on screenshot). Note: headless Chrome can't apply programmatic scroll to the document (every element reports
+`moved=0` despite a 6662px page), so the scroll-triggered show/hide and click-scroll can't be exercised in headless —
+but the feature is correct by parity with the read-progress bar, which uses the identical scrollingElement + scroll
+listener and has shipped working. SW cache `atlas-v172` → `atlas-v173`.
+
 ## iter 229 — Signal-propagation / initialization explorer — the 50th widget (visualizations)
 New widget **`dl-signal-propagation`** (the **50th** — a round milestone), embedded in
 `dl-initialization-and-vanishing-gradients` after the He-init section (it had a deep-dive but no viz). Makes the

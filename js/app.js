@@ -2387,7 +2387,7 @@
     else view404();
     renderChrome();
     closeSidebar();
-    updateReadProgress();                                  // recompute bar for the new page (sync)
+    updateReadProgress(); updateToTop();                   // recompute bar + hide back-to-top for the new (top-scrolled) page
     setTimeout(updateReadProgress, 200);                   // ...and again once KaTeX/viz settle the height
   }
 
@@ -2482,7 +2482,12 @@
   function applyTextScale() { try { document.documentElement.style.setProperty("--read-scale", localStorage.getItem("atlas.textScale") || "1"); } catch (e) {} }
 
   // ---------- reading-progress bar (long-form lessons & pages) ----------
-  let _rpRaf = 0;
+  let _rpRaf = 0, _toTop = null;
+  function updateToTop() {                     // show the back-to-top button once you've scrolled down a screen
+    if (!_toTop) return;
+    const el = document.scrollingElement || document.documentElement;
+    _toTop.classList.toggle("on", el.scrollTop > 600);
+  }
   function updateReadProgress() {
     const bar = document.getElementById("read-progress");
     if (!bar) return;
@@ -2496,11 +2501,16 @@
   }
   function scheduleReadProgress() {           // rAF-throttle the high-frequency scroll/resize events
     if (_rpRaf) return;
-    _rpRaf = requestAnimationFrame(() => { _rpRaf = 0; updateReadProgress(); });
+    _rpRaf = requestAnimationFrame(() => { _rpRaf = 0; updateReadProgress(); updateToTop(); });
   }
   function initReadProgress() {
     window.addEventListener("scroll", scheduleReadProgress, { passive: true });
     window.addEventListener("resize", scheduleReadProgress, { passive: true });
+    _toTop = document.createElement("button");
+    _toTop.className = "to-top"; _toTop.type = "button"; _toTop.innerHTML = "↑";
+    _toTop.setAttribute("aria-label", "Scroll back to top");
+    _toTop.addEventListener("click", () => (document.scrollingElement || document.documentElement).scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" }));
+    document.body.appendChild(_toTop);
   }
 
   // ---------- boot ----------

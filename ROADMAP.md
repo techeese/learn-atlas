@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 230: **Back-to-top button on long pages** (UI/UX — freshest lane). Floating gold ↑ button (bottom-right) fades in
+   past ~600px scroll, smooth-scrolls to top (reduced-motion safe). Reuses the read-progress mechanism (same scrollingElement
+   + rAF scroll handler; one global button; hidden on route change). Verified: gate GREEN; smoke errs=0/kErr=0 (10 routes)
+   with toTopBtn=1; hidden-at-top correct; visual renders. NOTE: headless can't programmatically scroll the document
+   (moved=0 on a 6662px page), so scroll-toggle/click-scroll aren't headless-exercisable — correct by parity with the
+   shipping read-progress bar (identical mechanism). SW →v173. ★230 step-back: loop healthy, well-rotated, site mature.
    ✅ iter 229: **New viz `dl-signal-propagation` — 50th widget** (visualizations). In dl-initialization-and-vanishing-gradients
    (had deep-dive, no viz). Per-layer gain g → activation RMS across 24 layers on a log scale: g=1 flat, below vanishes,
    above explodes (exponential in depth). g slider + too-small/good/too-big presets; note shows g²⁴ + verdict. Math
