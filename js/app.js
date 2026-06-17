@@ -606,6 +606,21 @@
     </div>`;
   }
 
+  // auto "On this page" table of contents for a lesson's sections (jumps within the long Lecture body)
+  function buildLessonTOC(body) {
+    const prose = body.querySelector(".prose"); if (!prose) return;
+    const heads = Array.prototype.slice.call(prose.querySelectorAll("h3")).filter(h => !h.closest("details"));
+    if (heads.length < 3) return;   // short lessons don't need one
+    const items = heads.map((h, i) => { h.id = "sec-" + i; h.classList.add("toc-anchor"); return `<li><button class="toc-link" type="button" data-sec="${i}">${esc(h.textContent.trim())}</button></li>`; }).join("");
+    const toc = document.createElement("details");
+    toc.className = "lesson-toc reveal"; toc.open = true;
+    toc.innerHTML = `<summary>📑 On this page · ${heads.length} sections</summary><ol class="toc-list">${items}</ol>`;
+    prose.parentNode.insertBefore(toc, prose);
+    toc.querySelectorAll(".toc-link").forEach(b => b.addEventListener("click", () => {
+      const h = heads[parseInt(b.dataset.sec, 10)];
+      if (h) h.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+    }));
+  }
   function renderLecture(body, course, lesson, prev, next) {
     const done = Store.isLessonDone(lesson.id);
     body.innerHTML = `
@@ -648,6 +663,7 @@
       renderChrome();
     });
     bindGo();
+    buildLessonTOC(body);
     hydrateViz(body);
     hydrateCode(body);
     // reward expanding a "Deeper dive" intuition (Deep Thinker)

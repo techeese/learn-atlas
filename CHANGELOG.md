@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 144 — Auto "On this page" table of contents for every lesson (new functionality / UX)
+Lessons are dense — **every one of the 148 has 4–11 `<h3>` sections** (avg 7.5) — but there was no way to see a lesson's
+structure or jump within it. Now the Lecture view auto-builds a collapsible **"On this page"** TOC from the section
+headings: a numbered, 2-column list (1-column on mobile) where each entry smooth-scrolls to its section.
+- **app.js**: `buildLessonTOC(body)` runs after the prose mounts — collects `.prose h3` (skipping any inside a
+  `<details>` deep-dive), stamps each with an `id` + `.toc-anchor`, and inserts a `<details class="lesson-toc" open>`
+  above the body. Clicks call `scrollIntoView` (smooth, or instant under reduced motion). Shows only when ≥3 sections.
+  Uses no `href` anchors, so it never touches the hash router.
+- **styles.css**: `.lesson-toc` card + numbered `.toc-link`s (CSS counters), `columns:2` collapsing to 1 at ≤640px,
+  `scroll-margin-top` on anchors, gold hover, focus-visible ring.
+- **Verified**: `node gate.js` ALL GREEN; render-check on the (8-section) Loss Functions lesson →
+  `errs=0 | summary "📑 On this page · 8 sections" | 8 links | 8 anchored h3s with ids | clicking a link errors=0 and its
+  target exists`; all-routes smoke `errs=0`; desktop (2-col) + 390px mobile (1-col) screenshots read. SW cache **v86 → v87**.
+- New functionality had been neglected since iter 113 (Notebook); this revisits it.
+
 ## iter 143 — MCQ arc → Linear Algebra · SVD & Applications 12 → 16 (content — owner's #1 ask)
 The 12→16 arc continues through LA's **SVD and Applications to Machine Learning** module. **+4 new MCQs each** to *The
 Singular Value Decomposition* and *Low-Rank Approximation, PCA & Dimensionality Reduction* (**+8, bank 1,924 → 1,932**),

@@ -298,6 +298,22 @@ body::after {
 /* reading content */
 .prose { max-width: 760px; font-size: calc(17px * var(--read-scale, 1)); }
 .prose h3 { font-family: var(--font-disp); font-size: 26px; font-weight: 500; margin: 30px 0 12px; letter-spacing: -.3px; }
+.toc-anchor { scroll-margin-top: 18px; }
+
+/* auto "On this page" lesson table of contents */
+.lesson-toc { max-width: 760px; margin: 0 0 26px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 2px 6px; }
+.lesson-toc > summary { cursor: pointer; list-style: none; padding: 9px 12px; font-family: var(--font-disp); font-size: 13px; letter-spacing: .4px; color: var(--gold); text-transform: uppercase; }
+.lesson-toc > summary::-webkit-details-marker { display: none; }
+.lesson-toc > summary::after { content: "▾"; float: right; opacity: .6; transition: transform .2s; }
+.lesson-toc[open] > summary::after { transform: rotate(180deg); }
+.lesson-toc[open] > summary { border-bottom: 1px solid var(--line); }
+.toc-list { margin: 6px 0; padding: 0; list-style: none; counter-reset: toc; columns: 2; column-gap: 14px; }
+.toc-list li { counter-increment: toc; break-inside: avoid; }
+.toc-link { display: block; width: 100%; text-align: left; background: none; border: 0; cursor: pointer; color: var(--ink-soft); font-family: var(--font-body); font-size: 14px; line-height: 1.35; padding: 6px 10px 6px 32px; border-radius: 7px; position: relative; transition: background .15s, color .15s; }
+.toc-link::before { content: counter(toc); position: absolute; left: 10px; top: 6px; color: var(--ink-mute); font-family: var(--font-mono); font-size: 11px; }
+.toc-link:hover { background: var(--panel-2); color: var(--gold); }
+.toc-link:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+@media (max-width: 640px) { .toc-list { columns: 1; } }
 .prose h4 { font-family: var(--font-disp); font-size: 19px; font-weight: 600; margin: 24px 0 8px; color: var(--gold); }
 .prose p { margin: 13px 0; color: var(--ink-soft); }
 .prose ul, .prose ol { margin: 12px 0 12px 24px; color: var(--ink-soft); }

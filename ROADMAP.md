@@ -139,6 +139,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    mastery/recency-weighted ⌘K ranking (title tier is still purely lexical). Still-thin: new functionality (since 113), UI/UX, mobile audit.
    ✅ iter 143: MCQ arc → Linear Algebra·SVD & Applications 12→16 (+8, bank →1,932). LA 6/7 modules. Adversarial agent ALL PASS;
    positions shuffled; render-check "of 16" errs=0; SW cache →v86.
+   ✅ iter 144: auto "On this page" TOC for every lesson (new functionality/UX; neglected since 113). buildLessonTOC: collapsible
+   numbered section list (2-col→1-col mobile), smooth-scroll, reduced-motion safe; errs=0; SW cache →v87. Still-thin: mobile audit, UI/UX.
    LA REMAINING (MCQ arc): matrix-calculus(3) — the LAST LA module. Then Calc/DL/RL/LLM/PS.
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
