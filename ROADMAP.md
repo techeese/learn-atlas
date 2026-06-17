@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 219: **Runnable in-lesson coding exercises (5→8 lessons)** (new functionality / active practice — diversifies from
+   viz/deep-dives). The `data-code` self-checking editor reached only 5 lessons; added JS exercises to a-divide-and-conquer
+   (merge sort → "1 2 3 4 5 7 8 9"), a-graph-representations-traversal (BFS → "A B C D E F"), a-greedy (activity selection
+   → "4"). JS chosen so it's verifiable headless (no Pyodide). Byte-stable inject (code HTML-escaped). Verified: each block
+   decoded+executed as playground runJS → output===expected (3/3); gate GREEN; browser run shows "✓ Output matches
+   expected" (err=0); smoke errs=0/kErr=0 (10 routes). Reuses existing Playground (no new mobile layout). SW →v162.
+   (Code-exercise coverage now 8/148 — more algorithm/DL lessons are candidates for future hands-on exercises.)
    ✅ iter 218: **New viz `algo-hashing`** (visualizations — owner-loved; 3 iters since last viz). The 47th widget, in
    `a-hash-tables` (no viz). Insert keys → chained buckets colored by collision severity; +1/+8/Find/Reset + table-size
    slider; live load factor α=n/m, longest chain, expected lookup ≈1+α/2. Teaches "why O(1) needs low α." Verified: gate

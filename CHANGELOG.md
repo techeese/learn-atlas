@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 219 — Runnable in-lesson coding exercises for 3 algorithm lessons (new functionality / active practice)
+The `data-code` infrastructure (an embedded editor that runs JS natively / Python via Pyodide and **self-checks output
+against `data-expected`**) existed but reached only **5 of 148 lessons**. Reading about an algorithm isn't coding it —
+so added **runnable JavaScript exercises** (5 → 8 lessons) to three foundational algorithm lessons that had none, each a
+complete, correct reference implementation the learner runs (instant ✓), edits, and experiments with:
+- **`a-divide-and-conquer`** — **merge sort** (split, sort halves, merge) → `1 2 3 4 5 7 8 9`.
+- **`a-graph-representations-traversal`** — **BFS** with an explicit queue → `A B C D E F` (the exact order its viz
+  animates; the lead-in nudges swapping `shift()`→`pop()` to get DFS).
+- **`a-greedy`** — **activity selection** (earliest-finish-first) → `4`.
+Chose JavaScript precisely because it runs in-browser *and* is fully verifiable headless (no Pyodide/network) — diversifies
+from the recent viz/deep-dive stretch. Injected byte-stably (no-op guard; code HTML-escaped programmatically so `<`/`>`/`&`
+round-trip through `textContent`).
+Verified: extracted each embedded block, **decoded the HTML entities and executed it exactly as the playground's `runJS`
+does → output === `data-expected` for all 3** (3 pass / 0 fail); `gate.js` ALL GREEN (2,368 MCQs · 47 widgets); in-browser
+the exercise mounts (editor + Run), running it shows **"✓ Output matches expected"** (err=0); all-routes smoke (10 routes
+incl. all 3 lessons + the playground) **errs=0/kErr=0**. Reuses the existing Playground component (already embedded in 5
+lessons), so no new mobile layout. SW cache `atlas-v161` → `atlas-v162`.
+
 ## iter 218 — Hash-table visualizer: collisions & load factor (visualizations)
 New widget **`algo-hashing`** (the **47th**), embedded in `a-hash-tables` after the "Load Factor, Resizing, and
 Amortized Cost" section — a core data structure that had no viz, where the "why O(1) on average" story is genuinely
