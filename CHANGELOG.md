@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 102 — Glossary expansion: 48 → 75 terms (understandability)
+The glossary had fallen far behind the curriculum — most glaringly, the entire **Probability & Statistics** topic had
+**zero** terms, and the advanced modules added since (matrix calculus, convex optimization, generative models, advanced
+algorithms, frontier RL) were absent. Added **27 terms (48 → 75)**: a full Probability & Statistics set (16: probability,
+conditional probability, Bayes, independence, random variable, expectation, variance, normal distribution, CLT, LLN,
+covariance/correlation, standard error, confidence interval, p-value, hypothesis test, estimator/bias) plus key advanced
+terms across the six (Jacobian, convex function, Lagrange multiplier, amortized analysis, max-flow/min-cut, union-find,
+autoencoder/VAE, GAN, diffusion model, policy gradient, model-based RL). Every topic is now genuinely covered
+(LA 9 · calc 10 · algo 11 · DL 11 · RL 10 · LLM 8 · PS 16). Because the glossary powers BOTH ⌘K search AND the inline
+`.gloss` hover/tap tooltips, these definitions automatically light up across all 148 lessons wherever the terms appear.
+Plain-language defs in the existing concise style with KaTeX. SW cache → `atlas-v46`; README 48→75. Verified: `node gate.js`
+ALL GREEN; glossary page renders all new terms (katex=61, katex-error=0; p-value/VAE/Jacobian/CLT all present); inline
+tooltips activate on lessons (gloss spans present, errs=0); a Node check confirms 75 valid entries across the 7 real
+topics; stray Chrome cleaned up.
+
 ## iter 101 — Bookmarks: save lessons for later (new functionality) — first ship of the post-curriculum "experience" arc
 With the curriculum now complete (148 lessons across 7 topics), navigation matters — so this adds a **bookmarks**
 feature. A **☆/★ toggle** in every lesson's action bar saves it (with a toast), and saved lessons appear in a new
