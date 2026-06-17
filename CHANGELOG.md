@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 87 — Deep Learning — NEW advanced module: Generative Models (3 lessons) (content; owner "deepen the existing six" directive)
+Rotated off the long Probability & Statistics arc to honor the owner's directive item 2 — *deepen the existing six with
+advanced/frontier lessons*. Deep Learning ended at transformers with no coverage of generative modeling, the engine of
+the current AI explosion; this adds a 7th module that fills exactly that gap:
+**(1) Autoencoders & Variational Autoencoders** — encoder/bottleneck/decoder, the PCA connection, why a plain
+autoencoder can't generate, the VAE's probabilistic latent, the ELBO (reconstruction − KL), and the reparameterization
+trick $z=\mu+\sigma\odot\varepsilon$.
+**(2) Generative Adversarial Networks** — generator vs discriminator, the minimax value function, the $D\equiv\tfrac12$
+optimum, alternating training & the non-saturating loss, mode collapse / instability, and the WGAN fix.
+**(3) Diffusion Models** — the fixed forward noising process (incl. the one-shot $x_t=\sqrt{\bar\alpha_t}x_0+\sqrt{1-\bar\alpha_t}\varepsilon$),
+the learned reverse denoising, the "just predict the noise" MSE objective, sampling cost, why it overtook GANs, and
+latent diffusion (Stable Diffusion = VAE + denoising + cross-attention — fusing all three lessons).
+Each is a full KaTeX lecture + 6 flashcards + 3 homework (hint+solution) + 2 worked examples; MCQs deferred to the
+pipeline. Deep Learning is now a **7-module, 21-lesson** course. Site: **136 lessons · 817 flashcards · 406 homework ·
+264 examples**. SW cache → `atlas-v31`; README counts refreshed (lessons/concepts 133→136). Verified: `node gate.js`
+ALL GREEN (7 topics · 136 lessons); all three lessons render math with **katex-error=0** (GAN generator/discriminator
+notation confirmed visually); course/cheatsheet/map + lessons smoke errs=0; legible at 390px; stray Chrome cleaned up.
+
 ## iter 86 — Probability & Statistics Module 5 — 12 MCQs per lesson (content; owner "more questions" ask)
 Completed the Hypothesis Testing module: all four lessons (testing logic, p-values, errors & power, t-tests) brought
 from 0 → 12 MCQs each via the author→adversarial-verify pipeline — **+48 fact-checked questions**. Every one of the

@@ -29,7 +29,14 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    LESSON HTML in `content`; put commentary ONLY in `notes`; never write a summary into `content`." (Recovered
    via transcript extraction this time.)
 2. **Deepen the existing six** — add ADVANCED lessons/modules (not just more of the same; go further than the
-   current depth) where each topic has frontier/advanced gaps.
+   current depth) where each topic has frontier/advanced gaps. IN PROGRESS:
+   ✅ iter 87: Deep Learning → new "Generative Models" module (Autoencoders/VAEs, GANs, Diffusion) — content+cards+
+   homework+examples, NO MCQs yet (add via pipeline next). REMAINING advanced gaps to mine, one topic per rotation:
+   Calculus → convex optimization / Lagrange multipliers (constrained optimization); Linear Algebra → matrix calculus
+   (gradients of vector/matrix expressions) or pseudoinverse/ridge; Algorithms → amortized analysis or max-flow/min-cut;
+   RL → model-based or offline RL; LLMs are already very deep. Author with `String.raw` + single-backslash LaTeX; the
+   per-topic data file uses its OWN header comment — preserve it. NOTE: name the module variable anything but `module`
+   (reserved in CommonJS), and run generators from the learn-atlas dir (relative `data/...` paths).
 3. **Hard-concept support** — for concepts that are hard to understand, add an EXTRA place/way to explain
    (e.g. a deeper-dive / "intuition" expandable, an alternative explanation), and SPLIT or MERGE lessons where
    that makes a concept land better.
