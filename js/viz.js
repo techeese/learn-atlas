@@ -2072,4 +2072,98 @@
     resample();
   });
 
+  register({ id: 'llm-positional-encoding', topic: 'llm', title: 'Positional Encoding: The Sinusoidal Clock', blurb: 'Self-attention is order-blind — it sees a bag of tokens. Sinusoidal positional encodings fix that by adding a unique "fingerprint" to each position. See the iconic heatmap, the stack of frequencies behind it, and why nearby positions stay similar.' },
+  function (root) {
+    const W = 580, H = 408, MONO = "JetBrains Mono, monospace";
+    const NPOS = 40;
+    let d = 32, mode = 'heatmap', q = 12;
+    const { c, ctx } = canvas(root, W, H);
+
+    function pe(pos, idx) { const k = Math.floor(idx / 2), w = Math.pow(10000, -2 * k / d), a = pos * w; return (idx % 2 === 0) ? Math.sin(a) : Math.cos(a); }
+    function toRGB(s) { s = String(s).trim(); if (s[0] === '#') { let h = s.slice(1); if (h.length === 3) h = h.split('').map(x => x + x).join(''); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; } const m = s.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/); return m ? [+m[1], +m[2], +m[3]] : [128, 128, 128]; }
+    function mix(a, b, t) { const A = toRGB(a), B = toRGB(b); return `rgb(${Math.round(A[0] + (B[0] - A[0]) * t)},${Math.round(A[1] + (B[1] - A[1]) * t)},${Math.round(A[2] + (B[2] - A[2]) * t)})`; }
+
+    function draw() {
+      const pl = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pl.bg; ctx.fillRect(0, 0, W, H);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      if (mode === 'heatmap') drawHeatmap(pl);
+      else if (mode === 'waves') drawWaves(pl);
+      else drawSim(pl);
+      setNote(pl);
+    }
+
+    function drawHeatmap(pl) {
+      const padL = 50, padT = 26, padR = 16, padB = 34;
+      const cw = (W - padL - padR) / d, ch = (H - padT - padB) / NPOS;
+      for (let p = 0; p < NPOS; p++) for (let i = 0; i < d; i++) {
+        const v = pe(p, i);
+        ctx.fillStyle = v >= 0 ? mix(pl.panel, pl.sage, v) : mix(pl.panel, pl.rust, -v);
+        ctx.fillRect(padL + i * cw, padT + p * ch, Math.ceil(cw) + 0.5, Math.ceil(ch) + 0.5);
+      }
+      ctx.strokeStyle = pl.line; ctx.lineWidth = 1; ctx.strokeRect(padL, padT, d * cw, NPOS * ch);
+      ctx.fillStyle = pl.mute; ctx.font = '10px ' + MONO;
+      ctx.save(); ctx.translate(14, padT + NPOS * ch / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.fillText('token position  0 → ' + (NPOS - 1), 0, 0); ctx.restore();
+      ctx.textAlign = 'center'; ctx.fillText('embedding dimension  0 → ' + (d - 1), padL + d * cw / 2, H - 12);
+      ctx.textAlign = 'left'; ctx.fillStyle = pl.sage; ctx.fillText('■ +1', padL, 18); ctx.fillStyle = pl.rust; ctx.fillText('■ −1', padL + 52, 18);
+    }
+
+    function drawWaves(pl) {
+      const padL = 46, padT = 22, padR = 14, padB = 40;
+      const w = W - padL - padR, h = H - padT - padB, y0 = padT + h / 2;
+      ctx.strokeStyle = pl.line; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(padL, y0); ctx.lineTo(padL + w, y0); ctx.stroke();           // zero line
+      ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padT + h); ctx.stroke();        // y axis
+      ctx.fillStyle = pl.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'right';
+      ctx.fillText('+1', padL - 6, padT + 4); ctx.fillText('0', padL - 6, y0 + 4); ctx.fillText('−1', padL - 6, padT + h + 4);
+      const dims = [0, 2, 8, 20].filter(k => k < d), cols = [pl.gold, pl.sage, pl.violet, pl.rust];
+      const xOf = p => padL + (p / (NPOS - 1)) * w, yOf = v => y0 - v * (h / 2 - 4);
+      dims.forEach((idx, di) => {
+        ctx.strokeStyle = cols[di]; ctx.lineWidth = 2; ctx.beginPath();
+        for (let p = 0; p < NPOS; p++) { const x = xOf(p), y = yOf(pe(p, idx)); p === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+        ctx.stroke();
+        ctx.fillStyle = cols[di]; ctx.textAlign = 'left'; ctx.font = '10px ' + MONO;
+        ctx.fillText('dim ' + idx + (idx === 0 ? ' (fast)' : idx === 20 ? ' (slow)' : ''), padL + 6 + di * 96, padT + h + 26);
+      });
+      ctx.fillStyle = pl.mute; ctx.textAlign = 'center'; ctx.fillText('token position →', padL + w / 2, padT + h + 13);
+    }
+
+    function drawSim(pl) {
+      const padL = 50, padT = 24, padR = 16, padB = 38;
+      const w = W - padL - padR, h = H - padT - padB;
+      const sims = []; let lo = 1, hi = -1;
+      for (let p = 0; p < NPOS; p++) { let s = 0; for (let i = 0; i < d; i++) s += pe(q, i) * pe(p, i); s = (2 / d) * s; sims.push(s); if (s < lo) lo = s; if (s > hi) hi = s; }
+      lo = Math.min(lo, -0.2); hi = 1;
+      const xOf = p => padL + (p / (NPOS - 1)) * w, yOf = s => padT + h - ((s - lo) / (hi - lo)) * h;
+      ctx.strokeStyle = pl.line; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(padL, yOf(0)); ctx.lineTo(padL + w, yOf(0)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padT + h); ctx.stroke();
+      // query marker
+      ctx.strokeStyle = mix(pl.gold, pl.bg, 0.3); ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(xOf(q), padT); ctx.lineTo(xOf(q), padT + h); ctx.stroke(); ctx.setLineDash([]);
+      ctx.strokeStyle = pl.gold; ctx.lineWidth = 2; ctx.beginPath();
+      sims.forEach((s, p) => { const x = xOf(p), y = yOf(s); p === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); });
+      ctx.stroke();
+      sims.forEach((s, p) => { ctx.fillStyle = p === q ? pl.gold : pl.soft; ctx.beginPath(); ctx.arc(xOf(p), yOf(s), p === q ? 4 : 2, 0, 7); ctx.fill(); });
+      ctx.fillStyle = pl.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'right';
+      ctx.fillText('1.0', padL - 6, yOf(1) + 4); ctx.fillText('0', padL - 6, yOf(0) + 4);
+      ctx.textAlign = 'center'; ctx.fillText('token position →   (query q = ' + q + ')', padL + w / 2, padT + h + 26);
+    }
+
+    function setNote(pl) {
+      info.innerHTML = mode === 'heatmap'
+        ? `<b>Heatmap.</b> Each row is a token position (0–${NPOS - 1}); each column an embedding dimension (0–${d - 1}). Colour = the sin/cos value (sage +1, rust −1). Left dimensions oscillate fast, right ones slowly — a "continuous binary clock" that fingerprints every position. This fixed matrix is simply <i>added</i> onto the token embeddings.`
+        : mode === 'waves'
+        ? `<b>Frequencies.</b> A few dimensions drawn as waves across positions. Dimension 2k is sin(pos·ω) with ω = 10000<sup>−2k/d</sup>: small k → short wavelength (fast), large k → long wavelength (slow). Stacking many frequencies makes each position's vector unique — the rows of the heatmap.`
+        : `<b>Relative similarity.</b> Dot-product similarity between query position q = ${q} and every other position, scaled so the peak at q is 1. It falls off smoothly and symmetrically with distance — which is how the fixed sinusoids let attention recover <i>relative</i> position (the offset is a linear rotation of the encoding).`;
+    }
+
+    const ctl = controls(root);
+    select(ctl, { label: 'view', value: mode, options: [{ value: 'heatmap', label: 'Heatmap (pos × dim)' }, { value: 'waves', label: 'Frequencies (waves)' }, { value: 'similarity', label: 'Relative similarity' }], onChange: v => { mode = v; draw(); } });
+    slider(ctl, { label: 'dimensions d', min: 16, max: 64, step: 8, value: d, fmt: v => 'd=' + v, onInput: v => { d = v; if (q > NPOS - 1) q = NPOS - 1; draw(); } });
+    slider(ctl, { label: 'query pos (similarity)', min: 0, max: NPOS - 1, step: 1, value: q, fmt: v => 'q=' + v, onInput: v => { q = v; draw(); } });
+    const info = note(root);
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Sinusoidal positional encoding. A heatmap of position by embedding dimension where low dimensions oscillate quickly and high dimensions slowly, giving each position a unique fingerprint; alternate views show the per-dimension sinusoids and the smooth decay of similarity with distance.');
+    draw();
+  });
+
 })();

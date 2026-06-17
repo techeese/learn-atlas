@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 166 — Positional-encoding visualization (`llm-positional-encoding`, the 38th widget) (visualizations)
+The transformers thread had **no positional-encoding viz** — yet sinusoidal PE is one of the most abstract ideas in
+the stack (a formula of nested powers of 10000), and the dedicated lesson *"Positional Information: From Sinusoids to
+RoPE"* had no visual. New `llm-positional-encoding` widget makes it concrete with **three views** (a `view` select):
+- **Heatmap** — the iconic *position × dimension* grid (40 positions × d dims), colour = the sin/cos value (sage +1,
+  rust −1). You can see low dimensions oscillate fast and high ones slowly — the "continuous binary clock."
+- **Frequencies (waves)** — a handful of dimensions drawn as sine waves across positions, making the geometrically
+  spaced wavelengths (ω = 10000^−2k/d) visible — *these are the rows of the heatmap*.
+- **Relative similarity** — dot-product similarity between a chosen query position q (slider) and every position,
+  normalised so the peak at q is 1; it decays smoothly and symmetrically with distance, which is *why* fixed
+  sinusoids let attention recover **relative** position.
+- A `dimensions d` slider (16–64) rescales the encoding live. All three are **synchronous static draws** (no rAF), so
+  first paint is correct and screenshots are faithful. The note is plain-unicode (uses ω, superscripts, −; no `$…$`).
+  Embedded before the "Absolute Position 2: Learned Embeddings" h3 in `llm/l-positional-encoding`. Canvas gets
+  `role="img"` + an aria description.
+- **Verified**: `viz.js` + `llm.js` syntax OK; byte-stable JSON round-trip guard before the embed (+50 bytes);
+  `node gate.js` **ALL GREEN · 38 widgets** (embedded id resolves); lab render-check cycling all three modes →
+  `errs=0 | canvas=1 | ctls=3 | rawDollars=0`; lesson-embed check → `host=1, canvas=1`; all-routes smoke (12)
+  `errs=0`; desktop screenshots of all three modes + a **390px** mobile shot read crafted/legible. SW cache
+  **v108 → v109**; README 37 → 38 (two counts + appended to the widget list).
+
 ## iter 165 — MCQ arc → Deep Learning · Generalization 12 → 16 (content — owner's #1 ask)
 The arc continues through DL's third module, *Generalization: Regularization and Stable Training*. All **three**
 lessons go 12 → 16 (**+12, bank 2,072 → 2,084**), stating the bedrock the existing 12 assumed:
