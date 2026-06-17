@@ -230,6 +230,36 @@
   }
 
   // ---------- onboarding / welcome tour ----------
+  // ---------- accessible modal helper: dialog semantics + focus trap + focus restore ----------
+  // Marks the card as role=dialog/aria-modal, moves focus inside, traps Tab within the modal,
+  // and on release() returns focus to whatever was focused when the modal opened.
+  function modalA11y(scrim, card, label) {
+    const opener = document.activeElement;
+    if (card) {
+      card.setAttribute("role", "dialog");
+      card.setAttribute("aria-modal", "true");
+      if (label && !card.getAttribute("aria-label")) card.setAttribute("aria-label", label);
+      if (!card.hasAttribute("tabindex")) card.setAttribute("tabindex", "-1");
+    }
+    const SEL = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    const focusables = () => Array.prototype.filter.call((card || scrim).querySelectorAll(SEL), el => el.offsetParent !== null);
+    function onKey(e) {
+      if (e.key !== "Tab") return;
+      const f = focusables();
+      if (!f.length) { e.preventDefault(); if (card) card.focus(); return; }
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    scrim.addEventListener("keydown", onKey);
+    const f = focusables();
+    if (f.length) f[0].focus(); else if (card) card.focus();
+    return function release() {
+      scrim.removeEventListener("keydown", onKey);
+      if (opener && typeof opener.focus === "function" && document.contains(opener)) opener.focus();
+    };
+  }
+
   function showIntro(force) {
     if (!force) { try { if (localStorage.getItem("atlas.introSeen")) return; } catch (e) {} }
     // counts are computed live so the tour never goes stale as content grows
@@ -252,11 +282,13 @@
       <button class="btn primary" id="intro-go">Start learning →</button>
     </div>`;
     document.body.appendChild(ov);
+    let release = null;
     const onKey = (e) => { if (e.key === "Escape") close(); };
-    const close = () => { try { localStorage.setItem("atlas.introSeen", "1"); } catch (e) {} ov.remove(); document.removeEventListener("keydown", onKey); };
+    const close = () => { try { localStorage.setItem("atlas.introSeen", "1"); } catch (e) {} if (release) release(); ov.remove(); document.removeEventListener("keydown", onKey); };
     ov.addEventListener("click", e => { if (e.target === ov) close(); });
     ov.querySelector("#intro-go").addEventListener("click", close);
     document.addEventListener("keydown", onKey);
+    release = modalA11y(ov, ov.querySelector(".intro-card"), "Welcome to Atlas");
   }
 
   // ---------- juice: confetti + level-up celebration (respects reduced-motion) ----------
@@ -281,10 +313,12 @@
     const ov = document.createElement("div"); ov.className = "levelup-ov";
     ov.innerHTML = `<div class="levelup-card"><div class="lu-glyph">⬆</div><div class="lu-eyebrow">Level Up</div><div class="lu-lvl">Level ${info.level}</div><div class="lu-name">${esc(info.name)}</div><button class="btn primary" id="lu-close">Keep going →</button></div>`;
     document.body.appendChild(ov);
-    const close = () => ov.remove();
+    let release = null;
+    const close = () => { if (release) release(); ov.remove(); };
     ov.addEventListener("click", e => { if (e.target === ov) close(); });
     ov.querySelector("#lu-close").addEventListener("click", close);
     document.addEventListener("keydown", function esc2(e) { if (e.key === "Escape") { close(); document.removeEventListener("keydown", esc2); } });
+    release = modalA11y(ov, ov.querySelector(".levelup-card"), "Level up");
   }
 
   // ---------- chrome (sidebar + topbar) ----------
@@ -2035,9 +2069,10 @@
       else if (e.key === "Escape") { closePalette(); }
     });
     paletteEl.addEventListener("click", e => { if (e.target === paletteEl) closePalette(); });
-    render(); inp.focus();
+    render();
+    paletteEl._release = modalA11y(paletteEl, paletteEl.querySelector(".palette"), "Command palette");
   }
-  function closePalette() { if (paletteEl) { paletteEl.remove(); paletteEl = null; } }
+  function closePalette() { if (paletteEl) { if (paletteEl._release) paletteEl._release(); paletteEl.remove(); paletteEl = null; } }
 
   // ---------- router ----------
   // a meaningful browser-tab / history / screen-reader title per route (SPAs otherwise stay stuck on one title)
@@ -2152,7 +2187,7 @@
 
   // ---------- keyboard-shortcuts help (press ?) ----------
   let shortcutsEl = null;
-  function closeShortcuts() { if (shortcutsEl) { document.removeEventListener("keydown", shortcutsEl._onKey); shortcutsEl.remove(); shortcutsEl = null; } }
+  function closeShortcuts() { if (shortcutsEl) { document.removeEventListener("keydown", shortcutsEl._onKey); if (shortcutsEl._release) shortcutsEl._release(); shortcutsEl.remove(); shortcutsEl = null; } }
   function showShortcuts() {
     if (shortcutsEl) return;
     const groups = [
@@ -2172,6 +2207,7 @@
     document.addEventListener("keydown", onKey);
     shortcutsEl.addEventListener("click", e => { if (e.target === shortcutsEl) closeShortcuts(); });
     shortcutsEl.querySelector("#sc-close").addEventListener("click", closeShortcuts);
+    shortcutsEl._release = modalA11y(shortcutsEl, shortcutsEl.querySelector(".sc-card"), "Keyboard shortcuts");
   }
 
   function applyTextScale() { try { document.documentElement.style.setProperty("--read-scale", localStorage.getItem("atlas.textScale") || "1"); } catch (e) {} }

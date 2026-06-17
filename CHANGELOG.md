@@ -2,6 +2,34 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 180 — Modal focus management: trap + restore + dialog semantics (accessibility) · ★180 reflection
+Accessibility was the most-neglected compass area (last dedicated at iter 160, 20 iters ago). The four overlays
+(command palette, welcome tour, level-up, keyboard-shortcuts) all handled Escape, but shared three real a11y gaps:
+focus wasn't moved into / **trapped within** the dialog, focus was **lost on close** (keyboard & screen-reader users
+got dumped to the page top), and most lacked `role="dialog"`/`aria-modal`. Added one shared **`modalA11y(scrim, card,
+label)`** helper that: marks the card `role="dialog"` + `aria-modal="true"` (+ an aria-label), moves focus inside on
+open, **traps Tab/Shift+Tab within the dialog**, and on `release()` **restores focus to whatever was focused when the
+modal opened**. Wired into all four overlays (open → store the releaser; every close path calls it). Purely
+behavioral — no visual change.
+- **Verified**: `app.js` syntax OK; a headless focus-driven test confirms, for the command palette: `role=dialog`,
+  `aria-modal=true`, focus moves into the input on open, **Tab stays trapped**, Escape closes, and **focus returns to
+  the Search button** that opened it; same for the shortcuts overlay (`role=dialog`, `aria-modal`, focus-in,
+  focus-restored to the ⌨ button). All-routes smoke (11) `errs=0`. No visual change → no screenshot/mobile gate needed.
+  SW cache **v122 → v123**.
+
+★ **180-iteration reflection.** The loop remains healthy — strict content/non-content alternation held another 10
+iters, zero red gates, zero reverts. **Content**: the 12→16 MCQ arc reached **2,168 MCQs**; **Deep Learning completed**
+(all 22 lessons, iter 173) and the arc is now **5 topics opened / 4 complete** (Algorithms, LA, Calculus, DL done; RL
+at 3/7 modules). **Non-content** rotated genuinely widely this stretch — viz×2 (positional-encoding→transformers,
+KL→VAE… then dropout earlier; TD-vs-MC→RL), gamification (achievements 168), animations (Progress count-up 174),
+understandability (glossary +14 terms 176), UI/UX (reading-progress bar 170), and now a11y (180). Site totals:
+**40 widgets · 46 achievements · 89 glossary terms · 2,168 MCQs**. The "pair a viz with the upcoming content module"
+tactic is paying off (positional-encoding, KL, TD-MC all landed where the arc was heading). *Still-thin / candidates*:
+**workflow/dev-flow** (gate or MCQ-pipeline tooling — last at 158), **mobile** (no dedicated audit-and-fix in a while),
+and **performance** (verified fine at 164, no action). No area is alarmingly neglected; flow still serves the north
+star. **OWNER:** the arc will keep marching through RL → LLMs → Prob & Stats (≈45 lessons / ~11 content iters to reach
+the whole bank at 16); say the word if you'd rather I divert to a bigger new pillar instead of finishing the sweep.
+
 ## iter 179 — MCQ arc → Reinforcement Learning · Model-Free Prediction 12 → 16 (content — owner's #1 ask)
 The arc continues through RL's *Model-Free Prediction & Control* module. All **four** lessons go 12 → 16 (**+16, bank
 2,152 → 2,168**), stating the bedrock the existing 12 assumed:

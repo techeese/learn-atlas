@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 180 (★180): Modal focus management (accessibility — non-content; a11y last touched iter 160). Shared
+   `modalA11y()` helper gives the 4 overlays (palette/tour/level-up/shortcuts) role=dialog+aria-modal, focus-in,
+   Tab-trap, and focus-restore-to-opener. Headless focus test: palette+shortcuts role/aria-modal/focus-in/esc-close/
+   focus-restored all ✓; Tab trapped; smoke errs=0; no visual change; SW →v123. ★180 reflection in CHANGELOG (loop
+   healthy; DL complete, RL 3/7; thin: workflow, mobile, perf=fine).
    ✅ iter 179: MCQ arc → Reinforcement Learning·Model-Free Prediction 12→16 (+16, bank →2,168). All 4 lessons (monte-
    carlo/td-learning/sarsa-qlearning/eligibility-traces). RL 3/7 modules. Adversarial agent ALL PASS; positions
    balanced 4/4/4/4 (distinct patterns); render "of 16" errs=0; SW →v122. RL REMAINING (arc): function-approximation(2),
