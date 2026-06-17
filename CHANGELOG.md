@@ -2,6 +2,29 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 164 — Inline "Quick Check": low-stakes retrieval at the end of every lecture (new functionality / understandability)
+The lecture reading flow had **no retrieval practice** — the Quiz tab is a deliberate, separate switch, so learners
+who read and move on never test recall, forfeiting the single best-evidenced retention lever (the *testing effect*,
+Roediger & Karpicke). New **Quick Check** sits at the end of the lecture body (right after the prose, before notes
+& navigation — the natural "done reading" beat). It opens collapsed with an inviting framing ("Reading it is not the
+same as remembering it"), then runs **3 questions sampled from the lesson's own MCQ bank** with immediate
+correct/incorrect feedback + explanations, ending on a "you recalled N/3" beat with a one-tap **"Take the full quiz →"**
+CTA (clicks the quiz tab) and an "↻ Another 3" reshuffle.
+- **Deliberately no-stakes**: awards **no XP, no mastery, no miss-tracking** — the graded Quiz tab owns scoring. This
+  keeps it pedagogically distinct (low-stakes in-flow retrieval vs. the graded test) and prevents double-counting /
+  gaming. Zero new content — reuses each lesson's existing MCQs via the shared `shuffle()` + the quiz visual classes
+  (`.choice`/`.explain`), so it inherits KaTeX typesetting and the answer-feedback juice. Skips itself on lessons
+  with < 3 MCQs (`host.remove()`).
+- **Files**: `js/app.js` — `mountQuickCheck(host, lesson)` (self-contained state machine), a `#quick-check`
+  placeholder in `renderLecture`'s body + the mount call; `css/styles.css` — `#quick-check` card (gold left-accent
+  panel) + `.qc-*` styles, theme-variable-based so both themes adapt.
+- **Verified**: `node -e Function(...)` syntax OK; functional drive (headless) — mount→intro→Start→answer→explanation
+  →Next→done-screen all `errs=0`, and the **"full quiz" CTA switches to the quiz tab and renders it** (`aria-selected
+  =true`, "Question 1 of …" shown); KaTeX check inside the card → `qcKErr=0 | qcRawDollars=0 | sawKatex=1`; desktop
+  intro + answered screenshots read crafted; **390px** mobile screenshot legible (stem + wrapped choices); all-routes
+  smoke (15 routes incl. a non-DL lesson) `errs=0`. No state-shape change (store.js untouched) → prior saves load.
+  SW cache **v106 → v107**.
+
 ## iter 163 — MCQ arc → Deep Learning · Training Mechanics 12 → 16 (content — owner's #1 ask)
 The arc's **fourth topic continues**: all **four** lessons of the *How Networks Learn* module go 12 → 16
 (**+16, bank 2,056 → 2,072**), stating the bedrock the existing 12 assumed.

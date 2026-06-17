@@ -402,6 +402,22 @@ body::after {
   background: var(--panel); font-size: 15px; color: var(--ink-soft); animation: fade .35s;
 }
 .explain .et { color: var(--gold); font-weight: 600; font-family: var(--font-disp); margin-bottom: 5px; }
+/* inline Quick Check — low-stakes retrieval at the end of the lecture (testing effect, in-flow) */
+#quick-check {
+  margin: 30px 0 4px; padding: 20px 22px; border-radius: 14px;
+  border: 1px solid var(--line); border-left: 3px solid var(--gold);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 6%, var(--panel2, var(--panel))), var(--panel));
+}
+.qc-head { font-family: var(--font-disp); font-size: 18px; font-weight: 600; color: var(--ink); display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+.qc-ico { font-size: 19px; }
+.qc-sub { font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-mute); }
+.qc-body { margin-top: 14px; }
+.qc-lead { color: var(--ink-soft); font-size: 15px; line-height: 1.55; margin: 0 0 16px; }
+.qc-stem { font-size: 18px; margin-bottom: 18px; }
+.qc-next-slot:not(:empty) { margin-top: 18px; }
+.qc-score { font-family: var(--font-disp); font-size: 17px; color: var(--ink); }
+.qc-score b { font-size: 32px; color: var(--gold); display: inline-block; margin-right: 6px; }
+.qc-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
 .quiz-result { text-align: center; padding: 30px 0; }
 .quiz-result .big { font-family: var(--font-disp); font-size: 64px; font-weight: 600; color: var(--gold); }
 .quiz-result .big.big-pop, .recall-done .big.big-pop { animation: bigPop .55s cubic-bezier(.2,1.35,.4,1); transform-origin: center; }

@@ -647,6 +647,7 @@
     const done = Store.isLessonDone(lesson.id);
     body.innerHTML = `
       <div class="prose reveal">${lesson.content || "<p>Content coming soon.</p>"}</div>
+      <section id="quick-check" class="reveal" aria-label="Quick check"></section>
       <div class="notes-box reveal">
         <div class="notes-head">📝 My notes <span id="notes-saved"></span><a href="#/notes" data-route class="notes-all">all notes →</a></div>
         <textarea id="notes-area" placeholder="Jot your own notes, questions, or 'aha' moments — saved automatically on this device.">${esc(Store.getNote(lesson.id))}</textarea>
@@ -686,12 +687,78 @@
     });
     bindGo();
     buildLessonTOC(body);
+    mountQuickCheck(document.getElementById("quick-check"), lesson);
     hydrateViz(body);
     hydrateCode(body);
     // reward expanding a "Deeper dive" intuition (Deep Thinker)
     body.querySelectorAll("details.deep-dive").forEach(d => d.addEventListener("toggle", () => { if (d.open) { Store.unlock("deep-thinker"); flushAchievements(); } }));
     linkGlossary(body.querySelector(".prose"));   // inline term tooltips (before typeset, so tooltip math renders)
     typeset();
+  }
+
+  // ---------- inline "Quick Check": low-stakes retrieval at the end of the lecture ----------
+  // Brings the testing effect into the reading flow without leaving the page. Reuses the lesson's
+  // own MCQs; deliberately NO XP / mastery / miss-tracking — the graded Quiz tab owns scoring.
+  function mountQuickCheck(host, lesson) {
+    if (!host) return;
+    const all = lesson.mcq || [];
+    if (all.length < 3) { host.remove(); return; }   // not worth it for a tiny bank
+    const N = 3;
+    let picks = [], idx = 0, right = 0, started = false;
+
+    function reset() { picks = shuffle(all).slice(0, N); idx = 0; right = 0; }
+
+    function frame(inner) {
+      host.innerHTML = `<div class="qc-head"><span class="qc-ico">🧠</span> Quick check
+        <span class="qc-sub">${started ? `question ${Math.min(idx + 1, N)} of ${N}` : "before you move on"}</span></div>
+        <div class="qc-body">${inner}</div>`;
+    }
+
+    function intro() {
+      started = false;
+      frame(`<p class="qc-lead">Reading it is not the same as remembering it. Try ${N} quick questions from this
+        lesson — <strong>no grade, no XP</strong>, just to see if it stuck.</p>
+        <button class="btn primary" id="qc-start">Start quick check →</button>`);
+      host.querySelector("#qc-start").addEventListener("click", () => { reset(); started = true; drawQ(); });
+    }
+
+    function drawQ() {
+      if (idx >= picks.length) return done();
+      const q = picks[idx];
+      frame(`<div class="q-stem qc-stem">${q.q}</div>
+        <div class="choices">${q.choices.map((ch, ci) => `<button class="choice" data-ci="${ci}"><span class="key">${String.fromCharCode(65 + ci)}</span><span>${ch}</span></button>`).join("")}</div>
+        <div class="qc-explain-slot"></div>
+        <div class="qc-next-slot"></div>`);
+      let locked = false;
+      host.querySelectorAll(".choice").forEach(btn => btn.addEventListener("click", () => {
+        if (locked) return; locked = true;
+        const ci = parseInt(btn.dataset.ci, 10), ans = q.answer;
+        host.querySelectorAll(".choice").forEach((b, bi) => { b.classList.add("locked"); if (bi === ans) b.classList.add("correct"); else if (bi === ci) b.classList.add("wrong"); });
+        if (ci === ans) right++;
+        host.querySelector(".qc-explain-slot").innerHTML = `<div class="explain"><div class="et">${ci === ans ? "Correct ✓" : "Not quite"}</div>${q.explain || ""}</div>`;
+        const nb = document.createElement("button");
+        nb.className = "btn primary"; nb.textContent = idx === picks.length - 1 ? "See how you did →" : "Next →";
+        nb.addEventListener("click", () => { idx++; drawQ(); });
+        host.querySelector(".qc-next-slot").appendChild(nb);
+        typeset();
+      }));
+      typeset();
+    }
+
+    function done() {
+      started = false;
+      const msg = right === N ? "All three — it stuck. 🎯" : right >= 2 ? "Nicely done — mostly there." : "Worth another read of the tricky parts.";
+      frame(`<div class="qc-score"><b>${right}/${N}</b> recalled</div>
+        <p class="qc-lead">${msg}</p>
+        <div class="qc-actions">
+          <button class="btn primary" id="qc-quiz">Take the full quiz (${all.length} Q) →</button>
+          <button class="btn ghost" id="qc-again">↻ Another ${N}</button>
+        </div>`);
+      host.querySelector("#qc-again").addEventListener("click", () => { reset(); started = true; drawQ(); });
+      host.querySelector("#qc-quiz").addEventListener("click", () => { const t = document.getElementById("tab-quiz"); if (t) t.click(); });
+    }
+
+    intro();
   }
 
   // ---------- quiz engine ----------
