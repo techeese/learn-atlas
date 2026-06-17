@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 133 — MCQ arc → topic 2: Linear Algebra · Foundations 12 → 16 (content — owner's #1 ask)
+The 12→16 arc moves to its second topic. **+4 new MCQs each** to Vectors & Operations, Dot Product & Norms, Span &
+Independence, and Basis & Dimension (**+16, bank 1,868 → 1,884**) — foundational angles the existing 12 (mostly compute-
+and-trap questions) didn't state plainly: what a vector <em>is</em> / the zero vector as additive identity / negative-
+scalar geometry / component-wise operations; dot product = sum of componentwise products / norm = $\sqrt{\mathbf v\cdot
+\mathbf v}$ / $\mathbf u\cdot\mathbf v=\lVert\mathbf u\rVert\lVert\mathbf v\rVert\cos\theta$ / positive dot ⇒ angle <90°;
+linear combination / definition of dependence / max independent in $\mathbb R^n$ is $n$ / what "spans $\mathbb R^n$"
+means; basis = independent + spanning / dimension = size of a basis / the standard basis of $\mathbb R^3$ / why no basis
+exceeds $n$ vectors. Pipeline: authored avoiding existing stems → **adversarial-verify agent → ALL 16 PASS** (with a
+duplicate check vs the existing 12 — only one acceptable reinforcement overlap, no fix needed; reported keys matched the
+shuffle) → positions shuffled (1302 / 2031 / 3120 / 0213). The gate's position-bias note dropped 21 → 19 (the shuffled
+batch de-biased span & basis). SW cache → `atlas-v76`; README 1,868 → 1,884. Verified: `node gate.js` ALL GREEN; quiz
+renders **"of 16"**, `.katex-error`=0, errs=0. **Arc: Algorithms ✓ · Linear Algebra 1/7 modules.**
+
 ## iter 132 — Keyboard-shortcuts help overlay (press ?) (understandability / accessibility)
 The app has lots of keyboard shortcuts (1–4 to answer, Space to flip cards, ⌘K to search, arrow keys to roam the map)
 but no in-app reference — so they were undiscoverable. Added a **shortcuts overlay**: press **`?`** anywhere (or click the

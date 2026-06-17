@@ -149,6 +149,50 @@
               ],
               "answer": 1,
               "explain": "Adding componentwise places $\\mathbf{v}$'s tail at $\\mathbf{u}$'s tip (head-to-tail), and the resultant is the origin-based diagonal of the parallelogram. The length is only $|\\mathbf{u}|+|\\mathbf{v}|$ when the vectors point the same way, so that choice is generally false; the tip-to-tip arrow is actually the difference, not the sum."
+            },
+            {
+              "q": "In linear algebra, a vector in $\\mathbb{R}^n$ is…",
+              "choices": [
+                "a single number",
+                "an ordered list of $n$ numbers — which you can picture as a point, or as an arrow with direction and length",
+                "a square grid of numbers",
+                "only an arrow, and only in 2D"
+              ],
+              "answer": 1,
+              "explain": "A vector is an ordered $n$-tuple $(v_1,\\dots,v_n)$. Geometrically it's a point in $n$-space or, equivalently, the arrow from the origin to that point. A lone number is a scalar; a grid of numbers is a matrix."
+            },
+            {
+              "q": "What makes the zero vector $\\mathbf{0}=(0,\\dots,0)$ special?",
+              "choices": [
+                "It equals $(1,1,\\dots,1)$",
+                "It has length 1",
+                "It points straight up",
+                "It is the additive identity: $\\mathbf{u}+\\mathbf{0}=\\mathbf{u}$ for every vector $\\mathbf{u}$"
+              ],
+              "answer": 3,
+              "explain": "Adding the zero vector changes nothing, so it plays the role $0$ plays for numbers — the additive identity. It has length $0$ and no direction."
+            },
+            {
+              "q": "Multiplying a vector by a negative scalar, say $-3\\mathbf{v}$, does what geometrically?",
+              "choices": [
+                "Reverses its direction and scales its length by 3",
+                "Rotates it 90°",
+                "Leaves it unchanged",
+                "Changes only its length, never its direction"
+              ],
+              "answer": 0,
+              "explain": "A scalar $c$ scales length by $|c|$; a negative sign flips the arrow to point the opposite way. So $-3\\mathbf{v}$ is three times as long as $\\mathbf{v}$ and points in the opposite direction."
+            },
+            {
+              "q": "How are vector addition and scalar multiplication actually carried out?",
+              "choices": [
+                "Via the dot product",
+                "Only the first component changes",
+                "Component-wise — each coordinate is handled independently",
+                "By matrix multiplication"
+              ],
+              "answer": 2,
+              "explain": "$(\\mathbf{u}+\\mathbf{v})_i = u_i+v_i$ and $(c\\mathbf{v})_i = c\\,v_i$: you operate on matching coordinates separately. This is why both vectors must have the same number of components to be added."
             }
           ],
           "flashcards": [
@@ -344,6 +388,50 @@
               ],
               "answer": 2,
               "explain": "Cosine similarity normalizes by both magnitudes, so multiplying a vector by a positive scalar cancels out and leaves $\\cos\\theta$ unchanged at $0.99$. The distractor about the dot product doubling is true for the raw dot product but irrelevant here, since the larger norm divides it back out."
+            },
+            {
+              "q": "How is the dot product $\\mathbf{u}\\cdot\\mathbf{v}$ computed?",
+              "choices": [
+                "Take the component-wise vector $(u_1v_1,\\dots,u_nv_n)$",
+                "Multiply the two magnitudes together",
+                "Multiply corresponding components and add them: $u_1v_1+u_2v_2+\\cdots+u_nv_n$",
+                "Keep whichever vector is longer"
+              ],
+              "answer": 2,
+              "explain": "The dot product sums the products of matching components, yielding a single <em>scalar</em>. (Note the component-wise product is a vector, not the dot product, and $\\|\\mathbf{u}\\|\\|\\mathbf{v}\\|$ alone omits the angle factor.)"
+            },
+            {
+              "q": "The norm (length) $\\|\\mathbf{v}\\|$ of a vector equals…",
+              "choices": [
+                "$\\sqrt{\\mathbf{v}\\cdot\\mathbf{v}}$",
+                "$\\mathbf{v}\\cdot\\mathbf{v}$",
+                "the sum of the components of $\\mathbf{v}$",
+                "$(\\mathbf{v}\\cdot\\mathbf{v})/n$"
+              ],
+              "answer": 0,
+              "explain": "$\\mathbf{v}\\cdot\\mathbf{v}=v_1^2+\\cdots+v_n^2$ is the squared length (Pythagoras in $n$ dimensions), so the length itself is its square root, $\\|\\mathbf{v}\\|=\\sqrt{\\mathbf{v}\\cdot\\mathbf{v}}$."
+            },
+            {
+              "q": "How does the dot product relate to the angle $\\theta$ between two vectors?",
+              "choices": [
+                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\| / \\|\\mathbf{v}\\|$",
+                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\|\\,\\|\\mathbf{v}\\|\\sin\\theta$",
+                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\| + \\|\\mathbf{v}\\|$",
+                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\|\\,\\|\\mathbf{v}\\|\\cos\\theta$"
+              ],
+              "answer": 3,
+              "explain": "The geometric form $\\mathbf{u}\\cdot\\mathbf{v}=\\|\\mathbf{u}\\|\\|\\mathbf{v}\\|\\cos\\theta$ ties algebra to geometry: it's the basis of cosine similarity, and it's why a dot product of zero means $\\cos\\theta=0$, i.e. perpendicular."
+            },
+            {
+              "q": "If two nonzero vectors have a <em>positive</em> dot product ($\\mathbf{u}\\cdot\\mathbf{v} > 0$), the angle between them is…",
+              "choices": [
+                "exactly 90° — they're orthogonal",
+                "less than 90° — they point in broadly the same direction",
+                "more than 90° — they point broadly opposite",
+                "always exactly 0°"
+              ],
+              "answer": 1,
+              "explain": "Since $\\mathbf{u}\\cdot\\mathbf{v}=\\|\\mathbf{u}\\|\\|\\mathbf{v}\\|\\cos\\theta$ and the magnitudes are positive, the sign of the dot product is the sign of $\\cos\\theta$: positive ⇒ acute angle, zero ⇒ orthogonal, negative ⇒ obtuse."
             }
           ],
           "flashcards": [
@@ -539,6 +627,50 @@
               ],
               "answer": 1,
               "explain": "Two independent vectors span a 2-dimensional plane through the origin; reaching all of $\\mathbb{R}^3$ requires 3 independent vectors. Confusing 'independent' with 'spanning the whole space' is the common misconception here."
+            },
+            {
+              "q": "A <em>linear combination</em> of vectors $v_1,\\dots,v_k$ is…",
+              "choices": [
+                "whichever of them is longest",
+                "the dot product of all of them",
+                "the product of the vectors",
+                "any sum of scalar multiples of them, $c_1 v_1 + c_2 v_2 + \\cdots + c_k v_k$"
+              ],
+              "answer": 3,
+              "explain": "Scale each vector by some number and add the results — that's a linear combination. The set of <em>all</em> such combinations is the span, and these are the only operations a vector space is built from."
+            },
+            {
+              "q": "A set of vectors is linearly <em>dependent</em> when…",
+              "choices": [
+                "all of them are mutually orthogonal",
+                "at least one of them can be written as a linear combination of the others (equivalently, some nontrivial combination equals $\\mathbf{0}$)",
+                "they all have unit length",
+                "there are fewer of them than the dimension"
+              ],
+              "answer": 1,
+              "explain": "Dependence means redundancy: one vector adds no new direction because it's reachable from the rest. Equivalently $c_1v_1+\\cdots+c_kv_k=\\mathbf{0}$ has a solution with not all $c_i=0$."
+            },
+            {
+              "q": "What is the largest possible number of linearly independent vectors in $\\mathbb{R}^n$?",
+              "choices": [
+                "$n+1$",
+                "$n-1$",
+                "$n$",
+                "unlimited"
+              ],
+              "answer": 2,
+              "explain": "$\\mathbb{R}^n$ has dimension $n$, so at most $n$ vectors can be independent; any $n+1$ vectors in $\\mathbb{R}^n$ are forced to be dependent. Exactly $n$ independent vectors form a basis."
+            },
+            {
+              "q": "A set of vectors <em>spans</em> $\\mathbb{R}^n$ when…",
+              "choices": [
+                "every vector in $\\mathbb{R}^n$ can be written as some linear combination of them",
+                "they are all linearly independent",
+                "there are exactly $n$ of them",
+                "they are mutually orthogonal"
+              ],
+              "answer": 0,
+              "explain": "Spanning is about reach: the vectors' linear combinations cover all of $\\mathbb{R}^n$, leaving no vector out. (You may need more than $n$ vectors to span if some are redundant; independence is a separate property.)"
             }
           ],
           "flashcards": [
@@ -732,6 +864,50 @@
               ],
               "answer": 2,
               "explain": "$W$ is spanned by $\\{(1,0,1),(0,1,1)\\}$ (set $a=1,b=0$ then $a=0,b=1$), which are independent, so $\\dim W = 2$. The dimension counts free parameters, not the ambient space $\\mathbb{R}^3$."
+            },
+            {
+              "q": "A <em>basis</em> of a vector space is a set of vectors that is…",
+              "choices": [
+                "both linearly independent and spans the space",
+                "linearly independent (spanning isn't required)",
+                "spanning (independence isn't required)",
+                "orthogonal and unit-length"
+              ],
+              "answer": 0,
+              "explain": "A basis is the 'just right' set: independent (no redundancy) <em>and</em> spanning (reaches everything). Orthonormal bases (orthogonal + unit length) are a convenient special case, not a requirement."
+            },
+            {
+              "q": "The <em>dimension</em> of a vector space is…",
+              "choices": [
+                "the value of its largest component",
+                "the total number of vectors in the space",
+                "the number of vectors in any basis for it",
+                "the number of dependent vectors it contains"
+              ],
+              "answer": 2,
+              "explain": "Every basis of a given space has the same size, and that common count is the dimension — e.g. $\\dim \\mathbb{R}^n = n$. (The space itself contains infinitely many vectors, so that can't be the measure.)"
+            },
+            {
+              "q": "What is the standard basis of $\\mathbb{R}^3$?",
+              "choices": [
+                "Any three vectors at all",
+                "The unit axis vectors $(1,0,0),\\,(0,1,0),\\,(0,0,1)$",
+                "The single vector $(1,1,1)$",
+                "The zero vector $(0,0,0)$"
+              ],
+              "answer": 1,
+              "explain": "The standard basis $\\{\\mathbf{e}_1,\\mathbf{e}_2,\\mathbf{e}_3\\}$ points one unit along each axis; a vector's ordinary coordinates $(x,y,z)$ are exactly its coefficients in this basis. The zero vector can never be in any basis (it's dependent)."
+            },
+            {
+              "q": "Why can no basis of $\\mathbb{R}^n$ contain more than $n$ vectors?",
+              "choices": [
+                "$n$ is the maximum allowed length of a vector",
+                "There isn't enough memory to store them",
+                "Basis vectors must be orthogonal",
+                "Any $n+1$ vectors in $\\mathbb{R}^n$ are necessarily linearly dependent, so they can't all be independent basis vectors"
+              ],
+              "answer": 3,
+              "explain": "Independence caps out at $n$ vectors in $\\mathbb{R}^n$ — a $(n{+}1)$th vector must be a combination of the others. Since a basis must be independent, it can have at most $n$ vectors (and at least $n$ to span), so exactly $n$."
             }
           ],
           "flashcards": [
