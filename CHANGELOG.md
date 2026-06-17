@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 159 — MCQ arc → Calculus · Convex & Constrained Optimization 12 → 16 · ★ CALCULUS COMPLETE (content — owner's #1 ask)
+The final Calculus module. **+4 new MCQs each** to *Convex Sets & Functions*, *Gradient Descent on Convex Functions*,
+and *Lagrange Multipliers* (**+12, bank 2,032 → 2,044**) — and with this **all 25 Calculus lessons are at 16 MCQs**, making
+**Calculus the third topic fully migrated** (after Algorithms ✓ and Linear Algebra ✓). New angles: the convex-set
+definition / convex ⟺ Hessian PSD / which function is convex ($e^x$) / $-f$ is concave; a concrete GD step ($x_0{=}4,
+\eta{=}0.1\Rightarrow 3.2$) / converged when $\nabla f=0$ / too-large-lr diverges / GD is first-order; a Lagrange compute
+($\max(x{+}y)$ s.t. $x^2{+}y^2{=}2$ is $2$) / the constraint restricts to the feasible set / the Lagrangian $f-\lambda g$ /
+$\lambda{=}0$ ⟹ the constraint isn't binding. Answer positions shuffled ([1,3,0,2]/[2,0,3,1]/[3,1,2,0]).
+- **Verified**: byte-stable JSON round-trip (diff +132 localized insertions); `node gate.js` ALL GREEN (2,044 MCQs) and a
+  programmatic check confirms **every Calculus lesson = 16**; direct key-dump confirms the shuffled indices; an independent
+  adversarial fact-check agent returned **ALL PASS** (PSD-not-PD, $x_1{=}3.2$, $\max{=}2$ via Cauchy–Schwarz, Lagrangian
+  $f-\lambda g$, $\lambda{=}0$ non-binding all checked); render-check on the Lagrange quiz → `errs=0 | "Question 1 of 16" |
+  rawDollars=0 kErr=0`. SW cache **v101 → v102**; README 2,032 → 2,044.
+- **Arc progress**: Algorithms ✓, Linear Algebra ✓, **Calculus ✓** — 3 of 7 topics fully at 16 (bank 1,776 → 2,044).
+  NEXT topics: Deep Learning, Reinforcement Learning, LLMs, Probability & Statistics.
+
 ## iter 158 — "Redrill the N you missed" on the test results screen (workflow / new functionality)
 Finishing a (non-mastery) test now offers an immediate **"↻ Redrill the N you missed"** button on the results screen,
 which launches a mastery drill on *exactly* the questions you just got wrong (shuffled, re-queued until each sticks) —

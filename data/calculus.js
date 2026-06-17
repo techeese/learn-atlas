@@ -5448,6 +5448,50 @@
               ],
               "answer": 1,
               "explain": "$wx_i+b-y_i$ is affine in $(w,b)$, and composing an affine map with the convex $t\\mapsto t^2$ keeps it convex; summing convex terms with nonnegative weights ($1/n$) preserves convexity. The 'min of convex' claim is false, and products/constants reasoning is irrelevant."
+            },
+            {
+              "q": "A set $C$ is *convex* if:",
+              "choices": [
+                "it contains the origin",
+                "for any two points in $C$, the entire line segment joining them also lies in $C$",
+                "it is bounded",
+                "it is symmetric about the origin"
+              ],
+              "answer": 1,
+              "explain": "Convexity of a set means 'no dents': pick any two points in $C$ and the straight segment between them stays inside $C$. A filled disk is convex; a crescent — or the unit *circle* (just the boundary curve) — is not, since a chord leaves the set."
+            },
+            {
+              "q": "A twice-differentiable function $f:\\mathbb{R}^n\\to\\mathbb{R}$ is convex if and only if its Hessian is ___ everywhere.",
+              "choices": [
+                "negative definite",
+                "zero",
+                "the identity matrix",
+                "positive semidefinite"
+              ],
+              "answer": 3,
+              "explain": "Convexity is upward curvature in every direction, captured by a positive *semi*definite Hessian (all eigenvalues $\\ge 0$) at every point. In 1-D this reduces to $f''(x)\\ge 0$. (A negative definite Hessian would make it concave.)"
+            },
+            {
+              "q": "Which of the following functions is convex on all of $\\mathbb{R}$?",
+              "choices": [
+                "$e^x$",
+                "$x^3$",
+                "$\\sin x$",
+                "$-x^2$"
+              ],
+              "answer": 0,
+              "explain": "$e^x$ has $f''(x)=e^x>0$ everywhere, so it is convex. $x^3$ has $f''=6x$, negative for $x<0$ (not convex); $\\sin x$ alternates concavity; $-x^2$ is concave ($f''=-2<0$)."
+            },
+            {
+              "q": "If $f$ is a convex function, then $-f$ is:",
+              "choices": [
+                "also convex",
+                "linear",
+                "concave",
+                "undefined"
+              ],
+              "answer": 2,
+              "explain": "Negating flips curvature: if $f$ curves upward (convex), $-f$ curves downward (concave), and vice versa. This is why maximizing a concave function is the same problem as minimizing a convex one — the well-behaved case optimization theory loves."
             }
           ],
           "flashcards": [
@@ -5643,6 +5687,50 @@
               ],
               "answer": 0,
               "explain": "The gradient is just a local linear approximation trusted over a distance set by smoothness ($\\eta\\le 1/L$); too large a step overshoots and the loss rises, even though the direction is locally downhill. The other options misstate basic facts about gradients and convexity."
+            },
+            {
+              "q": "Minimize $f(x)=x^2$ by gradient descent from $x_0 = 4$ with step size $\\eta = 0.1$. What is $x_1$?",
+              "choices": [
+                "$4.8$",
+                "$0.8$",
+                "$3.2$",
+                "$3.6$"
+              ],
+              "answer": 2,
+              "explain": "$x_1 = x_0 - \\eta f'(x_0)$ with $f'(x)=2x$: $x_1 = 4 - 0.1\\cdot(2\\cdot4) = 4 - 0.8 = 3.2$. Each step moves a fraction of the way toward the minimum at $x=0$."
+            },
+            {
+              "q": "Gradient descent has reached a minimum of a convex function when the gradient is:",
+              "choices": [
+                "zero ($\\nabla f = \\mathbf{0}$)",
+                "maximal",
+                "equal to the learning rate",
+                "negative"
+              ],
+              "answer": 0,
+              "explain": "At a minimum the slope is flat, so $\\nabla f = \\mathbf{0}$ and the update $x \\leftarrow x - \\eta\\nabla f$ stops moving. For a convex function this stationary point is the global minimum."
+            },
+            {
+              "q": "If the learning rate is set too large, gradient descent tends to:",
+              "choices": [
+                "converge faster with no downside",
+                "do nothing",
+                "always still converge, just slowly",
+                "overshoot the minimum and oscillate or diverge"
+              ],
+              "answer": 3,
+              "explain": "Too big a step jumps past the minimum and can land higher than it started, bouncing outward and diverging. For an $L$-smooth loss, steps above $2/L$ are guaranteed to diverge. (Too *small* a step is safe but crawls — hence tuning the learning rate matters.)"
+            },
+            {
+              "q": "Gradient descent is called a *first-order* method because it uses only:",
+              "choices": [
+                "the function value $f(x)$",
+                "the first derivative — the gradient $\\nabla f$ — and not the Hessian",
+                "the second derivative (Hessian)",
+                "random sampling"
+              ],
+              "answer": 1,
+              "explain": "First-order methods rely solely on the gradient (first derivatives). Second-order methods like Newton's also use the Hessian (curvature) to take smarter steps, but at much higher cost per step — which is why gradient descent dominates large-scale deep learning."
             }
           ],
           "flashcards": [
@@ -5838,6 +5926,50 @@
               ],
               "answer": 0,
               "explain": "As the shadow price, $\\lambda\\approx df^*/dc$, so $\\lambda=3$ means relaxing the budget by one dollar increases optimal profit by roughly $3$ units — the marginal value of the resource. It does not mean profit equals $3c$ nor that you should scale spending."
+            },
+            {
+              "q": "Maximize $f(x,y)=x+y$ subject to $x^2+y^2=2$. What is the maximum value?",
+              "choices": [
+                "$\\sqrt{2}$",
+                "$1$",
+                "$4$",
+                "$2$"
+              ],
+              "answer": 3,
+              "explain": "Lagrange: $\\nabla f=(1,1)=\\lambda(2x,2y)$ forces $x=y$; the constraint $x^2+y^2=2$ then gives $x=y=1$ (the maximum), so $f=1+1=2$. (The point $x=y=-1$ gives the minimum $-2$.)"
+            },
+            {
+              "q": "In 'optimize $f$ subject to $g(\\mathbf{x})=c$', the constraint restricts the search to:",
+              "choices": [
+                "only the origin",
+                "the set of points satisfying $g(\\mathbf{x})=c$ — a lower-dimensional surface or curve, not all of space",
+                "the entire space (the constraint is just a hint)",
+                "the boundary of $f$"
+              ],
+              "answer": 1,
+              "explain": "Constrained optimization searches only the *feasible set* $\\{\\mathbf{x}: g(\\mathbf{x})=c\\}$ — e.g. a curve in the plane or a surface in 3-D. The best point on that restricted set generally differs from the unconstrained optimum, which is why a special method is needed."
+            },
+            {
+              "q": "For 'optimize $f$ subject to $g(\\mathbf{x})=0$', the Lagrangian is $\\mathcal{L}(\\mathbf{x},\\lambda) = $",
+              "choices": [
+                "$f(\\mathbf{x})\\cdot g(\\mathbf{x})$",
+                "$f(\\mathbf{x}) + g(\\mathbf{x})$",
+                "$f(\\mathbf{x}) - \\lambda\\,g(\\mathbf{x})$",
+                "$f(\\mathbf{x}) / g(\\mathbf{x})$"
+              ],
+              "answer": 2,
+              "explain": "The Lagrangian folds the constraint into the objective with a multiplier: $\\mathcal{L} = f - \\lambda g$. Setting $\\nabla_{\\mathbf{x}}\\mathcal{L}=\\mathbf{0}$ recovers $\\nabla f = \\lambda\\nabla g$, and $\\partial\\mathcal{L}/\\partial\\lambda = 0$ recovers the constraint $g=0$. (The sign of the $\\lambda$ term is just convention.)"
+            },
+            {
+              "q": "If the Lagrange multiplier $\\lambda = 0$ at a solution, it means:",
+              "choices": [
+                "the constraint is not binding — the unconstrained optimum already satisfies it, so the constraint isn't 'pushing' the solution",
+                "there is no solution",
+                "the constraint is violated",
+                "$f$ is automatically maximized"
+              ],
+              "answer": 0,
+              "explain": "$\\nabla f = \\lambda\\nabla g$ with $\\lambda=0$ gives $\\nabla f = \\mathbf{0}$ — the point is already a critical point of $f$ ignoring the constraint. The constraint is satisfied but exerts no 'force' on the optimum (its shadow price is zero: relaxing it wouldn't change the optimal value)."
             }
           ],
           "flashcards": [
