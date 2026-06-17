@@ -149,6 +149,50 @@
               ],
               "answer": 0,
               "explain": "Asymptotic notation hides constants and only promises behavior as $n \\to \\infty$ (beyond some threshold $n_0$); at a small fixed $n=5$ a $\\Theta(n^2)$ routine with tiny constants can beat a $\\Theta(n)$ one with huge constants. The crossover where A wins may lie above $n=5$."
+            },
+            {
+              "q": "An algorithm runs an $O(n^2)$ preprocessing phase and then a separate $O(n\\log n)$ phase, one after the other. What is the tightest big-O bound for the whole algorithm?",
+              "choices": [
+                "$O(n^2\\log n)$",
+                "$O(n^2)$",
+                "$O(n\\log n)$",
+                "$O(n^3)$"
+              ],
+              "answer": 1,
+              "explain": "Sequential phases <em>add</em>: $O(n^2)+O(n\\log n)=O(n^2+n\\log n)$, and a sum is dominated by its larger term, so the total is $O(n^2)$. Multiplying the bounds (giving $O(n^3\\log n)$) would be for <em>nested</em> phases, not sequential ones."
+            },
+            {
+              "q": "Why can we write a logarithmic running time as $O(\\log n)$ without specifying the base of the logarithm?",
+              "choices": [
+                "Big-O notation discards all logarithmic factors",
+                "In computer science logarithms are always base 2",
+                "The base genuinely does not change the value of $\\log n$",
+                "Changing the base only multiplies the logarithm by a constant factor, which big-O ignores"
+              ],
+              "answer": 3,
+              "explain": "$\\log_a n = \\log_b n / \\log_b a$, so logs of different bases differ only by the constant factor $1/\\log_b a$. Big-O absorbs constant factors, so the base is irrelevant inside $O(\\cdot)$."
+            },
+            {
+              "q": "Which function grows asymptotically faster as $n\\to\\infty$: $n^{100}$ or $2^{n}$?",
+              "choices": [
+                "$2^{n}$ — every exponential eventually overtakes every polynomial",
+                "$n^{100}$ — its exponent is far larger",
+                "They grow at the same rate",
+                "It depends on the constant factors"
+              ],
+              "answer": 0,
+              "explain": "For any fixed exponent $k$, $n^k = o(2^n)$: exponential growth dominates polynomial growth once $n$ is large enough, no matter how large $k$ is. The constant factors only shift <em>where</em> the crossover happens, not the eventual winner."
+            },
+            {
+              "q": "An $O(n^2)$ algorithm takes about 1 second on an input of size $n$. Roughly how long should you expect it to take on an input of size $3n$?",
+              "choices": [
+                "About 6 seconds",
+                "About 3 seconds",
+                "About 9 seconds",
+                "About 27 seconds"
+              ],
+              "answer": 2,
+              "explain": "For a quadratic, scaling the input by a factor $k$ scales the running time by $k^2$. Here $k=3$, so $3^2 = 9\\times$ the time. (A cubic would scale by $27\\times$, a linear algorithm by $3\\times$.)"
             }
           ],
           "flashcards": [
@@ -344,6 +388,50 @@
               ],
               "answer": 2,
               "explain": "For $T_B$, $n^{\\log_b a} = n$ while $f(n) = n^2$ dominates polynomially (Case 3), so $T_B(n) = \\Theta(n^2)$ with no log factor; the level costs $n^2, n^2/2, n^2/4, \\dots$ form a geometric series summing to $\\Theta(n^2)$. The classmate wrongly assumed every level costs the full $n^2$ as in $T_A$'s balanced Case 2."
+            },
+            {
+              "q": "Apply the Master Theorem to $T(n) = 8\\,T(n/2) + n^2$. Here $a=8,\\ b=2$, so $n^{\\log_b a}=n^{\\log_2 8}=n^3$. What is the solution?",
+              "choices": [
+                "$\\Theta(n^2\\log n)$ — Case 2",
+                "$\\Theta(n^2)$ — the root work dominates",
+                "$\\Theta(n^3)$ — Case 1, the leaves dominate",
+                "$\\Theta(n^3\\log n)$"
+              ],
+              "answer": 2,
+              "explain": "Compare $f(n)=n^2$ with $n^{\\log_b a}=n^3$. Since $f(n)=O(n^{3-\\epsilon})$ is polynomially smaller, this is Case 1 and $T(n)=\\Theta(n^{\\log_b a})=\\Theta(n^3)$ — the cost accumulates in the exponentially many leaves."
+            },
+            {
+              "q": "For which recurrence does the Master Theorem give $\\Theta(n\\log n)$?",
+              "choices": [
+                "$T(n)=2T(n/2)+\\Theta(n)$",
+                "$T(n)=2T(n/2)+\\Theta(n^2)$",
+                "$T(n)=4T(n/2)+\\Theta(n)$",
+                "$T(n)=T(n/2)+\\Theta(1)$"
+              ],
+              "answer": 0,
+              "explain": "$T(n)=2T(n/2)+\\Theta(n)$ has $n^{\\log_2 2}=n=f(n)$, so the work is balanced across all $\\log n$ levels (Case 2) → $\\Theta(n\\log n)$ — exactly mergesort. The others solve to $\\Theta(n^2)$, $\\Theta(n^2)$, and $\\Theta(\\log n)$."
+            },
+            {
+              "q": "A divide-and-conquer algorithm of the form $T(n)=a\\,T(n/2)+f(n)$ halves the problem at each level. About how deep is its recursion tree?",
+              "choices": [
+                "$a^{n}$ levels",
+                "$n$ levels",
+                "$n/2$ levels",
+                "$\\log_2 n$ levels"
+              ],
+              "answer": 3,
+              "explain": "Each level divides the size by $b=2$, so it takes $\\log_2 n$ halvings to reach base cases of size 1. The branching factor $a$ controls how many leaves the tree has, not how deep it is."
+            },
+            {
+              "q": "Why can the standard Master Theorem not be applied directly to $T(n)=T(n/3)+T(2n/3)+\\Theta(n)$?",
+              "choices": [
+                "$f(n)=\\Theta(n)$ is not a valid driving function",
+                "The subproblems have unequal sizes, so it isn't of the form $a\\,T(n/b)+f(n)$",
+                "The coefficients must be integers",
+                "$n/3$ is not an integer for every $n$"
+              ],
+              "answer": 1,
+              "explain": "The Master Theorem requires all subproblems to have the <em>same</em> size $n/b$. Here they are $n/3$ and $2n/3$, so it doesn't apply — you'd use a recursion tree or the Akra–Bazzi method (this one happens to solve to $\\Theta(n\\log n)$)."
             }
           ],
           "flashcards": [
@@ -539,6 +627,50 @@
               ],
               "answer": 1,
               "explain": "A recursive call's correctness rests on assuming correctness for smaller inputs, so induction on subproblem size is the natural framing — there is no loop counter to track. The lesson stresses that invariants and induction are the same idea, so the claim they are unrelated (choice 3) is wrong, and choice 2 wrongly assumes exact halving."
+            },
+            {
+              "q": "A correctness proof by loop invariant has three parts. What are they?",
+              "choices": [
+                "Setup, Iteration, and Cleanup",
+                "Base case, Hypothesis, and Conclusion",
+                "Precondition, Loop body, and Postcondition",
+                "Initialization, Maintenance, and Termination"
+              ],
+              "answer": 3,
+              "explain": "You show the invariant holds before the loop (<strong>Initialization</strong>), that each iteration preserves it (<strong>Maintenance</strong>), and that on exit the invariant plus the loop's stopping condition give the desired result (<strong>Termination</strong>). The first two mirror the base case and inductive step of induction."
+            },
+            {
+              "q": "In a proof by induction that a statement $P(n)$ holds for all $n\\ge 1$, what must the base case establish?",
+              "choices": [
+                "That $P(n)$ holds as $n\\to\\infty$",
+                "That $P$ holds for the smallest value, $P(1)$",
+                "That $P(n)$ implies $P(n+1)$",
+                "That $P$ holds for all even $n$"
+              ],
+              "answer": 1,
+              "explain": "The base case anchors the induction by proving the statement for the smallest value (here $P(1)$). Showing $P(n)\\Rightarrow P(n+1)$ is the separate inductive step; without a true base case the chain of implications has nothing to stand on."
+            },
+            {
+              "q": "Linear search scans $a[0..n-1]$ for a key, examining indices $i=0,1,2,\\dots$ in order. Which statement is a correct loop invariant, holding just before the iteration that examines index $i$?",
+              "choices": [
+                "The array $a$ is sorted",
+                "$a[i]$ is equal to the key",
+                "The key does not appear anywhere in $a[0..i-1]$",
+                "$i = n$"
+              ],
+              "answer": 2,
+              "explain": "Before examining index $i$, the algorithm has already checked $a[0],\\dots,a[i-1]$ without finding the key — so 'the key is not in $a[0..i-1]$' is preserved each iteration. With the termination condition it proves the search correct whether or not the key exists."
+            },
+            {
+              "q": "In a loop-invariant proof, what exactly does the <strong>maintenance</strong> step show?",
+              "choices": [
+                "If the invariant holds before an iteration, it still holds before the next iteration",
+                "That the invariant is true before the loop begins",
+                "That the loop eventually terminates",
+                "That the invariant implies the postcondition"
+              ],
+              "answer": 0,
+              "explain": "Maintenance is the inductive step: assuming the invariant holds at the start of an arbitrary iteration, the loop body re-establishes it for the next one. Being true initially is <em>initialization</em>; using it after the loop is <em>termination</em>."
             }
           ],
           "flashcards": [

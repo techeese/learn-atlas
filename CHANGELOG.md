@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 119 — More questions: Algorithms-foundations lessons 12 → 16 MCQs (content — owner's #1 ask) — phase 1 of a 12→16 arc
+The owner's single most-repeated request is *"more and more and more questions."* Every lesson has sat at exactly 12 MCQs
+since iter 100; the mistakes deck (104) addressed "re-think until you pass," but the literal *more questions* ask hadn't
+been honored in ~19 iterations — the loop's classic timidity. Started a deliberate **12 → 16 growth arc**, phase 1 = the
+**Algorithms · Foundations** module: **+4 new MCQs each** to Asymptotic Analysis, Recurrences & the Master Theorem, and
+Correctness/Loop-Invariants (**+12, site bank 1,776 → 1,788**). New questions cover angles the existing 12 didn't: the
+big-O sum rule for sequential phases, log-base irrelevance, polynomial-vs-exponential growth, quadratic time-scaling;
+Master-Theorem Case 1 ($8T(n/2)+n^2=\Theta(n^3)$), recognizing the $\Theta(n\log n)$ case, recursion-tree depth, and
+unequal-split inapplicability; and naming the three invariant-proof parts, the induction base case, a concrete
+linear-search invariant, and what "maintenance" proves. **Correctness is non-negotiable for MCQs**, so every item went
+through an **adversarial-verify agent** (read the lessons, recompute each key, check for ambiguous/duplicate choices) →
+**verdict: ALL 12 PASS**; I also **shuffled the correct choice off position A** (it was authored at index 0) to varied
+positions (e.g. 1302 / 2031 / 3120) so there's no "always A" tell. SW cache → `atlas-v63`; README 1,776 → 1,788.
+Verified: `node gate.js` ALL GREEN (answer indices in range); the quiz renders **"Question 1 of 16"** with KaTeX
+(`.katex-error`=0) and answering works; errs=0. NEXT: continue the arc — the remaining Algorithms modules, then the other
+six topics, one module/topic per content iteration (interleave with the rest of the compass).
+
 ## iter 118 — "Activity" panel on the Progress page — surface what you've actually done (UI / gamification)
 The Progress page showed mastery, accuracy, and a heatmap, but none of the rich engagement state the loop has added
 since — so a learner couldn't see, at a glance, how much they've *done*. Added an **Activity** section: a responsive

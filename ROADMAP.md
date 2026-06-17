@@ -74,6 +74,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    (ε-greedy + off-policy TD), embedded in the SARSA/Q-Learning lesson.
    ✅ iter 118: "Activity" panel on the Progress page — 12 lifetime-stat tiles (questions, perfect quizzes, mistakes
    redeemed/outstanding, notes, bookmarks, achievements, streak…), 3 actionable; surfaces existing tracked state.
+   ✅ iter 119: ★ STARTED the 12→16 MCQ-growth arc (owner's #1 ask). Phase 1: Algorithms·Foundations (3 lessons)
+   12→16 (+12, bank 1,776→1,788), adversarially verified, answer positions shuffled.
+   → ARC QUEUE (one module/topic per content iteration, interleave with compass): finish Algorithms (6 more modules),
+   then LA / Calc / DL / RL / LLM / PS. Reusable approach: author 4/lesson avoiding existing stems → adversarial-verify
+   Agent (ALL must PASS) → shuffle correct-choice positions → node injector (load course, push, rewrite JSON) → gate →
+   quiz renders "of 16". Keep `String.raw`/double-backslash LaTeX discipline; bump bank count in README + CHANGELOG.
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
    already memoized; staggered page-entrance already exists (CSS :nth-child reveal delays). So perf/mobile/transitions
    have little headroom. NEGLECTED areas still worth a pass: onboarding refresh, SVG Knowledge-Map keyboard nav
