@@ -82,6 +82,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    quiz renders "of 16". Keep `String.raw`/double-backslash LaTeX discipline; bump bank count in README + CHANGELOG.
    ✅ iter 120: per-achievement progress bars (gold fill + cur/target) on locked threshold achievements, ≥80% "near"
    highlight — ★120 checkpoint. Thin areas now: animations/juice (since 106), a fresh viz (MDP policy-iteration, VAE).
+   ✅ iter 121: MCQ arc phase 2 — Algorithms·Core Data Structures 12→16 (+12, bank →1,800). Algorithms 2/7 modules done.
+   ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
+   algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
    already memoized; staggered page-entrance already exists (CSS :nth-child reveal delays). So perf/mobile/transitions
    have little headroom. NEGLECTED areas still worth a pass: onboarding refresh, SVG Knowledge-Map keyboard nav

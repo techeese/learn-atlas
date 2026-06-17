@@ -872,6 +872,50 @@
               ],
               "answer": 2,
               "explain": "Stacks (LIFO) and queues (FIFO) are access disciplines that can each be built on either physical layout, so they are not a separate third layout. The tempting distractors wrongly bind a policy to one specific layout, but the LIFO/FIFO rule is about *which end you touch*, independent of contiguous-vs-pointer storage; and the policies are genuinely distinct, so they are not identical."
+            },
+            {
+              "q": "Three items are pushed onto an empty stack in the order 1, 2, 3, then popped one at a time. In what order do they come off the stack?",
+              "choices": [
+                "2, 3, 1",
+                "1, 2, 3",
+                "3, 2, 1",
+                "3, 1, 2"
+              ],
+              "answer": 2,
+              "explain": "A stack is LIFO (last-in, first-out): the most recently pushed item (3) sits on top and pops first, giving 3, 2, 1 — the reverse of the insertion order."
+            },
+            {
+              "q": "Which structure lets you read the $k$-th element by index in $O(1)$ time?",
+              "choices": [
+                "A singly linked list",
+                "A contiguous array (address = base + $k\\cdot$elemSize)",
+                "A doubly linked list",
+                "A stack"
+              ],
+              "answer": 1,
+              "explain": "An array stores elements contiguously, so element $k$ lives at $\\text{base}+k\\cdot(\\text{element size})$ — one arithmetic step, $O(1)$. A linked list must follow $k$ pointers from the head, which is $O(k)=O(n)$ in the worst case."
+            },
+            {
+              "q": "A network printer should process documents strictly in the order they were submitted. Which abstract data type models this directly?",
+              "choices": [
+                "A hash table",
+                "A stack (LIFO)",
+                "A binary search tree",
+                "A queue (FIFO)"
+              ],
+              "answer": 3,
+              "explain": "'First submitted, first printed' is first-in, first-out — a queue. A stack would print the most recent document first; the others impose no arrival order at all."
+            },
+            {
+              "q": "A dynamic array uses the doubling strategy and supports $O(1)$ <em>amortized</em> append. What is the worst-case time of a single, unlucky append?",
+              "choices": [
+                "$\\Theta(n)$ — the append that triggers a resize copies all $n$ existing elements",
+                "$\\Theta(1)$ — every append is constant time",
+                "$\\Theta(\\log n)$",
+                "$\\Theta(n\\log n)$"
+              ],
+              "answer": 0,
+              "explain": "Most appends are $O(1)$, but the one that fills the array must allocate a larger block and copy all $n$ elements — $\\Theta(n)$ for that operation. Doubling makes such resizes rare enough that the <em>amortized</em> cost stays $O(1)$."
             }
           ],
           "flashcards": [
@@ -1067,6 +1111,50 @@
               ],
               "answer": 1,
               "explain": "Open addressing stores every element inside the array, so it categorically cannot hold more items than slots — $\\alpha \\le 1$ is a hard structural limit, not a speed trade-off. Separate chaining uses external lists, so it tolerates $\\alpha > 1$ with expected cost $O(1+\\alpha)$, making it the correct choice when items far exceed slots and pointer overhead is acceptable."
+            },
+            {
+              "q": "How does a hash table achieve expected $O(1)$ lookup?",
+              "choices": [
+                "It keeps the keys sorted and binary-searches them",
+                "It applies a hash function to the key to compute an array index, jumping straight to the right bucket",
+                "It compares the search key against every stored entry",
+                "It stores the keys in a balanced tree"
+              ],
+              "answer": 1,
+              "explain": "A hash function maps a key directly to a slot index, so a lookup is one index computation plus (with a good hash and a bounded load factor) a short constant-length search in that bucket — expected $O(1)$, with no scan over unrelated keys."
+            },
+            {
+              "q": "What is a hash <em>collision</em>?",
+              "choices": [
+                "The hash function runs too slowly",
+                "The table has become completely full",
+                "A lookup fails to find its key",
+                "Two distinct keys hash to the same slot"
+              ],
+              "answer": 3,
+              "explain": "A collision is when two different keys produce the same index. Since there are usually far more possible keys than slots, collisions are inevitable (pigeonhole) — which is exactly why hash tables need a resolution scheme such as chaining or probing."
+            },
+            {
+              "q": "For which task is a standard (unordered) hash table a poor choice compared with a balanced BST?",
+              "choices": [
+                "Listing the keys in sorted order, or answering range queries",
+                "Looking up a single key by value",
+                "Inserting a new key",
+                "Deleting a key"
+              ],
+              "answer": 0,
+              "explain": "Hashing scatters keys across slots with no order, so producing sorted output or a range needs an extra $O(n\\log n)$ sort. A balanced BST keeps keys ordered, giving $O(\\log n)$ range and successor queries — the payoff for its slower $O(\\log n)$ point lookups."
+            },
+            {
+              "q": "A chained hash table doubles its number of slots once the load factor $\\alpha=n/m$ grows too large. Why is resizing necessary?",
+              "choices": [
+                "To keep the keys in sorted order",
+                "To reduce the table's memory usage",
+                "To keep $\\alpha$ (the average chain length) bounded so operations stay expected $O(1)$",
+                "To eliminate collisions entirely"
+              ],
+              "answer": 2,
+              "explain": "Lookup cost with chaining is $\\Theta(1+\\alpha)$. Inserting without resizing lets $\\alpha=n/m$ grow without bound, so chains lengthen and performance drifts toward $O(n)$. Doubling $m$ restores a small constant $\\alpha$ and keeps operations expected $O(1)$ (collisions can never be fully eliminated)."
             }
           ],
           "flashcards": [
@@ -1262,6 +1350,50 @@
               ],
               "answer": 1,
               "explain": "A balanced BST supports find-min in $O(\\log n)$ (leftmost node) and deletion of a located key in $O(\\log n)$, whereas a heap must first do an $O(n)$ search to find an arbitrary value before deleting it. The distractor wrongly assumes heap operations are uniformly cheap, ignoring that arbitrary-value lookup in a heap is $O(n)$."
+            },
+            {
+              "q": "An in-order traversal of a binary search tree visits the keys in what order?",
+              "choices": [
+                "Descending sorted order",
+                "The order in which they were inserted",
+                "Level by level, top to bottom",
+                "Ascending sorted order"
+              ],
+              "answer": 3,
+              "explain": "In-order traversal (left subtree, then node, then right subtree) of a BST always yields keys in ascending sorted order — a direct consequence of the BST property: everything left of a node is smaller, everything right is larger."
+            },
+            {
+              "q": "In a binary max-heap, where is the maximum element always located?",
+              "choices": [
+                "At the root (array index 0)",
+                "At one of the leaves",
+                "At the last filled array position",
+                "It can be anywhere in the heap"
+              ],
+              "answer": 0,
+              "explain": "The max-heap property — every parent $\\ge$ its children — forces the largest key up to the root, giving $O(1)$ access to the maximum (why heaps back priority queues). The <em>minimum</em>, by contrast, must sit at some leaf."
+            },
+            {
+              "q": "Extracting the maximum from a binary max-heap of $n$ elements takes how long?",
+              "choices": [
+                "$O(n)$",
+                "$O(1)$",
+                "$O(\\log n)$",
+                "$O(n\\log n)$"
+              ],
+              "answer": 2,
+              "explain": "You return the root ($O(1)$), move the last element into the root, then sift it down — at most one swap per level, and the heap has height $\\Theta(\\log n)$. So extract-max is $O(\\log n)$. (Merely <em>reading</em> the max without removing it is $O(1)$.)"
+            },
+            {
+              "q": "A binary heap most directly implements which abstract data type?",
+              "choices": [
+                "A stack",
+                "A priority queue",
+                "A FIFO queue",
+                "A hash map"
+              ],
+              "answer": 1,
+              "explain": "A heap gives $O(1)$ access to the highest- (or lowest-) priority element plus $O(\\log n)$ insert and extract — exactly the priority-queue operations. Stacks and FIFO queues order by insertion, not priority, and a hash map is unordered."
             }
           ],
           "flashcards": [

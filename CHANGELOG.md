@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 121 — MCQ arc phase 2: Algorithms · Core Data Structures 12 → 16 (content — owner's #1 ask)
+Continuing the 12→16 question-growth arc (interleaved — iter 120 was gamification). **+4 new MCQs each** to Arrays/Linked
+Lists/Stacks/Queues, Hash Tables, and BSTs/Heaps (**+12, site bank 1,788 → 1,800**). New questions hit the fundamentals
+the existing 12 hadn't pinned down directly: stack LIFO pop order, $O(1)$ indexed access (contiguous array vs linked
+list), FIFO-queue modelling, the $\Theta(n)$ worst case of a single doubling-array append; how hashing gives $O(1)$
+lookup, what a collision is, the hash table's weakness at sorted/range queries vs a BST, and why a chained table resizes
+to bound $\alpha$; BST in-order = ascending sorted, max-heap max at the root, $O(\log n)$ extract-max, and heap = priority
+queue. Same verified pipeline: authored avoiding existing stems → **adversarial-verify agent (verdict: ALL 12 PASS** —
+keys correct, one defensible answer each, explains accurate, KaTeX valid) → correct-choice positions shuffled off A
+(2130 / 1302 / 3021). SW cache → `atlas-v65`; README 1,788 → 1,800. Verified: `node gate.js` ALL GREEN; quiz renders
+**"Question 1 of 16"** with `.katex-error`=0 and errs=0. **Algorithms now has 2 of 7 modules at 16 MCQs; 5 to go.**
+
 ## iter 120 — Per-achievement progress bars on the Hall of Achievements (gamification) — ★ 120-iteration checkpoint
 The Achievements page showed each badge as a binary locked/unlocked tile — motivating once earned, but silent about
 *how close* you are. Added **live progress bars** to every locked, threshold-based achievement: a gold fill + "cur /
