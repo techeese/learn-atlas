@@ -334,6 +334,15 @@
       </div>`;
     }).join("");
 
+    // bookmarked lessons (saved for later) — only shown if any exist
+    const idxBm = index();
+    const bm = Store.bookmarkIds().map(id => idxBm[id]).filter(Boolean);
+    const bmHtml = bm.length ? `
+      <div class="page-head reveal" style="margin-bottom:14px"><h2 style="font-size:26px">★ Bookmarks</h2></div>
+      <div class="conn-chips reveal" style="margin-bottom:34px">
+        ${bm.map(n => `<a class="conn-chip" href="#/lesson/${n.course.id}/${n.lesson.id}" data-route style="--c:${n.course.color}"><span class="cc-dot" style="background:${n.course.color}"></span>${esc(n.lesson.title)}</a>`).join("")}
+      </div>` : "";
+
     app.innerHTML = `
     <div class="view">
       <div class="page-head reveal">
@@ -371,6 +380,7 @@
         <a class="btn ghost" href="#/library" data-route>📚 References</a>
       </div>
 
+      ${bmHtml}
       <div class="page-head reveal" style="margin-bottom:18px"><h2 style="font-size:26px">Topics</h2></div>
       <div class="grid">${cards}</div>
     </div>`;
@@ -570,10 +580,18 @@
         <button class="btn primary" id="complete-btn">${done ? "✓ Completed" : "Mark complete (+50 XP)"}</button>
         ${prev ? `<a class="btn ghost" href="#/lesson/${course.id}/${prev.id}" data-route>← ${esc(prev.title)}</a>` : ""}
         ${next ? `<a class="btn" href="#/lesson/${course.id}/${next.id}" data-route>${esc(next.title)} →</a>` : `<a class="btn" href="#/course/${course.id}" data-route>Back to course →</a>`}
-        <button class="btn ghost" id="print-lesson" style="margin-left:auto">🖨️ Print</button>
+        <button class="btn ghost" id="bookmark-btn" aria-pressed="${Store.isBookmarked(lesson.id)}" style="margin-left:auto">${Store.isBookmarked(lesson.id) ? "★ Bookmarked" : "☆ Bookmark"}</button>
+        <button class="btn ghost" id="print-lesson">🖨️ Print</button>
       </div>
       ${lessonConnections(lesson.id)}`;
     const pl = document.getElementById("print-lesson"); if (pl) pl.addEventListener("click", () => window.print());
+    const bm = document.getElementById("bookmark-btn");
+    if (bm) bm.addEventListener("click", () => {
+      const on = Store.toggleBookmark(lesson.id);
+      bm.textContent = on ? "★ Bookmarked" : "☆ Bookmark";
+      bm.setAttribute("aria-pressed", on);
+      toast(on ? "★" : "☆", on ? "Bookmarked" : "Bookmark removed", lesson.title);
+    });
     const area = document.getElementById("notes-area");
     let nt; area.addEventListener("input", () => { clearTimeout(nt); nt = setTimeout(() => { Store.setNote(lesson.id, area.value); const s = document.getElementById("notes-saved"); s.textContent = "saved ✓"; setTimeout(() => s.textContent = "", 1500); }, 500); });
     const btn = document.getElementById("complete-btn");

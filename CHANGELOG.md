@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 101 — Bookmarks: save lessons for later (new functionality) — first ship of the post-curriculum "experience" arc
+With the curriculum now complete (148 lessons across 7 topics), navigation matters — so this adds a **bookmarks**
+feature. A **☆/★ toggle** in every lesson's action bar saves it (with a toast), and saved lessons appear in a new
+**★ Bookmarks** section on the dashboard (only when non-empty) as quick-launch chips. New state field `bookmarks` (id→true)
+added to `blank()` and the `load()` merge — so any prior save still loads cleanly (verified: an old save with no
+bookmarks field loads with `bookmarks: {}`). Store API: `toggleBookmark` / `isBookmarked` / `bookmarkIds`. The
+bookmark button is accessible (`aria-pressed`), and the dashboard chips reuse the existing `.conn-chip` styling. This is
+the first ship of the new arc the 100-iteration checkpoint set — returning from curriculum-building to experience
+polish. SW cache → `atlas-v45`. Verified: `node gate.js` ALL GREEN; a Node test confirms toggle/persist + old-save
+migration; in-browser the button flips ☆ Bookmark → ★ Bookmarked and the dashboard shows the ★ Bookmarks section with
+the chip; 14-route smoke errs=0; stray Chrome cleaned up.
+
 ## iter 100 — RL frontier module → 12 MCQs per lesson (content; owner "more questions" ask) — ★ 100-iteration milestone + checkpoint
 Completed the RL frontier module: all three lessons (model-based, offline, imitation) brought from 0 → 12 MCQs each via
 the author→adversarial-verify pipeline — **+36 fact-checked questions**, all ok=true. **★ With this, EVERY one of the

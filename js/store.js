@@ -78,7 +78,8 @@
       goalXp: 50,           // daily XP goal
       activity: {},         // "YYYY-MM-DD" -> xp earned that day (study heatmap)
       freezes: 1,           // streak-freeze tokens
-      lastLesson: null      // "courseId/lessonId" — resume point
+      lastLesson: null,     // "courseId/lessonId" — resume point
+      bookmarks: {}         // lessonId -> true (saved/favorited lessons)
     };
   }
 
@@ -116,6 +117,7 @@
       base.activity = s.activity || {};
       base.freezes = Number.isFinite(s.freezes) ? s.freezes : 1;
       base.lastLesson = s.lastLesson || null;
+      base.bookmarks = s.bookmarks || {};
     }
     return base;
   }
@@ -145,6 +147,10 @@
   function freezeJustUsed() { const v = _freezeJustUsed; _freezeJustUsed = false; return v; }
   function markKnown(lessonId) { if (!lessonId) return; state.mastery[lessonId] = { s: 0.65, ts: Date.now(), n: 1 }; save(); }
   function setLastLesson(key) { if (state.lastLesson !== key) { state.lastLesson = key; save(); } }
+  // ---- bookmarks (saved lessons) --------------------------------------
+  function toggleBookmark(id) { if (!id) return false; if (state.bookmarks[id]) delete state.bookmarks[id]; else state.bookmarks[id] = true; save(); return !!state.bookmarks[id]; }
+  function isBookmarked(id) { return !!state.bookmarks[id]; }
+  function bookmarkIds() { return Object.keys(state.bookmarks || {}); }
 
   // ---- XP / level ------------------------------------------------------
   const levelUps = [];
@@ -400,6 +406,7 @@
     gradeCard, cardDue, projectInterval,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, topicMastery, markKnown,
     getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed, setLastLesson,
+    toggleBookmark, isBookmarked, bookmarkIds,
     unlock, drainUnlocked, drainLevelUps,
     stats, courseProgress, resetAll, touchStreak
   };
