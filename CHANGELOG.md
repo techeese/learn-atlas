@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 142 — ⌘K becomes a true command palette: quick actions + runnable commands (workflow)
+The command palette could only *navigate* (and on an empty query it dumped the raw search index — topics, then 148
+lessons). Now it's a real command palette:
+- **Curated empty state** — opening ⌘K with no query leads with **Resume: <your last lesson>** (continue where you left
+  off), then Start Daily Mix, Daily Review (· N due), and Spawn a Test, instead of a wall of topic/lesson entries.
+- **Runnable commands** — three state-changing verbs are now searchable and executable from the palette: *Toggle theme
+  (Ink / Parchment)*, *Cycle reading text size*, *Restart the welcome tour*. Selecting one runs an `action()` (and toasts),
+  no navigation needed. Refactored the theme toggle into a reusable `toggleTheme()` and added `cycleTextScale()`.
+- `searchIndex()` now concats the commands so typing e.g. "theme" surfaces the toggle as the top hit; `go()` runs
+  `r.action` when present, else navigates. Footer/placeholder updated to advertise commands.
+- **Verified**: `node gate.js` ALL GREEN; driven smoke (seeded a `lastLesson`) → `errs=0`, empty-query defaults =
+  [Resume…, Start Daily Mix, Daily Review · 889 due, Spawn a Test, Toggle theme, Cycle reading text size, Restart tour];
+  searching "theme" ranks the command first; clicking it flips `data-theme` **ink → parchment** and closes the palette;
+  all-routes smoke `errs=0`; desktop + 390px mobile screenshots read. SW cache **v84 → v85**.
+- Workflow had been neglected since iter 126; this revisits it.
+
 ## iter 141 — MCQ arc → Linear Algebra · Orthogonality 12 → 16 (content — owner's #1 ask)
 The 12→16 arc continues through LA's **Orthogonality, Projection, and Least Squares** module. **+4 new MCQs each** to
 *Orthonormal Bases & Gram–Schmidt* and *Projections & Least Squares* (**+8, bank 1,916 → 1,924**), stating plainly the

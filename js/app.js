@@ -1789,6 +1789,25 @@
     Object.keys(window.REFERENCES || {}).forEach(k => (window.REFERENCES[k] || []).forEach(r => out.push({ t: r.title, sub: "Reference · " + r.by, hash: r.url, ext: true, icon: "🔖" })));
     return out;
   }
+  // action commands (verbs that DO something rather than navigate) — make ⌘K a true command palette
+  function commandActions() {
+    return [
+      { t: "Toggle theme (Ink / Parchment)", sub: "Command", icon: "🎨", action: () => { const t = toggleTheme(); toast("🎨", "Theme switched", t === "ink" ? "Ink (dark)" : "Parchment (light)"); } },
+      { t: "Cycle reading text size", sub: "Command", icon: "🔠", action: () => { const p = cycleTextScale(); toast("🔠", "Text size", "Reading text scaled to " + p + "%"); } },
+      { t: "Restart the welcome tour", sub: "Command", icon: "👋", action: () => showIntro(true) }
+    ];
+  }
+  // curated items shown when the palette opens with an empty query (resume + the things you most often want)
+  function paletteDefaults() {
+    const out = [];
+    const last = Store.raw.lastLesson;
+    if (last) { const n = index()[last.split("/")[1]]; if (n) out.push({ t: "Resume: " + n.lesson.title, sub: "Continue where you left off", hash: "#/lesson/" + last, icon: "▶" }); }
+    let due = 0; try { due = Store.stats().dueCount || 0; } catch (e) {}
+    out.push({ t: "Start Daily Mix", sub: "Guided 15-minute session", hash: "#/session", icon: "🎯" });
+    out.push({ t: "Daily Review" + (due ? " · " + due + " due" : ""), sub: "Spaced-repetition flashcards", hash: "#/review", icon: "⚡" });
+    out.push({ t: "Spawn a Test", sub: "Custom exam from the question bank", hash: "#/test", icon: "📝" });
+    return out.concat(commandActions());
+  }
   // full-text index of lesson bodies (built once, cached) — powers "search inside lessons"
   let _lessonText = null;
   function lessonTextIndex() {
@@ -1814,9 +1833,9 @@
   let paletteEl = null;
   function openPalette() {
     if (paletteEl) return;
-    const idx = searchIndex();
+    const idx = searchIndex().concat(commandActions());   // commands are searchable too
     paletteEl = document.createElement("div"); paletteEl.className = "palette-scrim";
-    paletteEl.innerHTML = `<div class="palette"><input class="palette-in" placeholder="Search lessons, concepts, visualizations, pages…"><div class="palette-list"></div><div class="palette-foot">🔎 also searches inside lessons · ↑↓ navigate · ↵ open · esc close</div></div>`;
+    paletteEl.innerHTML = `<div class="palette"><input class="palette-in" placeholder="Search lessons, concepts, visualizations · or run a command…"><div class="palette-list"></div><div class="palette-foot">🔎 also searches inside lessons · ⚡ run commands (theme, text size…) · ↑↓ navigate · ↵ open · esc close</div></div>`;
     document.body.appendChild(paletteEl);
     const inp = paletteEl.querySelector(".palette-in"), list = paletteEl.querySelector(".palette-list");
     let sel = 0, results = [];
@@ -1857,12 +1876,12 @@
           body.sort((a, b) => a._at - b._at);
           results = results.concat(body).slice(0, 50);
         }
-      } else results = idx.slice(0, 50);
+      } else results = paletteDefaults();
       if (sel >= results.length) sel = Math.max(0, results.length - 1);
       list.innerHTML = results.length ? results.map((r, i) => `<div class="palette-item ${i === sel ? "sel" : ""}" data-i="${i}"><span class="pi-ico">${r.icon}</span><span class="pi-main"><span class="pi-t">${esc(r.t)}</span><span class="pi-sub">${r.subHtml ? r.subHtml : esc(r.sub)}</span></span>${r.ext ? '<span class="pi-ext">↗</span>' : ""}</div>`).join("") : '<div class="palette-empty">No matches</div>';
       list.querySelectorAll(".palette-item").forEach(e => e.addEventListener("click", () => go(parseInt(e.dataset.i, 10))));
     }
-    function go(i) { const r = results[i]; if (!r) return; closePalette(); if (r.ext) window.open(r.hash, "_blank", "noopener"); else location.hash = r.hash; }
+    function go(i) { const r = results[i]; if (!r) return; closePalette(); if (typeof r.action === "function") r.action(); else if (r.ext) window.open(r.hash, "_blank", "noopener"); else location.hash = r.hash; }
     function scrollSel() { const e = list.querySelector(".sel"); if (e) e.scrollIntoView({ block: "nearest" }); }
     inp.addEventListener("input", () => { sel = 0; render(); });
     inp.addEventListener("keydown", e => {
@@ -1910,14 +1929,24 @@
     const saved = localStorage.getItem("atlas.theme") || "ink";
     document.documentElement.setAttribute("data-theme", saved);
     updateThemeLabel(saved);
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-      const cur = document.documentElement.getAttribute("data-theme");
-      const nx = cur === "ink" ? "parchment" : "ink";
-      document.documentElement.setAttribute("data-theme", nx);
-      localStorage.setItem("atlas.theme", nx);
-      updateThemeLabel(nx);
-      renderChrome();
-    });
+    document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute("data-theme");
+    const nx = cur === "ink" ? "parchment" : "ink";
+    document.documentElement.setAttribute("data-theme", nx);
+    localStorage.setItem("atlas.theme", nx);
+    updateThemeLabel(nx);
+    renderChrome();
+    return nx;
+  }
+  function cycleTextScale() {
+    const steps = ["0.9", "1", "1.15"];
+    let cur = localStorage.getItem("atlas.textScale") || "1";
+    let idx = steps.indexOf(cur); if (idx < 0) idx = 1;
+    const nx = steps[(idx + 1) % steps.length];
+    localStorage.setItem("atlas.textScale", nx); applyTextScale();
+    return Math.round(parseFloat(nx) * 100);
   }
   function updateThemeLabel(t) {
     document.getElementById("theme-toggle").innerHTML = t === "ink" ? "☾ &nbsp;Ink theme" : "☀ &nbsp;Parchment theme";
