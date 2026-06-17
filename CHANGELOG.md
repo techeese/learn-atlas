@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 184 — Honest "cards due" + capped new-card intake in Daily Review (UI/UX + correctness)
+A **390px mobile audit** (the release gate, not dedicated in a while) swept the newest/most-complex views — TD-MC &
+positional-encoding labs, the command palette, Knowledge Map, test, dashboard — and confirmed mobile is **solid**
+(no overflow, cramped controls, or breakage at true 390px). But it surfaced a real *correctness/UX* bug: a brand-new
+profile's dashboard read **"887 cards due"** and the Daily Review would have queued the **entire 889-card deck**.
+Root cause: `cardDue()` treats *never-seen* cards as "due" (correct for letting the review queue surface new cards),
+but the dashboard stat / CTA / palette and the review session all conflated *unseen* cards with a *review backlog* —
+alarming and inaccurate, and a brutal first session.
+- **Fix**: added `Store.cardState(id)` → `new` / `due` / `later`, and `stats()` now returns **`reviewDue`** (started &
+  now due — the honest "needs attention" number) and `newCount` alongside the legacy `dueCount`. The dashboard "Cards
+  due" stat, its review CTA, and the ⌘K "Daily Review · N due" entry now use `reviewDue` (a fresh user sees **0**, not
+  887). The Daily Review view now serves **all due reviews + a capped 30 new cards/session** (matching Daily Mix's
+  existing cap), with an honest forecast (*due to review · new this session · due in 7 days · in rotation*) and copy.
+  `cardDue` is unchanged, so nothing else regresses.
+- **Verified**: `store.js`+`app.js` syntax OK; a node logic test — fresh profile `reviewDue=0, newCount=totalCards`;
+  after seeding 1 due + 1 later card, `reviewDue=1` and `cardState` returns due/later/new correctly; browser on a
+  **fresh profile** → dashboard "Cards due = 0", CTA "⚡ Review flashcards" (no scary number), Review forecast "0 due ·
+  30 new this session", and the **flashcard deck is 30 cards (not 889)**; all-routes smoke (11) `errs=0`; the 6-view
+  390px audit read clean. No state-shape change → prior saves load. SW cache **v126 → v127**.
+
 ## iter 183 — MCQ arc → Reinforcement Learning · Policy Gradient 12 → 16 (content — owner's #1 ask)
 The arc continues through RL's *Policy-Gradient & Actor-Critic* module. All **three** lessons go 12 → 16 (**+12, bank
 2,176 → 2,188**), stating the bedrock the existing 12 assumed:

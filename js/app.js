@@ -434,7 +434,7 @@
       <div class="stat-strip">
         <div class="stat reveal" style="--c:var(--gold)"><div class="v">${st.lessonsDone}/${st.totalLessons}</div><div class="k">Lessons done</div></div>
         <div class="stat reveal" style="--c:var(--sage)"><div class="v">${st.accuracy}%</div><div class="k">Quiz accuracy</div></div>
-        <div class="stat reveal" style="--c:var(--rust)"><div class="v">${st.dueCount}</div><div class="k">Cards due</div></div>
+        <div class="stat reveal" style="--c:var(--rust)"><div class="v">${st.reviewDue}</div><div class="k">Cards due</div></div>
         <div class="stat reveal" style="--c:var(--violet)"><div class="v">${st.streak}</div><div class="k">Day streak</div></div>
       </div>
 
@@ -452,7 +452,7 @@
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px" class="reveal">
         <a class="btn primary" href="#/session" data-route>🎯 Start Daily Mix</a>
-        <a class="btn" href="#/review" data-route>⚡ Review ${st.dueCount} due card${st.dueCount === 1 ? "" : "s"}</a>
+        <a class="btn" href="#/review" data-route>${st.reviewDue ? `⚡ Review ${st.reviewDue} due card${st.reviewDue === 1 ? "" : "s"}` : "⚡ Review flashcards"}</a>
         <a class="btn" href="#/test" data-route>📝 Spawn a test</a>
         ${Store.missedCount() ? `<a class="btn" href="#/mistakes" data-route style="border-color:var(--rust);color:var(--rust)">🎯 Redeem ${Store.missedCount()} mistake${Store.missedCount() === 1 ? "" : "s"}</a>` : ""}
         <a class="btn ghost" href="#/map" data-route>🗺️ Knowledge Map</a>
@@ -1052,34 +1052,43 @@
     }
   }
 
-  // ---------- global review (all due cards) ----------
+  // ---------- global review (due reviews + a capped trickle of new cards) ----------
+  const NEW_CARDS_PER_SESSION = 30;   // cap the intake of brand-new cards so a fresh user isn't handed the whole deck
   function viewReview() {
-    const due = [], cards = Store.raw.cards || {}, now = Date.now(), DAY = 86400000;
+    const dueReviews = [], newCards = [], cards = Store.raw.cards || {}, now = Date.now(), DAY = 86400000;
     let soon = 0, week = 0, seen = 0;
     C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
       (l.flashcards || []).forEach((card, i) => {
-        const id = l.id + ":" + i;
-        if (Store.cardDue(id)) due.push({ c: card, id });
+        const id = l.id + ":" + i, s = Store.cardState(id);
+        if (s === "due") dueReviews.push({ c: card, id });
+        else if (s === "new") newCards.push({ c: card, id });
         const rec = cards[id];
         if (rec) { seen++; const d = rec.due || 0; if (d > now && d <= now + DAY) soon++; if (d > now && d <= now + 7 * DAY) week++; }
       });
     })));
+    const newBatch = shuffle(newCards).slice(0, NEW_CARDS_PER_SESSION);
+    const session = shuffle(dueReviews.concat(newBatch));   // due reviews first-class, plus a capped trickle of new cards
     const forecast = `<div class="today-strip reveal" style="gap:0">
-      <div class="fc-cell"><div class="fc-n" style="color:var(--rust)">${due.length}</div><div class="fc-k">due now</div></div>
-      <div class="fc-cell"><div class="fc-n" style="color:var(--gold)">${soon}</div><div class="fc-k">next 24h</div></div>
-      <div class="fc-cell"><div class="fc-n" style="color:var(--sage)">${week}</div><div class="fc-k">next 7 days</div></div>
+      <div class="fc-cell"><div class="fc-n" style="color:var(--rust)">${dueReviews.length}</div><div class="fc-k">due to review</div></div>
+      <div class="fc-cell"><div class="fc-n" style="color:var(--gold)">${newBatch.length}</div><div class="fc-k">new this session</div></div>
+      <div class="fc-cell"><div class="fc-n" style="color:var(--sage)">${week}</div><div class="fc-k">due in 7 days</div></div>
       <div class="fc-cell"><div class="fc-n" style="color:var(--violet)">${seen}</div><div class="fc-k">cards in rotation</div></div>
     </div>`;
+    const intro = session.length
+      ? (dueReviews.length
+          ? `${dueReviews.length} card${dueReviews.length === 1 ? "" : "s"} due for review${newBatch.length ? `, plus ${newBatch.length} new card${newBatch.length === 1 ? "" : "s"} to learn` : ""}. Grade honestly — the schedule adapts.`
+          : `No reviews due yet — here ${newBatch.length === 1 ? "is" : "are"} ${newBatch.length} new card${newBatch.length === 1 ? "" : "s"} to start learning (more arrive each session as you go).`)
+      : "Nothing due right now, and you've started every card. Come back tomorrow, or study a lesson's deck directly.";
     app.innerHTML = `
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Daily review</div>
       <div class="page-head reveal"><div class="eyebrow">Spaced repetition</div><h2>Daily <em>Review</em></h2>
-      <p>${due.length ? `${due.length} card${due.length === 1 ? "" : "s"} due across all your topics. Grade honestly — the schedule adapts.` : "Nothing due right now. Come back tomorrow, or study a lesson's deck directly."}</p></div>
+      <p>${intro}</p></div>
       ${forecast}
       <div id="review-body"></div>
     </div>`;
     bindGo();
-    if (due.length) runFlashcards(document.getElementById("review-body"), shuffle(due), "Due across all topics");
+    if (session.length) runFlashcards(document.getElementById("review-body"), session, "Daily review");
     else document.getElementById("review-body").innerHTML = emptyState("✅", "Inbox zero. Your memory is up to date.");
   }
 
@@ -1980,7 +1989,7 @@
     const out = [];
     const last = Store.raw.lastLesson;
     if (last) { const n = index()[last.split("/")[1]]; if (n) out.push({ t: "Resume: " + n.lesson.title, sub: "Continue where you left off", hash: "#/lesson/" + last, icon: "▶" }); }
-    let due = 0; try { due = Store.stats().dueCount || 0; } catch (e) {}
+    let due = 0; try { due = Store.stats().reviewDue || 0; } catch (e) {}
     out.push({ t: "Start Daily Mix", sub: "Guided 15-minute session", hash: "#/session", icon: "🎯" });
     out.push({ t: "Daily Review" + (due ? " · " + due + " due" : ""), sub: "Spaced-repetition flashcards", hash: "#/review", icon: "⚡" });
     out.push({ t: "Spawn a Test", sub: "Custom exam from the question bank", hash: "#/test", icon: "📝" });

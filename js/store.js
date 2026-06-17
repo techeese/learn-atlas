@@ -416,8 +416,15 @@
   }
   function cardDue(cardId) {
     const c = state.cards[cardId];
-    if (!c) return true;            // never seen = due
+    if (!c) return true;            // never seen = due (so the review queue can surface new cards)
     return Date.now() >= c.due;
+  }
+  // distinguish a brand-new card from one you've started and that is now due for review.
+  // "new"   = never graded (no record);  "due" = started and due<=now;  "later" = started, scheduled ahead.
+  function cardState(cardId) {
+    const c = state.cards[cardId];
+    if (!c) return "new";
+    return Date.now() >= c.due ? "due" : "later";
   }
 
   // ---- aggregate stats -------------------------------------------------
@@ -426,9 +433,14 @@
     if (window.COURSES) window.COURSES.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
       totalLessons++; totalCards += (l.flashcards || []).length;
     })));
-    let dueCount = 0;
+    let dueCount = 0, reviewDue = 0, newCount = 0;
     if (window.COURSES) window.COURSES.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
-      (l.flashcards || []).forEach((_, i) => { if (cardDue(l.id + ":" + i)) dueCount++; });
+      (l.flashcards || []).forEach((_, i) => {
+        const s = cardState(l.id + ":" + i);
+        if (s !== "later") dueCount++;          // new + due (everything the review queue would surface)
+        if (s === "due") reviewDue++;            // started-and-now-due — the honest "review backlog"
+        else if (s === "new") newCount++;
+      });
     })));
     const acc = state.mcq.total ? Math.round((state.mcq.correct / state.mcq.total) * 100) : 0;
     return {
@@ -436,7 +448,9 @@
       totalLessons,
       cardsReviewed: state.cardsReviewed,
       totalCards,
-      dueCount,
+      dueCount,        // new + due (legacy meaning)
+      reviewDue,       // cards you've started that are now due — the "what needs attention" number
+      newCount,        // never-seen cards
       accuracy: acc,
       streak: state.streak
     };
@@ -457,7 +471,7 @@
     get raw() { return state; },
     save, addXP, levelInfo,
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
-    gradeCard, cardDue, projectInterval,
+    gradeCard, cardDue, cardState, projectInterval,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, topicMastery, markKnown,
     getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,
