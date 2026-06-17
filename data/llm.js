@@ -4003,6 +4003,50 @@
               ],
               "answer": 3,
               "explain": "The lesson frames tool use as the general pattern of letting an LLM reach outside itself, with RAG as the special case of reaching into a document store; you can wrap retrieval as a search_documents tool. Tool calling is the more general case (not a subset of RAG), and neither retrains the weights."
+            },
+            {
+              "q": "Why is the chunk size a genuine engineering tradeoff in a RAG pipeline?",
+              "choices": [
+                "Larger chunks are always better because they give the model more context; there is no real downside.",
+                "Chunks that are too large mix many topics, so a single embedding becomes a muddy average and retrieval gets imprecise; chunks that are too small lose the surrounding context needed to interpret them (or split an answer across two). A small overlap helps facts that straddle a boundary.",
+                "Chunk size only affects offline indexing speed, never retrieval quality.",
+                "Smaller chunks always retrieve better because each one is more specific, so you should chunk per word."
+              ],
+              "answer": 1,
+              "explain": "One embedding must summarize a whole chunk. Too large → it averages several topics into a muddy vector that retrieves imprecisely (and wastes prompt tokens); too small → it loses the context that makes a passage interpretable, and an answer may be split across chunks neither of which suffices. A small (~50-token) overlap rescues facts that straddle a boundary."
+            },
+            {
+              "q": "A vector store with millions of chunks uses an Approximate Nearest Neighbor (ANN) index (e.g. HNSW, IVF) instead of comparing the query to every chunk. Why?",
+              "choices": [
+                "Because exact similarity search is impossible for vectors of dimension above 512.",
+                "Because ANN indexes are always exact but simply use less memory than brute-force search.",
+                "Exact search compares the query against every chunk ($O(Nd)$ per query), which is too slow at millions of chunks; ANN trades a tiny amount of recall for an orders-of-magnitude speedup — the usual exactness-vs-latency tradeoff.",
+                "Because ANN changes the embedding model so that fewer chunks need to be stored."
+              ],
+              "answer": 2,
+              "explain": "For a few thousand chunks you can compute cosine similarity against all of them exactly ($O(Nd)$). At millions that's too slow, so ANN structures (HNSW graphs, IVF clustering) find *almost* the nearest vectors far faster, giving up a sliver of recall for a huge latency win — exact accuracy traded for speed."
+            },
+            {
+              "q": "How does fine-tuning differ from RAG as a way to give a model new domain knowledge?",
+              "choices": [
+                "Fine-tuning bakes new behavior or style into the weights, but it does not give you fresh, swappable facts or per-claim citations — so it is usually orthogonal to RAG, not a substitute for it.",
+                "Fine-tuning and RAG are identical; \"RAG\" is just the name for fine-tuning on retrieved documents.",
+                "Fine-tuning lets you update a single fact with a database write, whereas RAG requires retraining.",
+                "Fine-tuning makes every answer automatically citable, which is why it replaces retrieval."
+              ],
+              "answer": 0,
+              "explain": "Fine-tuning changes the weights — good for instilling behavior, format, or style — but the facts it teaches are still frozen in parameters: not swappable without retraining and not attributable. RAG supplies current, specific, citable facts from an external store. They solve different problems and are typically combined, not traded off. (The \"database write\" and \"automatically citable\" descriptions actually fit RAG, not fine-tuning.)"
+            },
+            {
+              "q": "HR changes the vacation cap from 30 to 35 days. In a RAG system, what does it take to make the chatbot give the new answer?",
+              "choices": [
+                "Retrain the base model on the updated policy.",
+                "Fine-tune the model for a few epochs on the new number.",
+                "Nothing — the model will infer the new cap on its own once enough users ask.",
+                "Re-index the one affected chunk (a database write); the next query retrieves the updated text and the model answers from it — no retraining or fine-tuning."
+              ],
+              "answer": 3,
+              "explain": "That is the operational superpower of non-parametric knowledge: facts live in a store you control, so updating one is a database write, not a training run. Re-embed and replace the changed chunk; the next retrieval grounds the model in the new text. Parametric (weight-baked) knowledge would require retraining."
             }
           ],
           "flashcards": [
@@ -4198,6 +4242,50 @@
               ],
               "answer": 0,
               "explain": "$\\mathrm{SE} = \\sqrt{0.8 \\cdot 0.2 / 2000} = \\sqrt{0.00008} \\approx 0.0089$, i.e. about $\\pm 0.9$ points. Small gaps are on the order of the uncertainty, so confidence intervals and a paired (McNemar-style) test are required; the baseline matters for interpreting absolute skill, not for computing the SE."
+            },
+            {
+              "q": "The lesson says there is a *structural* reason an LLM tends to guess rather than abstain. What is it?",
+              "choices": [
+                "The model is explicitly forbidden from outputting \"I don't know\" by its safety filters.",
+                "Abstaining would violate the chain rule of probability.",
+                "The model always knows the answer, so abstention is never actually needed.",
+                "The softmax over the vocabulary always yields a probability distribution, and there is no native \"null / abstain\" token unless one is explicitly trained in — so the decoder is structurally obligated to emit *some* token, i.e. to guess."
+              ],
+              "answer": 3,
+              "explain": "At every step the model produces a full distribution over real vocabulary tokens; \"I don't know\" is not a built-in option, just another phrase it must learn to prefer. Combined with a fixed-capacity, lossy memory of rare facts, the decoder will produce *something* plausible-sounding rather than abstain — unless abstention/calibration is explicitly trained in."
+            },
+            {
+              "q": "A public benchmark's scores can be inflated \"silently.\" According to the lesson, what is the dominant threat to a benchmark's validity?",
+              "choices": [
+                "Contamination — if the benchmark (or near-duplicates) appeared in the training corpus, the score measures memorization rather than capability, inflating it with no obvious sign.",
+                "The random baseline being too high, which makes every model look good.",
+                "Using natural-log instead of base-2 when reporting perplexity.",
+                "Having too many questions, which averages out the real differences between models."
+              ],
+              "answer": 0,
+              "explain": "If test items leaked into pretraining, a high score reflects recall of seen answers, not generalization — and because the leakage is invisible in the score itself, it is the dominant and silent validity threat for any popular public benchmark. (The other options are minor or not real concerns.)"
+            },
+            {
+              "q": "The lesson invokes Goodhart's law for benchmarks: \"once a metric becomes a target, it ceases to be a good measure.\" What does this imply in practice?",
+              "choices": [
+                "Benchmarks become more discriminating over time as models improve against them.",
+                "A benchmark is only valid if every model scores below 50%.",
+                "As models get tuned toward popular benchmarks, those benchmarks saturate and stop discriminating real progress — so a leaderboard can keep rising while genuine capability gaps shrink.",
+                "Goodhart's law only applies to human evaluation, never to automated benchmarks."
+              ],
+              "answer": 2,
+              "explain": "When a benchmark becomes the optimization target, models are tuned (directly or indirectly) toward it, scores climb and bunch near the top, and the metric loses its power to separate models — saturation. That is why heavily-targeted benchmarks stop reflecting real progress and the field keeps proposing harder ones."
+            },
+            {
+              "q": "When using a strong model as an LLM-as-judge for *pairwise* comparisons, which bias is specifically called out, and how is it mitigated?",
+              "choices": [
+                "It always scores both responses identically, so you must add random noise to break ties.",
+                "Position bias — it disproportionately favors the first (or last) candidate — mitigated by swapping the order of the two responses and averaging. (Judges also can't reliably catch factual errors they would make themselves — circularity.)",
+                "It refuses to compare responses unless they are exactly the same length.",
+                "It can only judge math problems, never open-ended text."
+              ],
+              "answer": 1,
+              "explain": "A judge model tends to pick the response in a particular slot (often the first), so you run each pair in both orders and average to cancel it. Judges also share the failure modes they're grading — they can't reliably flag errors they'd make (circularity) and favor longer/more confident answers — which is why LLM-judges are validated periodically against human eval."
             }
           ],
           "flashcards": [
@@ -4393,6 +4481,50 @@
               ],
               "answer": 2,
               "explain": "Typesetting an instruction into an image exploits the multiplied multimodal attack surface (a payload the vision stack reads but text filters miss), and burying it mid-document exploits 'lost in the middle,' the positional bias where models reliably attend to the start and end of long contexts but degrade in the middle."
+            },
+            {
+              "q": "What is the \"scalable oversight\" problem in alignment?",
+              "choices": [
+                "As models exceed human expertise in a domain, humans can no longer reliably tell good output from bad (e.g. judging a 400-line proof or a subtly insecure code patch) — so the human labels used to align the model become unreliable exactly in the high-stakes cases that matter most.",
+                "Training runs cost too much electricity to scale to larger models.",
+                "There are not enough GPUs to oversee every token the model generates.",
+                "Models refuse too many prompts, so human reviewers are overwhelmed by complaints."
+              ],
+              "answer": 0,
+              "explain": "RLHF assumes a human can distinguish good from bad output. That breaks down once the model is more capable than the supervisor in a domain — the labels become noisy precisely where correctness is hardest to verify. It motivates AI-assisted evaluation, debate, and constitutional/self-critique methods."
+            },
+            {
+              "q": "Why does the lesson say \"we patched that jailbreak\" is never a complete answer?",
+              "choices": [
+                "Because patching a jailbreak always permanently breaks the model's helpfulness.",
+                "Because jailbreaks can only be fixed by retraining the entire model from scratch.",
+                "Because jailbreaks are illegal to study, so they cannot be patched at all.",
+                "Because safety must hold over an effectively infinite input space (a $\\forall$ quantifier) while an attacker needs only one working input (an $\\exists$), and adversarial jailbreaks *transfer* across models that share training data and inductive biases — so closing one input leaves the rest of the space open."
+              ],
+              "answer": 3,
+              "explain": "Defense is universal (\"no input should break the policy\") while attack is existential (\"find one input that does\") — an inherent asymmetry. And an adversarial suffix optimized against one model often works on others, because they share data and biases. Patching a specific exploit shrinks the known holes but cannot cover the infinite, transferable attack surface."
+            },
+            {
+              "q": "How does the lesson characterize bias in an LLM?",
+              "choices": [
+                "A bug accidentally introduced during fine-tuning that can be fully removed with a system prompt.",
+                "Dataset bias propagating through an estimator: because pretraining maximizes likelihood over human-authored text, the model faithfully reflects that corpus's stereotypes and skews — surfacing as representational harm (stereotyped associations) and allocational harm (skewed outcomes when it gates a decision).",
+                "A purely hypothetical concern that has never been measured in real models.",
+                "An artifact of the softmax temperature that disappears at $\\tau = 0$."
+              ],
+              "answer": 1,
+              "explain": "Bias is not bolted on — it is a faithful reflection of the training distribution, the same dataset-bias-through-an-estimator problem as in any supervised model, just at massive scale with a fluent, persuasive surface. It appears as representational harm (stereotyped associations) and allocational harm (skewed outcomes when the model gates decisions like resume screening)."
+            },
+            {
+              "q": "The lesson distinguishes the model *misbehaving* from *misuse*. What is misuse, and how should its risk be assessed?",
+              "choices": [
+                "Misuse is the model producing disallowed content because of a jailbreak; its risk is assessed by counting how often it refuses.",
+                "Misuse is any factual error the model makes; its risk is assessed by its benchmark accuracy.",
+                "Misuse is the model working *as intended* in service of a harmful goal (e.g. scaled disinformation, spear-phishing, malware); the relevant question is *marginal risk* — does the model meaningfully lower the cost or skill needed versus existing tools like a search engine?",
+                "Misuse is when the model refuses a legitimate request; its risk is assessed by user complaints."
+              ],
+              "answer": 2,
+              "explain": "Misuse isn't the model failing — it's the model succeeding at a task someone uses for harm. The empirical framing is marginal risk: not \"could this help a bad actor at all?\" but \"does it meaningfully reduce the cost or expertise required compared to tools they already have?\" That keeps the assessment grounded rather than alarmist."
             }
           ],
           "flashcards": [

@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 198: MCQ arc → **LLM·Applications 12→16** (RAG/tools, hallucination/eval, safety/frontier; +12, bank
+   →2,288). **★★ LLM TOPIC COMPLETE** — all 19 LLM lessons / 6 modules at 16. Adversarial ALL 12 PASS; positions
+   balanced 0/1/2/3; byte-stable inject; RAG + safety quizzes render "of 16" rawDollars=0 kErr=0; all-routes errs=0;
+   SW →v141. **ARC: 6/7 topics done** (Algo/LA/Calc/DL/RL/LLM) — only **Probability & Statistics** remains to finish
+   the whole 12→16 arc (5 modules: Foundations, Distributions, Joint, Inference/Estimation, Hypothesis-Testing).
    ✅ iter 197: **Scope-aware Test setup** (UI/UX — non-content). "Spawn a Test" now shows a live "N questions
    available" readout that updates per scope (Everything→2,276, LLMs→292, etc.), notes when length will be clamped to
    the pool, and disables Start with a warning when a scope is too thin (<3 q). Shared `scopedPool()`; aria-live.

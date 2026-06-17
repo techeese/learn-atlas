@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 198 — MCQ arc → LLM Applications 12→16 ★★ LLM TOPIC COMPLETE (content — owner's #1 ask)
+Finished the LLM topic's last module — **Applications**, all 3 lessons **12 → 16 MCQs** (+12; bank **2,276 → 2,288**).
+**★★ All 19 LLM lessons / 6 modules are now at 16 MCQs — the entire Large Language Models course is complete.**
+New foundational questions, adversarially fact-checked (**ALL 12 PASS**; one verify flag was a transcription slip in
+the *prompt*, not the item — confirmed post-inject that the keyed index maps to the intended choice), answer positions
+balanced 0/1/2/3 with distinct per-lesson patterns ([1,2,0,3] / [3,0,2,1] / [0,3,1,2]):
+- **RAG & tools**: the chunk-size tradeoff (muddy vs context-starved); ANN indexes (HNSW/IVF) trade recall for speed;
+  fine-tuning vs RAG (style-in-weights vs fresh citable facts — orthogonal); updating a fact = a *re-index*, not a retrain.
+- **Hallucination & evaluation**: no native *abstain* token (the decoder is obligated to guess); benchmark
+  **contamination** as the silent dominant validity threat; **Goodhart/saturation**; LLM-as-judge **position bias** +
+  circularity.
+- **Safety & frontier**: **scalable oversight**; the **∀-defense vs ∃-attack** asymmetry (and jailbreak transfer);
+  bias as dataset-bias-through-an-estimator (representational + allocational harm); **misuse & marginal risk**.
+
+**Arc: 6/7 topics fully at 16** — Algorithms ✓ · LA ✓ · Calculus ✓ · DL ✓ · RL ✓ · **LLM ✓** — only **Probability &
+Statistics** remains to finish the entire 12→16 MCQ-growth arc.
+Verified: node syntax ALL JS OK; `gate.js` ALL GREEN (7 topics · 148 lessons · **2,288 MCQs** · 41 widgets); answer
+indices confirmed + 0/1/2/3-balanced per lesson (incl. an explicit check that the judge-bias item's key maps to the
+"position bias" choice); byte-stable injection; RAG & safety quizzes render "Question 1 of 16" rawDollars=0 kErr=0;
+all-routes smoke (11 routes) errs=0; RAG quiz screenshot clean. SW cache `atlas-v140` → `atlas-v141`.
+
 ## iter 197 — Scope-aware Test setup: live question-pool readout (UI/UX — non-content)
 Non-content rebalance. "Spawn a Test" is a core, high-use surface, but it showed *lesson* counts in the scope picker,
 not the *question*-pool size — so you couldn't tell how many questions a scope held until you hit Start (and got a
