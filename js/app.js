@@ -1965,10 +1965,27 @@
   function closePalette() { if (paletteEl) { paletteEl.remove(); paletteEl = null; } }
 
   // ---------- router ----------
+  // a meaningful browser-tab / history / screen-reader title per route (SPAs otherwise stay stuck on one title)
+  function docTitleFor(parts) {
+    const BASE = "Atlas";
+    if (!parts.length) return "Dashboard · " + BASE;
+    const p = parts[0];
+    const PAGES = { review: "Daily Review", session: "Daily Mix", test: "Spawn a Test", mistakes: "Redeem Mistakes", map: "Knowledge Map", playground: "Code Playground", library: "References", notes: "My Notes", glossary: "Glossary", achievements: "Achievements", stats: "Progress" };
+    if (p === "lesson") { const f = findLesson(parts[1], parts[2]); return (f ? f.lesson.title : "Lesson") + " · " + BASE; }
+    if (p === "course") { const c = findCourse(parts[1]); return (c ? c.title : "Course") + " · " + BASE; }
+    if (p === "lab" && parts[1]) { const v = (window.VIZ_CATALOG || []).find(x => x.id === parts[1]); return (v ? v.title : "Visualization") + " · " + BASE; }
+    if (p === "lab") return "Visualization Lab · " + BASE;
+    if (p === "path") { const f = findLesson(parts[1], parts[2]); return "Learning path" + (f ? ": " + f.lesson.title : "") + " · " + BASE; }
+    if (p === "cheatsheet") { const c = findCourse(parts[1]); return "Cheatsheet" + (c ? ": " + c.title : "") + " · " + BASE; }
+    if (p === "placement") { const c = parts[1] && findCourse(parts[1]); return "Placement" + (c ? ": " + c.title : "") + " · " + BASE; }
+    if (PAGES[p]) return PAGES[p] + " · " + BASE;
+    return BASE + " · Personal Learning Codex";
+  }
   function router() {
     if (window.VIZUtil) window.VIZUtil.stopAll(); // kill any running animation loops
     const h = (location.hash || "#/").slice(1);
     const parts = h.split("/").filter(Boolean); // e.g. ["course","linear-algebra"]
+    try { document.title = docTitleFor(parts); } catch (e) { document.title = "Atlas · Personal Learning Codex"; }
     window.scrollTo(0, 0);
     if (parts.length === 0) viewDashboard();
     else if (parts[0] === "course") viewCourse(parts[1]);

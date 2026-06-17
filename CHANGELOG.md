@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 160 — Per-route document titles (a11y / UX) + ★160 reflection
+The SPA left the browser-tab title stuck on "Atlas · Personal Learning Codex" for *every* route — so screen-reader users
+heard no page-change announcement on navigation, and browser history / bookmarks / open tabs were all indistinguishable.
+The router now sets a meaningful `document.title` per route via `docTitleFor(parts)`: lessons, courses, and lab widgets
+resolve to their *actual* names (e.g. "Convex Sets, Convex Functions & Why They Matter · Atlas", "Taylor Polynomials… · Atlas"),
+and every page route gets a clear label ("Knowledge Map", "Daily Mix", "Progress", "Learning path: …", "Cheatsheet: Calculus"…).
+- **Verified**: `node gate.js` ALL GREEN; navigated ~20 route types and captured the title the router set for each →
+  **errs=0**, lesson/course/viz/path/cheatsheet/placement names all correctly resolved, page routes labeled, the 404 falls
+  back to the base title. SW cache **v102 → v103**.
+- **★160 reflection**: the loop is healthy and the owner's #1 ask is the engine — the 12→16 MCQ arc has now fully migrated
+  **3 of 7 topics** (Algorithms, Linear Algebra, Calculus; bank 1,776 → 2,044, +268). Non-content slots stayed well-rotated
+  across the compass: viz ×3 (optimizer race / Riemann / Taylor), gamification ×2 (achievement nudge & 43-achievement
+  categorization), animations (goal-ring sweep, result count-up), workflow (command palette, "redrill misses"), UI/UX
+  (TOC + scroll-spy, per-route titles), new functionality (auto-TOC), plus a clean mobile audit and a countUp clock-skew
+  fix. No compass area is starved; no failure mode has tripped. Next ~50: finish the arc (DL/RL/LLM/PS → ~2,300 MCQs),
+  keep interleaving bold viz/feature swings.
+
 ## iter 159 — MCQ arc → Calculus · Convex & Constrained Optimization 12 → 16 · ★ CALCULUS COMPLETE (content — owner's #1 ask)
 The final Calculus module. **+4 new MCQs each** to *Convex Sets & Functions*, *Gradient Descent on Convex Functions*,
 and *Lagrange Multipliers* (**+12, bank 2,032 → 2,044**) — and with this **all 25 Calculus lessons are at 16 MCQs**, making
