@@ -436,14 +436,20 @@
     const cards = C().map(c => {
       const p = Store.courseProgress(c.id);
       const lc = flatLessons(c).length;
+      const tm = Store.topicMastery(c.id), lvl = Store.masteryLevel(tm);   // avg retained mastery (decays), distinct from completion
       return `
       <div class="course-card reveal" style="--c:${c.color}" data-go="#/course/${c.id}">
         <div class="cc-icon">${esc(c.icon)}</div>
         <h3>${esc(c.title)}</h3>
         <div class="blurb">${esc(c.blurb)}</div>
-        <div class="cc-foot">
-          <div class="mini-bar"><div class="mini-fill" style="width:${p.pct}%;background:${c.color}"></div></div>
-          <span>${p.done}/${lc}</span>
+        <div class="cc-stats">
+          <div class="cc-foot" title="Lessons completed">
+            <div class="mini-bar"><div class="mini-fill" style="width:${p.pct}%;background:${c.color}"></div></div>
+            <span>${p.done}/${lc} done</span>
+          </div>
+          <div class="cc-mastery" title="Average mastery across this topic — reflects what you've retained, and decays over time">
+            <span class="cc-mdot" style="background:${lvl.color}"></span>${tm > 0 ? Math.round(tm * 100) + "% mastered" : "not started"}
+          </div>
         </div>
       </div>`;
     }).join("");

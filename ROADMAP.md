@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 199: **Dashboard topic cards show mastery, not just completion** (UI/UX — non-content). Each Topics-grid
+   card now has a "N% mastered" readout (decay-aware `topicMastery`, mastery-level-colored dot) under the "N/M done"
+   bar — so completion no longer overstates knowledge. No new state. Verified: seeded LA→"5% mastered", untouched→
+   "not started"; errs=0; 390px clean; SW →v142.
    ✅ iter 198: MCQ arc → **LLM·Applications 12→16** (RAG/tools, hallucination/eval, safety/frontier; +12, bank
    →2,288). **★★ LLM TOPIC COMPLETE** — all 19 LLM lessons / 6 modules at 16. Adversarial ALL 12 PASS; positions
    balanced 0/1/2/3; byte-stable inject; RAG + safety quizzes render "of 16" rawDollars=0 kErr=0; all-routes errs=0;

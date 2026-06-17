@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 199 — Dashboard topic cards show mastery, not just completion (UI/UX — non-content)
+Non-content rebalance. The dashboard's Topics grid showed only *completion* (a "N/M done" bar) — which **overstates
+knowledge**: a learner who clicked through every lesson but whose mastery has since decayed sees a full bar yet may
+retain little. Added a second, honest signal to each topic card: a mastery readout — a **mastery-level-colored dot +
+"N% mastered"** (or "not started") — from the existing decay-aware `Store.topicMastery()`, right under the completion
+bar. Now "clicked through it" and "actually know it" are never conflated on the main landing surface.
+- `js/app.js` (`viewDashboard`): each card computes `topicMastery` + `masteryLevel`, renders a `.cc-stats` block with
+  the completion row ("N/M done") and a new `.cc-mastery` row. No new state.
+- `css/styles.css`: `.cc-stats` / `.cc-mastery` / `.cc-mdot`.
+
+Verified (seeded mastery): LA with 2/19 lessons mastered → "1/19 done" + sage dot + "5% mastered"; an untouched topic
+→ "not started" with a muted dot; the % is the topic-wide average (consistent with the course page's mastery metric).
+errs=0; all-routes smoke (11 routes) errs=0; **390px** both rows render cleanly under the blurb (screenshot read).
+`gate.js` ALL GREEN (data untouched). SW cache `atlas-v141` → `atlas-v142`.
+
 ## iter 198 — MCQ arc → LLM Applications 12→16 ★★ LLM TOPIC COMPLETE (content — owner's #1 ask)
 Finished the LLM topic's last module — **Applications**, all 3 lessons **12 → 16 MCQs** (+12; bank **2,276 → 2,288**).
 **★★ All 19 LLM lessons / 6 modules are now at 16 MCQs — the entire Large Language Models course is complete.**
