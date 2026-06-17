@@ -2415,4 +2415,97 @@
     draw();
   });
 
+  /* ========================================================
+     43. GAN training: the adversarial minimax game (DL)
+     ===================================================== */
+  register({ id: 'dl-gan-training', topic: 'deep-learning', title: 'GAN Training: The Adversarial Game', blurb: 'Watch a generator (orange) and an optimal discriminator (purple) play their minimax game. Press play and the generator slides its distribution onto the real data (green) until D(x) collapses to 0.5 everywhere — a coin flip. Switch to two modes to watch the single-Gaussian generator mode-collapse onto just one peak.' },
+  function (root) {
+    const W = 560, H = 380, padL = 40, padR = 16, padB = 40, padT = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const MONO = "JetBrains Mono, monospace";
+    const XMIN = -6, XMAX = 6, NX = 240, dx = (XMAX - XMIN) / NX, EPS = 1e-9;
+    const xs = []; for (let i = 0; i <= NX; i++) xs.push(XMIN + i * dx);
+    const START = { mu: -3.0, sig: 1.4 };
+    let muG = START.mu, sigG = START.sig, lr = 0.4, iter = 0, playing = false, mode = 'single', frame = 0, playBtn = null;
+
+    function gauss(x, mu, sig) { const z = (x - mu) / sig; return Math.exp(-0.5 * z * z) / (sig * Math.sqrt(2 * Math.PI)); }
+    function pdata(x) {
+      return mode === 'single' ? gauss(x, 1.0, 0.85)
+        : 0.5 * gauss(x, -1.9, 0.6) + 0.5 * gauss(x, 1.9, 0.6);
+    }
+    // Optimal discriminator for the CURRENT generator: D*(x) = p_data / (p_data + p_g).
+    function frozenD() { const D = new Array(NX + 1); for (let i = 0; i <= NX; i++) { const a = pdata(xs[i]), b = gauss(xs[i], muG, sigG); D[i] = a / (a + b + EPS); } return D; }
+    // Generator objective with D held frozen: J = ∫ p_g(x;μ,σ) · log D(x) dx (the non-saturating "fool D" goal).
+    function objective(mu, sig, D) { let J = 0; for (let i = 0; i <= NX; i++) J += gauss(xs[i], mu, sig) * Math.log(D[i] + EPS) * dx; return J; }
+    function step() {
+      const D = frozenD(), h = 0.04;                          // train D to its optimum, then one gradient step for G
+      const dMu = (objective(muG + h, sigG, D) - objective(muG - h, sigG, D)) / (2 * h);
+      const dSig = (objective(muG, sigG + h, D) - objective(muG, sigG - h, D)) / (2 * h);
+      muG += lr * dMu; sigG += lr * dSig;
+      sigG = Math.max(0.28, Math.min(3, sigG)); muG = Math.max(XMIN + 0.5, Math.min(XMAX - 0.5, muG));
+      iter++;
+    }
+    function jsd() {                                          // Jensen–Shannon divergence (nats), 0 = perfect match
+      let k1 = 0, k2 = 0;
+      for (let i = 0; i <= NX; i++) { const a = pdata(xs[i]), b = gauss(xs[i], muG, sigG), m = 0.5 * (a + b) + EPS; if (a > EPS) k1 += a * Math.log(a / m) * dx; if (b > EPS) k2 += b * Math.log(b / m) * dx; }
+      return Math.max(0, 0.5 * k1 + 0.5 * k2);
+    }
+    function setPlay(v) { playing = v; if (playBtn) { playBtn.innerHTML = v ? '⏸ Pause' : '▶ Play'; playBtn.classList.toggle('active', v); } }
+    function reset() { muG = START.mu; sigG = START.sig; iter = 0; setPlay(false); draw(); }
+
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const dens = []; let ymax = 0;
+      for (let i = 0; i <= NX; i++) { const a = pdata(xs[i]), b = gauss(xs[i], muG, sigG); dens.push([a, b]); if (a > ymax) ymax = a; if (b > ymax) ymax = b; }
+      ymax = (ymax || 1) * 1.18;
+      const X = x => padL + ((x - XMIN) / (XMAX - XMIN)) * (W - padL - padR);
+      const Yd = v => (H - padB) - (v / ymax) * (H - padT - padB);
+      const YD = d => (H - padB) - d * (H - padT - padB);     // D ∈ [0,1] across full plot height
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      ctx.save(); ctx.strokeStyle = p.mute; ctx.setLineDash([3, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, YD(0.5)); ctx.lineTo(W - padR, YD(0.5)); ctx.stroke(); ctx.restore();
+      ctx.fillStyle = p.mute; ctx.font = '9px ' + MONO; ctx.textAlign = 'left'; ctx.fillText('D=0.5', W - padR - 40, YD(0.5) - 4);
+      function fillCurve(idx, color) {
+        ctx.beginPath(); ctx.moveTo(X(xs[0]), H - padB);
+        for (let i = 0; i <= NX; i++) ctx.lineTo(X(xs[i]), Yd(dens[i][idx]));
+        ctx.lineTo(X(xs[NX]), H - padB); ctx.closePath();
+        ctx.fillStyle = color; ctx.globalAlpha = 0.30; ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath();
+        for (let i = 0; i <= NX; i++) { const px = X(xs[i]), py = Yd(dens[i][idx]); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke();
+      }
+      fillCurve(0, p.sage);                                   // real data
+      fillCurve(1, p.rust);                                   // generator
+      ctx.strokeStyle = p.violet; ctx.lineWidth = 2.4; ctx.beginPath();
+      for (let i = 0; i <= NX; i++) { const a = dens[i][0], b = dens[i][1], d = a / (a + b + EPS); const px = X(xs[i]), py = YD(d); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'center';
+      for (let x = -6; x <= 6; x += 2) ctx.fillText(x, X(x), H - padB + 14);
+      ctx.textAlign = 'left'; ctx.font = '600 11px ' + MONO;
+      ctx.fillStyle = p.sage; ctx.fillText('■ real', padL + 4, padT - 8);
+      ctx.fillStyle = p.rust; ctx.fillText('■ generator', padL + 62, padT - 8);
+      ctx.fillStyle = p.violet; ctx.fillText('— D(x)=P(real)', padL + 168, padT - 8);
+      ctx.fillStyle = p.mute; ctx.textAlign = 'right'; ctx.fillText('iter ' + iter, W - padR - 2, padT - 8);
+      const J = jsd();
+      let msg = `<b>Generator</b> N(μ=${muG.toFixed(2)}, σ=${sigG.toFixed(2)}). <b>Jensen–Shannon divergence</b> = <b>${J.toFixed(3)}</b> nats (the quantity the game minimizes; 0 = indistinguishable). `;
+      if (mode === 'single') {
+        msg += J < 0.01
+          ? `<span style="color:${p.sage}">Equilibrium reached:</span> the generator sits on the real data and <b>D(x) ≈ 0.5 everywhere</b> — the discriminator is reduced to a coin flip. This is the global optimum where p_g = p_data.`
+          : `The discriminator (purple) still tells them apart — D ≈ 1 over real-only regions, D ≈ 0 over fake-only regions. Each step the generator climbs the gradient of "fool D," sliding toward the data.`;
+      } else {
+        msg += `<span style="color:${p.rust}">⚠ Mode collapse:</span> a single-Gaussian generator can cover only <b>one</b> of the two real modes, so JS divergence stalls (it can't reach 0). D(x) stays near 1 over the abandoned mode — those real samples are never imitated. Real GANs hit this too; remedies include minibatch discrimination, unrolled GANs, and the Wasserstein objective.`;
+      }
+      info.innerHTML = msg;
+    }
+
+    playBtn = button(ctl, '▶ Play', function () { setPlay(!playing); }, '');
+    button(ctl, 'Step', function () { setPlay(false); step(); draw(); });
+    button(ctl, 'Reset', reset);
+    select(ctl, { label: 'real data', value: mode, options: [{ value: 'single', label: 'one mode' }, { value: 'two', label: 'two modes (collapse)' }], onChange: v => { mode = v; reset(); } });
+    slider(ctl, { label: 'learning rate', min: 0.1, max: 1.0, step: 0.05, value: lr, fmt: v => v.toFixed(2), onInput: v => { lr = v; } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'GAN training visualizer: a green curve is the real data density, an orange curve is the generator density, and a purple curve is the optimal discriminator D(x) = probability a point is real. Pressing play steps the adversarial game so the generator distribution converges onto the real one and D flattens to 0.5; a two-mode setting demonstrates mode collapse.');
+    draw();                                                   // synchronous first paint
+    loop(function () { if (playing) { frame++; if (frame % 8 === 0) { step(); draw(); if (mode === 'single' && jsd() < 0.004) setPlay(false); } } });
+  });
+
 })();

@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 207: **New viz `dl-gan-training`** (visualizations — first non-content move after the arc completed). The
+   43rd widget, embedded in the GANs lesson (which had NO viz). Generator (orange) vs optimal discriminator D=p_data/
+   (p_data+p_g) (purple) vs real data (green); Play steps the alternating game → generator converges onto the data and
+   D flattens to 0.5 (equilibrium, auto-stops); two-mode toggle demonstrates mode collapse (single Gaussian covers one
+   peak, D stays confident on the other). Faithful: analytic optimal D + real gradient ascent on the generator's fool-D
+   objective (validated convergence in node first). Verified: gate GREEN (43 widgets); 3 screenshots (init/equilibrium/
+   collapse) all err=0; all-routes errs=0/kErr=0 (14 routes); mobile 390px scales. SW →v150.
    ✅ iter 206: MCQ arc → **PS·Hypothesis-Testing 12→16** (all 4 lessons — testing logic, p-values, errors & power,
    t-tests; +16, bank →2,368). Adversarial ALL 16 PASS (arithmetic re-checked: one-sided z=−2.0<−1.645; 20×0.05=1
    expected false positives; one-sided p=P(Z>1.75)≈0.04; two-sample SE=√(s₁²/n₁+s₂²/n₂)); each new batch balanced
@@ -468,8 +475,10 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
   iter 84, diffusion noising iter 89, convex-landscape/GD-trap iter 92, hypothesis-test/p-value iter 98, BPE-merge
   trainer iter 105, LR-schedule explorer iter 112, Q-learning gridworld iter 117, optimizer-race iter 136, Riemann-sum
   iter 148, Taylor-polynomial iter 152, dropout iter 162, positional-encoding iter 166, KL-divergence iter 172,
-  TD-vs-MC iter 178, multi-armed-bandit iter 186): a VAE latent-space explorer, a GAN training-dynamics demo. (✓
-  beam-search tree iter ~138; ✓ value-iteration is the existing gridworld.)
+  TD-vs-MC iter 178, multi-armed-bandit iter 186, binomial⇄poisson iter 203, GAN-training iter 207): a VAE latent-space
+  explorer (NOTE: the VAE lesson already embeds `dl-kl-divergence`, so a 2nd VAE viz is lower priority), a policy-iteration
+  vs value-iteration comparison. (✓ beam-search tree iter ~138; ✓ value-iteration is the existing gridworld; ✓ GAN
+  training-dynamics + mode-collapse demo iter 207, embedded in the GANs lesson — 43 widgets now.)
   NOTE: viz blurbs AND notes are NOT KaTeX-typeset (the Lab shows them raw) — use plain unicode (xₜ, √, ε, ᾱ), not $...$.
 - Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.
 - Reduced-motion + high-contrast accessibility modes.

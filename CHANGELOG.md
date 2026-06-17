@@ -2,6 +2,29 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 207 — GAN training visualizer: the adversarial game (visualizations)
+New widget **`dl-gan-training`** (the **43rd**), embedded in the GANs lesson (`dl-gans`), which previously had **no
+visualization** — a real gap, now filled with the field's most iconic figure (Goodfellow et al. Fig. 1) made live.
+Pivot off content after the 12→16 arc completed (anti-monotony; the owner explicitly loves visualizations / "a joy to
+watch"). What it shows:
+- **Real data** density (green), the **generator** density (orange, a Gaussian N(μ,σ)), and the **optimal
+  discriminator** D(x) = p_data/(p_data+p_g) (purple) — the analytic optimum, plotted exactly.
+- **Play** runs the alternating game: each step retrains D to its optimum, then takes one gradient-ascent step on the
+  generator's "fool D" objective J = ∫ p_g·log D dx (numerical gradient). The generator slides onto the data and
+  **D(x) flattens to 0.5 everywhere** (a coin flip) at the global optimum p_g = p_data — auto-stops when JSD ≈ 0.
+- **Two modes (collapse)** toggle: a single-Gaussian generator can cover only one of two real peaks, so it visibly
+  **mode-collapses** onto one while D stays confident (≈1) over the abandoned mode and JS divergence stalls — the
+  canonical GAN failure, made tangible. Note explains remedies (minibatch discrimination, unrolled, Wasserstein).
+- Controls: Play/Pause, Step, Reset, mode select, learning-rate slider. Live readout of generator μ/σ + JS divergence.
+Faithful by construction: D is the analytic optimal discriminator; the generator does real gradient ascent. Validated
+the dynamics in node first — single-mode converges to N(1.0,0.85) with JSD→0 (~15 steps); two-mode collapses to
+μ≈−1.9 with JSD stuck ≈0.21.
+Verified: syntax OK; `gate.js` ALL GREEN (**43 widgets**, embed id resolves; 2,368 MCQs); screenshots of (a) initial
+synchronous paint, (b) single-mode equilibrium (curves overlap, D≈0.5), (c) two-mode collapse — all **err=0**;
+all-routes smoke (14 routes incl. `#/lab/dl-gan-training` + the embedded lesson) **errs=0/kErr=0**; mobile 390px
+canvas scales and stays legible. `dl-vae-latent` was the runner-up but the VAE lesson already has `dl-kl-divergence`;
+the GANs lesson had nothing. SW cache `atlas-v149` → `atlas-v150`.
+
 ## iter 206 — MCQ arc → PS Hypothesis-Testing module 12→16 ★★★ COMPLETES THE WHOLE ARC (content — owner's #1 ask)
 **Probability & Statistics → Hypothesis Testing**, all 4 lessons **12 → 16 MCQs** (+16; bank **2,352 → 2,368**). New
 foundational questions, adversarially fact-checked with arithmetic re-verified (**ALL 16 PASS**); each new batch

@@ -1927,7 +1927,7 @@
       "deep-diver": [mastered, 10], "loremaster": [mastered, 25], "savant": [mastered, 50],
       "habit": [Object.keys(R.activity || {}).length, 14], "sage": [R.xp, 25000],
       "viz-voyager": [Object.keys(R.vizSeen || {}).length, 15],
-      "viz-complete": [Object.keys(R.vizSeen || {}).length, (window.VIZ_CATALOG || []).length || 42]
+      "viz-complete": [Object.keys(R.vizSeen || {}).length, (window.VIZ_CATALOG || []).length || 43]
     };
   }
   // the locked, in-progress achievement closest to unlocking (for the dashboard nudge)
