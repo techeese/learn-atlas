@@ -51,10 +51,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    "think again until you pass" loop); + a 35th achievement (♻️ Redeemer).
    ✅ iter 105: `llm-bpe` BPE tokenizer trainer (29th viz) — embedded in the LLM tokenization lesson.
    ✅ iter 106: answer-feedback juice (correct pop+glow, key spring, wrong shake) on every MCQ.
-   ✅ iter 107: full-text lesson search in ⌘K (body matches with highlighted snippets). Ideas still open
-   for this arc: onboarding refresh; flashcard flip/grade juice & route-transition polish; more deeper-dives;
-   a bookmarks ("Curator") achievement; surfacing missed-deck stats on the Progress page; mastery-weighted/recency
-   ranking in ⌘K (the title-match tier is still purely lexical).
+   ✅ iter 107: full-text lesson search in ⌘K (body matches with highlighted snippets).
+   ✅ iter 108: four new deeper-dives (eigenvectors=power-iteration, CLT=why-a-bell, attention=soft-dictionary,
+   policy-gradients=train-by-trial) — directive 3. Ideas still open for this arc: onboarding refresh; flashcard
+   flip/grade juice & route-transition polish; MORE deeper-dives (KKT/shadow-price, vanishing/exploding gradients,
+   batch-norm, the kernel trick, dropout-as-ensemble); a bookmarks ("Curator") achievement; surfacing missed-deck
+   stats on the Progress page; mastery-weighted/recency ranking in ⌘K (title tier is still purely lexical).
    MORE VIZ IDEAS still open (backlog below): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space
    explorer, a GAN training-dynamics demo, a Q-learning/SARSA path demo.
    (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
@@ -66,9 +68,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    (e.g. a deeper-dive / "intuition" expandable, an alternative explanation), and SPLIT or MERGE lessons where
    that makes a concept land better. ✅ iter 95: built the reusable `<details class="deep-dive"><summary>Deeper dive: …</summary>…</details>`
    component (native, accessible, collapsed by default, print-opens; KaTeX works inside). Seeded on Bayes (natural
-   frequencies) + the VAE reparameterization trick (pathwise derivative). NEXT: sprinkle deeper-dives on more hard
-   concepts (eigen-defectiveness, KKT/shadow-price, CLT "why", attention, policy-gradient) — one or two per content
-   iteration, with a genuinely DIFFERENT angle (not a restatement). Also consider SPLIT/MERGE where a lesson is overloaded.
+   frequencies) + the VAE reparameterization trick (pathwise derivative). ✅ iter 108: +4 — eigenvectors
+   (power-iteration/long-run), CLT "why a bell" (convolution attractor + max-entropy), attention (soft differentiable
+   dictionary), policy-gradients (train-by-trial + baseline=grading-curve). Site now has 6 deeper-dives. NEXT: keep
+   sprinkling on hard concepts (KKT/shadow-price, vanishing/exploding gradients, batch-norm, the kernel trick,
+   dropout-as-ensemble) — one or two per content iteration, with a genuinely DIFFERENT angle (not a restatement).
+   Also consider SPLIT/MERGE where a lesson is overloaded.
 4. **New learning functionality** is welcome too.
 Verification: owner chose KEEP FULL verification (screenshot every view desktop+mobile + DOM-dump errs=0) —
 but ALWAYS `pkill -f "Google Chrome.*--headless"` after each run so zombie Chrome can't accumulate (87 had

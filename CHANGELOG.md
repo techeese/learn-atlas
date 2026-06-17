@@ -2,6 +2,28 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 108 — Four new "Deeper dive" alternative explanations on hard concepts (understandability — owner directive 3)
+The owner's standing directive 3 asks for hard concepts to get an *extra* place/way to explain — a different angle, not a
+restatement. iter 95 built the collapsible `<details class="deep-dive">` component and seeded two (Bayes, the VAE
+reparameterization trick); this adds **four more**, each on a genuinely tricky idea and each taking a *different lens*
+than its lesson's main treatment:
+• **Eigenvectors** (`la-eigenvalues-eigenvectors`) — the **power-iteration / long-run** view: apply the matrix
+repeatedly and any vector swings toward the top eigenvector, which is why PageRank, PCA, and dynamical stability are all
+the same trick ("$Av=\lambda v$" ↔ "what repeated multiplication converges to").
+• **Why the CLT gives a *bell*** (`ps-sampling-distributions`) — two intuitions the formal theorem omits:
+convolution-smoothing (the Gaussian is the **fixed-point/attractor** of repeated averaging) and **maximum entropy**
+(the least-committal shape given only a mean and variance).
+• **Self-attention** (`l-self-attention`) — attention as a **soft, differentiable key–value dictionary lookup**:
+softmax replaces the non-differentiable argmax so retrieval becomes trainable by gradient descent.
+• **Policy gradients** (`rl-policy-gradient-theorem`) — **training by trial** (the score-function trick turns an
+un-differentiable environment into a sampled expectation; "treats for what worked") and the **baseline as grading on a
+curve** (subtract $V^\pi(s)$ so only better-than-average actions are reinforced — unbiased, lower variance).
+Collapsed by default, KaTeX works inside, and they print expanded (the existing component's CSS). SW cache → `atlas-v52`.
+Verified: `node gate.js` ALL GREEN (7·148·1776); a 4-lesson smoke run opens each `<details>` and confirms the math
+renders inside (LA 8 · LLM 8 · RL 5 KaTeX elements; the PS one is intentionally prose-only) with **errs=0 and
+per-lesson `.katex-error`=0** on all four; desktop + mobile screenshots confirm the collapsible renders with clean math;
+stray Chrome cleaned up. Site now carries **6 deeper-dives**.
+
 ## iter 107 — Full-text lesson search in the command palette (new functionality / understandability)
 The ⌘K palette searched concept titles, viz, pages, glossary, and references — but **not the text inside lessons**, so
 "where did I read about vanishing gradients?" was unanswerable. Now the palette also runs **full-text search across
