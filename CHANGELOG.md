@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 91 — Calculus Convex-Optimization module — 12 MCQs per lesson (content; owner "more questions" ask)
+Completed the new Convex & Constrained Optimization module: all three lessons (convexity, GD convergence, Lagrange
+multipliers) brought from 0 → 12 MCQs each via the author→adversarial-verify pipeline — **+36 fact-checked questions**,
+all three returning ok=true (the verifier re-derived the Hessian-PSD bound $|b|\le 2\sqrt6$, the Jensen→$\operatorname{Var}\ge0$
+result, and both Lagrange optima symbolically). Every calculus lesson (25) is back to exactly 12 MCQs (300 in the topic),
+and **every lesson site-wide once again has a full 12-question quiz**. Site bank **1,632 → 1,668**. Distractors target
+canonical traps (convexity needs $f''\ge0$ <em>throughout</em>; union of convex sets need not be convex; Lagrange
+conditions are necessary not sufficient; the multiplier is a shadow price). SW cache → `atlas-v35`; README 1,632→1,668.
+Verified: `node gate.js` ALL GREEN (7 topics · 139 lessons · **1,668 MCQs**); all three quizzes render "of 12" with
+errs=0 and katex-error=0; stray Chrome cleaned up.
+
 ## iter 90 — Calculus — NEW advanced module: Convex & Constrained Optimization (3 lessons) (content; "deepen the existing six") — 10-iter checkpoint
 Checkpoint review (iters 81–89): heavily content (PS Modules 4–5 + their MCQs, DL generative module + MCQs) plus two
 viz and one accessibility ship; the deepen-the-six rotation had only touched Deep Learning. This iteration continues

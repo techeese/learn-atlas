@@ -4348,7 +4348,140 @@
           "title": "Convex Sets, Convex Functions & Why They Matter",
           "minutes": 17,
           "content": "<h3>1. The hook: the property that makes optimization tractable</h3>\n<p>Training a model means minimizing a loss — finding the bottom of a landscape. For a general function that landscape can be a nightmare of false valleys, and you can never be sure the dip you found is the deepest. <strong>Convexity</strong> is the single property that tames this: for a convex problem, the bottom you find is guaranteed to be <em>the</em> bottom. It is the dividing line between optimization that is provably solvable and optimization that is, in general, hopeless.</p>\n\n<h3>2. Convex sets</h3>\n<p>A set $C$ is <strong>convex</strong> if the straight line segment between any two of its points stays entirely inside it: for all $x, y \\in C$ and $\\lambda \\in [0,1]$,\n$$\\lambda x + (1-\\lambda) y \\in C.$$\nA filled disk, a cube, a half-plane, and all of $\\mathbb{R}^n$ are convex; a crescent or a donut is not (a chord can poke outside). Convex <em>sets</em> are the natural arenas in which to pose optimization problems, because you can always move in a straight line toward a better point without leaving the feasible region.</p>\n\n<h3>3. Convex functions</h3>\n<p>A function $f$ is <strong>convex</strong> if the chord connecting any two points on its graph lies on or above the graph between them: for all $x, y$ and $\\lambda\\in[0,1]$,\n$$f\\big(\\lambda x + (1-\\lambda) y\\big) \\le \\lambda f(x) + (1-\\lambda) f(y).$$\nGeometrically the function \"holds water\" — it curves upward like a bowl. A function is <strong>concave</strong> if $-f$ is convex (it sheds water, like a dome); maximizing a concave function is the same as minimizing a convex one.</p>\n\n<h3>4. How to test for convexity</h3>\n<p>Two practical tests:</p>\n<ul>\n<li><strong>Second derivative (1-D):</strong> $f$ is convex on an interval iff $f''(x)\\ge 0$ throughout — the slope is non-decreasing. So $x^2$, $e^x$, and $-\\log x$ are convex; $x^3$ is not (its $f''=6x$ changes sign).</li>\n<li><strong>Hessian (multivariable):</strong> $f$ is convex iff its Hessian $\\nabla^2 f(x)$ is <strong>positive semidefinite</strong> everywhere (all eigenvalues $\\ge 0$) — the multidimensional version of \"curves upward in every direction.\"</li>\n</ul>\n<p>Convexity is also preserved by helpful operations: a nonnegative weighted sum of convex functions is convex, and the max of convex functions is convex — which is how complicated losses are shown convex by assembling them from convex pieces.</p>\n\n<h3>5. The payoff: every local minimum is global</h3>\n<p>Here is why all this matters. <strong>For a convex function on a convex set, every local minimum is a global minimum.</strong> There are no deceptive side-valleys to get stuck in: if you reach a point where you cannot improve locally, you are done — that point is optimal. (If the function is <em>strictly</em> convex, the minimizer is moreover unique.) This is the guarantee that turns optimization from \"hope you found the best\" into \"you provably found the best,\" and it is why convex problems can be solved reliably at massive scale.</p>\n<div class=\"callout\">\n<div class=\"c-tag\">Intuition</div>\n<p>Drop a marble anywhere into a bowl (convex) and it always rolls to the same lowest point. Drop it into an egg carton (non-convex) and where it lands depends on where you let go — that is the local-minimum trap convexity eliminates.</p>\n</div>\n\n<h3>6. Jensen's inequality</h3>\n<p>Convexity has a probabilistic face. <strong>Jensen's inequality</strong> states that for a convex $f$ and any random variable $X$,\n$$f\\big(\\mathbb{E}[X]\\big) \\le \\mathbb{E}\\big[f(X)\\big].$$\n\"The function of the average is at most the average of the function.\" It is the engine behind countless bounds in machine learning and information theory — the derivation of the VAE's ELBO, the non-negativity of KL divergence, and the AM–GM inequality are all one application of Jensen away. (For concave $f$ the inequality flips.)</p>\n\n<h3>7. Convex and non-convex losses in ML</h3>\n<p>Convexity is exactly why some models are easy to train and others are not. <strong>Linear regression</strong> (squared error) and <strong>logistic regression</strong> have convex losses, so gradient descent finds the global optimum and the solution is reproducible. A <strong>deep neural network</strong>'s loss is decidedly <em>non-convex</em> — riddled with many local minima and saddle points — which is why training is an art of initialization, learning-rate schedules, and stochasticity rather than a solved problem. Knowing which regime you are in sets your expectations entirely.</p>\n\n<h3>8. Why this matters</h3>\n<p>Convexity is the great organizing principle of optimization: it decides whether \"find the minimum\" is a guarantee or a gamble. Recognizing a convex problem means you can deploy fast, reliable solvers with global guarantees; recognizing a non-convex one tells you to lean on the heuristics that make deep learning work. The next lesson makes the guarantee concrete — showing exactly why gradient descent converges to the global optimum when the function is convex.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "Consider the set $C=\\{(x,y): x^2+y^2 = 1\\}$ (the unit circle, i.e. just the boundary curve, not the filled disk). Is $C$ convex, and why?",
+              "choices": [
+                "Yes — it is a closed, bounded, smooth curve, and all smooth bounded curves are convex.",
+                "No — the chord between two distinct points on the circle passes through the interior, which is not part of $C$.",
+                "Yes — every point is equidistant from the center, so segments between them stay on the circle.",
+                "No — but only because the circle is not a filled region; any bounded set fails convexity."
+              ],
+              "answer": 1,
+              "explain": "Convexity requires the entire segment $\\lambda x+(1-\\lambda)y$ to lie in the set. For two distinct points on a circle the connecting chord cuts through the interior, which the curve does not contain, so it fails. The filled disk is convex; the bare circle is not."
+            },
+            {
+              "q": "A classmate argues: \"$f(x)=x^3$ is convex because $f''(x)=6x$ and we can find points where $6x\\ge 0$.\" What is the precise error?",
+              "choices": [
+                "The second-derivative test does not apply to cubics; you must use the chord definition only.",
+                "$f''(x)=3x^2$, not $6x$, so the premise of the argument is wrong.",
+                "Convexity on an interval requires $f''\\ge 0$ throughout that interval; since $f''=6x<0$ for $x<0$, $f$ is not convex on $\\mathbb{R}$ (only on $x\\ge 0$).",
+                "$x^3$ is concave everywhere because odd powers shed water, so the conclusion is reversed."
+              ],
+              "answer": 2,
+              "explain": "Convexity demands $f''(x)\\ge 0$ at every point of the interval, not merely at some points. Since $6x<0$ for $x<0$, $x^3$ fails on $\\mathbb{R}$; it is convex only on $[0,\\infty)$."
+            },
+            {
+              "q": "Let $f$ and $g$ both be convex functions on $\\mathbb{R}$. Which of the following is guaranteed to be convex?",
+              "choices": [
+                "$h(x)=\\max\\{f(x),\\,g(x)\\}$",
+                "$h(x)=f(x)\\cdot g(x)$ (the product)",
+                "$h(x)=\\min\\{f(x),\\,g(x)\\}$",
+                "$h(x)=f(g(x))$ for arbitrary convex $f,g$"
+              ],
+              "answer": 0,
+              "explain": "The pointwise maximum of convex functions is always convex (the chord above each lies above the max). The pointwise min can dip below (creating a non-convex notch), products of convex functions need not be convex, and composition requires extra monotonicity conditions."
+            },
+            {
+              "q": "For the quadratic $f(x,y)=2x^2 + 3y^2 + bxy$, the Hessian is $\\nabla^2 f=\\begin{pmatrix}4 & b\\\\ b & 6\\end{pmatrix}$. For which values of $b$ is $f$ convex on $\\mathbb{R}^2$?",
+              "choices": [
+                "$b>0$ only, since off-diagonal coupling must be positive.",
+                "$|b|\\le \\sqrt{24}=2\\sqrt{6}$, so that the Hessian stays positive semidefinite.",
+                "Any real $b$, because the diagonal entries $4$ and $6$ are already positive.",
+                "$b=0$ only, since a nonzero cross term always breaks convexity."
+              ],
+              "answer": 1,
+              "explain": "A symmetric $2\\times2$ matrix is positive semidefinite iff its diagonal entries are $\\ge 0$ and its determinant $\\ge 0$. Here $\\det = 24-b^2\\ge 0$ gives $|b|\\le 2\\sqrt6$. Positive diagonals alone are not sufficient."
+            },
+            {
+              "q": "Why does convexity of a loss function matter so much for training, according to the lesson's central payoff?",
+              "choices": [
+                "Convex losses always have a closed-form solution, so gradient descent is never needed.",
+                "Convex losses are computed faster per step than non-convex ones.",
+                "For a convex function on a convex set, every local minimum is automatically a global minimum, so reaching a point you cannot locally improve means you are provably optimal.",
+                "Convexity guarantees the gradient is zero everywhere, making the landscape flat and easy to search."
+              ],
+              "answer": 2,
+              "explain": "The defining payoff is local = global: there are no deceptive side-valleys, so a local optimum is the global optimum. Convex problems still generally need iterative solvers, and the gradient is certainly not zero everywhere."
+            },
+            {
+              "q": "Jensen's inequality for a convex $f$ states $f(\\mathbb{E}[X])\\le \\mathbb{E}[f(X)]$. Using $f(x)=x^2$ (convex), what well-known fact does Jensen immediately reproduce?",
+              "choices": [
+                "$\\mathbb{E}[X^2]\\ge (\\mathbb{E}[X])^2$, i.e. the variance is non-negative.",
+                "$\\mathbb{E}[X^2]\\le (\\mathbb{E}[X])^2$, i.e. squaring reduces the mean.",
+                "$\\mathbb{E}[X]=\\mathbb{E}[X^2]$ whenever $X$ is centered.",
+                "$(\\mathbb{E}[X])^2 = \\mathbb{E}[X]\\cdot \\mathbb{E}[X^2]$, the Cauchy–Schwarz identity."
+              ],
+              "answer": 0,
+              "explain": "Plugging $f(x)=x^2$ into Jensen gives $(\\mathbb{E}[X])^2\\le \\mathbb{E}[X^2]$, equivalent to $\\operatorname{Var}(X)=\\mathbb{E}[X^2]-(\\mathbb{E}[X])^2\\ge 0$. The inequality direction is fixed by $x^2$ being convex, so the reversed option is wrong."
+            },
+            {
+              "q": "A student runs gradient descent twice from different random initializations on logistic regression and gets two noticeably different final losses. What is the most likely correct diagnosis?",
+              "choices": [
+                "This is expected; logistic regression is non-convex and has many local minima.",
+                "Something is wrong (a bug, non-convergence, or bad step size) — logistic regression's loss is convex, so both runs should reach essentially the same loss.",
+                "The data must be linearly separable, which is the only way convex losses produce different minima.",
+                "Logistic regression has no minimum, so any two losses are equally valid."
+              ],
+              "answer": 1,
+              "explain": "Logistic regression has a convex loss, so every local minimum is the global one; different starts should converge to essentially the same loss. Divergent results signal a bug or non-convergence, not multiple basins (that symptom is normal for non-convex deep nets)."
+            },
+            {
+              "q": "The intersection of two convex sets is always convex. What does this fail to guarantee about their union?",
+              "choices": [
+                "The union is also always convex, by the same segment argument.",
+                "The union is convex only if the two sets overlap.",
+                "The union can be non-convex — e.g. two disjoint disks, where a segment between them leaves the union.",
+                "The union is never convex unless one set contains the other entirely."
+              ],
+              "answer": 2,
+              "explain": "Take two separate filled disks: each is convex, but a segment joining a point in one to a point in the other passes through the empty gap, so the union is not convex. Intersection preserves convexity; union does not in general."
+            },
+            {
+              "q": "Which statement correctly distinguishes a convex function from a concave one using the chord test?",
+              "choices": [
+                "Convex: the chord lies on or above the graph; concave: the chord lies on or below the graph.",
+                "Convex: the chord lies on or below the graph; concave: the chord lies on or above the graph.",
+                "Both convex and concave functions have chords lying above the graph; the difference is only in the domain.",
+                "Convex functions have no chords because their graphs are straight lines."
+              ],
+              "answer": 0,
+              "explain": "By definition a convex function satisfies $f(\\lambda x+(1-\\lambda)y)\\le \\lambda f(x)+(1-\\lambda)f(y)$ — the chord sits on or above the curve (it \"holds water\"). Concave is the reverse ($-f$ convex), with the chord on or below."
+            },
+            {
+              "q": "Is the affine function $f(x)=3x+5$ convex, concave, both, or neither?",
+              "choices": [
+                "Neither, because its second derivative is zero and convexity requires $f''>0$.",
+                "Convex only, since lines never dip below their chords.",
+                "Both convex and concave, because the chord coincides exactly with the graph (equality holds).",
+                "Concave only, since a positive slope makes it shed water."
+              ],
+              "answer": 2,
+              "explain": "For an affine function the chord lies exactly on the graph, so $f(\\lambda x+(1-\\lambda)y)=\\lambda f(x)+(1-\\lambda)f(y)$ with equality — satisfying both the $\\le$ (convex) and $\\ge$ (concave) conditions. Convexity allows $f''=0$; strict convexity is what needs $f''>0$."
+            },
+            {
+              "q": "We want to confirm $f(x)=-\\log x$ is convex on $x>0$ from the lesson's tests. Which computation correctly establishes this?",
+              "choices": [
+                "$f'(x)=1/x$ and $f''(x)=-1/x^2<0$, so $f$ is convex.",
+                "$f'(x)=-1/x$ and $f''(x)=1/x^2>0$ for all $x>0$, so $f$ is convex.",
+                "$f'(x)=-1/x$ and $f''(x)=-1/x^2<0$, so $f$ is concave, not convex.",
+                "$f(x)=-\\log x$ is linear, so it is convex by default with $f''=0$."
+              ],
+              "answer": 1,
+              "explain": "Differentiating, $f'(x)=-1/x$ and $f''(x)=1/x^2$, which is strictly positive on $x>0$, confirming convexity. The sign-error options misplace the negative; $-\\log x$ is a standard strictly convex function (its convexity underlies log-loss)."
+            },
+            {
+              "q": "Mean squared error in linear regression, $L(w,b)=\\frac1n\\sum_i (wx_i+b-y_i)^2$, is convex in $(w,b)$. Which reasoning shows this from convexity-preserving operations?",
+              "choices": [
+                "Each $x_i$ is convex in $w$, and a product of convex functions is convex, so $L$ is convex.",
+                "Each term is a convex function ($t\\mapsto t^2$) of an affine map of $(w,b)$, hence convex; and a nonnegative sum of convex functions is convex.",
+                "$L$ is convex because the data $y_i$ are fixed constants, and constants are convex.",
+                "$L$ is the minimum of convex terms, and the min of convex functions is convex."
+              ],
+              "answer": 1,
+              "explain": "$wx_i+b-y_i$ is affine in $(w,b)$, and composing an affine map with the convex $t\\mapsto t^2$ keeps it convex; summing convex terms with nonnegative weights ($1/n$) preserves convexity. The 'min of convex' claim is false, and products/constants reasoning is irrelevant."
+            }
+          ],
           "flashcards": [
             {
               "front": "Define a convex set.",
@@ -4410,7 +4543,140 @@
           "title": "Gradient Descent on Convex Functions",
           "minutes": 16,
           "content": "<h3>1. The hook: when does gradient descent actually work?</h3>\n<p>Gradient descent is the workhorse of machine learning, but on a general function it offers no promises — it can stall at a saddle or a shallow local dip. <strong>Convexity changes the contract.</strong> On a convex function, gradient descent is not just a heuristic that often works; it is a method with a <em>proof</em> that it converges to the global minimum, at a rate you can quantify in advance. This lesson connects the convexity of the last lesson to a concrete guarantee.</p>\n\n<h3>2. The algorithm, briefly</h3>\n<p><strong>Gradient descent</strong> repeatedly steps downhill, opposite the gradient:\n$$x_{k+1} = x_k - \\eta\\,\\nabla f(x_k),$$\nwhere $\\eta>0$ is the <strong>learning rate (step size)</strong>. The gradient points in the direction of steepest <em>increase</em>, so its negative is steepest decrease; $\\eta$ controls how far you move each step.</p>\n\n<h3>3. Convexity turns \"a local min\" into \"the answer\"</h3>\n<p>On a general landscape, the most gradient descent can promise is to reach a point where $\\nabla f = 0$ — which might be a local min, a saddle, or a plateau. On a <em>convex</em> function this is enough: a stationary point of a convex function is a global minimum (from the previous lesson). So if gradient descent converges at all on a convex problem, it converges to the global optimum. Convexity removes every trap that makes the algorithm's output untrustworthy.</p>\n\n<h3>4. The learning rate and smoothness</h3>\n<p>Convergence still hinges on choosing $\\eta$ well. The relevant property is <strong>smoothness</strong>: $f$ is $L$-smooth if its gradient doesn't change too fast (the gradient is $L$-Lipschitz, equivalently the Hessian's eigenvalues are bounded above by $L$). For an $L$-smooth convex function, a constant step size $\\eta \\le 1/L$ guarantees the loss decreases every step and converges. The failure modes are familiar:</p>\n<ul>\n<li>$\\eta$ <strong>too small</strong>: stable but painfully slow — many tiny steps.</li>\n<li>$\\eta$ <strong>too large</strong> (beyond $\\sim 2/L$): the steps overshoot the valley and the loss oscillates or diverges.</li>\n</ul>\n\n<h3>5. Strong convexity gives speed</h3>\n<p>Plain convexity guarantees you <em>arrive</em>; <strong>strong convexity</strong> guarantees you arrive <em>fast</em>. A function is $\\mu$-strongly convex if it curves up at least as much as a quadratic with curvature $\\mu$ (Hessian eigenvalues bounded <em>below</em> by $\\mu>0$) — it has a definite bowl shape, no flat directions. Strong convexity gives a unique minimum and, crucially, a fast convergence rate.</p>\n\n<h3>6. Convergence rates</h3>\n<p>The rates make the distinction precise. For an $L$-smooth function with step $\\eta=1/L$:</p>\n<ul>\n<li><strong>Convex</strong>: the error shrinks like $f(x_k)-f^\\star = O(1/k)$ — a <em>sublinear</em> rate; halving the error takes twice as many steps.</li>\n<li><strong>Strongly convex</strong>: the error shrinks like $O\\big((1-\\mu/L)^k\\big)$ — a <em>linear</em> (geometric) rate; each step multiplies the error by a constant factor $<1$, so accuracy improves exponentially fast.</li>\n</ul>\n<p>The ratio $\\kappa = L/\\mu$ is the <strong>condition number</strong>: when $\\kappa$ is large (a long, narrow valley) convergence crawls and the iterates zig-zag; when $\\kappa\\approx1$ (a round bowl) it races straight to the bottom. This is exactly why <em>feature scaling</em> and <em>preconditioning</em> help — they shrink $\\kappa$.</p>\n<div class=\"callout sage\">\n<div class=\"c-tag\">Why this matters for ML</div>\n<p>It explains the whole toolkit: momentum and Adam fight ill-conditioning (large $\\kappa$); normalizing inputs rounds out the bowl; the learning rate must respect smoothness $L$ or training diverges. The convex theory is the clean model that the messier deep-learning practice imitates.</p>\n</div>\n\n<h3>7. But deep learning is non-convex — so why does GD work?</h3>\n<p>Neural-network losses are non-convex, so none of these global guarantees strictly apply. Yet gradient descent works remarkably well in practice, for reasons still being researched: in very high dimensions most critical points are <em>saddles</em> rather than bad local minima; massive <strong>over-parameterization</strong> smooths the landscape and creates wide, connected basins of good solutions; and the noise in <strong>stochastic</strong> gradient descent helps escape saddles and sharp minima. The convex picture remains the indispensable mental model — and locally, near a minimum, a smooth loss looks convex (its Hessian is PSD there).</p>\n\n<h3>8. Why this matters</h3>\n<p>Understanding convergence under convexity is what lets you reason about training instead of just turning knobs: it tells you why the learning rate has a ceiling, why a poorly scaled problem trains slowly, what momentum and adaptive methods are really fixing, and what \"convergence\" can and cannot be promised. It is the theoretical backbone beneath every optimizer you will ever use.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "On a general (non-convex) function, what is the strongest guarantee plain gradient descent can offer if it converges?",
+              "choices": [
+                "It reaches the global minimum of $f$.",
+                "It reaches a point where $\\nabla f = 0$, which may be a local min, saddle, or plateau.",
+                "It reaches a point where $f$ is strictly decreasing.",
+                "It reaches a point where the Hessian is positive definite."
+              ],
+              "answer": 1,
+              "explain": "Gradient descent only zeros the gradient; on a general landscape such a stationary point could be a saddle, plateau, or local dip. The global-minimum guarantee (choice 0) requires convexity, which the question explicitly excludes."
+            },
+            {
+              "q": "Why does convexity make gradient descent's output trustworthy, when on a general function reaching $\\nabla f = 0$ proves nothing?",
+              "choices": [
+                "Convexity forces the gradient to never vanish until the minimum.",
+                "Convexity makes every step strictly decrease the loss regardless of $\\eta$.",
+                "On a convex function every stationary point ($\\nabla f = 0$) is automatically a global minimum.",
+                "Convexity guarantees the Hessian is the identity matrix."
+              ],
+              "answer": 2,
+              "explain": "For a convex function a stationary point is a global minimum, so converging to $\\nabla f = 0$ converges to the global optimum. Choice 1 is false (descent still requires a small enough $\\eta$), and choice 0 misstates the role of convexity."
+            },
+            {
+              "q": "A loss is $L$-smooth and convex. Which constant step size is guaranteed to make the loss decrease every step and converge?",
+              "choices": [
+                "$\\eta = 1/\\mu$",
+                "Any $\\eta > 0$",
+                "$\\eta = 3/L$",
+                "$\\eta \\le 1/L$"
+              ],
+              "answer": 3,
+              "explain": "For $L$-smooth convex $f$, a constant step $\\eta \\le 1/L$ guarantees descent and convergence. Choice 2 ($3/L$) exceeds the $\\sim 2/L$ divergence threshold, and 'any $\\eta>0$' ignores the smoothness ceiling entirely."
+            },
+            {
+              "q": "For a quadratic loss with $L$-smoothness $L$, gradient descent diverges once the step size exceeds roughly which value?",
+              "choices": [
+                "$2/L$",
+                "$1/(2L)$",
+                "$L/2$",
+                "$1/L^2$"
+              ],
+              "answer": 0,
+              "explain": "Steps beyond about $2/L$ overshoot the valley and the loss oscillates with growing amplitude. The safe-descent ceiling is $1/L$; the strict divergence boundary is $\\sim 2/L$, so choice 0 is correct."
+            },
+            {
+              "q": "For $f(x)=\\tfrac12 a x^2$ with $a>0$, gradient descent gives $x_{k+1}=(1-\\eta a)x_k$. Which step size sends $x_1=0$ in a single step?",
+              "choices": [
+                "$\\eta = 2/a$",
+                "$\\eta = a$",
+                "$\\eta = 1/a$",
+                "$\\eta = 1/(2a)$"
+              ],
+              "answer": 2,
+              "explain": "The multiplier $1-\\eta a$ is zero exactly when $\\eta = 1/a$, so $x_1 = 0$ immediately. At $\\eta=2/a$ the multiplier is $-1$ and the iterates oscillate forever without converging."
+            },
+            {
+              "q": "What does strong convexity ($\\mu$-strong convexity, $\\mu>0$) add beyond plain convexity for gradient descent?",
+              "choices": [
+                "It removes the need to choose a learning rate.",
+                "It upgrades the convergence from sublinear $O(1/k)$ to a linear (geometric) rate $O((1-\\mu/L)^k)$.",
+                "It makes the function $L$-smooth automatically.",
+                "It guarantees convergence even when $\\eta > 2/L$."
+              ],
+              "answer": 1,
+              "explain": "Strong convexity gives a unique minimum and a linear/geometric error decay $O((1-\\mu/L)^k)$, far faster than the sublinear $O(1/k)$ of plain convexity. It does not relax the step-size ceiling (choice 3) nor remove the need to pick $\\eta$."
+            },
+            {
+              "q": "A loss has Hessian eigenvalues ranging from $\\mu = 2$ (flattest direction) to $L = 50$ (steepest). What is the condition number $\\kappa$?",
+              "choices": [
+                "$48$",
+                "$52$",
+                "$0.04$",
+                "$25$"
+              ],
+              "answer": 3,
+              "explain": "The condition number is $\\kappa = L/\\mu = 50/2 = 25$. Choices 0 and 1 wrongly subtract or add the eigenvalues; choice 2 inverts the ratio."
+            },
+            {
+              "q": "Minimize $f(x)=x^2-4x+5$ with gradient descent from $x_0=0$ and $\\eta=0.1$. What is $x_1$?",
+              "choices": [
+                "$0.4$",
+                "$-0.4$",
+                "$0.8$",
+                "$-4$"
+              ],
+              "answer": 0,
+              "explain": "$f'(x)=2x-4$, so $f'(0)=-4$ and $x_1 = 0 - 0.1(-4) = 0.4$. Choice 1 flips the sign of the update, and choice 3 forgets to multiply by $\\eta$."
+            },
+            {
+              "q": "Why does a large condition number $\\kappa = L/\\mu$ slow gradient descent down?",
+              "choices": [
+                "It forces the gradient to become zero too early.",
+                "A single step size cannot suit both a steep and a flat direction at once, so the iterates take tiny steps and zig-zag across a long narrow valley.",
+                "It makes the function non-convex, removing all guarantees.",
+                "It causes the learning rate to grow without bound."
+              ],
+              "answer": 1,
+              "explain": "With a stretched valley, the step must stay small ($\\eta\\le 1/L$) to remain stable in the steep direction, leaving the flat direction crawling, so GD zig-zags slowly. A large $\\kappa$ does not break convexity (choice 2); it just ill-conditions it."
+            },
+            {
+              "q": "An engineer reports that feature scaling and normalizing inputs noticeably speed up training. In the convex-convergence picture, what are these techniques doing?",
+              "choices": [
+                "Increasing $L$ so larger steps are allowed.",
+                "Shrinking the condition number $\\kappa$ by rounding out the loss bowl.",
+                "Replacing gradient descent with Newton's method.",
+                "Making the loss strongly convex when it was only convex."
+              ],
+              "answer": 1,
+              "explain": "Scaling and normalization round out the bowl, lowering $\\kappa = L/\\mu$, which makes GD race straight to the bottom instead of zig-zagging. They don't change the algorithm (choice 2) or manufacture strong convexity from nowhere (choice 3)."
+            },
+            {
+              "q": "Neural-network losses are non-convex, yet gradient descent works well in practice. Which explanation is consistent with the lesson?",
+              "choices": [
+                "Deep-net losses are secretly globally convex once trained.",
+                "Gradient descent provably finds the global minimum of any non-convex loss given a small enough $\\eta$.",
+                "Backpropagation cancels out all saddle points before training begins.",
+                "In very high dimensions most critical points are saddles (not bad minima), over-parameterization creates wide good basins, and SGD noise helps escape saddles."
+              ],
+              "answer": 3,
+              "explain": "The lesson attributes practical success to high-dimensional saddle prevalence, over-parameterized smooth landscapes, and stochastic-gradient noise — not to any global-convexity or global-minimum guarantee (choices 0 and 1 are false)."
+            },
+            {
+              "q": "A student argues: 'Since the negative gradient always points downhill, any positive learning rate must decrease the loss.' Why is this reasoning wrong for an $L$-smooth convex function?",
+              "choices": [
+                "The negative gradient only gives the local slope; a step much larger than $\\sim 1/L$ can overshoot the valley and land higher than where it started.",
+                "The negative gradient actually points uphill on convex functions.",
+                "Convex functions have no downhill direction at all.",
+                "The loss only decreases when $\\eta$ is negative."
+              ],
+              "answer": 0,
+              "explain": "The gradient is just a local linear approximation trusted over a distance set by smoothness ($\\eta\\le 1/L$); too large a step overshoots and the loss rises, even though the direction is locally downhill. The other options misstate basic facts about gradients and convexity."
+            }
+          ],
           "flashcards": [
             {
               "front": "Write the gradient descent update and name its parts.",
@@ -4472,7 +4738,140 @@
           "title": "Constrained Optimization & Lagrange Multipliers",
           "minutes": 17,
           "content": "<h3>1. The hook: optimizing with strings attached</h3>\n<p>Real problems rarely let you optimize freely. Maximize a portfolio's return <em>subject to</em> a fixed budget; minimize a model's error <em>subject to</em> a cap on its weights; find the most likely distribution <em>subject to</em> matching observed averages. These are <strong>constrained optimization</strong> problems, and the elegant tool that solves the equality-constrained case is the method of <strong>Lagrange multipliers</strong> — one of the most useful ideas in all of applied calculus.</p>\n\n<h3>2. The setup and the geometric insight</h3>\n<p>We want to optimize $f(x)$ subject to a constraint $g(x)=0$. The constraint confines us to a curve or surface; we slide along it seeking the highest (or lowest) value of $f$. The key picture: at the constrained optimum, the contour line of $f$ is <strong>tangent</strong> to the constraint curve. If they merely crossed, you could slide along the constraint to a better $f$-value — so at the best point they just touch. Tangency means their gradients point along the same line:\n$$\\nabla f(x) = \\lambda\\,\\nabla g(x),$$\nfor some scalar $\\lambda$, the <strong>Lagrange multiplier</strong>. (Gradients are perpendicular to contours, so parallel gradients = tangent contours.)</p>\n\n<h3>3. The Lagrangian</h3>\n<p>This condition is packaged neatly by the <strong>Lagrangian</strong>, which folds the constraint into a single function:\n$$\\mathcal{L}(x, \\lambda) = f(x) - \\lambda\\,g(x).$$\nSetting its gradient (with respect to both $x$ and $\\lambda$) to zero recovers everything at once: $\\nabla_x \\mathcal{L}=0$ gives $\\nabla f = \\lambda\\nabla g$ (the tangency condition), and $\\partial \\mathcal{L}/\\partial\\lambda = 0$ gives back the constraint $g(x)=0$. A constrained problem in $x$ becomes an <em>unconstrained</em> stationary-point problem in $(x,\\lambda)$.</p>\n\n<h3>4. The recipe</h3>\n<p>To optimize $f$ subject to $g(x)=0$:</p>\n<ul>\n<li>Form $\\mathcal{L}(x,\\lambda) = f(x) - \\lambda g(x)$.</li>\n<li>Solve the system $\\nabla_x \\mathcal{L} = 0$ and $g(x)=0$ for $x$ and $\\lambda$.</li>\n<li>Compare $f$ at the resulting candidate points to identify the max/min.</li>\n</ul>\n<p>The multiplier $\\lambda$ is not just bookkeeping — it carries meaning, as the next section shows.</p>\n\n<h3>5. What the multiplier means: the shadow price</h3>\n<p>The value of $\\lambda$ at the optimum is the <strong>sensitivity</strong> of the optimal objective to loosening the constraint. If the constraint is $g(x)=c$, then\n$$\\frac{d f^\\star}{dc} = \\lambda.$$\nIn economics $\\lambda$ is the <strong>shadow price</strong> — how much more optimal value you would gain per unit of extra budget. A large $\\lambda$ means the constraint is \"expensive\" (binding hard); $\\lambda=0$ means it isn't really limiting you. This interpretation is why multipliers appear throughout economics, physics, and ML.</p>\n\n<h3>6. Inequality constraints: a glimpse of KKT</h3>\n<p>Many problems involve <em>inequality</em> constraints, $g(x)\\le 0$. The generalization is the <strong>Karush–Kuhn–Tucker (KKT)</strong> conditions, which add two ideas: the multiplier must be nonnegative ($\\lambda\\ge0$), and <strong>complementary slackness</strong> holds — $\\lambda\\,g(x)=0$, meaning either the constraint is <em>active</em> ($g(x)=0$, like an equality) or its multiplier is zero ($\\lambda=0$, the constraint is slack and ignorable). KKT is the foundation of constrained convex optimization and the engine behind support vector machines.</p>\n<div class=\"callout\">\n<div class=\"c-tag\">Intuition</div>\n<p>A hiker maximizing altitude while staying on a fixed trail stops where the trail runs tangent to a contour of the hillside — pushing further along the trail would only take her downhill. The multiplier measures how much higher she could get if the trail were nudged outward a little.</p>\n</div>\n\n<h3>7. Worked example</h3>\n<p>Maximize $f(x,y)=xy$ subject to $x+y=10$. Lagrangian: $\\mathcal{L}=xy-\\lambda(x+y-10)$. Stationarity: $\\partial_x\\mathcal{L}=y-\\lambda=0$ and $\\partial_y\\mathcal{L}=x-\\lambda=0$, so $x=y=\\lambda$. The constraint $x+y=10$ then gives $2\\lambda=10$, $\\lambda=5$, so $x=y=5$ and $f=25$. The multiplier $\\lambda=5$ predicts that raising the budget to $x+y=11$ would raise the optimum by about $5$ — and indeed the new optimum is $5.5\\times5.5=30.25$, an increase of $5.25\\approx\\lambda$. (This also proves AM–GM for two numbers: the product is largest when they're equal.)</p>\n\n<h3>8. Why this matters for machine learning</h3>\n<p>Constrained optimization and multipliers are everywhere in ML. <strong>Support vector machines</strong> are a constrained quadratic program solved through its KKT conditions, where the multipliers identify the support vectors. <strong>Regularization</strong> has a constrained reading: ridge/LASSO are equivalent to minimizing loss subject to a budget on the weights ($\\lVert w\\rVert\\le t$), with the penalty strength playing the role of a multiplier. And the <strong>maximum-entropy</strong> derivation of the softmax, and constrained policy updates in RL, are Lagrangian arguments. Mastering this turns \"minimize subject to\" from a roadblock into a routine.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "Maximize $f(x,y)=xy$ subject to $g(x,y)=x+y-10=0$. Solving the Lagrange conditions, what is the optimal $(x,y)$ and the maximum value?",
+              "choices": [
+                "$(5,5)$, max $=25$",
+                "$(10,0)$, max $=0$",
+                "$(2,8)$, max $=16$",
+                "$(0,10)$, max $=0$"
+              ],
+              "answer": 0,
+              "explain": "$\\nabla f=(y,x)$ and $\\nabla g=(1,1)$, so $y=\\lambda$ and $x=\\lambda$, giving $x=y$; the constraint then forces $x=y=5$ and $f=25$. The corner choices have zero product and are not interior tangency solutions."
+            },
+            {
+              "q": "When solving $\\nabla f=\\lambda\\nabla g$ together with $g(\\mathbf{x})=0$ in $\\mathbb{R}^n$ with one constraint, how many scalar equations and unknowns are there?",
+              "choices": [
+                "$n$ equations in $n$ unknowns ($\\mathbf{x}$ only)",
+                "$n+1$ equations in $n+1$ unknowns (the $n$ components of $\\mathbf{x}$ plus $\\lambda$)",
+                "$2n$ equations in $n$ unknowns",
+                "$n-1$ equations in $n$ unknowns"
+              ],
+              "answer": 1,
+              "explain": "The vector equation $\\nabla f=\\lambda\\nabla g$ supplies $n$ scalar equations, and the constraint $g=0$ adds one more, for $n+1$ equations; the unknowns are the $n$ coordinates plus the multiplier $\\lambda$, also $n+1$. Forgetting to count $\\lambda$ as an unknown (and the constraint as an equation) is the common slip."
+            },
+            {
+              "q": "The Lagrange multiplier $\\lambda$ at the optimum of 'maximize $f$ subject to $g(\\mathbf{x})=c$' has a famous interpretation. What does it measure?",
+              "choices": [
+                "The slope of the constraint curve at the optimum",
+                "The rate of change of the optimal value $f^*$ with respect to the constraint level $c$, i.e. $\\lambda=\\frac{df^*}{dc}$",
+                "The distance from the optimum to the unconstrained maximum",
+                "The curvature of $f$ along the constraint"
+              ],
+              "answer": 1,
+              "explain": "By the envelope theorem, $\\lambda$ equals the marginal change in the optimal objective value per unit relaxation of the constraint, $df^*/dc$ — its 'shadow price.' It is not a slope or distance; it tells you how much loosening the budget would buy you."
+            },
+            {
+              "q": "A student forms $\\mathcal{L}(x,y,\\lambda)=f(x,y)-\\lambda\\,g(x,y)$ and wants the stationarity conditions. Differentiating $\\mathcal{L}$ with respect to $\\lambda$ and setting it to zero recovers which equation?",
+              "choices": [
+                "$\\nabla f=\\mathbf{0}$",
+                "$\\lambda=0$",
+                "The original constraint $g(x,y)=0$",
+                "$\\nabla f=\\lambda\\nabla g$"
+              ],
+              "answer": 2,
+              "explain": "Since $\\mathcal{L}=f-\\lambda g$, we have $\\partial\\mathcal{L}/\\partial\\lambda=-g$, so setting it to zero gives back $g(x,y)=0$. The $x$- and $y$-derivatives produce $\\nabla f=\\lambda\\nabla g$; the $\\lambda$-derivative is precisely what re-imposes the constraint."
+            },
+            {
+              "q": "Why does the method of Lagrange multipliers require the constraint qualification $\\nabla g(\\mathbf{x}^*)\\neq\\mathbf{0}$ at the candidate point?",
+              "choices": [
+                "Because if $\\nabla g=\\mathbf{0}$ the equation $\\nabla f=\\lambda\\nabla g$ cannot capture the tangency, so a genuine optimum may exist with no valid $\\lambda$",
+                "Because $\\lambda$ would otherwise be negative",
+                "Because the Lagrangian would no longer be differentiable",
+                "Because $f$ must also have zero gradient there"
+              ],
+              "answer": 0,
+              "explain": "If $\\nabla g=\\mathbf{0}$, the right-hand side of $\\nabla f=\\lambda\\nabla g$ is the zero vector for every $\\lambda$, so the condition cannot represent the gradient of $f$ unless $\\nabla f$ is also zero — the method can silently miss the true optimum. Such points must be checked separately."
+            },
+            {
+              "q": "For a problem with TWO equality constraints, $g_1(\\mathbf{x})=0$ and $g_2(\\mathbf{x})=0$, what is the correct stationarity condition at a constrained optimum (assuming the constraint gradients are independent)?",
+              "choices": [
+                "$\\nabla f=\\lambda_1\\nabla g_1=\\lambda_2\\nabla g_2$ with $\\lambda_1=\\lambda_2$",
+                "$\\nabla f=\\lambda_1\\nabla g_1+\\lambda_2\\nabla g_2$ for some scalars $\\lambda_1,\\lambda_2$",
+                "$\\nabla f=\\lambda(\\nabla g_1+\\nabla g_2)$ for a single $\\lambda$",
+                "$\\nabla f\\cdot\\nabla g_1=\\nabla f\\cdot\\nabla g_2=0$"
+              ],
+              "answer": 1,
+              "explain": "With several constraints, $\\nabla f$ must lie in the span of the constraint gradients, so it is a linear combination $\\sum_i\\lambda_i\\nabla g_i$ — one multiplier per constraint. Using a single shared $\\lambda$ or forcing the multipliers equal wrongly collapses the feasible-direction analysis."
+            },
+            {
+              "q": "Minimize $f(x,y)=x^2+y^2$ subject to $x+2y=5$. What is the minimum value of $f$?",
+              "choices": [
+                "$5$",
+                "$25$",
+                "$1$",
+                "$0$"
+              ],
+              "answer": 0,
+              "explain": "$\\nabla f=(2x,2y)=\\lambda(1,2)$ gives $x=\\lambda/2,\\ y=\\lambda$, so $y=2x$; substituting into $x+2y=5$ yields $5x=5$, $x=1,y=2$, and $f=1+4=5$. The value $25$ comes from mistakenly squaring the constraint constant."
+            },
+            {
+              "q": "A student insists that any solution of $\\nabla f=\\lambda\\nabla g$ together with $g=0$ must be the constrained MAXIMUM. Why is this wrong?",
+              "choices": [
+                "The equations are only necessary first-order conditions, so they also flag minima and other stationary points; you must compare values or use a second-order test to identify the maximum",
+                "Because the equations actually only find minima, never maxima",
+                "Because $\\lambda$ must be positive for a maximum",
+                "Because the method ignores the constraint"
+              ],
+              "answer": 0,
+              "explain": "Lagrange conditions are first-order necessary conditions satisfied by constrained maxima, minima, and saddle-type stationary points alike. You must evaluate $f$ at all candidates (or apply a bordered-Hessian/second-order test) to know which is the maximum."
+            },
+            {
+              "q": "Geometrically, the condition $\\nabla f=\\lambda\\nabla g$ says the contour of $f$ is tangent to the constraint curve. What goes wrong at a point where the contour of $f$ instead CROSSES the constraint transversally?",
+              "choices": [
+                "The gradient of $g$ vanishes there",
+                "$f$ is undefined along the constraint",
+                "Moving a little along the constraint in one direction increases $f$, so the point cannot be a constrained extremum",
+                "The multiplier $\\lambda$ becomes infinite"
+              ],
+              "answer": 2,
+              "explain": "If the contour crosses the constraint, the constraint passes through to both higher and lower contour values, so you can slide along it to improve $f$ — proving the point is not optimal. Tangency is exactly the condition that removes any such improving direction."
+            },
+            {
+              "q": "In regularized regression, minimizing training loss subject to $\\|\\mathbf{w}\\|_2^2\\le t$ is, by Lagrangian duality, equivalent to which unconstrained problem?",
+              "choices": [
+                "Minimize $\\text{loss}(\\mathbf{w})\\cdot\\lambda\\|\\mathbf{w}\\|_2^2$",
+                "Minimize $\\text{loss}(\\mathbf{w})+\\lambda\\|\\mathbf{w}\\|_2^2$ for some $\\lambda\\ge 0$ (ridge regression)",
+                "Maximize $\\text{loss}(\\mathbf{w})-\\lambda\\|\\mathbf{w}\\|_2^2$",
+                "Minimize $\\|\\mathbf{w}\\|_2^2$ with no loss term"
+              ],
+              "answer": 1,
+              "explain": "Folding the squared-norm budget into the objective with a multiplier gives the penalized form $\\text{loss}+\\lambda\\|\\mathbf{w}\\|_2^2$, which is ridge regression; tightening the budget $t$ corresponds to a larger $\\lambda$. The penalty is additive, not multiplicative, and you minimize (not maximize) it."
+            },
+            {
+              "q": "Why can the sign convention of the multiplier (writing $\\nabla f=\\lambda\\nabla g$ versus $\\nabla f=-\\lambda\\nabla g$, or $\\mathcal{L}=f-\\lambda g$ versus $f+\\lambda g$) be chosen freely for an EQUALITY constraint?",
+              "choices": [
+                "Because $\\lambda$ is always zero for equality constraints",
+                "Because the choice only flips the sign of the recovered $\\lambda$; the located point $\\mathbf{x}^*$ is identical either way",
+                "Because the constraint is automatically satisfied regardless",
+                "Because equality constraints have no gradient"
+              ],
+              "answer": 1,
+              "explain": "Replacing $\\lambda$ by $-\\lambda$ just relabels the multiplier, so the system has the same solution set for $\\mathbf{x}$ — only the sign/value reported for $\\lambda$ changes. (For inequality constraints the sign matters via KKT, but for a pure equality it is a free convention.)"
+            },
+            {
+              "q": "Suppose at a Lagrange candidate you find $\\lambda=3$ for 'maximize profit $f$ subject to spending exactly $g=c$ dollars.' What is the best practical reading?",
+              "choices": [
+                "Each extra dollar of budget would raise the optimal profit by about $3$ units",
+                "The optimal profit equals $3c$",
+                "You should spend $3$ times the current budget",
+                "The constraint is irrelevant since $\\lambda\\neq 0$"
+              ],
+              "answer": 0,
+              "explain": "As the shadow price, $\\lambda\\approx df^*/dc$, so $\\lambda=3$ means relaxing the budget by one dollar increases optimal profit by roughly $3$ units — the marginal value of the resource. It does not mean profit equals $3c$ nor that you should scale spending."
+            }
+          ],
           "flashcards": [
             {
               "front": "What is the geometric condition at an equality-constrained optimum?",
