@@ -3280,6 +3280,50 @@
               ],
               "answer": 2,
               "explain": "Temperature only rescales logits ($p_i \\propto p_i^{1/\\tau}$); it never changes the ranking and never removes a token from contention — the most likely token stays most likely — so it cannot reach a token that already had zero support, nor invent new ones. Top-$k$ and top-$p$ are the methods that actually truncate, only ever removing tail tokens from the candidate set."
+            },
+            {
+              "q": "Dividing the logits by a temperature $\\tau$ before the softmax is equivalent to which operation on the original probabilities $p_i$?",
+              "choices": [
+                "Multiplying each probability by $\\tau$ and renormalizing.",
+                "Adding $\\tau$ to each probability and renormalizing.",
+                "Raising each probability to the power $1/\\tau$ and renormalizing: $p_i(\\tau)\\propto p_i^{1/\\tau}$.",
+                "Subtracting the mean probability $\\tau$ times and renormalizing."
+              ],
+              "answer": 2,
+              "explain": "Since $p_i\\propto e^{z_i}$, scaling the logits by $1/\\tau$ gives $e^{z_i/\\tau}=(e^{z_i})^{1/\\tau}\\propto p_i^{1/\\tau}$. So temperature sampling is exactly $p_i(\\tau)\\propto p_i^{1/\\tau}$ renormalized — $\\tau<1$ sharpens (exponent $>1$), $\\tau>1$ flattens (exponent $<1$)."
+            },
+            {
+              "q": "Why is temperature almost always combined with a truncation method like top-k or top-p?",
+              "choices": [
+                "Because temperature alone is too slow to compute at inference time.",
+                "Because temperature changes the ranking of tokens, which truncation must then undo.",
+                "Because temperature can only be applied after sampling, whereas truncation happens before.",
+                "Because temperature only reshapes the distribution — it never removes any token from contention or changes the ranking — so the unreliable long tail still has nonzero mass until a truncation method actually cuts it off."
+              ],
+              "answer": 3,
+              "explain": "Temperature rescales logits but leaves every token in play and preserves their order (the argmax stays the argmax). The deep tail still carries mass that pure sampling can hit. Top-k / top-p actually delete the tail, so the two are paired: temperature controls the *shape*, truncation removes the *garbage*."
+            },
+            {
+              "q": "The lesson warns that pure (untruncated) sampling has a specific danger. What is it?",
+              "choices": [
+                "It is deterministic, so it always produces the same output and lacks diversity.",
+                "The long tail: across tens of thousands of vocabulary tokens, the many tiny-probability tokens collectively carry meaningful mass, so occasionally one bizarre, off-topic token is sampled and can derail the whole generation.",
+                "It can only ever select the single most probable token, causing repetition loops.",
+                "It requires sorting the entire vocabulary at every step, which is computationally infeasible."
+              ],
+              "answer": 1,
+              "explain": "With a 50k-token vocabulary, the bottom tens of thousands of tokens might each have probability ~$10^{-6}$ but sum to nontrivial mass. Pure sampling will occasionally draw one such token, and a single off-topic token can throw the rest of the sequence off the rails — which is exactly why truncation (top-k / top-p) exists."
+            },
+            {
+              "q": "In \"self-consistency\" decoding for reasoning tasks, why is sampling *many* answers at a higher temperature an asset rather than a liability?",
+              "choices": [
+                "You deliberately generate diverse independent reasoning chains and take a majority vote — because independent errors tend to cancel, the most-agreed answer is more reliable than any single greedy chain.",
+                "Higher temperature guarantees each chain is correct, so any one of them can be used.",
+                "Sampling many answers lets you pick the longest one, which is always the most accurate.",
+                "It removes the need for chain-of-thought, since voting replaces reasoning entirely."
+              ],
+              "answer": 0,
+              "explain": "Self-consistency samples several diverse chains-of-thought (higher temperature for diversity) and returns the majority answer. Independent mistakes scatter across different wrong answers while correct reasoning converges, so the vote concentrates on the right answer — diversity becomes the mechanism, not a bug."
             }
           ],
           "flashcards": [
@@ -3475,6 +3519,50 @@
               ],
               "answer": 2,
               "explain": "In-context learning means the model infers the task from demonstrations placed in the context window, with no weight updates, which is exactly the few-shot labeled-examples case. Training another epoch and editing weights both change parameters, and the zero-shot instruction-only case is instruction following with no in-context demonstrations to learn from."
+            },
+            {
+              "q": "\"Zero-shot chain-of-thought\" often unlocks step-by-step reasoning with no worked examples at all. How is it triggered, and why does it work?",
+              "choices": [
+                "Appending a phrase like \"Let's think step by step\" — such phrasing was associated with detailed, multi-step explanations in the training data, so it conditions the model toward generating reasoning before the answer.",
+                "Fine-tuning the model on reasoning data at inference time, which adds the skill on the fly.",
+                "Lowering the temperature to 0 so the model is forced to reason deterministically.",
+                "Providing five worked examples whose answers show the full reasoning trace."
+              ],
+              "answer": 0,
+              "explain": "Zero-shot CoT just appends a trigger like \"Let's think step by step.\" No examples, no weight changes — the phrase is statistically tied to elaborated explanations in pretraining text, so it steers the conditional distribution toward emitting intermediate steps first. (Showing worked examples is *few-shot* CoT, a different trigger.)"
+            },
+            {
+              "q": "A model produces a chain-of-thought, then a final answer. What is the important caveat about that written reasoning?",
+              "choices": [
+                "It is a cryptographically verified proof that the answer is correct.",
+                "It always exactly mirrors the matrix operations the model performed internally.",
+                "It is a plausible explanation the model generated — it can be a post-hoc rationalization that does not faithfully reflect the actual internal process that produced the answer.",
+                "It is stored in the model's weights and can be replayed deterministically across sessions."
+              ],
+              "answer": 2,
+              "explain": "A CoT trace is itself generated text — useful as a scaffold that improves accuracy, but not a guaranteed record of *why* the model answered as it did. It can be a post-hoc rationalization. Treat it as a helpful working aid, not a certified explanation of the model's internal computation."
+            },
+            {
+              "q": "The lesson offers \"Bayesian task inference\" as a mental model for in-context learning. What does it say?",
+              "choices": [
+                "The model runs a literal Bayesian update on its weights after each example, permanently storing the task.",
+                "Each example adds one neuron to the network dedicated to the new task.",
+                "The model ranks tasks alphabetically and picks the first one that matches the prompt.",
+                "Pretraining exposed the model to a mixture of latent tasks; the prompt conditions a posterior $p(T\\mid P)$ over which task is meant, and adding more consistent examples sharpens that posterior toward the intended task."
+              ],
+              "answer": 3,
+              "explain": "The model behaves as if marginalizing over latent tasks: $p(\\text{answer}\\mid P)=\\sum_T p(\\text{answer}\\mid T,P)\\,p(T\\mid P)$. Consistent few-shot examples raise the posterior weight on the intended task $T$, which is why more (and cleanly-formatted) examples help. It models the behavior — no weights change."
+            },
+            {
+              "q": "When is chain-of-thought prompting NOT worth using, according to the lesson?",
+              "choices": [
+                "On any task, because chain-of-thought always reduces accuracy.",
+                "On trivial tasks — it wastes tokens (more latency and cost) and can even hurt by over-thinking — and with very small models, which may produce fluent but wrong chains.",
+                "Whenever the temperature is above 0.5, because chain-of-thought requires greedy decoding.",
+                "On tasks with more than five reasoning steps, since the context window cannot hold them."
+              ],
+              "answer": 1,
+              "explain": "CoT trades extra output tokens (latency/cost) for serial reasoning depth — a bad deal on simple tasks, where it can even hurt via over-thinking. Its gains also tend to emerge with scale; small models may emit confident-sounding but incorrect chains. Reserve it for genuinely multi-step problems on capable models."
             }
           ],
           "flashcards": [
@@ -3670,6 +3758,50 @@
               ],
               "answer": 1,
               "explain": "The rejection-sampling verification keeps the output exactly distributed as the target regardless of draft quality, so it is always lossless. A poor draft simply yields few accepted tokens, so you approach one target token per target pass (plus draft overhead) and gain little or nothing in speed."
+            },
+            {
+              "q": "Weight-only int4 quantization (dequantizing to FP16 for the math) and weight-and-activation int8 (W8A8) target different bottlenecks. How?",
+              "choices": [
+                "Weight-only speeds up training; W8A8 speeds up inference. Neither affects memory.",
+                "They are identical; \"W8A8\" is just another name for weight-only int4.",
+                "Weight-only quantization increases memory traffic, while W8A8 reduces it.",
+                "Weight-only attacks decode's *memory-bandwidth* bottleneck (fewer bytes to read per weight); W8A8 also quantizes activations so the *arithmetic* runs in int8, additionally speeding up the compute-bound prefill phase."
+              ],
+              "answer": 3,
+              "explain": "Decode is memory-bound, so weight-only int4 (math still in FP16 after on-the-fly dequant) directly cuts the dominant cost — bytes moved per weight. Prefill is compute-bound, so quantizing activations too (W8A8) lets the matmuls run in int8 and speeds that phase. Weight-only is the common latency choice; W8A8 helps throughput/prefill."
+            },
+            {
+              "q": "In affine weight quantization $q=\\text{round}(w/s)+z$, $\\hat w = s(q-z)$, why do schemes like LLM.int8() and AWQ treat a few weights/activations specially instead of quantizing everything uniformly?",
+              "choices": [
+                "Because the scale $s$ must be identical for every weight in the entire model.",
+                "A few large-magnitude \"outlier\" values carry disproportionate information; quantizing them naively destroys accuracy, so successful schemes keep those salient weights/channels in higher precision (or scale to preserve them).",
+                "Because the zero-point $z$ can only represent positive integers, so negative weights must be stored separately.",
+                "Because rounding is exact for small weights but mathematically undefined for large ones."
+              ],
+              "answer": 1,
+              "explain": "Quantization error is roughly uniform per group, but not all values matter equally — a handful of outlier activations/weights dominate the output. Uniformly quantizing them injects large error where it hurts most, so methods like LLM.int8() / AWQ protect those salient channels (higher precision or scaling), keeping int4/int8 nearly lossless on perplexity."
+            },
+            {
+              "q": "The lesson stresses that *two* distinct costs grow as the context gets longer. What are they?",
+              "choices": [
+                "The KV cache (memory that grows *linearly* with context length) and attention compute (which grows *quadratically*, $O(n^2)$, with sequence length).",
+                "The number of model weights and the number of layers, both growing linearly with context.",
+                "The vocabulary size and the embedding dimension, both growing with context.",
+                "The learning rate and the batch size, which must both rise with context."
+              ],
+              "answer": 0,
+              "explain": "Long context is taxed two ways: the KV cache holds a key+value per token per layer per head, so its memory grows *linearly* with length (and batch); and attention's $QK^\\top$ is $O(n^2)$, so its compute/traffic grows *quadratically*. Weights and layer count are fixed; only these two scale with context."
+            },
+            {
+              "q": "Speculative decoding only pays off *because* decode is memory-bandwidth-bound. Why?",
+              "choices": [
+                "Because the draft model is more accurate than the target model, so its proposed tokens are always accepted.",
+                "Because verifying the drafted tokens requires no reading of the target model's weights at all.",
+                "The target model's single parallel pass over the $k$ drafted tokens costs about the same wall-clock time as generating one token (the weight read dominates; the extra arithmetic over $k$ positions is nearly free) — so you spend otherwise-idle FLOPs to verify several tokens per weight read.",
+                "Because the draft model permanently replaces the target model after a warmup phase, eliminating large-model reads."
+              ],
+              "answer": 2,
+              "explain": "One decode step is dominated by reading the big model's weights once; the FLOPs are mostly idle. Running the target over $k$ drafted tokens in parallel reads those weights once too, so it costs ~one step of wall-clock time but verifies up to $k$ tokens. You trade wasted FLOPs for fewer sequential weight reads — pure roofline arbitrage."
             }
           ],
           "flashcards": [

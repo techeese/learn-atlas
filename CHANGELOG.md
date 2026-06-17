@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 196 — MCQ arc → LLM Inference module 12→16 (content — owner's #1 ask)
+Resumed the 12→16 MCQ-growth arc: the LLM **Inference** module, all 3 lessons **12 → 16 MCQs** (+12; bank
+**2,264 → 2,276**). New foundational questions, adversarially fact-checked (**ALL 12 PASS**), answer positions
+balanced 0/1/2/3 with distinct per-lesson patterns ([2,3,1,0] / [0,2,3,1] / [3,1,0,2]):
+- **Decoding & sampling**: temperature as $p_i(\tau)\propto p_i^{1/\tau}$; temperature *reshapes but never truncates*
+  (so it's paired with top-k/top-p); pure sampling's *long-tail* danger; **self-consistency** (sample many chains +
+  majority vote, errors cancel).
+- **Prompting, ICL & CoT**: **zero-shot CoT** ("Let's think step by step"); the CoT-faithfulness caveat (a trace is a
+  plausible / post-hoc explanation, not a record of the internal process); ICL as **Bayesian task inference**
+  (sharpening $p(T\mid P)$); and when CoT is *not* worth it (trivial tasks, small models).
+- **Inference efficiency**: weight-only int4 vs **W8A8** (memory-bandwidth vs compute bottleneck); affine quantization
+  + **outlier protection** (LLM.int8()/AWQ); the *two* costs that grow with context (KV cache = linear memory,
+  attention = quadratic compute); and why **speculative decoding** pays off *because* decode is memory-bound.
+
+LLM topic now **5/6 modules at 16** (Foundations ✓, Transformer ✓, Training ✓, Alignment ✓, Inference ✓) — only the
+**Applications** module remains. Arc: Algorithms ✓ · LA ✓ · Calculus ✓ · DL ✓ · RL ✓ · **LLM 5/6** · Prob & Stats remaining.
+Verified: node syntax ALL JS OK; `gate.js` ALL GREEN (7 topics · 148 lessons · **2,276 MCQs** · 41 widgets); answer
+indices confirmed + 0/1/2/3-balanced per lesson; byte-stable injection (no-op round-trip guard); decoding &
+inference-efficiency quizzes render "Question 1 of 16" rawDollars=0 kErr=0; all-routes smoke (13 routes) errs=0;
+decode quiz screenshot clean with math typeset. SW cache `atlas-v138` → `atlas-v139`.
+
 ## iter 195 — "Keep it fresh" becomes actionable: one-click refresh drill (new functionality — retention)
 Non-content rebalance that **closes the loop** the iter-191 fading-mastery surface opened. That iteration *showed*
 which mastered concepts were fading (decayed into the [0.55, 0.8) band) but left the learner to navigate to each
