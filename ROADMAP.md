@@ -177,6 +177,14 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 216: **Recent-test performance trend on the Progress page** (new functionality/UI · retention — deliberate non-viz
+   diversification per the iter-215 owner note). The `tests` array stored scores but only the count was shown; added a
+   "Recent tests" section (avg + best + last 10 as color-coded score bars). Pure additive (existing data + `.mastery-bar`
+   + tokens; no new state/CSS). Verified: gate GREEN; seeded render avg 80%/best 100% color-coded (err=0); empty-tests case
+   omits the section cleanly; smoke errs=0/kErr=0 (10 routes); mobile 390px legible. SW →v159.
+   NOTE/backlog (a11y): the interactive canvas viz (la-vector-add, la-eigen, calc-derivative, la-projection, graph-traversal
+   node-click, ps-covariance-scatter…) are mouse/touch-only — no keyboard path. A dedicated a11y arc should add keyboard
+   operability (focusable canvas + arrow/Enter handlers, or slider/button alternatives). Too broad for one iter; queued.
    ✅ iter 215: **New viz `la-projection`** (visualizations — owner-loved; topic diversity: LA not visualized in many iters;
    214 wasn't viz). The 46th widget, in `la-projection-least-squares` (no viz). Drag target b → its projection p (closest
    point on span(a)) + perpendicular residual e with right-angle marker; live aᵀe≈0 (normal equation) + |e|. The geometry

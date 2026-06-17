@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 216 — Recent-test performance trend on the Progress page (new functionality / UI · retention)
+The app **stored every custom test's score** (last 25) but only ever showed the *count* ("Tests taken: N") — the
+learner could never see their exam **performance or trajectory**, one of the strongest "see your progress → come back"
+motivators. Added a **"Recent tests"** section to the Progress page (between Activity and Concept mastery): a running
+**Average** and **Best**, then the last 10 tests as rows — scope label + a color-coded score bar (sage ≥90% / gold ≥70%
+/ rust below) + `correct/total · %`. Deliberately non-viz this iteration (a clean Stats/UX panel, not a Lab widget) to
+diversify after a viz-heavy stretch, per the iter-215 owner note.
+Pure additive: reuses the existing `tests` array + `.mastery-bar` styles + theme tokens — **no new state, no CSS, no
+data change**. Gracefully absent when no tests have been taken.
+Verified: `gate.js` ALL GREEN; with seeded history the section renders with the correct summary (**Average 80%, Best
+100%** for scores [90,70,100,78,60]) and color-coded bars (err=0); the **empty-tests** case is handled (section omitted,
+`#/stats` renders clean in the all-routes smoke); all-routes smoke (10 routes) **errs=0/kErr=0**; mobile 390px the
+section stays legible (Average 77%/Best 100% for the 3-test seed). SW cache `atlas-v158` → `atlas-v159`.
+
 ## iter 215 — Orthogonal-projection visualizer: least-squares geometry (visualizations)
 New widget **`la-projection`** (the **46th**), embedded in `la-projection-least-squares` after "The Geometry of
 Orthogonal Projection". Chose a topic not visualized in many iters (Linear Algebra) and the concept that underpins

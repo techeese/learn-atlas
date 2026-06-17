@@ -2053,6 +2053,27 @@
       tile("Day streak", R.streak, "var(--rust)")
     ].join("");
 
+    // recent test performance — the tests array stores scores; surface them as a trend (improvement = motivation)
+    const tests = R.tests || [];
+    const tpcts = tests.map(t => t.total ? Math.round(t.correct / t.total * 100) : 0);
+    const avgPct = tpcts.length ? Math.round(tpcts.reduce((a, b) => a + b, 0) / tpcts.length) : 0;
+    const bestPct = tpcts.length ? Math.max.apply(null, tpcts) : 0;
+    const testHist = tests.length ? `
+      <div class="page-head reveal" style="margin:24px 0 14px"><h2 style="font-size:24px">Recent tests</h2></div>
+      <div class="reveal" style="max-width:700px">
+        <div style="display:flex;gap:18px;margin-bottom:14px;color:var(--ink-mute);font-size:14px">
+          <span>Average <b style="color:var(--ink)">${avgPct}%</b></span>
+          <span>Best <b style="color:var(--sage)">${bestPct}%</b></span>
+          <span>${tests.length}${tests.length === 25 ? " (last 25)" : ""} recorded</span>
+        </div>
+        ${tests.slice(0, 10).map(t => { const pct = t.total ? Math.round(t.correct / t.total * 100) : 0; const col = pct >= 90 ? "var(--sage)" : pct >= 70 ? "var(--gold)" : "var(--rust)";
+          return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:9px">
+            <div style="flex:1;min-width:0"><div style="font-size:13px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.label || "Test")}</div>
+              <div class="mastery-bar" style="margin-top:5px"><div class="mastery-fill" style="width:${pct}%;background:${col}"></div></div></div>
+            <div style="font-family:var(--font-mono);font-size:13px;color:${col};min-width:84px;text-align:right">${t.correct}/${t.total} · ${pct}%</div>
+          </div>`; }).join("")}
+      </div>` : "";
+
     app.innerHTML = `
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Progress</div>
@@ -2066,6 +2087,7 @@
 
       <div class="page-head reveal" style="margin:24px 0 14px"><h2 style="font-size:24px">Activity</h2></div>
       <div class="act-grid reveal">${actGrid}</div>
+      ${testHist}
 
       <div class="page-head reveal" style="margin:24px 0 14px"><h2 style="font-size:24px">Concept mastery</h2></div>
       <div class="dist-strip reveal">${distRow}</div>
