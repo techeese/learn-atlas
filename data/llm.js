@@ -2557,6 +2557,50 @@
               ],
               "answer": 2,
               "explain": "Instruction tuning generalizes precisely because it teaches the behavior of responding to instructions, activating capabilities already present from pretraining, rather than memorizing a per-task mapping. The other options misstate SFT as a lookup table, as wholesale knowledge replacement, or as requiring one model per task."
+            },
+            {
+              "q": "The lesson describes SFT as \"behavioral cloning of expert demonstrations, expressed as conditional language modeling.\" What does that mean?",
+              "choices": [
+                "SFT uses reinforcement learning to clone a reward model's behavior over many rollouts.",
+                "SFT clones the base model's weights into a new model and then freezes them.",
+                "SFT trains the model to imitate the user's questions, learning to generate good prompts.",
+                "SFT trains the model, via ordinary cross-entropy, to reproduce expert (instruction, response) demonstrations — imitating the demonstrated response conditioned on the prompt."
+              ],
+              "answer": 3,
+              "explain": "SFT is supervised imitation: each example is an expert demonstration of the desired response to a prompt, and the model is trained (cross-entropy on the response tokens) to reproduce it. That is behavioral cloning — copying demonstrated behavior — cast as conditional next-token prediction $p_\\theta(\\text{response}\\mid\\text{prompt})$. No RL, no reward model."
+            },
+            {
+              "q": "Why must the chat template used at inference match the one used during SFT?",
+              "choices": [
+                "Because the template determines the model's parameter count, which must stay fixed.",
+                "Because the model learned the structural meaning of the role/turn special tokens (the user / assistant / system markers) during SFT; feeding a different format at inference puts it off-distribution and behavior degrades sharply.",
+                "Because the template is stored inside the model weights, and changing it corrupts them.",
+                "Because inference templates are required by the tokenizer to compute perplexity."
+              ],
+              "answer": 1,
+              "explain": "SFT teaches the model what the reserved role/turn tokens mean and where the assistant turn begins. At inference the model expects that same structure; a mismatched template is an input distribution it never trained on, so it stops reliably following the role boundaries and quality drops."
+            },
+            {
+              "q": "One behavior an instruct model has that a base model lacks is reliably stopping. How does SFT instill this?",
+              "choices": [
+                "The chat-formatted demonstrations end the assistant turn with an end-of-turn token, so the model learns to emit that token and halt; a base completer just keeps generating plausible continuations.",
+                "SFT adds a hard-coded maximum length that truncates every response.",
+                "The reward model penalizes long outputs during SFT, teaching brevity.",
+                "Stopping is impossible to learn; instruct models rely on the decoder cutting off at a fixed token count."
+              ],
+              "answer": 0,
+              "explain": "Every SFT demonstration terminates the assistant turn with an end-of-turn token, so the model learns that producing it is the right way to finish a response; at inference, generation stops when that token is emitted. A base model never reliably learned to stop — it just continues the most plausible text."
+            },
+            {
+              "q": "Your instruct model gives confidently wrong answers about a niche topic. The lesson says adding more SFT examples of that fact is usually the wrong fix. Why?",
+              "choices": [
+                "Because SFT examples must be at least 1,000 tokens long to teach a fact, and niche facts rarely are.",
+                "Because SFT overwrites the prompt tokens, erasing the question that contained the fact.",
+                "Because SFT primarily teaches behavior (format, tone, when to answer or stop), not facts efficiently — factual knowledge is installed upstream in (continued) pretraining, so a knowledge gap lives there, not in the SFT data.",
+                "Because adding SFT examples always causes catastrophic forgetting of every other fact."
+              ],
+              "answer": 2,
+              "explain": "SFT reshapes behavior, not the knowledge store. Facts are learned during pretraining (or continued pretraining); SFT just teaches the model to surface what it knows in a helpful format. If the knowledge isn't there, more behavioral demonstrations won't install it efficiently — the gap is upstream."
             }
           ],
           "flashcards": [
@@ -2752,6 +2796,50 @@
               ],
               "answer": 1,
               "explain": "PPO is on-policy (it generates fresh samples and gets new reward judgments, enabling exploration and reward-model generalization), whereas DPO is off-policy and trains only on the fixed pairs, so it can overfit stale responses and has no mechanism to suppress out-of-dataset junk. Note DPO targets the same KL-constrained BT objective and uses no separate reward model, ruling out the other options."
+            },
+            {
+              "q": "How is the reward model $r_\\phi(x,y)$ in RLHF typically built and trained?",
+              "choices": [
+                "A brand-new, randomly-initialized network trained from scratch to output a probability distribution over tokens.",
+                "A copy of the base model trained with reinforcement learning to maximize human ratings.",
+                "Usually the SFT model with its token-prediction head replaced by a single scalar output head (read at the end-of-sequence position), fit by maximum likelihood under the Bradley–Terry model — i.e. logistic regression on the reward gap between preferred and rejected responses.",
+                "A frozen copy of the reference model whose token logits are summed to produce a reward."
+              ],
+              "answer": 2,
+              "explain": "The reward model reuses the SFT network but swaps the vocabulary head for a scalar head read at the EOS position. It is trained by minimizing the Bradley–Terry negative log-likelihood $-\\log\\sigma(r_\\phi(x,y_w)-r_\\phi(x,y_l))$ — binary logistic regression on the gap between winner and loser."
+            },
+            {
+              "q": "The full PPO-RLHF setup is famously heavy, keeping four models in play at once. What are they?",
+              "choices": [
+                "The policy being trained, a value/critic network, the frozen reward model, and the frozen reference (SFT) model.",
+                "Four copies of the policy at different learning rates, averaged together.",
+                "The tokenizer, the embedding matrix, the policy, and the reward model.",
+                "The base model, the SFT model, the instruct model, and the DPO model."
+              ],
+              "answer": 0,
+              "explain": "PPO-RLHF runs the policy (updated), a learned value/critic (for advantage estimates), the frozen reward model (the objective), and the frozen reference model (for the KL penalty) — four networks resident at once. That memory and complexity burden is a major reason DPO, which needs only the policy plus a frozen reference, became popular."
+            },
+            {
+              "q": "Why does RLHF need a reinforcement-learning method (PPO) rather than simply backpropagating the reward into the policy?",
+              "choices": [
+                "Because the reward model has more parameters than the policy, so gradients would overflow.",
+                "Because human labelers must approve each gradient step in real time.",
+                "Because the KL penalty is non-convex, which ordinary backpropagation cannot handle.",
+                "Because the reward depends on a sampled, discrete sequence of tokens — it is non-differentiable with respect to the policy parameters — so you must use a policy-gradient estimator instead of direct backprop."
+              ],
+              "answer": 3,
+              "explain": "The reward $r_\\phi(x,y)$ is evaluated on a response $y$ obtained by sampling discrete tokens from the policy; there is no differentiable path from the parameters through the sampling to the reward. Policy-gradient methods like PPO estimate the gradient from sampled rollouts, which is why an RL loop is needed."
+            },
+            {
+              "q": "DPO is said to make \"the language model its own reward model.\" What is the implicit reward it optimizes?",
+              "choices": [
+                "The cross-entropy loss of the policy on the preferred response.",
+                "$\\hat r_\\theta(x,y) = \\beta\\log\\frac{\\pi_\\theta(y\\mid x)}{\\pi_{\\text{ref}}(y\\mid x)}$ — the $\\beta$-scaled log-ratio of the policy to the frozen reference.",
+                "The raw sequence probability $\\pi_\\theta(y\\mid x)$ assigned by the policy.",
+                "The KL divergence between the policy and the reference, evaluated on the winner."
+              ],
+              "answer": 1,
+              "explain": "Rearranging the KL-constrained optimum lets the reward be written as $r(x,y)=\\beta\\log\\frac{\\pi(y|x)}{\\pi_{\\text{ref}}(y|x)}+\\beta\\log Z(x)$. DPO drops the prompt-only $Z(x)$ term (it cancels in preference differences) and trains the policy so this implicit reward $\\beta\\log\\frac{\\pi_\\theta}{\\pi_{\\text{ref}}}$ orders winners above losers — the LM scores itself."
             }
           ],
           "flashcards": [
@@ -2947,6 +3035,50 @@
               ],
               "answer": 1,
               "explain": "Because W_0 is frozen and receives no gradient, its quantization error is a fixed, constant perturbation; the high-precision adapters A,B are optimized on top of that fixed base and learn to work around it, so quality loss is negligible. NF4 is still lossy (just well-matched to a normal distribution), the base is dequantized on the fly per block but not permanently overwritten, and alpha/r scales the delta BA, not the base's rounding error."
+            },
+            {
+              "q": "LoRA parameterizes the fine-tuning update as $\\Delta W = BA$ with a small rank $r$. What is the empirical justification for assuming $\\Delta W$ has low rank?",
+              "choices": [
+                "Because any matrix can be written exactly as a single rank-one product, so $r = 1$ always suffices.",
+                "Because adapting a strong pretrained model to a downstream task nudges its behavior along only a small number of directions — the model already \"knows\" most of what it needs, so the update has low intrinsic rank.",
+                "Because the GPU can only store low-rank matrices in 4-bit precision.",
+                "Because the base weights $W_0$ are themselves low-rank, so their update must be too."
+              ],
+              "answer": 1,
+              "explain": "Hu et al. (2021) observed that the change needed to adapt a large pretrained model to a task has low intrinsic rank: pretraining already did the heavy lifting, and adaptation steers behavior along a few directions. So $\\Delta W$ is well-approximated by a thin product $BA$ with $r\\ll\\min(d,k)$."
+            },
+            {
+              "q": "The lesson says optimizer-state memory — not the weights — is what makes full fine-tuning blow up, citing roughly 16 bytes per parameter. Where does that figure come from?",
+              "choices": [
+                "16 bytes is the size of one fp128 weight; modern GPUs store every weight at quad precision.",
+                "It counts 16 separate copies of the model held for redundancy during distributed training.",
+                "It is the size of the activation cache stored per parameter for the backward pass.",
+                "Mixed-precision Adam stores, per parameter, an fp16 weight + fp16 gradient + an fp32 master weight + fp32 first moment (momentum) + fp32 second moment (variance) $\\approx 2+2+4+4+4 = 16$ bytes — so a 7B model needs ~112 GB before activations."
+              ],
+              "answer": 3,
+              "explain": "Full fine-tuning with mixed-precision Adam keeps five things per parameter: fp16 weight (2B), fp16 gradient (2B), fp32 master weight (4B), fp32 momentum (4B), fp32 variance (4B) $\\approx$ 16 bytes. For 7B parameters that is ~112 GB — beyond a single 80 GB GPU. LoRA slashes this because optimizer state scales only with the few *trainable* parameters."
+            },
+            {
+              "q": "In QLoRA, what is \"4-bit NormalFloat (NF4)\"?",
+              "choices": [
+                "A 4-bit integer format that rounds every weight to the nearest multiple of 4.",
+                "A format that stores only the 4 largest weights in each matrix and discards the rest.",
+                "A 4-bit data type whose quantization levels are placed to be information-theoretically optimal for weights that follow a (zero-mean) normal distribution — which neural-network weights approximately do.",
+                "A 4-bit floating-point format used for the LoRA adapters $A$ and $B$ to save memory."
+              ],
+              "answer": 2,
+              "explain": "NF4 quantizes the *frozen* base weights to 4 bits using levels tuned for normally-distributed values (a good model of neural-net weights), roughly a 4× memory cut on the base (~14 GB → under 4 GB for 7B). The adapters $A,B$ stay in higher precision; NF4 is applied to the read-only base, not the trainable parts."
+            },
+            {
+              "q": "In a transformer, which weights is LoRA most commonly applied to, and roughly what fraction of parameters end up trainable?",
+              "choices": [
+                "The attention projection matrices (e.g. $W_q$, $W_v$, sometimes $W_k$, $W_o$), and the trainable parameters are typically well under 1% of the total.",
+                "Every weight in the network equally, which is why trainable parameters stay near 50%.",
+                "Only the embedding and unembedding matrices, about 20% of parameters.",
+                "The LayerNorm gains and biases, which make up roughly 5% of parameters."
+              ],
+              "answer": 0,
+              "explain": "LoRA is typically injected into the attention projections ($W_q$, $W_v$, and sometimes $W_k$, $W_o$), occasionally the MLP layers. Because each adapter is tiny ($r(d+k)$ parameters) and the huge base is frozen, the trainable share is usually well under 1% of the model."
             }
           ],
           "flashcards": [

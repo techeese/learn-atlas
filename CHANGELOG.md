@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 194 — MCQ arc → LLM Alignment module 12→16 (content — owner's #1 ask)
+Resumed the 12→16 MCQ-growth arc: the LLM **Alignment** module, all 3 lessons **12 → 16 MCQs** (+12; bank
+**2,252 → 2,264**). New foundational questions, adversarially fact-checked (**ALL 12 PASS**), answer positions
+balanced 0/1/2/3 with distinct per-lesson patterns ([3,1,0,2] / [2,0,3,1] / [1,3,2,0]):
+- **Fine-tuning & instruction tuning (SFT)**: SFT as *behavioral cloning* of demonstrations (cross-entropy on the
+  response, conditioned on the prompt); why the chat template must match at train/inference; how SFT teaches the model
+  to *stop* (end-of-turn token); and that SFT shapes behavior, not facts (knowledge lives upstream in pretraining).
+- **RLHF, reward models & DPO**: the reward model = SFT net + scalar head at EOS, trained by Bradley–Terry/logistic
+  NLL; the **four models** PPO-RLHF holds in memory (policy, critic, frozen RM, frozen reference); why RL (not plain
+  backprop) — the reward is non-differentiable over sampled tokens; DPO's **implicit reward** $\beta\log(\pi_\theta/\pi_{\text{ref}})$.
+- **PEFT / LoRA**: the low-intrinsic-rank justification for $\Delta W=BA$; full-FT's ~16 bytes/param Adam accounting
+  (→ ~112 GB for 7B); QLoRA's **NF4** (4-bit levels optimal for normal-distributed weights, on the *frozen* base); and
+  which matrices LoRA adapts (attention projections, well under 1% trainable).
+
+LLM topic now **4/6 modules at 16** (Foundations ✓, Transformer ✓, Training ✓, Alignment ✓). Arc: Algorithms ✓ · LA ✓
+· Calculus ✓ · DL ✓ · RL ✓ · **LLM 4/6** · Probability & Statistics remaining.
+Verified: node syntax ALL JS OK; `gate.js` ALL GREEN (7 topics · 148 lessons · **2,264 MCQs** · 41 widgets); answer
+indices confirmed + 0/1/2/3-balanced per lesson; byte-stable injection (no-op round-trip guard); RLHF & LoRA quizzes
+render "Question 1 of 16" rawDollars=0 kErr=0; all-routes smoke (13 routes) errs=0; LoRA quiz screenshot clean with
+math typeset. SW cache `atlas-v136` → `atlas-v137`.
+
 ## iter 193 — Lab gallery: searchable + explored-progress tracking (UI/UX — non-content)
 Non-content rebalance. The Visualization Lab had grown to **41 widgets in a flat, scroll-only grid** with no way to
 search and — despite the `vizSeen` state and the *Full Spectrum* achievement (open every viz) already existing — no
