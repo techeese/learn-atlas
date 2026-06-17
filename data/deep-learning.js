@@ -3280,6 +3280,50 @@
               ],
               "answer": 0,
               "explain": "An RNN's state $h_t$ summarizes inputs up to and including step $t$, so $h_1$ reflects essentially only the first token; the classifier loses the rest of the review. Choice 1 misstates the directionality—$h_t$ summarizes the past, not the entire (future-inclusive) sequence."
+            },
+            {
+              "q": "In an RNN with recurrence $h_t = f(h_{t-1}, x_t)$, what does the hidden state $h_t$ represent?",
+              "choices": [
+                "A learned, compressed summary of everything seen up to step $t$ — the only channel through which the past reaches the future",
+                "The network's output prediction at step $t$",
+                "The raw input token presented at step $t$",
+                "The fixed parameters that define the recurrent cell"
+              ],
+              "answer": 0,
+              "explain": "$h_t$ is the network's running memory: at each step it reads the new token $x_t$, updates its notes given $h_{t-1}$, and passes them forward. Anything not encoded in $h_t$ cannot influence later steps — \"if it didn't make it into $h_t$, it is gone.\""
+            },
+            {
+              "q": "What does \"backpropagation through time\" (BPTT) refer to?",
+              "choices": [
+                "Training the RNN backwards, feeding tokens from last to first during the forward pass",
+                "A separate optimizer used only for recurrent layers",
+                "Running ordinary backprop on the RNN's unrolled graph, where gradients from every time step accumulate into the same shared weights",
+                "Discarding all gradients older than one step to save memory"
+              ],
+              "answer": 2,
+              "explain": "BPTT is just standard backprop applied to the RNN once it is unrolled into a feedforward graph of depth $T$. Because the same weights are reused at every step, gradient contributions from all time steps sum into those shared parameters: $\\partial\\mathcal{L}/\\partial W_{hh}=\\sum_t \\partial\\mathcal{L}_t/\\partial W_{hh}$."
+            },
+            {
+              "q": "In an LSTM, what is the role of the forget gate $f_t$, which multiplies the previous cell state in $c_t = f_t\\odot c_{t-1} + i_t\\odot\\tilde{c}_t$?",
+              "choices": [
+                "It selects the network's final output prediction",
+                "It controls how much of the previous cell state is kept versus erased — near 1 preserves long-term memory, near 0 discards it",
+                "It sets the learning rate used at that time step",
+                "It injects random noise into the cell state for regularization"
+              ],
+              "answer": 1,
+              "explain": "The forget gate is a per-coordinate value in $(0,1)$ that scales the old cell state. Near 1 it carries memory forward almost untouched (which is exactly why $\\partial c_t/\\partial c_{t-1}=\\operatorname{diag}(f_t)$ resists vanishing); near 0 it clears that coordinate to make room for new information."
+            },
+            {
+              "q": "An RNN used to predict the sentiment of a whole review (one label per sequence) is which configuration?",
+              "choices": [
+                "Sequence-to-sequence (aligned) — one output emitted per input token",
+                "Encoder-decoder — two RNNs communicating through a context vector",
+                "Feedforward — there is no recurrence involved",
+                "Sequence-to-one — read the whole sequence and predict from the final hidden state $h_T$"
+              ],
+              "answer": 3,
+              "explain": "Sequence-to-one reads the entire input and produces a single prediction from the last hidden state $h_T$, which summarizes the whole sequence. (Per-token labels would be seq-to-seq; translation would be encoder-decoder.)"
             }
           ],
           "flashcards": [
@@ -3475,6 +3519,50 @@
               ],
               "answer": 1,
               "explain": "Orthonormality is precisely the problem: it forces all distinct tokens to be equally dissimilar, so the representation carries zero similarity information. An embedding maps tokens into a lower-dimensional space that learns meaningful relationships, adding structure the one-hot encoding lacks."
+            },
+            {
+              "q": "What is a learned word embedding?",
+              "choices": [
+                "A one-hot vector with a single 1 marking the token's vocabulary index",
+                "The integer ID assigned to the token in the vocabulary",
+                "The softmax probability the model assigns to the token",
+                "A dense, low-dimensional, real-valued vector — learned by the model — that represents a token, with similar tokens ending up near each other"
+              ],
+              "answer": 3,
+              "explain": "An embedding maps each token to a dense vector in $\\mathbb{R}^d$ ($d\\ll|V|$) whose entries are trained by backprop. Unlike one-hot codes, embeddings place related tokens close together, so the model can generalize across similar words."
+            },
+            {
+              "q": "A one-hot encoding of a token drawn from a vocabulary of size $|V|$ is...",
+              "choices": [
+                "A $|V|$-dimensional vector that is 1 at the token's index and 0 everywhere else",
+                "A dense $d$-dimensional learned vector",
+                "The token's frequency count in the corpus",
+                "A vector of $|V|$ random values"
+              ],
+              "answer": 0,
+              "explain": "One-hot puts a single 1 at the token's coordinate and 0 elsewhere. It is injective but wasteful and similarity-free: any two distinct one-hot vectors are orthogonal and exactly $\\sqrt 2$ apart, so \"cat\" is as far from \"dog\" as from \"democracy.\""
+            },
+            {
+              "q": "What is tokenization in an NLP pipeline?",
+              "choices": [
+                "Converting embedding vectors back into readable text",
+                "Normalizing embedding vectors to unit length",
+                "Splitting raw text into the discrete units (tokens — words, subwords, or characters) that each receive an embedding",
+                "Assigning a probability to each word in the vocabulary"
+              ],
+              "answer": 2,
+              "explain": "Tokenization decides what actually gets an embedding: it chops raw text into tokens (whole words, subword pieces like BPE, or characters). Each resulting token is then mapped to a row of the embedding table before any sequence model runs."
+            },
+            {
+              "q": "An embedding table $E$ for a vocabulary of $|V|$ tokens with embedding dimension $d$ — what is its shape, and how is a token embedded?",
+              "choices": [
+                "$E$ is $d\\times d$; the embedding is $E$ times the token's frequency",
+                "$E$ is $|V|\\times d$; the embedding of token $i$ is simply row $i$ of $E$ (a fast table lookup)",
+                "$E$ is $|V|\\times|V|$; the embedding is a column of $E$",
+                "$E$ is $1\\times d$, a single row shared by every token"
+              ],
+              "answer": 1,
+              "explain": "The table has one learnable row per token, so $E\\in\\mathbb{R}^{|V|\\times d}$. Embedding token $i$ means selecting row $i$ — equivalent to $e_i^\\top E$ with a one-hot $e_i$, but implemented as a direct gather/lookup."
             }
           ],
           "flashcards": [
@@ -3670,6 +3758,50 @@
               ],
               "answer": 1,
               "explain": "Keys and values always travel together (both projected from $X_k$), while the query comes from $X_q$; self-attention has $X_q=X_k=X$ and cross-attention has them differ. The three projection matrices $W^Q,W^K,W^V$ are independent learned weights even when the source sequences coincide, so they need not be equal or identical."
+            },
+            {
+              "q": "In attention, what do the query, key, and value vectors represent?",
+              "choices": [
+                "Query, key, and value are three identical copies of the same input vector",
+                "The query is what the current position is looking for; each key advertises what a position offers; the value is the content retrieved if that position is attended to",
+                "The query is the output, the key is the loss, and the value is the gradient",
+                "They are the forget, input, and output gates of an LSTM cell"
+              ],
+              "answer": 1,
+              "explain": "Attention is a soft dictionary. The query says what you want; each key advertises how a position can be found; the value is the payload delivered. Keys and values are deliberately decoupled so a token can be matched one way yet contribute different content."
+            },
+            {
+              "q": "Scaled dot-product attention produces its output by which sequence of operations?",
+              "choices": [
+                "Average all the values, then multiply the result by the query",
+                "Take only the single highest-scoring value (a hard lookup)",
+                "Concatenate all the values and pass them through a linear layer",
+                "Score each key against the query (dot product), softmax the scores into weights, then return the weighted average of the values"
+              ],
+              "answer": 3,
+              "explain": "Three steps: (1) $s_i = q\\cdot k_i$ scores each key; (2) $\\alpha=\\operatorname{softmax}(s/\\sqrt d)$ turns scores into weights; (3) output $=\\sum_i \\alpha_i v_i$, a weighted blend of values — mostly the best match, with smaller contributions from the rest."
+            },
+            {
+              "q": "After the softmax step in attention, what do the attention weights $\\alpha$ represent?",
+              "choices": [
+                "A probability distribution over the positions — non-negative and summing to 1 — giving how much each position is attended to",
+                "The raw dot-product scores, before any normalization",
+                "The learnable parameters of the attention layer",
+                "The gradient of the loss with respect to each value"
+              ],
+              "answer": 0,
+              "explain": "Softmax maps the raw scores to $\\alpha_i\\ge 0$ with $\\sum_i\\alpha_i=1$ — a distribution over positions. A peaked $\\alpha$ acts like a hard lookup (attend to one position); a flat $\\alpha$ averages everything."
+            },
+            {
+              "q": "What characterizes self-attention, as opposed to cross-attention?",
+              "choices": [
+                "The queries come from one sequence while the keys and values come from a different sequence",
+                "It uses no softmax — only a hard maximum over the scores",
+                "The queries, keys, and values are all derived from the same input sequence — every position attends within that one sequence",
+                "It has no learnable parameters"
+              ],
+              "answer": 2,
+              "explain": "In self-attention $Q$, $K$, and $V$ are all projections of the same input $X$, so each position attends to the others in its own sequence. Cross-attention draws queries from one sequence and keys/values from another (e.g. decoder attending to encoder outputs)."
             }
           ],
           "flashcards": [

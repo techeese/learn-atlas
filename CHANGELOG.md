@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 169 — MCQ arc → Deep Learning · Sequences & Attention 12 → 16 (content — owner's #1 ask)
+The arc continues through DL's fifth module, *Sequence Models and the Attention Revolution*. All **three** lessons go
+12 → 16 (**+12, bank 2,096 → 2,108**), stating the bedrock the existing 12 assumed:
+- **RNNs/LSTMs/GRUs**: what the hidden state $h_t$ *is* (the running, compressed memory of the past) / what *BPTT*
+  means (backprop on the unrolled graph, gradients summing into shared weights) / the LSTM *forget gate*'s role
+  (keep vs. erase the cell state) / the seq-to-one configuration (predict from $h_T$).
+- **Embeddings & Tokenization**: what a learned *embedding* is (a dense learned vector; similar tokens near each
+  other) / what *one-hot* is / what *tokenization* is (splitting text into the units that get embedded) / the
+  embedding-table shape ($|V|\times d$, embed = row lookup).
+- **The Attention Mechanism**: what *query/key/value* represent (the soft-dictionary roles) / the three steps
+  (score → softmax → weighted average of values) / what the attention weights $\alpha$ are (a distribution over
+  positions summing to 1) / what defines *self-attention* (Q,K,V all from the same sequence).
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,108 MCQs**; direct key-dump confirms
+  answer indices map to the intended choices, **balanced 3/3/3/3** with three *distinct* per-lesson patterns
+  (0,2,1,3 / 3,0,2,1 / 1,3,0,2 — no marching); an independent adversarial fact-check agent returned **ALL PASS** (it
+  confirmed the self-attention Q's cross-attention distractor is a contrast case, not a second valid answer);
+  render-checks on the Attention and Embeddings quizzes → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`;
+  all-routes smoke (12) `errs=0`. SW cache **v111 → v112**; README 2,096 → 2,108.
+  ★ **Deep Learning is now 5/7 modules at 16** (foundations, training-mechanics, generalization, convolutional,
+  sequences-attention).
+
 ## iter 168 — 3 new achievements that reward the best learning behaviors (gamification — owner-loved; +integrates iter-164 Quick Check)
 Gamification had gone quiet since iter 154 (14 iters), and the iter-164 **Quick Check** shipped *disconnected* from the
 motivation loop. This closes that loop and rewards the site's two highest-leverage behaviors — in-flow retrieval and
