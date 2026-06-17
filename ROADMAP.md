@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 204: MCQ arc → **PS·Joint 12→16** (all 3 lessons — joint distributions/marginals/independence, covariance/
+   correlation, conditional expectation/tower; +12, bank →2,336). Adversarial ALL 12 PASS (arithmetic re-checked);
+   positions balanced 0/1/2/3; byte-stable inject; gate GREEN (render-hazard lints clear); Cov+CondExp quizzes render
+   "of 16" rawDollars=0 kErr=0; all-routes errs=0; SW →v147. **PS now 3/5 modules.** REMAINING: PS Inference/Estimation,
+   Hypothesis-Testing.
    ✅ iter 203: **New viz `ps-binomial-poisson`** (visualizations — non-content; pairs with iter-202). The 42nd widget:
    Binomial PMF bar chart (n,p sliders), mean-np line, live mean/var/σ, + a Poisson(np) overlay showing the law of
    rare events. Filled the gap — the discrete-distribution lessons had no viz. Embedded in ps-bernoulli-binomial.

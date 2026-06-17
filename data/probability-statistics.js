@@ -2316,6 +2316,50 @@
               ],
               "answer": 1,
               "explain": "Marginalizing means eliminating the unwanted variable: integrating out $y$ sums the density over all $y$-slices and returns a function of $x$ alone, the continuous analogue of summing a row. Integrating over $x$ would instead remove $X$ and give $f_Y(y)$."
+            },
+            {
+              "answer": 3,
+              "q": "For continuous random variables with joint density $f_{X,Y}(x,y)$, how is $P\\big((X,Y)\\in A\\big)$ obtained, and what must the total be?",
+              "choices": [
+                "Sum $f_{X,Y}$ over the points in $A$; the total over all points must equal 1.",
+                "Read $f_{X,Y}$ at the center of $A$; the density there must equal 1.",
+                "Differentiate $f_{X,Y}$ over $A$; the total derivative must equal 1.",
+                "Integrate the density over $A$ — a *volume* under the surface, $\\iint_A f_{X,Y}\\,dx\\,dy$ — and the total volume over the whole plane must equal 1."
+              ],
+              "explain": "In the continuous case the joint density is a surface, and probability is the volume beneath it over the region: $P((X,Y)\\in A)=\\iint_A f_{X,Y}\\,dx\\,dy$, with $\\iint_{\\mathbb{R}^2} f_{X,Y}\\,dx\\,dy=1$. (Summing is the discrete analogue; the density itself is not a probability.)"
+            },
+            {
+              "answer": 1,
+              "q": "What does it take for two random variables to be independent via the factorization $p_{X,Y}(x,y)=p_X(x)\\,p_Y(y)$?",
+              "choices": [
+                "The factorization need hold at just one representative pair $(x,y)$.",
+                "The factorization must hold at *every* pair $(x,y)$ — a single cell where $p_{X,Y}(x,y)\\ne p_X(x)p_Y(y)$ breaks independence entirely.",
+                "The factorization must hold on average (summed over all pairs), even if individual cells differ.",
+                "Only the marginals must match; the individual joint values are irrelevant."
+              ],
+              "explain": "Independence is an all-points condition: the joint must equal the product of marginals for *every* $(x,y)$. Find even one pair where it fails and the variables are dependent — exactly what the worked example showed when $p(0,0)=0.40\\ne p_X(0)p_Y(0)=0.30$."
+            },
+            {
+              "answer": 2,
+              "q": "A joint PMF has $p(0,0)=0.4,\\ p(0,1)=0.2,\\ p(1,0)=0.1,\\ p(1,1)=0.3$. What is $P(X=1\\mid Y=1)$?",
+              "choices": [
+                "$0.3$, the joint probability $p(1,1)$ itself.",
+                "$0.5$, since $Y=1$ has probability $0.5$.",
+                "$0.6$, from $\\frac{p(1,1)}{p_Y(1)} = \\frac{0.3}{0.2+0.3} = \\frac{0.3}{0.5}$.",
+                "$0.75$, from $\\frac{p(1,1)}{p_X(1)} = \\frac{0.3}{0.4}$."
+              ],
+              "explain": "Condition on $Y=1$: slice to that column and renormalize by its total. $p_Y(1)=p(0,1)+p(1,1)=0.2+0.3=0.5$, so $P(X=1\\mid Y=1)=\\frac{p(1,1)}{p_Y(1)}=\\frac{0.3}{0.5}=0.6$. (Dividing by $p_X(1)=0.4$ would instead give $P(Y=1\\mid X=1)$.)"
+            },
+            {
+              "answer": 0,
+              "q": "The lesson says the \"joint → marginal → conditional\" pipeline underlies probabilistic ML. How does *inference* (predicting a label $y$ from input $x$) fit in?",
+              "choices": [
+                "It computes a conditional $p(y\\mid x)$ — slicing the joint at the observed $x$ and renormalizing — which is exactly the conditional-distribution operation.",
+                "It computes a marginal $p(y)$, ignoring $x$ entirely.",
+                "It sums the joint to 1, which directly yields the prediction.",
+                "It requires the marginals only; the joint is never used."
+              ],
+              "explain": "Predicting $y$ from $x$ means evaluating $p(y\\mid x)=\\frac{p(x,y)}{p(x)}$ — fix the observed $x$ (slice), renormalize over $y$. Generative models learn the joint $p(x,y)$; inference reads a conditional off it. That slice-and-renormalize move is the same one used throughout the lesson."
             }
           ],
           "flashcards": [
@@ -2511,6 +2555,50 @@
               ],
               "answer": 2,
               "explain": "The portfolio variance $\\tfrac{\\sigma^2}{2}(1+\\rho)$ is smallest when $\\rho=-1$, giving variance $0$ — the assets perfectly cancel. This is the mathematical heart of diversification: the most negative covariance damps the spread of the sum the most."
+            },
+            {
+              "answer": 2,
+              "q": "Two variables have $\\operatorname{Cov}(X,Y)=4$, $\\operatorname{Var}(X)=4$, and $\\operatorname{Var}(Y)=25$. What is the correlation $\\rho_{X,Y}$?",
+              "choices": [
+                "$4$, the covariance itself.",
+                "$0.16 = \\frac{4}{25}$.",
+                "$0.4$, from $\\rho = \\frac{\\operatorname{Cov}(X,Y)}{\\sigma_X\\,\\sigma_Y} = \\frac{4}{\\sqrt{4}\\,\\sqrt{25}} = \\frac{4}{2\\cdot 5}$.",
+                "$1.0$, since the covariance is positive."
+              ],
+              "explain": "Correlation is covariance divided by both standard deviations: $\\sigma_X=\\sqrt{4}=2$, $\\sigma_Y=\\sqrt{25}=5$, so $\\rho=\\frac{4}{2\\cdot 5}=0.4$. This normalization strips the units and forces $\\rho\\in[-1,1]$, making it comparable across problems."
+            },
+            {
+              "answer": 0,
+              "q": "If $X$ and $Y$ are independent, what is $\\operatorname{Cov}(X,Y)$, and why?",
+              "choices": [
+                "Exactly $0$, because independence gives $\\mathbb{E}[XY]=\\mathbb{E}[X]\\mathbb{E}[Y]$, so $\\operatorname{Cov}(X,Y)=\\mathbb{E}[XY]-\\mathbb{E}[X]\\mathbb{E}[Y]=0$.",
+                "Exactly $1$, the maximum, since independence is the strongest relationship.",
+                "Undefined, because independent variables have no joint distribution.",
+                "Always positive, since independent variables drift the same way."
+              ],
+              "explain": "Independence implies $\\mathbb{E}[XY]=\\mathbb{E}[X]\\mathbb{E}[Y]$, and the computational formula $\\operatorname{Cov}(X,Y)=\\mathbb{E}[XY]-\\mathbb{E}[X]\\mathbb{E}[Y]$ then gives $0$. So independent variables are always uncorrelated — though, crucially, the converse does not hold."
+            },
+            {
+              "answer": 3,
+              "q": "Let $X$ be uniform on $\\{-1,0,1\\}$ and $Y=X^2$. Then $Y$ is completely determined by $X$, yet $\\operatorname{Cov}(X,Y)=0$. What does this show?",
+              "choices": [
+                "That $X$ and $Y$ are independent after all.",
+                "That the covariance was computed incorrectly — a deterministic relationship must have $\\operatorname{Cov}\\ne 0$.",
+                "That correlation can exceed 1 for nonlinear relationships.",
+                "That zero covariance/correlation means no *linear* association only — a strong nonlinear (even deterministic) dependence can still give $\\operatorname{Cov}=0$, so uncorrelated does NOT imply independent."
+              ],
+              "explain": "Here $\\mathbb{E}[X]=0$ and $\\mathbb{E}[XY]=\\mathbb{E}[X^3]=0$, so $\\operatorname{Cov}(X,Y)=0$ despite $Y=X^2$ being a perfect (nonlinear) function of $X$. Covariance/correlation detect only *linear* co-movement; a U-shaped dependence is invisible to them. Uncorrelated $\\ne$ independent."
+            },
+            {
+              "answer": 1,
+              "q": "You rescale and shift both variables: $X' = 10X + 3$ and $Y' = 0.5Y - 2$. How does the correlation $\\rho_{X',Y'}$ compare to $\\rho_{X,Y}$?",
+              "choices": [
+                "It scales by $10 \\times 0.5 = 5$.",
+                "It is unchanged: $\\rho_{X',Y'} = \\rho_{X,Y}$, because correlation is invariant to positive scaling and any shift (the scale factors cancel between the covariance and the standard deviations).",
+                "It becomes $0$, since shifting destroys the relationship.",
+                "It flips sign."
+              ],
+              "explain": "Covariance scales as $\\operatorname{Cov}(aX+b,cY+d)=ac\\,\\operatorname{Cov}(X,Y)$, and each standard deviation scales by $|a|$ and $|c|$. In $\\rho=\\operatorname{Cov}/(\\sigma_{X'}\\sigma_{Y'})$ the factor $ac$ (here positive) cancels, leaving $\\rho$ unchanged. (A negative scale factor would flip the sign; shifts never matter.)"
             }
           ],
           "flashcards": [
@@ -2706,6 +2794,50 @@
               ],
               "answer": 2,
               "explain": "Once $Y$ is known, $X=h(Y)$ is fully determined, so its conditional mean is just $h(Y)$, i.e. $X$ itself. Replacing it with the constant $\\mathbb{E}[X]$ would wrongly discard the information that $Y$ pins $X$ down exactly."
+            },
+            {
+              "answer": 1,
+              "q": "The law of total expectation (tower property) states $\\mathbb{E}\\big[\\mathbb{E}[X\\mid Y]\\big]=\\mathbb{E}[X]$. What does it let you do?",
+              "choices": [
+                "Conclude that $\\mathbb{E}[X\\mid Y]$ always equals $\\mathbb{E}[X]$ for every $Y$.",
+                "Compute $\\mathbb{E}[X]$ by divide-and-conquer: average $X$ within each $Y$-slice, then average those slice-means weighted by $p_Y(y)$ — $\\mathbb{E}[X]=\\sum_y \\mathbb{E}[X\\mid Y=y]\\,p_Y(y)$.",
+                "Replace $\\mathbb{E}[X]$ with $\\operatorname{Var}(X)$ whenever $Y$ is unknown.",
+                "Compute $\\mathbb{E}[X\\mid Y]$ without knowing the conditional distribution."
+              ],
+              "explain": "Taking the expectation of the conditional forecast over all values of $Y$ recovers the unconditional mean. Operationally it is a divide-and-conquer engine: split by $Y$, average within each slice, then re-average weighted by how likely each slice is. (Choice A confuses this with independence, where $\\mathbb{E}[X\\mid Y]=\\mathbb{E}[X]$.)"
+            },
+            {
+              "answer": 3,
+              "q": "The law of total variance decomposes $\\operatorname{Var}(X) = \\mathbb{E}\\big[\\operatorname{Var}(X\\mid Y)\\big] + \\operatorname{Var}\\big(\\mathbb{E}[X\\mid Y]\\big)$. What do the two terms represent?",
+              "choices": [
+                "Both terms are always equal, so each is half the variance.",
+                "The first is the between-group variance; the second is the within-group variance.",
+                "The first is the mean of $X$; the second is the mean of $Y$.",
+                "The first, $\\mathbb{E}[\\operatorname{Var}(X\\mid Y)]$, is the average spread *within* each $Y$-slice (unexplained); the second, $\\operatorname{Var}(\\mathbb{E}[X\\mid Y])$, is the spread *between* the slice-means (explained by $Y$)."
+              ],
+              "explain": "Total variance splits into within-group and between-group pieces: $\\mathbb{E}[\\operatorname{Var}(X\\mid Y)]$ averages the spread inside each $Y$-slice (the part $Y$ can't explain), and $\\operatorname{Var}(\\mathbb{E}[X\\mid Y])$ measures how much the slice-means vary (the part $Y$ does explain). This is the \"explained vs. unexplained variance\" of regression and ANOVA. (Choice B swaps the two.)"
+            },
+            {
+              "answer": 0,
+              "q": "A hen lays $N\\sim\\text{Poisson}(\\lambda)$ eggs; each hatches independently with probability $p$. Let $X$ be the number that hatch. Using the tower property, what is $\\mathbb{E}[X]$?",
+              "choices": [
+                "$p\\lambda$, since $\\mathbb{E}[X\\mid N]=Np$ (the Binomial mean) and $\\mathbb{E}[X]=\\mathbb{E}[Np]=p\\,\\mathbb{E}[N]=p\\lambda$.",
+                "$\\lambda$, the mean number of eggs, ignoring hatching.",
+                "$p$, the hatch probability.",
+                "$\\lambda^p$, combining the two parameters."
+              ],
+              "explain": "Condition on $N$: given $N=n$, $X\\sim\\text{Bin}(n,p)$ so $\\mathbb{E}[X\\mid N]=Np$. The tower property gives $\\mathbb{E}[X]=\\mathbb{E}[\\mathbb{E}[X\\mid N]]=\\mathbb{E}[Np]=p\\,\\mathbb{E}[N]=p\\lambda$. Conditioning turns a daunting double sum into three lines."
+            },
+            {
+              "answer": 2,
+              "q": "Which of the following are conditional expectations?",
+              "choices": [
+                "Neither — they are variances, not expectations.",
+                "Only the regression function $f(x)=\\mathbb{E}[Y\\mid X=x]$; an RL value function is unrelated.",
+                "Both the regression function $f(x)=\\mathbb{E}[Y\\mid X=x]$ (the MSE-optimal predictor) AND the RL value function $V(s)=\\mathbb{E}[\\text{return}\\mid \\text{state}=s]$.",
+                "Only the RL value function; regression is a deterministic fit with no expectation."
+              ],
+              "explain": "Both are conditional expectations. The regression function $\\mathbb{E}[Y\\mid X=x]$ is provably the predictor minimizing mean-squared error, and the value function $V(s)=\\mathbb{E}[\\text{return}\\mid s]$ is the expected return given the state (Bellman equations are tower-property identities). Conditional expectation is the shared backbone of prediction across ML."
             }
           ],
           "flashcards": [

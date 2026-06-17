@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 204 — MCQ arc → PS Joint Distributions module 12→16 (content — owner's #1 ask)
+**Probability & Statistics → Joint Distributions & Dependence**, all 3 lessons **12 → 16 MCQs** (+12; bank
+**2,324 → 2,336**). New foundational questions, adversarially fact-checked with arithmetic re-verified (**ALL 12
+PASS**), answer positions balanced 0/1/2/3 with distinct per-lesson patterns:
+- **Joint distributions**: continuous probability as a *volume* (double integral); independence must hold at *every*
+  pair (one bad cell breaks it); a conditional $P(X{=}1\mid Y{=}1)$ slice-and-renormalize computation; inference as
+  "compute a conditional off the joint."
+- **Covariance/correlation**: computing $\rho=\operatorname{Cov}/(\sigma_X\sigma_Y)$; independent ⇒ Cov $=0$ (and why);
+  the $Y=X^2$ counterexample (uncorrelated ≠ independent — correlation is *linear* only); $\rho$'s invariance under
+  positive linear transforms.
+- **Conditional expectation**: the tower property as divide-and-conquer; the law of *total variance*
+  (within- + between-group, i.e. unexplained + explained); the hen-and-eggs tower computation ($\mathbb{E}[X]=p\lambda$);
+  regression function & RL value function both being conditional expectations.
+
+**PS now 3/5 modules at 16** (Foundations ✓, Distributions ✓, Joint ✓). Arc: 6/7 topics done; **PS 3/5**.
+Verified: adversarial ALL 12 PASS (arithmetic re-checked); `gate.js` ALL GREEN incl. render-hazard lints (7 topics ·
+148 lessons · **2,336 MCQs** · 42 widgets); indices 0/1/2/3-balanced; byte-stable injection; Covariance &
+Conditional-Expectation quizzes render "Question 1 of 16" rawDollars=0 kErr=0; all-routes smoke (8 routes) errs=0;
+conditional-expectation quiz screenshot clean. SW cache `atlas-v146` → `atlas-v147`.
+
 ## iter 203 — New viz: Binomial ⇄ Poisson PMF explorer (visualizations — non-content)
 Non-content move pairing with the iter-202 Distributions content. The PS topic had 5 visualizations but **none for the
 discrete distributions** — `ps-bernoulli-binomial`, `ps-poisson`, and `ps-geometric-waiting` had no embedded widget.
