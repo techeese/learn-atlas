@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 115 — Three more "Deeper dive" intuitions on hard concepts (understandability — owner directive 3)
+Continued directive 3 (an *extra*, different-angle explanation for genuinely hard ideas). Added **3 more deeper-dives
+(6 → 9 site-wide)**, each deliberately offering a lens its lesson does *not* already lead with:
+• **Vanishing/exploding gradients** (`dl-initialization-and-vanishing-gradients`) — the lesson teaches variance-
+preservation mechanics; the dive gives the unifying intuition: backprop <em>multiplies</em>, so the gradient is an
+<em>exponential</em> product of per-layer factors ($0.9^{50}\approx0.005$ vanishes, $1.1^{50}\approx117$ explodes) —
+and init, normalization, and residuals are all <em>one</em> fix: keep each factor ≈ 1.
+• **BatchNorm: two competing stories** (`dl-dropout-and-normalization`) — the original "internal covariate shift" pitch
+vs. the later evidence (Santurkar et al.) that the real mechanism is a <em>smoother loss landscape</em>; a technique can
+be right for reasons other than its origin story.
+• **KKT & complementary slackness** (`c-lagrange-multipliers`) — expands the lesson's one-line "glimpse of KKT" into the
+"you only pay for the fences you lean on" intuition ($\lambda_i g_i(\mathbf{x}^\star)=0$: inactive ⇒ price 0, active ⇒
+may bind), tied to why SVM support vectors are exactly the active constraints.
+Collapsed by default, KaTeX inside, print-expands (existing component). SW cache → `atlas-v59`. Verified: `node gate.js`
+ALL GREEN; an in-browser run opens each `<details>` and confirms math renders (vanishing-gradients 10 · KKT 7 KaTeX
+elements; the BatchNorm dive is intentionally prose-only) with **errs=0 and per-lesson `.katex-error`=0**; a screenshot
+confirms the KKT dive renders cleanly; stray Chrome cleaned up.
+
 ## iter 114 — Onboarding refresh: dynamic counts (fixes a stale "122 lessons"), modernized copy, leak fix (understandability / fix)
 The first-visit tour (also replayable via the sidebar "Guide / tour" button) claimed **"122 lessons"** — stale and
 wrong; the site has **148**. Rather than hardcode a new number that will re-stale, the intro now **computes its counts

@@ -66,6 +66,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 113: Notebook (#/notes) — gathers all per-lesson notes into one reviewable page (new functionality).
    ✅ iter 114: onboarding refresh — intro tour counts now computed live (fixed stale "122 lessons" → 148), modernized
    copy, fixed an Escape-listener leak on tour replay.
+   ✅ iter 115: +3 deeper-dives (vanishing/exploding gradients = exponential product; BatchNorm = covariate-shift vs.
+   smoother-landscape; KKT = complementary slackness) → 9 deeper-dives site-wide (directive 3).
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
    already memoized; staggered page-entrance already exists (CSS :nth-child reveal delays). So perf/mobile/transitions
    have little headroom. NEGLECTED areas still worth a pass: onboarding refresh, SVG Knowledge-Map keyboard nav
@@ -84,9 +86,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    frequencies) + the VAE reparameterization trick (pathwise derivative). ✅ iter 108: +4 — eigenvectors
    (power-iteration/long-run), CLT "why a bell" (convolution attractor + max-entropy), attention (soft differentiable
    dictionary), policy-gradients (train-by-trial + baseline=grading-curve). Site now has 6 deeper-dives. NEXT: keep
-   sprinkling on hard concepts (KKT/shadow-price, vanishing/exploding gradients, batch-norm, the kernel trick,
-   dropout-as-ensemble) — one or two per content iteration, with a genuinely DIFFERENT angle (not a restatement).
-   Also consider SPLIT/MERGE where a lesson is overloaded.
+   sprinkling on hard concepts — ✅ iter 115 did vanishing/exploding gradients, BatchNorm (two stories), and KKT
+   complementary slackness. Remaining candidates: the kernel trick (needs an SVM host — none yet), convexity
+   (local=global), backprop = chain-rule + memoization, condition number / why GD zig-zags, softmax temperature.
+   One or two per content iteration, with a genuinely DIFFERENT angle (not a restatement). Consider SPLIT/MERGE too.
 4. **New learning functionality** is welcome too.
 Verification: owner chose KEEP FULL verification (screenshot every view desktop+mobile + DOM-dump errs=0) —
 but ALWAYS `pkill -f "Google Chrome.*--headless"` after each run so zombie Chrome can't accumulate (87 had
