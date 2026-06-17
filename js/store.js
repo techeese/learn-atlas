@@ -67,7 +67,10 @@
     { id: "deep-thinker",icon: "🧩", name: "Deep Thinker",      desc: "Expand a “Deeper dive” intuition." },
     { id: "daily-ritual",icon: "🌅", name: "Daily Ritual",      desc: "Finish a Daily Mix session." },
     { id: "habit",       icon: "📆", name: "Creature of Habit", desc: "Study on 14 different days." },
-    { id: "sage",        icon: "🧙", name: "Sage",              desc: "Earn 25,000 total XP." }
+    { id: "sage",        icon: "🧙", name: "Sage",              desc: "Earn 25,000 total XP." },
+    { id: "self-examiner",icon:"🔎", name: "Self-Examiner",     desc: "Try a lecture's Quick Check." },
+    { id: "quick-ace",   icon: "🌟", name: "Quick Ace",         desc: "Ace a Quick Check — all answers right." },
+    { id: "viz-voyager", icon: "🛰️", name: "Viz Voyager",       desc: "Open 15 different visualizations." }
   ];
 
   function blank() {
@@ -91,7 +94,9 @@
       bookmarks: {},        // lessonId -> true (saved/favorited lessons)
       missed: {},           // "lessonId#qIdx" -> 1 (questions answered wrong, waiting to be redeemed)
       missedFixed: 0,       // lifetime count of missed questions later answered correctly
-      perfectQuizzes: 0     // lifetime count of 100% lesson quizzes (for the Flawless Five achievement)
+      perfectQuizzes: 0,    // lifetime count of 100% lesson quizzes (for the Flawless Five achievement)
+      quickChecks: 0,       // lifetime count of inline Quick Checks completed (low-stakes retrieval)
+      vizSeen: {}           // vizId -> true (distinct visualizations opened, for Viz Voyager)
     };
   }
 
@@ -133,6 +138,8 @@
       base.missed = (s.missed && typeof s.missed === "object") ? s.missed : {};
       base.missedFixed = num(s.missedFixed);
       base.perfectQuizzes = num(s.perfectQuizzes);
+      base.quickChecks = num(s.quickChecks);
+      base.vizSeen = (s.vizSeen && typeof s.vizSeen === "object") ? s.vizSeen : {};
     }
     return base;
   }
@@ -180,6 +187,20 @@
   }
   function missedKeys() { return Object.keys(state.missed || {}); }
   function missedCount() { return Object.keys(state.missed || {}).length; }
+  // ---- inline Quick Check (no-stakes retrieval) — rewards the BEHAVIOR, not the score ----
+  function recordQuickCheck(correct, total) {
+    state.quickChecks = num(state.quickChecks) + 1;
+    unlock("self-examiner");
+    if (num(total) > 0 && num(correct) >= num(total)) unlock("quick-ace");
+    save();
+  }
+  // ---- visualization exploration (distinct widgets opened) ----
+  function recordVizOpen(id) {
+    if (id) { if (!state.vizSeen || typeof state.vizSeen !== "object") state.vizSeen = {}; state.vizSeen[id] = true; }
+    unlock("visualizer");
+    if (Object.keys(state.vizSeen || {}).length >= 15) unlock("viz-voyager");
+    save();
+  }
 
   // ---- XP / level ------------------------------------------------------
   const levelUps = [];
@@ -441,6 +462,7 @@
     getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
+    recordQuickCheck, recordVizOpen,
     unlock, drainUnlocked, drainLevelUps,
     stats, courseProgress, resetAll, touchStreak
   };

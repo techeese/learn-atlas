@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 168: 3 new achievements (gamification — owner-loved; 43→46): 🔎 Self-Examiner (try a Quick Check), 🌟 Quick
+   Ace (ace one), 🛰️ Viz Voyager (open 15 different viz). Integrates the iter-164 Quick Check into the motivation loop
+   (rewards the behavior, not score — stays no-stakes). New recordQuickCheck/recordVizOpen + vizSeen/quickChecks state
+   (blank+load merge, backward-compat verified). Browser: Self-Examiner unlocks on QC completion, errs=0; SW →v111.
    ✅ iter 167: MCQ arc → Deep Learning·Convolutional Networks 12→16 (+12, bank →2,096). All 3 lessons (convolution/
    pooling/transfer-learning). ★ DL 4/7 modules at 16. Adversarial agent ALL PASS (conv-equivariance vs pooling-
    invariance validated); positions balanced 3/3/3/3; render "of 16" errs=0; SW →v110. DL REMAINING (arc):

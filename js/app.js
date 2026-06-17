@@ -747,6 +747,7 @@
 
     function done() {
       started = false;
+      Store.recordQuickCheck(right, N); flushAchievements();   // reward the retrieval behavior (no XP/mastery — stays low-stakes)
       const msg = right === N ? "All three — it stuck. 🎯" : right >= 2 ? "Nicely done — mostly there." : "Worth another read of the tricky parts.";
       frame(`<div class="qc-score"><b>${right}/${N}</b> recalled</div>
         <p class="qc-lead">${msg}</p>
@@ -1140,7 +1141,7 @@
       node.dataset.vizDone = "1"; node.classList.add("viz");
       if (window.VIZ[id]) {
         try {
-          window.VIZ[id](node); Store.unlock("visualizer"); flushAchievements();
+          window.VIZ[id](node); Store.recordVizOpen(id); flushAchievements();
           // accessibility: name the visualization for screen readers (canvas content is otherwise invisible)
           const m = meta(id);
           if (m) {
@@ -1699,7 +1700,8 @@
       "curator": [Object.keys(R.bookmarks || {}).length, 5], "annotator": [Object.keys(R.notes || {}).length, 5],
       "flawless-five": [R.perfectQuizzes || 0, 5], "redeemer": [R.missedFixed || 0, 25],
       "deep-diver": [mastered, 10], "loremaster": [mastered, 25],
-      "habit": [Object.keys(R.activity || {}).length, 14], "sage": [R.xp, 25000]
+      "habit": [Object.keys(R.activity || {}).length, 14], "sage": [R.xp, 25000],
+      "viz-voyager": [Object.keys(R.vizSeen || {}).length, 15]
     };
   }
   // the locked, in-progress achievement closest to unlocking (for the dashboard nudge)
@@ -1717,12 +1719,12 @@
   // achievements grouped into themed categories (keeps the 40+ Hall scannable)
   const ACH_CATEGORIES = [
     { label: "Lessons & Courses", ids: ["first-step", "ten-lessons", "half-century", "topic-clear", "module-master", "all-topics", "atlas-complete"] },
-    { label: "Quizzes & Tests", ids: ["perfect", "flawless-five", "mcq-100", "mcq-500", "crack-shot", "exam-ace", "test-taker", "test-veteran", "redeemer"] },
+    { label: "Quizzes & Tests", ids: ["perfect", "flawless-five", "mcq-100", "mcq-500", "crack-shot", "exam-ace", "test-taker", "test-veteran", "redeemer", "self-examiner", "quick-ace"] },
     { label: "Consistency & Streaks", ids: ["streak3", "streak7", "streak30", "streak100", "daily-ritual", "habit"] },
     { label: "Flashcards & Recall", ids: ["cards25", "century", "cards-500", "recaller", "total-recall"] },
     { label: "Mastery", ids: ["mastered-one", "deep-diver", "loremaster", "well-rounded"] },
     { label: "Levels & XP", ids: ["scholar", "polymath", "erudite", "sage"] },
-    { label: "Exploration & Practice", ids: ["curious", "visualizer", "pathfinder", "coder", "curator", "annotator", "deep-thinker", "homework-hero"] }
+    { label: "Exploration & Practice", ids: ["curious", "visualizer", "viz-voyager", "pathfinder", "coder", "curator", "annotator", "deep-thinker", "homework-hero"] }
   ];
   function viewAchievements() {
     const have = Store.raw.achievements;

@@ -2,6 +2,28 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 168 — 3 new achievements that reward the best learning behaviors (gamification — owner-loved; +integrates iter-164 Quick Check)
+Gamification had gone quiet since iter 154 (14 iters), and the iter-164 **Quick Check** shipped *disconnected* from the
+motivation loop. This closes that loop and rewards the site's two highest-leverage behaviors — in-flow retrieval and
+deep exploration — with **3 new achievements (43 → 46)**:
+- **🔎 Self-Examiner** — try a lecture's Quick Check (rewards doing low-stakes retrieval at all).
+- **🌟 Quick Ace** — ace a Quick Check (all answers right).
+- **🛰️ Viz Voyager** — open **15 different** visualizations (the old "Visualizer" rewards opening just *one*; this
+  rewards exploring the 38-widget lab — with a live progress bar in the Hall).
+Crucially the Quick-Check badges reward the **behavior, not a graded score**, so Quick Check stays no-stakes (still no
+XP/mastery). New `recordQuickCheck(correct,total)` and `recordVizOpen(id)` in `store.js`; viz hydration now records the
+*distinct* id (so `visualizer` + `viz-voyager` both flow from one path); Quick Check's `done()` calls
+`recordQuickCheck` + `flushAchievements`. New ids slotted into the grouped Hall categories (Quizzes & Tests /
+Exploration) and `viz-voyager` into the progress map + dashboard "nearest achievement" nudge.
+- **State safety**: two new fields — `quickChecks` (count) and `vizSeen` ({id→true}) — added to `blank()` AND the
+  `load()` typeof-merge (`num(...)` / object-guard), so a prior-shape save still loads.
+- **Verified**: `store.js` + `app.js` syntax OK; a node test with a **prior-shape save (no new fields)** loads cleanly
+  (xp/streak preserved, `quickChecks=0`, `vizSeen={}`); unlock logic exercised — `recordQuickCheck(2,3)`→Self-Examiner
+  only, `(3,3)`→Quick Ace; 15 distinct viz→Viz Voyager, dup opens don't double-count; **count 43→46**. Browser drive:
+  completing a Quick Check unlocks Self-Examiner (`errs=0`), and all three render in the Hall; desktop + **390px**
+  achievements screenshots good (mobile header reads "0 of 46 unlocked"); all-routes smoke (12) `errs=0`. SW cache
+  **v110 → v111**; README 43 → 46.
+
 ## iter 167 — MCQ arc → Deep Learning · Convolutional Networks 12 → 16 (content — owner's #1 ask)
 The arc continues through DL's fourth module, *Convolutional Networks for Vision*. All **three** lessons go 12 → 16
 (**+12, bank 2,084 → 2,096**), stating the bedrock the existing 12 assumed:
