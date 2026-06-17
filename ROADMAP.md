@@ -173,6 +173,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 157: MCQ arc → Calculus·Bridge to Multivariable 12→16 (+12, bank →2,032). Calc 6/7 modules. Adversarial agent
    ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v100.
    CALC REMAINING (MCQ arc): convex-optimization(3) — the LAST Calc module, then Calculus COMPLETE. Then DL/RL/LLM/PS.
+   ✅ iter 158: "Redrill the N you missed" button on the test results screen (workflow/new-functionality; neglected since 142/144)
+   — immediate mastery drill on just this session's misses; reuses runMasteryDrill; omitted on perfect runs. errs=0; SW cache →v101.
    ✅ iter 156: animated score reveal on result screens (animations; neglected since 140) — count-up + bigPop spring, confetti
    on perfect 10+ test; reduced-motion safe. Also HARDENED shared countUp with Math.max(0,k) clamp (rAF/performance.now clock
    skew could render a negative score). errs=0; SW cache →v99. NOTE: headless --dump-dom doesn't advance rAF, so count-up

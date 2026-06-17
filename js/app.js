@@ -1237,12 +1237,13 @@
       let correct = 0; items.forEach((it, k) => { const ok = answers[k] === it.q.answer; if (ok) correct++; Store.bumpMastery(it.lessonId, { correct: ok }); if (it.qIdx != null) { if (ok) Store.clearMiss(it.lessonId, it.qIdx); else Store.recordMiss(it.lessonId, it.qIdx); } });
       const pct = Math.round(correct / items.length * 100);
       Store.recordTest(correct, items.length, `${label} · ${items.length}Q`);
+      const missed = items.filter((it, k) => answers[k] !== it.q.answer);   // redrill exactly these, right now
       app.innerHTML = `
       <div class="view"><div class="quiz quiz-result reveal">
         <div class="big">${pct}%</div>
         <p style="color:var(--ink-soft);font-size:18px">${correct} of ${items.length} correct · ${esc(label)}</p>
         <p style="color:var(--ink-mute);margin:6px 0 20px">+${correct * 8}${items.length >= 10 && correct === items.length ? " +50 perfect bonus" : ""} XP</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">${opts.onDone ? `<button class="btn primary" id="t-continue">Continue →</button>` : `<button class="btn primary" id="t-again">↻ New test</button><a class="btn ghost" href="#/" data-route>Done</a>`}</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">${opts.onDone ? `<button class="btn primary" id="t-continue">Continue →</button>` : `${missed.length ? `<button class="btn primary" id="t-redrill">↻ Redrill the ${missed.length} you missed</button>` : ""}<button class="btn ${missed.length ? "ghost" : "primary"}" id="t-again">↻ New test</button><a class="btn ghost" href="#/" data-route>Done</a>`}</div>
       </div>
       <div class="hw reveal" style="margin-top:30px"><div class="module-head"><span class="mnum">📋</span><h3>Review</h3></div>
         ${items.map((it, k) => { const ok = answers[k] === it.q.answer; return `<div class="hw-item" style="border-color:${ok ? "var(--sage-deep)" : "var(--rust)"}">
@@ -1254,7 +1255,11 @@
       </div></div>`;
       bindGo();
       if (opts.onDone) document.getElementById("t-continue").addEventListener("click", opts.onDone);
-      else document.getElementById("t-again").addEventListener("click", () => { location.hash = "#/test"; });
+      else {
+        document.getElementById("t-again").addEventListener("click", () => { location.hash = "#/test"; });
+        const rd = document.getElementById("t-redrill");
+        if (rd) rd.addEventListener("click", () => runMasteryDrill(shuffle(missed.slice()), label + " · redo misses"));
+      }
       if (pct === 100 && items.length >= 10) confetti();
       animateBig(); flushAchievements(); renderChrome(); typeset();
     }

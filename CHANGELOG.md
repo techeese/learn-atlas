@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 158 — "Redrill the N you missed" on the test results screen (workflow / new functionality)
+Finishing a (non-mastery) test now offers an immediate **"↻ Redrill the N you missed"** button on the results screen,
+which launches a mastery drill on *exactly* the questions you just got wrong (shuffled, re-queued until each sticks) —
+tightening the owner's "think again until you pass" loop: fix the misses while they're fresh, no detour to the dashboard's
+global mistakes deck. The button is a no-op-omit on a perfect run (`${missed.length ? … : ""}`), and only appears on the
+standalone result (not the chained Daily-Mix flow). Reuses the existing `runMasteryDrill`; misses cleared from the global
+deck as you get them right, exactly as before.
+- **Verified**: `node gate.js` ALL GREEN; drove a 5-question test (mastery off) to its result → `errs=0`, button reads
+  "↻ Redrill the N you missed" with the correct count, and clicking it **replaces the result with a fresh drill question**
+  on just the missed items (`resultGone:true, drillQuestionShown:true`); a perfect test omits the button by construction;
+  all-routes smoke `errs=0`; results screenshot read (primary gold Redrill + New test + Done). SW cache **v100 → v101**.
+- Workflow/new-functionality areas were the most-neglected (since iters 142/144); this revisits them.
+
 ## iter 157 — MCQ arc → Calculus · Bridge to Multivariable 12 → 16 (content — owner's #1 ask)
 The Calculus arc's sixth module, *Bridge to Multivariable Calculus for ML*. **+4 new MCQs each** to all three lessons
 (**+12, bank 2,020 → 2,032**): a $\partial/\partial x$ compute / the partial as a slice-slope / how many partials
