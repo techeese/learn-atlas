@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 100 — RL frontier module → 12 MCQs per lesson (content; owner "more questions" ask) — ★ 100-iteration milestone + checkpoint
+Completed the RL frontier module: all three lessons (model-based, offline, imitation) brought from 0 → 12 MCQs each via
+the author→adversarial-verify pipeline — **+36 fact-checked questions**, all ok=true. **★ With this, EVERY one of the
+148 lessons site-wide carries exactly 12 MCQs** — full, uniform quiz coverage across all seven topics. Site bank
+**1,740 → 1,776**. SW cache → `atlas-v44`; README 1,740→1,776.
+**100-iteration checkpoint (iters 90–99 reflection).** The arc since the last checkpoint delivered the entire
+"deepen the existing six" directive: a 7th frontier module for each original topic (DL generative models, Calculus
+convex optimization, LA matrix calculus, Algorithms advanced, RL frontier) plus three new visualizations (convex
+landscape, diffusion, p-value) and the reusable "deeper dive" component — interleaving content / MCQs / viz to honor
+anti-monotony. Site grew from ~125 to **148 lessons, 1,776 MCQs, 28 widgets**. Both of the owner's headline directives
+(new subject + deepen the six) are now fully delivered with complete card/quiz/homework/example coverage. NEXT ARC:
+return to the broad compass — UI/UX & animation polish, onboarding, more deeper-dives & achievements, new functionality
+— since pure content/viz has dominated for ~30 iterations. Verified: `node gate.js` ALL GREEN (7 topics · 148 lessons ·
+**1,776 MCQs**); all three RL quizzes render "of 12" with errs=0 and katex-error=0; stray Chrome cleaned up.
+
 ## iter 99 — Reinforcement Learning — NEW frontier module: Model-Based, Offline & Imitation RL (3 lessons) — COMPLETES the deepen-the-six arc (content; "deepen the existing six")
 The final topic of the deepen-the-six rotation. RL ended at exploration/practice with no model-based, offline, or
 imitation learning — its three biggest frontier gaps. New 7th module:

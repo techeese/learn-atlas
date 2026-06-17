@@ -3363,7 +3363,140 @@
           "title": "Model-Based RL & Planning",
           "minutes": 17,
           "content": "<h3>1. The hook: learn a model, then plan with it</h3>\n<p>The model-free methods you have seen — Q-learning, SARSA, policy gradients — learn purely from trial and error, often needing millions of environment interactions. That is fine in a simulator but ruinous on a real robot or a costly system. <strong>Model-based RL</strong> takes a different bet: <em>learn how the world works</em> — a model of transitions and rewards — and then <em>plan</em> against that model, squeezing far more learning out of each precious real interaction.</p>\n\n<h3>2. Model-free vs. model-based</h3>\n<p>A <strong>model</strong> predicts the environment's dynamics: given a state $s$ and action $a$, it estimates the next-state distribution $p(s'\\mid s,a)$ and the reward $r(s,a)$. <strong>Model-free</strong> RL skips this and learns a value function or policy directly from experience. <strong>Model-based</strong> RL first learns (or is given) the model, then uses it to compute a good policy by <em>planning</em>. The trade is classic: model-free is simple and unbiased but sample-hungry; model-based is sample-efficient but only as good as its learned model.</p>\n\n<h3>3. Learning the model</h3>\n<p>From logged transitions $(s,a,r,s')$ you fit two predictors: a <strong>transition model</strong> $\\hat{p}(s'\\mid s,a)$ and a <strong>reward model</strong> $\\hat{r}(s,a)$. In small discrete problems these are just tallied frequencies and averages; in large or continuous problems they are neural networks trained by supervised regression. Crucially, model-learning is ordinary supervised learning — and it uses <em>every</em> transition, including the failures, whereas a value update only extracts a single scalar of signal per step.</p>\n\n<h3>4. Planning: turning a model into a policy</h3>\n<p>Once you have a model, you can <strong>plan</strong> without touching the real environment. With a known/learned model the methods you already know apply directly — value iteration and policy iteration compute the optimal policy by sweeping the model's equations. For large spaces you instead do <strong>rollouts</strong>: simulate trajectories from the model to estimate which actions look best from the current state. Planning is \"thinking\" — extra computation traded for fewer real-world samples.</p>\n\n<h3>5. Dyna: learning, planning, and acting together</h3>\n<p><strong>Dyna-Q</strong> elegantly fuses the two worlds. After each <em>real</em> step it does three things: (1) update the value function from the real transition (model-free), (2) update the learned model with that transition, and (3) run $k$ <em>simulated</em> updates by sampling remembered transitions from the model. Those imagined experiences let the agent propagate value information far faster than real steps alone — the same data, replayed mentally, accelerates learning dramatically.</p>\n<div class=\"callout\">\n<div class=\"c-tag\">Intuition</div>\n<p>Model-free learning is practicing only by playing real games. Dyna adds <em>imagining</em> games in your head between moves — each real experience is rehearsed many times, so one hard-won sample teaches far more.</p>\n</div>\n\n<h3>6. Monte Carlo Tree Search</h3>\n<p>When the model is a known simulator (board games, planning problems), <strong>Monte Carlo Tree Search (MCTS)</strong> plans by selectively growing a search tree of futures: it repeatedly <em>selects</em> a promising path (balancing exploration and exploitation, e.g. via UCT), <em>expands</em> a new node, <em>simulates</em> a rollout to estimate its value, and <em>backs up</em> the result to update ancestors. MCTS is the planning engine behind <strong>AlphaGo</strong> and <strong>AlphaZero</strong>, where it is guided by learned value and policy networks — a celebrated marriage of learning and planning.</p>\n\n<h3>7. The promise and the peril</h3>\n<p>Model-based RL can be <strong>orders of magnitude more sample-efficient</strong> than model-free — the headline reason to use it on real systems. Its Achilles' heel is <strong>model bias</strong>: planning trusts the model, so errors in $\\hat{p}$ <em>compound</em> over long rollouts, and the agent can learn to exploit fantasy transitions that don't exist. Practical methods fight this with short rollouts, model ensembles (to quantify uncertainty), and by mixing in real experience — accepting that a learned model is a useful but fallible map, not the territory.</p>\n\n<h3>8. Why this matters</h3>\n<p>Model-based RL is the frontier where RL meets the real world: robotics, control, and any setting where interaction is slow, expensive, or dangerous. The \"learn a model, plan with it\" idea also powers the most famous successes in the field (AlphaZero, MuZero — which even learns the model implicitly) and connects RL to control theory and planning. Knowing when the sample-efficiency win outweighs the model-bias risk is a key design judgment.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "A team trains a robotic arm where each real-world trial costs money and risks hardware damage. Why might model-based RL be preferred over Q-learning here?",
+              "choices": [
+                "Model-based RL is guaranteed to find the optimal policy, while Q-learning is not",
+                "Model-based RL is typically more sample-efficient, extracting more learning per costly real interaction",
+                "Model-based RL never suffers from bias, unlike Q-learning",
+                "Model-based RL does not require any reward signal to learn"
+              ],
+              "answer": 1,
+              "explain": "The whole appeal of model-based RL is sample efficiency: it plans against a learned model to get more out of each expensive real interaction. It is not guaranteed optimal (it is limited by model accuracy), and it certainly is not unbiased — a flawed model introduces bias."
+            },
+            {
+              "q": "In a small, discrete environment, how are the transition model $\\hat{p}(s'\\mid s,a)$ and reward model $\\hat{r}(s,a)$ typically estimated from logged transitions $(s,a,r,s')$?",
+              "choices": [
+                "By training a deep neural network with backpropagation",
+                "By counting visit frequencies for transitions and averaging observed rewards",
+                "By solving the Bellman optimality equation directly",
+                "By sampling from a fixed prior distribution over dynamics"
+              ],
+              "answer": 1,
+              "explain": "For small discrete problems the model reduces to tabulated frequencies (for $\\hat{p}$) and sample averages (for $\\hat{r}$). Neural networks are reserved for large or continuous spaces, and the Bellman equation is part of planning, not model fitting."
+            },
+            {
+              "q": "What is the core trade-off between model-free and model-based RL as described?",
+              "choices": [
+                "Model-free is sample-efficient but biased; model-based is sample-hungry but unbiased",
+                "Model-free is simple and unbiased but sample-hungry; model-based is sample-efficient but only as good as its learned model",
+                "Model-free always converges faster in wall-clock time; model-based always converges slower",
+                "Model-free requires a known reward function; model-based learns the reward"
+              ],
+              "answer": 1,
+              "explain": "Model-free is simple and unbiased but needs many samples; model-based is sample-efficient yet its quality is capped by model accuracy. The first option simply swaps the properties, making it the classic trap answer."
+            },
+            {
+              "q": "A student claims: 'Once we have learned a perfect model, planning against it gives the optimal policy, so model-based RL can never fail.' What is the flaw?",
+              "choices": [
+                "The claim is correct; a perfect model always yields the optimal policy via planning",
+                "Models in practice are imperfect, and planning amplifies any model errors, so the policy is only as good as the learned model",
+                "Planning ignores the reward model, so even a perfect transition model is useless",
+                "Optimal policies require model-free methods regardless of model quality"
+              ],
+              "answer": 1,
+              "explain": "The conditional 'once we have a perfect model' rarely holds — learned models have errors, and a planner can exploit those errors, producing a policy that fails in the real environment. This is the well-known model-bias pitfall the lesson warns about."
+            },
+            {
+              "q": "In model-based RL, what does it mean to 'plan' once you have a model?",
+              "choices": [
+                "To collect more real environment transitions to refine the model",
+                "To use the model's predicted dynamics and rewards to compute a good policy without further real interaction",
+                "To directly observe the true transition probabilities of the environment",
+                "To randomly perturb the current policy and keep improvements"
+              ],
+              "answer": 1,
+              "explain": "Planning means computing a good policy using the model's simulated transitions and rewards, which is precisely how model-based RL saves real interactions. Collecting more real data is model learning, not planning."
+            },
+            {
+              "q": "Suppose a learned transition model is highly accurate near states the agent has visited but wildly wrong in rarely-visited states. Why is this dangerous for a planner seeking high return?",
+              "choices": [
+                "The planner will avoid all unvisited states and stay perfectly safe",
+                "The planner may be drawn toward unvisited states where the erroneous model hallucinates high reward",
+                "Reward models are unaffected by transition errors, so there is no danger",
+                "Accurate models near visited states guarantee globally accurate planning"
+              ],
+              "answer": 1,
+              "explain": "A planner optimizing predicted return can latch onto regions where model errors falsely promise high reward — exploiting the model's mistakes. This is why naive model exploitation in poorly-modeled regions is risky."
+            },
+            {
+              "q": "A discrete environment has been observed taking action $a$ in state $s$ five times, landing in $s_1$ three times and $s_2$ twice, with rewards $2, 2, 2, 4, 4$. What does the tabular learned model give for $\\hat{p}(s_1\\mid s,a)$ and $\\hat{r}(s,a)$?",
+              "choices": [
+                "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=2.8$",
+                "$\\hat{p}(s_1\\mid s,a)=0.5$ and $\\hat{r}(s,a)=3.0$",
+                "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=3.0$",
+                "$\\hat{p}(s_1\\mid s,a)=0.4$ and $\\hat{r}(s,a)=2.8$"
+              ],
+              "answer": 0,
+              "explain": "The frequency estimate is $3/5=0.6$, and the reward average is $(2+2+2+4+4)/5=14/5=2.8$. The distractors mix up the count ratio or miscompute the mean (e.g., 3.0 ignores the correct sum)."
+            },
+            {
+              "q": "Why are neural networks used for the model in large or continuous state spaces, rather than the tabular tallying used for small discrete problems?",
+              "choices": [
+                "Neural networks are unbiased estimators of dynamics, unlike tables",
+                "In large/continuous spaces, counts per exact state-action are sparse or undefined, so a function approximator is needed to generalize",
+                "Tabular models cannot represent rewards, only transitions",
+                "Neural networks remove the need for any logged transitions"
+              ],
+              "answer": 1,
+              "explain": "With continuous or huge state spaces, you almost never revisit an exact state-action pair, so frequency tables fail; a neural network generalizes across similar states. Neural nets are not unbiased, and tables can represent rewards just fine in small problems."
+            },
+            {
+              "q": "Which statement best distinguishes what a model-free method learns from what a model-based method learns first?",
+              "choices": [
+                "Model-free learns $p(s'\\mid s,a)$ and $r(s,a)$; model-based learns a value function",
+                "Model-free learns a value function or policy directly; model-based first learns $p(s'\\mid s,a)$ and $r(s,a)$, then plans",
+                "Both learn the transition model, but only model-based plans",
+                "Both learn a policy directly, differing only in the optimizer used"
+              ],
+              "answer": 1,
+              "explain": "Model-free skips dynamics and learns values/policies directly from experience; model-based first fits the transition and reward models, then plans. The first option reverses the two definitions, a common confusion."
+            },
+            {
+              "q": "A model-based agent has learned its model from only 50 transitions and immediately plans an aggressive policy that the planner predicts will earn huge reward. What is the most prudent concern?",
+              "choices": [
+                "The planner is too conservative and should be made greedier",
+                "With so little data the model is likely inaccurate, so the predicted huge reward may be a planning artifact, not real",
+                "The reward model is irrelevant after planning begins",
+                "More data would make the policy worse, so 50 transitions is ideal"
+              ],
+              "answer": 1,
+              "explain": "With scarce data the learned model is unreliable, and the planner may be exploiting model errors that produce illusory high return — overconfidence in an under-trained model is the central model-based pitfall. Gathering more data generally improves, not worsens, the model."
+            },
+            {
+              "q": "Which pair correctly identifies the two predictors fit when learning a model from data?",
+              "choices": [
+                "A policy network and a value network",
+                "A transition model $\\hat{p}(s'\\mid s,a)$ and a reward model $\\hat{r}(s,a)$",
+                "An advantage estimator and a baseline",
+                "A Q-function and an exploration schedule"
+              ],
+              "answer": 1,
+              "explain": "Learning a model means fitting the dynamics $\\hat{p}(s'\\mid s,a)$ and the reward $\\hat{r}(s,a)$ from logged $(s,a,r,s')$ tuples. Policies, values, advantages, and Q-functions are products of model-free learning or downstream planning, not the model itself."
+            },
+            {
+              "q": "All else equal, if two agents reach the same final policy quality, which property most favors the model-based agent in a setting where real interactions are scarce and expensive?",
+              "choices": [
+                "It used fewer real environment interactions to get there",
+                "It is mathematically simpler to implement",
+                "It is guaranteed to be unbiased",
+                "It avoids needing a reward signal"
+              ],
+              "answer": 0,
+              "explain": "The defining advantage of model-based RL is sample efficiency — reaching comparable quality with fewer costly real interactions. Simplicity and unbiasedness are actually strengths of model-free methods, and a reward signal is still required to fit the reward model."
+            }
+          ],
           "flashcards": [
             {
               "front": "What is a model in RL, and how does model-based differ from model-free?",
@@ -3425,7 +3558,140 @@
           "title": "Offline (Batch) Reinforcement Learning",
           "minutes": 16,
           "content": "<h3>1. The hook: learning from a fixed dataset, no exploration allowed</h3>\n<p>Every method so far assumed the agent can <em>act</em> — try things, see what happens, and learn from the consequences. But in medicine, autonomous driving, and recommendation, letting an untrained agent experiment is unethical, dangerous, or ruinously expensive. <strong>Offline (batch) RL</strong> tackles the hard case: learn the best possible policy purely from a <em>fixed, pre-collected dataset</em> of logged experience, with <em>no</em> further interaction with the environment.</p>\n\n<h3>2. The setting</h3>\n<p>You are handed a dataset $\\mathcal{D}$ of transitions $(s,a,r,s')$ logged by some <strong>behavior policy</strong> (a doctor's past decisions, a deployed recommender, a human driver) — and that is all you ever get. The goal is to output a policy that is <em>better</em> than the behavior policy, using only $\\mathcal{D}$. There is no exploration to fix mistakes, no chance to test a new idea. This single constraint changes everything.</p>\n\n<h3>3. The core problem: distributional shift</h3>\n<p>The defining difficulty is <strong>distributional shift</strong>: a learned policy will want to take actions the dataset rarely or never contains, and there is no data to evaluate them. Worse, value-based methods <em>overestimate</em> these out-of-distribution (OOD) actions. The Q-learning target $\\max_{a'} Q(s',a')$ deliberately picks the highest-valued next action — and for actions absent from the data, $Q$ is an unconstrained extrapolation that tends to be erroneously high. The max then <em>seeks out</em> exactly those over-optimistic phantoms.</p>\n\n<h3>4. Why naive off-policy RL fails offline</h3>\n<p>This creates a vicious cycle unique to the offline setting. Online, an agent that overvalues a bad action simply <em>tries</em> it, sees the low reward, and corrects the estimate. Offline, it can never try it — so the overestimation is never corrected, feeds back through the Bellman target into other states, and compounds. Standard off-policy algorithms (DQN, DDPG) that work fine online often <strong>diverge or produce garbage</strong> when run on a fixed dataset, precisely because the error-correction loop is severed.</p>\n<div class=\"callout sage\">\n<div class=\"c-tag\">The crux</div>\n<p>Online RL's safety net is that bad guesses get tested and fixed. Remove interaction, and any overestimate of an unseen action becomes a permanent delusion the algorithm actively chases. Offline RL is largely the art of <em>not trusting</em> values for actions the data can't vouch for.</p>\n</div>\n\n<h3>5. The fix: stay close to the data</h3>\n<p>Offline algorithms add a <strong>conservatism</strong> that keeps the policy honest about what the data supports:</p>\n<ul>\n<li><strong>Policy constraints</strong> (e.g. BCQ, BEAR): force the learned policy to choose actions close to those in $\\mathcal{D}$, so $Q$ is only ever queried where it has evidence.</li>\n<li><strong>Value penalization</strong> (e.g. CQL — Conservative Q-Learning): explicitly push <em>down</em> the Q-values of OOD actions, learning a lower bound so the policy can't be lured by inflated phantoms.</li>\n</ul>\n<p>Both encode the same principle: prefer actions the dataset can support, and be pessimistic about the rest. Pessimism, not optimism, is the right default when you cannot test your beliefs.</p>\n\n<h3>6. Worked intuition</h3>\n<p>Imagine learning to treat patients only from historical records where doctors gave drug A or B, never the untested drug C. A naive value method might extrapolate a sky-high value for C (nothing in the data contradicts it) and recommend it for everyone — a potentially catastrophic hallucination. An offline-RL method instead recognizes C is unsupported and either avoids recommending it or assigns it a conservative (low/uncertain) value, sticking to improvements it can actually justify from the records. The win is a policy that <em>safely</em> beats the logged behavior, not a fantasy optimum.</p>\n\n<h3>7. The promise</h3>\n<p>Offline RL is what lets RL touch domains where exploration is off the table: learning treatment policies from electronic health records, driving policies from fleets of logged human driving, dialogue and recommendation policies from massive interaction logs. It turns the vast <em>passive</em> data the world already records into decision policies — without the dangerous trial-and-error that made RL impractical there.</p>\n\n<h3>8. Why this matters</h3>\n<p>Offline RL is one of the most active frontiers because it removes RL's biggest deployment barrier — the need to explore in the real world. It also reframes a deep lesson: when you cannot gather more data, the safe move is <em>pessimism about the unknown</em>, a principle that echoes across robust ML and decision-making under uncertainty. The same logged-data abundance that powers supervised learning can, with the right conservatism, power decision-making too.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "In offline RL, what makes the Q-learning target $r + \\gamma\\max_{a'}Q(s',a')$ more dangerous than a target that uses the dataset's logged next action, $r + \\gamma Q(s',a'_{\\text{data}})$?",
+              "choices": [
+                "The $\\max$ operator is slower to compute over large action spaces",
+                "The $\\max$ actively selects the action with the highest estimated value, which is exactly the over-optimistic OOD extrapolation",
+                "The logged-action target ignores the discount factor $\\gamma$ entirely",
+                "The $\\max$ target requires a known transition model $P$, which is unavailable offline"
+              ],
+              "answer": 1,
+              "explain": "For actions absent from $\\mathcal{D}$, $Q$ is an unconstrained extrapolation that tends to be erroneously high; the $\\max$ deliberately seeks the highest value and so latches onto exactly those inflated OOD phantoms. The logged-action target only queries $Q$ where the data has evidence, so it is far more stable."
+            },
+            {
+              "q": "A practitioner runs vanilla DQN on a fixed dataset and finds the Q-values blow up over training, even though the same DQN code works fine when allowed to interact online. What is the most likely root cause?",
+              "choices": [
+                "The replay buffer is too small to hold the fixed dataset",
+                "Offline, overestimated OOD action values are never corrected by trying them, so the error feeds back through Bellman targets and compounds",
+                "The learning rate must always be larger offline than online",
+                "Distributional shift only affects policy-gradient methods, so DQN is immune"
+              ],
+              "answer": 1,
+              "explain": "Online, an overvalued action gets tried, the low reward is observed, and the estimate is corrected; offline that corrective loop is severed, so overestimation propagates through Bellman targets and compounds, often causing divergence. Buffer size and learning rate are not the defining issue."
+            },
+            {
+              "q": "Why is 'optimism in the face of uncertainty' — a useful principle in online RL — exactly the wrong default in offline RL?",
+              "choices": [
+                "Offline datasets are always larger, so there is no uncertainty to be optimistic about",
+                "Optimism drives exploration online to validate high guesses, but offline the agent can never try the action, so an optimistic value becomes an uncorrectable delusion the policy chases",
+                "Optimism causes the discount factor to exceed 1, destabilizing the Bellman backup",
+                "Offline RL maximizes regret rather than return, which reverses the sign of optimism"
+              ],
+              "answer": 1,
+              "explain": "Online, optimism is a feature: high values for under-explored actions push the agent to try them and confirm or correct the guess. Offline there is no trial, so the optimistic estimate is never validated and the policy keeps chasing it — hence pessimism about the unknown is the correct default."
+            },
+            {
+              "q": "Conservative Q-Learning (CQL) and policy-constraint methods (BCQ, BEAR) differ in mechanism but share one underlying principle. What is it?",
+              "choices": [
+                "Both increase the discount factor to weight long-term rewards more heavily",
+                "Both require additional online rollouts to refine the policy after training",
+                "Both prefer actions the dataset supports and are pessimistic about everything else",
+                "Both replace the $\\max$ with a softmax to smooth the Bellman target"
+              ],
+              "answer": 2,
+              "explain": "CQL pushes down OOD Q-values (value penalization) while BCQ/BEAR force the policy to stay near dataset actions (policy constraint), but both encode the same idea: trust $Q$ only where there is evidence and be pessimistic about unsupported actions. Neither relies on online rollouts."
+            },
+            {
+              "q": "Which of the following best describes what 'distributional shift' refers to in offline RL?",
+              "choices": [
+                "The reward distribution drifts over time within the logged dataset",
+                "The learned policy wants to take actions the dataset rarely or never contains, where $Q$ has no data to be evaluated against",
+                "The state visitation of the behavior policy is non-stationary across episodes",
+                "The discount factor must shift to account for the finite dataset size"
+              ],
+              "answer": 1,
+              "explain": "Distributional shift is the mismatch between the actions the learned policy prefers and the actions present in $\\mathcal{D}$: the policy queries $Q$ at out-of-distribution actions the data cannot vouch for. It is about the action/state coverage gap, not a drifting reward or discount."
+            },
+            {
+              "q": "Consider an offline learner that, instead of using $\\max_{a'}Q(s',a')$, restricts the maximization to actions with sufficient support in $\\mathcal{D}$ at state $s'$. How does this most directly help?",
+              "choices": [
+                "It guarantees the policy will exactly match the behavior policy",
+                "It eliminates the need for a discount factor in the Bellman backup",
+                "It prevents the target from reaching for unsupported OOD actions whose $Q$-values are unreliable extrapolations",
+                "It makes the algorithm on-policy rather than off-policy"
+              ],
+              "answer": 2,
+              "explain": "By only maximizing over in-support actions, the target never queries $Q$ at OOD actions where the value is an over-optimistic extrapolation, breaking the overestimation loop. It does not force the policy to copy the behavior policy (it can still pick the best supported action) and does not remove $\\gamma$."
+            },
+            {
+              "q": "The stated goal of offline RL is to output a policy that is BETTER than the behavior policy using only $\\mathcal{D}$. Why is simply doing behavioral cloning on $\\mathcal{D}$ insufficient for this goal?",
+              "choices": [
+                "Behavioral cloning requires online interaction, which is forbidden offline",
+                "Behavioral cloning only reproduces the behavior policy's choices, so it can at best match — not exceed — the logged behavior",
+                "Behavioral cloning cannot use the reward signal $r$, so it diverges on fixed data",
+                "Behavioral cloning overestimates OOD actions even more aggressively than Q-learning"
+              ],
+              "answer": 1,
+              "explain": "Cloning imitates the logged actions, so it caps performance at roughly the behavior policy's level and cannot improve on it. Offline RL's value is using the rewards in $\\mathcal{D}$ to find a policy that recombines logged decisions into something better, while staying conservative about unsupported actions."
+            },
+            {
+              "q": "A common misconception is that offline RL fails simply because the dataset is too small. Even with an arbitrarily LARGE logged dataset from a fixed behavior policy, why can naive off-policy RL still break down?",
+              "choices": [
+                "Large datasets cause the discount factor to underflow numerically",
+                "If the behavior policy never takes certain actions, those actions remain OOD regardless of dataset size, so their $Q$-values stay unconstrained extrapolations",
+                "Larger datasets always increase variance of the Bellman target without bound",
+                "With more data the $\\max$ operator becomes biased toward in-distribution actions"
+              ],
+              "answer": 1,
+              "explain": "The problem is coverage, not raw size: actions the behavior policy never selects have no transitions at any dataset size, so $Q$ there is pure extrapolation that the $\\max$ can still latch onto. More samples of the same restricted behavior do not fill the OOD gap."
+            },
+            {
+              "q": "Suppose at state $s'$ an OOD action $a^*$ has an erroneously high $Q(s',a^*)$. Trace the most accurate description of how this single error corrupts an offline Q-learner across the state space.",
+              "choices": [
+                "The error stays localized at $s'$ because Bellman backups only update the current state",
+                "The inflated value enters Bellman targets for predecessor states, raising their $Q$-values, which then inflate THEIR predecessors, propagating backward with no corrective signal",
+                "The error is automatically averaged away as more transitions into $s'$ are sampled",
+                "The error only affects the policy at $s'$ and never touches the value function"
+              ],
+              "answer": 1,
+              "explain": "The Bellman target $r+\\gamma\\max_{a'}Q(s',a')$ for any transition landing in $s'$ becomes inflated, raising $Q$ for states leading to $s'$; those raised values then inflate their own predecessors, so the overestimation propagates backward and compounds. Offline, no real transition with $a^*$ ever reveals its true low reward to pull it back."
+            },
+            {
+              "q": "You must choose online vs. offline RL for three settings: (a) a board game with a fast, accurate simulator; (b) a sepsis-treatment policy to be learned from 10 years of ICU records; (c) a warehouse robot with a cordoned-off area where it can safely practice. Which assignment is correct?",
+              "choices": [
+                "(a) offline, (b) online, (c) offline",
+                "(a) online, (b) offline, (c) online",
+                "(a) offline, (b) offline, (c) online",
+                "(a) online, (b) online, (c) offline"
+              ],
+              "answer": 1,
+              "explain": "The deciding question is whether the agent can safely and affordably explore. A fast simulator (a) and a safe practice area (c) make exploration available, favoring online; sepsis treatment (b) cannot be experimented on real patients and already has a large logged dataset, the canonical offline case."
+            },
+            {
+              "q": "An offline learner is trained on hospital records containing only treatments A and B, never an untested drug C. A naive value method recommends C for every patient. What is the conservative-offline diagnosis and remedy?",
+              "choices": [
+                "C is in-distribution but underrewarded; raise its learning rate to fix the estimate",
+                "C is OOD with an unconstrained, inflated $Q$; a conservative method pushes its value down (or forbids straying to it), keeping the policy to A/B where evidence exists",
+                "The behavior policy was stochastic, so importance weights overcounted C; reweight the returns",
+                "C should be recommended because no data contradicts its high value"
+              ],
+              "answer": 1,
+              "explain": "With no $(s, C, r, s')$ transitions, $Q(s,C)$ is pure upward extrapolation, and the $\\max$ prefers C everywhere — a hallucination that can never be checked. CQL-style value penalization or a policy constraint distrusts unsupported actions, anchoring recommendations to A/B and yielding a policy that safely improves on logged practice."
+            },
+            {
+              "q": "Which statement most accurately captures the core lesson offline RL teaches about decision-making under uncertainty?",
+              "choices": [
+                "When you cannot gather more data, the safe move is pessimism about the unknown, not optimism",
+                "Uncertainty should always be resolved by exploring, regardless of the cost of mistakes",
+                "The right response to unseen actions is to assume they match the average value of seen actions",
+                "Pessimism is only appropriate when the dataset is small; large datasets justify optimism about OOD actions"
+              ],
+              "answer": 0,
+              "explain": "Because beliefs about unseen actions cannot be tested offline, an optimistic overestimate becomes a permanent, uncorrectable delusion the policy chases; pessimism about the unknown keeps the policy to improvements the data can justify. This principle echoes across robust ML and decision-making under uncertainty, independent of dataset size."
+            }
+          ],
           "flashcards": [
             {
               "front": "What is the offline (batch) RL setting?",
@@ -3487,7 +3753,140 @@
           "title": "Imitation Learning & Inverse RL",
           "minutes": 16,
           "content": "<h3>1. The hook: learning from demonstrations</h3>\n<p>Sometimes the easiest way to specify a behavior is not to design a reward but to <em>show</em> what good looks like: an expert drives the car, flies the drone, or plays the game, and the agent learns to imitate. <strong>Imitation learning</strong> turns expert demonstrations into a policy — sidestepping the notoriously hard problem of hand-crafting a reward function that captures what you actually want.</p>\n\n<h3>2. Behavioral cloning: imitation as supervised learning</h3>\n<p>The simplest approach, <strong>behavioral cloning (BC)</strong>, treats imitation as plain supervised learning: collect demonstration pairs (state $\\to$ expert action) and train a classifier/regressor to map states to the expert's actions. It is simple, stable, and needs no environment interaction or reward — just demonstrations. For many tasks with abundant data covering the relevant states, BC works remarkably well.</p>\n\n<h3>3. The fatal flaw: compounding errors</h3>\n<p>BC has a subtle, serious weakness: <strong>covariate shift</strong>. The policy is trained only on states the expert visited, but at deployment the agent acts on <em>its own</em> states. A small mistake takes it slightly off the expert's trajectory into a state it never saw in training — where its next action is even worse, pushing it further off — and errors <strong>compound</strong>. Whereas a supervised classifier's errors grow linearly with the number of decisions, BC's errors can grow <em>quadratically</em> in the episode length, because each mistake changes the future inputs. The agent drifts into uncharted territory and has no idea how to recover.</p>\n<div class=\"callout\">\n<div class=\"c-tag\">Intuition</div>\n<p>Learning to drive only by watching a perfect driver, you never see how to recover from the edge of the lane — because the expert was never there. Your first small drift takes you somewhere the demonstrations never covered, and you have no idea how to get back.</p>\n</div>\n\n<h3>4. DAgger: fixing the distribution mismatch</h3>\n<p><strong>DAgger</strong> (Dataset Aggregation) repairs covariate shift by collecting demonstrations on the <em>agent's own</em> states: run the current policy, and have the expert label the correct action for each state the agent actually visited (including its mistakes), then add these to the dataset and retrain. Iterating this aligns the training distribution with the deployment distribution, teaching the agent how to recover from its own errors. The cost is that it needs an <em>interactive</em> expert who can be queried on new states — not always available.</p>\n\n<h3>5. Inverse RL: recover the reward, not the actions</h3>\n<p><strong>Inverse reinforcement learning (IRL)</strong> takes a deeper route: rather than copying actions, it infers the <em>reward function</em> the expert appears to be optimizing, then runs ordinary RL on that recovered reward. The bet is that the reward is a more <strong>compact and transferable</strong> description of the task than the surface behavior. A reward learned from expert driving (\"stay centered, avoid collisions, make progress\") can generalize to new roads and situations the demonstrations never showed — whereas cloned actions cannot.</p>\n\n<h3>6. Why IRL can beat behavioral cloning</h3>\n<p>The contrast is about <em>what is learned</em>. BC learns a mapping from seen states to actions, so it fails off-distribution. IRL learns <em>why</em> the expert acts — the objective — which an RL agent can then optimize even in novel states, giving robustness to distribution shift and the ability to outperform the demonstrator in places the demos didn't cover. The price is that IRL is harder and more expensive (it solves an RL problem in the inner loop, and the reward is under-determined by behavior). Modern adversarial methods like <strong>GAIL</strong> blend the ideas: a discriminator learns to tell expert from agent trajectories, providing a reward-like signal that the policy is trained to fool — imitation without explicitly recovering a reward.</p>\n\n<h3>7. Worked intuition</h3>\n<p>Teach a robot to pour water. <strong>BC</strong> memorizes the exact joint trajectories of demonstrations and will fail if the cup starts in a new position the demos didn't include. <strong>IRL</strong> instead infers the <em>goal</em> (\"get liquid into the cup without spilling\"); an RL agent optimizing that goal handles new cup positions, because it understands the objective rather than the specific motions. Same demonstrations, but learning the intent generalizes where copying the motion does not.</p>\n\n<h3>8. Why this matters</h3>\n<p>Imitation learning is how we program behavior that is easy to demonstrate but hard to reward-engineer — a huge fraction of robotics, autonomous driving, and increasingly the alignment of large models. In fact, <strong>RLHF</strong> (reinforcement learning from human feedback) is a cousin of these ideas: it learns a reward model from human preference data and optimizes it, exactly the IRL-flavored move of inferring an objective from human behavior rather than hand-coding it. Knowing BC's covariate-shift failure and IRL's reward-transfer advantage is essential to using demonstrations well.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "Behavioral cloning is best characterized as which kind of learning problem?",
+              "choices": [
+                "A supervised learning problem: fit a map from states to expert actions",
+                "An unsupervised clustering of expert trajectories",
+                "An online RL problem that maximizes a known reward via environment interaction",
+                "A planning problem that searches the state space for the optimal path"
+              ],
+              "answer": 0,
+              "explain": "BC treats demonstration pairs (state → expert action) as a labeled dataset and trains a classifier/regressor — plain supervised learning, with no reward and no environment interaction. The RL option is the classic confusion BC is precisely defined to avoid."
+            },
+            {
+              "q": "A supervised classifier that errs with probability $\\epsilon$ per decision makes $\\sim\\epsilon T$ mistakes over $T$ i.i.d. examples. Roughly how does a behavioral-cloning policy's total error scale with horizon $T$, and why?",
+              "choices": [
+                "$O(\\epsilon T)$, because each decision is independent of the others",
+                "$O(\\epsilon \\log T)$, because errors partially cancel over long episodes",
+                "$O(\\epsilon T^2)$, because each mistake shifts the future state distribution, inducing cascades up to $O(T)$ steps long",
+                "$O(\\epsilon^2 T)$, because two independent errors must coincide to cause failure"
+              ],
+              "answer": 2,
+              "explain": "Because the agent's action determines its next state, a single mistake pushes it off-distribution where further mistakes are likelier; each of the $\\sim\\epsilon T$ initial errors can trigger a cascade of up to $O(T)$ steps, giving $O(\\epsilon T^2)$. The $O(\\epsilon T)$ option wrongly assumes the i.i.d. independence that BC violates."
+            },
+            {
+              "q": "What precisely is the 'covariate shift' that makes behavioral cloning fragile?",
+              "choices": [
+                "The expert's actions drift over the course of a single demonstration",
+                "The reward function changes between training and deployment",
+                "The labels (expert actions) are noisy and inconsistent across demonstrations",
+                "The state distribution at deployment (states the agent visits) differs from the state distribution in training (states the expert visited)"
+              ],
+              "answer": 3,
+              "explain": "Covariate shift is a mismatch in the input (state) distribution: BC trains on expert-visited states but acts on its own states. It is about inputs, not noisy labels or a changing reward — BC has no reward at all."
+            },
+            {
+              "q": "DAgger differs from plain behavioral cloning primarily in that it:",
+              "choices": [
+                "Collects new expert labels on states the current policy actually visits, then aggregates and retrains",
+                "Replaces the expert's actions with rewards inferred by inverse RL",
+                "Trains a discriminator to distinguish expert from agent trajectories",
+                "Reweights the original demonstrations to emphasize rare expert actions"
+              ],
+              "answer": 0,
+              "explain": "DAgger (Dataset Aggregation) runs the current policy, has an interactive expert label the agent's visited states, adds them to the dataset, and retrains — aligning training with deployment. The discriminator description is GAIL; inferring rewards is IRL."
+            },
+            {
+              "q": "You can only learn from a fixed, historical recording of an expert pilot who is no longer reachable. Which method is fundamentally INAPPLICABLE here?",
+              "choices": [
+                "Inverse RL on the recorded trajectories",
+                "Behavioral cloning on the recorded pairs",
+                "DAgger",
+                "GAIL using the recorded trajectories as the expert set"
+              ],
+              "answer": 2,
+              "explain": "DAgger requires an interactive expert that can be queried for correct actions on new, agent-visited states; with only a static recording there is no way to obtain those fresh labels. BC, IRL, and GAIL all work from a fixed demonstration set."
+            },
+            {
+              "q": "What does inverse reinforcement learning (IRL) try to recover from demonstrations?",
+              "choices": [
+                "A direct state→action policy that mimics the expert",
+                "A value function $v(s)$ computed by Monte Carlo over the demos",
+                "A reward function the expert appears to be optimizing, which RL then maximizes",
+                "A transition model $p(s'\\mid s,a)$ of the environment"
+              ],
+              "answer": 2,
+              "explain": "IRL infers the reward the expert is optimizing and then runs ordinary RL on that recovered reward. Learning a direct policy is BC; IRL deliberately recovers the objective ('why'), not the surface actions."
+            },
+            {
+              "q": "Why can an IRL-based agent sometimes generalize to off-distribution states where a behavioral-cloning policy fails?",
+              "choices": [
+                "IRL trains on far more demonstrations than BC requires",
+                "IRL's recovered reward is defined over all states, so RL can compute good actions even in states the demos never showed",
+                "IRL memorizes the expert's exact trajectories with higher fidelity",
+                "IRL avoids any environment interaction, eliminating distribution shift"
+              ],
+              "answer": 1,
+              "explain": "A recovered reward is a global objective defined everywhere, so an RL agent can derive sensible actions in novel states by optimizing return. BC only stores state→action mappings for seen states, so it has no response off-distribution; and IRL actually requires more interaction (an inner RL loop), not less."
+            },
+            {
+              "q": "A claim states: 'Since behavioral cloning learns directly from a near-optimal expert, with enough data it will reliably surpass the expert's performance.' What is wrong with this claim?",
+              "choices": [
+                "BC can only surpass the expert if trained with a discount factor $\\gamma < 1$",
+                "Nothing is wrong; more data always pushes BC past the demonstrator",
+                "BC needs the reward function to exceed the expert, which it never has",
+                "BC has no notion of reward and only reproduces demonstrated behavior, so its performance ceiling is roughly the demonstrator's level"
+              ],
+              "answer": 3,
+              "explain": "BC merely copies demonstrated state→action behavior and lacks any reward to judge better-but-undemonstrated actions, so it is capped near the demonstrator. Methods that infer or stitch toward higher return (IRL, RL) are what can exceed the expert."
+            },
+            {
+              "q": "GAIL (Generative Adversarial Imitation Learning) blends imitation and IRL ideas by:",
+              "choices": [
+                "Explicitly recovering a reward function, then solving the MDP exactly with value iteration",
+                "Asking an interactive expert to relabel the agent's visited states each round",
+                "Training a discriminator to tell expert from agent trajectories and using its signal as a reward the policy is trained to fool",
+                "Supervised-fitting the expert actions, then fine-tuning with PPO on the true reward"
+              ],
+              "answer": 2,
+              "explain": "GAIL uses a discriminator as a learned reward-like signal that the policy learns to fool, matching expert behavior without explicitly recovering a reward. Explicit reward recovery is classical IRL; relabeling visited states is DAgger."
+            },
+            {
+              "q": "Why is RLHF (RL from human feedback) described as a cousin of inverse RL rather than of behavioral cloning?",
+              "choices": [
+                "It learns a reward model from human preference data and then optimizes it, inferring an objective from human behavior",
+                "It clones human-written responses token-by-token with supervised learning",
+                "It requires an interactive human to relabel every state the model visits",
+                "It searches the environment dynamics to plan optimal responses"
+              ],
+              "answer": 0,
+              "explain": "RLHF fits a reward model from human preferences and runs RL on it — the IRL-flavored move of inferring an objective from human behavior rather than hand-coding a reward. Cloning responses directly would be the BC analogue."
+            },
+            {
+              "q": "An autonomous-driving demonstration set contains only smooth, lane-centered highway driving — no examples of recovering from drifting toward the shoulder. What is the most likely failure mode of a behavioral-cloning policy, and the underlying cause?",
+              "choices": [
+                "It overfits the reward and drives too cautiously; cause is reward mis-specification",
+                "It crashes immediately at the start because it never sees the initial state; cause is poor initialization",
+                "It drives well until a small drift takes it to an unseen near-shoulder state, then acts poorly and drifts further; cause is covariate shift",
+                "It explores the shoulder to gather data; cause is excessive exploration"
+              ],
+              "answer": 2,
+              "explain": "The near-shoulder recovery states are absent from training, so once the policy drifts there it has no learned response, acts poorly, and drifts further — the compounding-error cascade of covariate shift. BC has no reward, so reward mis-specification is irrelevant."
+            },
+            {
+              "q": "Which statement most accurately captures a genuine DISADVANTAGE of IRL relative to behavioral cloning?",
+              "choices": [
+                "IRL cannot generalize to states outside the demonstration distribution",
+                "IRL is harder and costlier — it solves an RL problem in an inner loop, and the reward is under-determined by behavior",
+                "IRL requires an interactive expert that BC does not",
+                "IRL ignores the demonstrations entirely and relies only on a hand-coded reward"
+              ],
+              "answer": 1,
+              "explain": "IRL's price is computational and statistical: it embeds an RL problem in its inner loop and the reward is under-determined (many rewards explain the same behavior). Better off-distribution generalization is an IRL advantage, not a drawback, and it does not need an interactive expert."
+            }
+          ],
           "flashcards": [
             {
               "front": "What is behavioral cloning (BC)?",

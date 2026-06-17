@@ -40,8 +40,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    lessons to 12 MCQs (+36; LA topic now 228 / site 1,704) — Linear Algebra fully complete again.
    ✅ iter 96: Algorithms → new "Advanced Algorithms & Analysis" module. ✅ iter 97: all 3 advanced-algo lessons to 12 MCQs
    (+36; algo topic now 276 / site 1,740) — Algorithms fully complete again.
-   ✅ iter 99: Reinforcement Learning → new "Model-Based, Offline & Imitation RL" module (the LAST of the six) — MCQs
-   deferred (add via pipeline next). deepen-the-six is now COMPLETE.
+   ✅ iter 99: Reinforcement Learning → new "Model-Based, Offline & Imitation RL" module (the LAST of the six).
+   ✅ iter 100: all 3 RL frontier lessons to 12 MCQs (+36; RL topic now 240 / site 1,776). deepen-the-six is COMPLETE,
+   and EVERY one of the 148 lessons now has exactly 12 MCQs.
    POST-ARC: the loop returns to the broad compass — more deeper-dives on hard concepts, UI/UX & animation polish,
    onboarding, more achievements/gamification, new functionality, and topping up any new lessons' MCQs.
    (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
