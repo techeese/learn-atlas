@@ -3525,6 +3525,50 @@
               ],
               "answer": 1,
               "explain": "Prediction error stays high on anything stochastic and unlearnable, so a source of pure noise gives an endless novelty bonus and hypnotizes the agent. Encoding states into learned features that capture only action-relevant structure filters out this irreducible noise — that is precisely why ICM predicts in feature space, not pixel space."
+            },
+            {
+              "q": "What is the exploration–exploitation tradeoff?",
+              "choices": [
+                "Exploit known-good actions to cash in reward, vs explore lesser-known actions to gain information — a pure-greedy agent can lock onto a mediocre option forever because it never gathers the evidence to overturn its belief",
+                "Whether to use a model of the environment or learn model-free",
+                "Whether to update value estimates online or wait until the episode ends",
+                "Whether to represent the policy deterministically or stochastically"
+              ],
+              "answer": 0,
+              "explain": "Because the agent generates its own data, an action it never tries is a reward it can never learn about. Exploiting maximizes reward given current beliefs; exploring spends a turn on information that may reveal something better. Balancing the two is the defining tension of RL."
+            },
+            {
+              "q": "What is the $\\varepsilon$-greedy exploration strategy?",
+              "choices": [
+                "Always pick the action with the highest estimated value",
+                "Pick actions with probability proportional to their estimated value",
+                "Act greedily with probability $1-\\varepsilon$ and pick a uniformly random action with probability $\\varepsilon$ — simple, but \"blind\" (it explores by coin-flip, treating barely-tried and well-tested actions identically)",
+                "Add an optimism bonus to every under-tried action"
+              ],
+              "answer": 2,
+              "explain": "$\\varepsilon$-greedy is the first scheme everyone learns and works surprisingly well, but it explores blindly: it keeps wasting exploration on options already shown to be bad, because it ignores how uncertain each action's value is."
+            },
+            {
+              "q": "In a multi-armed bandit, what does <em>regret</em> measure?",
+              "choices": [
+                "The total reward collected over $T$ steps",
+                "The cumulative reward lost relative to an oracle that always played the best arm — $L_T=\\sum_t\\big(q_*-q_*(A_t)\\big)$; lower is better, and a good algorithm makes it grow <em>sublinearly</em> in $T$",
+                "The variance of the reward distribution",
+                "The probability of pulling the wrong arm on the final step"
+              ],
+              "answer": 1,
+              "explain": "Raw reward is hard to compare across problems, so we measure the gap to a perfect oracle. Sublinear regret ($L_T/T\\to0$) means the agent eventually plays optimally almost all the time — the hallmark of a good exploration strategy."
+            },
+            {
+              "q": "What is the core idea behind UCB (Upper Confidence Bound) exploration?",
+              "choices": [
+                "Pick the arm with the lowest estimated value, to gather information",
+                "Pick a uniformly random arm at every step",
+                "Pick the arm that has been pulled the fewest times, regardless of its value",
+                "\"Optimism in the face of uncertainty\": pick the arm with the highest <em>upper confidence bound</em> $\\hat Q(a)+c\\sqrt{\\ln t/N(a)}$ — favoring arms that are either high-value or under-explored, and exploring less as evidence accumulates"
+              ],
+              "answer": 3,
+              "explain": "UCB adds an exploration bonus that shrinks as an arm is pulled more. It tries arms that <em>could plausibly</em> be best given current uncertainty — directed exploration, unlike $\\varepsilon$-greedy's blind coin flip — which earns it logarithmic (sublinear) regret."
             }
           ],
           "flashcards": [
@@ -3715,6 +3759,50 @@
               ],
               "answer": 1,
               "explain": "Reusing transitions can genuinely cut the number of environment steps, but off-policy bootstrapping (deadly-triad effects, stale data) tends to be more brittle and harder to tune, so the gain comes with a stability cost rather than being a free lunch. The absolute claims in the other options ignore this real-world trade-off."
+            },
+            {
+              "q": "What is <em>reward hacking</em>?",
+              "choices": [
+                "When the learning rate is set too high and the loss diverges",
+                "When the discount factor is too small to value future reward",
+                "When the replay buffer overflows and old transitions are lost",
+                "When the agent maximizes the <em>literal</em> reward while violating your intent — finding a high-return loophole you never imagined (e.g. the boat that circles to farm respawning pickups instead of finishing the race)"
+              ],
+              "answer": 3,
+              "explain": "The agent optimizes exactly what you wrote, not what you meant. A capable optimizer will find any high-return trajectory, so the question is never \"would a reasonable agent do this?\" but \"does the math forbid it?\" — treat the reward like a contract a ruthless lawyer will exploit."
+            },
+            {
+              "q": "What is the tradeoff between <em>sparse</em> and <em>dense</em> rewards?",
+              "choices": [
+                "Sparse rewards always train faster than dense rewards",
+                "Sparse rewards (e.g. +1 only at the goal) are unambiguous about intent but give little learning signal (brutal credit assignment over many zero steps); dense rewards give feedback every step but invite baked-in wrong assumptions and are where most reward hacking is born",
+                "Dense rewards are mathematically guaranteed never to be hacked",
+                "Sparse and dense rewards always induce the same optimal policy"
+              ],
+              "answer": 1,
+              "explain": "Sparse = honest about the goal but hard to learn from; dense = easy to learn from but risky, because you're encoding your own (often wrong) idea of <em>how</em> to solve the task. Potential-based shaping is the one provably safe way to densify without changing the optimal policy."
+            },
+            {
+              "q": "What does <em>sample efficiency</em> mean in RL?",
+              "choices": [
+                "How fast the algorithm runs in wall-clock time on a GPU",
+                "The number of parameters in the policy network",
+                "How much performance the agent gains per unit of <em>environment interaction</em> (samples) — the metric that matters most when each real-world step is slow or costly",
+                "The fraction of the reward that is intrinsic rather than extrinsic"
+              ],
+              "answer": 2,
+              "explain": "Sample efficiency is about data, not compute: an algorithm that reaches a target in fewer environment steps is more sample-efficient even if it costs more GPU time per step. It's decisive on real robots or any setting where collecting experience is the bottleneck."
+            },
+            {
+              "q": "What distinguishes <em>model-free</em> from <em>model-based</em> RL?",
+              "choices": [
+                "Model-free methods learn values or a policy directly from experience with no model of the world; model-based methods learn the dynamics $\\hat p(s'\\mid s,a)$ and plan against them — usually more sample-efficient, but limited by model error",
+                "Model-free methods require a simulator; model-based methods do not",
+                "Model-based methods can only be used with discrete action spaces",
+                "They are two names for the same approach"
+              ],
+              "answer": 0,
+              "explain": "Model-based RL can squeeze more learning from each interaction by planning in a learned model — but if the environment is hard to model, errors compound (the \"Dyna trap\") and it can underperform a simple model-free baseline. The choice hinges on how learnable the dynamics are."
             }
           ],
           "flashcards": [
@@ -3910,6 +3998,50 @@
               ],
               "answer": 3,
               "explain": "The negative-log-likelihood SFT objective only ever increases the probability of the demonstrated tokens; it gives no signal to suppress a fluent-but-wrong completion, so more demonstrations cannot directly down-weight bad outputs. RL optimizes an answer-level scalar objective, letting it trade off tokens to raise quality and explicitly penalize undesirable generations — the other options misattribute the gap to overfitting, context length, or variance."
+            },
+            {
+              "q": "What makes reinforcement learning different \"in kind\" from supervised and unsupervised learning?",
+              "choices": [
+                "RL simply uses larger neural networks",
+                "Evaluative (not instructive) feedback, sequential credit assignment across time, and the agent controlling its own data distribution — together they make RL a different discipline, not just a harder regression",
+                "RL never uses gradient descent",
+                "RL always requires a perfect model of the environment"
+              ],
+              "answer": 1,
+              "explain": "Supervised learning gets the right answer for each input from a fixed dataset; RL only gets a <em>score</em>, rewards can be delayed, and the policy's own actions determine the next data — breaking the i.i.d. assumption. \"The data distribution depends on the model\" is the single fact behind most hard RL problems."
+            },
+            {
+              "q": "In LLM post-training, what is the core difference between supervised fine-tuning (SFT) and RL?",
+              "choices": [
+                "They are identical; \"RL\" is just a newer name for fine-tuning",
+                "SFT improves a policy by consequence, while RL clones demonstrations",
+                "SFT needs a reward model, while RL needs labeled $(x,y^\\star)$ pairs",
+                "SFT teaches by <em>example</em> (imitate demonstrated answers — its ceiling is demo quality, and it can't say which of two answers is better); RL teaches by <em>consequence</em> (raise the probability of higher-scoring whole answers and push down bad ones)"
+              ],
+              "answer": 3,
+              "explain": "SFT is pure next-token imitation — it can only increase the probability of demonstrated sequences, never down-weight a bad-but-fluent one. RL optimizes a scalar objective over whole generations, so it can express comparative preferences and penalize undesirable outputs. SFT clones a policy; RL improves one."
+            },
+            {
+              "q": "In RLHF, what is the <em>reward model</em>?",
+              "choices": [
+                "A model trained on human <em>preference comparisons</em> (A is better than B) that scores a response, providing the scalar reward the RL stage then optimizes — needed because open-ended quality has no single \"correct\" label",
+                "The environment's built-in reward function, handed to you",
+                "A model that predicts the next state from the current state and action",
+                "The discount factor applied to future rewards"
+              ],
+              "answer": 0,
+              "explain": "Because you can't write a ground-truth label for \"a good answer,\" RLHF learns a reward model from human rankings of competing responses, then uses RL (e.g. PPO) to push the policy toward responses the reward model scores highly — turning comparative human judgment into an optimizable signal."
+            },
+            {
+              "q": "What is <em>offline</em> RL?",
+              "choices": [
+                "RL that runs without a GPU",
+                "RL that ignores rewards entirely",
+                "Learning a policy from a <em>fixed, previously-collected</em> dataset with no further environment interaction — valuable when live exploration is unsafe or costly (e.g. healthcare), but it must guard against overvaluing actions that are absent from the data",
+                "RL where the reward arrives only at the very end of an episode"
+              ],
+              "answer": 2,
+              "explain": "Offline RL decouples learning from data collection entirely. It is strictly more powerful than behavior cloning (it can improve on the logging policy), but naive Q-learning over-estimates out-of-distribution actions it can't verify — so methods constrain the policy to stay near the data's support."
             }
           ],
           "flashcards": [

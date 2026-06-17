@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 185: MCQ arc → Reinforcement Learning·Practice & Frontiers 12→16 (+12, bank →2,200 ★). All 3 lessons
+   (exploration/practical-rl/connections-frontiers). RL 6/7 modules — only Advanced left. Adversarial agent ALL PASS;
+   positions balanced 3/3/3/3 (distinct patterns); render "of 16" errs=0; SW →v128. RL REMAINING (arc): advanced(3).
+   Then LLMs, Prob & Stats.
    ✅ iter 184: Honest "cards due" + capped new-card Daily Review (UI/UX+correctness — non-content). 390px mobile audit
    (6 complex views) = mobile solid; surfaced a real bug: fresh profile showed "887 cards due" & review queued all 889.
    Fix: cardState() new/due/later + stats.reviewDue; dashboard/CTA/palette use reviewDue (fresh=0); Daily Review =

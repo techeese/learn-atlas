@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 185 — MCQ arc → Reinforcement Learning · Practice & Frontiers 12 → 16 (content — owner's #1 ask)
+The arc continues through RL's *Exploration, Practice & Connections* module. All **three** lessons go 12 → 16 (**+12,
+bank 2,188 → 2,200**), stating the bedrock the existing 12 assumed:
+- **Exploration**: the explore–exploit tradeoff / what *ε-greedy* is / what *regret* measures / UCB's "optimism under
+  uncertainty" principle.
+- **Practical RL**: what *reward hacking* is / the *sparse vs dense* reward tradeoff / what *sample efficiency* means /
+  *model-free vs model-based*.
+- **Connections & Frontiers**: RL's three distinguishing features (evaluative feedback, credit assignment, the agent
+  controls its own data) / *SFT vs RL* (teach by example vs by consequence) / what the RLHF *reward model* is / what
+  *offline RL* is.
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,200 MCQs** (★ bank crossed 2,200; no
+  bias note); direct key-dump confirms answer indices map to the intended choices, **balanced 3/3/3/3** with three
+  *distinct* per-lesson patterns (0,2,1,3 / 3,1,2,0 / 1,3,0,2); an independent adversarial fact-check agent returned
+  **ALL PASS**; render-checks on the (KaTeX-heavy) Exploration and Connections quizzes → `errs=0 | "Question 1 of 16"
+  | rawDollars=0 kErr=0`; all-routes smoke (10) `errs=0`. SW cache **v127 → v128**; README 2,188 → 2,200. RL now
+  **6/7 modules at 16** — only the *Advanced* module remains before RL completes.
+
 ## iter 184 — Honest "cards due" + capped new-card intake in Daily Review (UI/UX + correctness)
 A **390px mobile audit** (the release gate, not dedicated in a while) swept the newest/most-complex views — TD-MC &
 positional-encoding labs, the command palette, Knowledge Map, test, dashboard — and confirmed mobile is **solid**
