@@ -1109,6 +1109,50 @@
               ],
               "answer": 2,
               "explain": "Apply $B$ first then $A$ means $A(B\\mathbf{x}) = (AB)\\mathbf{x}$, so the composite matrix is $AB$ with the first-applied map on the right; matrix multiplication is generally not commutative, so order matters."
+            },
+            {
+              "q": "Which $2\\times 2$ matrix represents the transformation that leaves every vector exactly where it is (sends each $\\mathbf{x}$ to itself)?",
+              "choices": [
+                "$\\begin{bmatrix} 0 & 0 \\\\ 0 & 0 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 1 & 1 \\\\ 1 & 1 \\end{bmatrix}$"
+              ],
+              "answer": 1,
+              "explain": "The identity matrix $I=\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$ has the standard basis vectors as its columns, so $I\\mathbf{x}=\\mathbf{x}$ for every $\\mathbf{x}$. The zero matrix collapses everything to the origin, and $\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$ swaps coordinates (a reflection across the line $y=x$)."
+            },
+            {
+              "q": "Which matrix reflects every vector across the $x$-axis (keeping its $x$-coordinate, negating its $y$-coordinate)?",
+              "choices": [
+                "$\\begin{bmatrix} -1 & 0 \\\\ 0 & 1 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 1 & 0 \\\\ 0 & -1 \\end{bmatrix}$",
+                "$\\begin{bmatrix} -1 & 0 \\\\ 0 & -1 \\end{bmatrix}$"
+              ],
+              "answer": 2,
+              "explain": "Reflecting across the $x$-axis sends $\\begin{bmatrix}x\\\\y\\end{bmatrix}\\mapsto\\begin{bmatrix}x\\\\-y\\end{bmatrix}$. Reading off the images of the basis vectors, $\\mathbf{e}_1\\mapsto\\mathbf{e}_1$ and $\\mathbf{e}_2\\mapsto-\\mathbf{e}_2$, giving columns $\\begin{bmatrix}1\\\\0\\end{bmatrix}$ and $\\begin{bmatrix}0\\\\-1\\end{bmatrix}$. $\\begin{bmatrix}-1&0\\\\0&1\\end{bmatrix}$ reflects across the $y$-axis; $\\begin{bmatrix}-1&0\\\\0&-1\\end{bmatrix}$ is a $180^\\circ$ rotation."
+            },
+            {
+              "q": "Which property must hold for $\\textbf{every}$ linear transformation $T$?",
+              "choices": [
+                "$T(\\mathbf{0})=\\mathbf{0}$ — it must send the zero vector to the zero vector",
+                "$T$ must be invertible",
+                "$T$ must preserve the length of every vector",
+                "$T$ must map the unit square to another square"
+              ],
+              "answer": 0,
+              "explain": "Linearity requires $T(c\\mathbf{x})=cT(\\mathbf{x})$; taking $c=0$ forces $T(\\mathbf{0})=\\mathbf{0}$, so a linear map always fixes the origin. This is exactly why a translation $\\mathbf{x}\\mapsto\\mathbf{x}+\\mathbf{b}$ (with $\\mathbf{b}\\neq\\mathbf{0}$) is $\\textit{not}$ linear. Invertibility, length-preservation, and square-preservation hold only for special maps, not all linear ones."
+            },
+            {
+              "q": "What does the matrix $\\begin{bmatrix} 1 & k \\\\ 0 & 1 \\end{bmatrix}$ (with $k\\neq 0$) do to the plane?",
+              "choices": [
+                "Scales every vector by the factor $k$",
+                "Rotates the plane by an angle of $k$ radians",
+                "Reflects vectors across the line $y=kx$",
+                "Shears horizontally — slides points sideways by an amount proportional to their height $y$, leaving the $x$-axis fixed"
+              ],
+              "answer": 3,
+              "explain": "Applying it gives $\\begin{bmatrix}x+ky\\\\y\\end{bmatrix}$: the $y$-coordinate is unchanged while $x$ is shifted by $ky$. Points on the $x$-axis ($y=0$) stay put, and points higher up slide farther — a horizontal shear. Its determinant is $1$, so it preserves area even though it distorts shapes."
             }
           ],
           "flashcards": [
@@ -1300,6 +1344,50 @@
               ],
               "answer": 0,
               "explain": "The identity matrix represents the do-nothing transformation (each $\\mathbf{e}_i \\mapsto \\mathbf{e}_i$), and composing any map with the identity leaves it unchanged. The determinant or symmetry facts are true of $I$ but are not the reason it acts as a multiplicative identity."
+            },
+            {
+              "q": "If $A$ and $B$ are matrices whose product $AB$ is defined, what is $(AB)^{\\mathsf{T}}$?",
+              "choices": [
+                "$A^{\\mathsf{T}}B^{\\mathsf{T}}$",
+                "$AB$ — transposing a product changes nothing",
+                "$B^{\\mathsf{T}}A^{\\mathsf{T}}$",
+                "$(BA)^{\\mathsf{T}}$"
+              ],
+              "answer": 2,
+              "explain": "Transposing a product reverses the order: $(AB)^{\\mathsf{T}}=B^{\\mathsf{T}}A^{\\mathsf{T}}$. The flip is forced by the dimensions — if $A$ is $m\\times n$ and $B$ is $n\\times p$, then $A^{\\mathsf{T}}B^{\\mathsf{T}}$ ($n\\times m$ times $p\\times n$) isn't even defined, whereas $B^{\\mathsf{T}}A^{\\mathsf{T}}$ ($p\\times n$ times $n\\times m$) is."
+            },
+            {
+              "q": "How is the entry in row $i$, column $j$ of the product $AB$ computed?",
+              "choices": [
+                "Multiply the $(i,j)$ entry of $A$ by the $(i,j)$ entry of $B$",
+                "Sum all entries in row $i$ of $A$ and all entries in column $j$ of $B$",
+                "Take the dot product of column $i$ of $A$ with row $j$ of $B$",
+                "Take the dot product of row $i$ of $A$ with column $j$ of $B$"
+              ],
+              "answer": 3,
+              "explain": "$(AB)_{ij}=\\sum_k A_{ik}B_{kj}$ — the dot product of the $i$-th $\\textit{row}$ of $A$ with the $j$-th $\\textit{column}$ of $B$. This is precisely why the inner dimensions must match: that row and that column must have equal length. Multiplying matching entries (the first option) is the Hadamard product, a different operation."
+            },
+            {
+              "q": "For the power $A^2 = A\\,A$ to make sense, what must be true of $A$?",
+              "choices": [
+                "$A$ must be a single row or column vector",
+                "$A$ must be square (same number of rows as columns)",
+                "$A$ must be invertible",
+                "Any matrix $A$ works — just square each entry"
+              ],
+              "answer": 1,
+              "explain": "$A^2=A\\,A$ needs the number of columns of the left $A$ to equal the number of rows of the right $A$, i.e. $A$ is $n\\times n$. A non-square matrix cannot be multiplied by itself. (Squaring each entry would be the entrywise/Hadamard square $A\\circ A$, an unrelated operation.) Invertibility is not required."
+            },
+            {
+              "q": "Suppose the product $AB$ is the zero matrix. Does it follow that $A=0$ or $B=0$?",
+              "choices": [
+                "No — there exist nonzero matrices whose product is the zero matrix",
+                "Yes, always — just as with real numbers, a zero product needs a zero factor",
+                "Yes, but only when $A$ and $B$ are both square",
+                "Only if $A$ and $B$ commute"
+              ],
+              "answer": 0,
+              "explain": "Matrices have zero divisors. For instance $\\begin{bmatrix}1&0\\\\0&0\\end{bmatrix}\\begin{bmatrix}0&0\\\\0&1\\end{bmatrix}=\\begin{bmatrix}0&0\\\\0&0\\end{bmatrix}$, yet neither factor is zero. So the familiar 'a product is zero only if a factor is zero' rule from real numbers $\\textit{fails}$ for matrices — regardless of whether they are square or commute."
             }
           ],
           "flashcards": [
@@ -1495,6 +1583,50 @@
               ],
               "answer": 1,
               "explain": "Since $A\\mathbf{x}=LU\\mathbf{x}=\\mathbf{b}$, set $U\\mathbf{x}=\\mathbf{y}$ so $L\\mathbf{y}=\\mathbf{b}$; solve the lower-triangular system first by forward substitution, then the upper-triangular one by back substitution. Forming $A^{-1}$ is the discouraged, more expensive route, and the order of the triangular solves cannot be swapped."
+            },
+            {
+              "q": "What is the inverse of $A=\\begin{bmatrix} 1 & 2 \\\\ 0 & 1 \\end{bmatrix}$?",
+              "choices": [
+                "$\\begin{bmatrix} 1 & 2 \\\\ 0 & 1 \\end{bmatrix}$ — $A$ is its own inverse",
+                "$\\begin{bmatrix} -1 & -2 \\\\ 0 & -1 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 1 & 0 \\\\ -2 & 1 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 1 & -2 \\\\ 0 & 1 \\end{bmatrix}$"
+              ],
+              "answer": 3,
+              "explain": "Using $\\begin{bmatrix}a&b\\\\c&d\\end{bmatrix}^{-1}=\\frac{1}{ad-bc}\\begin{bmatrix}d&-b\\\\-c&a\\end{bmatrix}$ with $ad-bc=1$ gives $\\begin{bmatrix}1&-2\\\\0&1\\end{bmatrix}$. Intuitively $A$ is a horizontal shear by $+2$, so its inverse shears by $-2$. Check: $\\begin{bmatrix}1&2\\\\0&1\\end{bmatrix}\\begin{bmatrix}1&-2\\\\0&1\\end{bmatrix}=\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$."
+            },
+            {
+              "q": "If $A$ and $B$ are invertible $n\\times n$ matrices, what is $(AB)^{-1}$?",
+              "choices": [
+                "$B^{-1}A^{-1}$",
+                "$A^{-1}B^{-1}$",
+                "$A^{-1}B$",
+                "$\\frac{1}{AB}$ — the entrywise reciprocal of $AB$"
+              ],
+              "answer": 0,
+              "explain": "Undoing $AB$ means reversing the last operation first: $(AB)^{-1}=B^{-1}A^{-1}$ (the 'socks and shoes' rule). Check: $(AB)(B^{-1}A^{-1})=A(BB^{-1})A^{-1}=AIA^{-1}=I$. The form $A^{-1}B^{-1}$ works only in the special case $AB=BA$, and a matrix inverse is never an entrywise reciprocal."
+            },
+            {
+              "q": "How many solutions can a system of linear equations $A\\mathbf{x}=\\mathbf{b}$ have?",
+              "choices": [
+                "Any nonnegative whole number, depending on the equations",
+                "Exactly $0$ or exactly $1$ — never more",
+                "Exactly $0$, exactly $1$, or infinitely many — but never a finite number greater than one",
+                "Always exactly one, as long as $A$ is square"
+              ],
+              "answer": 2,
+              "explain": "If a linear system had two distinct solutions $\\mathbf{x}_1\\neq\\mathbf{x}_2$, then every point on the line $\\mathbf{x}_1+t(\\mathbf{x}_2-\\mathbf{x}_1)$ would also satisfy it — instantly giving infinitely many. So the only possibilities are none (inconsistent), exactly one (unique), or infinitely many. A square $A$ guarantees uniqueness only when it is invertible."
+            },
+            {
+              "q": "Which statement about the homogeneous system $A\\mathbf{x}=\\mathbf{0}$ is always true?",
+              "choices": [
+                "It may be inconsistent (have no solution) when $A$ is not square",
+                "It is always consistent, because $\\mathbf{x}=\\mathbf{0}$ is always a solution",
+                "It always has exactly one solution",
+                "It has a nonzero solution for every matrix $A$"
+              ],
+              "answer": 1,
+              "explain": "Setting $\\mathbf{x}=\\mathbf{0}$ gives $A\\mathbf{0}=\\mathbf{0}$, so the trivial solution always works — a homogeneous system is $\\textit{never}$ inconsistent. Whether it has $\\textit{other}$ (nonzero) solutions depends on $A$: a free column (e.g. more unknowns than pivots) yields infinitely many, while a pivot in every column leaves only the trivial solution."
             }
           ],
           "flashcards": [

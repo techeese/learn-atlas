@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 135 — MCQ arc → Linear Algebra · Matrices 12 → 16 (content — owner's #1 ask)
+The 12→16 growth arc advances to LA's **Matrices** module. **+4 new MCQs each** to *Matrices as Linear Transformations*,
+*Matrix Multiplication*, and *Inverses & Systems* (**+12, bank 1,884 → 1,896**), all foundational angles the existing
+12 (mostly compute-and-trap) left unstated: the identity / reflection-across-x-axis matrices, the must-hold property
+$T(\mathbf{0})=\mathbf{0}$, the shear $\begin{bmatrix}1&k\\0&1\end{bmatrix}$; the transpose rule $(AB)^{\mathsf T}=B^{\mathsf T}A^{\mathsf T}$,
+the row·column entry definition, when $A^2$ is even defined, matrix zero-divisors ($AB=0\not\Rightarrow A=0$ or $B=0$);
+a concrete shear inverse, $(AB)^{-1}=B^{-1}A^{-1}$, the 0/1/∞ solution trichotomy, and why a homogeneous system is
+always consistent. Correct-answer positions shuffled across the batch ([1,2,0,3]/[2,3,1,0]/[3,0,2,1]).
+- **Verified**: byte-stable JSON round-trip (diff is +132 localized insertions only); `node gate.js` ALL GREEN (1,896 MCQs);
+  direct key-dump confirms the shuffled answer indices; an independent adversarial fact-check agent returned **ALL PASS**
+  (each answer recomputed from scratch, single-correct, KaTeX-safe, no duplication); render-check on the Matrices lesson
+  quiz → `errs=0 | QPROG="Question 1 of 16" | rawDollars=0 kErr=0` + screenshot read (matrices typeset). SW cache **v77 → v78**.
+- **Arc progress**: Algorithms ✓ (7/7 modules). Linear Algebra now **2/7** (foundations, matrices). Remaining LA:
+  structure(2), eigen(3), orthogonality(2), svd-applications(2), matrix-calculus(3); then Calc/DL/RL/LLM/PS.
+
 ## iter 134 — Dashboard "closest achievement" nudge (gamification)
 A gentle motivation hook on the dashboard: a gold-accented card that surfaces the **single locked achievement you're
 nearest to unlocking** — its icon, name, `cur / target`, a one-line description, and a thin progress bar — linking

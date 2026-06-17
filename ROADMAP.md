@@ -115,7 +115,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 134: dashboard "closest achievement" nudge (gamification) — gold card surfacing the nearest locked
    achievement (icon/name/cur·target/desc/bar), links to #/achievements; only shows once you've started toward one.
    Refactored `achProgressMap()` out of `viewAchievements` + added `nearestAchievement()`. SW cache →v77.
-   LA REMAINING: matrices(3), structure(2), eigen(3), orthogonality(2), svd-applications(2), matrix-calculus(3).
+   ✅ iter 135: MCQ arc → Linear Algebra·Matrices 12→16 (+12, bank →1,896). LA 2/7 modules (foundations, matrices).
+   Adversarial agent ALL PASS; positions shuffled; render-check "of 16" errs=0; SW cache →v78.
+   LA REMAINING: structure(2), eigen(3), orthogonality(2), svd-applications(2), matrix-calculus(3). Then Calc/DL/RL/LLM/PS.
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
