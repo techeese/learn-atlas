@@ -149,6 +149,50 @@
               ],
               "answer": 3,
               "explain": "With only evaluative feedback, the agent cannot know an action is best without trying alternatives, so always exploiting risks missing higher-reward actions (the exploration-exploitation trade-off). The other options misstate RL's feedback type, the loop structure, or wrongly assume offline solvability."
+            },
+            {
+              "q": "Which best describes what reinforcement learning is?",
+              "choices": [
+                "An agent learns by trial-and-error interaction with an environment, choosing actions to maximize cumulative reward — with no labeled dataset and no teacher supplying correct answers",
+                "Learning a mapping from labeled examples to their correct outputs",
+                "Finding clusters or latent structure in unlabeled data",
+                "Memorizing a fixed dataset of (situation, correct-action) pairs"
+              ],
+              "answer": 0,
+              "explain": "RL is the \"third paradigm\": no fixed dataset and no teacher, just an agent acting in an environment and receiving a scalar reward. It learns from <i>evaluative</i> feedback (how good an action was) under <i>delayed</i> consequences — neither of which supervised or unsupervised learning has."
+            },
+            {
+              "q": "What is a policy $\\pi$ in reinforcement learning?",
+              "choices": [
+                "The total reward accumulated over an episode",
+                "The environment's rule for handing out rewards",
+                "The agent's behavior — a mapping from states to actions (deterministic $a=\\pi(s)$, or a distribution $\\pi(a\\mid s)$)",
+                "The discount factor applied to future rewards"
+              ],
+              "answer": 2,
+              "explain": "The policy <i>is</i> the agent's strategy: given the current state, which action (or distribution over actions) to take. Everything the agent \"decides\" is encoded in $\\pi$; learning in RL means improving $\\pi$ toward higher expected return."
+            },
+            {
+              "q": "What is the return $G_t$?",
+              "choices": [
+                "The single immediate reward $R_{t+1}$",
+                "The cumulative (discounted) future reward from time $t$ onward, $G_t=\\sum_{k\\ge0}\\gamma^k R_{t+k+1}$ — the quantity the agent maximizes in expectation",
+                "The average reward across all states",
+                "The probability of eventually reaching the goal"
+              ],
+              "answer": 1,
+              "explain": "The agent optimizes long-run reward, not the immediate $R_{t+1}$. The return $G_t$ sums all future rewards, discounted by $\\gamma^k$, and the objective is to maximize its expectation $\\mathbb{E}_\\pi[G_t]$."
+            },
+            {
+              "q": "What is the role of the discount factor $\\gamma\\in[0,1]$?",
+              "choices": [
+                "It sets the learning rate of the agent's value updates",
+                "It rescales the state space to a fixed size",
+                "It is the per-step probability that the environment changes its reward function",
+                "It down-weights rewards that arrive further in the future (and keeps the infinite-horizon return finite), trading immediate against long-term reward"
+              ],
+              "answer": 3,
+              "explain": "$\\gamma$ weights a reward $k$ steps away by $\\gamma^k$. Near 0 the agent is myopic (cares only about immediate reward); near 1 it is far-sighted. Mathematically, $\\gamma<1$ also makes the infinite sum a convergent geometric series for bounded rewards."
             }
           ],
           "flashcards": [
@@ -344,6 +388,50 @@
               ],
               "answer": 1,
               "explain": "Under discounting, a longer trajectory accumulates more of the per-step $+10$ (each discounted but still summing larger over many steps), so design (B) can make dawdling more valuable than reaching the goal quickly — the policy can change. The claim that adding a constant is always policy-invariant holds only for undiscounted/equal-length episodes, not here."
+            },
+            {
+              "q": "A (finite) Markov Decision Process is defined by which components?",
+              "choices": [
+                "Just a dataset of (state, correct-action) pairs",
+                "A single reward function and nothing else",
+                "An encoder, a decoder, and a latent code",
+                "A tuple $(S, A, P, R, \\gamma)$: a state space, an action space, transition dynamics, a reward function, and a discount factor"
+              ],
+              "answer": 3,
+              "explain": "The MDP is RL's standard problem object: $S$ (situations), $A$ (choices), $P$ (how the world responds — the environment's randomness), $R$ (the goal, as a scalar signal), and $\\gamma$ (how much the future counts). Nearly every RL algorithm is a recipe for solving an MDP."
+            },
+            {
+              "q": "What does the Markov property state?",
+              "choices": [
+                "Rewards are always deterministic",
+                "The next state and reward depend only on the current state and action — not on the full history of how the agent got there",
+                "The agent must remember its entire trajectory in order to act well",
+                "Every state is visited equally often"
+              ],
+              "answer": 1,
+              "explain": "\"Markov\" = memoryless: $\\Pr(S_{t+1},R_{t+1}\\mid S_t,A_t)$ doesn't depend on earlier states/actions. The current state is a sufficient statistic for the future — which is exactly why a good state representation must capture everything relevant (a single camera frame, lacking velocity, violates this)."
+            },
+            {
+              "q": "What do the transition dynamics $p(s',r\\mid s,a)$ describe?",
+              "choices": [
+                "The agent's policy for choosing actions",
+                "The discounted sum of future rewards",
+                "The probability of landing in next-state $s'$ with reward $r$, given the agent took action $a$ in state $s$ — where the environment's randomness lives",
+                "The fixed reward for reaching the goal state"
+              ],
+              "answer": 2,
+              "explain": "$p(s',r\\mid s,a)$ is the single most complete description of the environment: a proper distribution (it sums to 1 over all $s',r$ for each $s,a$). From it you can derive the state-transition probabilities $p(s'\\mid s,a)$ and the expected reward $r(s,a)$."
+            },
+            {
+              "q": "In an MDP, which component specifies <em>what</em> the agent is trying to achieve?",
+              "choices": [
+                "The reward function $R$ — it is the entire specification of the goal; the agent has no other notion of \"good\"",
+                "The state space $S$",
+                "The discount factor $\\gamma$",
+                "The transition dynamics $P$"
+              ],
+              "answer": 0,
+              "explain": "In RL the goal lives <i>entirely</i> in the reward. The agent maximizes expected cumulative reward and has no separate objective — which is why reward design (and its pitfalls, like reward hacking) is so consequential."
             }
           ],
           "flashcards": [
@@ -539,6 +627,50 @@
               ],
               "answer": 2,
               "explain": "$T^\\pi$ is a $\\gamma$-contraction whose unique fixed point is $v_\\pi$ (it has no $\\max$ over actions — it evaluates the fixed policy $\\pi$), so iteration converges to $v_\\pi$ from any $v_0$. Reaching $v_*$ requires the Bellman optimality operator (which takes a max over actions), not $T^\\pi$."
+            },
+            {
+              "q": "What is the state-value function $v_\\pi(s)$?",
+              "choices": [
+                "The immediate reward received in state $s$",
+                "The expected return when you start in state $s$ and then follow policy $\\pi$ thereafter",
+                "The number of times state $s$ is visited",
+                "The probability the policy assigns to the best action in $s$"
+              ],
+              "answer": 1,
+              "explain": "$v_\\pi(s)=\\mathbb{E}_\\pi[G_t\\mid S_t=s]$: starting here and behaving according to $\\pi$, how much discounted reward do I expect to accumulate? It scores <i>states</i> under a fixed policy."
+            },
+            {
+              "q": "What is the action-value (Q) function $q_\\pi(s,a)$?",
+              "choices": [
+                "The same as $v_\\pi(s)$ for every action $a$",
+                "The immediate reward $r(s,a)$ only, ignoring the future",
+                "The probability of taking action $a$ under $\\pi$",
+                "The expected return from taking action $a$ in state $s$ now and following $\\pi$ thereafter — which lets you compare actions in a state"
+              ],
+              "answer": 3,
+              "explain": "$q_\\pi(s,a)=\\mathbb{E}_\\pi[G_t\\mid S_t=s,A_t=a]$ \"probes\" an arbitrary first action $a$ (even one $\\pi$ wouldn't pick) and then defers to $\\pi$. Comparing $q$ across actions is how you improve a policy without a model — the basis of Q-learning and SARSA."
+            },
+            {
+              "q": "What does a Bellman equation express?",
+              "choices": [
+                "A self-consistency relation: a state's value equals the immediate expected reward plus the discounted value of the next state",
+                "The gradient of the policy with respect to its parameters",
+                "The total number of states reachable from $s$",
+                "The loss function used to train a supervised classifier"
+              ],
+              "answer": 0,
+              "explain": "Bellman equations decompose value recursively: $v_\\pi(s)=\\mathbb{E}[\\,R_{t+1}+\\gamma\\,v_\\pi(S_{t+1})\\,]$. \"Value now = one step of reward + discounted value of where you land.\" This recursion is what makes dynamic-programming and TD methods possible."
+            },
+            {
+              "q": "What are the optimal value function $v_*(s)$ and an optimal policy $\\pi_*$?",
+              "choices": [
+                "The value and policy of a randomly initialized agent",
+                "The average value taken over all possible policies",
+                "$v_*$ is the best achievable expected return from each state; an optimal policy $\\pi_*$ attains it (e.g. by acting greedily with respect to $q_*$)",
+                "Quantities defined only for supervised-learning problems"
+              ],
+              "answer": 2,
+              "explain": "$v_*(s)=\\max_\\pi v_\\pi(s)$ — the most return obtainable from $s$. Once you have $q_*$, an optimal policy is simply greedy: $\\pi_*(s)=\\arg\\max_a q_*(s,a)$ — which is why so much of RL focuses on estimating optimal value functions."
             }
           ],
           "flashcards": [

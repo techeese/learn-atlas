@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 175 — MCQ arc → Reinforcement Learning · Foundations 12 → 16 (content — owner's #1 ask; 5th topic opens)
+The arc opens its **fifth topic, Reinforcement Learning**, with the *Foundations: the RL problem & MDPs* module. All
+**three** lessons go 12 → 16 (**+12, bank 2,132 → 2,144**), stating the bedrock the existing 12 assumed:
+- **What RL Is**: the trial-and-error/no-teacher definition (the "third paradigm") / what a *policy* is (states→actions)
+  / what the *return* $G_t$ is (cumulative discounted future reward) / the role of the *discount factor* $\gamma$.
+- **MDPs**: the five-tuple $(S,A,P,R,\gamma)$ / the *Markov property* (future depends only on the current state) /
+  what the *transition dynamics* $p(s',r\mid s,a)$ describe / that the *reward function* alone specifies the goal.
+- **Policies, Values, Bellman**: the *state-value* $v_\pi$ and *action-value* $q_\pi$ definitions / what a *Bellman
+  equation* expresses (value = immediate reward + discounted next-state value) / the *optimal* $v_*$/$\pi_*$ (greedy
+  w.r.t. $q_*$).
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,144 MCQs**; direct key-dump confirms
+  answer indices map to the intended choices, **balanced 3/3/3/3** with three *distinct* per-lesson patterns
+  (0,2,1,3 / 3,1,2,0 / 1,3,0,2); an independent adversarial fact-check agent returned **ALL PASS** (it confirmed the
+  γ distractor — "probability the environment changes its reward function" — is fabricated, not the real
+  continuation-probability interpretation); render-checks on the (KaTeX-heavy) Policies-Values and What-is-RL quizzes
+  → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`; all-routes smoke (11) `errs=0`. SW cache **v117 → v118**;
+  README 2,132 → 2,144. Arc progress: **5 topics opened, 4 complete** (Algorithms, LA, Calculus, DL done; RL 1/7
+  modules). Remaining: RL (6 modules), LLMs, Probability & Statistics.
+
 ## iter 174 — Cascade count-up on the Progress page (animations / juice)
 The **Progress page** is the "look how far I've come" celebration screen, yet all its numbers — the hero stat-strip
 (XP / lessons / cards / accuracy), the **12 activity tiles**, and the mastery-distribution counts — rendered
