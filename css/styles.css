@@ -313,6 +313,8 @@ body::after {
 .toc-link::before { content: counter(toc); position: absolute; left: 10px; top: 6px; color: var(--ink-mute); font-family: var(--font-mono); font-size: 11px; }
 .toc-link:hover { background: var(--panel-2); color: var(--gold); }
 .toc-link:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.toc-link.active { color: var(--gold); background: color-mix(in srgb, var(--gold) 8%, transparent); box-shadow: inset 2px 0 0 var(--gold); }
+.toc-link.active::before { color: var(--gold); }
 @media (max-width: 640px) { .toc-list { columns: 1; } }
 .prose h4 { font-family: var(--font-disp); font-size: 19px; font-weight: 600; margin: 24px 0 8px; color: var(--gold); }
 .prose p { margin: 13px 0; color: var(--ink-soft); }

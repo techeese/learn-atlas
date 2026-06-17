@@ -607,7 +607,9 @@
   }
 
   // auto "On this page" table of contents for a lesson's sections (jumps within the long Lecture body)
+  let _tocIO = null;   // scroll-spy observer (disconnected & rebuilt per lesson render)
   function buildLessonTOC(body) {
+    if (_tocIO) { _tocIO.disconnect(); _tocIO = null; }
     const prose = body.querySelector(".prose"); if (!prose) return;
     const heads = Array.prototype.slice.call(prose.querySelectorAll("h3")).filter(h => !h.closest("details"));
     if (heads.length < 3) return;   // short lessons don't need one
@@ -616,10 +618,22 @@
     toc.className = "lesson-toc reveal"; toc.open = true;
     toc.innerHTML = `<summary>📑 On this page · ${heads.length} sections</summary><ol class="toc-list">${items}</ol>`;
     prose.parentNode.insertBefore(toc, prose);
-    toc.querySelectorAll(".toc-link").forEach(b => b.addEventListener("click", () => {
+    const links = Array.prototype.slice.call(toc.querySelectorAll(".toc-link"));
+    links.forEach(b => b.addEventListener("click", () => {
       const h = heads[parseInt(b.dataset.sec, 10)];
       if (h) h.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
     }));
+    // scroll-spy: highlight the section currently nearest the top of the viewport
+    if ("IntersectionObserver" in window) {
+      const setActive = () => {
+        let idx = 0;
+        for (let i = 0; i < heads.length; i++) { if (heads[i].getBoundingClientRect().top <= 130) idx = i; else break; }
+        links.forEach((l, i) => l.classList.toggle("active", i === idx));
+      };
+      _tocIO = new IntersectionObserver(setActive, { rootMargin: "-120px 0px -70% 0px", threshold: 0 });
+      heads.forEach(h => _tocIO.observe(h));
+      setActive();
+    }
   }
   function renderLecture(body, course, lesson, prev, next) {
     const done = Store.isLessonDone(lesson.id);

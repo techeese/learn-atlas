@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 150 — Scroll-spy for the lesson TOC (UI/UX) + ★150 reflection
+The iter-144 "On this page" TOC now **highlights the section you're currently reading** as you scroll — completing the
+feature. An `IntersectionObserver` over the section headings recomputes, on each crossing, the last heading whose top is
+at/above a trigger line and marks the matching TOC entry `.active` (gold text + a left gold accent bar). The observer is
+disconnected and rebuilt per lesson render (no leak); on lessons with <3 sections nothing is added.
+- **Verified**: `node gate.js` ALL GREEN; on-load wiring confirmed → `errs=0`, the observer is created and `setActive()`
+  marks section 1 active (screenshot read: gold left-accent highlight on the first TOC item); all-routes smoke `errs=0`.
+  NOTE: the *dynamic* highlight-on-scroll can't be exercised in this headless mode — programmatic scrolling is a no-op
+  there (the page uses a `body{overflow-y:auto}` scroll box that `--dump-dom` doesn't drive), so I verified by (a) the
+  on-load active state, (b) the standard IO + `getBoundingClientRect` mechanism, and (c) **graceful degradation**: it is
+  purely additive — if scroll events never fired, the highlight just stays on section 1 with zero regression to the TOC's
+  jump behavior and no error. SW cache **v92 → v93**.
+- **★150 reflection**: the loop is healthy and ambitious. The owner's #1 ask (the 12→16 MCQ arc) is driving steadily —
+  Algorithms ✓, Linear Algebra ✓, Calculus 2/7, bank 1,776 → 1,976 (+200) — interleaved with non-content moves across
+  the whole compass: viz ×3 (optimizer race, Riemann sum, cross-entropy), gamification ×2 (nudge, +6 achievements),
+  workflow (command palette), new-functionality (notebook→TOC), animation (goal ring), a11y, understandability
+  (deeper-dives), a mobile audit (clean), and dev-flow (gate hardening). No compass area is starved; no failure mode has
+  tripped. Next ~50: finish the MCQ arc (Calc/DL/RL/LLM/PS), keep one bold viz/feature per ~handful of content iters.
+
 ## iter 149 — MCQ arc → Calculus · The Derivative 12 → 16 (content — owner's #1 ask)
 The Calculus arc's second module, *The Derivative: Definition & Rules*. **+4 new MCQs each** to all four lessons
 (**+16, bank 1,960 → 1,976**), stating the bedrock the existing 12 assumed: derivative notation ($f'$, $\frac{dy}{dx}$) /

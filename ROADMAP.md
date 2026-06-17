@@ -152,6 +152,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ALL PASS (hardened one ambiguous continuity distractor → f'(a)); positions shuffled; render "of 16" errs=0; SW cache →v90.
    ✅ iter 149: MCQ arc → Calculus·The Derivative 12→16 (+16, bank →1,976). Calc 2/7 modules. Adversarial agent ALL PASS;
    positions shuffled; render "of 16" errs=0; SW cache →v92.
+   ✅ iter 150 (★150): scroll-spy for the lesson TOC (UI/UX) — highlights the current section as you scroll (IntersectionObserver,
+   disconnected/rebuilt per render). errs=0; SW cache →v93. NOTE for future: headless --dump-dom does NOT drive programmatic
+   scrolling (body{overflow-y:auto} scroll box), so scroll-DRIVEN behavior can only be verified by on-load state + graceful-
+   degradation reasoning, not end-to-end. ★150 reflection logged in CHANGELOG (loop healthy; arc steady; compass well-rotated).
    CALC REMAINING (MCQ arc): applications-derivatives(4), integration(4), applications-integration(3),
    multivariable-bridge(3), convex-optimization(3). Then DL/RL/LLM/PS.
    ✅ iter 148: Riemann Sum visualizer (calc-riemann, 35th viz; the first INTEGRATION viz) in the definite-integral lesson.

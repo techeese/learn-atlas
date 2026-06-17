@@ -14,7 +14,7 @@ Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys
 
 ## Features
 
-- **Lectures** — readable lessons with KaTeX-rendered math, callouts, and code, each opening with an auto-generated **"On this page"** table of contents that jumps to any section (every lesson has 4–11).
+- **Lectures** — readable lessons with KaTeX-rendered math, callouts, and code, each opening with an auto-generated **"On this page"** table of contents that jumps to any section and **highlights the section you're currently reading** as you scroll (every lesson has 4–11).
 - **Examples** — an optional per-lesson tab of worked examples with revealable working.
 - **"Deeper dive" expandables** — for genuinely hard concepts, an inline collapsible offers an *alternative* explanation or extra intuition (e.g. Bayes recast as natural frequencies; the reparameterization trick as a pathwise derivative; cross-entropy as a KL divergence to the true distribution) — kept out of the main flow until you want it.
 - **Quizzes** — instant feedback + explanations; earns XP, perfect-score bonus.
