@@ -19,9 +19,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 82: Module 4 "Statistical Inference: Estimation & Confidence" (4 lessons). ✅ iter 83: all 4 Module-4
    lessons to 12 MCQs (+48; topic now 192 / site 1,548). All 16 PS lessons now at 12 MCQs.
    ✅ iter 84: confidence-interval coverage simulator viz (`ps-ci-coverage`). ✅ iter 85: Module 5 "Hypothesis
-   Testing" (4 lessons: testing logic, p-values, errors & power, t-tests) — content+cards+homework+examples, NO MCQs yet.
-   NEXT for this topic: (a) add 12 MCQs to each of the 4 Module-5 lessons via the pipeline; (b) Module 6 —
-   Bayesian inference (priors/posteriors/conjugacy, MAP vs MLE) would round out the course.
+   Testing" (4 lessons). ✅ iter 86: all 4 Module-5 lessons to 12 MCQs (+48; topic now 240 / site 1,596). All 20 PS
+   lessons now at 12 MCQs — PS is a COMPLETE 5-module course with full MCQ + cards + homework + examples coverage.
+   OPTIONAL future: Module 6 — Bayesian inference (priors/posteriors/conjugacy, MAP vs MLE) would round it out.
+   ⚠ ROTATION DUE: iters 71–86 were almost entirely Probability & Statistics. Directive item 2 ("deepen the existing
+   six with ADVANCED lessons") has been neglected — rotate there next (e.g. an advanced LA/calc/DL/RL/LLM module).
    ⚠ Lesson-authoring workflow bug (iter 71): the VERIFY agent overwrote `content` with its review notes for
    3/4 lessons. When authoring future lessons, make the verify schema/prompt EXPLICIT: "return the corrected
    LESSON HTML in `content`; put commentary ONLY in `notes`; never write a summary into `content`." (Recovered

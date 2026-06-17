@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 86 — Probability & Statistics Module 5 — 12 MCQs per lesson (content; owner "more questions" ask)
+Completed the Hypothesis Testing module: all four lessons (testing logic, p-values, errors & power, t-tests) brought
+from 0 → 12 MCQs each via the author→adversarial-verify pipeline — **+48 fact-checked questions**. Every one of the
+**20** Probability & Statistics lessons now sits at exactly 12 MCQs (240 in the topic); the site bank reaches
+**1,548 → 1,596**. The adversarial pass earned its keep this round: it **caught and fixed two flawed items** in the
+testing-logic lesson — an ambiguous court-analogy MCQ with two defensible "correct" answers (a distractor was
+rewritten so the key is unique), and a numerically broken fill-machine MCQ whose author had left a self-contradictory
+answer key and a rambling explanation (rewritten with self-consistent numbers: n=100, σ=5, x̄=501 → z=2.0 → reject).
+The other three lessons verified clean. Every PS lesson now has a Quiz tab. SW cache → `atlas-v30`; README 1,548→1,596.
+Verified: `node gate.js` ALL GREEN (7 topics · 133 lessons · **1,596 MCQs**); all four Module-5 quizzes render "of 12"
+with errs=0 and katex-error=0 (including the two fixed items); stray Chrome cleaned up.
+
 ## iter 85 — Probability & Statistics — Module 5: Hypothesis Testing (4 lessons) (content; owner depth direction)
 Added the fifth Probability & Statistics module, completing the inference arc (estimate → test). Four lessons that
 build on each other:
