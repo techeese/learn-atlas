@@ -1679,4 +1679,69 @@
     reset();
   });
 
+  /* ========================================================
+     32. Beam search — keep the k best partial sequences (LLM)
+     ======================================================== */
+  register({ id: 'llm-beam-search', topic: 'llm', title: 'Beam Search Decoding', blurb: 'Watch beam search keep the k most-probable partial sequences at each step — and reach a higher-probability sentence than greedy (k=1) by exploring more than one path. (Tokens/probabilities here are illustrative; the point is the search.)' },
+  function (root) {
+    const W = 600, H = 430, padL = 8, padR = 8, padT = 34, padB = 8, MONO = 'JetBrains Mono, monospace';
+    const { ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const POOL = ["the", "a", "cat", "dog", "sat", "ran", "on", "mat", "fast", "red", "big", "sky", "sun", "old", "sea", "new"];
+    let K = 2, STEPS = 3, kbtns = [];
+    function hash(s) { let h = 2166136261 >>> 0; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+    function next(seq) {                              // deterministic toy LM: 3 candidate next-tokens
+      const key = seq.join(" ") || "<start>", toks = [];
+      for (let j = 0; toks.length < 3 && j < 40; j++) { const t = POOL[hash(key + "#" + j) % POOL.length]; if (toks.indexOf(t) < 0) toks.push(t); }
+      const logits = toks.map((_, i) => (hash(key + "@" + i) % 1000) / 1000 * 2.6);
+      const ex = logits.map(Math.exp), Z = ex.reduce((a, b) => a + b, 0);
+      return toks.map((t, i) => ({ tok: t, prob: ex[i] / Z })).sort((a, b) => b.prob - a.prob);
+    }
+    function run(k) {                                 // beam search; return per-step candidate records
+      let beams = [{ seq: [], lp: 0, id: 0 }], nid = 1; const steps = [];
+      for (let s = 0; s < STEPS; s++) {
+        const cands = [];
+        beams.forEach(b => next(b.seq).forEach(c => cands.push({ seq: b.seq.concat(c.tok), tok: c.tok, prob: c.prob, lp: b.lp + Math.log(c.prob), parent: b.id, id: nid++ })));
+        cands.sort((a, b) => b.lp - a.lp);
+        cands.forEach((c, i) => c.kept = i < k);
+        steps.push(cands);
+        beams = cands.filter(c => c.kept);
+      }
+      return { steps, best: beams[0] };
+    }
+    function roundRect(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+    function hx(h) { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(x => x + x).join(''); if (!/^[0-9a-f]{6}$/i.test(h)) return [40, 35, 31]; return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; }
+    function mix(a, b, t) { const pa = hx(a), pb = hx(b); return `rgb(${Math.round(pa[0] + (pb[0] - pa[0]) * t)},${Math.round(pa[1] + (pb[1] - pa[1]) * t)},${Math.round(pa[2] + (pb[2] - pa[2]) * t)})`; }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+    const info = note(root);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const res = run(K), greedy = run(1), colW = (W - padL - padR) / STEPS, pos = {};
+      res.steps.forEach((cands, s) => {
+        const n = cands.length, bh = Math.min(38, (H - padT - padB) / n - 6), gap = ((H - padT - padB) - n * bh) / (n + 1);
+        cands.forEach((c, i) => { c._x = padL + s * colW + 5; c._y = padT + gap + i * (bh + gap); c._w = colW - 10; c._h = bh; pos[c.id] = c; });
+      });
+      res.steps.forEach((cands, s) => { if (!s) return; cands.forEach(c => { const par = pos[c.parent]; if (!par) return; ctx.strokeStyle = c.kept ? p.gold : p.line; ctx.globalAlpha = c.kept ? 0.8 : 0.22; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(par._x + par._w, par._y + par._h / 2); ctx.lineTo(c._x, c._y + c._h / 2); ctx.stroke(); }); });
+      ctx.globalAlpha = 1;
+      res.steps.forEach(cands => cands.forEach(c => {
+        ctx.globalAlpha = c.kept ? 1 : 0.42;
+        ctx.fillStyle = c.kept ? mix(p.panel, p.gold, 0.18) : p.panel; ctx.strokeStyle = c.kept ? p.gold : p.line; ctx.lineWidth = c.kept ? 1.8 : 1;
+        roundRect(ctx, c._x, c._y, c._w, c._h, 7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = p.ink; ctx.font = '600 13px ' + MONO; ctx.textAlign = 'center'; ctx.fillText(c.tok, c._x + c._w / 2, c._y + c._h / 2 - 2);
+        ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.fillText('logp ' + c.lp.toFixed(2), c._x + c._w / 2, c._y + c._h / 2 + 12);
+        ctx.globalAlpha = 1;
+      }));
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'center';
+      for (let s = 0; s < STEPS; s++) ctx.fillText('step ' + (s + 1), padL + s * colW + colW / 2, 16);
+      const bestSeq = res.best ? res.best.seq.join(" ") : "", gSeq = greedy.best ? greedy.best.seq.join(" ") : "";
+      const better = res.best.lp > greedy.best.lp + 1e-9;
+      info.innerHTML = `<b style="color:${p.gold}">beam width k=${K}</b> — top-k kept each step (gold), the rest pruned (faded).<br>` +
+        `Beam best: “<b>${esc(bestSeq)}</b>” &nbsp;logp ${res.best.lp.toFixed(2)} &nbsp;·&nbsp; Greedy (k=1): “${esc(gSeq)}” &nbsp;logp ${greedy.best.lp.toFixed(2)}. ` +
+        (better ? `<span style="color:${p.sage}">Beam wins by ${(res.best.lp - greedy.best.lp).toFixed(2)} — greedy's locally-best first token led to a worse sentence.</span>` : `<span style="color:${p.mute}">(Here greedy already matches beam — widen k or change steps to see beam pull ahead.)</span>`);
+    }
+    kbtns = [1, 2, 3].map(k => button(ctl, 'k=' + k, () => { K = k; kbtns.forEach((b, j) => b.classList.toggle('primary', j + 1 === K)); draw(); }, K === k ? 'primary' : ''));
+    slider(ctl, { label: 'steps', min: 2, max: 4, step: 1, value: STEPS, fmt: v => v, onInput: v => { STEPS = v; draw(); } });
+    draw();
+  });
+
 })();

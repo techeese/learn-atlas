@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 124 — Beam Search decoding tree — a 32nd visualization (visualizations)
+The decoding lesson had a temperature/top-p <em>sampling</em> viz but nothing for <strong>beam search</strong> — a core
+decoding method it explicitly teaches. Added **`llm-beam-search`**, embedded in "Decoding Strategies and Sampling" at the
+end of its Beam Search section, and a visually fresh shape for the Lab (a left-to-right search <em>tree</em>, not a grid
+or plot). A small deterministic toy LM gives 3 candidate next-tokens per context; the widget runs beam search for a few
+steps and shows, per step column, every candidate with its cumulative log-prob — the **top-k kept** (gold, with edges
+from their parent beam) and the rest **pruned** (faded). Controls: **k = 1 / 2 / 3** and a **steps** slider. The caption
+contrasts the beam result with greedy (k=1) and, because beam's candidate set always includes greedy's path, shows beam
+$\ge$ greedy — usually strictly better, illustrating how greedy's locally-best first token can lead to a worse sentence.
+Built per the viz landmines (synchronous draw, no loops, plain-unicode note). SW cache → `atlas-v68`; README 31 → 32
+widgets (+Lab blurb). Verified: `node gate.js` ALL GREEN (32 widgets); an in-browser run is **errs=0** — the Lab item
+renders the canvas + 3 width buttons + steps slider, switching k updates the readout, and it hydrates inline in the
+lesson; desktop + 390px screenshots show the gold kept-beam tree with faded pruned branches and no overflow; stray
+Chrome cleaned up.
+
 ## iter 123 — MCQ arc phase 3: Algorithms · Sorting & Searching 12 → 16 (content — owner's #1 ask)
 Continuing the 12→16 arc (interleaved — iter 122 was animations). **+4 new MCQs each** to Comparison Sorts, Linear-Time
 Sorts & Selection, and Binary Search (**+12, bank 1,800 → 1,812**). New angles beyond the existing 12: merge sort's
