@@ -53,10 +53,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 106: answer-feedback juice (correct pop+glow, key spring, wrong shake) on every MCQ.
    ✅ iter 107: full-text lesson search in ⌘K (body matches with highlighted snippets).
    ✅ iter 108: four new deeper-dives (eigenvectors=power-iteration, CLT=why-a-bell, attention=soft-dictionary,
-   policy-gradients=train-by-trial) — directive 3. Ideas still open for this arc: onboarding refresh; flashcard
-   flip/grade juice & route-transition polish; MORE deeper-dives (KKT/shadow-price, vanishing/exploding gradients,
-   batch-norm, the kernel trick, dropout-as-ensemble); a bookmarks ("Curator") achievement; surfacing missed-deck
-   stats on the Progress page; mastery-weighted/recency ranking in ⌘K (title tier is still purely lexical).
+   policy-gradients=train-by-trial) — directive 3.
+   ✅ iter 109: five new achievements (Curator, Annotator, Flawless Five, Crack Shot, Deep Thinker) → 40 total.
+   Ideas still open for this arc: onboarding refresh; flashcard flip/grade juice & route-transition polish; MORE
+   deeper-dives (KKT/shadow-price, vanishing/exploding gradients, batch-norm, the kernel trick, dropout-as-ensemble);
+   surfacing missed-deck stats on the Progress page; mastery-weighted/recency ranking in ⌘K (title tier is still
+   purely lexical); a "Daily Ritual" achievement once Daily-Mix completions are tracked.
    MORE VIZ IDEAS still open (backlog below): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space
    explorer, a GAN training-dynamics demo, a Q-learning/SARSA path demo.
    (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE

@@ -59,7 +59,12 @@
     { id: "loremaster",  icon: "🦉", name: "Loremaster",       desc: "Reach 80% mastery on 25 concepts." },
     { id: "erudite",     icon: "✨", name: "Erudite",          desc: "Earn 5,000 total XP." },
     { id: "atlas-complete",icon:"🌐",name: "Atlas Complete",   desc: "Complete every lesson in every subject." },
-    { id: "redeemer",     icon: "♻️", name: "Redeemer",         desc: "Turn 25 missed questions into correct ones." }
+    { id: "redeemer",     icon: "♻️", name: "Redeemer",         desc: "Turn 25 missed questions into correct ones." },
+    { id: "curator",     icon: "📌", name: "Curator",          desc: "Bookmark 5 lessons to revisit." },
+    { id: "annotator",   icon: "🖊️", name: "Annotator",        desc: "Write your own notes on 5 lessons." },
+    { id: "flawless-five",icon:"💎", name: "Flawless Five",     desc: "Ace 5 quizzes with a perfect score." },
+    { id: "crack-shot",  icon: "🎖️", name: "Crack Shot",        desc: "Answer 1,000 quiz questions correctly." },
+    { id: "deep-thinker",icon: "🧩", name: "Deep Thinker",      desc: "Expand a “Deeper dive” intuition." }
   ];
 
   function blank() {
@@ -82,7 +87,8 @@
       lastLesson: null,     // "courseId/lessonId" — resume point
       bookmarks: {},        // lessonId -> true (saved/favorited lessons)
       missed: {},           // "lessonId#qIdx" -> 1 (questions answered wrong, waiting to be redeemed)
-      missedFixed: 0        // lifetime count of missed questions later answered correctly
+      missedFixed: 0,       // lifetime count of missed questions later answered correctly
+      perfectQuizzes: 0     // lifetime count of 100% lesson quizzes (for the Flawless Five achievement)
     };
   }
 
@@ -123,6 +129,7 @@
       base.bookmarks = s.bookmarks || {};
       base.missed = (s.missed && typeof s.missed === "object") ? s.missed : {};
       base.missedFixed = num(s.missedFixed);
+      base.perfectQuizzes = num(s.perfectQuizzes);
     }
     return base;
   }
@@ -153,7 +160,7 @@
   function markKnown(lessonId) { if (!lessonId) return; state.mastery[lessonId] = { s: 0.65, ts: Date.now(), n: 1 }; save(); }
   function setLastLesson(key) { if (state.lastLesson !== key) { state.lastLesson = key; save(); } }
   // ---- bookmarks (saved lessons) --------------------------------------
-  function toggleBookmark(id) { if (!id) return false; if (state.bookmarks[id]) delete state.bookmarks[id]; else state.bookmarks[id] = true; save(); return !!state.bookmarks[id]; }
+  function toggleBookmark(id) { if (!id) return false; if (state.bookmarks[id]) delete state.bookmarks[id]; else { state.bookmarks[id] = true; if (Object.keys(state.bookmarks).length >= 5) unlock("curator"); } save(); return !!state.bookmarks[id]; }
   function isBookmarked(id) { return !!state.bookmarks[id]; }
   function bookmarkIds() { return Object.keys(state.bookmarks || {}); }
   // ---- missed-question deck (questions answered wrong → drill until redeemed) ----
@@ -255,9 +262,10 @@
     state.mcq.correct += correct;
     state.mcq.total += total;
     addXP(correct * XP.mcqCorrect);
-    if (total > 0 && correct === total) { addXP(XP.mcqPerfect); unlock("perfect"); }
+    if (total > 0 && correct === total) { addXP(XP.mcqPerfect); unlock("perfect"); state.perfectQuizzes = num(state.perfectQuizzes) + 1; if (state.perfectQuizzes >= 5) unlock("flawless-five"); }
     if (state.mcq.correct >= 100) unlock("mcq-100");
     if (state.mcq.correct >= 500) unlock("mcq-500");
+    if (state.mcq.correct >= 1000) unlock("crack-shot");
     if (lessonId) { for (let k = 0; k < correct; k++) bumpMastery(lessonId, { correct: true }); for (let k = 0; k < total - correct; k++) bumpMastery(lessonId, { correct: false }); }
     save();
   }
@@ -271,6 +279,7 @@
     if (total >= 10 && correct === total) { addXP(50); unlock("exam-ace"); }
     if (state.mcq.correct >= 100) unlock("mcq-100");
     if (state.mcq.correct >= 500) unlock("mcq-500");
+    if (state.mcq.correct >= 1000) unlock("crack-shot");
     state.tests.unshift({ label: String(label || "Test"), correct, total });
     state.tests = state.tests.slice(0, 25);
     if (state.tests.length >= 10) unlock("test-veteran");
@@ -337,7 +346,7 @@
 
   // ---- notes, daily goal, streak-freeze, export/import ----
   function getNote(lessonId) { return state.notes[lessonId] || ""; }
-  function setNote(lessonId, text) { if (text && text.trim()) state.notes[lessonId] = text; else delete state.notes[lessonId]; save(); }
+  function setNote(lessonId, text) { if (text && text.trim()) { state.notes[lessonId] = text; if (Object.keys(state.notes).length >= 5) unlock("annotator"); } else delete state.notes[lessonId]; save(); }
   function setGoal(xp) { state.goalXp = Math.max(10, num(xp)); save(); }
   function todayXP() { return num(state.activity[todayStr()]); }
   function exportData() { return JSON.stringify(state); }

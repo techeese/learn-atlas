@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 109 — Five new achievements covering bookmarks, notes, quiz skill & the deeper-dives (gamification)
+The owner explicitly loves "more achievements," and several now-shipped features had no reward hook. Added **5 (35 → 40)**,
+each tied to a distinct behavior so the collection rewards the *breadth* of how you use the site:
+• **Curator** 📌 — bookmark 5 lessons · **Annotator** 🖊️ — write your own notes on 5 lessons · **Flawless Five** 💎 —
+ace 5 quizzes at 100% · **Crack Shot** 🎖️ — answer 1,000 quiz questions correctly (feeds the owner's "more questions"
+love with a real long-term goal) · **Deep Thinker** 🧩 — expand a "Deeper dive" intuition (rewards the directive-3
+component built across iters 95/108). Curator/Annotator hook existing state (`bookmarks`, `notes`); Crack Shot hooks the
+existing `mcq.correct`; Deep Thinker fires from a `toggle` listener on `details.deep-dive` in the lecture view; Flawless
+Five adds one new counter, `perfectQuizzes`, added to `blank()` AND the `load()` merge (`num()`-guarded) so old saves
+migrate cleanly. Also added `flushAchievements()` to the bookmark and notes handlers so those unlocks toast immediately.
+SW cache → `atlas-v53`; README 35 → 40. Verified: `node gate.js` ALL GREEN; a Node test confirms migration (old save →
+`perfectQuizzes:0`, no false unlocks) and that each new badge unlocks at its exact threshold (Curator@5, Annotator@5,
+Crack Shot when `mcq.correct` crosses 1000, Flawless Five@5, Deep Thinker via `unlock()`); an in-browser run is
+**errs=0**, the Achievements page renders **40** cards, and opening a lesson's deeper-dive unlocks Deep Thinker live;
+desktop + 390px screenshots confirm the Hall of Achievements (progress bar reads "4 of 40 · 10%" with a seeded mix);
+stray Chrome cleaned up.
+
 ## iter 108 — Four new "Deeper dive" alternative explanations on hard concepts (understandability — owner directive 3)
 The owner's standing directive 3 asks for hard concepts to get an *extra* place/way to explain — a different angle, not a
 restatement. iter 95 built the collapsible `<details class="deep-dive">` component and seeded two (Bayes, the VAE

@@ -602,9 +602,10 @@
       bm.textContent = on ? "★ Bookmarked" : "☆ Bookmark";
       bm.setAttribute("aria-pressed", on);
       toast(on ? "★" : "☆", on ? "Bookmarked" : "Bookmark removed", lesson.title);
+      flushAchievements();   // surface the Curator unlock
     });
     const area = document.getElementById("notes-area");
-    let nt; area.addEventListener("input", () => { clearTimeout(nt); nt = setTimeout(() => { Store.setNote(lesson.id, area.value); const s = document.getElementById("notes-saved"); s.textContent = "saved ✓"; setTimeout(() => s.textContent = "", 1500); }, 500); });
+    let nt; area.addEventListener("input", () => { clearTimeout(nt); nt = setTimeout(() => { Store.setNote(lesson.id, area.value); const s = document.getElementById("notes-saved"); s.textContent = "saved ✓"; setTimeout(() => s.textContent = "", 1500); flushAchievements(); }, 500); });
     const btn = document.getElementById("complete-btn");
     btn.addEventListener("click", () => {
       const was = Store.isLessonDone(lesson.id);
@@ -622,6 +623,8 @@
     bindGo();
     hydrateViz(body);
     hydrateCode(body);
+    // reward expanding a "Deeper dive" intuition (Deep Thinker)
+    body.querySelectorAll("details.deep-dive").forEach(d => d.addEventListener("toggle", () => { if (d.open) { Store.unlock("deep-thinker"); flushAchievements(); } }));
     linkGlossary(body.querySelector(".prose"));   // inline term tooltips (before typeset, so tooltip math renders)
     typeset();
   }
