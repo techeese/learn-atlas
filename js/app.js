@@ -213,25 +213,31 @@
   // ---------- onboarding / welcome tour ----------
   function showIntro(force) {
     if (!force) { try { if (localStorage.getItem("atlas.introSeen")) return; } catch (e) {} }
+    // counts are computed live so the tour never goes stale as content grows
+    const courses = window.COURSES || [];
+    const nLessons = courses.reduce((s, c) => s + c.modules.reduce((a, m) => a + m.lessons.length, 0), 0);
+    const nTopics = courses.length;
+    const nViz = (window.VIZ_CATALOG || []).length;
     const ov = document.createElement("div"); ov.className = "intro-ov";
     ov.innerHTML = `<div class="intro-card">
       <div class="intro-eyebrow">Welcome to your codex</div>
       <h2 class="intro-title">Atlas</h2>
       <p class="intro-sub">A personal home for linear algebra, calculus, algorithms, deep learning, reinforcement learning, LLMs & probability/statistics — built to make hard ideas <em>click</em> and <em>stick</em>.</p>
       <div class="intro-grid">
-        <div class="intro-item"><span>📖</span><b>Learn</b><small>122 lessons with rendered math, worked examples & interactive visualizations.</small></div>
-        <div class="intro-item"><span>📝</span><b>Master</b><small>Spawn a test in <b>Mastery mode</b> — wrong answers return until you pass.</small></div>
-        <div class="intro-item"><span>🗺️</span><b>Navigate</b><small>The Knowledge Constellation maps every concept and what it builds on.</small></div>
+        <div class="intro-item"><span>📖</span><b>Learn</b><small>${nLessons} lessons across ${nTopics} subjects — rendered math, worked examples${nViz ? ` & ${nViz} interactive visualizations` : ""}.</small></div>
+        <div class="intro-item"><span>📝</span><b>Master</b><small>Spawn tests in <b>Mastery mode</b>, then <b>redeem every wrong answer</b> until it sticks.</small></div>
+        <div class="intro-item"><span>🗺️</span><b>Navigate</b><small>A Knowledge Constellation maps every concept; flashcards & a daily review keep it fresh.</small></div>
         <div class="intro-item"><span>💻</span><b>Build</b><small>Run real Python & JS in the Code Playground, right in the browser.</small></div>
       </div>
-      <p class="intro-tip">Tip: press <kbd>⌘K</kbd> (or <kbd>Ctrl K</kbd>) to jump anywhere. Progress saves on this device.</p>
+      <p class="intro-tip">Tip: press <kbd>⌘K</kbd> (or <kbd>Ctrl K</kbd>) to search anything — even inside lessons. Progress saves on this device.</p>
       <button class="btn primary" id="intro-go">Start learning →</button>
     </div>`;
     document.body.appendChild(ov);
-    const close = () => { try { localStorage.setItem("atlas.introSeen", "1"); } catch (e) {} ov.remove(); };
+    const onKey = (e) => { if (e.key === "Escape") close(); };
+    const close = () => { try { localStorage.setItem("atlas.introSeen", "1"); } catch (e) {} ov.remove(); document.removeEventListener("keydown", onKey); };
     ov.addEventListener("click", e => { if (e.target === ov) close(); });
     ov.querySelector("#intro-go").addEventListener("click", close);
-    document.addEventListener("keydown", function k(e) { if (e.key === "Escape") { close(); document.removeEventListener("keydown", k); } });
+    document.addEventListener("keydown", onKey);
   }
 
   // ---------- juice: confetti + level-up celebration (respects reduced-motion) ----------

@@ -64,6 +64,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    examples coverage now 148/148 (298 total), all math numerically verified.
    ✅ iter 112: Learning-Rate Schedule explorer (dl-lr-schedules, 30th viz) — constant/step/exp/cosine/linear + warmup.
    ✅ iter 113: Notebook (#/notes) — gathers all per-lesson notes into one reviewable page (new functionality).
+   ✅ iter 114: onboarding refresh — intro tour counts now computed live (fixed stale "122 lessons" → 148), modernized
+   copy, fixed an Escape-listener leak on tour replay.
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
    already memoized; staggered page-entrance already exists (CSS :nth-child reveal delays). So perf/mobile/transitions
    have little headroom. NEGLECTED areas still worth a pass: onboarding refresh, SVG Knowledge-Map keyboard nav

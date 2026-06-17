@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 114 — Onboarding refresh: dynamic counts (fixes a stale "122 lessons"), modernized copy, leak fix (understandability / fix)
+The first-visit tour (also replayable via the sidebar "Guide / tour" button) claimed **"122 lessons"** — stale and
+wrong; the site has **148**. Rather than hardcode a new number that will re-stale, the intro now **computes its counts
+live** from `window.COURSES` / `window.VIZ_CATALOG`: "Learn — 148 lessons across 7 subjects — rendered math, worked
+examples & 30 interactive visualizations." Also modernized the pillar copy to reflect the mature feature set — **Master**
+now names the redeem-your-mistakes loop ("Spawn tests in Mastery mode, then redeem every wrong answer until it sticks"),
+**Navigate** mentions flashcards + the daily review, and the tip notes that **⌘K searches inside lessons**. Fixed a
+small bug: the Escape-to-close `keydown` listener was added on every `showIntro()` but only removed when you actually
+pressed Escape — so replaying the tour (or closing via the button) leaked a listener each time; `close()` now always
+removes it. SW cache → `atlas-v58`. Verified: `node gate.js` ALL GREEN; an in-browser run is **errs=0**, the tour
+auto-shows with the correct live counts ("148 lessons across 7 subjects … 30 interactive visualizations"), the Guide
+button **replays it as exactly one overlay** (no duplicate), and it closes cleanly; desktop + 390px screenshots confirm
+the card renders (2×2 grid → single column on mobile) with no overflow; stray Chrome cleaned up.
+
 ## iter 113 — Notebook: all your lesson notes in one place (new functionality)
 Lessons already had a per-lesson "My notes" box (auto-saved to `localStorage`), but those notes were scattered — there
 was no way to see them together. Added a **Notebook** at **`#/notes`**: it gathers every note you've written into one
