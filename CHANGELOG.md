@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 227 — Code exercises across LA / Calculus / Deep Learning (new functionality / active practice)
+Extended hands-on coding from **11 → 14 lessons**, and — unlike the algorithm-heavy earlier batches — spread them across
+the **core ML math** so the playground proves it works everywhere:
+- **`la-matrix-multiplication`** — the triple-loop **matmul** straight from the definition → `19 22 43 50`.
+- **`c-definite-integral-riemann`** — a **midpoint Riemann sum** approximating ∫₀¹x² dx with n=1000 → `0.3333` (= 1/3).
+- **`dl-loss-functions`** — **softmax** (max-subtraction for stability, then normalize) on logits [2,1,0] → `0.665 0.245
+  0.090`.
+JavaScript again (verifiable headless). Byte-stable per-file injection (no-op guard each; code HTML-escaped to round-trip).
+Verified: **all 9 embedded JS exercises decoded + executed as the playground's `runJS` → output === `data-expected`** (9
+pass / 0 fail); `gate.js` ALL GREEN (2,368 MCQs · 49 widgets); in-browser the softmax exercise mounts (editor + Run) and
+shows **"✓ Output matches expected"** (err=0); all-routes smoke (10 routes incl. all 3 lessons + the playground)
+**errs=0/kErr=0**. Reuses the existing Playground component (no new mobile layout). SW cache `atlas-v169` → `atlas-v170`.
+
 ## iter 226 — Discount-factor γ explorer (visualizations)
 New widget **`rl-discounting`** (the **49th**), embedded in `rl-mdp-formalism` right after the "Discount Factor γ"
 section. RL was the most viz-thin topic (4 widgets), and γ — arguably RL's most consequential single hyperparameter —

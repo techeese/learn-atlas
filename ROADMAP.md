@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 227: **Code exercises across LA/Calc/DL (11→14 lessons)** (new functionality / active practice — diversified the
+   lane beyond algorithms). la-matrix-multiplication (matmul → "19 22 43 50"), c-definite-integral-riemann (midpoint Riemann
+   → "0.3333"), dl-loss-functions (softmax → "0.665 0.245 0.090"). Byte-stable per-file inject. Verified: all 9 embedded JS
+   exercises decoded+executed → output===expected (9/9); gate GREEN; softmax exercise browser run "✓ Output matches expected"
+   err=0; smoke errs=0/kErr=0 (10 routes). Reuses Playground (no new mobile layout). SW →v170. (Code-exercise coverage 14/148,
+   now spanning algorithms + core ML math.)
    ✅ iter 226: **New viz `rl-discounting`** (visualizations — RL was the most viz-thin topic). 49th widget, in rl-mdp-formalism
    after the discount-factor section. Bars = weight γᵗ of a future reward (geometric decay); effective-horizon marker at
    1/(1−γ); γ slider + myopic/far-sighted presets; note shows return G + horizon + verdict. Math node-validated (γ0.9→G9.28/h10;
