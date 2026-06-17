@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 167: MCQ arc → Deep Learning·Convolutional Networks 12→16 (+12, bank →2,096). All 3 lessons (convolution/
+   pooling/transfer-learning). ★ DL 4/7 modules at 16. Adversarial agent ALL PASS (conv-equivariance vs pooling-
+   invariance validated); positions balanced 3/3/3/3; render "of 16" errs=0; SW →v110. DL REMAINING (arc):
+   sequences-attention(3), transformers(3), generative(3). Then RL/LLM/PS.
    ✅ iter 166: Positional-encoding viz (`llm-positional-encoding`, **38th widget**, visualizations — non-content,
    interleaved). 3 views (heatmap pos×dim / frequency waves / relative-similarity) + a `d` slider; static draws.
    Embedded in `llm/l-positional-encoding`. gate ALL GREEN · 38 widgets; lab+lesson render errs=0, rawDollars=0;

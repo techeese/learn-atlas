@@ -2,6 +2,28 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 167 — MCQ arc → Deep Learning · Convolutional Networks 12 → 16 (content — owner's #1 ask)
+The arc continues through DL's fourth module, *Convolutional Networks for Vision*. All **three** lessons go 12 → 16
+(**+12, bank 2,084 → 2,096**), stating the bedrock the existing 12 assumed:
+- **The Convolution Operation**: what a *kernel* is (a small array of learnable weights = a pattern detector) / what a
+  *feature map* is (the grid of responses = a heatmap of where the pattern appears) / the two priors convolution
+  encodes (locality + translation *equivariance*) / why we zero-pad (center the kernel on border pixels so the output
+  doesn't shrink).
+- **Pooling & CNN Architectures**: what max-pooling outputs (the window max) / pooling's purpose beyond downsampling
+  (small-shift tolerance / local invariance) / pooling has *no* learnable parameters / a 2×2/stride-2 pool gives
+  $(H/2, W/2, C)$ — channels untouched (applied per channel).
+- **Transfer Learning**: the central idea (reuse a net pretrained on a large dataset for a new small-data task) /
+  feature-extraction (freeze backbone, train head) vs fine-tuning (also unfreeze backbone) / the feature hierarchy
+  (early = generic edges/blobs, late = task-specific) / the standard first step: discard the old head, attach a fresh
+  $K$-class head.
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,096 MCQs** (position-bias note even
+  dropped 12→11 lessons — the balanced additions de-skewed another); direct key-dump confirms answer indices map to
+  the intended choices, **balanced 3/3/3/3** with no within-lesson marching pattern; an independent adversarial
+  fact-check agent returned **ALL PASS** (it specifically validated the conv-*equivariance* vs pooling-*invariance*
+  distinction as internally consistent); render-checks on the Pooling and Convolution quizzes → `errs=0 | "Question 1
+  of 16" | rawDollars=0 kErr=0`; all-routes smoke (13) `errs=0`. SW cache **v109 → v110**; README 2,084 → 2,096.
+  ★ **Deep Learning is now 4/7 modules at 16** (foundations, training-mechanics, generalization, convolutional).
+
 ## iter 166 — Positional-encoding visualization (`llm-positional-encoding`, the 38th widget) (visualizations)
 The transformers thread had **no positional-encoding viz** — yet sinusoidal PE is one of the most abstract ideas in
 the stack (a formula of nested powers of 10000), and the dedicated lesson *"Positional Information: From Sinusoids to

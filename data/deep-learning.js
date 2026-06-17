@@ -2557,6 +2557,50 @@
               ],
               "answer": 0,
               "explain": "For stride $1$, 'same' padding requires $P=(K-1)/2 = (7-1)/2 = 3$, which gives $W_{out}=\\lfloor(W-7+6)/1\\rfloor+1 = W$. Choosing $P=6$ or $P=7$ would enlarge the output rather than preserve it."
+            },
+            {
+              "q": "In a convolutional layer, what is a \"kernel\" (filter)?",
+              "choices": [
+                "A small array of learnable weights that slides across the input, acting as a learned pattern detector",
+                "A fixed lookup table mapping pixel colors to outputs",
+                "The fully-connected layer at the end of the network",
+                "The learning-rate schedule used for the convolutional layer"
+              ],
+              "answer": 0,
+              "explain": "A kernel is a small array of learnable weights (e.g. $3\\times3$, spanning the full input depth). It slides over the input; at each position it computes a dot product with the overlapping patch. Training learns which patterns are worth detecting — so each kernel becomes a pattern detector."
+            },
+            {
+              "q": "What is the \"feature map\" (activation map) produced by applying one kernel?",
+              "choices": [
+                "The set of learnable weights inside the kernel",
+                "The list of all kernels contained in the layer",
+                "The grid of outputs from sliding one kernel over the input — a heatmap of where that pattern appears",
+                "A single scalar that summarizes the entire image"
+              ],
+              "answer": 2,
+              "explain": "Sliding one kernel over the whole input produces a grid of dot-product responses: the feature map. It is literally a heatmap of “where did this learned pattern appear?” One kernel → one feature map; a layer with $C_{out}$ kernels stacks $C_{out}$ feature maps."
+            },
+            {
+              "q": "Convolutional layers bake two priors about images directly into the architecture. Which two?",
+              "choices": [
+                "Color constancy and rotation invariance",
+                "Sparsity of the labels and balance of the classes",
+                "Large batch sizes and high learning rates",
+                "Locality (useful patterns are local) and translation equivariance (a pattern is detected the same way wherever it appears)"
+              ],
+              "answer": 3,
+              "explain": "Convolution encodes two structural assumptions: locality (a unit looks only at a small neighborhood) and translation equivariance (the same kernel is applied at every position, so a shifted input gives a correspondingly shifted feature map). These match how natural images actually behave, which is why convs beat dense layers on vision."
+            },
+            {
+              "q": "Why is zero-padding commonly added around the border of a convolution’s input?",
+              "choices": [
+                "To increase the number of learnable parameters in the layer",
+                "So the kernel can be centered on border pixels — keeping the output from shrinking and avoiding under-sampling of the edges",
+                "To convert the image to grayscale before convolving",
+                "To randomly drop border pixels as a form of regularization"
+              ],
+              "answer": 1,
+              "explain": "Without padding a $k\\times k$ kernel can’t be centered on edge pixels, so the output shrinks each layer and border information is under-used. Padding the border with zeros lets the kernel cover the edges; “same” padding ($P=(k-1)/2$ at stride 1) keeps the output the same spatial size as the input."
             }
           ],
           "flashcards": [
@@ -2752,6 +2796,50 @@
               ],
               "answer": 0,
               "explain": "Average pooling's output is $\\tfrac{1}{4}\\sum x_{i,j}$, so $\\partial y/\\partial x_{i,j} = 1/4$ for every input, spreading $g/4$ to all four. Max pooling routes the entire $g$ to the position that produced the maximum and sends $0$ elsewhere; the claim that parameter-free layers block gradients is false."
+            },
+            {
+              "q": "What does a max-pooling layer output for each window it slides over?",
+              "choices": [
+                "The average of the values in that window",
+                "The maximum value in that window",
+                "The sum of all the values in that window",
+                "The index (position) of the largest value in the window"
+              ],
+              "answer": 1,
+              "explain": "Max pooling returns $\\max_{(i,j)\\in W} x_{i,j}$ — the single largest activation in the window. It answers “did this feature fire anywhere nearby?”, keeping the strongest evidence and discarding exactly where it occurred. (Average pooling instead returns the window mean.)"
+            },
+            {
+              "q": "Besides shrinking spatial resolution, what is the main purpose of a pooling layer?",
+              "choices": [
+                "To build in tolerance to small spatial shifts (local translation invariance)",
+                "To add learnable parameters that increase the model’s capacity",
+                "To increase the number of channels in the feature map",
+                "To normalize activations to zero mean and unit variance"
+              ],
+              "answer": 0,
+              "explain": "Pooling summarizes a small window into one number, so a feature shifting by a pixel or two within the window leaves the output unchanged — building in tolerance to small translations. It also downsamples so deeper layers cover a larger effective receptive field cheaply."
+            },
+            {
+              "q": "How many learnable parameters does a standard max- or average-pooling layer have?",
+              "choices": [
+                "One parameter per input channel",
+                "One weight per position in the pooling window",
+                "The same number as a convolution with an equal window size",
+                "None — pooling is a fixed reduction (max or average) with nothing to learn"
+              ],
+              "answer": 3,
+              "explain": "Pooling applies a fixed function (max or mean) over each window — there are no weights and no bias, so it adds zero learnable parameters. That is also why global average pooling acts as a structural regularizer: there is nothing in it to overfit."
+            },
+            {
+              "q": "A $2\\times2$ pooling layer with stride 2 is applied to an $H\\times W\\times C$ tensor. What is the output shape?",
+              "choices": [
+                "$(H, W, C/2)$ — it halves the number of channels",
+                "$(2H, 2W, C)$ — it upsamples the spatial dimensions",
+                "$(H/2, W/2, C)$ — spatial dimensions halve while the channel count is unchanged (pooling acts per channel)",
+                "$(H\\cdot W, 1, C)$ — it flattens the spatial grid into one axis"
+              ],
+              "answer": 2,
+              "explain": "Pooling is applied independently to each channel, so depth $C$ is untouched; a $2\\times2$ window at stride 2 halves each spatial dimension, giving $(H/2, W/2, C)$ — a quarter of the spatial positions, same number of channels."
             }
           ],
           "flashcards": [
@@ -2947,6 +3035,50 @@
               ],
               "answer": 1,
               "explain": "BatchNorm's running mean and variance update from the data in training mode even when its weights are frozen. On a small, possibly skewed target dataset this shifts the backbone's effective statistics, so the backbone is not truly frozen and the preserved features get disturbed — hence keep BN in eval mode while frozen."
+            },
+            {
+              "q": "What is the central idea of transfer learning?",
+              "choices": [
+                "Train two networks at once and average their final weights",
+                "Move a trained model from the GPU to the CPU for faster inference",
+                "Convert a classification network into a regression network",
+                "Reuse a network already trained on a large, diverse dataset as a starting point, transferring its learned features to a new task with limited data"
+              ],
+              "answer": 3,
+              "explain": "Training from scratch needs huge labeled datasets; most real tasks have only hundreds-to-thousands of examples. Transfer learning reuses a model pretrained on a large dataset — it already encodes a rich, reusable vocabulary of visual features — and re-specializes it to the new task."
+            },
+            {
+              "q": "In transfer learning, what distinguishes \"feature extraction\" from \"fine-tuning\"?",
+              "choices": [
+                "Feature extraction needs a larger dataset; fine-tuning needs a smaller one",
+                "Feature extraction freezes the backbone and trains only the new head; fine-tuning also unfreezes and updates the backbone weights",
+                "Feature extraction works only for text, fine-tuning only for images",
+                "They are two names for exactly the same procedure"
+              ],
+              "answer": 1,
+              "explain": "Both attach a new head, but they differ in which weights gradient descent may change. Feature extraction keeps the backbone frozen ($\\nabla_\\theta\\mathcal{L}$ never applied) and trains only the head; fine-tuning unfreezes some or all backbone layers and updates them too (usually with a much smaller learning rate)."
+            },
+            {
+              "q": "Empirically, how do the features learned by a CNN change from its early to its late layers?",
+              "choices": [
+                "Late layers learn generic edges while early layers learn task-specific concepts",
+                "Every layer learns essentially identical features",
+                "Early layers learn generic primitives (oriented edges, color blobs); late layers assemble task-specific concepts tied to the original labels",
+                "Early layers hold all the parameters while late layers have none"
+              ],
+              "answer": 2,
+              "explain": "CNNs organize into a hierarchy of increasing abstraction: early layers learn near-universal primitives (edges, color blobs, Gabor-like filters), middle layers compose textures and parts, and late layers assemble task-specific concepts. That is exactly why the lower layers transfer to almost any visual task."
+            },
+            {
+              "q": "A pretrained classifier is written $\\hat{y} = h(f(x))$ (backbone $f$, head $h$). When adapting it to a new task with $K$ classes, what is the standard first step?",
+              "choices": [
+                "Discard the old head $h$ and attach a fresh head whose randomly-initialized final layer has output dimension $K$",
+                "Retrain the entire network from random initialization",
+                "Convert every convolution in the backbone into a dense layer",
+                "Increase the input image resolution to match the new task"
+              ],
+              "answer": 0,
+              "explain": "The original head predicts the source label set, which is useless for the new task. So every transfer recipe starts by discarding $h$ and attaching a fresh head ending in a randomly-initialized layer of output dimension $K$ — the reusable backbone $f$ is kept (then frozen or fine-tuned)."
             }
           ],
           "flashcards": [
