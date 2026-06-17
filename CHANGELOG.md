@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 176 — Glossary expansion: +14 high-frequency ML terms (understandability — owner's "hard-concept support" ask)
+The inline `.gloss` tooltips (and the searchable Glossary page) are a core understandability feature, but the 75-term
+glossary was **light on the dense modern-ML vocabulary** that saturates the DL/LLM/RL/Prob-&-Stats lectures — so many
+hard terms got *no* hover-definition. Added **14 carefully-written terms (75 → 89)**, each a one-glance definition that
+now lights up wherever it appears in lecture prose: **cross-entropy, KL divergence, learning rate, dropout, batch
+normalization, layer normalization, logit, epoch, receptive field, gradient clipping, mixed precision, maximum
+likelihood, perplexity, and the Markov property**. Pairs with the just-opened RL topic and deepens help across every
+technical lesson — a scalable understandability win (zero per-lesson authoring; the existing tooltip engine surfaces
+them automatically).
+- **Care taken on matching**: `linkGlossary` matches whole words case-insensitively, longest-first, max 14/lesson,
+  skipping headings/code/KaTeX. So I chose **specific, unambiguous** terms — no generic words (e.g. "return") and no
+  overlap traps (added "Cross-entropy", not bare "Entropy", which `\b…\b` would wrongly match inside "cross-entropy").
+  Defs use `$…$` (KaTeX-rendered in the tooltip) and match the existing terse house style.
+- **Verified**: `glossary.js` syntax OK; integrity check — **89 terms, no case-insensitive duplicates, all
+  `{term,topic,def}` well-formed**; on the DL Loss-Functions lesson the new terms wrap as `.gloss` tooltips
+  (`hasNewTerm=true`, 7 terms linked) and render clean (`kErr=0`, no raw `$` in prose); the Glossary page renders the
+  new entries with their math (screenshot read — Cross-entropy/KL-divergence/Logit show formulas); all-routes smoke
+  (10) `errs=0`. SW cache **v118 → v119**; README 75 → 89.
+
 ## iter 175 — MCQ arc → Reinforcement Learning · Foundations 12 → 16 (content — owner's #1 ask; 5th topic opens)
 The arc opens its **fifth topic, Reinforcement Learning**, with the *Foundations: the RL problem & MDPs* module. All
 **three** lessons go 12 → 16 (**+12, bank 2,132 → 2,144**), stating the bedrock the existing 12 assumed:
