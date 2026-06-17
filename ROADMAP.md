@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 200: MCQ arc → **PS·Foundations 12→16** (the FINAL topic opens; +16, bank →2,304) **+ FIX money-`\$` math
+   garble** (broken-wins, surfaced while verifying). 4 PS lessons (sample-spaces/axioms, conditional/Bayes, random
+   vars, expectation/variance) adversarial ALL 16 PASS, balanced. Bug: bare `\$` in prose mis-paired with the next
+   real `$…$` → garbled math; extended boot `escapeMathLt` to rewrite outside-math `\$`→`$\$$` (REAL-bad=0; 6 wrapped,
+   ~26 inside-math `\$` preserved). EXPVAR quiz/lecture + algorithms lecture render clean; all-routes errs=0; SW →v143.
+   **ARC: 6/7 topics done; Prob & Stats now 1/5 modules.** REMAINING: PS Distributions, Joint, Inference, Testing.
    ✅ iter 199: **Dashboard topic cards show mastery, not just completion** (UI/UX — non-content). Each Topics-grid
    card now has a "N% mastered" readout (decay-aware `topicMastery`, mastery-level-colored dot) under the "N/M done"
    bar — so completion no longer overstates knowledge. No new state. Verified: seeded LA→"5% mastered", untouched→
@@ -483,6 +489,14 @@ iter 52. If the pipeline is reused, make the author/verify prompts mandate `<str
   if you add a NEW innerHTML+math render path or a new data field, make sure it flows through `normalizeMath()` (or
   the rendered string is `escapeMathLt`-clean). `>` is safe unescaped; only `<`+letter breaks. Verify new math views
   with the rawDollars=0 / katex>0 / kErr=0 harness.
+- **★ LANDMINE — bare escaped money `\$` in prose garbles nearby math (found+fixed iter 200):** a `\$` in prose (e.g.
+  "wins \$2", or a choice like `\$3.5`) leaves a stray `$` that KaTeX auto-render mis-pairs with the next real `$…$`,
+  rendering the prose *between* them as garbled italic math (kErr stays 0 — it's "valid" wrong math — so the
+  rawDollars/`.katex-error` checks alone miss it; you must LOOK at the screenshot). FIXED in the same boot normalizer:
+  outside math, `\$`→`$\$$` (a self-contained span that renders a literal "$"); inside math, `\$` is left as-is
+  (KaTeX handles it). **You no longer need to avoid `\$` in data** — but money written as a bare literal `$` (no
+  backslash) sitting near `$…$` math could still mis-pair, so write money as `\$`. When verifying a money-bearing
+  lesson, *screenshot it* — the garble renders without raising kErr.
 - **Architecture review (iter 36):** layer discipline is clean — content in `data/*.js`, visualizations in
   `js/viz.js` (818 ln, cohesive registry of 18 widgets), playground in `js/playground.js`, state + SM-2 +
   mastery in `js/store.js` (374 ln), all app/router/views in `js/app.js` (1381 ln), styles in `css/styles.css`.

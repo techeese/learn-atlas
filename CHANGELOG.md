@@ -2,6 +2,33 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 200 — Final topic opens: PS Foundations 12→16 + FIX money-"\$" math garble (content + bug)
+Two things, the second surfaced by the first. **(1) Content** — opened the **last** topic of the 12→16 arc:
+**Probability & Statistics → Foundations**, all 4 lessons **12 → 16 MCQs** (+16; bank **2,288 → 2,304**), adversarially
+fact-checked (**ALL 16 PASS**, arithmetic re-verified), positions balanced 0/1/2/3 with distinct per-lesson patterns:
+sample-spaces/axioms (complement for "at least one"; derived-vs-axiom; classical counting; inclusion–exclusion for the
+overlap), conditional/Bayes (without-replacement chaining; law of total probability; naive-Bayes independence;
+posterior ∝ likelihood × prior), random variables (continuous endpoints don't matter; density ≠ probability; PDF
+normalization; tail via CDF complement), expectation/variance (linearity even for *dependent* vars; LOTUS; σ under a
+linear transform; the $\mathbb{E}[X^2]-\mathbb{E}[X]^2$ formula).
+**(2) Bug (broken-wins), found while verifying the above:** a bare escaped money dollar `\$` in prose (e.g. "wins
+\$2") left a stray `$` that KaTeX auto-render **mis-paired with the next real `$…$`**, rendering the intervening prose
+as garbled math (the expectation-variance quiz Q1 stem was visibly scrambled). Extended the iter-189 boot normalizer
+`escapeMathLt`: outside math, rewrite `\$` → `$\$$` (a self-contained span KaTeX renders as a literal "$", which can
+never mis-pair); inside math, `\$` is left untouched (KaTeX handles it). Also fixed its fast-path so `\$`-only strings
+aren't skipped. In-memory at boot — **no data files changed**.
+
+Verified: adversarial ALL 16 PASS; `gate.js` ALL GREEN (7 topics · 148 lessons · **2,304 MCQs** · 41 widgets); answer
+indices 0/1/2/3-balanced; byte-stable injection. Bugfix — node harness proved the transform's only effects are
+`<`→`&lt;` (in math) and `\$`→`$\$$` (outside math): **REAL-bad=0** across 17,964 strings, **6 bare money dollars
+wrapped, ~26 inside-math `\$` preserved**; browser: the EXPVAR quiz stem now reads correctly ("…wins $2 for each
+pip…", katex 2→7), the expectation-variance *lecture* renders its inside-math money (`$\$0$`/`$\$50$`/`$\$100$`, katex
+70, kErr=0), and the algorithms lecture (also uses `\$`) is clean (katex 195, kErr=0); all-routes smoke (13 routes,
+multi-topic) errs=0. SW cache `atlas-v142` → `atlas-v143`.
+
+**Arc: 6/7 topics fully at 16, the 7th (Prob & Stats) now started (1/5 modules).** Remaining PS modules: Distributions,
+Joint, Inference/Estimation, Hypothesis-Testing.
+
 ## iter 199 — Dashboard topic cards show mastery, not just completion (UI/UX — non-content)
 Non-content rebalance. The dashboard's Topics grid showed only *completion* (a "N/M done" bar) — which **overstates
 knowledge**: a learner who clicked through every lesson but whose mastery has since decayed sees a full bar yet may

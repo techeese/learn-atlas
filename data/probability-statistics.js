@@ -149,6 +149,50 @@
               ],
               "answer": 1,
               "explain": "Write $B = A \\cup (B \\setminus A)$ as a disjoint union; additivity gives $P(B)=P(A)+P(B\\setminus A)$, and since $P(B\\setminus A)\\ge 0$ we get $P(A)\\le P(B)$. A smaller event can never be more probable than the larger one containing it."
+            },
+            {
+              "q": "You roll a fair die twice. Using the complement rule, what is $P(\\text{at least one } 6)$?",
+              "choices": [
+                "$\\frac{2}{6} = \\frac{1}{3}$, by adding the chance of a 6 on each roll.",
+                "$1 - \\left(\\frac{5}{6}\\right)^2 = \\frac{11}{36}$ — one minus the probability of \"no 6 on either roll.\"",
+                "$\\left(\\frac{1}{6}\\right)^2 = \\frac{1}{36}$, the chance of a 6 on both rolls.",
+                "$\\frac{6}{36} = \\frac{1}{6}$, since there are 6 faces that could be a 6."
+              ],
+              "answer": 1,
+              "explain": "\"At least one\" is easiest through its complement \"none.\" $P(\\text{no 6 on a roll}) = \\frac{5}{6}$, and the rolls are independent, so $P(\\text{no 6 either roll}) = (5/6)^2 = 25/36$. Thus $P(\\text{at least one } 6) = 1 - 25/36 = 11/36 \\approx 0.306$. (Adding $\\frac16+\\frac16$ double-counts the $(6,6)$ outcome.)"
+            },
+            {
+              "q": "Which of the following is a *derived consequence* of Kolmogorov's axioms, NOT one of the three axioms itself?",
+              "choices": [
+                "$P(A) \\ge 0$ for every event $A$.",
+                "$P(\\Omega) = 1$.",
+                "For pairwise-disjoint events, the probability of their union equals the sum of their probabilities.",
+                "$P(A^c) = 1 - P(A)$ (the complement rule)."
+              ],
+              "answer": 3,
+              "explain": "The three axioms are nonnegativity ($P(A)\\ge 0$), normalization ($P(\\Omega)=1$), and countable additivity (disjoint unions add). The complement rule is a *theorem* derived from them: since $A$ and $A^c$ are disjoint and union to $\\Omega$, additivity + normalization give $P(A)+P(A^c)=1$. So too are $P(\\varnothing)=0$ and $0\\le P(A)\\le 1$."
+            },
+            {
+              "q": "Roll two fair dice (the 36 ordered pairs are equally likely). What is the probability of rolling \"doubles\" (both dice show the same number)?",
+              "choices": [
+                "$\\frac{1}{36}$",
+                "$\\frac{11}{36}$",
+                "$\\frac{6}{36} = \\frac{1}{6}$",
+                "$\\frac{12}{36} = \\frac{1}{3}$"
+              ],
+              "answer": 2,
+              "explain": "By the classical formula $P(A)=|A|/|\\Omega|$, count the favorable outcomes: $(1,1),(2,2),(3,3),(4,4),(5,5),(6,6)$ — six of them — out of $|\\Omega|=36$ equally-likely ordered pairs. So $P(\\text{doubles}) = 6/36 = 1/6$."
+            },
+            {
+              "q": "For two events, $P(A) = 0.5$, $P(B) = 0.4$, and $P(A \\cup B) = 0.6$. What is $P(A \\cap B)$?",
+              "choices": [
+                "$0.3$, from $P(A\\cap B) = P(A) + P(B) - P(A \\cup B)$.",
+                "$0.9$, since $P(A \\cap B) = P(A) + P(B)$.",
+                "$0$, because the events must be mutually exclusive.",
+                "$0.2$, since $P(A\\cap B) = P(A)\\,P(B)$."
+              ],
+              "answer": 0,
+              "explain": "Rearrange inclusion–exclusion $P(A\\cup B) = P(A)+P(B)-P(A\\cap B)$ to solve for the overlap: $P(A\\cap B) = 0.5+0.4-0.6 = 0.3$. Choice D assumes independence ($P(A)P(B)=0.2$), which is not given and is false here; choice B forgets to subtract the overlap; the events clearly overlap since $0.5+0.4>0.6$."
             }
           ],
           "flashcards": [
@@ -344,6 +388,50 @@
               ],
               "answer": 2,
               "explain": "Conditioning on $C$ restricts the sample space to $\\{1,2,3\\}$, of which the odd outcomes are $\\{1,3\\}$, giving $2/3$. Equivalently $P(C\\cap D)=P(\\{1,3\\})=2/6$ and $P(C)=3/6$, so $(2/6)/(3/6)=2/3$."
+            },
+            {
+              "q": "You draw two cards from a standard 52-card deck without replacement. Using the multiplication (chain) rule, what is the probability both are aces?",
+              "choices": [
+                "$\\left(\\frac{4}{52}\\right)^2 = \\frac{16}{2704}$, treating the draws as independent.",
+                "$\\frac{4}{52} + \\frac{3}{51}$, adding the two conditional probabilities.",
+                "$\\frac{4}{52} = \\frac{1}{13}$, the chance the first card is an ace.",
+                "$\\frac{4}{52}\\cdot\\frac{3}{51} = \\frac{1}{221}$, by $P(\\text{ace}_1)\\,P(\\text{ace}_2 \\mid \\text{ace}_1)$."
+              ],
+              "answer": 3,
+              "explain": "Without replacement the draws are dependent, so use the multiplication rule with the conditional: $P(A\\cap B)=P(\\text{ace}_1)\\,P(\\text{ace}_2\\mid \\text{ace}_1) = \\frac{4}{52}\\cdot\\frac{3}{51} = \\frac{12}{2652} = \\frac{1}{221}$. Squaring (choice A) wrongly assumes independence; adding (choice B) confuses \"and\" with \"or.\""
+            },
+            {
+              "q": "Factory 1 makes 60% of bulbs with a 2% defect rate; Factory 2 makes 40% with a 5% defect rate. By the law of total probability, what fraction of all bulbs are defective?",
+              "choices": [
+                "$0.07$ — just adding the two defect rates $2\\% + 5\\%$.",
+                "$(0.02)(0.6) + (0.05)(0.4) = 0.032$, a weighted average of the defect rates by production share.",
+                "$0.035$, the simple average of $2\\%$ and $5\\%$.",
+                "$(0.02)(0.05) = 0.001$, multiplying the two defect rates."
+              ],
+              "answer": 1,
+              "explain": "The factories partition the bulbs, so $P(D) = P(D\\mid F_1)P(F_1) + P(D\\mid F_2)P(F_2) = (0.02)(0.6)+(0.05)(0.4) = 0.012+0.020 = 0.032$ — each defect rate weighted by how many bulbs that factory makes. A plain average ignores the unequal production shares."
+            },
+            {
+              "q": "What does the \"naive\" in *naive Bayes* refer to, and why is it computationally convenient?",
+              "choices": [
+                "It assumes the features are conditionally independent given the label — so the joint likelihood factors into a product $\\prod_i P(x_i \\mid \\theta)$, which becomes a sum once you take logs.",
+                "It assumes every feature is equally likely, so all probabilities are $1/n$.",
+                "It ignores Bayes' theorem entirely and just uses the prior.",
+                "It assumes the prior and posterior are identical, so no update is ever needed."
+              ],
+              "answer": 0,
+              "explain": "Naive Bayes makes the (often unrealistic, hence \"naive\") assumption that features are conditionally independent given the class label. Independence lets the joint likelihood factor into a product of per-feature terms; taking logs converts that product into a sum, which is what you actually optimize. The same factorization underlies the likelihood of i.i.d. data."
+            },
+            {
+              "q": "In Bayes' theorem $P(B_i \\mid A) = \\dfrac{P(A \\mid B_i)\\,P(B_i)}{\\sum_j P(A \\mid B_j)\\,P(B_j)}$, which reading of the parts is correct?",
+              "choices": [
+                "$P(B_i)$ is the posterior and $P(B_i \\mid A)$ is the prior.",
+                "$P(A \\mid B_i)$ is the posterior; the denominator is the likelihood.",
+                "$P(B_i)$ is the prior (belief before evidence), $P(A \\mid B_i)$ is the likelihood (how well cause $B_i$ explains the evidence), $P(B_i \\mid A)$ is the posterior, and the denominator just normalizes — so posterior $\\propto$ likelihood $\\times$ prior.",
+                "All four quantities are equal whenever the evidence $A$ is observed."
+              ],
+              "answer": 2,
+              "explain": "Read it as posterior $\\propto$ likelihood $\\times$ prior. $P(B_i)$ is your belief before seeing $A$ (prior); $P(A\\mid B_i)$ is how well hypothesis $B_i$ predicts the evidence (likelihood); $P(B_i\\mid A)$ is the updated belief (posterior); the denominator $\\sum_j P(A\\mid B_j)P(B_j)=P(A)$ is the normalizer that makes the posteriors sum to 1."
             }
           ],
           "flashcards": [
@@ -539,6 +627,50 @@
               ],
               "answer": 1,
               "explain": "The split governs the probability mechanism: discrete variables place mass on points described by a PMF and summed, while continuous variables spread density described by a PDF and integrated. Both can be negative, both have a CDF, and both can have an expectation, so those do not distinguish the two types."
+            },
+            {
+              "q": "For a *continuous* random variable $X$, why does $P(a \\le X \\le b) = P(a < X < b)$?",
+              "choices": [
+                "Because the CDF is right-continuous, so the left endpoint is automatically dropped.",
+                "Because continuous variables are always uniform, so every interval has equal probability.",
+                "Because a single point has zero width, so $P(X = a) = P(X = b) = 0$; including or excluding the endpoints adds nothing.",
+                "It is not true — including the endpoints always makes the probability strictly larger."
+              ],
+              "answer": 2,
+              "explain": "For a continuous RV, probability is area under the density, and the area over a single point (zero width) is $0$, so $P(X=a)=0$ for every $a$. Adding or removing the endpoints therefore changes nothing: $P(a\\le X\\le b)=P(a<X<b)$. (This is false for *discrete* variables, where individual points carry positive mass.)"
+            },
+            {
+              "q": "A continuous random variable's density satisfies $f_X(x) = 2$ on part of its range. How can a \"probability\" density exceed 1?",
+              "choices": [
+                "$f_X(x)$ is a *density*, not a probability — only the *area* $\\int f_X\\,dx$ over an interval is a probability. A density can take any nonnegative value as long as its total area is 1.",
+                "It cannot; any valid density must satisfy $f_X(x) \\le 1$ everywhere.",
+                "The value 2 means there is a 200% chance, which is rounded down to 100% in practice.",
+                "Only discrete distributions allow values above 1; this $f_X$ must therefore be a PMF."
+              ],
+              "answer": 0,
+              "explain": "The density is \"probability per unit length,\" not a probability itself. What must lie in $[0,1]$ is the *area* over an interval, and the total area must equal 1 — but the density can rise above 1 over a short interval (e.g. uniform on $[0,0.5]$ has $f=2$). The only requirements are $f_X \\ge 0$ and $\\int f_X\\,dx = 1$."
+            },
+            {
+              "q": "For what constant $c$ is $f(x) = cx$ on $[0, 2]$ (and $0$ elsewhere) a valid probability density?",
+              "choices": [
+                "$c = 1$",
+                "$c = 2$",
+                "$c = \\frac{1}{4}$",
+                "$c = \\frac{1}{2}$"
+              ],
+              "answer": 3,
+              "explain": "A density must integrate to 1: $\\int_0^2 cx\\,dx = c\\,\\frac{x^2}{2}\\Big|_0^2 = c\\cdot 2 = 1$, so $c = \\frac{1}{2}$. (Check: $f(x)=x/2$ is nonnegative on $[0,2]$ and its triangle has area $\\tfrac12\\cdot 2\\cdot 1 = 1$.)"
+            },
+            {
+              "q": "A continuous random variable has CDF $F_X(x) = x^3$ for $0 \\le x \\le 1$ (with $0$ below and $1$ above). What is $P(X > 0.5)$?",
+              "choices": [
+                "$0.5^3 = 0.125$, reading $F_X(0.5)$ directly.",
+                "$1 - 0.5^3 = 0.875$, using $P(X > a) = 1 - F_X(a)$.",
+                "$0.5$, since $0.5$ is the midpoint of $[0,1]$.",
+                "$3 \\times 0.5^2 = 0.75$, using the density at $0.5$."
+              ],
+              "answer": 1,
+              "explain": "A tail probability is the complement of the CDF: $P(X > a) = 1 - F_X(a)$. Here $F_X(0.5) = 0.5^3 = 0.125$ is $P(X \\le 0.5)$, so $P(X > 0.5) = 1 - 0.125 = 0.875$. (Choice A gives the left tail; choice D evaluates the density $f_X = F_X' = 3x^2$, which is not a probability.)"
             }
           ],
           "flashcards": [
@@ -734,6 +866,50 @@
               ],
               "answer": 1,
               "explain": "$\\mathbb{E}[X]$ is the long-run average: across many trials the running mean settles toward $5$. It is neither the median, the mode, nor a guarantee about any individual observation's proximity to the mean."
+            },
+            {
+              "q": "Linearity of expectation says $\\mathbb{E}[X + Y] = \\mathbb{E}[X] + \\mathbb{E}[Y]$. Under what condition on $X$ and $Y$ does this hold?",
+              "choices": [
+                "Always — it holds even when $X$ and $Y$ are dependent; no independence assumption is needed.",
+                "Only when $X$ and $Y$ are independent.",
+                "Only when $X$ and $Y$ are identically distributed.",
+                "Only when $X$ and $Y$ are uncorrelated."
+              ],
+              "answer": 0,
+              "explain": "Linearity of expectation is unconditional: $\\mathbb{E}[aX+bY]=a\\mathbb{E}[X]+b\\mathbb{E}[Y]$ for *any* $X,Y$, however dependent. (Independence is needed for the expectation of a *product*, $\\mathbb{E}[XY]=\\mathbb{E}[X]\\mathbb{E}[Y]$, and for $\\text{Var}(X+Y)=\\text{Var}(X)+\\text{Var}(Y)$ — but never for the expectation of a sum.) This is why $\\mathbb{E}[\\text{sum of two dice}]=3.5+3.5=7$ needs no joint analysis."
+            },
+            {
+              "q": "You want $\\mathbb{E}[X^2]$ for a fair die ($X \\in \\{1,\\dots,6\\}$). What does the Law of the Unconscious Statistician (LOTUS) let you do?",
+              "choices": [
+                "Square the mean: $(\\mathbb{E}[X])^2 = 3.5^2 = 12.25$.",
+                "First derive the full distribution of $Y = X^2$, then average $Y$ — there is no shortcut.",
+                "Push each value through $g(x)=x^2$ and weight by the *original* probabilities: $\\mathbb{E}[X^2]=\\sum_i x_i^2\\,p_i = \\tfrac{1}{6}(1+4+9+16+25+36) = \\tfrac{91}{6} \\approx 15.17$.",
+                "Use $\\mathbb{E}[X^2] = \\mathbb{E}[X]\\cdot\\mathbb{E}[X] = 12.25$, because expectation is multiplicative."
+              ],
+              "answer": 2,
+              "explain": "LOTUS: $\\mathbb{E}[g(X)] = \\sum_i g(x_i)\\,p_i$ using $X$'s own distribution — no need to find the distribution of $X^2$. So $\\mathbb{E}[X^2] = \\tfrac16(1+4+9+16+25+36)=91/6\\approx 15.17$. Note this is *not* $(\\mathbb{E}[X])^2=12.25$; in general $\\mathbb{E}[g(X)]\\ne g(\\mathbb{E}[X])$ for nonlinear $g$."
+            },
+            {
+              "q": "Temperatures with standard deviation $\\sigma_C = 5$°C are converted to Fahrenheit by $F = 1.8\\,C + 32$. What is the standard deviation in Fahrenheit?",
+              "choices": [
+                "$1.8 \\times 5 + 32 = 41$°F.",
+                "$1.8 \\times 5 = 9$°F — the additive $+32$ does not affect spread, and the scale factor multiplies $\\sigma$ by $|1.8|$.",
+                "$1.8^2 \\times 5 = 16.2$°F.",
+                "$5$°F — a linear conversion leaves the standard deviation unchanged."
+              ],
+              "answer": 1,
+              "explain": "For $Y=aX+b$, $\\sigma(Y)=|a|\\,\\sigma(X)$: shifting by $b$ slides the distribution without changing its spread, while scaling by $a$ stretches $\\sigma$ by $|a|$. So $\\sigma_F = 1.8\\times 5 = 9$°F. (The *variance* scales by $a^2=3.24$; the $+32$ never affects spread.)"
+            },
+            {
+              "q": "A random variable has $\\mathbb{E}[X] = 2$ and $\\mathbb{E}[X^2] = 6$. What is $\\text{Var}(X)$?",
+              "choices": [
+                "$6$, which is $\\mathbb{E}[X^2]$ directly.",
+                "$4$, which is $(\\mathbb{E}[X])^2$.",
+                "$8 = \\mathbb{E}[X^2] + (\\mathbb{E}[X])^2$.",
+                "$2 = \\mathbb{E}[X^2] - (\\mathbb{E}[X])^2 = 6 - 4$."
+              ],
+              "answer": 3,
+              "explain": "The computational formula is $\\text{Var}(X) = \\mathbb{E}[X^2] - (\\mathbb{E}[X])^2 = 6 - 2^2 = 6 - 4 = 2$. (It follows from expanding $\\mathbb{E}[(X-\\mu)^2]$ and using linearity.) The standard deviation would be $\\sigma=\\sqrt{2}\\approx 1.41$."
             }
           ],
           "flashcards": [
