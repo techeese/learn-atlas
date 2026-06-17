@@ -3040,6 +3040,50 @@
               ],
               "answer": 1,
               "explain": "Antidifferentiating gives $x^3 - 2x^2 + x + C$, and passing through the origin means $g(0)=0$, which forces $C=0$. Leaving $+C$ in the final answer (third option) ignores the initial condition that pins down the unique solution."
+            },
+            {
+              "q": "What is $\\int x^n\\,dx$ for $n \\neq -1$?",
+              "choices": [
+                "$\\dfrac{x^{n-1}}{n-1} + C$",
+                "$n\\,x^{n-1} + C$",
+                "$\\dfrac{x^{n+1}}{n+1} + C$",
+                "$x^{n+1} + C$"
+              ],
+              "answer": 2,
+              "explain": "Reverse the power rule: raise the exponent by one and divide by the new exponent, $\\int x^n\\,dx = \\dfrac{x^{n+1}}{n+1}+C$. Check by differentiating: $\\frac{d}{dx}\\frac{x^{n+1}}{n+1} = x^n$. The case $n=-1$ is excluded (it would divide by zero); there $\\int x^{-1}\\,dx = \\ln|x|+C$."
+            },
+            {
+              "q": "An antiderivative $F$ of a function $f$ is a function satisfying:",
+              "choices": [
+                "$F'(x) = f(x)$",
+                "$F(x) = f'(x)$",
+                "$F''(x) = f(x)$",
+                "$F(x) = f(x) + C$"
+              ],
+              "answer": 0,
+              "explain": "Antidifferentiation reverses differentiation: $F$ is an antiderivative of $f$ exactly when $F'(x)=f(x)$. Since the derivative of a constant is $0$, any two antiderivatives differ only by a constant — hence the $+C$ in $\\int f\\,dx = F(x)+C$."
+            },
+            {
+              "q": "What is $\\int \\cos x\\,dx$?",
+              "choices": [
+                "$-\\sin x + C$",
+                "$\\cos x + C$",
+                "$-\\cos x + C$",
+                "$\\sin x + C$"
+              ],
+              "answer": 3,
+              "explain": "Since $\\frac{d}{dx}\\sin x = \\cos x$, the antiderivative of $\\cos x$ is $\\sin x + C$. (Contrast $\\int \\sin x\\,dx = -\\cos x + C$, because $\\frac{d}{dx}(-\\cos x) = \\sin x$ — the sign flips.)"
+            },
+            {
+              "q": "What is $\\int \\dfrac{1}{x}\\,dx$?",
+              "choices": [
+                "$-\\dfrac{1}{x^2} + C$",
+                "$\\ln|x| + C$",
+                "$\\dfrac{x^{0}}{0} + C$",
+                "$\\ln(x^2) + C$"
+              ],
+              "answer": 1,
+              "explain": "This is the $n=-1$ case the power rule can't handle (it would divide by zero). Since $\\frac{d}{dx}\\ln|x| = \\frac1x$, we get $\\int \\frac1x\\,dx = \\ln|x| + C$. The absolute value matters — it makes the antiderivative valid for negative $x$ too."
             }
           ],
           "flashcards": [
@@ -3235,6 +3279,50 @@
               ],
               "answer": 1,
               "explain": "Integrating a rate (acceleration) accumulates the total change in its antiderivative quantity (velocity): $\\int_0^4 t\\,dt = \\tfrac{1}{2}(4)^2 = 8$ m/s. Integrating acceleration gives change in velocity, not position or distance, and $8$ is a sum of rate$\\times$time, not an average."
+            },
+            {
+              "q": "The definite integral $\\int_a^b f(x)\\,dx$ represents:",
+              "choices": [
+                "the slope of $f$ at $x=b$",
+                "the signed area between the curve $f$ and the $x$-axis from $a$ to $b$ (area above minus area below)",
+                "the value $f(b) - f(a)$",
+                "the arc length of the curve"
+              ],
+              "answer": 1,
+              "explain": "Geometrically the definite integral accumulates *signed* area: regions where $f>0$ count positively and regions where $f<0$ count negatively. That's why $\\int_0^{2\\pi}\\sin x\\,dx = 0$ — the area above the axis cancels the area below."
+            },
+            {
+              "q": "What is $\\int_a^a f(x)\\,dx$ (equal lower and upper limits)?",
+              "choices": [
+                "$f(a)$",
+                "undefined",
+                "$1$",
+                "$0$"
+              ],
+              "answer": 3,
+              "explain": "Integrating over a zero-width interval accumulates nothing, so $\\int_a^a f(x)\\,dx = 0$ for any $f$ — the integral analogue of 'no distance covered in zero time'."
+            },
+            {
+              "q": "How does $\\int_b^a f(x)\\,dx$ compare to $\\int_a^b f(x)\\,dx$?",
+              "choices": [
+                "$\\int_b^a f = -\\int_a^b f$ — swapping the limits flips the sign",
+                "they are equal",
+                "$\\int_b^a f = 2\\int_a^b f$",
+                "$\\int_b^a f = 0$"
+              ],
+              "answer": 0,
+              "explain": "Reversing the direction of integration negates the result: $\\int_b^a f\\,dx = -\\int_a^b f\\,dx$. This is consistent with $\\Delta x=(b-a)/n$ flipping sign, and it keeps the rule $\\int_a^b + \\int_b^c = \\int_a^c$ valid for any order of $a,b,c$."
+            },
+            {
+              "q": "In a regular partition of $[a,b]$ into $n$ subintervals, each subinterval has width $\\Delta x = $",
+              "choices": [
+                "$\\dfrac{a-b}{n}$",
+                "$\\dfrac{b}{n}$",
+                "$\\dfrac{b-a}{n}$",
+                "$\\dfrac{n}{b-a}$"
+              ],
+              "answer": 2,
+              "explain": "A 'regular' partition splits $[a,b]$ into $n$ equal pieces, so each has width $\\Delta x = \\dfrac{b-a}{n}$ (total length over count). As $n\\to\\infty$, $\\Delta x\\to 0$ and the Riemann sum $\\sum f(x_i^*)\\Delta x$ converges to the integral."
             }
           ],
           "flashcards": [
@@ -3430,6 +3518,50 @@
               ],
               "answer": 0,
               "explain": "By FTC Part 1, $g'(x)=f(x)$, so $g'(c)=f(c)=0$ and $g'$ changes from $+$ to $-$ at $c$, the first-derivative test condition for a local maximum. The distractor $g(c)=0$ confuses the value of the derivative $f(c)=0$ with the value of the accumulated area $g(c)$."
+            },
+            {
+              "q": "The Fundamental Theorem of Calculus (Part 2) states that $\\int_a^b f(x)\\,dx$ equals (where $F$ is any antiderivative of $f$):",
+              "choices": [
+                "$F(a) - F(b)$",
+                "$f(b) - f(a)$",
+                "$F'(b) - F'(a)$",
+                "$F(b) - F(a)$"
+              ],
+              "answer": 3,
+              "explain": "FTC Part 2: to evaluate a definite integral, find any antiderivative $F$ (so $F'=f$) and compute $F(b)-F(a)$. This turns the hard limit-of-Riemann-sums definition into simple subtraction — the reason integration is practical at all."
+            },
+            {
+              "q": "By the Fundamental Theorem of Calculus (Part 1), if $g(x) = \\int_a^x f(t)\\,dt$ with $f$ continuous, then $g'(x) = $",
+              "choices": [
+                "$f'(x)$",
+                "$f(x)$",
+                "$f(x) - f(a)$",
+                "$F(x)$"
+              ],
+              "answer": 1,
+              "explain": "FTC Part 1: the derivative of an accumulation function returns the integrand, $\\frac{d}{dx}\\int_a^x f(t)\\,dt = f(x)$ — differentiation undoes integration. (With a variable upper limit like $x^3$, the chain rule adds a factor: $\\frac{d}{dx}\\int_a^{x^3} f = f(x^3)\\cdot 3x^2$.)"
+            },
+            {
+              "q": "Using the Fundamental Theorem, what is $\\int_0^1 x^2\\,dx$?",
+              "choices": [
+                "$1$",
+                "$\\dfrac{1}{2}$",
+                "$\\dfrac{1}{3}$",
+                "$3$"
+              ],
+              "answer": 2,
+              "explain": "An antiderivative of $x^2$ is $\\frac{x^3}{3}$, so $\\int_0^1 x^2\\,dx = \\left[\\frac{x^3}{3}\\right]_0^1 = \\frac{1}{3} - 0 = \\frac{1}{3}$."
+            },
+            {
+              "q": "The Fundamental Theorem of Calculus establishes that differentiation and integration are:",
+              "choices": [
+                "inverse operations — each undoes the other",
+                "completely unrelated",
+                "the same operation",
+                "both forms of multiplication"
+              ],
+              "answer": 0,
+              "explain": "The FTC ties the two halves of calculus together: Part 1 shows differentiating an integral returns the integrand, and Part 2 shows integrating a derivative returns the original function's net change. Differentiation (local slope) and integration (accumulated area) are inverse processes."
             }
           ],
           "flashcards": [
@@ -3625,6 +3757,50 @@
               ],
               "answer": 1,
               "explain": "Two consistent applications give $I = e^x\\sin x - e^x\\cos x - I$, an equation you solve to get $I = \\tfrac12 e^x(\\sin x - \\cos x) + C$. The recurrence is the intended mechanism, not a sign of failure or divergence."
+            },
+            {
+              "q": "$u$-substitution is the integration technique that reverses which differentiation rule?",
+              "choices": [
+                "the product rule",
+                "the chain rule",
+                "the quotient rule",
+                "the power rule"
+              ],
+              "answer": 1,
+              "explain": "$u$-substitution undoes the chain rule: spot an inner function $u=g(x)$ together with its derivative $g'(x)\\,dx = du$, and the integral collapses to $\\int f(u)\\,du$. (Integration by parts, in contrast, reverses the *product* rule.)"
+            },
+            {
+              "q": "The integration-by-parts formula is $\\int u\\,dv = $",
+              "choices": [
+                "$uv + \\int v\\,du$",
+                "$\\int v\\,du - uv$",
+                "$uv - \\int v\\,du$",
+                "$u'v - \\int u v\\,dx$"
+              ],
+              "answer": 2,
+              "explain": "$\\int u\\,dv = uv - \\int v\\,du$. It comes from integrating the product rule $(uv)' = u'v + uv'$ and rearranging. The art is choosing $u$ (something that simplifies when differentiated) and $dv$ (something you can integrate) — the LIATE guideline helps."
+            },
+            {
+              "q": "Evaluate $\\int \\dfrac{2x}{x^2+1}\\,dx$.",
+              "choices": [
+                "$\\dfrac{1}{x^2+1} + C$",
+                "$2\\ln(x^2+1) + C$",
+                "$\\arctan x + C$",
+                "$\\ln(x^2+1) + C$"
+              ],
+              "answer": 3,
+              "explain": "Substitute $u = x^2+1$, so $du = 2x\\,dx$ — exactly the numerator. The integral becomes $\\int \\frac{du}{u} = \\ln|u| + C = \\ln(x^2+1)+C$ (the argument is always positive, so no absolute value needed). Spotting 'derivative of the denominator on top' is the classic $\\ln$ pattern."
+            },
+            {
+              "q": "Integration by parts is the natural choice for an integral that is a:",
+              "choices": [
+                "product of two different kinds of functions (e.g. a polynomial times an exponential, log, or trig) where one factor simplifies when differentiated",
+                "ratio of two polynomials",
+                "composition $f(g(x))\\cdot g'(x)$",
+                "single power of $x$"
+              ],
+              "answer": 0,
+              "explain": "Integration by parts shines on products like $x e^x$, $x\\ln x$, or $x\\sin x$ — pick the factor that gets simpler when differentiated as $u$. A composition with its inner derivative present (option 3) calls for $u$-substitution instead; a single power uses the power rule."
             }
           ],
           "flashcards": [

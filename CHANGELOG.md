@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 153 — MCQ arc → Calculus · Integration 12 → 16 · ★ BANK CROSSES 2,000 MCQs (content — owner's #1 ask)
+The Calculus arc's fourth module, *Integration*. **+4 new MCQs each** to all four lessons (**+16, bank 1,992 → 2,008** —
+**past 2,000** for the first time): the antiderivative power rule / what an antiderivative is ($F'=f$) / $\int\cos x\,dx$ /
+$\int\frac1x\,dx=\ln|x|+C$; the definite integral as signed area / $\int_a^a=0$ / swapping limits flips the sign /
+$\Delta x=\frac{b-a}{n}$; FTC Part 2 ($\int_a^b f=F(b)-F(a)$) / FTC Part 1 ($\frac{d}{dx}\int_a^x f=f(x)$) / $\int_0^1 x^2=\tfrac13$ /
+differentiation & integration are inverse operations; $u$-sub reverses the chain rule / the IBP formula $uv-\int v\,du$ /
+$\int\frac{2x}{x^2+1}\,dx=\ln(x^2+1)+C$ / when integration by parts is the right tool. Answer positions shuffled ([2,0,3,1]/[1,3,0,2]/[3,1,2,0]/[1,2,3,0]).
+- **Verified**: byte-stable JSON round-trip (diff +176 localized insertions); `node gate.js` ALL GREEN (**2,008 MCQs**);
+  direct key-dump confirms shuffled indices; an independent adversarial fact-check agent returned **ALL PASS** (the
+  $\ln|x|$ absolute-value, $\ln(x^2)\neq\ln|x|$, $\int\frac{2x}{x^2+1}=\ln$-not-$2\ln$-not-$\arctan$, and inverse-not-same-operation
+  traps all checked); render-check on the FTC quiz → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`. SW cache **v95 → v96**; README 1,992 → 2,008.
+- **Arc progress**: Algorithms ✓, Linear Algebra ✓; **Calculus now 4/7** (foundations, derivatives, applications-of-derivatives,
+  integration). Remaining Calc: applications-of-integration, multivariable-bridge, convex-optimization. Then DL/RL/LLM/PS.
+
 ## iter 152 — Taylor Polynomial approximator viz (visualization)
 The **36th** widget (`calc-taylor`), embedded in *Linear Approximation, Differentials & L'Hôpital's Rule* (which had no
 viz) right after the linearization section — because it **generalizes that lesson**: it overlays a function (sin x, cos x,
