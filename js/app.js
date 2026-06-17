@@ -1564,10 +1564,29 @@
     document.body.appendChild(paletteEl);
     const inp = paletteEl.querySelector(".palette-in"), list = paletteEl.querySelector(".palette-list");
     let sel = 0, results = [];
+    // typo-tolerant subsequence match: are q's chars in order within t? returns a quality score (lower=better) or -1
+    function subseq(q, t) {
+      let ti = 0, gaps = 0, first = -1, prev = -1;
+      for (let qi = 0; qi < q.length; qi++) {
+        const f = t.indexOf(q[qi], ti); if (f < 0) return -1;
+        if (first < 0) first = f;
+        if (prev >= 0 && f > prev + 1) gaps += f - prev - 1;
+        prev = f; ti = f + 1;
+      }
+      return first + gaps * 0.5;
+    }
     function render() {
       const q = inp.value.trim().toLowerCase();
       if (q) {
-        const score = x => { const t = x.t.toLowerCase(); if (t === q) return 0; if (t.startsWith(q)) return 1; if (t.indexOf(q) >= 0) return 2; if ((x.sub || "").toLowerCase().indexOf(q) >= 0) return 3; return 9; };
+        const score = x => {
+          const t = x.t.toLowerCase();
+          if (t === q) return 0;
+          if (t.startsWith(q)) return 1;
+          if (t.indexOf(q) >= 0) return 2;
+          if ((x.sub || "").toLowerCase().indexOf(q) >= 0) return 3;
+          if (q.length >= 2) { const f = subseq(q, t); if (f >= 0) return 4 + Math.min(f, 40) / 100; } // fuzzy/typo tolerance
+          return 9;
+        };
         results = idx.map((x, i) => ({ x, s: score(x), i })).filter(o => o.s < 9).sort((a, b) => a.s - b.s || a.i - b.i).map(o => o.x).slice(0, 50);
       } else results = idx.slice(0, 50);
       if (sel >= results.length) sel = Math.max(0, results.length - 1);

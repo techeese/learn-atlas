@@ -50,7 +50,7 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
   iter 67): MDP policy-iteration, a BPE-merge animation, a learning-rate-schedule plot.
 - Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.
 - Reduced-motion + high-contrast accessibility modes.
-- Search ranking improvements (fuzzy, recency, mastery-weighted) in ⌘K.
+- ~~Search ranking improvements (fuzzy, recency, mastery-weighted) in ⌘K.~~ **fuzzy DONE iter 70** (typo-tolerant subsequence tier). Recency/mastery-weighting still open.
 - Onboarding tour for first visit; better empty states everywhere.
 - Audio: optional ambient focus soundscape (generative WebAudio, mute by default).
 - Print/PDF a full lesson (not just cheatsheets).

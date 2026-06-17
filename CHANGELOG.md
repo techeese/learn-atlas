@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 70 — Typo-tolerant fuzzy search in the ⌘K command palette (understandability / workflow) — 10-iter checkpoint
+The command palette is the core fast-navigation tool across 113 lessons + 21 visualizations + glossary + pages
++ references, but it only did exact substring matching — a small typo ("eignvalue", "softmx", "gradent")
+returned nothing. Added a **typo-tolerant subsequence tier**: if the query characters appear in order within a
+title (allowing omissions/abbreviations), it matches, scored just below true substring hits and ranked by how
+tight/early the match is. Exact > prefix > substring > fuzzy ordering is preserved, so precise queries are
+unaffected. One-function change in `openPalette`; no new state. SW cache → `atlas-v16`. Verified: a node unit
+test of the matcher (eignvalue→eigenvalue, softmx→softmax, gradent→gradient all match; gibberish rejected) and
+a headless palette test where typing "eignvalue" surfaces "Eigenvalues and Eigenvectors" as the top result,
+errs=0, `node gate.js` ALL GREEN.
+**Checkpoint note:** both owner content sweeps are done and the platform is mature across all compass areas;
+the two biggest remaining swings (a 7th topic, the AI tutor) stay owner-gated, so the loop continues delivering
+genuine in-scope polish on the existing six rather than unilaterally expanding scope.
+
 ## iter 69 — Course-page overview: mastery distribution + "continue/start next" CTA (UI/UX)
 The course page is the main navigation hub into each topic's now-large content, but its header only showed a
 flat progress %. Added an at-a-glance **mastery distribution bar** — a segmented strip showing how many of the
