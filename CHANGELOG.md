@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 128 — Hardened the content gate with MCQ-quality checks (workflow / dev-flow — "evolve the loop")
+Mid-MCQ-arc, the loop's QA tool `gate.js` only checked answer-index range + ≥2 choices. Hardened it to catch real
+authoring bugs across all **1,840** MCQs: new **failures** for <strong>duplicate choices within an MCQ</strong> (an
+ambiguity bug), <strong>empty choices</strong>, and <strong>empty stems</strong>; plus non-blocking **warnings** for
+<strong>duplicate question stems within a lesson</strong> and a summarized **note** on egregious correct-answer-position
+bias. Running it was itself the verification — and it surfaced two things: (1) the content is <strong>structurally
+clean</strong> — zero duplicate/empty choices, zero out-of-range keys, zero duplicate stems across 1,840 questions; and
+(2) a genuine pre-existing quality issue — **22 lessons (>70%, ~66 at >55%) have most correct answers at the same index**
+(the original authoring fixed the position; the arc's newer MCQs are shuffled). I deliberately did <em>not</em>
+auto-shuffle to fix it: an audit found many explanations cite positions ("option A", "the third option", "choice (a)"),
+so a blind reorder would corrupt them — de-skewing needs per-MCQ care and is queued as careful future content work. No
+user-facing asset changed (gate.js is dev-only), so no SW-cache bump. Verified: `node gate.js` → ALL GREEN with the new
+checks active and the skew note printed.
+
 ## iter 127 — MCQ arc phase 5: Algorithms · Graph Algorithms 12 → 16 (content — owner's #1 ask)
 Continuing the 12→16 arc (interleaved — iter 126 was workflow). **+4 new MCQs each** to Graph Representations & Traversal,
 Shortest Paths & Topological Sort, and MST & Union-Find (**+12, bank 1,828 → 1,840**). New questions cover the

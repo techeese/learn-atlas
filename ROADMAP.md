@@ -97,6 +97,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    (remember → test → fix → grow). runMasteryDrill gained opts.onDone for chaining.
    ✅ iter 127: MCQ arc phase 5 — Algorithms·Graph Algorithms 12→16 (+12, bank →1,840). Algorithms 5/7 modules.
    REMAINING in Algorithms: advanced-ml-connections (4), advanced-techniques (3). Then LA/Calc/DL/RL/LLM/PS.
+   ✅ iter 128: hardened gate.js (dup/empty-choice + empty-stem FAILURES, dup-stem + position-bias diagnostics).
+   ⚠ NEW DEBT SURFACED: ~22 lessons (>70%) have correct-answer-position bias (original authoring fixed the index).
+   NOT auto-fixable by shuffle — many explanations cite positions ("option A", "choice (a)"). FUTURE: de-skew
+   lesson-by-lesson, rewriting any position-referencing explanations (careful, per-MCQ; pair with an adversarial check).
+   The 12→16 arc's NEW MCQs are already shuffled, so this is purely original-content debt.
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
