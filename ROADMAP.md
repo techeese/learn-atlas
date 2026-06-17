@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 221: **Deeper dives for LA & Calc (1→3 each)** (understandability — completes raising the two thinnest topics).
+   la-svd (rotate-stretch-rotate), la-four-subspaces-rank (the jigsaw), c-chain-rule (=backprop engine), c-gradient-directional
+   (steepest ascent ⊥ level sets). Byte-stable inject across both files. Verified: gate GREEN (lints), four-subspaces dive
+   katex=28/kErr=0 + fires deep-thinker, gradient dive katex=15/kErr=0, smoke errs=0/kErr=0 (10 routes). SW →v164.
+   Deep-dive coverage now: LA 3, Calc 3, Algo 3, DL 4, LLM 4, RL 4, PS 2 — every topic ≥2; PS(2) is the lone thin one left.
    ✅ iter 220: **Per-module progress bars + module-completion celebration** (gamification/UI — fresh lane, last gamification
    iter 209). Course page module headers now show X/N done (✓ complete when finished) + a progress bar; completing a
    module's last lesson fires confetti + "📗 Module complete!" toast (guarded: once, multi-lesson modules only). Pure

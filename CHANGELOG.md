@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 221 — Deeper dives for Linear Algebra & Calculus — the last two thin topics (understandability)
+LA and Calculus were the only topics still at **1** "Deeper dive" each; raised both to **3** (the depth pass now covers
+every subject — minimum is PS at 2). Four `<details class="deep-dive">` on foundational ML-math:
+- **`la-svd`** — *every matrix is a rotation, a stretch, and another rotation*: $A=U\Sigma V^{\top}$ sends the unit sphere
+  to an ellipsoid whose semi-axes are the singular values; why it's the "fundamental theorem" (works for *every* matrix,
+  unifies PCA / Eckart–Young / the four subspaces).
+- **`la-four-subspaces-rank`** — *the four subspaces as a jigsaw*: row⊥null fill $\mathbb{R}^n$, col⊥left-null fill
+  $\mathbb{R}^m$; all dimensions hinge on rank $r$; $A$ maps the row space one-to-one onto the column space and crushes
+  the null space.
+- **`c-chain-rule`** — *the chain rule is the engine of backprop*: a net is one composite function; backprop is the chain
+  rule applied right-to-left with memoization; reverse-mode is efficient because the loss is one scalar; vanishing
+  gradients are the product of many sub-1 factors.
+- **`c-gradient-directional`** — *why the gradient is steepest ascent ⊥ level sets*: $D_uf=\nabla f\cdot u=\lVert\nabla
+  f\rVert\cos\theta$ is maximized along $\nabla f$, and is $0$ along a contour — so $\nabla f$ crosses the contours at
+  right angles (the basis of gradient descent and the Lagrange condition).
+Injected byte-stably across both data files (no-op guard each; `String.raw` LaTeX; even-`$` + no-markdown pre-checks; no
+raw `<` in math). Verified: `gate.js` ALL GREEN incl. render-hazard lints (2,368 MCQs · 47 widgets); the four-subspaces
+dive (densest, 56 `$`) renders **katex=28, kErr=0, errs=0** and fires **deep-thinker**; the gradient dive renders
+**katex=15, kErr=0**; all-routes smoke (10 routes incl. all 4 lessons) **errs=0/kErr=0**. SW cache `atlas-v163` → `atlas-v164`.
+
 ## iter 220 — Per-module progress bars + a module-completion celebration (gamification / UI)
 The course page listed each module's lesson *count* but showed **no progress through it**, and finishing a whole module
 — a meaningful milestone — passed silently. Fresh gamification/delight lane (last gamification was iter 209). Two parts:
