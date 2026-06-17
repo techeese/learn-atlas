@@ -2078,6 +2078,50 @@
               ],
               "answer": 2,
               "explain": "Since $r^2 h$ is a product of two time-varying factors, the product rule and chain rule give $\\frac{d}{dt}[r^2 h] = 2r\\frac{dr}{dt}\\,h + r^2\\frac{dh}{dt}$. The first two options each hold one variable artificially constant, and the last forgets the $\\frac{dr}{dt}$ and $\\frac{dh}{dt}$ chain-rule factors entirely."
+            },
+            {
+              "q": "When is implicit differentiation the right tool?",
+              "choices": [
+                "When the function has no derivative",
+                "When $x$ and $y$ are independent variables",
+                "When $y$ is defined implicitly by an equation and is hard or impossible to solve explicitly for $y$",
+                "When the equation is linear"
+              ],
+              "answer": 2,
+              "explain": "Implicit differentiation finds $dy/dx$ directly from an equation $F(x,y)=0$ — e.g. $x^3+y^3=6xy$ — without first solving for $y$ explicitly (often impossible). Differentiate both sides w.r.t. $x$ treating $y$ as a function of $x$ (so $\\frac{d}{dx}y^n = ny^{n-1}y'$ by the chain rule), then solve for $y'$."
+            },
+            {
+              "q": "In a related-rates problem, you differentiate the equation relating the quantities with respect to:",
+              "choices": [
+                "time $t$ (every quantity is a function of $t$, so the chain rule applies)",
+                "$x$ only",
+                "the largest variable",
+                "a constant"
+              ],
+              "answer": 0,
+              "explain": "Related rates link how quantities change *over time*, so you differentiate the relating equation with respect to $t$. Each variable is a function of $t$, so the chain rule brings in its rate (e.g. $\\frac{d}{dt}r^2 = 2r\\frac{dr}{dt}$). Plug in the known values/rates only *after* differentiating."
+            },
+            {
+              "q": "For $xy = 12$, what is $\\dfrac{dy}{dx}$ by implicit differentiation?",
+              "choices": [
+                "$\\dfrac{y}{x}$",
+                "$-\\dfrac{x}{y}$",
+                "$\\dfrac{12}{x^2}$",
+                "$-\\dfrac{y}{x}$"
+              ],
+              "answer": 3,
+              "explain": "Differentiate $xy=12$ with the product rule: $1\\cdot y + x\\cdot y' = 0$, so $x y' = -y$ and $y' = -\\dfrac{y}{x}$. Check against the explicit form $y = 12/x$: $y' = -12/x^2 = -y/x$. ✓"
+            },
+            {
+              "q": "For a curve defined implicitly by $F(x,y)=0$, the value $\\dfrac{dy}{dx}$ at a point gives:",
+              "choices": [
+                "the area enclosed by the curve",
+                "the slope of the tangent line to the curve at that point",
+                "the curvature of the curve",
+                "the $y$-coordinate at that point"
+              ],
+              "answer": 1,
+              "explain": "As for explicit functions, $\\frac{dy}{dx}$ is the slope of the tangent line — here to the implicit curve at the chosen point. For the unit circle $x^2+y^2=1$, $\\frac{dy}{dx}=-x/y$, so at $\\left(\\tfrac{\\sqrt2}{2},\\tfrac{\\sqrt2}{2}\\right)$ the tangent slope is $-1$."
             }
           ],
           "flashcards": [
@@ -2273,6 +2317,50 @@
               ],
               "answer": 0,
               "explain": "When $f''(c)=0$ the Second Derivative Test gives no information, but $x^4$ still has a true minimum at $0$ (confirmed by the First Derivative Test, since $f'$ goes negative-to-positive). The misconception is that $f''=0$ forces an inflection point or rules out an extremum, which $x^4$ disproves."
+            },
+            {
+              "q": "If $f'$ changes sign from negative to positive at $c$, the First Derivative Test says $c$ is a:",
+              "choices": [
+                "local maximum",
+                "local minimum",
+                "inflection point",
+                "saddle point"
+              ],
+              "answer": 1,
+              "explain": "$f$ decreasing then increasing ($f'<0$ then $f'>0$) carves a valley, so $c$ is a *local minimum*. The reverse sign change (positive→negative) gives a local maximum, and no sign change means $c$ is neither."
+            },
+            {
+              "q": "An inflection point of $f$ is a point where:",
+              "choices": [
+                "$f'(x) = 0$",
+                "$f$ attains a maximum",
+                "$f''(x) > 0$",
+                "the concavity changes (typically $f''$ changes sign)"
+              ],
+              "answer": 3,
+              "explain": "An inflection point is where the graph switches from concave up to concave down or vice versa — i.e. $f''$ changes sign. It need not be a critical point ($f'$ can be nonzero there), and $f''=0$ alone isn't enough (e.g. $f=x^4$ at $0$: $f''=0$ but no concavity change)."
+            },
+            {
+              "q": "If $f'(x) > 0$ on an interval, then on that interval $f$ is:",
+              "choices": [
+                "increasing",
+                "decreasing",
+                "constant",
+                "concave up"
+              ],
+              "answer": 0,
+              "explain": "A positive derivative means the slope is positive throughout the interval, so $f$ is *increasing* there. (Concavity is governed by $f''$, not $f'$; a function can be increasing while concave either up or down.)"
+            },
+            {
+              "q": "The Extreme Value Theorem guarantees that a function continuous on a *closed* interval $[a,b]$:",
+              "choices": [
+                "has no extrema",
+                "is monotonic",
+                "attains both an absolute maximum and an absolute minimum on $[a,b]$",
+                "has $f'(c)=0$ somewhere"
+              ],
+              "answer": 2,
+              "explain": "Continuity on a closed, bounded interval guarantees the function achieves a highest and a lowest value somewhere on $[a,b]$ — the Extreme Value Theorem. (Drop 'closed' or 'continuous' and it can fail: $f(x)=1/x$ on $(0,1]$ has no maximum.) Those extrema occur at critical points or endpoints."
             }
           ],
           "flashcards": [
@@ -2468,6 +2556,50 @@
               ],
               "answer": 1,
               "explain": "For $x$ slightly less than $0$ and slightly greater than $0$ (but below $3$), the factor $4x^2 \\ge 0$ while $(x-3) < 0$, so $f'(x) < 0$ on both sides; the function decreases through $x=0$ with no sign change, giving neither a max nor a min. The first-derivative sign test resolves it directly, so $f'''$ is unnecessary."
+            },
+            {
+              "q": "To find the absolute maximum and minimum of a continuous $f$ on $[a,b]$, evaluate $f$ at:",
+              "choices": [
+                "only the critical points in $(a,b)$",
+                "only the endpoints $a$ and $b$",
+                "only the midpoint",
+                "the critical points in $(a,b)$ AND the endpoints $a$ and $b$, then compare"
+              ],
+              "answer": 3,
+              "explain": "On a closed interval the extremes occur either at an interior critical point ($f'=0$ or undefined) or at an endpoint. So list the critical points in $(a,b)$, add $a$ and $b$, evaluate $f$ at each, and pick the largest and smallest — the 'closed-interval method'."
+            },
+            {
+              "q": "For a convex function, any local minimum is:",
+              "choices": [
+                "a saddle point",
+                "also the global minimum",
+                "actually a maximum",
+                "never unique"
+              ],
+              "answer": 1,
+              "explain": "Convexity (a single bowl, no separate valleys) guarantees a local minimum is *the* global minimum — nowhere lower to get stuck. This is why convex problems are 'easy': gradient descent can't be trapped in a suboptimal local minimum, unlike on the non-convex loss surfaces of deep nets."
+            },
+            {
+              "q": "At an interior point where a differentiable function attains a local maximum or minimum, its derivative must be:",
+              "choices": [
+                "positive",
+                "negative",
+                "zero",
+                "undefined"
+              ],
+              "answer": 2,
+              "explain": "Fermat's theorem: at an interior extremum of a differentiable function, $f'(c)=0$ — the tangent is horizontal, with no uphill or downhill direction. This is why optimization starts by solving $f'(x)=0$ (or $\\nabla L=\\mathbf{0}$). The converse fails: $f'(c)=0$ can also mark a saddle or inflection."
+            },
+            {
+              "q": "In the gradient-descent update $\\mathbf{w} \\leftarrow \\mathbf{w} - \\eta\\,\\nabla L$, the learning rate $\\eta$ controls:",
+              "choices": [
+                "the step size — how far you move at each update",
+                "the direction of the step",
+                "the number of parameters",
+                "the final value of the loss"
+              ],
+              "answer": 0,
+              "explain": "$\\eta$ scales the step: too small and training crawls; too large and you overshoot or diverge. The *direction* is fixed by $-\\nabla L$ (steepest descent); $\\eta$ only sets how far along that direction you move each iteration."
             }
           ],
           "flashcards": [
@@ -2663,6 +2795,50 @@
               ],
               "answer": 1,
               "explain": "The remainder term $\\tfrac12 f''(\\xi)(x-a)^2$ grows with $(x-a)^2$, so error increases with distance because the line cannot capture the curvature the true function has. A fixed slope does not keep error constant, since the gap between line and curve widens."
+            },
+            {
+              "q": "L'Hôpital's rule may be applied to $\\lim \\dfrac{f}{g}$ only when direct substitution gives:",
+              "choices": [
+                "any value at all",
+                "an indeterminate form, $\\tfrac{0}{0}$ or $\\tfrac{\\infty}{\\infty}$",
+                "only $\\tfrac{0}{0}$",
+                "a finite nonzero number"
+              ],
+              "answer": 1,
+              "explain": "L'Hôpital requires the indeterminate forms $\\tfrac00$ or $\\tfrac{\\infty}{\\infty}$. Applying it to a *determinate* limit gives wrong answers — e.g. $\\lim_{x\\to0}\\frac{\\cos x}{x+1}=\\frac11=1$ by substitution, but differentiating top and bottom would wrongly give $\\frac{-\\sin x}{1}\\to 0$. (Forms like $0\\cdot\\infty$ or $\\infty-\\infty$ must first be rewritten as $\\tfrac00$ or $\\tfrac\\infty\\infty$.)"
+            },
+            {
+              "q": "To apply L'Hôpital's rule to an indeterminate $\\lim\\dfrac{f(x)}{g(x)}$, you take the limit of:",
+              "choices": [
+                "$\\left(\\dfrac{f}{g}\\right)'$ via the quotient rule",
+                "$f'(x)\\cdot g'(x)$",
+                "$\\dfrac{f'(x)}{g'(x)}$ — derivative of the top over derivative of the bottom",
+                "$\\dfrac{f(x)}{g'(x)}$"
+              ],
+              "answer": 2,
+              "explain": "L'Hôpital replaces the ratio by the ratio of derivatives: $\\lim\\frac{f}{g} = \\lim\\frac{f'}{g'}$ (when the form is indeterminate and the new limit exists). A common error is to apply the *quotient rule* to $f/g$ instead — that is not what the rule says."
+            },
+            {
+              "q": "Using L'Hôpital's rule, what is $\\displaystyle\\lim_{x\\to 0}\\frac{e^x - 1}{x}$?",
+              "choices": [
+                "$0$",
+                "$e$",
+                "$\\infty$",
+                "$1$"
+              ],
+              "answer": 3,
+              "explain": "Substitution gives $\\tfrac{e^0-1}{0}=\\tfrac00$, an indeterminate form, so apply L'Hôpital: differentiate top and bottom to get $\\lim_{x\\to0}\\frac{e^x}{1}=e^0=1$. (This also confirms that the slope of $e^x$ at $0$ is $1$.)"
+            },
+            {
+              "q": "Geometrically, the linearization $L(x) = f(a) + f'(a)(x-a)$ is:",
+              "choices": [
+                "the tangent line to $f$ at $x=a$",
+                "a secant line through two points of $f$",
+                "the second-order Taylor polynomial of $f$",
+                "the derivative $f'$"
+              ],
+              "answer": 0,
+              "explain": "$L(x)$ is exactly the tangent line at $a$: it passes through $(a,f(a))$ with slope $f'(a)$. Near $a$ the curve and its tangent nearly coincide, which is why $L(x)\\approx f(x)$ for $x$ close to $a$ — the basis of linear approximation."
             }
           ],
           "flashcards": [

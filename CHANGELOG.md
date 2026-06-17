@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 151 — MCQ arc → Calculus · Applications of the Derivative 12 → 16 (content — owner's #1 ask)
+The Calculus arc's third module, *Applications of the Derivative*. **+4 new MCQs each** to all four lessons
+(**+16, bank 1,976 → 1,992**): when to use implicit differentiation / related-rates differentiate w.r.t. $t$ /
+$\frac{dy}{dx}$ of $xy=12$ is $-y/x$ / $\frac{dy}{dx}$ is the implicit-curve tangent slope; the First Derivative Test
+(neg→pos ⟹ local min) / inflection = concavity change / $f'>0 \Rightarrow$ increasing / the Extreme Value Theorem;
+the closed-interval method (critical points **and** endpoints) / convex ⟹ local min is global / Fermat ($f'=0$ at an
+interior extremum) / the learning rate $\eta$ is the step size; and L'Hôpital's precondition ($\tfrac00$ or $\tfrac\infty\infty$) /
+it uses $f'/g'$ not the quotient rule / $\lim_{x\to0}\frac{e^x-1}{x}=1$ / the linearization is the tangent line.
+Answer positions shuffled ([2,0,3,1]/[1,3,0,2]/[3,1,2,0]/[1,2,3,0]).
+- **Verified**: byte-stable JSON round-trip (diff +176 localized insertions); `node gate.js` ALL GREEN (1,992 MCQs);
+  direct key-dump confirms the shuffled indices; an independent adversarial fact-check agent returned **ALL PASS** (the
+  $xy=12\Rightarrow-y/x$ sign vs the "$12/x^2$" trap, FDT neg→pos = min, L'Hôpital f'/g'-not-quotient-rule, and
+  linearization-not-2nd-order-Taylor all checked); render-check on the Optimization quiz → `errs=0 | "Question 1 of 16" |
+  rawDollars=0 kErr=0`. SW cache **v93 → v94**; README 1,976 → 1,992.
+- **Arc progress**: Algorithms ✓, Linear Algebra ✓; **Calculus now 3/7** (foundations, derivatives, applications-of-derivatives).
+  Remaining Calc: integration, applications-of-integration, multivariable-bridge, convex-optimization. Then DL/RL/LLM/PS.
+
 ## iter 150 — Scroll-spy for the lesson TOC (UI/UX) + ★150 reflection
 The iter-144 "On this page" TOC now **highlights the section you're currently reading** as you scroll — completing the
 feature. An `IntersectionObserver` over the section headings recomputes, on each crossing, the last heading whose top is

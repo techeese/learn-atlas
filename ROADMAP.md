@@ -156,8 +156,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    disconnected/rebuilt per render). errs=0; SW cache →v93. NOTE for future: headless --dump-dom does NOT drive programmatic
    scrolling (body{overflow-y:auto} scroll box), so scroll-DRIVEN behavior can only be verified by on-load state + graceful-
    degradation reasoning, not end-to-end. ★150 reflection logged in CHANGELOG (loop healthy; arc steady; compass well-rotated).
-   CALC REMAINING (MCQ arc): applications-derivatives(4), integration(4), applications-integration(3),
-   multivariable-bridge(3), convex-optimization(3). Then DL/RL/LLM/PS.
+   ✅ iter 151: MCQ arc → Calculus·Applications of the Derivative 12→16 (+16, bank →1,992). Calc 3/7 modules. Adversarial
+   agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v94.
+   CALC REMAINING (MCQ arc): integration(4), applications-integration(3), multivariable-bridge(3), convex-optimization(3).
+   Then DL/RL/LLM/PS. (Bank approaching 2,000 MCQs.)
    ✅ iter 148: Riemann Sum visualizer (calc-riemann, 35th viz; the first INTEGRATION viz) in the definite-integral lesson.
    Function/rule/n controls + Refine animation; numerics pre-verified; errs=0; SW cache →v91; README 34→35.
    VIZ BACKLOG remaining: MDP policy-iteration (3rd gridworld — low priority), VAE latent-space, GAN training-dynamics,
