@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 235: **Runnable code in every topic — RL & LLM exercises** (examples / new functionality). Completes the active-coding
+   milestone (RL & LLMs were the last two at zero): RL discounted return (forward Σγᵗrₜ vs backward Gₜ=rₜ+γGₜ₊₁, agree) +
+   one Q-learning update (TD target/error/Q = 1.72/1.72/0.86); LLM softmax output head (sums to 1) + temperature & greedy
+   decoding (0.844→0.481, greedy token 0). Coverage 17→21, **7/7 topics**. Deterministic; data-expected captured via runJS
+   replay. Verified: gate GREEN; all 4 return pg-check ok errs=0 exact output; real component renders (unicode Σ/γᵗ/rₜ +
+   `<` decoded); 390px mobile + new TOC section; smoke errs=0/kErr=0 (13 routes). SW →v178.
    ✅ iter 234: **High-contrast accessibility mode** (accessibility — rotating off gamification). Independent `data-contrast="high"` toggle
    layered on EITHER theme: deepens text/bg separation, brightens hairline borders (esp. low-contrast --ink-mute/--line),
    intensifies accents; +3px focus rings, solid-underlined inline links. Sidebar button (`#contrast-toggle`, aria-pressed)
@@ -639,7 +645,7 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
   vs value-iteration comparison. (✓ beam-search tree iter ~138; ✓ value-iteration is the existing gridworld; ✓ GAN
   training-dynamics + mode-collapse demo iter 207, embedded in the GANs lesson — 43 widgets now.)
   NOTE: viz blurbs AND notes are NOT KaTeX-typeset (the Lab shows them raw) — use plain unicode (xₜ, √, ε, ᾱ), not $...$.
-- Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.
+- ~~Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.~~ **MILESTONE iter 235**: 21 exercises, **≥1 in all 7 topics** (algos 9, DL 3, prob-stats 3, RL 2, LLM 2, calc 1, LA 1). Future: deepen thin topics (calc/LA at 1) where a runnable demo adds real insight.
 - ~~Reduced-motion + high-contrast accessibility modes.~~ **DONE** (reduced-motion long-standing; **high-contrast mode iter 234** — `data-contrast="high"` layered on either theme, sidebar + ⌘K toggle, persisted).
 - ~~Search ranking improvements (fuzzy, recency, mastery-weighted) in ⌘K.~~ **fuzzy DONE iter 70** (typo-tolerant subsequence tier). Recency/mastery-weighting still open.
 - Onboarding tour for first visit; better empty states everywhere.

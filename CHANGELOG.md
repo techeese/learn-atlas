@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 235 — Runnable code in every topic: RL & LLM exercises (examples / new functionality)
+Completes the active-coding milestone — **all seven subjects now have at least one runnable, self-checking exercise**
+(RL and LLMs were the last two at zero). Added 4 deterministic JS exercises:
+- **RL · Policies, Value Functions & Bellman** → the **discounted return** computed two ways (forward `Σ γᵗrₜ` and the
+  backward recursion `Gₜ = rₜ + γGₜ₊₁`), shown to agree — the seed of every Bellman equation.
+- **RL · SARSA, Q-Learning** → **one Q-learning update** `Q ← Q + α[r + γ·maxₐ′Q(s′,a′) − Q]`, printing the TD target,
+  the TD error ("surprise"), and the stepped estimate.
+- **LLM · Embeddings & the Output Head** → the **softmax** that turns logits into a next-token distribution (with the
+  subtract-the-max stability trick), confirmed to sum to 1.
+- **LLM · Decoding Strategies** → **temperature** reshaping one logit vector (T=0.5 sharp → T=2 flat) plus **greedy**
+  argmax decoding for contrast.
+Coverage 17 → **21 lessons**, **7/7 topics**. Each program is deterministic (no `Math.random`); `data-expected` was
+captured by replaying the Playground `runJS` console.log path, not guessed.
+Verified: gate ALL GREEN; **all 4 exercises return `pg-check ok`** with `errs=0` and exact output (RL G=3.8593 both ways;
+Q-update target/error/Q = 1.72/1.72/0.86; softmax sums to 1.0000; temperature 0.844→0.481 + greedy token 0); the real
+Playground renders with unicode (Σ, γᵗ, rₜ) intact and `t < rewards.length` correctly entity-decoded; 390px mobile clean
+with the new "Code it…" TOC section; all-routes smoke **errs=0/kErr=0 (13 routes)**. SW cache `atlas-v177` → `atlas-v178`.
+
 ## iter 234 — High-contrast accessibility mode (accessibility)
 Rotating off gamification, and closing a standing backlog item. The site had reduced-motion, ARIA, keyboard nav, two
 themes and adjustable text size — but no **high-contrast** option for low-vision / bright-environment reading. Added an
