@@ -3758,7 +3758,140 @@
           "title": "Autoencoders & Variational Autoencoders",
           "minutes": 18,
           "content": "<h3>1. The hook: from recognizing to creating</h3>\n<p>Every network so far has been <strong>discriminative</strong> — given an input $x$, predict a label $y$. <strong>Generative</strong> models flip the problem: learn the structure of the data itself so you can <em>create</em> new, realistic samples — new faces, new molecules, new sentences. The first step toward generation is learning a compressed, meaningful representation of data, and the cleanest tool for that is the <strong>autoencoder</strong>.</p>\n\n<h3>2. The autoencoder</h3>\n<p>An <strong>autoencoder</strong> is a network trained to copy its input to its output through a narrow bottleneck. It has two halves:</p>\n<ul>\n<li>an <strong>encoder</strong> $z = f_\\phi(x)$ that compresses the input into a low-dimensional <strong>latent code</strong> $z$;</li>\n<li>a <strong>decoder</strong> $\\hat{x} = g_\\theta(z)$ that reconstructs the input from that code.</li>\n</ul>\n<p>It is trained to minimize a <strong>reconstruction loss</strong>, e.g. $\\mathcal{L} = \\lVert x - \\hat{x}\\rVert^2$. Because the latent space is much smaller than the input, the network cannot just memorize — it must discover the efficient, recurring structure of the data. The bottleneck is the whole point: it forces a compressed representation.</p>\n\n<h3>3. What autoencoders learn</h3>\n<p>An autoencoder is a learned, nonlinear generalization of dimensionality reduction. In fact, a linear autoencoder with squared loss recovers exactly the <strong>PCA</strong> subspace — autoencoders are PCA's deep cousin. Useful variants include the <strong>denoising autoencoder</strong> (feed a corrupted $\\tilde{x}$, ask it to output the clean $x$, which forces robust features) and autoencoders for <strong>anomaly detection</strong> (inputs that reconstruct poorly are unlike the training data).</p>\n\n<h3>4. Why a plain autoencoder can't generate</h3>\n<p>You might hope to <em>generate</em> by picking a random $z$ and decoding it. It fails. A vanilla autoencoder's latent space is an unstructured grab-bag: training only pins down codes for the actual training points, leaving the space between them full of \"holes\" that decode to garbage. There is no distribution to sample from — the encoder can scatter codes anywhere. To generate, we need the latent space to be <em>continuous and densely meaningful</em>, with a known distribution to draw from. That is exactly what the variational autoencoder adds.</p>\n\n<h3>5. The variational autoencoder (VAE)</h3>\n<p>A <strong>VAE</strong> makes the latent code probabilistic. Instead of emitting a single point, the encoder outputs the parameters of a distribution — a mean $\\mu$ and standard deviation $\\sigma$ — and the code is <em>sampled</em>: $z \\sim \\mathcal{N}(\\mu, \\sigma^2)$. Two pressures are balanced during training:</p>\n<ul>\n<li><strong>Reconstruct</strong> the input well (the decoder must turn $z$ back into $x$);</li>\n<li><strong>Regularize</strong> each encoded distribution to stay close to a standard normal prior $\\mathcal{N}(0, I)$.</li>\n</ul>\n<p>The regularizer packs all the codes into one smooth, gap-free blob shaped like $\\mathcal{N}(0,I)$ — so after training you can <strong>generate</strong> by sampling $z\\sim\\mathcal{N}(0,I)$ and decoding it, with high odds of landing somewhere meaningful.</p>\n\n<h3>6. The ELBO and the reparameterization trick</h3>\n<p>The VAE maximizes a tractable lower bound on the data log-likelihood, the <strong>evidence lower bound (ELBO)</strong>:\n$$\\mathcal{L}_{\\text{VAE}} = \\underbrace{\\mathbb{E}_{q_\\phi(z\\mid x)}\\big[\\log p_\\theta(x\\mid z)\\big]}_{\\text{reconstruction}} \\;-\\; \\underbrace{D_{\\mathrm{KL}}\\!\\big(q_\\phi(z\\mid x)\\,\\Vert\\,p(z)\\big)}_{\\text{latent regularizer}}.$$\nThe first term rewards faithful reconstruction; the second, a <strong>KL divergence</strong>, penalizes the encoder for drifting from the prior. One obstacle: you cannot backpropagate through a random sampling step. The <strong>reparameterization trick</strong> fixes this by moving the randomness outside the network — write\n$$z = \\mu + \\sigma \\odot \\varepsilon, \\qquad \\varepsilon \\sim \\mathcal{N}(0, I),$$\nso $z$ is a deterministic function of $\\mu,\\sigma$ (which carry gradients) plus external noise $\\varepsilon$. Now gradients flow through $\\mu$ and $\\sigma$ as usual.</p>\n<div class=\"callout\">\n<div class=\"c-tag\">Intuition</div>\n<p>A plain autoencoder memorizes a sparse set of latent points; a VAE inflates each into a little fuzzy ball and presses all the balls toward $\\mathcal{N}(0,I)$, tiling the latent space so that <em>every</em> nearby point decodes to something plausible. That smoothness is what makes sampling work.</p>\n</div>\n\n<h3>7. Generating and interpolating</h3>\n<p>Once trained: draw $z\\sim\\mathcal{N}(0,I)$, decode, and you get a fresh sample. Because the latent space is smooth, <strong>interpolating</strong> between two codes ($z = (1-t)z_1 + t z_2$) produces a gradual, semantically meaningful morph — a face slowly aging, a digit smoothly bending from 3 to 8. VAE samples tend to look a little <em>blurry</em> (the averaging effect of the likelihood term), which is the price of their training stability — and a key motivation for the sharper GANs and diffusion models that follow.</p>\n\n<h3>8. Why this matters</h3>\n<p>VAEs introduced the template the whole field now uses: learn a latent distribution, then sample it to generate. They remain workhorses for representation learning, semi-supervised learning, and molecule/drug design, and the encode-to-a-latent-then-decode idea reappears inside <strong>latent diffusion models</strong> (Stable Diffusion runs diffusion in a VAE's latent space). Understanding the reconstruction-vs-regularization tradeoff and the reparameterization trick prepares you for every generative model that follows.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "An autoencoder is trained with reconstruction loss but no labels $y$. Which category does this place it in?",
+              "choices": [
+                "Reinforcement learning, because the reconstruction loss acts as a reward",
+                "Self-supervised / unsupervised learning, because the target is derived from the input itself",
+                "Supervised learning, because every input has a target (its own copy)",
+                "Semi-supervised learning, because only some inputs need labels"
+              ],
+              "answer": 1,
+              "explain": "No external labels are provided; the training target is constructed from the data itself ($x$ as both input and target), which is the defining feature of self-supervised/unsupervised learning. Calling it supervised is the tempting trap, but 'supervised' specifically means externally provided labels."
+            },
+            {
+              "q": "You remove the bottleneck and make the autoencoder's hidden layer wider than the input (an overcomplete autoencoder) with no other regularization. What is the most likely failure?",
+              "choices": [
+                "The reconstruction loss explodes because there are too many parameters",
+                "The network learns the identity function and copies input to output without discovering useful structure",
+                "Gradients vanish because the latent code is too large",
+                "The latent code automatically matches $\\mathcal{N}(0,I)$"
+              ],
+              "answer": 1,
+              "explain": "Without a narrow bottleneck (or other constraint), the network has enough capacity to trivially copy the input through, learning the identity map and no meaningful compressed representation. The whole point of the bottleneck is to forbid this shortcut."
+            },
+            {
+              "q": "A linear autoencoder with a $k$-dimensional bottleneck, linear activations, and squared-error loss is fully trained. What subspace does its encoder learn to project onto?",
+              "choices": [
+                "A random $k$-dimensional subspace, since linear autoencoders are not identifiable",
+                "The subspace spanned by the top $k$ principal components of the data",
+                "The subspace spanned by the $k$ smallest-variance directions",
+                "The full input space, since linear maps cannot compress"
+              ],
+              "answer": 1,
+              "explain": "A linear autoencoder with squared loss recovers the same subspace as PCA — the span of the top $k$ principal components (largest-variance directions). It is PCA's deep, nonlinear-capable cousin, but in the linear case it collapses back to PCA itself."
+            },
+            {
+              "q": "A denoising autoencoder is fed a corrupted input $\\tilde{x}$ and trained to output the clean $x$. Why does this corruption help compared to a plain autoencoder?",
+              "choices": [
+                "It forces the network to learn robust features by filling in missing/corrupted structure rather than copying",
+                "It guarantees the latent space matches the prior $\\mathcal{N}(0,I)$",
+                "It reduces the number of parameters the network needs",
+                "It converts the reconstruction loss into a classification loss"
+              ],
+              "answer": 0,
+              "explain": "By mapping corrupted inputs back to clean ones, the network cannot rely on copying; it must learn the data's underlying structure to repair the corruption, yielding more robust features. It does nothing to shape the latent toward a prior — that is the VAE's job."
+            },
+            {
+              "q": "You want to use an autoencoder for anomaly detection on machine-sensor data, training only on normal readings. At test time, how do you flag an anomaly?",
+              "choices": [
+                "By checking whether the latent code $z$ is close to zero",
+                "By flagging inputs with unusually high reconstruction error",
+                "By measuring the KL divergence of the encoder output",
+                "By flagging inputs with unusually low reconstruction error"
+              ],
+              "answer": 1,
+              "explain": "Trained only on normal data, the autoencoder reconstructs normal inputs well but reconstructs unfamiliar (anomalous) inputs poorly, so high reconstruction error signals an anomaly. Low error means the input looks normal — the opposite of an anomaly."
+            },
+            {
+              "q": "Both a plain autoencoder and a VAE encode an input to a low-dimensional latent. What does the VAE's encoder output that the plain autoencoder's does not?",
+              "choices": [
+                "A class label for the input",
+                "A reconstruction of the input",
+                "A single deterministic point in latent space",
+                "The parameters of a distribution ($\\mu$ and $\\sigma$) from which $z$ is sampled"
+              ],
+              "answer": 3,
+              "explain": "The VAE encoder emits the mean $\\mu$ and standard deviation $\\sigma$ of a distribution, and $z\\sim\\mathcal{N}(\\mu,\\sigma^2)$ is then sampled. The plain autoencoder emits a single deterministic point, which is exactly the difference that lets the VAE structure its latent space."
+            },
+            {
+              "q": "In the VAE objective $\\mathcal{L}_{\\text{VAE}} = \\mathbb{E}_{q_\\phi(z\\mid x)}[\\log p_\\theta(x\\mid z)] - D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\,\\Vert\\,p(z))$, what is the role of the KL term?",
+              "choices": [
+                "It rewards the decoder for sharp, high-fidelity reconstructions",
+                "It penalizes the encoder's posterior for drifting away from the prior $p(z)=\\mathcal{N}(0,I)$",
+                "It measures the classification accuracy of the latent code",
+                "It scales the learning rate during training"
+              ],
+              "answer": 1,
+              "explain": "The KL divergence pulls the per-input posterior $q_\\phi(z\\mid x)$ toward the standard-normal prior, packing all codes into one smooth blob you can later sample from. The reconstruction (first) term, not the KL term, is what rewards faithful decoding."
+            },
+            {
+              "q": "A team trains a VAE but, to 'fix blurriness,' weights the KL term so heavily that it dominates the reconstruction term. What outcome should they expect?",
+              "choices": [
+                "Posterior collapse: $z$ stops carrying information about $x$ and reconstructions become a blurry average",
+                "The latent space develops holes and sampling fails like a plain autoencoder",
+                "Razor-sharp reconstructions with perfectly disentangled factors",
+                "The reparameterization trick stops working"
+              ],
+              "answer": 0,
+              "explain": "When KL dominates, the encoder is pushed to output $\\mathcal{N}(0,I)$ regardless of input, so $z$ carries no information about $x$ (posterior collapse) and the decoder produces a single averaged, blurry output. Dropping the KL term entirely (not over-weighting it) is what causes latent-space holes."
+            },
+            {
+              "q": "The reparameterization trick rewrites the sampling step as $z = \\mu + \\sigma \\odot \\varepsilon$ with $\\varepsilon\\sim\\mathcal{N}(0,I)$. What problem does this specifically solve?",
+              "choices": [
+                "It makes the prior $p(z)$ unnecessary",
+                "It lets gradients flow through $\\mu$ and $\\sigma$ even though sampling is involved",
+                "It removes all randomness from the model",
+                "It guarantees the KL term equals zero"
+              ],
+              "answer": 1,
+              "explain": "You cannot backpropagate through a raw random sampling node, but writing $z$ as a deterministic function of $\\mu,\\sigma$ plus external noise $\\varepsilon$ moves the randomness outside the differentiable path, so gradients flow through $\\mu$ and $\\sigma$. Randomness is not removed — it is just relocated to $\\varepsilon$."
+            },
+            {
+              "q": "A VAE encodes a 3 to $z_1=(2,-1)$ and an 8 to $z_2=(-2,3)$. You decode the interpolation $z = (1-t)z_1 + t z_2$ at $t=0.25$. What latent point is decoded, and what do you expect to see?",
+              "choices": [
+                "$(1,0)$ — a plausible glyph blending toward the 3 and 8",
+                "$(0,1)$ — pure noise, since interpolation only works in plain autoencoders",
+                "$(-1,2)$ — a glyph mostly resembling the 8",
+                "$(0,0)$ — always the prior mean regardless of $t$"
+              ],
+              "answer": 0,
+              "explain": "$(1-0.25)(2,-1)+(0.25)(-2,3) = (1.5,-0.75)+(-0.5,0.75) = (1,0)$. Because the VAE's KL-regularized latent is smooth and gap-free, this intermediate point decodes to a believable in-between digit; interpolation works in VAEs precisely (not in plain autoencoders)."
+            },
+            {
+              "q": "After training a VAE, what is the correct procedure to generate a brand-new sample (not a reconstruction)?",
+              "choices": [
+                "Encode a training image, then decode its mean $\\mu$",
+                "Average all training latent codes and decode the result",
+                "Draw $z\\sim\\mathcal{N}(0,I)$ and pass it through the decoder",
+                "Pass random noise directly through the encoder"
+              ],
+              "answer": 2,
+              "explain": "Because the KL term shapes the aggregate latent toward $\\mathcal{N}(0,I)$, you generate by sampling $z$ from that prior and decoding it. Encoding a training image and decoding its mean is reconstruction, not generation; feeding noise to the encoder is meaningless since the encoder expects data."
+            },
+            {
+              "q": "VAE samples are often noticeably blurrier than samples from some other generative models. What is the standard explanation?",
+              "choices": [
+                "The reparameterization trick injects too much noise into the output",
+                "The bottleneck is always too small to carry image detail",
+                "The encoder collapses to the prior, removing all detail",
+                "The pixel-wise likelihood (reconstruction) term rewards outputting the average of plausible outputs, which looks blurry"
+              ],
+              "answer": 3,
+              "explain": "Under an explicit reconstruction likelihood (e.g. squared error), when the model is uncertain the loss is minimized by predicting the mean of plausible pixel values, which appears blurry — the price of the VAE's stable training. This averaging effect, not the reparameterization noise or bottleneck size per se, is the textbook cause."
+            }
+          ],
           "flashcards": [
             {
               "front": "What are the three parts of an autoencoder and its training objective?",
@@ -3820,7 +3953,140 @@
           "title": "Generative Adversarial Networks",
           "minutes": 17,
           "content": "<h3>1. The hook: a forger and a detective</h3>\n<p>VAEs generate by optimizing a likelihood, which tends to produce slightly blurry samples. <strong>Generative Adversarial Networks (GANs)</strong>, introduced by Ian Goodfellow in 2014, take a radically different route: pit two networks against each other in a game. One forges fakes; the other tries to spot them. As each improves, the forgeries get sharper — and the result was, for years, the most photorealistic image generation in deep learning.</p>\n\n<h3>2. The two players</h3>\n<ul>\n<li>The <strong>generator</strong> $G$ takes random noise $z\\sim\\mathcal{N}(0,I)$ and maps it to a fake sample $G(z)$. Its goal: fool the discriminator.</li>\n<li>The <strong>discriminator</strong> $D$ takes a sample (real or fake) and outputs the probability $D(x)\\in[0,1]$ that it is <em>real</em>. Its goal: tell real from fake.</li>\n</ul>\n<p>Crucially, $G$ never sees real data directly — it learns only through the gradient signal relayed by $D$. The discriminator is a learned, adaptive loss function for the generator.</p>\n\n<h3>3. The minimax game</h3>\n<p>Training is a two-player <strong>minimax</strong> optimization with a single value function:\n$$\\min_G \\max_D \\; V(D,G) = \\mathbb{E}_{x\\sim p_{\\text{data}}}\\big[\\log D(x)\\big] + \\mathbb{E}_{z\\sim p_z}\\big[\\log\\big(1 - D(G(z))\\big)\\big].$$\n$D$ maximizes $V$ — pushing $D(x)\\to 1$ on real data and $D(G(z))\\to 0$ on fakes. $G$ minimizes $V$ — pushing $D(G(z))\\to 1$, i.e. fooling $D$. At the theoretical optimum, $G$ reproduces the true data distribution $p_{\\text{data}}$ and $D$ is reduced to guessing ($D\\equiv\\tfrac12$): the forger has become perfect and the detective can do no better than a coin flip.</p>\n\n<h3>4. How training actually proceeds</h3>\n<p>You cannot solve a minimax in one shot; you <strong>alternate</strong>:</p>\n<ul>\n<li>Update $D$: sample a batch of real data and a batch of fakes, take a gradient <em>ascent</em> step to improve its real-vs-fake accuracy.</li>\n<li>Update $G$: generate fakes, take a gradient <em>descent</em> step to make $D$ rate them as more real.</li>\n</ul>\n<p>In practice $G$ is trained with the <strong>non-saturating</strong> loss — maximize $\\log D(G(z))$ rather than minimize $\\log(1-D(G(z)))$ — because the original form gives vanishing gradients early on, when $D$ easily rejects $G$'s feeble first attempts. The two updates chase each other; there is no single loss curve that simply goes down.</p>\n\n<h3>5. Why GANs are hard to train</h3>\n<p>A minimax game has no simple \"loss going down\" to monitor, and three failure modes are notorious:</p>\n<ul>\n<li><strong>Mode collapse</strong>: $G$ discovers a few outputs that reliably fool $D$ and emits only those, ignoring the diversity of the real data — generating, say, only one kind of face.</li>\n<li><strong>Vanishing gradients</strong>: if $D$ gets too good too fast, it rejects every fake with confidence and relays almost no gradient to $G$.</li>\n<li><strong>Instability / oscillation</strong>: the two networks can cycle without converging, since each is chasing a moving target.</li>\n</ul>\n<div class=\"callout\">\n<div class=\"c-tag\">Intuition</div>\n<p>Balance is everything. A discriminator that is too strong starves the generator of signal; one that is too weak gives lazy feedback. Good GAN training keeps the two roughly matched so the gradient stays informative — like a sparring partner who is challenging but not crushing.</p>\n</div>\n\n<h3>6. Taming the instability</h3>\n<p>A line of fixes made GANs practical: the <strong>Wasserstein GAN (WGAN)</strong> replaces the JS-divergence objective with the Earth-Mover distance (via a critic with constrained gradients), giving smoother, more informative gradients and far less mode collapse; <strong>gradient penalties</strong> and <strong>spectral normalization</strong> stabilize $D$; and architectural advances (DCGAN, progressive growing, StyleGAN) pushed resolution and fidelity to photorealism. The throughline is making the generator's gradient signal reliable.</p>\n\n<h3>7. Worked intuition: the equilibrium</h3>\n<p>Think of $p_{\\text{data}}$ and the generator's distribution $p_g$ as two piles of sand. $D$ tries to draw a boundary separating them; $G$ shovels its pile to sit exactly on top of the real one. When $p_g = p_{\\text{data}}$ the piles coincide, no boundary separates them, and the best $D$ can do is output $\\tfrac12$ everywhere. That fixed point — generator matched to data, discriminator at chance — is the goal, even though reaching it stably is the hard part.</p>\n\n<h3>8. Why this matters</h3>\n<p>GANs delivered the first wave of strikingly realistic synthetic images (faces, art, super-resolution, image-to-image translation like turning sketches into photos) and remain valuable where fast, sharp, one-shot generation matters. Their core idea — an <strong>adversarial</strong>, learned loss rather than a hand-designed one — recurs across deep learning (adversarial training for robustness, domain-adversarial learning). They have since been largely overtaken for image synthesis by diffusion models, the subject of the next lesson, which trade GANs' single-step speed for far greater training stability and sample diversity.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "For a fixed generator $G$, the optimal discriminator is $D^*(x)=\\dfrac{p_{\\text{data}}(x)}{p_{\\text{data}}(x)+p_g(x)}$. At a point where the real density is $p_{\\text{data}}(x)=0.6$ and the generator density is $p_g(x)=0.2$, what does the optimal discriminator output?",
+              "choices": [
+                "$0.75$",
+                "$0.5$",
+                "$0.6$",
+                "$0.25$"
+              ],
+              "answer": 0,
+              "explain": "$D^*=0.6/(0.6+0.2)=0.6/0.8=0.75$. The value $0.5$ only occurs where $p_g=p_{\\text{data}}$; here the real density dominates, so $D$ correctly leans toward 'real'."
+            },
+            {
+              "q": "Why does $G$ receive a useful learning signal even though it never looks at a single real image?",
+              "choices": [
+                "It minimizes a pixel-wise reconstruction loss against the nearest real image",
+                "It backpropagates the discriminator's gradient with respect to $G(z)$, so $D$ relays what 'real' looks like",
+                "It directly maximizes the log-likelihood of the real data under its own density",
+                "It copies the discriminator's weights every few steps"
+              ],
+              "answer": 1,
+              "explain": "The generator's gradient flows back through the (frozen) discriminator: $\\nabla_\\theta$ of $\\log D(G(z))$ passes through $D$, which encodes the difference between real and fake. There is no reconstruction target and no access to real samples — only the relayed adversarial signal."
+            },
+            {
+              "q": "A practitioner reports that the generator's loss is steadily decreasing while the discriminator's loss is also steadily decreasing, and concludes training is going well. What is the flaw in this reasoning?",
+              "choices": [
+                "Both losses decreasing means equilibrium has been reached, so the conclusion is correct",
+                "Loss should be replaced by accuracy, which always rises at equilibrium",
+                "In a minimax game the two objectives are opposed, so a smoothly falling 'overall' loss is not the success signal — you must monitor sample quality and balance",
+                "Decreasing loss for both proves mode collapse has occurred"
+              ],
+              "answer": 2,
+              "explain": "GAN training is adversarial: when one player improves it tends to hurt the other, so there is no single loss curve that monotonically descends toward success. Convergence is judged by sample quality/diversity and by the two networks staying balanced, not by a falling loss."
+            },
+            {
+              "q": "Early in training the generator produces obvious garbage that $D$ rejects with $D(G(z))\\approx 0$. Why does the original minimax objective $\\min_G \\log(1-D(G(z)))$ stall here, and how does the non-saturating loss fix it?",
+              "choices": [
+                "The original loss is undefined at $D=0$; the fix adds a small constant",
+                "$\\log(1-D(G(z)))$ is flat (near-zero gradient) when $D(G(z))\\approx 0$; maximizing $\\log D(G(z))$ gives large gradients exactly when $G$ is losing",
+                "The original loss explodes to $+\\infty$; the fix clips it",
+                "Both losses behave identically; the change is purely cosmetic"
+              ],
+              "answer": 1,
+              "explain": "As $D(G(z))\\to 0$, the slope of $\\log(1-D(G(z)))$ flattens, so $G$ gets almost no gradient just when it most needs to improve. The non-saturating form $\\max\\log D(G(z))$ is steep near $D(G(z))=0$, supplying a strong signal early on."
+            },
+            {
+              "q": "Suppose during training the discriminator becomes nearly perfect, outputting $D(x)\\approx 1$ on all real data and $D(G(z))\\approx 0$ on all fakes. What is the most likely consequence for the generator?",
+              "choices": [
+                "The generator converges quickly because the gradient is large",
+                "The generator's gradient nearly vanishes, so it stops improving",
+                "The generator immediately reaches the global optimum $p_g=p_{\\text{data}}$",
+                "The discriminator's accuracy drops to 50%"
+              ],
+              "answer": 1,
+              "explain": "An over-strong discriminator that confidently rejects every fake sits in a flat region of its output, relaying almost no gradient back to $G$ — the vanishing-gradient failure mode. Keeping $D$ and $G$ balanced is what preserves an informative signal."
+            },
+            {
+              "q": "Mode collapse is best described as a failure of which property, and why is it not penalized by the standard objective?",
+              "choices": [
+                "A failure of sharpness; the objective rewards blur",
+                "A failure of diversity/coverage; the objective only rewards fooling $D$, not covering all of $p_{\\text{data}}$",
+                "A failure of the discriminator's calibration; the objective ignores $D$",
+                "A failure of convergence speed; the objective has no time term"
+              ],
+              "answer": 1,
+              "explain": "Mode collapse means $G$ emits only a few outputs, dropping much of the data's diversity. The minimax value function rewards making $D(G(z))$ high — fooling the discriminator — but contains no explicit term forcing $G$ to span every mode, so collapsing onto a winning subset can still lower its loss."
+            },
+            {
+              "q": "WGAN replaces the original GAN objective with the Earth-Mover (Wasserstein) distance and renames the second network a 'critic' rather than a discriminator. What is the most important behavioral difference of the critic?",
+              "choices": [
+                "It outputs a probability in $[0,1]$ like before, just trained longer",
+                "It outputs an unbounded real-valued score (not a probability) and provides usable gradients even when real and fake distributions barely overlap",
+                "It is frozen and never updated, acting as a fixed feature extractor",
+                "It is trained to maximize pixel reconstruction accuracy"
+              ],
+              "answer": 1,
+              "explain": "The WGAN critic estimates the Wasserstein distance and emits an unbounded scalar score, not a $[0,1]$ probability. Because the Earth-Mover distance varies smoothly even when distributions don't overlap, the critic still gives meaningful gradients where a saturating JS-based discriminator would not."
+            },
+            {
+              "q": "In the GAN value function, which term does the generator $G$ have any influence over through its parameters?",
+              "choices": [
+                "$\\mathbb{E}_{x\\sim p_{\\text{data}}}[\\log D(x)]$",
+                "$\\mathbb{E}_{z\\sim p_z}[\\log(1-D(G(z)))]$",
+                "Both terms equally",
+                "Neither term; $G$ only affects $D$'s weights"
+              ],
+              "answer": 1,
+              "explain": "$G$ appears only inside $G(z)$ in the second expectation, so only that term carries a gradient with respect to $G$'s parameters. The first term depends solely on real data and $D$, so $\\nabla_G$ of it is zero — which is why the generator's update concerns only the fake-sample term."
+            },
+            {
+              "q": "Why is the generator $z\\sim\\mathcal{N}(0,I)$ input random noise rather than, say, a fixed constant vector?",
+              "choices": [
+                "The noise is needed so $D$ cannot see the inputs",
+                "Randomness lets a deterministic network $G$ transform varied $z$ into a varied distribution of outputs covering $p_{\\text{data}}$",
+                "Gaussian noise directly encodes the labels of the real data",
+                "The noise is only used at test time, not during training"
+              ],
+              "answer": 1,
+              "explain": "$G$ is a deterministic function, so its output distribution comes entirely from the distribution of its input $z$. Sampling $z$ from a known prior and pushing it through $G$ is what turns a single network into a sampler for a whole distribution; a fixed input would yield a single fixed output."
+            },
+            {
+              "q": "At the global optimum where $p_g=p_{\\text{data}}$ and $D\\equiv\\tfrac12$, what is the value of $V(D,G)$? (Use natural log.)",
+              "choices": [
+                "$0$",
+                "$-\\log 4 \\approx -1.386$",
+                "$\\log 2 \\approx 0.693$",
+                "$-\\infty$"
+              ],
+              "answer": 1,
+              "explain": "Plugging $D=\\tfrac12$ gives $\\mathbb{E}[\\log\\tfrac12]+\\mathbb{E}[\\log(1-\\tfrac12)] = \\log\\tfrac12 + \\log\\tfrac12 = -\\log 2 - \\log 2 = -\\log 4$. The tempting $0$ ignores that even a chance-level $D$ contributes $\\log\\tfrac12$ in each term."
+            },
+            {
+              "q": "A common misconception is that 'the discriminator should be trained to 100% accuracy before each generator update so it gives the best feedback.' What is the key problem with this advice?",
+              "choices": [
+                "A perfect discriminator is impossible to train, so the advice is moot",
+                "A near-perfect $D$ saturates and stops passing useful gradient to $G$, starving its learning",
+                "Training $D$ longer always causes mode collapse in $D$",
+                "It is correct advice and is standard practice"
+              ],
+              "answer": 1,
+              "explain": "Pushing $D$ to be perfect drives its outputs into flat, saturated regions where gradients to $G$ vanish, halting the generator's progress. Effective training keeps the two roughly matched — challenging but not crushing — so the relayed gradient stays informative."
+            },
+            {
+              "q": "You need a generative model that produces a new image in a single forward pass (low inference latency) and you have stable hand-tuned training infrastructure. Compared with a diffusion model, which advantage of a GAN is most relevant here?",
+              "choices": [
+                "GANs guarantee full mode coverage with no diversity loss",
+                "GANs generate in one network evaluation, versus diffusion's many iterative denoising steps",
+                "GANs optimize a simple MSE regression loss that descends smoothly",
+                "GANs never require a discriminator at inference time, unlike diffusion"
+              ],
+              "answer": 1,
+              "explain": "A GAN samples by one pass through $G$, whereas diffusion needs tens-to-thousands of sequential denoising steps, making GANs much faster at inference. The other options are false: diffusion (not GANs) covers modes better and uses a smooth MSE loss; the 'no discriminator at inference' point is true of GANs but is not the latency advantage being asked about (diffusion has no discriminator at all)."
+            }
+          ],
           "flashcards": [
             {
               "front": "What are the generator and discriminator in a GAN, and their opposing goals?",
@@ -3882,7 +4148,140 @@
           "title": "Diffusion Models",
           "minutes": 18,
           "content": "<h3>1. The hook: sculpting images out of noise</h3>\n<p>The models behind DALL·E 2, Stable Diffusion, Midjourney, and Sora are <strong>diffusion models</strong>. Their idea is almost paradoxical: learn to generate by learning to <em>destroy</em>. Take real data, gradually drown it in noise until nothing remains, and train a network to reverse that decay one tiny step at a time. Run the reversal from pure noise and a coherent image emerges — sculpted out of static. Diffusion has overtaken GANs for image synthesis by trading single-shot speed for remarkable stability, diversity, and fidelity.</p>\n\n<h3>2. The forward (noising) process</h3>\n<p>The <strong>forward process</strong> is fixed, not learned: over $T$ steps it adds a little Gaussian noise at a time, slowly turning a data point $x_0$ into pure noise $x_T$. Each step is\n$$q(x_t \\mid x_{t-1}) = \\mathcal{N}\\!\\big(\\sqrt{1-\\beta_t}\\,x_{t-1},\\; \\beta_t I\\big),$$\nwhere the small $\\beta_t$ form a <strong>noise schedule</strong>. A key convenience: the steps compose, so you can jump straight to any time $t$ in one shot,\n$$x_t = \\sqrt{\\bar\\alpha_t}\\,x_0 + \\sqrt{1-\\bar\\alpha_t}\\,\\varepsilon, \\qquad \\varepsilon\\sim\\mathcal{N}(0,I),\\;\\; \\bar\\alpha_t = \\prod_{s=1}^{t}(1-\\beta_s).$$\nAt $t=T$, $\\bar\\alpha_T\\approx 0$ and $x_T$ is essentially standard normal — all structure gone.</p>\n\n<h3>3. The reverse (denoising) process</h3>\n<p>Generation runs the arrow backward: start from pure noise $x_T\\sim\\mathcal{N}(0,I)$ and repeatedly remove a sliver of noise to recover $x_{t-1}$ from $x_t$, ending at a clean sample $x_0$. The true reverse step is intractable, so a network $\\varepsilon_\\theta(x_t, t)$ <em>learns</em> it. Because each reverse step only has to undo a tiny amount of noise, it is a far gentler learning problem than generating an image in one leap — which is the secret to diffusion's stability.</p>\n\n<h3>4. Training: just predict the noise</h3>\n<p>The training objective is strikingly simple. Take a clean $x_0$, pick a random timestep $t$, add noise to get $x_t$ via the one-shot formula above, and ask the network to <strong>predict the noise that was added</strong>. The loss is plain mean-squared error:\n$$\\mathcal{L} = \\mathbb{E}_{x_0,\\,t,\\,\\varepsilon}\\Big[\\big\\lVert \\varepsilon - \\varepsilon_\\theta(x_t, t)\\big\\rVert^2\\Big].$$\nNo adversarial game, no minimax, no discriminator — a single regression loss that descends smoothly, which is exactly why diffusion training is so much more stable than a GAN's. The network is typically a <strong>U-Net</strong> (with the timestep $t$ fed in as an embedding), and for text-to-image it is additionally <strong>conditioned</strong> on a text embedding.</p>\n<div class=\"callout sage\">\n<div class=\"c-tag\">Why predicting noise works</div>\n<p>If you can estimate the noise $\\varepsilon$ in $x_t$, you can subtract a piece of it to get a slightly cleaner $x_{t-1}$. Knowing \"which way is less noisy\" at every point is equivalent to knowing the gradient of the data density (the <em>score</em>) — diffusion models are score-based models in disguise.</p>\n</div>\n\n<h3>5. Sampling</h3>\n<p>To generate: draw $x_T\\sim\\mathcal{N}(0,I)$, then loop $t=T,\\dots,1$, at each step using $\\varepsilon_\\theta(x_t,t)$ to estimate and partially remove the noise (adding a touch of fresh noise back except at the last step), yielding $x_{t-1}$. After $T$ steps you have a sample $x_0$. The catch is <strong>speed</strong>: naively this needs hundreds to thousands of network passes per image, versus a GAN's single pass. Fast samplers (DDIM, distillation) cut this to tens of steps, the main engineering frontier of diffusion inference.</p>\n\n<h3>6. Why diffusion overtook GANs</h3>\n<ul>\n<li><strong>Stable training</strong>: one regression loss, no fragile minimax balance — no mode collapse, no oscillation.</li>\n<li><strong>Mode coverage / diversity</strong>: it models the whole distribution, so it doesn't drop modes the way GANs do.</li>\n<li><strong>Sample quality</strong>: state-of-the-art fidelity, especially for diverse, complex scenes.</li>\n</ul>\n<p>The cost is slow, iterative sampling — the tradeoff diffusion makes versus the GAN's one-shot speed.</p>\n\n<h3>7. Latent diffusion: making it practical</h3>\n<p>Running diffusion directly on millions of pixels is expensive. <strong>Latent diffusion</strong> (the basis of Stable Diffusion) first uses a <em>VAE</em> to compress images into a small latent space, runs the entire diffusion process there, and decodes the result back to pixels — slashing compute by working on, say, a $64\\times64$ latent instead of a $512\\times512$ image. Here the three lessons of this module fuse: a VAE for compression, a denoising diffusion core, and (for text-to-image) cross-attention conditioning on a transformer's text embedding.</p>\n\n<h3>8. Why this matters</h3>\n<p>Diffusion is the engine of the current generative-AI explosion in images, video, audio, and even molecule and protein design. Its conceptual gift — that a hard generation problem becomes easy when broken into many tiny, learnable denoising steps, trained with nothing fancier than MSE — is a template echoing across modern AI. And the convergence of VAE compression, attention-based conditioning, and iterative denoising shows how the pieces you have studied assemble into a state-of-the-art system.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "In the forward process, the marginal is $x_t = \\sqrt{\\bar\\alpha_t}\\,x_0 + \\sqrt{1-\\bar\\alpha_t}\\,\\varepsilon$. As $t$ grows from $0$ toward $T$, what happens to the coefficients $\\sqrt{\\bar\\alpha_t}$ and $\\sqrt{1-\\bar\\alpha_t}$?",
+              "choices": [
+                "$\\sqrt{\\bar\\alpha_t}$ shrinks toward 0 while $\\sqrt{1-\\bar\\alpha_t}$ grows toward 1",
+                "Both grow toward 1",
+                "$\\sqrt{\\bar\\alpha_t}$ grows toward 1 while $\\sqrt{1-\\bar\\alpha_t}$ shrinks toward 0",
+                "Both stay constant since the schedule is fixed"
+              ],
+              "answer": 0,
+              "explain": "Since $\\bar\\alpha_t=\\prod_{s\\le t}(1-\\beta_s)$ is a shrinking product of factors $<1$, $\\bar\\alpha_t\\to0$, so the signal weight $\\sqrt{\\bar\\alpha_t}\\to0$ and the noise weight $\\sqrt{1-\\bar\\alpha_t}\\to1$ — the data fades and noise dominates. 'Fixed schedule' refers to $\\beta_t$, not to these cumulative coefficients being constant."
+            },
+            {
+              "q": "Why is the one-shot formula $x_t=\\sqrt{\\bar\\alpha_t}\\,x_0+\\sqrt{1-\\bar\\alpha_t}\\,\\varepsilon$ practically essential for training, rather than a mere convenience?",
+              "choices": [
+                "It makes the forward process learnable instead of fixed",
+                "It lets you sample $x_t$ for a random $t$ in one step, so each training example needs only one noising operation instead of simulating $t$ sequential steps",
+                "It guarantees the reverse process is deterministic",
+                "It replaces the MSE loss with a likelihood objective"
+              ],
+              "answer": 1,
+              "explain": "Training picks a random timestep per example; the closed form jumps straight to $x_t$ in a single draw, avoiding running the Markov chain step-by-step (which would be $O(t)$ per sample). It does not make the forward process learnable — that process is fixed by design."
+            },
+            {
+              "q": "A student claims: \"The network $\\varepsilon_\\theta(x_t,t)$ directly outputs the clean image $x_0$.\" What is the precise correction in this lesson's formulation?",
+              "choices": [
+                "It outputs $x_{t-1}$ directly with no further computation",
+                "It outputs the noise schedule $\\beta_t$",
+                "It outputs the variance of the reverse step",
+                "It predicts the noise $\\varepsilon$ that was added to $x_0$ to produce $x_t$; an estimate of $x_0$ is then recovered from $x_t$ and that predicted noise"
+              ],
+              "answer": 3,
+              "explain": "The objective is $\\|\\varepsilon-\\varepsilon_\\theta(x_t,t)\\|^2$, so the network targets the added noise, not $x_0$ directly. Given the predicted $\\hat\\varepsilon$ and $x_t$, one can algebraically back out an estimate of $x_0$ via the one-shot formula — but that is a derived quantity, not the network's raw output."
+            },
+            {
+              "q": "Suppose at a given timestep $\\bar\\alpha_t = 0.36$. With $x_0$ and $\\varepsilon$ both having unit scale, what fraction of $x_t$'s 'energy' (squared coefficient) comes from the original signal $x_0$?",
+              "choices": [
+                "About 0.36",
+                "About 0.6",
+                "About 0.64",
+                "About 0.8"
+              ],
+              "answer": 0,
+              "explain": "The signal coefficient is $\\sqrt{\\bar\\alpha_t}$, so its squared weight is exactly $\\bar\\alpha_t=0.36$, and the noise contributes $1-\\bar\\alpha_t=0.64$. The tempting 0.6 is just $\\sqrt{0.36}$, the amplitude, not the energy fraction."
+            },
+            {
+              "q": "Why does diffusion's per-step learning problem make training more stable than generating an image in a single shot?",
+              "choices": [
+                "Because the network is smaller than a one-shot generator",
+                "Because each reverse step only has to undo a tiny amount of noise — a gentle, well-conditioned regression — rather than map pure noise to a full image at once",
+                "Because the forward process removes the need for any neural network",
+                "Because adding noise back during sampling cancels all gradient variance"
+              ],
+              "answer": 1,
+              "explain": "Breaking generation into many tiny denoising steps means each step is an easy local correction with a concrete MSE target, which descends smoothly. A one-leap noise-to-image map is a far harder, less stable optimization — the core reason diffusion trains gracefully."
+            },
+            {
+              "q": "The callout notes diffusion models are 'score-based models in disguise.' What does predicting the noise $\\varepsilon$ in $x_t$ correspond to?",
+              "choices": [
+                "The entropy of the data distribution",
+                "The cumulative noise schedule $\\bar\\alpha_t$",
+                "The reconstruction loss of a VAE",
+                "Knowing 'which way is less noisy' — i.e. the gradient of the (log) data density, the score $\\nabla_{x}\\log p(x)$"
+              ],
+              "answer": 3,
+              "explain": "Estimating the noise tells you the direction toward higher data density, which is exactly the score $\\nabla_x\\log p(x)$ up to a known scaling. This is why score-based and denoising-diffusion formulations are equivalent; the other options confuse it with unrelated quantities."
+            },
+            {
+              "q": "During sampling, fresh Gaussian noise is added back at every reverse step except the last. What goes wrong if you instead deterministically take the predicted mean at every intermediate step in the standard stochastic sampler?",
+              "choices": [
+                "The samples become brighter than the training data",
+                "The reverse Markov chain runs in the wrong direction",
+                "You collapse each step's reverse distribution to its mean, producing over-averaged, blurry results instead of sampling diverse plausible images",
+                "Training diverges because the loss is no longer MSE"
+              ],
+              "answer": 2,
+              "explain": "Each reverse step represents a distribution over plausible slightly-cleaner images; injecting calibrated noise samples from it. Always taking the bare mean averages over modes and yields blurry output. (DDIM achieves quality determinism by a different reformulation, not by naively dropping the noise from the stochastic sampler.)"
+            },
+            {
+              "q": "What is the principal practical disadvantage of diffusion models compared to GANs, and the main remedy?",
+              "choices": [
+                "Unstable minimax training; fixed by adding a discriminator",
+                "Poor mode coverage; fixed by larger batch sizes",
+                "Slow inference needing many sequential network passes; fixed by fast samplers like DDIM and distillation",
+                "High memory at training time; fixed by latent compression alone"
+              ],
+              "answer": 2,
+              "explain": "A GAN generates in one pass while naive diffusion needs hundreds to thousands of sequential passes, so inference is the bottleneck. DDIM (deterministic, fewer steps) and distillation cut this to tens of steps. Mode coverage and training stability are actually diffusion's strengths, not weaknesses."
+            },
+            {
+              "q": "In latent diffusion (Stable Diffusion), where does the diffusion process actually run, and why?",
+              "choices": [
+                "Directly on the $512\\times512$ pixel grid, for maximum fidelity",
+                "On a U-Net's attention maps, to save memory",
+                "On the raw text tokens of the prompt before any image exists",
+                "In a VAE's compressed latent space (e.g. $64\\times64$), drastically cutting compute versus operating on full-resolution pixels"
+              ],
+              "answer": 3,
+              "explain": "Latent diffusion compresses images with a VAE, runs the entire noising/denoising process in that small latent, then decodes — slashing compute relative to working on millions of pixels. Running diffusion directly on pixels is exactly what latent diffusion avoids."
+            },
+            {
+              "q": "How is the timestep $t$ used by the denoising network, and why is it necessary?",
+              "choices": [
+                "It is fed in as an embedding so one shared network knows how much noise to expect and can behave differently across noise levels",
+                "It selects which of $T$ separately trained networks to call at that step",
+                "It is appended to the loss as a regularization weight",
+                "It scales the learning rate during training"
+              ],
+              "answer": 0,
+              "explain": "A single network handles all timesteps, but the right denoising behavior differs at high vs low noise, so $t$ is supplied as an embedding to condition the network. There are not $T$ separate networks — that would be wildly impractical and defeats weight sharing."
+            },
+            {
+              "q": "A student says: \"At $t=T$ the image $x_T$ still secretly contains $x_0$'s structure, since the forward process is invertible.\" Why is this misleading for generation?",
+              "choices": [
+                "The forward process is learned, so it can be exactly inverted",
+                "Because $\\bar\\alpha_T\\approx0$, $x_T$ is essentially indistinguishable from standard Gaussian noise; the structure is statistically gone, which is precisely why sampling can start from pure $\\mathcal{N}(0,I)$",
+                "The forward process adds noise only at the final step, so earlier structure is preserved",
+                "$x_T$ equals $x_0$ exactly because the steps compose"
+              ],
+              "answer": 1,
+              "explain": "With $\\bar\\alpha_T\\approx0$, the signal coefficient vanishes and $x_T\\sim\\mathcal{N}(0,I)$ to high accuracy — there is no usable structure left, which is what lets generation begin from fresh noise. The chain is not practically invertible without the learned reverse network."
+            },
+            {
+              "q": "Why is no discriminator or minimax game involved in training a diffusion model, and what is the consequence for the loss landscape?",
+              "choices": [
+                "A discriminator is used but only at inference time",
+                "The objective is a plain MSE regression against a fixed, known noise target, so the loss descends smoothly with no adapting adversary to chase",
+                "The objective is a KL divergence between two learned networks",
+                "The discriminator is replaced by the VAE decoder during training"
+              ],
+              "answer": 1,
+              "explain": "Each example has a concrete target — the actual noise $\\varepsilon$ added — so training is ordinary supervised regression that simply descends, with no second network creating a moving target. This absence of a minimax game is exactly why diffusion avoids GAN-style oscillation and mode collapse."
+            }
+          ],
           "flashcards": [
             {
               "front": "What is the forward process in a diffusion model, and is it learned?",

@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 88 — Deep Learning Generative Models — 12 MCQs per lesson (content; owner "more questions" ask)
+Completed the new Generative Models module: all three lessons (Autoencoders/VAEs, GANs, Diffusion) brought from
+0 → 12 MCQs each via the author→adversarial-verify pipeline — **+36 fact-checked questions**, all three returning
+ok=true (the verifier re-derived numeric items such as the optimal discriminator $D^{*}=0.6/0.8=0.75$ and the
+$\bar\alpha_t=0.36$ signal-energy fraction). Every Deep Learning lesson (22) is back to exactly 12 MCQs (264 in the
+topic), and **every lesson site-wide once again has a full 12-question quiz**. Site bank **1,596 → 1,632**.
+Distractors target the canonical generative-model misconceptions (autoencoder = supervised, posterior collapse from
+over-weighting KL, "predict the noise" vs "predict $x_0$", diffusion's slow-inference tradeoff). SW cache → `atlas-v32`;
+README 1,596→1,632. Verified: `node gate.js` ALL GREEN (7 topics · 136 lessons · **1,632 MCQs**); all three
+Generative-Models quizzes render "of 12" with errs=0 and katex-error=0; stray Chrome cleaned up.
+
 ## iter 87 — Deep Learning — NEW advanced module: Generative Models (3 lessons) (content; owner "deepen the existing six" directive)
 Rotated off the long Probability & Statistics arc to honor the owner's directive item 2 — *deepen the existing six with
 advanced/frontier lessons*. Deep Learning ended at transformers with no coverage of generative modeling, the engine of
