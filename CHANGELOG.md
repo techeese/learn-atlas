@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 157 — MCQ arc → Calculus · Bridge to Multivariable 12 → 16 (content — owner's #1 ask)
+The Calculus arc's sixth module, *Bridge to Multivariable Calculus for ML*. **+4 new MCQs each** to all three lessons
+(**+12, bank 2,020 → 2,032**): a $\partial/\partial x$ compute / the partial as a slice-slope / how many partials
+$f(x,y,z)$ has / an $f_{xx}$ compute; $\nabla f=(f_x,f_y)$ / $\nabla(x^2+y^2)$ at $(1,2)=(2,4)$ / directional derivatives
+need a **unit** vector / $\mathbf u\perp\nabla f\Rightarrow D_{\mathbf u}f=0$; what the Hessian test distinguishes
+(min/max/saddle) / positive-definite Hessian ⟹ local min / the Hessian is the matrix of second partials /
+negative-definite Hessian ⟹ local max. Answer positions shuffled ([2,0,3,1]/[1,3,2,0]/[3,1,0,2]).
+- **Verified**: byte-stable JSON round-trip (diff +132 localized insertions); `node gate.js` ALL GREEN (2,032 MCQs);
+  direct key-dump confirms the shuffled indices; an independent adversarial fact-check agent returned **ALL PASS** (the
+  $2xy^3$ / $6xy$ computes, the $(2,4)$ gradient, normalize-first directional derivative, and the PD→min / ND→max
+  Hessian criteria all checked); render-check on the Optimization quiz → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`.
+  SW cache **v99 → v100**; README 2,020 → 2,032.
+- **Arc progress**: Algorithms ✓, Linear Algebra ✓; **Calculus now 6/7** — only Convex & Constrained Optimization remains,
+  then Calculus is complete. Then DL/RL/LLM/PS.
+
 ## iter 156 — Animated score reveal on result screens + countUp clock-skew hardening (animations)
 Quiz/test/recall/placement **result screens** now land with a celebratory flourish: the big score **counts up** from 0
 and springs in with a `bigPop` scale animation, turning the highest-emotion moment of a study session into a reward

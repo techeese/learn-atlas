@@ -170,7 +170,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    count; safety "More" bucket for future uncategorized ones. errs=0; 43 cards across 7 cats; SW cache →v97. Still-thin: animations (since 140).
    ✅ iter 155: MCQ arc → Calculus·Applications of Integration 12→16 (+12, bank →2,020). Calc 5/7 modules. Adversarial agent
    ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v98.
-   CALC REMAINING (MCQ arc): multivariable-bridge(3), convex-optimization(3) — then Calculus COMPLETE. Then DL/RL/LLM/PS.
+   ✅ iter 157: MCQ arc → Calculus·Bridge to Multivariable 12→16 (+12, bank →2,032). Calc 6/7 modules. Adversarial agent
+   ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v100.
+   CALC REMAINING (MCQ arc): convex-optimization(3) — the LAST Calc module, then Calculus COMPLETE. Then DL/RL/LLM/PS.
    ✅ iter 156: animated score reveal on result screens (animations; neglected since 140) — count-up + bigPop spring, confetti
    on perfect 10+ test; reduced-motion safe. Also HARDENED shared countUp with Math.max(0,k) clamp (rAF/performance.now clock
    skew could render a negative score). errs=0; SW cache →v99. NOTE: headless --dump-dom doesn't advance rAF, so count-up

@@ -4725,6 +4725,50 @@
               ],
               "answer": 1,
               "explain": "Partials only probe the two axis directions; differentiability demands the linear map approximate $f$ along all approach directions, which can fail even when both partials exist. Assuming partials alone imply differentiability is the classic misconception."
+            },
+            {
+              "q": "For $f(x,y) = x^2 y^3$, what is $\\dfrac{\\partial f}{\\partial x}$?",
+              "choices": [
+                "$3x^2 y^2$",
+                "$2x + 3y^2$",
+                "$2x y^3$",
+                "$2x$"
+              ],
+              "answer": 2,
+              "explain": "Differentiate with respect to $x$ while treating $y$ (and hence $y^3$) as a constant: $\\frac{\\partial}{\\partial x}(x^2 y^3) = 2x\\cdot y^3 = 2xy^3$. Holding $y$ fixed is the whole idea of a partial derivative."
+            },
+            {
+              "q": "Geometrically, the partial derivative $\\partial f/\\partial x$ at a point gives:",
+              "choices": [
+                "the slope of the surface $z=f(x,y)$ in the $x$-direction (moving along $x$ with $y$ held fixed)",
+                "the slope in the $y$-direction",
+                "the total change in $f$ in every direction at once",
+                "the height $f$ at that point"
+              ],
+              "answer": 0,
+              "explain": "Slicing the surface with the plane $y=\\text{const}$ leaves a curve in $x$; $\\partial f/\\partial x$ is that curve's slope. Likewise $\\partial f/\\partial y$ is the slope of the slice $x=\\text{const}$. Each partial is a one-direction slope — the gradient gathers them."
+            },
+            {
+              "q": "How many first-order partial derivatives does a function $f(x,y,z)$ of three variables have?",
+              "choices": [
+                "one",
+                "two",
+                "nine",
+                "three — one for each variable ($\\partial f/\\partial x,\\ \\partial f/\\partial y,\\ \\partial f/\\partial z$)"
+              ],
+              "answer": 3,
+              "explain": "There is exactly one first-order partial per input variable, so $f(x,y,z)$ has three: $f_x, f_y, f_z$. They are the components of the gradient $\\nabla f$, a vector in $\\mathbb{R}^3$. (Second-order partials would number up to $3\\times 3 = 9$.)"
+            },
+            {
+              "q": "For $f(x,y) = x^3 y$, what is the second partial $f_{xx}$?",
+              "choices": [
+                "$3x^2 y$",
+                "$6x y$",
+                "$3x^2$",
+                "$x^3$"
+              ],
+              "answer": 1,
+              "explain": "Differentiate twice with respect to $x$, holding $y$ fixed: $f_x = 3x^2 y$, then $f_{xx} = \\frac{\\partial}{\\partial x}(3x^2 y) = 6xy$. ($f_{xx}$ means 'apply $\\partial/\\partial x$ twice', not square anything.)"
             }
           ],
           "flashcards": [
@@ -4920,6 +4964,50 @@
               ],
               "answer": 0,
               "explain": "Dividing by $\\lVert\\nabla L\\rVert$ keeps the same downhill direction (the sign is unchanged) but fixes the step length at $\\alpha$, so it no longer automatically tapers near a minimum where $\\nabla L\\to 0$. The other options misread normalization as a sign change or a magic convergence guarantee."
+            },
+            {
+              "q": "For a function $f(x,y)$, the gradient $\\nabla f$ is the vector:",
+              "choices": [
+                "$\\left(\\dfrac{\\partial f}{\\partial x} - \\dfrac{\\partial f}{\\partial y}\\right)$",
+                "$\\left(\\dfrac{\\partial f}{\\partial x},\\ \\dfrac{\\partial f}{\\partial y}\\right)$",
+                "the matrix of second derivatives",
+                "a single scalar, $\\dfrac{\\partial f}{\\partial x}\\cdot\\dfrac{\\partial f}{\\partial y}$"
+              ],
+              "answer": 1,
+              "explain": "The gradient stacks the first partial derivatives into a vector: $\\nabla f = (f_x, f_y)$ (in $n$ dimensions, $(f_{x_1},\\dots,f_{x_n})$). It points in the direction of steepest ascent, and its length is the maximum rate of increase."
+            },
+            {
+              "q": "Compute the gradient of $f(x,y) = x^2 + y^2$ at the point $(1, 2)$.",
+              "choices": [
+                "$(2, 2)$",
+                "$(x^2, y^2)$",
+                "$(4, 2)$",
+                "$(2, 4)$"
+              ],
+              "answer": 3,
+              "explain": "$\\nabla f = (\\partial f/\\partial x,\\ \\partial f/\\partial y) = (2x,\\ 2y)$. At $(1,2)$ that is $(2\\cdot1,\\ 2\\cdot2) = (2, 4)$ — pointing radially outward, the direction of steepest ascent on the bowl."
+            },
+            {
+              "q": "To compute the directional derivative of $f$ in the direction of a (non-unit) vector $\\mathbf{v}$, you first:",
+              "choices": [
+                "square $\\mathbf{v}$",
+                "just dot $\\nabla f$ with $\\mathbf{v}$ as given",
+                "normalize $\\mathbf{v}$ to a unit vector $\\hat{\\mathbf{v}} = \\mathbf{v}/\\|\\mathbf{v}\\|$, then take $\\nabla f \\cdot \\hat{\\mathbf{v}}$",
+                "multiply $\\mathbf{v}$ by $\\|\\mathbf{v}\\|$"
+              ],
+              "answer": 2,
+              "explain": "The directional derivative $D_{\\mathbf{u}}f = \\nabla f \\cdot \\mathbf{u}$ is defined for a *unit* vector $\\mathbf{u}$. Dotting with a non-unit $\\mathbf{v}$ scales the answer by $\\|\\mathbf{v}\\|$, so normalize first. This is exactly why $\\nabla f\\cdot\\mathbf v$ alone can over- or under-state the true rate."
+            },
+            {
+              "q": "If a unit vector $\\mathbf{u}$ is perpendicular to $\\nabla f$ at a point, the directional derivative $D_{\\mathbf{u}}f$ there is:",
+              "choices": [
+                "$0$ — you're moving along a level curve, so $f$ is momentarily unchanged",
+                "maximal",
+                "$\\|\\nabla f\\|$",
+                "negative"
+              ],
+              "answer": 0,
+              "explain": "$D_{\\mathbf{u}}f = \\nabla f\\cdot\\mathbf{u} = \\|\\nabla f\\|\\cos\\theta$; when $\\mathbf{u}\\perp\\nabla f$, $\\theta=90^\\circ$ and $\\cos\\theta = 0$. Geometrically you're moving along a contour (level set), where $f$ doesn't change — which is why the gradient is always perpendicular to level curves."
             }
           ],
           "flashcards": [
@@ -5115,6 +5203,50 @@
               ],
               "answer": 1,
               "explain": "The stationarity condition is $\\nabla f = \\lambda \\nabla g$, so $\\lambda = 0$ forces $\\nabla f = \\mathbf{0}$, meaning the optimum coincides with an unconstrained critical point and the constraint exerts no pull. A nonzero $\\lambda$ is what signals a binding constraint, so the first option is exactly backwards."
+            },
+            {
+              "q": "At a critical point, the second-derivative (Hessian) test distinguishes:",
+              "choices": [
+                "only local minima",
+                "the global minimum from everything else",
+                "continuous from discontinuous functions",
+                "local minima, local maxima, and saddle points"
+              ],
+              "answer": 3,
+              "explain": "Once $\\nabla f = \\mathbf{0}$ (a critical point), the Hessian's curvature decides the type: a local minimum (curves up in all directions), a local maximum (curves down in all), or a saddle (up in some, down in others). It's the multivariable analogue of the single-variable $f''$ test."
+            },
+            {
+              "q": "At a critical point, if the Hessian is *positive definite* (all its eigenvalues are positive), the point is a:",
+              "choices": [
+                "local maximum",
+                "local minimum",
+                "saddle point",
+                "inflection point"
+              ],
+              "answer": 1,
+              "explain": "Positive definite means the surface curves upward in every direction — a bowl — so the critical point is a local minimum. This generalizes $f''(c) > 0 \\Rightarrow$ minimum from single-variable calculus."
+            },
+            {
+              "q": "The Hessian matrix of $f(x,y)$ is:",
+              "choices": [
+                "the matrix of second partial derivatives, $\\begin{pmatrix} f_{xx} & f_{xy} \\\\ f_{yx} & f_{yy} \\end{pmatrix}$",
+                "the gradient $(f_x, f_y)$",
+                "the vector of first partial derivatives",
+                "the value of $f$ at the critical point"
+              ],
+              "answer": 0,
+              "explain": "The Hessian collects all second-order partials into a square matrix; for nice functions it is symmetric ($f_{xy}=f_{yx}$, by Clairaut). Its eigenvalues — or, in 2D, the discriminant $f_{xx}f_{yy}-f_{xy}^2$ — classify each critical point."
+            },
+            {
+              "q": "At a critical point, if the Hessian is *negative definite* (all eigenvalues negative), the point is a:",
+              "choices": [
+                "local minimum",
+                "saddle point",
+                "local maximum",
+                "inflection point"
+              ],
+              "answer": 2,
+              "explain": "Negative definite means the surface curves downward in every direction — a dome — so the critical point is a local maximum (the analogue of $f''(c) < 0$). Mixed-sign eigenvalues give a saddle; any zero eigenvalue makes the test inconclusive."
             }
           ],
           "flashcards": [
