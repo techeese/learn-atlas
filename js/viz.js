@@ -1195,4 +1195,62 @@
     reseed(); draw();
   });
 
+  /* ========================================================
+     25. Confidence-interval coverage simulator (what "95% confident" means)
+     ======================================================== */
+  register({ id: 'ps-ci-coverage', topic: 'probability-statistics', title: 'Confidence-Interval Coverage', blurb: 'Draw confidence interval after confidence interval and watch ~95% of them capture the true mean (and ~5% miss) — the real meaning of "95% confidence".' },
+  function (root) {
+    const W = 560, H = 410, padL = 14, padR = 14, padT = 14, padB = 46, NVIS = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const MONO = "JetBrains Mono, monospace";
+    const Z = { '80%': 1.282, '90%': 1.645, '95%': 1.960, '99%': 2.576 };
+    let conf = '95%', n = 20, running = null;
+    let total = 0, captured = 0, rows = [];
+    function randn() { let u = 0, v = 0; while (u === 0) u = Math.random(); while (v === 0) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+    const se = () => 1 / Math.sqrt(n);
+    const D = () => (3 + Z[conf]) * se();           // value-axis half-range: fits mean spread (±3 SE) + interval width
+    const X = v => { const d = D(); return padL + (v + d) / (2 * d) * (W - padL - padR); };
+    function step() {
+      const z = Z[conf], s = se(), mean = z * 0 + s * randn(), lo = mean - z * s, hi = mean + z * s;
+      const hit = lo <= 0 && 0 <= hi;               // true mean is 0
+      total++; if (hit) captured++;
+      rows.push({ mean, lo, hi, hit }); if (rows.length > NVIS) rows.shift();
+    }
+    function reset() { total = 0; captured = 0; rows = []; draw(); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // true-mean reference line
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 1.6; ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(X(0), padT - 2); ctx.lineTo(X(0), H - padB + 2); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + MONO; ctx.textAlign = 'center'; ctx.fillText('true μ', X(0), H - padB + 16);
+      // interval rows
+      const gap = (H - padT - padB) / NVIS;
+      rows.forEach((r, i) => {
+        const y = padT + (i + 0.5) * gap, col = r.hit ? p.sage : p.rust;
+        ctx.strokeStyle = col; ctx.lineWidth = r.hit ? 2 : 2.6; ctx.globalAlpha = r.hit ? 0.8 : 1;
+        ctx.beginPath(); ctx.moveTo(X(r.lo), y); ctx.lineTo(X(r.hi), y); ctx.stroke();
+        // end caps
+        ctx.beginPath(); ctx.moveTo(X(r.lo), y - 3); ctx.lineTo(X(r.lo), y + 3); ctx.moveTo(X(r.hi), y - 3); ctx.lineTo(X(r.hi), y + 3); ctx.stroke();
+        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(r.mean), y, 2.4, 0, 2 * Math.PI); ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+      const pct = total ? (captured / total * 100) : 0, miss = total - captured;
+      info.innerHTML = `confidence <b>${conf}</b> &nbsp;·&nbsp; sample size <b>n=${n}</b> &nbsp;·&nbsp; <span style="color:${p.sage}">captured ${captured}</span> / <span style="color:${p.rust}">missed ${miss}</span> of <b>${total}</b><br>` +
+        (total === 0
+          ? `Each horizontal bar is one ${conf} confidence interval from a fresh sample; the dot is its sample mean. Press <b>Run</b>.`
+          : `<b>${pct.toFixed(1)}%</b> of intervals captured the true μ (target <b>${conf}</b>). The <span style="color:${p.rust}">red</span> ones missed — over many samples about ${conf.replace('%', '')}% capture μ, which is <em>all</em> "${conf} confidence" means. Widening n just narrows the bars; the capture rate is set by the confidence level, not n.`);
+    }
+    select(ctl, { label: 'confidence', value: conf, options: Object.keys(Z).map(k => ({ value: k, label: k })), onChange: v => { conf = v; reset(); } });
+    slider(ctl, { label: 'sample size n', min: 5, max: 80, step: 5, value: n, fmt: v => 'n=' + v, onInput: v => { n = v; reset(); } });
+    const runBtn = button(ctl, '▶ Run', () => {
+      if (running) { running.stop(); running = null; runBtn.innerHTML = '▶ Run'; }
+      else { runBtn.innerHTML = '⏸ Pause'; let f = 0; running = loop(() => { f++; if (f % 6 === 0) { step(); draw(); } }); }
+    });
+    button(ctl, '+1', () => { step(); draw(); });
+    button(ctl, '↻ Reset', () => { if (running) { running.stop(); running = null; runBtn.innerHTML = '▶ Run'; } reset(); });
+    reset();
+  });
+
 })();

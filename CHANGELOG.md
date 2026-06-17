@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 84 — Confidence-Interval coverage simulator (visualizations; owner depth direction)
+A new interactive widget (`ps-ci-coverage`, the 25th) that makes the single most-misunderstood idea in statistics
+*visible*: what "95% confidence" actually means. Each press of **Run** / **+1** draws a fresh sample, builds its
+confidence interval, and stacks it as a horizontal bar against a dashed "true μ" line — intervals that capture μ are
+<span>green</span>, the ones that miss are <span>red</span>. A live cumulative tally ("captured X / missed Y of N →
+Z%") converges toward the chosen confidence level, so the learner *sees* that ~1 in 20 of the 95% intervals misses μ
+entirely — the procedural meaning the lesson stresses. Controls: confidence level (80/90/95/99%), sample size n
+(which only changes the bar <em>width</em> — the capture rate is set by the confidence level, not n, a key insight),
+and Run/+1/Reset. Sample means are drawn exactly as $\bar X = \mu + (\sigma/\sqrt n)Z$. Embedded in the
+*Confidence Intervals* lesson right after the interpretation section, and in the Lab. SW cache → `atlas-v28`;
+README viz counts 24→25. Verified: renders in Lab (green/red bars + true-μ line + dots); 120 draws gave 93.3% capture
+near the 95% target (finite-sample noise); embedded canvas hydrates in-lesson (katex-error=0); slider/buttons drive
+it with errs=0; legible at 390px; `node gate.js` ALL GREEN (25 widgets); stray Chrome cleaned up.
+
 ## iter 83 — Probability & Statistics Module 4 — 12 MCQs per lesson (content; owner "more questions" ask)
 Completed the new Statistical Inference module by bringing all four lessons (LLN, sampling distributions,
 point estimation, confidence intervals) from 0 → 12 MCQs each via the author→adversarial-verify pipeline:
