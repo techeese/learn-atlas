@@ -763,6 +763,9 @@ body::after {
 .tc-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--ink-soft); line-height: 1.5; cursor: pointer; }
 .tc-check input { margin-top: 3px; accent-color: var(--gold); width: 16px; height: 16px; flex: none; }
 .tc-check b { color: var(--ink); }
+.tc-avail { font-size: 13px; color: var(--ink-mute); margin-top: -4px; }
+.tc-avail b { color: var(--ink-soft); font-family: var(--font-mono); }
+.tc-avail .tc-thin { color: var(--rust); }
 .mastery-track { height: 8px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; margin: 4px 0 22px; }
 .mastery-track-fill { height: 100%; background: linear-gradient(90deg, var(--sage-deep), var(--sage)); border-radius: 8px; transition: width .4s; }
 

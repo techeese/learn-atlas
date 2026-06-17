@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 197 — Scope-aware Test setup: live question-pool readout (UI/UX — non-content)
+Non-content rebalance. "Spawn a Test" is a core, high-use surface, but it showed *lesson* counts in the scope picker,
+not the *question*-pool size — so you couldn't tell how many questions a scope held until you hit Start (and got a
+"not enough questions" error after the fact). Made the setup **scope-aware**:
+- A live **"N questions available"** readout under the Length row that updates the instant you change scope
+  (Completed / Weak spots / a Topic / Everything) — e.g. *Everything → 2,276*, *LLMs → 292*.
+- When the chosen length exceeds the pool, it says **"· your test will use all N"** (no silent surprise).
+- When a scope is too thin to test (< 3 questions), it shows a rust warning and **disables Start** up front, instead
+  of erroring on click.
+- Refactored the scope→pool logic into one shared `scopedPool(scope)` used by both the readout and Start (no drift);
+  `aria-live="polite"` on the readout. CSS: `.tc-avail` / `.tc-thin`.
+
+Verified (seeded states): default *Completed* with 0 done → "⚠ Only 0 questions" + Start disabled; *Everything* →
+"2,276 questions available" + enabled; *LLMs* → 292; *Weak spots* (none) → thin + disabled; 1 lesson done + length 40
+→ "16 questions available · your test will use all 16". errs=0 throughout; all-routes smoke (12 routes) errs=0;
+**390px** the readout is legible below the Length row (screenshot clean). `gate.js` ALL GREEN (data untouched). SW
+cache `atlas-v139` → `atlas-v140`.
+
 ## iter 196 — MCQ arc → LLM Inference module 12→16 (content — owner's #1 ask)
 Resumed the 12→16 MCQ-growth arc: the LLM **Inference** module, all 3 lessons **12 → 16 MCQs** (+12; bank
 **2,264 → 2,276**). New foundational questions, adversarially fact-checked (**ALL 12 PASS**), answer positions

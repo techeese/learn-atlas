@@ -1294,6 +1294,7 @@
           <label class="viz-slab">Length</label>
           <select id="t-len"><option value="5">5 questions</option><option value="10" selected>10 questions</option><option value="20">20 questions</option><option value="40">40 questions</option></select>
         </div>
+        <div id="t-avail" class="tc-avail" aria-live="polite"></div>
         <label class="tc-check"><input type="checkbox" id="t-mastery" checked> <span><b>Mastery mode</b> — wrong answers come back until you get them right (no casual remembering).</span></label>
         <button class="btn primary" id="t-start">Start →</button>
         <div id="t-warn" class="viz-note"></div>
@@ -1302,13 +1303,34 @@
         ${Store.raw.tests.slice(0, 8).map(t => `<div class="lesson-row" style="cursor:default"><div class="l-title" style="font-size:15px">${esc(t.label)}</div><div class="l-right"><span class="pill ${t.correct === t.total ? "sage" : "gold"}">${t.correct}/${t.total} · ${Math.round(t.correct / t.total * 100)}%</span></div></div>`).join("")}</div>` : ""}
     </div>`;
     bindGo();
-    document.getElementById("t-start").addEventListener("click", () => {
-      const scope = document.getElementById("t-scope").value, len = parseInt(document.getElementById("t-len").value, 10);
-      let pool = allQuestions(), label = "All topics";
-      if (scope === "mastered") { const done = {}; completed.forEach(l => done[l.id] = 1); pool = pool.filter(q => done[q.lessonId]); label = "Mastered material"; }
-      else if (scope === "weak") { const weak = {}; Store.weakSpots().forEach(w => weak[w.lessonId] = 1); pool = pool.filter(q => weak[q.lessonId]); label = "Weak spots"; }
-      else if (scope.startsWith("course:")) { const cid = scope.slice(7); pool = pool.filter(q => q.courseId === cid); label = (findCourse(cid) || {}).title || "Topic"; }
-      if (pool.length < 3) { document.getElementById("t-warn").textContent = "Not enough questions in that scope yet — complete a few more lessons, or widen the scope."; return; }
+    // resolve a scope value to its actual question pool + label (shared by the live readout and Start)
+    function scopedPool(scope) {
+      const all = allQuestions();
+      if (scope === "mastered") { const done = {}; completed.forEach(l => done[l.id] = 1); return { pool: all.filter(q => done[q.lessonId]), label: "Mastered material" }; }
+      if (scope === "weak") { const weak = {}; Store.weakSpots().forEach(w => weak[w.lessonId] = 1); return { pool: all.filter(q => weak[q.lessonId]), label: "Weak spots" }; }
+      if (scope.startsWith("course:")) { const cid = scope.slice(7); return { pool: all.filter(q => q.courseId === cid), label: (findCourse(cid) || {}).title || "Topic" }; }
+      return { pool: all, label: "All topics" };
+    }
+    const scopeSel = document.getElementById("t-scope"), lenSel = document.getElementById("t-len");
+    const avail = document.getElementById("t-avail"), startBtn = document.getElementById("t-start"), warn = document.getElementById("t-warn");
+    function updateAvail() {
+      const n = scopedPool(scopeSel.value).pool.length;
+      const len = parseInt(lenSel.value, 10);
+      warn.textContent = "";
+      if (n < 3) {
+        avail.innerHTML = `<span class="tc-thin">⚠ Only ${n} question${n === 1 ? "" : "s"} in this scope — pick a wider scope or complete a few more lessons.</span>`;
+        startBtn.disabled = true; startBtn.classList.add("disabled");
+      } else {
+        avail.innerHTML = `<b>${n}</b> question${n === 1 ? "" : "s"} available${len > n ? ` · your test will use all <b>${n}</b>` : ""}`;
+        startBtn.disabled = false; startBtn.classList.remove("disabled");
+      }
+    }
+    scopeSel.addEventListener("change", updateAvail);
+    lenSel.addEventListener("change", updateAvail);
+    updateAvail();
+    startBtn.addEventListener("click", () => {
+      const { pool, label } = scopedPool(scopeSel.value), len = parseInt(lenSel.value, 10);
+      if (pool.length < 3) { warn.textContent = "Not enough questions in that scope yet — complete a few more lessons, or widen the scope."; return; }
       const picked = shuffle(pool).slice(0, Math.min(len, pool.length));
       if (document.getElementById("t-mastery").checked) runMasteryDrill(picked, label);
       else runTest(picked, label);
