@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 137 — MCQ arc → Linear Algebra · Structure 12 → 16 (content — owner's #1 ask)
+The 12→16 arc continues through LA's **Rank, Subspaces, and Determinants** module. **+4 new MCQs each** to *Rank, Null
+Space & the Four Fundamental Subspaces* and *Determinants* (**+8, bank 1,896 → 1,904**), stating plainly the load-bearing
+facts the existing 12 (applied/compute questions) assumed: the **rank–nullity theorem** ($\operatorname{rank}+\dim N = n$
+columns), rank = number of pivots (with nullity as the trap), which dimension each subspace lives in
+($C(A)\subseteq\mathbb{R}^m$, $N(A)\subseteq\mathbb{R}^n$), and full-column-rank ⟹ trivial null space; plus determinant
+multiplicativity ($\det(AB)=\det A\,\det B$), invertible ⟺ $\det\neq 0$, two identical rows ⟹ $\det=0$, and single-row
+scaling vs. whole-matrix scaling ($5$ vs $5^n$). Answer positions shuffled ([1,3,0,2]/[2,0,3,1]).
+- **Verified**: byte-stable JSON round-trip (diff +88 localized insertions); `node gate.js` ALL GREEN (1,904 MCQs);
+  direct key-dump confirms the shuffled indices; an independent adversarial fact-check agent returned **ALL PASS**
+  (each answer recomputed from scratch, single-correct, KaTeX-safe, no ambiguity); render-check on the Determinants quiz
+  → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`. SW cache **v79 → v80**; README bank count 1,896 → 1,904.
+- **Arc progress**: Algorithms ✓ (7/7). Linear Algebra now **3/7** (foundations, matrices, structure). Remaining LA:
+  eigen(3), orthogonality(2), svd-applications(2), matrix-calculus(3); then Calc/DL/RL/LLM/PS.
+
 ## iter 136 — Optimizer Race viz: SGD vs Momentum vs RMSProp vs Adam (visualization)
 The **34th** interactive widget (`dl-optimizers`), embedded in *Optimizers: SGD, Momentum, RMSProp, and Adam* — which
 until now only embedded the weak 1-D `calc-gradient-descent` ball. Drops all four optimizers from the **same** start on

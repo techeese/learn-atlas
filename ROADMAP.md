@@ -121,7 +121,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    embedded in the DL optimizers lesson (replaced the weak 1-D calc-gradient-descent embed). Math pre-tuned in Node;
    errs=0; SW cache →v79. VIZ BACKLOG remaining: MDP policy-iteration (3rd gridworld — lower priority), VAE latent-space,
    GAN training-dynamics.
-   LA REMAINING: structure(2), eigen(3), orthogonality(2), svd-applications(2), matrix-calculus(3). Then Calc/DL/RL/LLM/PS.
+   ✅ iter 137: MCQ arc → Linear Algebra·Structure 12→16 (+8, bank →1,904). LA 3/7 modules (foundations, matrices, structure).
+   Adversarial agent ALL PASS; positions shuffled; render-check "of 16" errs=0; SW cache →v80.
+   LA REMAINING: eigen(3), orthogonality(2), svd-applications(2), matrix-calculus(3). Then Calc/DL/RL/LLM/PS.
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is

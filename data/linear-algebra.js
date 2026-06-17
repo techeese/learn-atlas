@@ -1828,6 +1828,50 @@
               ],
               "answer": 1,
               "explain": "Spanning $\\mathbb{R}^4$ means $\\operatorname{rank}(A)=4$, so a solution exists for every $b$ (existence). But $\\dim N(A)=6-4=2>0$, so any particular solution can be shifted by null-space vectors, making solutions non-unique. Existence (surjective) and uniqueness (injective) are separate conditions."
+            },
+            {
+              "q": "The rank–nullity theorem says that for any $m \\times n$ matrix $A$, $\\operatorname{rank}(A) + \\dim N(A)$ equals:",
+              "choices": [
+                "$m$ — the number of rows",
+                "$n$ — the number of columns",
+                "$m + n$",
+                "$\\min(m, n)$"
+              ],
+              "answer": 1,
+              "explain": "Each of the $n$ columns is either a pivot column (contributing to the rank, i.e. to $\\dim C(A)$) or a free column (contributing a basis vector of the null space). The two counts therefore partition the $n$ columns: $\\operatorname{rank}(A) + \\dim N(A) = n$. It is the number of columns, not rows."
+            },
+            {
+              "q": "Which quantity always equals $\\operatorname{rank}(A)$?",
+              "choices": [
+                "The number of rows of $A$",
+                "The number of free variables in $Ax = \\mathbf{0}$",
+                "The number of zero rows in the RREF of $A$",
+                "The number of pivot positions in any echelon form of $A$"
+              ],
+              "answer": 3,
+              "explain": "Rank is the number of pivots (leading entries) after reducing $A$ to echelon form — equivalently $\\dim C(A) = \\dim C(A^\\top)$. The number of free variables is the *nullity* (a tempting trap), not the rank; the number of rows is only an upper bound; and zero rows in the RREF count the deficiency $m - \\operatorname{rank}$, not the rank."
+            },
+            {
+              "q": "For an $m \\times n$ matrix $A$, which spaces contain the column space and the null space?",
+              "choices": [
+                "$C(A) \\subseteq \\mathbb{R}^m$ and $N(A) \\subseteq \\mathbb{R}^n$",
+                "$C(A) \\subseteq \\mathbb{R}^n$ and $N(A) \\subseteq \\mathbb{R}^m$",
+                "Both are subspaces of $\\mathbb{R}^n$",
+                "Both are subspaces of $\\mathbb{R}^m$"
+              ],
+              "answer": 0,
+              "explain": "Each column of $A$ is a vector with $m$ entries, so $C(A) \\subseteq \\mathbb{R}^m$. The null space holds the *inputs* $x$ satisfying $Ax = \\mathbf{0}$, and $x \\in \\mathbb{R}^n$, so $N(A) \\subseteq \\mathbb{R}^n$. Swapping which space lives in which dimension is one of the most common errors in the subject."
+            },
+            {
+              "q": "An $m \\times n$ matrix $A$ has full column rank ($\\operatorname{rank}(A) = n$). Which statement must be true?",
+              "choices": [
+                "$A$ is invertible",
+                "$C(A) = \\mathbb{R}^m$",
+                "$N(A) = \\{\\mathbf{0}\\}$ — the columns are linearly independent",
+                "$\\dim N(A) = n$"
+              ],
+              "answer": 2,
+              "explain": "By rank–nullity, $\\dim N(A) = n - \\operatorname{rank}(A) = 0$, so $N(A) = \\{\\mathbf{0}\\}$ and $Ax = \\mathbf{0}$ forces $x = \\mathbf{0}$ — i.e. the columns are linearly independent. $A$ is invertible only if it is also *square*; $C(A) = \\mathbb{R}^m$ describes full *row* rank; and $\\dim N(A) = n$ would mean rank $0$."
             }
           ],
           "flashcards": [
@@ -2023,6 +2067,50 @@
               ],
               "answer": 1,
               "explain": "Transposing never changes the determinant: $\\det(A^{\\top})=\\det(A)$ for every square matrix. Reflecting the array across its main diagonal is not a geometric reflection of the transformation's output, so it does not flip the sign; the reciprocal rule applies to the inverse $A^{-1}$, not the transpose."
+            },
+            {
+              "q": "For $n\\times n$ matrices with $\\det(A) = 3$ and $\\det(B) = -2$, what is $\\det(AB)$?",
+              "choices": [
+                "$1$",
+                "$-5$",
+                "$-6$",
+                "$5$"
+              ],
+              "answer": 2,
+              "explain": "The determinant is multiplicative: $\\det(AB) = \\det(A)\\det(B) = 3 \\times (-2) = -6$. There is no analogous rule for sums — $\\det(A+B)$ is generally *not* $\\det A + \\det B$. Geometrically, applying $B$ then $A$ scales volume by $|{-2}|$ and then by $3$, and the lone negative sign flips orientation once."
+            },
+            {
+              "q": "A square matrix $A$ is invertible if and only if:",
+              "choices": [
+                "$\\det(A) \\neq 0$",
+                "$\\det(A) = 0$",
+                "$\\det(A) = 1$",
+                "$\\det(A) > 0$"
+              ],
+              "answer": 0,
+              "explain": "$\\det(A) = 0$ exactly when $A$ collapses space to a lower dimension (dependent columns, a nontrivial null space), so $A$ is invertible iff $\\det(A) \\neq 0$. The *sign* of a nonzero determinant only encodes orientation (a negative determinant is still invertible), and its *magnitude* need not be $1$."
+            },
+            {
+              "q": "A square matrix has two identical rows. What is its determinant?",
+              "choices": [
+                "$1$",
+                "Equal to the product of its diagonal entries",
+                "Undefined",
+                "$0$"
+              ],
+              "answer": 3,
+              "explain": "Two identical rows are linearly dependent, so the matrix is singular and $\\det = 0$ (it squashes space flat — zero volume). Equivalently, subtracting one identical row from the other creates a zero row, which forces the determinant to $0$. The same holds for two identical columns."
+            },
+            {
+              "q": "If you multiply a single row of an $n\\times n$ matrix $A$ by $5$ (leaving the other rows unchanged), the determinant is multiplied by:",
+              "choices": [
+                "$25$",
+                "$5$",
+                "$1$ (it is unchanged)",
+                "$5^n$"
+              ],
+              "answer": 1,
+              "explain": "The determinant is linear in each row separately, so scaling *one* row by $5$ scales the determinant by $5$. Scaling *all* $n$ rows by $5$ — i.e. forming $5A$ — multiplies it by $5^n$, which is the rule $\\det(cA) = c^n \\det(A)$. The distinction is one row versus the whole matrix."
             }
           ],
           "flashcards": [
