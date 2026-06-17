@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 183: MCQ arc → Reinforcement Learning·Policy Gradient 12→16 (+12, bank →2,188). All 3 lessons (policy-
+   gradient-theorem/actor-critic/trpo-ppo). RL 5/7 modules. Adversarial agent ALL PASS; positions balanced 3/3/3/3
+   (distinct patterns); render "of 16" errs=0; SW →v126. RL REMAINING (arc): practice-frontiers(3), advanced(3).
+   Then LLMs, Prob & Stats.
    ✅ iter 182: De-skew answer positions across the last 9 biased lessons (workflow/content-quality — non-content).
    Correctness-preserving reorder (correct-choice text unchanged, answer index updated, asserted) of 81 MCQs in RL/LLM/
    PS; position-referencing MCQs skipped + edge cases hand-reviewed. ★ The gate's long-standing answer-position-bias

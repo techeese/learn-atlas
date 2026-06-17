@@ -2802,6 +2802,50 @@
               ],
               "answer": 3,
               "explain": "The log-derivative / score-function trick gives an unbiased estimate of $\\nabla_\\theta\\mathbb{E}_{x\\sim p_\\theta}[f(x)]$ even when $f$ is non-differentiable or the sampling distribution depends on $\\theta$ — exactly the obstacle named in the lesson ('the distribution we take the expectation over depends on $\\theta$'). It does not perform $\\arg\\max$, touch dynamics, or determinize the policy."
+            },
+            {
+              "q": "What defines <em>policy-gradient</em> methods (vs value-based methods)?",
+              "choices": [
+                "They directly parameterize a differentiable policy $\\pi_\\theta(a\\mid s)$ and optimize $\\theta$ by gradient ascent on expected return — rather than learning $Q$ and acting greedily",
+                "They learn a transition model of the environment and plan with it",
+                "They store one value per state in a lookup table",
+                "They only work for small discrete action spaces"
+              ],
+              "answer": 0,
+              "explain": "Value-based methods (Q-learning, DQN) learn $Q(s,a)$ and act greedily — the policy is implicit. Policy-gradient methods make the policy an explicit differentiable function $\\pi_\\theta$ and climb $\\nabla_\\theta J(\\theta)$, which is what makes continuous actions and genuinely stochastic optimal policies natural."
+            },
+            {
+              "q": "What objective $J(\\theta)$ do policy-gradient methods maximize?",
+              "choices": [
+                "The squared TD error of a value function",
+                "The entropy of the policy",
+                "The expected return $J(\\theta)=\\mathbb{E}_{\\tau\\sim\\pi_\\theta}[R(\\tau)]$ — the average total reward of trajectories the policy generates",
+                "The KL divergence between successive policies"
+              ],
+              "answer": 2,
+              "explain": "The goal is simply to make the policy earn more reward on average: $J(\\theta)=\\mathbb{E}_{\\tau\\sim p_\\theta}[R(\\tau)]$. The catch is that the sampling distribution $p_\\theta(\\tau)$ itself depends on $\\theta$ — which the log-derivative (score-function) trick resolves."
+            },
+            {
+              "q": "What is the core REINFORCE gradient estimator?",
+              "choices": [
+                "It sets the value of every state equal to its immediate reward",
+                "$\\nabla_\\theta J=\\mathbb{E}\\big[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)\\,R\\big]$ — scale each action's log-probability gradient by the return, pushing up the probability of actions that led to high reward",
+                "It maximizes $Q(s,a)$ by dynamic programming over a known model",
+                "It clips the policy ratio to a trust region"
+              ],
+              "answer": 1,
+              "explain": "Via the log-derivative trick, $\\nabla_\\theta J=\\mathbb{E}_{\\tau}[\\nabla_\\theta\\log\\pi_\\theta(\\tau)\\,R(\\tau)]$. Intuitively: take the gradient that raises the log-probability of the actions you took, and weight it by how much reward followed — good trajectories get reinforced. Crucially the environment's dynamics drop out."
+            },
+            {
+              "q": "Why subtract a <em>baseline</em> $b(s)$ from the return in the policy gradient?",
+              "choices": [
+                "To bias the gradient toward more exploration",
+                "To increase the learning rate automatically",
+                "To force the policy to become deterministic",
+                "To reduce the variance of the gradient estimate without adding bias — subtracting a state-only baseline (e.g. $V(s)$) leaves the gradient's expectation unchanged"
+              ],
+              "answer": 3,
+              "explain": "Because $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)\\,b(s)]=0$ for any function of the state alone, the baseline doesn't change the expected gradient — but choosing $b(s)=V(s)$ makes the weight \"how much better than average,\" which can sharply cut variance and speed learning."
             }
           ],
           "flashcards": [
@@ -2997,6 +3041,50 @@
               ],
               "answer": 1,
               "explain": "Because the loss is minimized, the $-c_e H$ term pushes entropy $H$ up, keeping $\\pi_\\theta$ stochastic so the agent keeps exploring rather than locking onto one action too early. It plays no role in the critic regression or in the unbiasedness argument (that is the baseline's job)."
+            },
+            {
+              "q": "What is an <em>actor-critic</em> method?",
+              "choices": [
+                "Two competing policies playing a zero-sum game",
+                "A value table plus an $\\varepsilon$-greedy action rule",
+                "A model of the environment plus a planner",
+                "A learned policy (the <em>actor</em>) paired with a learned value function (the <em>critic</em>) that scores states/actions, so the actor no longer needs the full Monte-Carlo return to learn"
+              ],
+              "answer": 3,
+              "explain": "The actor is $\\pi_\\theta$; the critic is a learned $V_\\phi$ (or $Q_\\phi$). The actor proposes actions and the critic evaluates them, supplying a low-variance credit signal so the policy can update every step instead of waiting for the episode's full return — two networks improving each other."
+            },
+            {
+              "q": "What does the <em>advantage</em> function $A^\\pi(s,a)$ represent?",
+              "choices": [
+                "The total discounted return of an entire episode",
+                "$A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)$ — how much better taking action $a$ is than the policy's average behavior in state $s$ (positive → make it more likely)",
+                "The entropy of the action distribution",
+                "The probability the policy assigns to action $a$"
+              ],
+              "answer": 1,
+              "explain": "The advantage centers the action-value on the state's own baseline: $A=Q-V$. It answers exactly what the policy gradient cares about — \"was $a$ better or worse than what I usually do here?\" — and using it as the credit signal gives an unbiased gradient with near-minimal variance."
+            },
+            {
+              "q": "Why does actor-critic replace REINFORCE's credit signal $\\Psi_t=G_t$ (the Monte-Carlo return)?",
+              "choices": [
+                "Because $G_t$ is biased, since it bootstraps off a value estimate",
+                "Because $G_t$ requires a model of the environment",
+                "Because $G_t$ is a sum of many random rewards across a whole trajectory, so one lucky/unlucky tail can swamp action $a_t$'s true effect — giving very high variance and slow learning",
+                "Because $G_t$ can only be applied to discrete action spaces"
+              ],
+              "answer": 2,
+              "explain": "$G_t$ is unbiased but extremely high-variance: it aggregates the noise of every reward and transition to the end of the episode. Actor-critic swaps it for a learned, bootstrapped estimate (e.g. the TD error as an advantage), trading a little bias for a large variance reduction."
+            },
+            {
+              "q": "How is the critic itself trained?",
+              "choices": [
+                "Like a value-function approximator — by regression, nudging $V_\\phi(s)$ toward a target such as the TD target $r+\\gamma V_\\phi(s')$ or the observed return",
+                "By maximizing the policy's entropy",
+                "By the same clipped objective the actor uses",
+                "It is not trained — the environment provides it"
+              ],
+              "answer": 0,
+              "explain": "The critic learns a value function by minimizing a squared error toward a bootstrapped (TD) or Monte-Carlo target — exactly value-function approximation. Its target is treated as a constant (stop-gradient) so the regression is stable, and the improving critic in turn sharpens the actor's credit signal."
             }
           ],
           "flashcards": [
@@ -3192,6 +3280,50 @@
               ],
               "answer": 0,
               "explain": "The advantage centers the signal by subtracting a baseline (the value estimate), which lowers gradient variance without adding bias, so each clipped step points in a more reliable direction. Advantages can be negative, do not replace $r_t$, and both returns and advantages are estimated from the same sampled data."
+            },
+            {
+              "q": "What is a <em>trust region</em> in policy optimization?",
+              "choices": [
+                "A region of the state space the agent is forbidden from entering",
+                "A constraint that keeps each policy update <em>close</em> to the current policy, so the data distribution and the local gradient estimate stay approximately valid",
+                "The set of actions that currently have positive advantage",
+                "A fixed learning-rate schedule"
+              ],
+              "answer": 1,
+              "explain": "Because the policy generates its own data, a too-large step lands you in a region the old gradient never described — a self-reinforcing collapse. A trust region limits how far each update can move the policy, keeping the surrogate objective an accurate guide."
+            },
+            {
+              "q": "What does PPO's <em>clipped</em> objective accomplish at a high level?",
+              "choices": [
+                "It clips the gradient's norm to a fixed maximum",
+                "It zeroes out all negative advantages",
+                "It decays the discount factor $\\gamma$ over training",
+                "It discourages the probability ratio $r_t=\\pi_\\theta/\\pi_{\\theta_{\\text{old}}}$ from moving far outside $[1-\\epsilon,1+\\epsilon]$, so no single update changes the policy too much — a cheap, first-order stand-in for a hard trust region"
+              ],
+              "answer": 3,
+              "explain": "PPO removes the incentive to push $r_t$ beyond the clip range: once a positive-advantage action's ratio exceeds $1+\\epsilon$ (or a negative one's drops below $1-\\epsilon$), the objective flattens and its gradient vanishes. This bounds the policy change per update without TRPO's expensive constrained optimization."
+            },
+            {
+              "q": "Why must PPO collect fresh trajectories every iteration rather than train forever on one batch?",
+              "choices": [
+                "PPO is on-policy: the importance-sampling surrogate is only trustworthy while $\\pi_\\theta$ stays near $\\pi_{\\theta_{\\text{old}}}$, so after a few epochs on a batch you must gather new data with the updated policy",
+                "PPO never needs new data; it trains indefinitely on the first batch",
+                "PPO requires the full transition model in order to recollect data",
+                "PPO learns entirely offline from a fixed, pre-collected dataset"
+              ],
+              "answer": 0,
+              "explain": "The surrogate reweights old data by $r_t=\\pi_\\theta/\\pi_{\\theta_{\\text{old}}}$, an approximation valid only near $\\pi_{\\theta_{\\text{old}}}$. A handful of epochs is fine, but once the policy has moved the importance weights become unreliable — so PPO re-collects on-policy data each round."
+            },
+            {
+              "q": "What does the probability ratio $r_t(\\theta)=\\pi_\\theta(a_t\\mid s_t)/\\pi_{\\theta_{\\text{old}}}(a_t\\mid s_t)$ measure?",
+              "choices": [
+                "The advantage of the action taken",
+                "The entropy of the current policy",
+                "How much more ($r_t>1$) or less ($r_t<1$) likely the new policy makes the taken action versus the old policy — it equals 1 at the very start of each update (when $\\theta=\\theta_{\\text{old}}$)",
+                "The discounted sum of future rewards"
+              ],
+              "answer": 2,
+              "explain": "$r_t$ is the importance-sampling weight that lets PPO evaluate the new policy's preferences on data drawn from the old one. $r_t=1$ means no change; $r_t>1$ means the update favors that action more, $r_t<1$ less — and clipping bounds exactly this quantity."
             }
           ],
           "flashcards": [

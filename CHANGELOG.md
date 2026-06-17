@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 183 — MCQ arc → Reinforcement Learning · Policy Gradient 12 → 16 (content — owner's #1 ask)
+The arc continues through RL's *Policy-Gradient & Actor-Critic* module. All **three** lessons go 12 → 16 (**+12, bank
+2,176 → 2,188**), stating the bedrock the existing 12 assumed:
+- **Policy Gradients & REINFORCE**: what policy-gradient methods *are* (parameterize $\pi_\theta$, ascend expected
+  return — vs value-based) / the objective $J(\theta)=\mathbb{E}[R(\tau)]$ / the REINFORCE estimator ($\nabla\!\log\pi
+  \cdot R$) / why subtract a *baseline* (variance reduction, unbiased).
+- **Actor-Critic**: what actor-critic *is* (actor=policy, critic=value fn) / the *advantage* $A=Q-V$ / why pure
+  REINFORCE's MC return is high-variance / how the *critic* is trained (value regression to a TD/MC target).
+- **TRPO & PPO**: what a *trust region* is / what PPO's *clip* accomplishes (keep $r_t$ near 1; cheap first-order trust
+  region) / why PPO is *on-policy* (recollect data each round) / what the ratio $r_t=\pi_\theta/\pi_{\theta_{old}}$ measures.
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,188 MCQs** (no bias note — the
+  iter-182 de-skew plus these balanced additions keep all three lessons clean); direct key-dump confirms answer indices
+  map to the intended choices, **balanced 3/3/3/3** with three *distinct* per-lesson patterns (0,2,1,3 / 3,1,2,0 /
+  1,3,0,2); an independent adversarial fact-check agent returned **ALL PASS**; render-checks on the (KaTeX-heavy)
+  Actor-Critic and TRPO/PPO quizzes → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`; all-routes smoke (11)
+  `errs=0`. SW cache **v125 → v126**; README 2,176 → 2,188. RL now **5/7 modules at 16**.
+
 ## iter 182 — De-skew answer positions across the last 9 biased lessons (workflow / content quality)
 `node gate.js` had flagged "answer-position bias (>70% of answers at one index)" for ~120 iterations — a real quiz-
 quality smell in the *original* 12-MCQ sets (their author overwhelmingly favored option B; e.g. `rl-trpo-ppo` and
