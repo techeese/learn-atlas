@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 103 — Per-topic mastery-composition bars on the Progress page (UI / understandability)
+Upgraded the Progress page's "By topic" section from a plain completion bar to a **segmented mastery-distribution bar**
+per topic — each subject now shows its composition across mastered / proficient / learning / seen / new (the same
+five-colour `.co-bar` used on course pages), alongside the existing "done/total · mastery %" and the topic icon. So
+instead of just "how much have I covered," a learner sees at a glance "how *well* do I know each of the seven subjects"
+— coverage and depth in one view. Reuses the existing course-page distribution styling; each bar is screen-reader
+labelled (`role="img"` + per-segment counts). SW cache → `atlas-v47`. Verified: `node gate.js` ALL GREEN; the Progress
+page renders all 7 per-topic mastery bars (segments appear as lessons are practiced; simulated progress produced the
+expected multi-colour segments) with errs=0; screenshot confirms the new composition bars; stray Chrome cleaned up.
+
 ## iter 102 — Glossary expansion: 48 → 75 terms (understandability)
 The glossary had fallen far behind the curriculum — most glaringly, the entire **Probability & Statistics** topic had
 **zero** terms, and the advanced modules added since (matrix calculus, convex optimization, generative models, advanced

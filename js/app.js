@@ -1464,11 +1464,15 @@
   function viewStats() {
     const st = Store.stats();
     const lv = Store.levelInfo();
+    const segDefs = [["mastered", "Mastered", "var(--sage)"], ["proficient", "Proficient", "var(--gold)"], ["learning", "Learning", "var(--violet)"], ["seen", "Seen", "var(--ink-mute)"], ["unseen", "New", "var(--line)"]];
     const perCourse = C().map(c => {
       const p = Store.courseProgress(c.id), mm = Math.round(Store.topicMastery(c.id) * 100);
+      const d = { mastered: 0, proficient: 0, learning: 0, seen: 0, unseen: 0 };
+      flatLessons(c).forEach(l => d[Store.masteryLevel(Store.effectiveMastery(l.id)).key]++);
+      const segs = segDefs.filter(s => d[s[0]] > 0).map(s => `<span class="co-seg" style="flex:${d[s[0]]};background:${s[2]}" title="${d[s[0]]} ${s[1]}"></span>`).join("") || `<span class="co-seg" style="flex:1;background:var(--line)"></span>`;
       return `<div style="margin-bottom:18px">
-        <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px"><span style="font-family:var(--font-disp)">${esc(c.title)}</span><span style="color:var(--ink-mute)">${p.done}/${p.total} done · ${mm}% mastery</span></div>
-        <div class="mini-bar" style="height:8px;max-width:none"><div class="mini-fill" style="width:${p.pct}%;background:${c.color}"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px"><span style="font-family:var(--font-disp)">${esc(c.icon)} ${esc(c.title)}</span><span style="color:var(--ink-mute)">${p.done}/${p.total} done · ${mm}% mastery</span></div>
+        <div class="co-bar" role="img" aria-label="${esc(c.title)} mastery: ${segDefs.filter(s => d[s[0]] > 0).map(s => d[s[0]] + " " + s[1]).join(", ")}">${segs}</div>
       </div>`;
     }).join("");
     // mastery distribution

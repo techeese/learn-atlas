@@ -1,6 +1,6 @@
 /* Atlas service worker — offline app shell + runtime caching.
    Bump CACHE when the asset list changes (e.g. after adding per-topic data files). */
-const CACHE = "atlas-v46";
+const CACHE = "atlas-v47";
 const ASSETS = [
   "./", "./index.html", "./css/styles.css",
   "./js/app.js", "./js/store.js", "./js/viz.js", "./js/playground.js",
