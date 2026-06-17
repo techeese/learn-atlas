@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 143 — MCQ arc → Linear Algebra · SVD & Applications 12 → 16 (content — owner's #1 ask)
+The 12→16 arc continues through LA's **SVD and Applications to Machine Learning** module. **+4 new MCQs each** to *The
+Singular Value Decomposition* and *Low-Rank Approximation, PCA & Dimensionality Reduction* (**+8, bank 1,924 → 1,932**),
+stating plainly the facts the existing 12 leaned on: **every** real matrix has an SVD, $\sigma_1=\|A\|_2$ (the spectral
+norm / max stretch), the columns of $V$ are eigenvectors of $A^\top A$, and each $\sigma_i u_i v_i^\top$ term is rank 1;
+PCA requires centering the data, principal components are orthogonal directions ordered by variance, reduction means
+projecting onto the top-$k$ PCs, and $A^{+}=A^{-1}$ for an invertible square $A$. Answer positions shuffled ([2,1,3,0]/[1,3,0,2]).
+- **Verified**: byte-stable JSON round-trip (diff +88 localized insertions); `node gate.js` ALL GREEN (1,932 MCQs);
+  direct key-dump confirms the shuffled indices; an independent adversarial fact-check agent returned **ALL PASS**
+  (each answer recomputed from scratch, with the precision points checked — σ₁=spectral not Frobenius, SVD exists for
+  *every* real matrix, $V$↔$A^\top A$ not $AA^\top$, $A^{+}=A^{-1}$ only under the invertible-square restriction);
+  render-check on the SVD quiz → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`. SW cache **v85 → v86**; README 1,924 → 1,932.
+- **Arc progress**: Algorithms ✓ (7/7). Linear Algebra now **6/7** — only matrix-calculus(3) remains; then Calc/DL/RL/LLM/PS.
+
 ## iter 142 — ⌘K becomes a true command palette: quick actions + runnable commands (workflow)
 The command palette could only *navigate* (and on an empty query it dumped the raw search index — topics, then 148
 lessons). Now it's a real command palette:

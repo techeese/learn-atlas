@@ -3524,6 +3524,50 @@
               ],
               "answer": 0,
               "explain": "With full column rank $n$, there are exactly $n$ positive singular values, so $n$ columns of $U$ pair with them and span the column space of $A$. The remaining $m-n$ columns are still part of the orthonormal basis but correspond to zero singular values and span the left null space; orthogonality of $U$ does not make every $\\sigma_i$ nonzero."
+            },
+            {
+              "q": "Which matrices have a singular value decomposition $A = U\\Sigma V^\\top$?",
+              "choices": [
+                "Only square matrices",
+                "Only symmetric matrices",
+                "Every real $m\\times n$ matrix — any shape, any rank",
+                "Only invertible matrices"
+              ],
+              "answer": 2,
+              "explain": "Unlike the eigen-decomposition (which needs a square, essentially diagonalizable matrix), the SVD exists for *every* real matrix — rectangular or square, full-rank or rank-deficient. This universality is exactly why the SVD is the workhorse decomposition for data, which is almost never square or symmetric."
+            },
+            {
+              "q": "The largest singular value $\\sigma_1$ of $A$ equals:",
+              "choices": [
+                "the trace of $A$",
+                "the spectral norm $\\|A\\|_2 = \\max_{\\|x\\|=1}\\|Ax\\|$ — the largest factor by which $A$ stretches any vector",
+                "the determinant of $A$",
+                "the Frobenius norm $\\|A\\|_F$"
+              ],
+              "answer": 1,
+              "explain": "Geometrically $A$ maps the unit sphere to an ellipsoid whose semi-axis lengths are the singular values; the longest is $\\sigma_1$, the maximum stretch — which is the definition of the spectral (operator-2) norm $\\|A\\|_2$. The Frobenius norm combines *all* the singular values, $\\|A\\|_F = \\sqrt{\\sum_i \\sigma_i^2}$, so it equals $\\sigma_1$ only for a rank-1 matrix."
+            },
+            {
+              "q": "The right singular vectors of $A$ (the columns of $V$) are the eigenvectors of which matrix?",
+              "choices": [
+                "$A$ itself",
+                "$A^{-1}$",
+                "$A + A^\\top$",
+                "$A^\\top A$"
+              ],
+              "answer": 3,
+              "explain": "From $A = U\\Sigma V^\\top$, $A^\\top A = V\\Sigma^\\top U^\\top U\\Sigma V^\\top = V(\\Sigma^\\top\\Sigma)V^\\top$, an eigen-decomposition: the columns of $V$ are eigenvectors of $A^\\top A$ with eigenvalues $\\sigma_i^2$. Symmetrically, the left singular vectors (columns of $U$) are eigenvectors of $AA^\\top$. This is the standard route to actually computing an SVD."
+            },
+            {
+              "q": "The SVD can be written as a sum of outer products $A = \\sum_i \\sigma_i\\, u_i v_i^\\top$. Each individual term $\\sigma_i\\, u_i v_i^\\top$ is a matrix of rank:",
+              "choices": [
+                "$1$",
+                "$0$",
+                "$i$",
+                "$m$ (the number of rows)"
+              ],
+              "answer": 0,
+              "explain": "An outer product $u_i v_i^\\top$ of two nonzero vectors is rank-1 (every column is a multiple of $u_i$), and scaling by $\\sigma_i$ doesn't change that. So the SVD expresses $A$ as a weighted sum of rank-1 pieces ordered by importance ($\\sigma_1 \\ge \\sigma_2 \\ge \\cdots$) — and keeping only the first $k$ gives the best rank-$k$ approximation."
             }
           ],
           "flashcards": [
@@ -3719,6 +3763,50 @@
               ],
               "answer": 1,
               "explain": "$\\Sigma^{+}$ replaces each nonzero $\\sigma_i$ with $1/\\sigma_i$, so $\\sigma_r=10^{-8}$ becomes $10^{8}$ and any noise along $u_r$ is amplified enormously. The standard fix (truncated SVD / regularization) drops or damps such tiny singular values, trading a little bias for far less variance."
+            },
+            {
+              "q": "Before running PCA on a data matrix, what preprocessing step is essential?",
+              "choices": [
+                "Sort the rows by magnitude",
+                "Center the data — subtract each feature's mean so every column has mean zero",
+                "Make the matrix square by padding with zeros",
+                "Invert the matrix"
+              ],
+              "answer": 1,
+              "explain": "PCA finds directions of maximum *variance*, and variance is measured about the mean — so you must first center each feature (subtract its mean). Skipping this makes the first 'principal component' chase the direction to the data's center of mass rather than the direction of spread. (Features on very different scales are often standardized too, but centering is the non-negotiable step.)"
+            },
+            {
+              "q": "In PCA, the principal components are:",
+              "choices": [
+                "the original data features, just renamed",
+                "always aligned with the coordinate axes",
+                "random projection directions",
+                "orthogonal directions, ordered so the first captures the most variance in the data"
+              ],
+              "answer": 3,
+              "explain": "The principal components are mutually orthogonal directions (the right singular vectors of the centered data / eigenvectors of the covariance matrix), ordered by how much variance each captures: PC1 is the direction of greatest spread, PC2 the greatest among directions orthogonal to PC1, and so on. They are generally *not* axis-aligned — that's the point, they find a better coordinate system for the data."
+            },
+            {
+              "q": "To reduce $d$-dimensional data to $k$ dimensions ($k < d$) with PCA, you:",
+              "choices": [
+                "project each data point onto the top $k$ principal components",
+                "delete the last $k$ original features",
+                "round every value to $k$ significant digits",
+                "keep only $k$ of the data points"
+              ],
+              "answer": 0,
+              "explain": "Dimensionality reduction projects each (centered) point onto the subspace spanned by the top $k$ principal components, replacing its $d$ coordinates with $k$ coordinates in that subspace — keeping as much variance as possible for $k$ dimensions. Deleting raw features throws away information blindly; PCA instead builds $k$ informative combined directions."
+            },
+            {
+              "q": "For an invertible square matrix $A$, the Moore–Penrose pseudoinverse $A^{+}$ equals:",
+              "choices": [
+                "$A^\\top$",
+                "the identity matrix",
+                "$A^{-1}$, the ordinary inverse",
+                "$A$ itself"
+              ],
+              "answer": 2,
+              "explain": "The pseudoinverse *generalizes* the inverse: whenever $A$ is square and invertible, $A^{+} = A^{-1}$. Its power is that it is also defined when $A$ is rectangular or rank-deficient (built as $A^{+} = V\\Sigma^{+}U^\\top$, inverting only the nonzero singular values), where it returns the minimum-norm least-squares solution instead of a true inverse."
             }
           ],
           "flashcards": [

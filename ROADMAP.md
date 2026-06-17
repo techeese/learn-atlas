@@ -137,7 +137,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 142: ⌘K is now a true command palette (workflow; neglected since 126) — curated empty state (Resume + quick actions)
    + runnable commands (toggle theme, cycle text size, restart tour); errs=0; SW cache →v85. Backlog idea still open:
    mastery/recency-weighted ⌘K ranking (title tier is still purely lexical). Still-thin: new functionality (since 113), UI/UX, mobile audit.
-   LA REMAINING (MCQ arc): svd-applications(2), matrix-calculus(3). Then Calc/DL/RL/LLM/PS.
+   ✅ iter 143: MCQ arc → Linear Algebra·SVD & Applications 12→16 (+8, bank →1,932). LA 6/7 modules. Adversarial agent ALL PASS;
+   positions shuffled; render-check "of 16" errs=0; SW cache →v86.
+   LA REMAINING (MCQ arc): matrix-calculus(3) — the LAST LA module. Then Calc/DL/RL/LLM/PS.
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
