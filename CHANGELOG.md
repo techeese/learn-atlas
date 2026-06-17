@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 195 — "Keep it fresh" becomes actionable: one-click refresh drill (new functionality — retention)
+Non-content rebalance that **closes the loop** the iter-191 fading-mastery surface opened. That iteration *showed*
+which mastered concepts were fading (decayed into the [0.55, 0.8) band) but left the learner to navigate to each
+lesson manually. Now the dashboard "Keep it fresh" card has a **↻ Quick refresh** CTA, and a new `#/refresh` route
+runs a **mastery drill built from the fading lessons' own MCQs** (a few per lesson, capped at 12). Because answering
+correctly calls `Store.bumpMastery(..., {correct:true})` — which raises the stored strength *and resets the 45-day
+decay clock* — refreshed concepts climb back above the fading threshold and drop off the list. Surface → action →
+re-locked knowledge → shrinking list: the spacing-review loop is now complete.
+- `js/app.js`: `viewRefresh()` (gathers `Store.fadingConcepts()`, pulls their questions from `allQuestions()`,
+  shuffles, runs `runMasteryDrill`); friendly empty state ("Nothing fading right now ✨") and a fallback to lesson
+  links if a fading lesson somehow carries no MCQs; route `#/refresh`; a `.fade-cta` button on the dashboard card.
+- `css/styles.css`: `.fade-cta` (sage primary button, full-width on mobile).
+- **No new state** — reuses the existing mastery model and drill machinery.
+
+Verified: seeded a decayed save → dashboard shows "↻ Quick refresh all 2 →" and `#/refresh` runs a mastery-mode drill
+labeled "Refresh · fading concepts" drawn from the fading lessons (errs=0); fresh user → "Nothing fading right now ✨"
+empty state, no drill; all-routes smoke (11 routes incl. `#/refresh`) errs=0; **390px** the CTA spans full width below
+the chips (screenshot read clean). `gate.js` ALL GREEN (data untouched). SW cache `atlas-v137` → `atlas-v138`.
+
 ## iter 194 — MCQ arc → LLM Alignment module 12→16 (content — owner's #1 ask)
 Resumed the 12→16 MCQ-growth arc: the LLM **Alignment** module, all 3 lessons **12 → 16 MCQs** (+12; bank
 **2,252 → 2,264**). New foundational questions, adversarially fact-checked (**ALL 12 PASS**), answer positions

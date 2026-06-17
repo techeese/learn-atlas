@@ -471,6 +471,7 @@
         <div class="fade-chips">
           ${fading.slice(0, 6).map(f => `<a class="fade-chip" href="#/lesson/${f.courseId}/${f.lessonId}" data-route><span class="fade-dot" style="background:${Store.masteryLevel(f.eff).color}"></span><span class="fade-title">${esc(f.title)}</span><span class="fade-pct">${Math.round(f.eff * 100)}%</span></a>`).join("")}
         </div>
+        <a class="fade-cta" href="#/refresh" data-route>↻ Quick refresh ${fading.length === 1 ? "this" : "all " + fading.length} →</a>
       </div>` : "";
 
     const near = nearestAchievement();
@@ -1327,6 +1328,40 @@
       bindGo(); return;
     }
     runMasteryDrill(items, "Your mistakes");
+  }
+
+  // ---------- "Keep it fresh": drill the fading-mastery concepts back up ----------
+  // Pulls a few MCQs from each fading lesson (Store.fadingConcepts) and runs them as a
+  // mastery drill. Answering correctly calls bumpMastery, which resets the decay clock and
+  // raises effectiveMastery — so refreshed concepts leave the fading band. Closes the loop
+  // the dashboard "Keep it fresh" surface (iter 191) opened.
+  function viewRefresh() {
+    const fading = Store.fadingConcepts();
+    if (!fading.length) {
+      app.innerHTML = `<div class="view">
+        <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Refresh</div>
+        <div class="page-head reveal"><div class="eyebrow">Keep it fresh</div><h2>Nothing fading right now <em>✨</em></h2>
+        <p>Concepts you've mastered slip gradually out of memory; when any start to fade, they collect here for a quick refresher — the spacing effect. Right now everything you've learned is holding strong. Come back after a while away.</p></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap" class="reveal"><a class="btn primary" href="#/session" data-route>🎯 Daily Mix</a><a class="btn ghost" href="#/" data-route>← Dashboard</a></div>
+      </div>`;
+      bindGo(); return;
+    }
+    const want = {}; fading.forEach(f => want[f.lessonId] = 1);
+    const byLesson = {};
+    allQuestions().forEach(it => { if (want[it.lessonId]) (byLesson[it.lessonId] = byLesson[it.lessonId] || []).push(it); });
+    const PER_LESSON = 3, CAP = 12;
+    const items = [];
+    fading.forEach(f => { items.push(...shuffle(byLesson[f.lessonId] || []).slice(0, PER_LESSON)); });
+    const drill = shuffle(items).slice(0, CAP);
+    if (!drill.length) {   // fading lessons exist but carry no MCQs — send to the lessons instead
+      app.innerHTML = `<div class="view">
+        <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Refresh</div>
+        <div class="page-head reveal"><div class="eyebrow">Keep it fresh</div><h2>Time for a refresher</h2>
+        <p>These concepts are fading. Revisit them to lock them back in:</p></div>
+        <div class="fade-chips reveal" style="max-width:680px">${fading.map(f => `<a class="fade-chip" href="#/lesson/${f.courseId}/${f.lessonId}" data-route><span class="fade-dot" style="background:${Store.masteryLevel(f.eff).color}"></span><span class="fade-title">${esc(f.title)}</span><span class="fade-pct">${Math.round(f.eff * 100)}%</span></a>`).join("")}</div>` ;
+      bindGo(); return;
+    }
+    runMasteryDrill(drill, "Refresh · fading concepts");
   }
 
   // ---------- mastery drill: re-queue wrong answers until ALL are passed ----------
@@ -2222,6 +2257,7 @@
     else if (parts[0] === "session") viewSession();
     else if (parts[0] === "test") viewTest();
     else if (parts[0] === "mistakes") viewMistakes();
+    else if (parts[0] === "refresh") viewRefresh();
     else if (parts[0] === "lab") parts[1] ? viewLabItem(parts[1]) : viewLab();
     else if (parts[0] === "map") viewMap();
     else if (parts[0] === "playground") viewPlayground();

@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 195: **"Keep it fresh" made actionable** (new functionality / retention — non-content). Closes the iter-191
+   loop: dashboard card got a **↻ Quick refresh** CTA + new `#/refresh` route running a mastery drill from the fading
+   lessons' MCQs; correct answers `bumpMastery` (resets the decay clock) so refreshed concepts leave the fading band.
+   No new state. Verified: seeded→"refresh all 2", drill draws from fading lessons; empty→"Nothing fading ✨";
+   all-routes errs=0; 390px CTA full-width; SW →v138.
    ✅ iter 194: MCQ arc → **LLM·Alignment 12→16** (all 3 lessons — SFT/instruction-tuning, RLHF/reward-models/DPO,
    PEFT/LoRA; +12, bank →2,264). Adversarial ALL 12 PASS; positions balanced 0/1/2/3; byte-stable inject; RLHF + LoRA
    quizzes render "of 16" rawDollars=0 kErr=0; all-routes errs=0; SW →v137. **LLM now 4/6 modules at 16**
