@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 111 — Worked examples for the 5 remaining Linear-Algebra lessons (examples — owner ask)
+A coverage check found examples had quietly stalled at 143/148 lessons since the iter 47–52 sweep — and the 5 gaps were
+**all computational LA lessons** (Four Fundamental Subspaces/Rank, Diagonalization, Symmetric/Spectral, SVD,
+Low-Rank/PCA). An old note had written these off as "purely conceptual," but eigendecomposition and SVD are exactly
+worked-example material; their Examples tab (the try-then-reveal practice mode) was simply empty. Added **2 fresh
+practice examples to each (×5 = +10, 288 → 298)**, with *different* numbers than the inline lecture walkthroughs so they
+work as real practice: diagonalize $\begin{psmallmatrix}2&1\\1&2\end{psmallmatrix}$ and take $A^4$; a triangular
+diagonalization + $B^3$; orthogonally diagonalize + classify definiteness; classify a quadratic form; a full $2\times2$
+SVD; a rank-deficient SVD/outer-product; PCA on a 3-point dataset; explained-variance + Eckart–Young error; rank/null
+space of a $3\times3$; rank–nullity of a wide $2\times4$.
+**Correctness:** every matrix claim was **numerically verified** in the generator before writing — each $PDP^{-1}=A$,
+power ($A^4$, $B^3$), $Q\Lambda Q^{\top}=A$, $U\Sigma V^{\top}=A$ reconstruction, null-space $A\mathbf{x}=0$, and
+rank–nullity identity is asserted (15 checks, all green). Injected by loading the course, attaching `examples`, and
+rewriting the file's JSON body in place (header/suffix preserved). SW cache → `atlas-v55`; README 288 → 298. Verified:
+`node gate.js` ALL GREEN (298 examples); an in-browser run opens each lesson's Examples tab and **reveals every
+solution** — errs=0 and **per-lesson `.katex-error`=0** with the matrix-heavy solutions rendering (svd 35 · diag 36 ·
+four-subspaces 30 · spectral 23 · pca 19 KaTeX elements); desktop + 390px screenshots confirm the matrices typeset with
+no overflow; stray Chrome cleaned up. **Examples coverage is now 148/148.**
+
 ## iter 110 — Keyboard accessibility for clickable cards (accessibility) — ★ 110-iteration checkpoint
 Accessibility hadn't been touched since iter 81. Audit found grade buttons and lesson tabs were already accessible, but
 the site's many **clickable `<div data-go>` cards were mouse-only** — not in the Tab order and not operable by keyboard

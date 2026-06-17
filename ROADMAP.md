@@ -60,8 +60,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    deeper-dives (KKT/shadow-price, vanishing/exploding gradients, batch-norm, the kernel trick, dropout-as-ensemble);
    surfacing missed-deck stats on the Progress page; mastery-weighted/recency ranking in ⌘K (title tier is still
    purely lexical); a "Daily Ritual" achievement once Daily-Mix completions are tracked.
-   NEGLECTED compass areas to rotate toward (110 checkpoint): performance (since iter 58), examples (since 52),
-   mobile-specific polish, workflow/dev-flow, and SVG Knowledge-Map keyboard access (deferred from iter 110).
+   ✅ iter 111: worked examples for the 5 remaining LA lessons (diagonalization/spectral/SVD/PCA/four-subspaces) →
+   examples coverage now 148/148 (298 total), all math numerically verified.
+   NEGLECTED compass areas to rotate toward: performance (since iter 58), mobile-specific polish, workflow/dev-flow,
+   onboarding refresh, route-transition juice, and SVG Knowledge-Map keyboard access (deferred from iter 110).
    MORE VIZ IDEAS still open (backlog below): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space
    explorer, a GAN training-dynamics demo, a Q-learning/SARSA path demo.
    (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
@@ -154,8 +156,10 @@ compass (UI/viz/animations/gamification/understandability/accessibility/perf), r
 ## Owner priority — worked examples sweep ✅ COMPLETE (iters 47–52)
 "Examples when we need it." Added 2 verified worked examples to every lesson that warranted them, all six
 topics, via the author→adversarial-verify workflow. DONE: Linear Algebra (47), Calculus (48), Algorithms (49),
-Deep Learning (50), Reinforcement Learning (51), LLMs (52). **Final: 108/113 lessons carry worked examples,
-218 total** (the 5 without are purely-conceptual LA lessons the verifier correctly skipped).
+Deep Learning (50), Reinforcement Learning (51), LLMs (52). **Then iter 111 filled the last 5 computational LA gaps
+(diagonalization/spectral/SVD/PCA/four-subspaces) the original sweep had skipped — examples coverage is now 148/148,
+298 total.** (Lesson note: the iter-47 "purely conceptual, correctly skipped" call was wrong for SVD/eigen lessons —
+those are prime worked-example material; iter 111 corrected it with numerically-verified examples.)
 → **The loop now rotates back to the broader compass** — UI/UX, visualizations, animations, new functionality,
 and gamification have been quiet since iter 46. Pick the biggest-value non-content move next (and honor
 anti-monotony: content/examples ran 6 iterations straight under the owner-ask exemption).

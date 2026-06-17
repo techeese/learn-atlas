@@ -1564,6 +1564,18 @@
               "hint": "Use rank-nullity with the constraint that rank cannot exceed the smaller of m and n.",
               "solution": "For a $4 \\times 6$ matrix, $\\operatorname{rank}(A) \\le \\min(m,n) = \\min(4,6) = 4$. By rank-nullity, nullity $= n - r = 6 - r \\ge 6 - 4 = 2$. So the nullity is at least 2 and can never be 0 — the null space is always nontrivial. The smallest possible nullity is 2 (attained when rank is the maximum, 4). \nColumns are linearly independent iff $N(A) = \\{0\\}$ iff nullity $= 0$ iff rank $= n = 6$. But rank $\\le 4 < 6$, so this is impossible: a matrix with more columns than rows ALWAYS has dependent columns. (Intuitively, 6 vectors in $\\mathbb{R}^4$ cannot be independent — you can have at most 4.)"
             }
+          ],
+          "examples": [
+            {
+              "title": "Rank, column space, and null space",
+              "body": "Let $A=\\begin{bmatrix}1&2&0\\\\0&0&1\\\\1&2&1\\end{bmatrix}$. Find $\\operatorname{rank}(A)$, a basis for the column space $C(A)$, and a basis for the null space $N(A)$. Verify the Rank–Nullity Theorem.",
+              "solution": "<strong>Row reduce.</strong> Row 3 equals Row 1 $+$ Row 2, so it is dependent. The RREF is\n$$\\begin{bmatrix}1&2&0\\\\0&0&1\\\\0&0&0\\end{bmatrix},$$\nwith pivots in columns $1$ and $3$. Hence $\\operatorname{rank}(A)=2$.\n\n<strong>Column space.</strong> Take the <em>original</em> pivot columns ($1$ and $3$):\n$$C(A)=\\operatorname{span}\\left\\{\\begin{bmatrix}1\\\\0\\\\1\\end{bmatrix},\\ \\begin{bmatrix}0\\\\1\\\\1\\end{bmatrix}\\right\\}.$$\n\n<strong>Null space.</strong> Column $2$ is free. From the RREF, $x_1=-2x_2$ and $x_3=0$. Setting $x_2=1$:\n$$N(A)=\\operatorname{span}\\left\\{\\begin{bmatrix}-2\\\\1\\\\0\\end{bmatrix}\\right\\},\\qquad \\text{nullity}=1.$$\n\n<strong>Rank–Nullity.</strong> $\\operatorname{rank}+\\text{nullity}=2+1=3=n$ (the number of columns). ✓"
+            },
+            {
+              "title": "Rank and nullity of a wide matrix",
+              "body": "Let $A=\\begin{bmatrix}1&1&1&1\\\\1&1&2&3\\end{bmatrix}$ (a $2\\times4$ matrix). Find the rank and nullity, and give a basis for $N(A)$.",
+              "solution": "<strong>Row reduce.</strong> Subtract Row 1 from Row 2 to get $\\begin{bmatrix}0&0&1&2\\end{bmatrix}$, then clear column 3 from Row 1:\n$$\\operatorname{RREF}=\\begin{bmatrix}1&1&0&-1\\\\0&0&1&2\\end{bmatrix}.$$\nPivots sit in columns $1$ and $3$, so $\\operatorname{rank}(A)=2$.\n\n<strong>Free variables.</strong> Columns $2$ and $4$ are free, so $\\text{nullity}=2$. The pivot rows give $x_1=-x_2+x_4$ and $x_3=-2x_4$. Choosing $(x_2,x_4)=(1,0)$ and $(0,1)$:\n$$N(A)=\\operatorname{span}\\left\\{\\begin{bmatrix}-1\\\\1\\\\0\\\\0\\end{bmatrix},\\ \\begin{bmatrix}1\\\\0\\\\-2\\\\1\\end{bmatrix}\\right\\}.$$\n\n<strong>Rank–Nullity.</strong> $2+2=4=n$. ✓ A wide matrix ($n>m$) must have a nontrivial null space — here it is $2$-dimensional."
+            }
           ]
         },
         {
@@ -2148,6 +2160,18 @@
               "hint": "Columns of a Markov matrix sum to 1. One eigenvalue of a Markov matrix is always exactly 1; its eigenvector (normalized to sum to 1) is the stationary distribution.",
               "solution": "Reading the flows into each region: $C_{k+1}=0.9C_k + 0.2S_k$ and $S_{k+1}=0.1C_k + 0.8S_k$, so $A=\\begin{bmatrix}0.9 & 0.2\\\\ 0.1 & 0.8\\end{bmatrix}$ (columns sum to 1). Eigenvalues: $\\det(A-\\lambda I)=(0.9-\\lambda)(0.8-\\lambda)-0.02 = \\lambda^2 -1.7\\lambda +0.7 = (\\lambda-1)(\\lambda-0.7)$, so $\\lambda_1=1,\\ \\lambda_2=0.7$. Since $|0.7|<1$, that mode decays and the system converges to the $\\lambda=1$ eigenvector. Solve $(A-I)v=0$: $\\begin{bmatrix}-0.1 & 0.2\\\\ 0.1 & -0.2\\end{bmatrix}v=0 \\Rightarrow v=\\begin{bmatrix}2\\\\1\\end{bmatrix}$. Normalizing so entries sum to 1 gives the stationary distribution $\\begin{bmatrix}2/3\\\\1/3\\end{bmatrix}$: in the long run 2/3 of the population lives in the city and 1/3 in the suburb, regardless of the starting split."
             }
+          ],
+          "examples": [
+            {
+              "title": "Diagonalize a symmetric 2×2 and take a power",
+              "body": "Let $A = \\begin{bmatrix} 2 & 1 \\\\ 1 & 2 \\end{bmatrix}$.\n\n(a) Find its eigenvalues and eigenvectors and write $A = PDP^{-1}$.\n\n(b) Use the diagonalization to compute $A^4$.",
+              "solution": "<strong>(a) Eigenvalues.</strong> Solve $\\det(A-\\lambda I)=0$:\n$$(2-\\lambda)^2 - 1 = \\lambda^2 - 4\\lambda + 3 = (\\lambda-1)(\\lambda-3)=0,$$\nso $\\lambda_1 = 3$ and $\\lambda_2 = 1$.\n\n<strong>Eigenvectors.</strong> For $\\lambda=3$, $(A-3I)=\\begin{bmatrix}-1&1\\\\1&-1\\end{bmatrix}$ gives $x_1=x_2$, so $\\mathbf{v}_1=\\begin{bmatrix}1\\\\1\\end{bmatrix}$. For $\\lambda=1$, $(A-I)=\\begin{bmatrix}1&1\\\\1&1\\end{bmatrix}$ gives $x_1=-x_2$, so $\\mathbf{v}_2=\\begin{bmatrix}1\\\\-1\\end{bmatrix}$.\n\nTherefore\n$$P=\\begin{bmatrix}1&1\\\\1&-1\\end{bmatrix},\\quad D=\\begin{bmatrix}3&0\\\\0&1\\end{bmatrix},\\quad P^{-1}=\\tfrac12\\begin{bmatrix}1&1\\\\1&-1\\end{bmatrix}.$$\n\n<strong>(b) The power.</strong> Diagonalization makes powers trivial because $A^4 = PD^4P^{-1}$ and $D^4=\\begin{bmatrix}81&0\\\\0&1\\end{bmatrix}$:\n$$A^4 = \\tfrac12\\begin{bmatrix}1&1\\\\1&-1\\end{bmatrix}\\begin{bmatrix}81&0\\\\0&1\\end{bmatrix}\\begin{bmatrix}1&1\\\\1&-1\\end{bmatrix}=\\begin{bmatrix}41&40\\\\40&41\\end{bmatrix}.$$\nCheck by squaring twice: $A^2=\\begin{bmatrix}5&4\\\\4&5\\end{bmatrix}$, and $(A^2)^2=\\begin{bmatrix}41&40\\\\40&41\\end{bmatrix}$. ✓"
+            },
+            {
+              "title": "Diagonalize a non-symmetric (triangular) matrix",
+              "body": "Let $B = \\begin{bmatrix} 4 & 1 \\\\ 0 & 3 \\end{bmatrix}$. Diagonalize $B$ (find $P$ and $D$), then compute $B^3$.",
+              "solution": "<strong>Eigenvalues.</strong> $B$ is upper-triangular, so the eigenvalues are the diagonal entries: $\\lambda_1=4,\\ \\lambda_2=3$.\n\n<strong>Eigenvectors.</strong> For $\\lambda=4$, $(B-4I)=\\begin{bmatrix}0&1\\\\0&-1\\end{bmatrix}$ forces $x_2=0$, giving $\\mathbf{v}_1=\\begin{bmatrix}1\\\\0\\end{bmatrix}$. For $\\lambda=3$, $(B-3I)=\\begin{bmatrix}1&1\\\\0&0\\end{bmatrix}$ gives $x_1=-x_2$, so $\\mathbf{v}_2=\\begin{bmatrix}1\\\\-1\\end{bmatrix}$.\n\n$$P=\\begin{bmatrix}1&1\\\\0&-1\\end{bmatrix},\\quad D=\\begin{bmatrix}4&0\\\\0&3\\end{bmatrix}.$$\n(Here $P^{-1}=P$, since $P^2=I$.)\n\n<strong>The cube.</strong> $B^3 = PD^3P^{-1}$ with $D^3=\\begin{bmatrix}64&0\\\\0&27\\end{bmatrix}$:\n$$B^3=\\begin{bmatrix}1&1\\\\0&-1\\end{bmatrix}\\begin{bmatrix}64&0\\\\0&27\\end{bmatrix}\\begin{bmatrix}1&1\\\\0&-1\\end{bmatrix}=\\begin{bmatrix}64&37\\\\0&27\\end{bmatrix}.$$\nDirect check: $B^2=\\begin{bmatrix}16&7\\\\0&9\\end{bmatrix}$, and $B\\,B^2=\\begin{bmatrix}64&37\\\\0&27\\end{bmatrix}$. ✓"
+            }
           ]
         },
         {
@@ -2330,6 +2354,18 @@
               "prompt": "Let $B = \\begin{bmatrix} 1 & 2 \\\\ 1 & 0 \\\\ 0 & 1 \\end{bmatrix}$. Show that $A = B^TB$ is positive definite, and explain in one sentence the general principle this illustrates about Gram matrices.",
               "hint": "Compute $A=B^TB$ (a $2\\times2$ matrix), then test definiteness via Sylvester. For the principle, think about what $x^TB^TBx$ equals geometrically and when it can be zero.",
               "solution": "$B^TB = \\begin{bmatrix}1&1&0\\\\2&0&1\\end{bmatrix}\\begin{bmatrix}1&2\\\\1&0\\\\0&1\\end{bmatrix} = \\begin{bmatrix}2&2\\\\2&5\\end{bmatrix}$. Sylvester: $a_{11}=2>0$ and $\\det A = 10-4=6>0$, so $A$ is positive definite. General principle: any $A=B^TB$ is PSD because $x^TAx=\\|Bx\\|^2\\ge0$, and it is strictly PD exactly when $B$ has full column rank (here the two columns of $B$ are linearly independent, so $Bx=0$ only for $x=0$)."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Orthogonally diagonalize a symmetric matrix",
+              "body": "Let $A = \\begin{bmatrix} 5 & 2 \\\\ 2 & 2 \\end{bmatrix}$. Find an orthonormal eigenbasis, write $A = Q\\Lambda Q^{\\top}$, and classify the definiteness of $A$.",
+              "solution": "<strong>Eigenvalues.</strong> $\\det(A-\\lambda I)=(5-\\lambda)(2-\\lambda)-4=\\lambda^2-7\\lambda+6=(\\lambda-1)(\\lambda-6)$, so $\\lambda_1=6,\\ \\lambda_2=1$.\n\n<strong>Eigenvectors.</strong> For $\\lambda=6$: $(A-6I)=\\begin{bmatrix}-1&2\\\\2&-4\\end{bmatrix}\\Rightarrow x_1=2x_2$, so $\\begin{bmatrix}2\\\\1\\end{bmatrix}$. For $\\lambda=1$: $(A-I)=\\begin{bmatrix}4&2\\\\2&1\\end{bmatrix}\\Rightarrow x_2=-2x_1$, so $\\begin{bmatrix}1\\\\-2\\end{bmatrix}$.\n\nThe two eigenvectors are orthogonal ($\\begin{bmatrix}2\\\\1\\end{bmatrix}\\cdot\\begin{bmatrix}1\\\\-2\\end{bmatrix}=0$) — guaranteed by the Spectral Theorem since $A$ is symmetric. Normalize each by $\\sqrt5$:\n$$Q=\\frac{1}{\\sqrt5}\\begin{bmatrix}2&1\\\\1&-2\\end{bmatrix},\\qquad \\Lambda=\\begin{bmatrix}6&0\\\\0&1\\end{bmatrix},\\qquad A=Q\\Lambda Q^{\\top}.$$\n\n<strong>Definiteness.</strong> Both eigenvalues are positive ($6,1>0$), so $A$ is <strong>positive definite</strong>."
+            },
+            {
+              "title": "Classify a quadratic form",
+              "body": "Classify the quadratic form $q(x,y)=x^2+4xy+y^2$ as positive definite, negative definite, or indefinite.",
+              "solution": "Write $q(\\mathbf{x})=\\mathbf{x}^{\\top}A\\mathbf{x}$ with the symmetric matrix\n$$A=\\begin{bmatrix}1&2\\\\2&1\\end{bmatrix}\\quad(\\text{off-diagonal} = \\tfrac12\\cdot\\text{coefficient of }xy).$$\n\n<strong>Eigenvalue test.</strong> $\\det(A-\\lambda I)=(1-\\lambda)^2-4=\\lambda^2-2\\lambda-3=(\\lambda-3)(\\lambda+1)$, so $\\lambda=3$ and $\\lambda=-1$. The eigenvalues have <strong>opposite signs</strong>, so the form is <strong>indefinite</strong>.\n\n<strong>Sanity check by plugging in:</strong> $q(1,1)=1+4+1=6>0$, while $q(1,-1)=1-4+1=-2<0$. A form that is positive in one direction and negative in another is exactly what \"indefinite\" means. (The leading-minor test agrees: $a_{11}=1>0$ but $\\det A=1-4=-3<0$.)"
             }
           ]
         }
@@ -2916,6 +2952,18 @@
               "hint": "Suppose $A^{\\mathsf{T}}A\\,v=\\lambda v$ with $\\lambda\\ne 0$. Apply $A$ to both sides and see what eigenvector of $AA^{\\mathsf{T}}$ pops out.",
               "solution": "Let $A^{\\mathsf{T}}A\\,v=\\lambda v$ with $\\lambda\\ne 0$ and $v\\ne 0$. Multiply on the left by $A$: $A A^{\\mathsf{T}}(Av)=\\lambda (Av)$. So $Av$ is an eigenvector of $AA^{\\mathsf{T}}$ with the same eigenvalue $\\lambda$, provided $Av\\ne 0$. It is nonzero, because $\\|Av\\|^2 = v^{\\mathsf{T}}A^{\\mathsf{T}}A v=\\lambda\\|v\\|^2\\ne 0$. By symmetry (swap the roles of $A$ and $A^{\\mathsf{T}}$), every nonzero eigenvalue of $AA^{\\mathsf{T}}$ is also a nonzero eigenvalue of $A^{\\mathsf{T}}A$. Hence the two matrices share the same multiset of nonzero eigenvalues. Since singular values are the square roots of these nonzero eigenvalues, and rank equals the number of nonzero singular values, both $A^{\\mathsf{T}}A$ ($n\\times n$) and $AA^{\\mathsf{T}}$ ($m\\times m$) yield the identical rank — even though the two matrices have different sizes and differ in their number of zero eigenvalues."
             }
+          ],
+          "examples": [
+            {
+              "title": "A full 2×2 SVD by hand",
+              "body": "Compute the singular value decomposition $A=U\\Sigma V^{\\top}$ of\n$$A=\\begin{bmatrix}0&2\\\\3&0\\end{bmatrix}.$$",
+              "solution": "<strong>Step 1 — singular values from $A^{\\top}A$.</strong>\n$$A^{\\top}A=\\begin{bmatrix}9&0\\\\0&4\\end{bmatrix}.$$\nIts eigenvalues are $9$ and $4$, so the singular values are their square roots: $\\sigma_1=3,\\ \\sigma_2=2$, and $\\Sigma=\\begin{bmatrix}3&0\\\\0&2\\end{bmatrix}$.\n\n<strong>Step 2 — right singular vectors $V$.</strong> $A^{\\top}A$ is already diagonal, so its orthonormal eigenvectors are the standard basis: $\\mathbf{v}_1=\\begin{bmatrix}1\\\\0\\end{bmatrix}$ (for $9$) and $\\mathbf{v}_2=\\begin{bmatrix}0\\\\1\\end{bmatrix}$ (for $4$). Thus $V=I$.\n\n<strong>Step 3 — left singular vectors via $\\mathbf{u}_i=\\tfrac{1}{\\sigma_i}A\\mathbf{v}_i$.</strong>\n$$\\mathbf{u}_1=\\tfrac13\\begin{bmatrix}0\\\\3\\end{bmatrix}=\\begin{bmatrix}0\\\\1\\end{bmatrix},\\qquad \\mathbf{u}_2=\\tfrac12\\begin{bmatrix}2\\\\0\\end{bmatrix}=\\begin{bmatrix}1\\\\0\\end{bmatrix},\\qquad U=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}.$$\n\n<strong>Result.</strong> $A=U\\Sigma V^{\\top}=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}\\begin{bmatrix}3&0\\\\0&2\\end{bmatrix}I=\\begin{bmatrix}0&2\\\\3&0\\end{bmatrix}$. ✓ Geometrically: $A$ rotates/reflects, stretches by $3$ and $2$, and reflects again."
+            },
+            {
+              "title": "SVD of a rank-deficient matrix",
+              "body": "Find the SVD of $A=\\begin{bmatrix}1&1\\\\1&1\\end{bmatrix}$, and read off its rank and its rank-one (outer-product) form.",
+              "solution": "<strong>Singular values.</strong> $A^{\\top}A=\\begin{bmatrix}2&2\\\\2&2\\end{bmatrix}$ has eigenvalues $4$ and $0$ (trace $4$, determinant $0$). So $\\sigma_1=2$ and $\\sigma_2=0$. Exactly <strong>one nonzero singular value</strong> $\\Rightarrow \\operatorname{rank}(A)=1$.\n\n<strong>Singular vectors.</strong> For $\\lambda=4$, the eigenvector of $A^{\\top}A$ is $\\mathbf{v}_1=\\tfrac{1}{\\sqrt2}\\begin{bmatrix}1\\\\1\\end{bmatrix}$; for $\\lambda=0$, $\\mathbf{v}_2=\\tfrac{1}{\\sqrt2}\\begin{bmatrix}1\\\\-1\\end{bmatrix}$ (a basis for the null space). Then\n$$\\mathbf{u}_1=\\tfrac{1}{\\sigma_1}A\\mathbf{v}_1=\\tfrac12\\cdot\\tfrac{1}{\\sqrt2}\\begin{bmatrix}2\\\\2\\end{bmatrix}=\\tfrac{1}{\\sqrt2}\\begin{bmatrix}1\\\\1\\end{bmatrix}.$$\n\n<strong>Outer-product form.</strong> Only the first term survives:\n$$A=\\sigma_1\\,\\mathbf{u}_1\\mathbf{v}_1^{\\top}=2\\cdot\\tfrac{1}{\\sqrt2}\\begin{bmatrix}1\\\\1\\end{bmatrix}\\cdot\\tfrac{1}{\\sqrt2}\\begin{bmatrix}1&1\\end{bmatrix}=\\begin{bmatrix}1&1\\\\1&1\\end{bmatrix}.$$\nThe zero singular value's direction $\\mathbf{v}_2$ spans the null space — a clean illustration of how the SVD exposes rank."
+            }
           ]
         },
         {
@@ -3098,6 +3146,18 @@
               "prompt": "Let $A=\\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\\\ 0 & 0 \\end{bmatrix}$. Compute the pseudoinverse $A^{+}$ and use it to find the minimum-norm least-squares solution to $Ax=b$ for $b=(2,5,7)^\\top$.",
               "hint": "Read off the SVD directly: A is already diagonal-ish. Only the single nonzero singular value gets reciprocated. Then $x=A^{+}b$.",
               "solution": "A has one nonzero singular value $\\sigma_1=1$ with $u_1=(1,0,0)^\\top$, $v_1=(1,0)^\\top$. So $A^{+}=v_1\\frac{1}{\\sigma_1}u_1^\\top = \\begin{bmatrix} 1 & 0 & 0 \\\\ 0 & 0 & 0 \\end{bmatrix}$. Then $x = A^{+}b = (2, 0)^\\top$. Check: $Ax=(2,0,0)^\\top$, residual $b-Ax=(0,5,7)^\\top$ which lies in the orthogonal complement of the column space — confirming it is the least-squares fit. Among all minimizers, $x=(2,0)$ has the smallest norm because the second coordinate is unconstrained by A and is set to 0."
+            }
+          ],
+          "examples": [
+            {
+              "title": "PCA on a tiny dataset by hand",
+              "body": "Three data points are observed: $(1,1),\\ (2,2),\\ (3,3)$. Center the data, form the (scatter) covariance, and find the first principal component. How much variance does it capture?",
+              "solution": "<strong>Center.</strong> The mean is $(2,2)$. Subtracting it gives the centered points\n$$(-1,-1),\\quad (0,0),\\quad (1,1).$$\n\n<strong>Scatter / covariance.</strong> With centered data matrix $X$ (rows = samples),\n$$X^{\\top}X=\\begin{bmatrix}2&2\\\\2&2\\end{bmatrix},\\qquad C=\\tfrac{1}{n-1}X^{\\top}X=\\begin{bmatrix}1&1\\\\1&1\\end{bmatrix}.$$\n\n<strong>Principal component.</strong> $C$ has eigenvalues $2$ and $0$. The first principal component is the eigenvector for the largest eigenvalue $2$:\n$$\\text{PC}_1=\\tfrac{1}{\\sqrt2}\\begin{bmatrix}1\\\\1\\end{bmatrix}.$$\n\n<strong>Variance captured.</strong> The fraction is $\\dfrac{\\lambda_1}{\\lambda_1+\\lambda_2}=\\dfrac{2}{2+0}=100\\%$. That makes sense: the points lie exactly on the line $y=x$, so the data is genuinely one-dimensional and PCA discovers that direction."
+            },
+            {
+              "title": "Explained variance and the best rank-one error",
+              "body": "A centered data matrix has singular values $\\sigma_1=4$ and $\\sigma_2=3$ (and no others).\n\n(a) What fraction of the total variance (energy) does the best rank-1 approximation capture?\n\n(b) What is the Frobenius-norm error $\\lVert A-A_1\\rVert_F$ of that best rank-1 approximation?",
+              "solution": "Variance/energy is carried by the <em>squares</em> of the singular values, $\\sigma_i^2$.\n\n<strong>(a) Captured fraction.</strong>\n$$\\frac{\\sigma_1^2}{\\sigma_1^2+\\sigma_2^2}=\\frac{16}{16+9}=\\frac{16}{25}=64\\%.$$\n\n<strong>(b) Approximation error.</strong> By the Eckart–Young theorem the best rank-$k$ approximation $A_k$ (from truncating the SVD) has error equal to the root-sum-square of the <em>dropped</em> singular values. Dropping only $\\sigma_2$:\n$$\\lVert A-A_1\\rVert_F=\\sqrt{\\sigma_2^2}=\\sigma_2=3.$$\nSo keeping the single strongest component reproduces $64\\%$ of the energy and leaves a Frobenius error of $3$."
             }
           ]
         }
