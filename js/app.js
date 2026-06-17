@@ -202,6 +202,14 @@
       requestAnimationFrame(() => requestAnimationFrame(() => { el.style.width = target; }));
     });
   }
+  function sweepForecast() {
+    if (reducedMotion()) return;
+    document.querySelectorAll(".fcst-bar").forEach(el => {
+      const target = el.style.height; if (!target || target === "0%") return;
+      el.style.height = "0%";
+      requestAnimationFrame(() => requestAnimationFrame(() => { el.style.height = target; }));
+    });
+  }
   function sweepGoalRing(pct) {
     const gr = document.querySelector(".goal-ring"); if (!gr) return;
     const target = Math.max(0, Math.min(100, pct || 0));
@@ -445,6 +453,33 @@
       return `<div class="consistency reveal"><div class="cs-row">${cells.join("")}</div>
         <div class="cs-label">🔥 <b>${st.streak}-day streak</b> · studied <b>${studied}</b> of the last 14 days · ${studiedToday ? `<span style="color:var(--sage)">today ✓</span>` : `<span style="color:var(--gold)">study today to keep it alive</span>`}</div></div>`;
     })();
+    // 7-day review forecast — the future companion to the consistency strip: when scheduled cards come due,
+    // so the spaced-repetition rhythm is visible and you can plan the week. Only shown once you have cards in flight.
+    const fcHtml = (() => {
+      const fc = Store.reviewForecast(7);
+      if (fc.dueNow + fc.upcoming + fc.beyond <= 0) return "";
+      const DAYNAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const today0 = new Date(); today0.setHours(0, 0, 0, 0);
+      const max = Math.max(1, ...fc.days);
+      const cols = fc.days.map((n, i) => {
+        const d = new Date(today0); d.setDate(today0.getDate() + i);
+        const h = n ? Math.max(12, Math.round(n / max * 100)) : 0;
+        const lbl = i === 0 ? "Today" : DAYNAMES[d.getDay()];
+        return `<div class="fcst-col${i === 0 ? " today" : ""}${n ? " has" : ""}" title="${DAYNAMES[d.getDay()]} ${d.getMonth() + 1}/${d.getDate()} · ${n} card${n === 1 ? "" : "s"} due">
+          <span class="fcst-num">${n || ""}</span>
+          <span class="fcst-track"><span class="fcst-bar" style="height:${h}%"></span></span>
+          <span class="fcst-lbl">${lbl}</span>
+        </div>`;
+      }).join("");
+      const summary = fc.dueNow
+        ? `<span style="color:var(--rust)"><b>${fc.dueNow}</b> due now</span> · ${fc.upcoming} more this week${fc.beyond ? ` · ${fc.beyond} later` : ""}`
+        : (fc.upcoming
+          ? `All caught up — <b>${fc.upcoming}</b> card${fc.upcoming === 1 ? "" : "s"} return${fc.upcoming === 1 ? "s" : ""} this week${fc.beyond ? ` · ${fc.beyond} later` : ""}`
+          : `All caught up — nothing returns in the next 7 days${fc.beyond ? ` · ${fc.beyond} scheduled later` : ""}`);
+      return `<div class="forecast reveal" role="img" aria-label="Review forecast: ${fc.dueNow} card${fc.dueNow === 1 ? "" : "s"} due now, ${fc.upcoming} returning over the next 7 days">
+        <div class="fcst-head">📅 <b>Review forecast</b> · <span>${summary}</span></div>
+        <div class="fcst-row" aria-hidden="true">${cols}</div></div>`;
+    })();
     // "continue where you left off"
     let contHtml = "";
     const last = Store.raw.lastLesson;
@@ -552,6 +587,7 @@
       </div>
 
       ${consHtml}
+      ${fcHtml}
       ${contHtml}
       ${cdHtml}
 
@@ -576,6 +612,7 @@
     bindGo();
     document.querySelectorAll(".stat-strip .v").forEach(countUp);   // count-up the hero stats on landing
     sweepGoalRing(goalPct);                                          // animate the daily-goal ring fill 0 → goalPct
+    sweepForecast();                                                 // sweep the review-forecast bars up 0 → height
     typeset();
   }
 

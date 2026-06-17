@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 233 — 7-day review forecast on the dashboard (gamification / new functionality)
+Rotating off content. The dashboard had a **past**-looking 14-day consistency strip but nothing **forward**-looking
+for the spaced-repetition schedule — the "what's my week of reviews going to look like?" question went unanswered, so
+the SRS rhythm stayed invisible between Daily-Review visits. Added a **7-day review forecast bar chart** right beside
+the consistency strip: one bar per upcoming day showing how many started cards come *due that day* (today's bar in
+gold, the rest in rust, empty days a baseline tick), with a header summary "**N due now** · M more this week · K later".
+- New pure store fn `Store.reviewForecast(days)` → `{dueNow, upcoming, beyond, scheduled, days:[…]}`, bucketed from each
+  card's existing `due` timestamp (no new state, no mutation; `Number.isFinite`-guarded; orphan/overdue-safe).
+- Bars sweep up 0→height on landing via a new `sweepForecast()` (mirrors `sweepBars`; **reduced-motion early-return**).
+- Shown only once you have cards in flight (`dueNow+upcoming+beyond>0`) so a brand-new dashboard stays uncluttered.
+- `role="img"` + summary aria-label on the container; the bar row is `aria-hidden` (the label already conveys it).
+Verified: `node` unit test of `reviewForecast` over a seeded deck (overdue/today/tomorrow/+2/+3/+4/+6/beyond) returns
+exactly `dueNow=1, days=[1,2,0,0,0,0,1], upcoming=4, beyond=1` ✓, and an empty store returns all-zero → strip hidden ✓;
+gate ALL GREEN; desktop + 390px mobile render correctly with accurate counts/labels (today=gold, empty day = baseline);
+all-routes smoke **errs=0/kErr=0 (13 routes)** with `forecast=present bars=7`. SW cache `atlas-v175` → `atlas-v176`.
+
 ## iter 232 — Runnable code exercises open in Probability & Statistics (examples / new functionality)
 Active-learning lane (rotating off two viz/UI iters). Code exercises — the most under-covered active surface (14/148
 lessons, and **zero** in Prob & Stats, RL, or LLMs) — got a new home: the **first three runnable, self-checking JS

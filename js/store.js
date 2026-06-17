@@ -472,6 +472,28 @@
     if (!c) return "new";
     return Date.now() >= c.due ? "due" : "later";
   }
+  // upcoming spaced-repetition load: how many started cards come due over the next `days`.
+  // Pure (no mutation); buckets[0] = today, [1] = tomorrow, … Cards already due land in `dueNow`;
+  // cards scheduled beyond the window are counted in `beyond` but not bucketed.
+  function reviewForecast(days) {
+    days = Math.max(1, num(days) || 7);
+    const now = Date.now(), DAY = 86400000;
+    const t0 = new Date(); t0.setHours(0, 0, 0, 0); const start = t0.getTime();
+    const buckets = new Array(days).fill(0);
+    let dueNow = 0, beyond = 0, scheduled = 0;
+    const cards = state.cards || {};
+    Object.keys(cards).forEach(id => {
+      const c = cards[id];
+      if (!c || !Number.isFinite(num(c.due)) || c.due <= 0) return;  // never properly scheduled
+      scheduled++;
+      if (c.due <= now) { dueNow++; return; }
+      const off = Math.floor((c.due - start) / DAY);
+      if (off < 0) dueNow++;                 // safety: past midnight-boundary rounding
+      else if (off < days) buckets[off]++;
+      else beyond++;
+    });
+    return { dueNow, beyond, scheduled, days: buckets, upcoming: buckets.reduce((a, b) => a + b, 0) };
+  }
 
   // ---- aggregate stats -------------------------------------------------
   function stats() {
@@ -517,7 +539,7 @@
     get raw() { return state; },
     save, addXP, levelInfo,
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
-    gradeCard, cardDue, cardState, projectInterval,
+    gradeCard, cardDue, cardState, projectInterval, reviewForecast,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, fadingConcepts, topicMastery, markKnown,
     getNote, setNote, setGoal, todayXP, goalJustReached, exportData, importData, freezeJustUsed, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,

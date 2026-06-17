@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 233: **7-day review forecast on the dashboard** (gamification / new functionality — rotating off content). Forward-looking
+   companion to the 14-day consistency strip: a bar chart of how many started cards come due each of the next 7 days
+   (today gold, rest rust, empty days a baseline), header "N due now · M more this week · K later". New pure
+   `Store.reviewForecast(days)` bucketed from each card's existing `due` (no new state); bars sweep up via `sweepForecast()`
+   (reduced-motion early-return); hidden until cards are in flight; role=img + aria-label. Verified: node unit test PASS
+   (dueNow=1, days=[1,2,0,0,0,0,1], upcoming=4, beyond=1; empty store → hidden); gate GREEN; desktop+390px correct counts;
+   smoke errs=0/kErr=0 (13 routes) forecast=present bars=7. SW →v176.
    ✅ iter 232: **Code exercises open in Probability & Statistics** (examples / new functionality — rotating off viz/UI). First 3
    runnable, self-checking JS exercises in a topic that had ZERO: expectation/variance (E[X]=1.90, Var=0.89, SD=0.9434),
    Bayes false-alarm trap (P(D|+)=0.1667 for a 99%-accurate test on a 1% disease), and the binomial PMF (sums to 1).
