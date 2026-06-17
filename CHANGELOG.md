@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 234 — High-contrast accessibility mode (accessibility)
+Rotating off gamification, and closing a standing backlog item. The site had reduced-motion, ARIA, keyboard nav, two
+themes and adjustable text size — but no **high-contrast** option for low-vision / bright-environment reading. Added an
+**independent high-contrast toggle that layers on *either* theme** (`data-contrast="high"` on `<html>`):
+- CSS = two variable-override blocks (one for ink, one for `[data-theme="parchment"][data-contrast="high"]`, each
+  redefining the **same token set** so the dark block can't leak into parchment): deeper text↔background separation
+  (ink→pure-white on near-black; parchment→near-black on near-white), **brightened hairline borders** (the worst
+  low-contrast tokens, `--ink-mute`/`--line`), and intensified accents. Plus **+3px focus rings** and **solid-underlined
+  inline lesson links / glossary terms** in HC.
+- Toggle lives in the sidebar (`#contrast-toggle`, with `aria-pressed` + live label) **and** the ⌘K command palette;
+  state persists in `localStorage["atlas.contrast"]` and applies at boot before first render. No change to the save shape
+  (separate key) → every prior save still loads.
+Verified: toggle flips normal↔high, persists, and updates label + `aria-pressed` (errs=0); all **four** theme×contrast
+lesson renders are correct with visibly boosted legibility while staying in the warm palette; all-routes smoke in HC
+**errs=0/kErr=0 (13 routes)** `data-contrast=high`; 390px mobile HC clean (borders visible, gloss underline applied).
+SW cache `atlas-v176` → `atlas-v177`.
+
 ## iter 233 — 7-day review forecast on the dashboard (gamification / new functionality)
 Rotating off content. The dashboard had a **past**-looking 14-day consistency strip but nothing **forward**-looking
 for the spaced-repetition schedule — the "what's my week of reviews going to look like?" question went unanswered, so

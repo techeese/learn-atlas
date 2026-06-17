@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 234: **High-contrast accessibility mode** (accessibility — rotating off gamification). Independent `data-contrast="high"` toggle
+   layered on EITHER theme: deepens text/bg separation, brightens hairline borders (esp. low-contrast --ink-mute/--line),
+   intensifies accents; +3px focus rings, solid-underlined inline links. Sidebar button (`#contrast-toggle`, aria-pressed)
+   + ⌘K command, persisted in `atlas.contrast`. CSS = two var-override blocks (ink + parchment, identical token set so no
+   leakage). Verified: toggle flips normal↔high + persists + label/aria update (errs=0); all 4 theme×contrast lesson
+   renders correct + legibility visibly boosted; smoke errs=0/kErr=0 (13 routes) data-contrast=high; 390px mobile HC clean.
+   SW →v177. Backlog item closed.
    ✅ iter 233: **7-day review forecast on the dashboard** (gamification / new functionality — rotating off content). Forward-looking
    companion to the 14-day consistency strip: a bar chart of how many started cards come due each of the next 7 days
    (today gold, rest rust, empty days a baseline), header "N due now · M more this week · K later". New pure
@@ -633,7 +640,7 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
   training-dynamics + mode-collapse demo iter 207, embedded in the GANs lesson — 43 widgets now.)
   NOTE: viz blurbs AND notes are NOT KaTeX-typeset (the Lab shows them raw) — use plain unicode (xₜ, √, ε, ᾱ), not $...$.
 - Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.
-- Reduced-motion + high-contrast accessibility modes.
+- ~~Reduced-motion + high-contrast accessibility modes.~~ **DONE** (reduced-motion long-standing; **high-contrast mode iter 234** — `data-contrast="high"` layered on either theme, sidebar + ⌘K toggle, persisted).
 - ~~Search ranking improvements (fuzzy, recency, mastery-weighted) in ⌘K.~~ **fuzzy DONE iter 70** (typo-tolerant subsequence tier). Recency/mastery-weighting still open.
 - Onboarding tour for first visit; better empty states everywhere.
 - Audio: optional ambient focus soundscape (generative WebAudio, mute by default).

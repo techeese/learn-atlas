@@ -2277,6 +2277,7 @@
     return [
       { t: "Toggle theme (Ink / Parchment)", sub: "Command", icon: "🎨", action: () => { const t = toggleTheme(); toast("🎨", "Theme switched", t === "ink" ? "Ink (dark)" : "Parchment (light)"); } },
       { t: "Cycle reading text size", sub: "Command", icon: "🔠", action: () => { const p = cycleTextScale(); toast("🔠", "Text size", "Reading text scaled to " + p + "%"); } },
+      { t: "Toggle high-contrast mode", sub: "Command", icon: "◐", action: () => { const c = toggleContrast(); toast(c === "high" ? "◉" : "◐", "High contrast " + (c === "high" ? "on" : "off"), c === "high" ? "Boosted text & borders for legibility." : "Back to the standard palette."); } },
       { t: "Restart the welcome tour", sub: "Command", icon: "👋", action: () => showIntro(true) }
     ];
   }
@@ -2455,6 +2456,26 @@
   function updateThemeLabel(t) {
     document.getElementById("theme-toggle").innerHTML = t === "ink" ? "☾ &nbsp;Ink theme" : "☀ &nbsp;Parchment theme";
   }
+  // ---------- high-contrast accessibility mode (layers on either theme) ----------
+  function initContrast() {
+    const saved = localStorage.getItem("atlas.contrast") === "high" ? "high" : "normal";
+    document.documentElement.setAttribute("data-contrast", saved);
+    updateContrastLabel(saved);
+    const btn = document.getElementById("contrast-toggle");
+    if (btn) btn.addEventListener("click", () => { const c = toggleContrast(); toast(c === "high" ? "◉" : "◐", "High contrast " + (c === "high" ? "on" : "off"), c === "high" ? "Boosted text & borders for legibility." : "Back to the standard palette."); });
+  }
+  function toggleContrast() {
+    const nx = document.documentElement.getAttribute("data-contrast") === "high" ? "normal" : "high";
+    document.documentElement.setAttribute("data-contrast", nx);
+    localStorage.setItem("atlas.contrast", nx);
+    updateContrastLabel(nx);
+    return nx;
+  }
+  function updateContrastLabel(c) {
+    const btn = document.getElementById("contrast-toggle"); if (!btn) return;
+    btn.innerHTML = c === "high" ? "◉ &nbsp;High contrast: on" : "◐ &nbsp;High contrast";
+    btn.setAttribute("aria-pressed", c === "high" ? "true" : "false");
+  }
 
   // ---------- mobile sidebar ----------
   function closeSidebar() {
@@ -2556,6 +2577,7 @@
     Store.touchStreak();           // count today toward streak on open
     applyTextScale();
     initTheme();
+    initContrast();
     initMobile();
     window.addEventListener("hashchange", router);
     window.addEventListener("keydown", e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openPalette(); } });

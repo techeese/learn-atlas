@@ -48,6 +48,49 @@
   --shadow:    rgba(80,60,30,.18);
 }
 
+/* ── High-contrast accessibility mode — layers on either theme (data-contrast="high") ──
+   Boosts text/background separation, brightens hairline borders, and deepens accent
+   colours so low-contrast tokens (esp. --ink-mute / --line) clear comfortably. Both
+   blocks redefine the SAME token set so the dark block can't leak into parchment. */
+[data-contrast="high"] {
+  --bg:        #0a0807;
+  --bg-2:      #14100d;
+  --panel:     #17120f;
+  --panel-2:   #211a14;
+  --line:      #756454;
+  --ink:       #ffffff;
+  --ink-soft:  #ece3d4;
+  --ink-mute:  #ccbca0;
+  --gold:      #f6b85f;
+  --gold-deep: #e2a043;
+  --sage:      #aacb9a;
+  --sage-deep: #82a073;
+  --rust:      #f28b71;
+  --violet:    #c8b9f2;
+  --shadow:    rgba(0,0,0,.7);
+}
+[data-theme="parchment"][data-contrast="high"] {
+  --bg:        #fcf8ee;
+  --bg-2:      #f0e7d3;
+  --panel:     #ffffff;
+  --panel-2:   #f3ead6;
+  --line:      #9a855f;
+  --ink:       #16110a;
+  --ink-soft:  #372c1d;
+  --ink-mute:  #564730;
+  --gold:      #875611;
+  --gold-deep: #6c4507;
+  --sage:      #3f5935;
+  --sage-deep: #324726;
+  --rust:      #8f3018;
+  --violet:    #483a75;
+  --shadow:    rgba(80,60,30,.3);
+}
+/* always-visible, thicker focus ring + solid (not dotted) inline links in high contrast */
+[data-contrast="high"] :focus-visible { outline-width: 3px; }
+[data-contrast="high"] .gloss { border-bottom-style: solid; border-bottom-width: 2px; }
+[data-contrast="high"] #tab-body a:not(.btn) { text-decoration: underline; text-underline-offset: 2px; }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
