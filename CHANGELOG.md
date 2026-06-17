@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 205 — MCQ arc → PS Inference/Estimation module 12→16 (content — owner's #1 ask)
+**Probability & Statistics → Statistical Inference: Estimation & Confidence**, all 4 lessons **12 → 16 MCQs** (+16;
+bank **2,336 → 2,352**). New foundational questions, adversarially fact-checked with arithmetic re-verified (**ALL 16
+PASS**), answer positions balanced 0/1/2/3 with distinct per-lesson patterns:
+- **Law of Large Numbers**: Monte Carlo as the LLN-as-a-tool; proportions-not-counts (the dilution mechanism behind
+  the gambler's fallacy); ML empirical-risk→expected-risk; the $\sigma^2/n$ variance shrink driving the Chebyshev proof.
+- **Sampling distributions**: $\mathbb{E}[\bar X]=\mu$, $\operatorname{Var}(\bar X)=\sigma^2/n$; the CLT standardized
+  form; *why a bell* (convolution fixed point + max entropy); sampling distribution = distribution of a *statistic*.
+- **Point estimation**: Bessel's $n-1$ (degrees of freedom); a biased-low-variance estimator beating an unbiased one
+  on MSE; consistency (bias→0 *and* variance→0); the bias–variance ↔ under/overfitting map.
+- **Confidence intervals**: a 90% CI computation ($z^*=1.645$); capture-rate set by the confidence *level* not $n$;
+  why $t$-intervals are wider (estimating $\sigma$ → heavier tails); the confidence–precision tradeoff at fixed $n$.
+
+**PS now 4/5 modules at 16** (Foundations ✓, Distributions ✓, Joint ✓, Inference ✓) — only **Hypothesis Testing**
+remains to complete the entire 12→16 arc across all 7 topics. (This was a second content iteration in a row, a
+deliberate push to finish the owner's near-complete #1 ask; non-content surfaces are at a maturity plateau.)
+Verified: adversarial ALL 16 PASS (arithmetic re-checked); `gate.js` ALL GREEN incl. render-hazard lints (7 topics ·
+148 lessons · **2,352 MCQs** · 42 widgets); indices 0/1/2/3-balanced; byte-stable injection; Sampling & CI quizzes
+render "Question 1 of 16" kErr=0 (the sampling Q1's inside-math money `$\sigma=\$30{,}000$` confirmed rendering
+correctly by screenshot — no garble); all-routes smoke (8 routes) errs=0. SW cache `atlas-v147` → `atlas-v148`.
+
 ## iter 204 — MCQ arc → PS Joint Distributions module 12→16 (content — owner's #1 ask)
 **Probability & Statistics → Joint Distributions & Dependence**, all 3 lessons **12 → 16 MCQs** (+12; bank
 **2,324 → 2,336**). New foundational questions, adversarially fact-checked with arithmetic re-verified (**ALL 12

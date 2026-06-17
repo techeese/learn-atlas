@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 205: MCQ arc → **PS·Inference/Estimation 12→16** (all 4 lessons — LLN, sampling distributions/standard error,
+   point estimation/bias-variance, confidence intervals; +16, bank →2,352). Adversarial ALL 16 PASS (arithmetic
+   re-checked); positions balanced 0/1/2/3; gate GREEN (lints clear); Sampling+CI quizzes render "of 16" kErr=0
+   (inside-math money confirmed by screenshot); all-routes errs=0; SW →v148. **PS now 4/5 modules** — only
+   **Hypothesis-Testing** remains to COMPLETE THE WHOLE 12→16 ARC. (2nd content iter in a row — deliberate push to
+   finish the owner's near-complete #1 ask; non-content surfaces are at a maturity plateau.)
    ✅ iter 204: MCQ arc → **PS·Joint 12→16** (all 3 lessons — joint distributions/marginals/independence, covariance/
    correlation, conditional expectation/tower; +12, bank →2,336). Adversarial ALL 12 PASS (arithmetic re-checked);
    positions balanced 0/1/2/3; byte-stable inject; gate GREEN (render-hazard lints clear); Cov+CondExp quizzes render

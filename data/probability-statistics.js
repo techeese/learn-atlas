@@ -3039,6 +3039,50 @@
               ],
               "answer": 0,
               "explain": "The LLN identifies the destination ($\\mu$), while the CLT characterizes the bell-shaped wobble around it via $\\sqrt{n}(\\bar{X}_n-\\mu)\\to N(0,\\sigma^2)$. They answer different questions — 'where' versus 'how it fluctuates' — and neither is a large-$n$ substitute for the other."
+            },
+            {
+              "answer": 2,
+              "q": "The lesson calls the LLN \"a computational engine\" via Monte Carlo estimation. How does Monte Carlo use the LLN?",
+              "choices": [
+                "It solves the integral $\\mathbb{E}[g(X)]$ exactly by symbolic algebra, with the LLN merely checking the answer.",
+                "It requires the population to be normal, then reads $\\mathbb{E}[g(X)]$ off a z-table.",
+                "To estimate a hard-to-compute $\\mathbb{E}[g(X)]$, draw many samples $X_i$ and average: by the LLN, $\\frac1n\\sum_i g(X_i)\\to\\mathbb{E}[g(X)]$.",
+                "It deterministically enumerates every possible outcome and weights each by its probability."
+              ],
+              "explain": "Monte Carlo turns the LLN into a tool: an intractable expectation (or an integral written as one) is approximated by sampling and averaging, since the sample average of $g(X)$ converges to $\\mathbb{E}[g(X)]$. It is how we estimate $\\pi$ with random darts, price derivatives, and handle Bayesian integrals — with error shrinking like $1/\\sqrt{n}$."
+            },
+            {
+              "answer": 0,
+              "q": "After 10 heads in a row, why does the LLN NOT imply that extra tails become more likely?",
+              "choices": [
+                "The LLN governs the *proportion*, which converges to 0.5 because early imbalances are *diluted* by the growing number of later flips — not *cancelled* by compensating outcomes. The coin has no memory; each flip stays 50/50.",
+                "Because after 10 heads, tails really are \"due\" — the LLN guarantees the count evens out.",
+                "Because the LLN only applies to the first 10 flips, after which it stops.",
+                "Because the LLN forces the running counts of heads and tails to become equal."
+              ],
+              "explain": "The LLN is about the *average/proportion*, not the running count. A surplus of, say, 5 extra heads is a 25% distortion after 20 flips but only 0.05% after 10,000 — the surplus is diluted by the swelling denominator, not erased by extra tails. Expecting \"due\" outcomes is the gambler's fallacy."
+            },
+            {
+              "answer": 3,
+              "q": "In machine learning, training minimizes the *average* loss over the training set (empirical risk) as a stand-in for the true expected risk. What licenses that substitution?",
+              "choices": [
+                "The Central Limit Theorem, which makes the loss exactly normal.",
+                "Nothing — empirical risk and expected risk are unrelated.",
+                "Bias correction, which removes the gap entirely for any sample size.",
+                "The Law of Large Numbers: as the training set grows, the average loss converges to the expected loss, so minimizing the empirical average approximates minimizing the true risk."
+              ],
+              "explain": "Empirical risk is a sample average of the per-example loss; by the LLN it converges to the expected risk as data grows, so minimizing training-set average loss is a sensible proxy for the true objective (and test-set accuracy, also an average, is meaningful). SGD adds that a mini-batch gradient is an unbiased sample-average estimate of the full gradient."
+            },
+            {
+              "answer": 1,
+              "q": "In the Chebyshev proof of the Weak Law of Large Numbers, what is the key quantity that drives $P(|\\bar X_n-\\mu|>\\varepsilon)\\to 0$?",
+              "choices": [
+                "The mean $\\mu$ itself grows with $n$, pushing the probability down.",
+                "The variance of the sample mean, $\\operatorname{Var}(\\bar X_n)=\\sigma^2/n$, shrinks to $0$ as $n\\to\\infty$ — Chebyshev then bounds the miss-probability by $\\sigma^2/(n\\varepsilon^2)\\to 0$.",
+                "The population variance $\\sigma^2$ shrinks as you collect more data.",
+                "The tolerance $\\varepsilon$ automatically shrinks with $n$."
+              ],
+              "explain": "Averaging divides the spread by $n$: $\\operatorname{Var}(\\bar X_n)=\\sigma^2/n$. Chebyshev gives $P(|\\bar X_n-\\mu|>\\varepsilon)\\le \\operatorname{Var}(\\bar X_n)/\\varepsilon^2 = \\sigma^2/(n\\varepsilon^2)\\to 0$. The population $\\sigma^2$ and the tolerance $\\varepsilon$ are fixed; it is the $1/n$ that does the work."
             }
           ],
           "flashcards": [
@@ -3234,6 +3278,50 @@
               ],
               "answer": 1,
               "explain": "Because the statistic is a function of the random sample, it changes from sample to sample and is itself a random variable with a sampling distribution. Parameters like $\\mu$ are fixed; statistics are not."
+            },
+            {
+              "answer": 1,
+              "q": "For i.i.d. $X_1,\\dots,X_n$ with mean $\\mu$ and variance $\\sigma^2$, what are the mean and variance of the sample mean $\\bar X_n$?",
+              "choices": [
+                "$\\mathbb{E}[\\bar X_n]=n\\mu$ and $\\operatorname{Var}(\\bar X_n)=n\\sigma^2$ (both grow with $n$).",
+                "$\\mathbb{E}[\\bar X_n]=\\mu$ (unbiased) and $\\operatorname{Var}(\\bar X_n)=\\sigma^2/n$ (spread shrinks with $n$).",
+                "$\\mathbb{E}[\\bar X_n]=\\mu$ and $\\operatorname{Var}(\\bar X_n)=\\sigma^2$ (same as a single observation).",
+                "$\\mathbb{E}[\\bar X_n]=\\mu/n$ and $\\operatorname{Var}(\\bar X_n)=\\sigma^2/n^2$."
+              ],
+              "explain": "By linearity $\\mathbb{E}[\\bar X_n]=\\frac1n\\sum\\mathbb{E}[X_i]=\\mu$ — the sample mean is unbiased. Independence kills the covariance cross-terms, so $\\operatorname{Var}(\\bar X_n)=\\frac{1}{n^2}\\sum\\operatorname{Var}(X_i)=\\frac{n\\sigma^2}{n^2}=\\sigma^2/n$: centered at the truth, tightening as $n$ grows."
+            },
+            {
+              "answer": 3,
+              "q": "What does the Central Limit Theorem say about the standardized sample mean $\\frac{\\bar X_n-\\mu}{\\sigma/\\sqrt n}$ as $n\\to\\infty$?",
+              "choices": [
+                "It converges to the constant $\\mu$.",
+                "It stays distributed exactly like the original population.",
+                "It converges to $N(0,1)$ only if the original population is itself normal.",
+                "It converges in distribution to $N(0,1)$ — *regardless* of the original population's shape (given finite variance) — so $\\bar X_n\\approx N(\\mu,\\sigma^2/n)$ for large $n$."
+              ],
+              "explain": "The CLT: $\\frac{\\bar X_n-\\mu}{\\sigma/\\sqrt n}\\xrightarrow{d}N(0,1)$ for i.i.d. data with finite variance, whatever the population's shape — skewed, bimodal, or discrete. Equivalently $\\bar X_n\\approx N(\\mu,\\sigma^2/n)$. This universality is what lets us attach normal-based error bars to almost any average."
+            },
+            {
+              "answer": 0,
+              "q": "Why does averaging many independent variables converge to a *bell* shape specifically, rather than some other curve?",
+              "choices": [
+                "The Gaussian is the *fixed point* of convolution (adding independent variables convolves and smooths their densities, and a sum of Gaussians is Gaussian) — and it is the *maximum-entropy* distribution for a given mean and variance, the least-committal shape a sum of many small effects lands on.",
+                "Because every real-world distribution is secretly normal to begin with.",
+                "Because the mean of any finite sample is always exactly normal.",
+                "Because the bell is the only curve whose total area equals 1."
+              ],
+              "explain": "Two complementary reasons: (1) adding independent variables convolves their densities, which blurs sharp features, and the Gaussian is the convolution fixed point — averaging flows toward the one shape it can no longer change; (2) among all distributions with a given mean and variance, the Gaussian has maximum entropy, so a sum that has \"forgotten\" everything but its mean and variance lands there."
+            },
+            {
+              "answer": 2,
+              "q": "What exactly is the \"sampling distribution\" of the sample mean?",
+              "choices": [
+                "The distribution of the raw data points $X_i$ within a single sample.",
+                "The population distribution, simply relabeled.",
+                "The distribution of the *statistic* $\\bar X_n$ itself — the values it takes across all possible samples of size $n$ — i.e. a distribution of *estimates*, not of raw data.",
+                "A fixed number equal to the true mean $\\mu$."
+              ],
+              "explain": "Imagine drawing sample after sample, computing $\\bar X_n$ each time, and histogramming those means — that histogram is the sampling distribution. It is a distribution of *estimates* (the statistic varies because the sample is random), and its spread (the standard error) quantifies the uncertainty in a single estimate."
             }
           ],
           "flashcards": [
@@ -3429,6 +3517,50 @@
               ],
               "answer": 1,
               "explain": "Because $\\operatorname{Var}(\\bar X)=\\sigma^2/n$, the variance is inversely proportional to $n$; quartering it requires $4\\times$ the sample size. Multiplying $n$ by 2 only halves the variance (and the standard error by $\\sqrt2$)."
+            },
+            {
+              "answer": 3,
+              "q": "The sample variance uses $s^2=\\frac{1}{n-1}\\sum_i (X_i-\\bar X)^2$. Why divide by $n-1$ instead of $n$?",
+              "choices": [
+                "It is an arbitrary convention with no real effect.",
+                "Dividing by $n-1$ makes the estimate larger, as a safety margin against outliers.",
+                "Because there are only $n-1$ data points left after removing the mean.",
+                "Deviations are taken from the *sample* mean $\\bar X$ (fitted to the same data), so they are systematically too small; dividing by $n-1$ — one fewer because a degree of freedom was used estimating $\\bar X$ — corrects this and makes $\\mathbb{E}[s^2]=\\sigma^2$ (unbiased)."
+              ],
+              "explain": "Using $\\bar X$ (not the unknown $\\mu$) shrinks the squared deviations, because $\\bar X$ is the value that minimizes them for this very sample. Dividing by $n-1$ rather than $n$ — \"one degree of freedom used up\" estimating the mean — exactly compensates, giving an unbiased $\\mathbb{E}[s^2]=\\sigma^2$. Dividing by $n$ would underestimate $\\sigma^2$."
+            },
+            {
+              "answer": 1,
+              "q": "Estimator A is unbiased with variance $1.0$. Estimator B has bias $0.2$ but variance $0.1$. Which has the lower mean squared error?",
+              "choices": [
+                "A, because unbiased estimators always have the lower MSE.",
+                "B: $\\operatorname{MSE}_B=\\operatorname{Var}+\\operatorname{Bias}^2=0.1+0.2^2=0.14$, versus $\\operatorname{MSE}_A=1.0+0=1.0$ — the small bias is far outweighed by the variance reduction.",
+                "They are equal, since MSE ignores bias.",
+                "Cannot be compared without knowing the true parameter $\\theta$."
+              ],
+              "explain": "$\\operatorname{MSE}=\\operatorname{Var}+\\operatorname{Bias}^2$. A: $1.0+0=1.0$. B: $0.1+0.04=0.14$. The slightly-biased B wins decisively — the rationale behind shrinkage / regularized estimators (e.g. ridge regression): trading a little bias for a large variance cut lowers total error. \"Unbiased\" is not the same as \"best.\""
+            },
+            {
+              "answer": 2,
+              "q": "What is a sufficient condition for an estimator $\\hat\\theta_n$ to be consistent (converge in probability to $\\theta$)?",
+              "choices": [
+                "It is unbiased for every $n$ (zero bias alone guarantees consistency).",
+                "Its variance is constant in $n$.",
+                "Both its bias and its variance go to $0$ as $n\\to\\infty$ — then $\\operatorname{MSE}(\\hat\\theta_n)=\\operatorname{Var}+\\operatorname{Bias}^2\\to 0$, which forces convergence in probability.",
+                "It equals the true $\\theta$ exactly for some finite $n$."
+              ],
+              "explain": "If $\\operatorname{Bias}\\to 0$ and $\\operatorname{Var}\\to 0$ then $\\operatorname{MSE}\\to 0$, and MSE-convergence implies convergence in probability — so the estimator is consistent. Unbiasedness alone is not enough (e.g. \"use only $X_1$\" is unbiased but its variance never shrinks, so it is not consistent); the variance must also vanish."
+            },
+            {
+              "answer": 0,
+              "q": "How does the bias–variance decomposition map onto model fitting in machine learning?",
+              "choices": [
+                "Underfitting is high *bias* (a too-rigid model misses the pattern), overfitting is high *variance* (the model chases noise and is unstable across datasets), and regularization deliberately trades a little bias for a large variance reduction.",
+                "Underfitting is high variance and overfitting is high bias.",
+                "Bias and variance are irrelevant to model fitting — only training accuracy matters.",
+                "Regularization increases both bias and variance simultaneously."
+              ],
+              "explain": "The same decomposition governs estimators and models: a too-simple model has high bias (systematically wrong), a too-flexible one has high variance (fits noise, varies wildly with the training sample), and regularization (shrinkage) accepts slightly more bias to cut variance — usually lowering total error. It is why \"most flexible / unbiased\" is not automatically \"best.\""
             }
           ],
           "flashcards": [
@@ -3624,6 +3756,50 @@
               ],
               "answer": 2,
               "explain": "With large $n$, the sample SD $s$ approaches $\\sigma$ and the $t$-distribution approaches the standard normal, so $t^{*}_{n-1}\\to z^{*}$ and the intervals coincide. The extra width of $t$ matters only for small samples, vanishing as $n$ grows."
+            },
+            {
+              "answer": 0,
+              "q": "A sample of $n=100$ has $\\bar X = 20$ from a population with known $\\sigma=5$. What is the 90% confidence interval for $\\mu$? (Use $z^*=1.645$.)",
+              "choices": [
+                "$20 \\pm 1.645\\cdot\\frac{5}{\\sqrt{100}} = 20 \\pm 1.645(0.5) = 20 \\pm 0.82$, i.e. $[19.18,\\ 20.82]$.",
+                "$20 \\pm 1.96\\cdot\\frac{5}{\\sqrt{100}} = 20 \\pm 0.98$.",
+                "$20 \\pm 1.645\\cdot 5 = 20 \\pm 8.2$.",
+                "$20 \\pm \\frac{5}{100} = 20 \\pm 0.05$."
+              ],
+              "explain": "The CI is $\\bar X \\pm z^*\\frac{\\sigma}{\\sqrt n}$. The standard error is $\\frac{5}{\\sqrt{100}}=0.5$; for 90% confidence $z^*=1.645$, so the margin is $1.645\\times 0.5\\approx 0.82$, giving $[19.18,20.82]$. (Choice B uses $z^*=1.96$, the 95% value; choice C forgets to divide by $\\sqrt n$.)"
+            },
+            {
+              "answer": 2,
+              "q": "You increase the sample size $n$ for a 95% confidence interval. What happens to the interval and to its long-run capture rate?",
+              "choices": [
+                "Both the width and the capture rate increase.",
+                "The capture rate rises above 95% as $n$ grows.",
+                "The interval gets *narrower* (margin $\\propto 1/\\sqrt n$), but the long-run capture rate stays at 95% — the capture rate is set by the confidence *level*, not by $n$.",
+                "Nothing changes; $n$ affects neither the width nor the capture rate."
+              ],
+              "explain": "More data shrinks the margin of error $z^*\\sigma/\\sqrt n$, so the interval narrows. But the fraction of such intervals that capture $\\mu$ over many repetitions is fixed by the chosen confidence level (95%), independent of $n$. Bigger samples buy *precision* (tighter bars), not a higher capture rate."
+            },
+            {
+              "answer": 1,
+              "q": "When the population $\\sigma$ is unknown you use the sample SD $s$, and the confidence interval switches from the normal $z$ to Student's $t$, making it slightly *wider*. Why wider?",
+              "choices": [
+                "Because the $t$-distribution has a different mean than the normal.",
+                "Estimating $\\sigma$ with $s$ injects extra uncertainty (you are now estimating two things), so the reference curve has *heavier tails* than the normal — a larger critical value $t^*>z^*$, hence a wider interval.",
+                "Because $s$ is always larger than $\\sigma$.",
+                "Because the $t$-interval drops the $\\frac{1}{\\sqrt n}$ factor."
+              ],
+              "explain": "Replacing the true $\\sigma$ with the estimate $s$ adds uncertainty, so the correct reference is Student's $t_{n-1}$ — same bell center but heavier tails — whose critical value $t^*$ exceeds $z^*$, widening $\\bar X\\pm t^*\\frac{s}{\\sqrt n}$. As $n$ grows, $s\\to\\sigma$ and $t\\to$ normal, so the gap vanishes."
+            },
+            {
+              "answer": 3,
+              "q": "At a *fixed* sample size $n$, can you simultaneously raise the confidence level AND shrink the margin of error?",
+              "choices": [
+                "Yes — a higher confidence level automatically gives a tighter interval.",
+                "Yes — the margin of error does not depend on the confidence level.",
+                "No, because raising the confidence level shrinks $\\sigma$.",
+                "No — they trade off: higher confidence means a larger $z^*$, which *widens* the margin $z^*\\sigma/\\sqrt n$. To be both more confident and more precise you need more data (larger $n$)."
+              ],
+              "explain": "The margin is $z^*\\sigma/\\sqrt n$. At fixed $n$ and $\\sigma$, raising confidence raises $z^*$ (e.g. $1.96\\to 2.576$ going 95%→99%), so the interval widens — you buy confidence with precision. The only way to tighten the interval *and* raise confidence is to collect more data, which shrinks $\\sigma/\\sqrt n$."
             }
           ],
           "flashcards": [
