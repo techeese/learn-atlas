@@ -2,6 +2,37 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 170 — Reading-progress bar for long lessons (UI/UX + animations) · ★170 reflection
+The lessons are genuinely long-form (the Attention lecture is ~7,000px tall), but there was no sense of *how far
+through* you are. A slim **reading-progress bar** now sits at the very top edge (3px, gold gradient with a soft glow)
+and fills left→right as you scroll any long page. It is **height-activated, not route-coupled**: a single passive
+`scroll`/`resize` listener (rAF-throttled) plus a per-navigation recompute shows the bar only when the page is
+genuinely scrollable (`scrollHeight − clientHeight > 400`) and hides it on short pages — so it self-manages across
+every route with no per-view wiring or listener leaks. Reduced-motion safe (the width transition is gated behind
+`prefers-reduced-motion: no-preference`; those users get instant, un-animated updates). The element lives outside
+`#app` (so route re-renders never wipe it) and is `aria-hidden` (a purely visual aid; the TOC + scroll-spy remain the
+semantic navigation).
+- **Files**: `index.html` (persistent `#read-progress` element), `css/styles.css` (`#read-progress` + `.rp-fill`),
+  `js/app.js` (`updateReadProgress`/`scheduleReadProgress`/`initReadProgress`, init in `boot()`, sync recompute in
+  `router()` + a 200ms deferred recompute after KaTeX/viz settle the height).
+- **Verified**: `app.js` syntax OK; functional dump-dom across 8 routes `errs=0`, and on the long Attention lesson the
+  bar activates (`on=true`, `scrollMax=7099`, fill `0%` at top); a forced-fill screenshot (desktop + **390px**)
+  confirms the gold bar's appearance and that it doesn't disturb the header/layout; top-of-lesson screenshot shows no
+  regression. (Headless can't drive real scroll — confirmed `scrollTop` stays 0 in `--dump-dom`, the known landmine —
+  so the scroll-driven fill rests on the verified activation + the trivial `clamp(scrollTop/max)` math, the same
+  logic+graceful-degradation basis accepted for the iter-150 scroll-spy.) SW cache **v112 → v113**.
+
+★ **170-iteration reflection.** Health check: the loop is humming — strict content/non-content alternation held for the
+last 10 iters with zero red gates or reverts. **Content**: the 12→16 MCQ arc reached **2,108 MCQs** and Deep Learning
+is **5/7 modules at 16** (only transformers + generative remain before RL/LLM/PS). **Non-content** rotated well —
+viz (dropout 162, positional-encoding 166), new-functionality (Quick Check 164), gamification (achievements 168, which
+also *integrated* 164 into the reward loop), a11y (160), and now UI/UX (170). The site is measurably richer:
+**38 widgets · 46 achievements · 2,108 MCQs**, with a new in-flow retrieval surface and reading orientation. *Still
+thin / candidates next*: a dedicated **understandability** pass (owner's "hard-concept support" ask — deeper-dives
+exist but alternative-explanation depth is untouched), **examples** (sweep complete but never revisited for the newer
+advanced modules), and **performance** (verified fine at iter 164, no action needed). No compass area is alarmingly
+neglected; the flow still serves the north star (understand faster · remember longer · come back).
+
 ## iter 169 — MCQ arc → Deep Learning · Sequences & Attention 12 → 16 (content — owner's #1 ask)
 The arc continues through DL's fifth module, *Sequence Models and the Attention Revolution*. All **three** lessons go
 12 → 16 (**+12, bank 2,096 → 2,108**), stating the bedrock the existing 12 assumed:

@@ -2077,6 +2077,8 @@
     else view404();
     renderChrome();
     closeSidebar();
+    updateReadProgress();                                  // recompute bar for the new page (sync)
+    setTimeout(updateReadProgress, 200);                   // ...and again once KaTeX/viz settle the height
   }
 
   // ---------- theme ----------
@@ -2168,6 +2170,28 @@
 
   function applyTextScale() { try { document.documentElement.style.setProperty("--read-scale", localStorage.getItem("atlas.textScale") || "1"); } catch (e) {} }
 
+  // ---------- reading-progress bar (long-form lessons & pages) ----------
+  let _rpRaf = 0;
+  function updateReadProgress() {
+    const bar = document.getElementById("read-progress");
+    if (!bar) return;
+    const fill = bar.firstElementChild;
+    const el = document.scrollingElement || document.documentElement;
+    const max = el.scrollHeight - el.clientHeight;
+    if (max <= 400) { bar.classList.remove("on"); if (fill) fill.style.width = "0%"; return; }  // short page → hide
+    bar.classList.add("on");
+    const p = Math.max(0, Math.min(1, el.scrollTop / max));
+    if (fill) fill.style.width = (p * 100).toFixed(1) + "%";
+  }
+  function scheduleReadProgress() {           // rAF-throttle the high-frequency scroll/resize events
+    if (_rpRaf) return;
+    _rpRaf = requestAnimationFrame(() => { _rpRaf = 0; updateReadProgress(); });
+  }
+  function initReadProgress() {
+    window.addEventListener("scroll", scheduleReadProgress, { passive: true });
+    window.addEventListener("resize", scheduleReadProgress, { passive: true });
+  }
+
   // ---------- boot ----------
   function boot() {
     Store.touchStreak();           // count today toward streak on open
@@ -2187,6 +2211,7 @@
     const scb = document.getElementById("shortcuts-btn"); if (scb) scb.addEventListener("click", showShortcuts);
     const skip = document.getElementById("skip-link"); if (skip) skip.addEventListener("click", () => { app.focus(); app.scrollIntoView(); });
     const guide = document.getElementById("guide-btn"); if (guide) guide.addEventListener("click", () => showIntro(true));
+    initReadProgress();
     router();
     flushAchievements();
     if (Store.freezeJustUsed()) toast("❄️", "Streak saved!", "A freeze covered the day you missed.");

@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 170 (★170): Reading-progress bar for long lessons (UI/UX + animations — non-content). Height-activated
+   (shows only when page scrollable >400px), single rAF-throttled scroll/resize listener + per-route recompute, lives
+   outside #app, reduced-motion safe, aria-hidden. errs=0 across 8 routes; activation verified (scrollMax=7099→on);
+   forced-fill desktop+390px screenshots good. SW →v113. ★170 reflection in CHANGELOG (loop healthy; DL 5/7 at 16;
+   thin areas: understandability/hard-concept support, examples-revisit, perf=fine).
    ✅ iter 169: MCQ arc → Deep Learning·Sequences & Attention 12→16 (+12, bank →2,108). All 3 lessons (rnn-lstm-gru/
    embeddings-tokenization/attention). ★ DL 5/7 modules at 16. Adversarial agent ALL PASS; positions balanced 3/3/3/3
    (distinct patterns, no marching); render "of 16" errs=0; SW →v112. DL REMAINING (arc): transformers(3),
