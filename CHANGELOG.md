@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 141 — MCQ arc → Linear Algebra · Orthogonality 12 → 16 (content — owner's #1 ask)
+The 12→16 arc continues through LA's **Orthogonality, Projection, and Least Squares** module. **+4 new MCQs each** to
+*Orthonormal Bases & Gram–Schmidt* and *Projections & Least Squares* (**+8, bank 1,916 → 1,924**), stating plainly the
+facts the existing 12 leaned on: an orthogonal matrix's inverse is its transpose ($Q^{-1}=Q^\top$), what Gram–Schmidt
+takes in and produces, normalizing $v\mapsto v/\|v\|$, and $\det Q=\pm 1$; the projection-onto-a-line formula
+$\tfrac{a^\top b}{a^\top a}a$, that least squares minimizes $\|Ax-b\|^2$, the projection-as-closest-point geometric
+definition, and the mirror case $b\perp S \Rightarrow$ projection $= \mathbf 0$. Answer positions shuffled ([1,2,3,0]/[2,0,3,1]).
+- **Verified**: byte-stable JSON round-trip (diff +88 localized insertions); `node gate.js` ALL GREEN (1,924 MCQs);
+  direct key-dump confirms the shuffled indices; an independent adversarial fact-check agent returned **ALL PASS**
+  (each answer recomputed from scratch — incl. the edge checks that "$\det Q=\pm1$" beats the "$1$" trap and that the
+  line-projection denominator is $a^\top a$; single-correct, KaTeX-safe); render-check on the Projections quiz
+  → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`. SW cache **v83 → v84**; README bank count 1,916 → 1,924.
+- **Arc progress**: Algorithms ✓ (7/7). Linear Algebra now **5/7** (foundations, matrices, structure, eigen, orthogonality).
+  Remaining LA: svd-applications(2), matrix-calculus(3); then Calc/DL/RL/LLM/PS.
+
 ## iter 140 — Animated daily-goal ring sweep on the dashboard (animations) — ★140 checkpoint
 The dashboard's stat numbers already count up on landing, but the daily-goal ring next to them rendered statically (a
 plain `--p` in its conic-gradient, with no `@property` registration so it couldn't interpolate). Now it **sweeps from

@@ -132,7 +132,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 140 (★checkpoint): animated daily-goal ring sweep on the dashboard (animations; neglected since 122). @property --p
    + transition; sweeps 0→goal% with the count-up; reduced-motion safe; errs=0; SW cache →v83. STILL-THIN compass areas to
    rotate next: workflow (since 126), new functionality (since 113), UI/UX, mobile audit.
-   LA REMAINING (MCQ arc): orthogonality(2), svd-applications(2), matrix-calculus(3). Then Calc/DL/RL/LLM/PS.
+   ✅ iter 141: MCQ arc → Linear Algebra·Orthogonality 12→16 (+8, bank →1,924). LA 5/7 modules. Adversarial agent ALL PASS;
+   positions shuffled; render-check "of 16" errs=0; SW cache →v84.
+   LA REMAINING (MCQ arc): svd-applications(2), matrix-calculus(3). Then Calc/DL/RL/LLM/PS.
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is

@@ -3040,6 +3040,50 @@
               ],
               "answer": 0,
               "explain": "For an orthonormal set the projection is the sum of independent one-dimensional projections $\\sum_i \\langle q_i, b\\rangle q_i$. Choice index 1 is the general (non-orthonormal) formula, but here every denominator $\\langle q_i,q_i\\rangle = 1$, so the division is redundant; orthonormality is exactly what removes it."
+            },
+            {
+              "q": "For a square matrix $Q$ whose columns are orthonormal (an orthogonal matrix), what is $Q^{-1}$?",
+              "choices": [
+                "$Q$ itself",
+                "$Q^\\top$",
+                "$Q / \\det(Q)$",
+                "It generally has no inverse"
+              ],
+              "answer": 1,
+              "explain": "Orthonormal columns mean $Q^\\top Q = I$, so $Q^\\top$ is a left inverse; for a *square* $Q$ a one-sided inverse is the full inverse, hence $Q^{-1} = Q^\\top$. This is why orthogonal matrices are so convenient — 'inverting' is just transposing. (For a *tall* $Q$ with orthonormal columns, $Q^\\top Q = I$ still holds but $QQ^\\top \\neq I$, so there is no square inverse.)"
+            },
+            {
+              "q": "What does the Gram–Schmidt process take in, and what does it produce?",
+              "choices": [
+                "Any list of vectors; it returns their eigenvectors",
+                "A square matrix; it returns the matrix's inverse",
+                "A linearly independent set; it returns an orthonormal set spanning the same subspace",
+                "An orthonormal set; it returns a diagonal matrix"
+              ],
+              "answer": 2,
+              "explain": "Gram–Schmidt converts a linearly independent set (e.g. a basis) into an orthonormal set spanning exactly the same subspace — it subtracts off each new vector's components along the directions already fixed, then normalizes. Fed a *dependent* set, it produces a zero vector at the redundant step, which is how it detects dependence."
+            },
+            {
+              "q": "To turn a nonzero vector $v$ into a unit vector pointing the same direction, you:",
+              "choices": [
+                "subtract its mean from every entry",
+                "divide by its largest entry",
+                "square each entry",
+                "divide it by its norm, $v / \\|v\\|$"
+              ],
+              "answer": 3,
+              "explain": "A unit vector has length $1$, so you rescale $v$ by the reciprocal of its length: $\\hat v = v / \\|v\\|$, which preserves the direction and makes $\\|\\hat v\\| = 1$. This 'normalize' step is exactly what Gram–Schmidt does after making each vector orthogonal to the previous ones."
+            },
+            {
+              "q": "The determinant of a square orthogonal matrix $Q$ (orthonormal columns) is always:",
+              "choices": [
+                "$\\pm 1$",
+                "$1$",
+                "$0$",
+                "the product of the column norms"
+              ],
+              "answer": 0,
+              "explain": "From $Q^\\top Q = I$ we get $\\det(Q^\\top Q) = \\det(Q)^2 = \\det(I) = 1$, so $\\det(Q) = \\pm 1$. The sign distinguishes a pure rotation ($+1$) from a rotation-with-reflection ($-1$). The column norms are each $1$, so their product is $1$ — but that does not pin down the sign of the determinant."
             }
           ],
           "flashcards": [
@@ -3235,6 +3279,50 @@
               ],
               "answer": 1,
               "explain": "Projecting a vector that is already in the subspace returns the vector itself, so $A\\hat{x}=b$ and $e=b-A\\hat{x}=0$, meaning $\\hat{x}$ exactly solves $Ax=b$. Least squares strictly generalizes exact solving: it reduces to it whenever $b\\in\\mathcal{C}(A)$."
+            },
+            {
+              "q": "The orthogonal projection of a vector $b$ onto the line spanned by a nonzero vector $a$ is:",
+              "choices": [
+                "$(a^\\top b)\\, a$",
+                "$\\dfrac{a^\\top b}{b^\\top b}\\, a$",
+                "$\\dfrac{a^\\top b}{a^\\top a}\\, a$",
+                "$\\dfrac{1}{\\|a\\|}\\, b$"
+              ],
+              "answer": 2,
+              "explain": "Project $b$ onto $a$: the scalar coefficient is $\\dfrac{a^\\top b}{a^\\top a}$ — chosen so the residual $b - \\hat b$ is perpendicular to $a$ — giving $\\hat b = \\dfrac{a^\\top b}{a^\\top a}\\,a$. Dividing by $a^\\top a = \\|a\\|^2$ is essential; it normalizes for the length of $a$. If $a$ is already a unit vector this reduces to $(a^\\top b)\\,a$."
+            },
+            {
+              "q": "The least-squares solution $\\hat{x}$ to $Ax = b$ is the one that minimizes:",
+              "choices": [
+                "$\\|Ax - b\\|^2$, the squared length of the residual",
+                "$\\|x\\|^2$, the squared length of the solution",
+                "the operator norm $\\|A\\|$",
+                "the number of nonzero entries in the residual"
+              ],
+              "answer": 0,
+              "explain": "Least squares finds the $x$ making $Ax$ as close to $b$ as possible in Euclidean distance — it minimizes $\\|Ax - b\\|^2$. Minimizing $\\|x\\|^2$ is a different problem (ridge / minimum-norm); counting nonzero residuals is an $\\ell_0$ objective. Squaring keeps the objective smooth and gives the linear normal equations $A^\\top A\\hat x = A^\\top b$."
+            },
+            {
+              "q": "Geometrically, the orthogonal projection of $b$ onto a subspace $S$ is:",
+              "choices": [
+                "the longest vector in $S$",
+                "the average of $S$'s basis vectors",
+                "$b$ reflected across $S$",
+                "the point of $S$ closest to $b$"
+              ],
+              "answer": 3,
+              "explain": "The projection $\\hat b \\in S$ is the unique point of $S$ nearest to $b$; the error $b - \\hat b$ is orthogonal to all of $S$, which is exactly the condition that minimizes the distance. This is why least squares — projecting $b$ onto the column space of $A$ — gives the best achievable fit."
+            },
+            {
+              "q": "If $b$ is orthogonal to every vector in a subspace $S$, then the orthogonal projection of $b$ onto $S$ is:",
+              "choices": [
+                "$b$ itself",
+                "the zero vector",
+                "the nearest basis vector of $S$",
+                "undefined"
+              ],
+              "answer": 1,
+              "explain": "If $b \\perp S$, then $b$ has no component lying in $S$, so its projection is $\\mathbf{0}$ and all of $b$ becomes the residual. This is the mirror image of the consistent case: when $b$ already lies *in* $S$, the projection is $b$ itself. Projection splits $b$ into its in-$S$ part and its orthogonal part."
             }
           ],
           "flashcards": [
