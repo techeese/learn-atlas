@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 171 — MCQ arc → Deep Learning · Transformers 12 → 16 (content — owner's #1 ask)
+The arc continues through DL's sixth module, *Transformers and the Modern Deep Learning Stack*. All **three** lessons
+go 12 → 16 (**+12, bank 2,108 → 2,120**), stating the bedrock the existing 12 assumed:
+- **The Transformer Architecture**: the defining change vs. the RNN (no recurrence → all-pairs attention → $O(1)$
+  path + parallelism) / what *multi-head* attention does (parallel attention in projected subspaces, concatenated) /
+  the sublayer wrapping (residual + layer norm) / where self-attention's Q,K,V come from ($xW^Q/xW^K/xW^V$ of the same input).
+- **Pretraining & Fine-Tuning**: the foundation-model paradigm (pretrain once on unlabeled data, adapt cheaply many
+  times) / what makes it *self*-supervised (labels manufactured from the input) / *MLM*/BERT (mask ~15%, bidirectional)
+  / *autoregressive*/GPT (predict from predecessors, causal → can generate).
+- **Practical Training & Debugging**: what a *tensor* is (shape/dtype/device) / what *mixed precision* trades (bf16/
+  fp16 speed+memory vs. precision) / what dominates GPU memory & causes *CUDA OOM* (activations + optimizer state) /
+  what *gradient checkpointing* trades (recompute activations to save memory).
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,120 MCQs**; direct key-dump confirms
+  answer indices map to the intended choices, **balanced 3/3/3/3** with three *distinct* per-lesson patterns
+  (0,2,1,3 / 3,1,2,0 / 1,3,0,2); an independent adversarial fact-check agent returned **ALL PASS** (it scrutinized the
+  residual+norm pre/post-norm subtlety and the AR-objective-vs-training-parallelism distractor); render-checks on the
+  Transformer-Architecture and Practical-Training quizzes → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`;
+  all-routes smoke (12) `errs=0`. SW cache **v113 → v114**; README 2,108 → 2,120.
+  ★ **Deep Learning is now 6/7 modules at 16** — only the *Generative Models* module remains before DL is complete.
+
 ## iter 170 — Reading-progress bar for long lessons (UI/UX + animations) · ★170 reflection
 The lessons are genuinely long-form (the Attention lecture is ~7,000px tall), but there was no sense of *how far
 through* you are. A slim **reading-progress bar** now sits at the very top edge (3px, gold gradient with a soft glow)

@@ -4003,6 +4003,50 @@
               ],
               "answer": 3,
               "explain": "Residual connections give gradients a short, near-identity path through every layer and let each sublayer model a residual update, which is what makes very deep stacks trainable; removing them reverts to the deep-network optimization problems Transformers were designed to avoid. They do not affect softmax bounds, permutation-equivariance, or parameter count in the ways the distractors claim."
+            },
+            {
+              "q": "What is the Transformer's defining architectural change relative to the RNN?",
+              "choices": [
+                "It removes recurrence entirely — every token attends directly to every other in one parallel operation, making the path length between any two positions $O(1)$ instead of $O(n)$",
+                "It processes tokens strictly one at a time, like an RNN but with a faster cell",
+                "It replaces all matrix multiplications with convolutions",
+                "It eliminates the need for any learnable weights"
+              ],
+              "answer": 0,
+              "explain": "The RNN's sequential recurrence ($h_t=f(h_{t-1},x_t)$) blocks parallelism and forces an $O(n)$ path between distant tokens. The Transformer drops recurrence so the whole sequence is processed at once via matrix multiplies, and any two tokens interact directly ($O(1)$ path) — the change that made internet-scale training feasible."
+            },
+            {
+              "q": "What does multi-head attention do?",
+              "choices": [
+                "It stacks many Transformer layers directly on top of one another",
+                "It applies attention to only the single most important token",
+                "It runs several attention operations in parallel on different learned projections (subspaces) of the input, then concatenates their outputs — so the model can attend to several kinds of relationships at once",
+                "It averages the embeddings of all tokens into one vector before attending"
+              ],
+              "answer": 2,
+              "explain": "A single attention pools everything into one weighted average. Multi-head splits the model dimension into $h$ heads, runs attention independently in each subspace, and concatenates — letting one token simultaneously track, say, its subject, its coreferent, and its topic."
+            },
+            {
+              "q": "In a Transformer, how is each sublayer (self-attention, feed-forward) wrapped?",
+              "choices": [
+                "With dropout only, and no skip connection",
+                "With a residual (skip) connection around it plus layer normalization — e.g. $\\mathrm{LayerNorm}(x + \\mathrm{Sublayer}(x))$ — to keep gradients flowing and stabilize deep stacks",
+                "With a pooling layer that halves the sequence length each time",
+                "With a softmax applied directly to the raw inputs"
+              ],
+              "answer": 1,
+              "explain": "Every sublayer is wrapped in a residual connection and layer norm. The skip connection gives gradients a clean path back through depth (removing them destabilizes training); layer norm keeps activations well-scaled. This residual+norm pattern is what lets Transformers stack dozens of layers."
+            },
+            {
+              "q": "In a Transformer's self-attention, where do the query, key, and value vectors come from?",
+              "choices": [
+                "The query comes from the input, but the keys and values are fixed learned constants",
+                "They are the raw one-hot token IDs, used directly",
+                "The query and key come from the input, but the value is the previous layer's loss",
+                "All three are separate linear projections — $xW^Q$, $xW^K$, $xW^V$ — of the same input token embeddings"
+              ],
+              "answer": 3,
+              "explain": "Self-attention computes $Q=XW^Q$, $K=XW^K$, $V=XW^V$ from the same input $X$. The three learned projection matrices let each token produce a \"what I'm looking for\" (query), a \"what I offer\" (key), and a \"what I deliver\" (value) from its own embedding."
             }
           ],
           "flashcards": [
@@ -4198,6 +4242,50 @@
               ],
               "answer": 2,
               "explain": "The lesson is explicit that in-context learning does zero weight updates — the 'learning' lives transiently in the activations of a single forward pass and is an emergent property of large autoregressive pretraining. There is no gradient step and no persistent change, which rules out the 'updates the training set' and 'permanent improvement' distractors; it is an AR-model capability, not an MLM one."
+            },
+            {
+              "q": "What is the foundation-model (pretrain → fine-tune) paradigm?",
+              "choices": [
+                "Train a separate model from scratch for each new task",
+                "Train only on human-labeled data, one label per example, for every task",
+                "Freeze a model's weights at initialization and never update them",
+                "Train one large model once on a huge pile of (mostly unlabeled) data — the expensive step — then cheaply adapt that same model to many downstream tasks"
+              ],
+              "answer": 3,
+              "explain": "Instead of one-model-per-task, you pretrain a single large model once on enormous unlabeled data, then adapt it many times (fine-tuning, prompting). The intelligence lives in the pretrained weights; adaptation just indexes into capabilities that already exist. It is transfer learning taken to the extreme."
+            },
+            {
+              "q": "What makes pretraining objectives like masked-LM and next-token prediction *self*-supervised?",
+              "choices": [
+                "A human labels a small seed set and the model labels the rest",
+                "The labels are manufactured from the input itself — hide part of $x$ and predict it — so no human annotation is needed",
+                "A larger model supervises a smaller one",
+                "There is no objective function at all"
+              ],
+              "answer": 1,
+              "explain": "Self-supervision creates the supervision signal from the data: split each input into a visible and a hidden part and train the model to predict the hidden part from the visible. The \"label\" was always in the data — we just covered it up — so the entire internet becomes training data with no labeling loop."
+            },
+            {
+              "q": "Masked language modeling (the BERT family) trains the model to...",
+              "choices": [
+                "Predict each token using only the tokens that come before it",
+                "Translate text from one language into another",
+                "Predict a randomly masked subset of tokens (~15%) from the surrounding context on *both* sides (bidirectional)",
+                "Classify whole sentences into a fixed set of categories"
+              ],
+              "answer": 2,
+              "explain": "MLM hides ~15% of tokens and reconstructs them from the full left-and-right context (a cloze test). Because prediction sees both sides, the encoder builds richly contextual representations — ideal for understanding tasks like classification, retrieval, and tagging."
+            },
+            {
+              "q": "Autoregressive next-token prediction (the GPT family) trains the model to...",
+              "choices": [
+                "Predict each token from only its predecessors (left-to-right, causal) — which is exactly why it can generate text by sampling one token at a time and feeding it back",
+                "Predict masked tokens using both left and right context",
+                "Predict the entire sequence in a single parallel step",
+                "Predict only the final token of each sequence"
+              ],
+              "answer": 0,
+              "explain": "AR factorizes $p(x)=\\prod_i p(x_i\\mid x_{<i})$ — each token is predicted from its predecessors, enforced by a causal mask so position $i$ can't see positions $>i$. Learning the full generative distribution is what lets the model generate fluently and be prompted."
             }
           ],
           "flashcards": [
@@ -4393,6 +4481,50 @@
               ],
               "answer": 2,
               "explain": "The lesson reduces tensor debugging to three core attributes — shape, dtype, and device — and a CPU-vs-GPU or float-vs-int mismatch is exactly a device/dtype discrepancy. The autograd-related attributes (requires_grad, grad_fn) and hyperparameters are real but are not the 'three attributes' the lesson uses to triage tensor bugs."
+            },
+            {
+              "q": "In a deep-learning framework, what is a \"tensor\" and which three attributes define it?",
+              "choices": [
+                "A single scalar loss value, defined by its sign, exponent, and mantissa",
+                "An $n$-dimensional array, defined by its shape, its dtype (e.g. float32/bfloat16), and its device (CPU or a specific GPU)",
+                "A layer of the network, defined by its weights, bias, and activation function",
+                "A gradient, defined by its direction, magnitude, and learning rate"
+              ],
+              "answer": 1,
+              "explain": "A tensor is just an $n$-dimensional array carrying three attributes — shape, dtype, and device. The lesson's point: almost every runtime bug (shape mismatch, dtype clash, CPU/GPU mixup) reduces to a question about one of those three."
+            },
+            {
+              "q": "What is mixed-precision training, and why is it used?",
+              "choices": [
+                "Mixing several datasets of different quality within one batch",
+                "Using a different learning rate for every layer of the network",
+                "Training entirely in float64 for maximum accuracy",
+                "Doing most computation in a lower-precision format (e.g. bfloat16/float16) rather than float32 — which speeds up matmuls and cuts memory, at some cost in numeric precision"
+              ],
+              "answer": 3,
+              "explain": "Mixed precision runs the bulk of the math (especially matmuls, where tensor cores are fastest) in 16-bit, keeping a few sensitive parts in 32-bit. You gain speed and memory headroom; the trade is reduced precision/range, which is why FP16 often needs loss scaling while BF16 usually doesn't."
+            },
+            {
+              "q": "Training hits a CUDA out-of-memory error. What usually dominates the memory, and what is a standard fix?",
+              "choices": [
+                "Activations kept for the backward pass (scaling with batch × sequence × width × depth), plus parameters and optimizer state; fixes include a smaller batch, shorter sequences, or gradient checkpointing",
+                "The learning-rate schedule; fix it by lowering the learning rate",
+                "The number of epochs; fix it by training for fewer epochs",
+                "The dataset's size on disk; fix it by compressing the data files"
+              ],
+              "answer": 0,
+              "explain": "Two things eat GPU memory in training: parameters + optimizer state (Adam stores weights, grad, and two moments — ~4× params in FP32), and activations (every forward intermediate kept for backprop), which usually dominate. Standard fixes shrink the activation footprint: smaller batch, shorter sequences, or gradient checkpointing."
+            },
+            {
+              "q": "What does gradient (activation) checkpointing trade?",
+              "choices": [
+                "It saves a copy of the model weights to disk every epoch",
+                "It stops training early once the validation loss starts rising",
+                "It saves memory by NOT storing all forward activations and instead recomputing them during the backward pass — trading extra compute for lower memory",
+                "It clips gradients whose norm exceeds a threshold"
+              ],
+              "answer": 2,
+              "explain": "Normally every forward activation is cached for the backward pass, which is the main memory hog. Gradient checkpointing keeps only a few and recomputes the rest during backprop — you pay extra forward FLOPs to fit a bigger model or batch in memory. (Not to be confused with saving model checkpoints to disk.)"
             }
           ],
           "flashcards": [
