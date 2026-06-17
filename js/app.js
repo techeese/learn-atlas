@@ -388,6 +388,7 @@
         <a class="btn ghost" href="#/map" data-route>🗺️ Knowledge Map</a>
         <a class="btn ghost" href="#/lab" data-route>🎛️ Visualization Lab</a>
         <a class="btn ghost" href="#/glossary" data-route>📔 Glossary</a>
+        ${Object.keys(Store.raw.notes || {}).length ? `<a class="btn ghost" href="#/notes" data-route>📓 My Notes</a>` : ""}
         <a class="btn ghost" href="#/library" data-route>📚 References</a>
       </div>
 
@@ -584,7 +585,7 @@
     body.innerHTML = `
       <div class="prose reveal">${lesson.content || "<p>Content coming soon.</p>"}</div>
       <div class="notes-box reveal">
-        <div class="notes-head">📝 My notes <span id="notes-saved"></span></div>
+        <div class="notes-head">📝 My notes <span id="notes-saved"></span><a href="#/notes" data-route class="notes-all">all notes →</a></div>
         <textarea id="notes-area" placeholder="Jot your own notes, questions, or 'aha' moments — saved automatically on this device.">${esc(Store.getNote(lesson.id))}</textarea>
       </div>
       <div class="lesson-actions">
@@ -1317,6 +1318,32 @@
     bindGo();
   }
 
+  function viewNotebook() {
+    const idx = index();
+    const notes = Object.keys(Store.raw.notes || {})
+      .map(id => ({ node: idx[id], text: Store.raw.notes[id] }))
+      .filter(n => n.node && n.text && String(n.text).trim())
+      .sort((a, b) => a.node.order - b.node.order);
+    const list = notes.length ? notes.map(n => `
+      <div class="note-card reveal" style="--c:${n.node.course.color}">
+        <div class="note-card-head">
+          <a href="#/lesson/${n.node.course.id}/${n.node.lesson.id}" data-route class="note-card-title">${esc(n.node.lesson.title)}</a>
+          <span class="note-card-course"><span class="cc-dot" style="background:${n.node.course.color}"></span>${esc(n.node.course.title)}</span>
+        </div>
+        <div class="note-card-body">${esc(n.text)}</div>
+      </div>`).join("")
+      : emptyState("📓", "No notes yet. Open any lesson and jot your thoughts in the “My notes” box — they'll gather here so your own words become your revision deck.");
+    app.innerHTML = `
+    <div class="view">
+      <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Notebook</div>
+      <div class="page-head reveal"><div class="eyebrow">Your notebook</div><h2>My <em>Notes</em></h2>
+      <p>Every lesson you've annotated, gathered in one place — your own words are the best revision notes.${notes.length ? ` <strong>${notes.length}</strong> note${notes.length === 1 ? "" : "s"} across ${new Set(notes.map(n => n.node.course.id)).size} subject${new Set(notes.map(n => n.node.course.id)).size === 1 ? "" : "s"}.` : ""}</p></div>
+      ${list}
+    </div>`;
+    bindGo();
+    typeset();
+  }
+
   // ---------- cheatsheet (printable) ----------
   function viewCheatsheet(cid) {
     const c = findCourse(cid); if (!c) return view404();
@@ -1631,7 +1658,7 @@
       c.modules.forEach(m => m.lessons.forEach(l => out.push({ t: l.title, sub: c.title, hash: "#/lesson/" + c.id + "/" + l.id, icon: "📖" })));
     });
     (window.VIZ_CATALOG || []).forEach(v => out.push({ t: v.title, sub: "Visualization", hash: "#/lab/" + v.id, icon: "🎛️" }));
-    [["Dashboard", "#/", "⌂"], ["Daily Mix", "#/session", "🎯"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Glossary", "#/glossary", "📔"], ["Library", "#/library", "📚"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
+    [["Dashboard", "#/", "⌂"], ["Daily Mix", "#/session", "🎯"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Glossary", "#/glossary", "📔"], ["Library", "#/library", "📚"], ["My Notes", "#/notes", "📓"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
     (window.GLOSSARY || []).forEach(e => out.push({ t: e.term, sub: "Glossary", hash: "#/glossary", icon: "📔" }));
     Object.keys(window.REFERENCES || {}).forEach(k => (window.REFERENCES[k] || []).forEach(r => out.push({ t: r.title, sub: "Reference · " + r.by, hash: r.url, ext: true, icon: "🔖" })));
     return out;
@@ -1740,6 +1767,7 @@
     else if (parts[0] === "map") viewMap();
     else if (parts[0] === "playground") viewPlayground();
     else if (parts[0] === "library") viewLibrary();
+    else if (parts[0] === "notes") viewNotebook();
     else if (parts[0] === "glossary") viewGlossary();
     else if (parts[0] === "cheatsheet") viewCheatsheet(parts[1]);
     else if (parts[0] === "placement") viewPlacement(parts[1]);

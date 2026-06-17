@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 113 — Notebook: all your lesson notes in one place (new functionality)
+Lessons already had a per-lesson "My notes" box (auto-saved to `localStorage`), but those notes were scattered — there
+was no way to see them together. Added a **Notebook** at **`#/notes`**: it gathers every note you've written into one
+page, ordered by the curriculum, each on a course-tinted card that links back to its lesson. Your own words are the best
+revision material, so this turns scattered jottings into a personal study deck (and pairs with the iter-109 *Annotator*
+achievement). Reachable three ways — a **📓 My Notes** quick-action on the dashboard (shown only when you have notes), a
+**My Notes** entry in **⌘K**, and an **"all notes →"** link in each lesson's notes box. Read-only and **uses the
+existing `notes` state — no new save fields**; it resolves each note's lesson through the memoized `index()` and
+**gracefully skips notes whose lesson no longer exists** (verified: a stale key is silently dropped, count stays
+accurate). Notes render with `white-space: pre-wrap` so multi-line jottings keep their shape. SW cache → `atlas-v57`;
+README +feature bullet. Verified: `node gate.js` ALL GREEN; an 8-route smoke is **errs=0** with the Notebook rendering
+its cards, the dashboard action present (only when notes exist), and ⌘K surfacing "My Notes"; desktop + 390px
+screenshots confirm the cards (course accent, title link, body) read cleanly with no overflow; stray Chrome cleaned up.
+
 ## iter 112 — Learning-Rate Schedule explorer — a 30th visualization (visualizations)
 Learning-rate schedules are one of the highest-leverage, least-intuitive training knobs — the DL lesson "Learning Rates,
 Schedules, and the Training Loop" and the LLM "AdamW, Schedules, and Stability" lesson both teach them in prose, but

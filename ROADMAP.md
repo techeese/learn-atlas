@@ -63,8 +63,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 111: worked examples for the 5 remaining LA lessons (diagonalization/spectral/SVD/PCA/four-subspaces) →
    examples coverage now 148/148 (298 total), all math numerically verified.
    ✅ iter 112: Learning-Rate Schedule explorer (dl-lr-schedules, 30th viz) — constant/step/exp/cosine/linear + warmup.
-   NEGLECTED compass areas to rotate toward: performance (since iter 58), mobile-specific polish, workflow/dev-flow,
-   onboarding refresh, route-transition juice, and SVG Knowledge-Map keyboard access (deferred from iter 110).
+   ✅ iter 113: Notebook (#/notes) — gathers all per-lesson notes into one reviewable page (new functionality).
+   CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
+   already memoized; staggered page-entrance already exists (CSS :nth-child reveal delays). So perf/mobile/transitions
+   have little headroom. NEGLECTED areas still worth a pass: onboarding refresh, SVG Knowledge-Map keyboard nav
+   (roving-tabindex/arrow-keys, deferred from 110), workflow/dev-flow, and MORE deeper-dives (directive 3 backlog).
    MORE VIZ IDEAS still open (backlog below): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space
    explorer, a GAN training-dynamics demo, a Q-learning/SARSA path demo.
    (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
