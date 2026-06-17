@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 122 — Flashcard grade juice: the card sails away in its grade colour (animations)
+Animations/juice was the most-neglected compass area (since iter 106). The flashcard <em>grade</em> action — the core
+spaced-repetition loop, done dozens of times a session — had no feedback: the card just swapped instantly. Now grading
+plays a brief **fly-out**: the card sails up-and-away with a scale-down + fade and a **grade-coloured glow** (Again →
+rust, Hard → gold, Good/Easy → sage), then the next card rises in via the existing reveal. Implemented on the outer
+`.card3d` so it doesn't disturb the inner 3-D flip (the answer face stays showing as it leaves). The advance is gated so
+the `animationend` handler and a `setTimeout` fallback can't double-fire (verified it lands on 2/6, not 3/6), buttons
+lock during the ~0.4 s fly-out, and <strong>reduced-motion falls back to instant</strong>. Works for both mouse grading
+and the 1–4 keyboard shortcuts (they click the same buttons). SW cache → `atlas-v66`. Verified: `node gate.js` ALL GREEN;
+an in-browser run is **errs=0** — flip works, grading applies the `card-graded` class, advances 1/6 → 2/6, and awards XP;
+a frozen mid-animation screenshot confirms the sage glow + displacement for a "Good" grade.
+
 ## iter 121 — MCQ arc phase 2: Algorithms · Core Data Structures 12 → 16 (content — owner's #1 ask)
 Continuing the 12→16 question-growth arc (interleaved — iter 120 was gamification). **+4 new MCQs each** to Arrays/Linked
 Lists/Stacks/Queues, Hash Tables, and BSTs/Heaps (**+12, site bank 1,788 → 1,800**). New questions hit the fundamentals

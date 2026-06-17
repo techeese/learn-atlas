@@ -402,6 +402,12 @@ body::after {
 .card-face .ftag { position: absolute; top: 18px; left: 22px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-mute); }
 .card-face .fcontent { font-family: var(--font-disp); font-size: 25px; font-weight: 500; line-height: 1.4; }
 .card-back { transform: rotateY(180deg); }
+/* graded fly-out: the card sails away with a grade-coloured glow, then the next one rises in */
+@keyframes cardGraded { to { transform: translate(46px, -54px) rotate(6deg) scale(.84); opacity: 0; } }
+.card3d.card-graded { animation: cardGraded .4s cubic-bezier(.4, 0, .85, .35) forwards; pointer-events: none; }
+.card3d.card-graded.g0 .card-face { border-color: var(--rust); box-shadow: 0 0 0 2px var(--rust), 0 18px 36px -14px var(--rust); }
+.card3d.card-graded.g1 .card-face { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold), 0 18px 36px -14px var(--gold); }
+.card3d.card-graded.g2 .card-face, .card3d.card-graded.g3 .card-face { border-color: var(--sage); box-shadow: 0 0 0 2px var(--sage), 0 18px 36px -14px var(--sage); }
 .card-back .fcontent { font-family: var(--font-body); font-size: 19px; color: var(--ink-soft); }
 .card-back .ftag { color: var(--gold); }
 .flash-grade { display: flex; gap: 11px; justify-content: center; flex-wrap: wrap; }

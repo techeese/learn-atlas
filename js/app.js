@@ -746,8 +746,14 @@
           </div>
           <div class="flash-hint">How well did you recall it? <kbd>1</kbd>–<kbd>4</kbd> grade · the time under each shows when you'll see it again.</div>`;
         slot.querySelectorAll(".grade-btn").forEach(b => b.addEventListener("click", () => {
-          Store.gradeCard(cards[i].id, parseInt(b.dataset.g, 10));
-          reviewed++; i++; draw(); renderChrome(); flushAchievements();
+          const g = parseInt(b.dataset.g, 10), card = document.getElementById("card3d");
+          let advanced = false;
+          const advance = () => { if (advanced) return; advanced = true; Store.gradeCard(cards[i].id, g); reviewed++; i++; draw(); renderChrome(); flushAchievements(); };
+          if (reducedMotion() || !card) return advance();   // instant for reduced-motion
+          slot.querySelectorAll(".grade-btn").forEach(x => x.disabled = true);  // lock during the fly-out
+          card.classList.add("card-graded", "g" + g);
+          card.addEventListener("animationend", advance, { once: true });
+          setTimeout(advance, 480);                          // fallback if animationend doesn't fire
         }));
       }
     }
