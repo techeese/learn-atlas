@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 210: **Deeper dives for Algorithms** (understandability — owner's "depth/hard-concept" love). Algorithms was the
+   only subject with 0 deep-dives; added 3 (`a-dynamic-programming` = memoized recomputation; `a-amortized-analysis` =
+   the banker's $O(1)$ append argument; `a-recurrences-master-theorem` = read $n\log n$ off the recursion tree). Byte-stable
+   inject (String.raw LaTeX); pure content. Verified: gate GREEN, DP dive katex=14/kErr=0/errs=0 + fires deep-thinker,
+   recurrences dive katex=20/kErr=0, smoke errs=0. SW →v153. (All 7 subjects now have deep-dives.)
    ✅ iter 209: **5 endgame achievements** (gamification — owner's most-repeated ask, untouched since iter 120). Ladders
    had stopped short of the complete codex; added 🗻 Summit (master 100 concepts), 🎇 Year of Fire (365-day streak),
    🌠 Living Legend (5,000 correct), 💫 Luminary (100k XP), 🏵️ Grand Examiner (100% on a 40Q test). 50→55. Fully wired

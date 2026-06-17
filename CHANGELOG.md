@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 210 — Deeper dives for the Algorithms track (understandability — owner's "depth / hard-concept" love)
+Algorithms was the **only one of the 7 subjects with zero "Deeper dive" expandables** — odd, since it holds some of the
+hardest "but *why* does this work?" ideas. Authored **3** of them (0 → 3), each a `<details class="deep-dive">` appended
+to its lesson, on the concepts learners most often half-understand:
+- **`a-dynamic-programming`** — *DP is just remembering*: the naive Fibonacci call tree is $\approx\phi^n$ nodes because
+  it re-derives the same subproblems; memoizing collapses it to $O(n)$. Overlapping subproblems + optimal substructure;
+  top-down vs bottom-up; Fibonacci's $O(1)$-space table.
+- **`a-amortized-analysis`** — *why a dynamic array's append is $O(1)$ even though some appends copy everything*: the
+  banker's argument (3 coins/append, 2 banked to fund the next resize) and the aggregate view ($1+2+4+\cdots+n<2n$), plus
+  why geometric growth — not fixed $+k$ — is what makes it converge.
+- **`a-recurrences-master-theorem`** — *read $n\log n$ off the recursion tree*: every level of merge sort's tree does
+  $cn$ work over $\log_2 n$ levels; the three Master-Theorem cases are just "leaves heaviest / balanced / root heaviest."
+Injected byte-stably (no-op guard first; `String.raw` to preserve single-backslash LaTeX, matching how content loads);
+a pre-write check enforces even-$ parity, no raw markdown, no template artifacts. **No code/schema change** — pure content.
+Verified: `gate.js` ALL GREEN incl. render-hazard lints (2,368 MCQs · 43 widgets); live render of the DP dive shows
+**katex=14, kErr=0, errs=0** and expanding it fires the **deep-thinker** achievement (existing toggle handler); the
+recurrences dive (densest, 40 `$`) shows **katex=20, kErr=0, errs=0**; the amortized lesson typesets cleanly; all-routes
+smoke (11 routes incl. all 3 lessons) **errs=0/kErr=0**. (No money/`<`-in-math in any dive, so neither render landmine
+applies.) SW cache `atlas-v152` → `atlas-v153`.
+
 ## iter 209 — Five endgame achievements matched to the complete site (gamification)
 The achievement ladders had stopped well short of the now-complete codex (148 lessons · 2,368 MCQs · 43 viz · all 7
 topics): mastery capped at 50 concepts, streaks at 100 days, correct-answers at 2,000, XP at 25k. So a devoted learner
