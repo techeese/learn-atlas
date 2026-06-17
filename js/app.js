@@ -513,13 +513,15 @@
         ${(() => { const eff = Store.effectiveMastery(lid), L = Store.masteryLevel(eff); return eff > 0 ? `<div class="mastery-bar" style="margin-top:10px;max-width:220px"><div class="mastery-fill" style="width:${Math.round(eff * 100)}%;background:${L.color}"></div></div>` : ""; })()}
       </div>
       ${pathBanner}
-      <div class="tabs">${tabs.map((t, i) => `<div class="tab ${i === 0 ? "active" : ""}" data-tab="${t.id}">${t.icon} ${t.label}${t.badge ? `<span class="badge">${t.badge}</span>` : ""}</div>`).join("")}</div>
-      <div id="tab-body"></div>
+      <div class="tabs" role="tablist" aria-label="Lesson sections">${tabs.map((t, i) => `<button class="tab ${i === 0 ? "active" : ""}" role="tab" id="tab-${t.id}" data-tab="${t.id}" aria-controls="tab-body" aria-selected="${i === 0 ? "true" : "false"}" tabindex="${i === 0 ? "0" : "-1"}">${t.icon} ${t.label}${t.badge ? `<span class="badge">${t.badge}</span>` : ""}</button>`).join("")}</div>
+      <div id="tab-body" role="tabpanel" tabindex="0" aria-labelledby="tab-lecture"></div>
     </div>`;
 
     const body = document.getElementById("tab-body");
-    function setTab(name) {
-      document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === name));
+    const tabEls = Array.from(document.querySelectorAll(".tab"));
+    function setTab(name, focusTab) {
+      tabEls.forEach(t => { const on = t.dataset.tab === name; t.classList.toggle("active", on); t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1; if (on && focusTab) t.focus(); });
+      body.setAttribute("aria-labelledby", "tab-" + name);
       if (name === "lecture") renderLecture(body, course, lesson, prev, next);
       else if (name === "examples") renderExamples(body, lesson);
       else if (name === "quiz") renderQuiz(body, lesson);
@@ -527,7 +529,18 @@
       else if (name === "homework") renderHomework(body, lesson);
       else if (name === "recall") renderRecall(body, course, lesson);
     }
-    document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => setTab(t.dataset.tab)));
+    tabEls.forEach((t, i) => {
+      t.addEventListener("click", () => setTab(t.dataset.tab));
+      t.addEventListener("keydown", e => {
+        let j = -1;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") j = (i + 1) % tabEls.length;
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp") j = (i - 1 + tabEls.length) % tabEls.length;
+        else if (e.key === "Home") j = 0;
+        else if (e.key === "End") j = tabEls.length - 1;
+        else return;
+        e.preventDefault(); setTab(tabEls[j].dataset.tab, true);
+      });
+    });
     setTab("lecture");
   }
 

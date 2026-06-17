@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 81 — Keyboard-accessible lesson tabs (ARIA tablist) (accessibility)
+Fixed a real accessibility defect the checkpoint surfaced: the per-lesson section tabs (Lecture / Examples / Quiz /
+Flashcards / Homework / Recall) were `<div>`s with click handlers only — no role, no `tabindex`, no keyboard support
+— so keyboard and screen-reader users could not switch tabs at all (there was even a dead `.tab:focus-visible` CSS
+rule for focus styling that could never trigger). Rebuilt them as a proper **ARIA tablist**: real `<button>` elements
+with `role="tab"`, `aria-selected`, `aria-controls`, a **roving tabindex** (the active tab is `tabindex=0`, the rest
+`-1`), and the panel as `role="tabpanel"` with `aria-labelledby` pointing at the active tab. Added keyboard
+navigation — **←/→ (and ↑/↓) move between tabs, Home/End jump to first/last**, each moving focus and activating
+that tab; Enter/Space work natively now that tabs are buttons. A button-style reset on `.tab` keeps the visuals
+pixel-identical. SW cache → `atlas-v25`. Verified: tablist + 6 `role="tab"` buttons + tabpanel present; initial
+roving tabindex correct (0 / −1); clicking updates `aria-selected`; ArrowRight from the first tab moves focus to and
+selects the next; visuals unchanged (screenshot); `node gate.js` ALL GREEN; 14-route smoke errs=0; Chrome cleaned.
+
 ## iter 80 — Nine new achievements + stale-count fixes (gamification; owner "more achievements" ask) — 10-iter checkpoint
 **Checkpoint review (iters 71–79):** the last ten iterations were almost entirely *content* (the new Probability &
 Statistics topic + MCQ sweeps) and *visualizations* (CLT, normal explorer, covariance scatter). Gamification, UI/UX,

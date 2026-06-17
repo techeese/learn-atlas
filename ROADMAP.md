@@ -137,4 +137,7 @@ iter 52. If the pipeline is reused, make the author/verify prompts mandate `<str
   "more achievements" ask now DELIVERED). Next non-content/non-viz pick should come from the neglected list above
   before the loop returns to PS Module 4. Achievements are awarded from existing state only (no new save fields) —
   if you add one needing new tracking, update blank() + load() merge with Number.isFinite.
+  · iter 81 addressed ACCESSIBILITY (lesson tabs → ARIA tablist with keyboard nav). STILL neglected: UI/UX polish,
+  animations/juice, onboarding, performance. A11y follow-ups if auditing more div-as-control patterns: check
+  `.grade-btn`, modal close buttons, and the Knowledge-Map nodes (lesson tabs were the most-used, done first).
 - (loop appends findings here)
