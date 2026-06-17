@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 75 — Probability & Statistics distribution lessons to 12 MCQs each (content; owner depth direction)
+Brought the 5 *Common Distributions* lessons (Bernoulli & Binomial, Poisson, Geometric & waiting-time,
+Uniform & Exponential, Normal & standardization) from 0 → 12 MCQs each via the proven author→adversarial-verify
+pipeline (`/tmp/gen_mcq_target_wf.js` → `Workflow` → `/tmp/inject_mcq.js`): **+60 fact-checked questions**, so
+all 9 Probability & Statistics lessons now sit at exactly 12 MCQs (108 in the topic). Site bank **1,404 → 1,464**.
+The verify pass enforced range-correct keys, no self-contradictory stems, no duplicate correct choices, valid
+KaTeX. Verified: `node gate.js` ALL GREEN (7 topics · 122 lessons · 1,464 MCQs); the Normal-distribution lesson
+quiz renders "Question 1 of 12" with 4 choices and errs=0 in headless Chrome; stray Chrome cleaned up.
+
 ## iter 74 — Central Limit Theorem visualization (visualizations; owner depth direction)
 A new interactive widget (`ps-clt`, the 22nd) for the deepest idea in statistics — and the reason the normal
 curve is everywhere. Pick a non-normal **source** (Exponential, Uniform, or Bimodal), set the **sample size n**,

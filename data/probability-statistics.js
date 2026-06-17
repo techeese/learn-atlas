@@ -803,7 +803,140 @@
           "title": "Bernoulli & Binomial Distributions",
           "minutes": 15,
           "content": "<h3>1. The hook: counting your way through luck</h3>\n<p>You flip a fair coin 10 times. How many heads will you see? Not exactly 5 — sometimes 4, sometimes 7, occasionally even 0. But there is a precise, knowable <em>pattern</em> behind that scatter. The <strong>Binomial distribution</strong> is the mathematics of that pattern: it answers \"how many successes in $n$ repeated yes/no attempts?\" Before we can count many trials, though, we must master one. That single trial is the <strong>Bernoulli</strong> — the atom from which the binomial molecule is built.</p>\n\n<h3>2. The Bernoulli trial: a single yes/no</h3>\n<p>A <strong>Bernoulli trial</strong> is an experiment with exactly two outcomes, conventionally labeled <em>success</em> (coded $1$) and <em>failure</em> (coded $0$). Let $p$ be the probability of success, so failure has probability $1-p$. A random variable $X \\in \\{0,1\\}$ with $P(X=1)=p$ and $P(X=0)=1-p$ is <strong>Bernoulli($p$)</strong>.</p>\n<p>Its moments are quick to derive. The mean is\n$$\\mathbb{E}[X] = 1\\cdot p + 0\\cdot(1-p) = p.$$\nBecause $X^2 = X$ (since $0^2=0$ and $1^2=1$), we get $\\mathbb{E}[X^2]=p$, so the variance is\n$$\\text{Var}(X) = \\mathbb{E}[X^2] - (\\mathbb{E}[X])^2 = p - p^2 = p(1-p).$$\nNotice variance is largest at $p=0.5$ (maximum uncertainty, value $0.25$) and shrinks to $0$ as $p\\to 0$ or $p\\to 1$ (near-certain outcomes carry little surprise).</p>\n\n<h3>3. From one trial to many: defining the Binomial</h3>\n<p>Now run $n$ <em>independent</em> Bernoulli($p$) trials and add up the successes. Let $X_1,\\dots,X_n$ be those indicators and define\n$$X = X_1 + X_2 + \\cdots + X_n.$$\nThen $X$ counts total successes and is called <strong>Binomial($n,p$)</strong>, written $X \\sim \\text{Bin}(n,p)$. The Bernoulli is just the special case $n=1$.</p>\n\n<h3>4. The PMF: why the binomial coefficient appears</h3>\n<p>What is $P(X=k)$, the probability of exactly $k$ successes? Any <em>one specific</em> sequence with $k$ successes and $n-k$ failures — say SSF...F — has probability $p^k(1-p)^{n-k}$ by independence (multiply the per-trial probabilities). But many distinct sequences yield $k$ successes; we must count them. The number of ways to choose <em>which</em> $k$ of the $n$ positions are successes is the <strong>binomial coefficient</strong>\n$$\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}.$$\nSumming the equal probability over all these arrangements gives the <strong>Binomial PMF</strong>:\n$$P(X=k) = \\binom{n}{k} p^k (1-p)^{n-k}, \\qquad k = 0,1,\\dots,n.$$\nThese probabilities sum to $1$ by the binomial theorem: $\\sum_{k=0}^{n}\\binom{n}{k}p^k(1-p)^{n-k} = (p + (1-p))^n = 1$.</p>\n\n<h3>5. Mean and variance via linearity</h3>\n<p>You could grind out $\\mathbb{E}[X]=\\sum_k k\\binom{n}{k}p^k(1-p)^{n-k}$ — but the indicator decomposition makes it effortless. <strong>Linearity of expectation</strong> needs no independence:\n$$\\mathbb{E}[X] = \\sum_{i=1}^{n}\\mathbb{E}[X_i] = \\sum_{i=1}^{n} p = np.$$\nVariance <em>does</em> use independence (cross-covariances vanish), so variances add:\n$$\\text{Var}(X) = \\sum_{i=1}^{n}\\text{Var}(X_i) = \\sum_{i=1}^{n} p(1-p) = np(1-p).$$\nThe standard deviation is $\\sigma = \\sqrt{np(1-p)}$.</p>\n\n<h3>6. Worked example: heads in 10 flips</h3>\n<p>Let $X \\sim \\text{Bin}(10, 0.5)$ count heads in 10 fair flips. Then $\\mathbb{E}[X] = 10(0.5) = 5$ and $\\text{Var}(X) = 10(0.5)(0.5) = 2.5$, so $\\sigma \\approx 1.58$. The chance of exactly 7 heads is\n$$P(X=7) = \\binom{10}{7}(0.5)^7(0.5)^3 = 120 \\cdot (0.5)^{10} = \\frac{120}{1024} \\approx 0.117.$$\nSo roughly an 11.7% chance. By symmetry this equals $P(X=3)$. It is rarer than exactly 4 heads, $P(X=4)=\\binom{10}{4}/1024 = 210/1024 \\approx 0.205$, and rarer still than the symmetric peak at 5, $P(X=5)=252/1024 \\approx 0.246$ — values farther from the center are less likely.</p>\n\n<h3>7. When does the Binomial model apply?</h3>\n<p>Check the <strong>BINS</strong> conditions before reaching for $\\text{Bin}(n,p)$:</p>\n<ul>\n<li><strong>Binary</strong> — each trial has two outcomes (success/failure).</li>\n<li><strong>Independent</strong> — trials do not influence one another.</li>\n<li><strong>Number fixed</strong> — $n$ is decided in advance, not random.</li>\n<li><strong>Same $p$</strong> — the success probability is identical every trial.</li>\n</ul>\n<p>Flipping a coin 20 times fits perfectly. Drawing 5 cards <em>without replacement</em> does <em>not</em> — the probabilities shift each draw (dependence), which calls for the hypergeometric distribution instead. Sampling a few items from a huge factory batch is approximately binomial because removing one item barely changes $p$.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "For a Bernoulli($p$) variable, at which value of $p$ is the variance $p(1-p)$ largest, and what is that maximum?",
+              "choices": [
+                "At $p=1$, where the variance equals $1$",
+                "At $p=0.5$, where the variance equals $0.25$",
+                "At $p=0$, where the variance equals $0$",
+                "At $p=0.5$, where the variance equals $0.5$"
+              ],
+              "answer": 1,
+              "explain": "The parabola $p(1-p)$ peaks at $p=0.5$ with value $0.5\\cdot0.5=0.25$ — maximum uncertainty. The tempting $0.5$ confuses the maximizing $p$ with the maximum value itself."
+            },
+            {
+              "q": "A student writes that for $X\\sim\\text{Bin}(n,p)$ the variance is $\\sqrt{np(1-p)}$. What did they get wrong?",
+              "choices": [
+                "Nothing — that is the correct variance",
+                "$\\sqrt{np(1-p)}$ is the standard deviation; the variance is $np(1-p)$",
+                "The variance is $np$, the same as the mean",
+                "The variance is $np(1-p)^2$ because failures are squared"
+              ],
+              "answer": 1,
+              "explain": "Variance is $np(1-p)$; taking its square root gives the standard deviation $\\sigma=\\sqrt{np(1-p)}$. Mean equals variance only for the Poisson, not the binomial."
+            },
+            {
+              "q": "You draw 5 cards from a standard 52-card deck without replacement and count the aces. Why is the count NOT Binomial?",
+              "choices": [
+                "The number of trials is not fixed in advance",
+                "Each draw has more than two outcomes",
+                "The success probability $p$ changes from draw to draw, violating independence and constant $p$",
+                "The mean would be negative"
+              ],
+              "answer": 2,
+              "explain": "Without replacement, removing a card alters the remaining composition, so $p$ shifts each draw and trials are dependent — that breaks the I and S of BINS, calling for the hypergeometric. $n=5$ is fixed and outcomes are binary (ace / not ace), so those are fine."
+            },
+            {
+              "q": "Let $X\\sim\\text{Bin}(10,0.5)$. Using the symmetry of the distribution, what is $P(X\\ge 4)+P(X\\le 6)$ worth relative to $1$?",
+              "choices": [
+                "It equals $1$, since the events partition the sample space",
+                "It exceeds $1$, because the events overlap on $4\\le X\\le 6$",
+                "It is less than $1$, because the tails are excluded",
+                "It cannot be computed without the full PMF"
+              ],
+              "answer": 1,
+              "explain": "The two events overlap on $\\{4,5,6\\}$, so their probabilities double-count that middle region; the sum is therefore greater than $1$. They do not partition the space, so the answer is not $1$."
+            },
+            {
+              "q": "Two independent counts $X\\sim\\text{Bin}(3,0.4)$ and $Y\\sim\\text{Bin}(5,0.4)$ are added. What is the distribution and mean of $X+Y$?",
+              "choices": [
+                "$\\text{Bin}(8,0.4)$ with mean $3.2$",
+                "$\\text{Bin}(15,0.4)$ with mean $6$",
+                "$\\text{Bin}(8,0.8)$ with mean $6.4$",
+                "Not binomial, because two binomials never add to a binomial"
+              ],
+              "answer": 0,
+              "explain": "Independent binomials with the SAME $p$ add by pooling trials: $\\text{Bin}(n_1+n_2,p)=\\text{Bin}(8,0.4)$, mean $8(0.4)=3.2$. The $p$ values do not add, and $n$ is $3+5=8$, not $3\\times5$."
+            },
+            {
+              "q": "A factory makes items that are defective independently with probability $p=0.02$; a batch has $n=100$ items. What are the mean and standard deviation of the number of defectives?",
+              "choices": [
+                "Mean $2$, standard deviation $1.96$",
+                "Mean $2$, standard deviation $1.4$",
+                "Mean $0.02$, standard deviation $0.14$",
+                "Mean $98$, standard deviation $1.4$"
+              ],
+              "answer": 1,
+              "explain": "Mean $=np=100(0.02)=2$; variance $=np(1-p)=100(0.02)(0.98)=1.96$, so $\\sigma=\\sqrt{1.96}=1.4$. The tempting $1.96$ is the variance, not the standard deviation."
+            },
+            {
+              "q": "Why does the factor $\\binom{n}{k}$ appear in the Binomial PMF $\\binom{n}{k}p^k(1-p)^{n-k}$?",
+              "choices": [
+                "It is the probability of any one sequence with $k$ successes",
+                "It counts the number of distinct orderings (which $k$ of the $n$ trials succeed), all sharing the same probability $p^k(1-p)^{n-k}$",
+                "It normalizes the probabilities so they exceed $1$",
+                "It corrects for the trials not being independent"
+              ],
+              "answer": 1,
+              "explain": "A single specific sequence has probability $p^k(1-p)^{n-k}$; the coefficient counts how many such sequences exist, $\\binom{n}{k}$ ways to choose which trials succeed. It is a count of arrangements, not a probability itself."
+            },
+            {
+              "q": "After 6 straight tails on a fair coin, a gambler bets heavily on heads next, reasoning heads is 'overdue.' From the Bernoulli/Binomial viewpoint, what is the flaw?",
+              "choices": [
+                "He is right — the long-run frequency must force a head soon",
+                "Each flip is an independent Bernoulli($0.5$); past results do not change $P(\\text{heads})=0.5$ on the next flip",
+                "The next flip's probability of heads rises to compensate, but only slightly",
+                "The flips are not really independent, so the bet is justified"
+              ],
+              "answer": 1,
+              "explain": "Independence means the coin has no memory: $P(\\text{heads})=0.5$ regardless of history. The 'due' belief is the gambler's fallacy — long-run frequency convergence does not require short-run compensation."
+            },
+            {
+              "q": "Let $X\\sim\\text{Bin}(9,0.5)$. Because $(n+1)p=10\\cdot0.5=5$ is an integer, what is true about the most likely value(s) of $X$?",
+              "choices": [
+                "There is a unique mode at $k=5$",
+                "There are two equally likely modes, at $k=4$ and $k=5$",
+                "Every value is equally likely since $p=0.5$",
+                "The mode is the mean, $4.5$, which $X$ can attain"
+              ],
+              "answer": 1,
+              "explain": "When $(n+1)p$ is an integer, the PMF ties at $k=(n+1)p-1$ and $k=(n+1)p$, here $k=4$ and $k=5$ (each $\\approx0.246$). The mean $4.5$ is not an attainable value of an integer-valued $X$."
+            },
+            {
+              "q": "Two independent Bernoulli($p$) indicators $X_1,X_2$ are added. For their sum $S=X_1+X_2$, what is $P(S=1)$?",
+              "choices": [
+                "$p^2$",
+                "$2p(1-p)$",
+                "$p(1-p)$",
+                "$2p$"
+              ],
+              "answer": 1,
+              "explain": "$S\\sim\\text{Bin}(2,p)$, and $P(S=1)=\\binom{2}{1}p(1-p)=2p(1-p)$ — exactly one of the two succeeds, and there are two ways for that to happen. Forgetting the factor of $2$ (the ordering) gives the tempting $p(1-p)$."
+            },
+            {
+              "q": "For $X\\sim\\text{Bin}(10,0.2)$, what is $P(X=0)$?",
+              "choices": [
+                "$0.2^{10}$",
+                "$(0.8)^{10}\\approx0.107$",
+                "$0$, since at least one success is guaranteed",
+                "$1-0.2=0.8$"
+              ],
+              "answer": 1,
+              "explain": "Zero successes means all 10 trials fail: $P(X=0)=(1-p)^{10}=(0.8)^{10}\\approx0.107$. The choice $0.2^{10}$ would be the probability of all successes, and nothing forces at least one success."
+            },
+            {
+              "q": "A coin is biased with $p=0.9$ for heads. Compared with a fair coin, how does the variance of the number of heads in $n=10$ flips change?",
+              "choices": [
+                "It rises, because heads are more frequent",
+                "It falls (from $2.5$ to $0.9$), because outcomes are more predictable near $p=1$",
+                "It stays at $2.5$, since variance depends only on $n$",
+                "It becomes negative, reflecting the bias"
+              ],
+              "answer": 1,
+              "explain": "Variance $np(1-p)$ is maximal at $p=0.5$ ($10\\cdot0.25=2.5$) and shrinks toward the extremes: at $p=0.9$ it is $10(0.9)(0.1)=0.9$. A near-certain outcome carries little uncertainty, so the spread drops; variance can never be negative."
+            }
+          ],
           "flashcards": [
             {
               "front": "Define a Bernoulli($p$) random variable and give its mean and variance.",
@@ -865,7 +998,140 @@
           "title": "The Poisson Distribution",
           "minutes": 14,
           "content": "<p><em>Imagine you run a small bakery. On a quiet Tuesday afternoon, customers wander in seemingly at random — sometimes three in a minute, sometimes none for five minutes. You can't predict <strong>when</strong> the next one arrives, but over a whole afternoon you average about 6 customers per hour. How many customers should you expect in the next 20 minutes? What's the chance that <em>nobody</em> shows up? The Poisson distribution is the mathematical machine built precisely for counting rare, independent events over a fixed window.</em></p>\n\n<h3>1. The intuition: counting random arrivals</h3>\n<p>Many real situations involve <strong>counting how many times something happens</strong> in a fixed interval of time, space, or volume, where each occurrence is independent and the average rate is steady:</p>\n<ul>\n<li>Phone calls reaching a help desk in an hour</li>\n<li>Typos (defects) on a printed page</li>\n<li>Radioactive decays detected per second</li>\n<li>Emails arriving in your inbox per minute</li>\n</ul>\n<p>The key features are: events are <strong>rare in any tiny slice</strong> of the interval, they occur <strong>independently</strong>, and they happen at a <strong>constant average rate</strong>. If a single number $\\lambda$ (the expected count) captures the average, the Poisson distribution tells you the full probability of seeing exactly $0, 1, 2, \\dots$ events.</p>\n\n<h3>2. The formula (PMF)</h3>\n<p>A random variable $X$ follows a <strong>Poisson distribution</strong> with parameter $\\lambda > 0$, written $X \\sim \\text{Poisson}(\\lambda)$, if for $k = 0, 1, 2, \\dots$:</p>\n$$P(X = k) = \\frac{\\lambda^k e^{-\\lambda}}{k!}$$\n<p>Here $\\lambda$ is the <strong>average number of events</strong> in the interval, $e \\approx 2.71828$, and $k!$ is the factorial. The factor $e^{-\\lambda}$ is exactly what makes the probabilities sum to 1, because the Taylor series gives $\\sum_{k=0}^{\\infty} \\frac{\\lambda^k}{k!} = e^{\\lambda}$, so $\\sum_k P(X=k) = e^{-\\lambda} e^{\\lambda} = 1$.</p>\n<p><em>Quick numeric check.</em> With $\\lambda = 2$, the chance of seeing exactly $k=3$ events is $P(X=3) = \\frac{2^3 e^{-2}}{3!} = \\frac{8 \\cdot 0.1353}{6} \\approx 0.180$ — about an 18% chance.</p>\n\n<h3>3. The striking fact: mean = variance = λ</h3>\n<p>The single parameter $\\lambda$ plays a double role: it is <strong>both the mean and the variance</strong>:</p>\n$$\\mathbb{E}[X] = \\lambda, \\qquad \\text{Var}(X) = \\lambda$$\n<p>This is unusual and useful. It means the standard deviation is $\\sigma = \\sqrt{\\lambda}$. As $\\lambda$ grows, the absolute spread $\\sqrt{\\lambda}$ grows but the <em>relative</em> spread $\\sqrt{\\lambda}/\\lambda = 1/\\sqrt{\\lambda}$ shrinks — busy systems are proportionally more predictable. Practically, the equality is a diagnostic: if your count data has variance much larger than its mean (<em>overdispersion</em>), a plain Poisson model is probably wrong.</p>\n\n<h3>4. Poisson as the limit of the Binomial (law of rare events)</h3>\n<p>Where does $e^{-\\lambda}$ come from? Split the interval into $n$ tiny sub-slices, each so small that at most one event can occur, with success probability $p$ per slice. The count is then $\\text{Binomial}(n, p)$. Now let $n \\to \\infty$ and $p \\to 0$ while holding $np = \\lambda$ fixed. Then:</p>\n$$\\binom{n}{k} p^k (1-p)^{n-k} \\;\\longrightarrow\\; \\frac{\\lambda^k e^{-\\lambda}}{k!}$$\n<p>The pieces: $\\binom{n}{k}p^k \\approx \\frac{n^k}{k!}\\left(\\frac{\\lambda}{n}\\right)^k = \\frac{\\lambda^k}{k!}$, and $(1-p)^{n-k} = \\left(1 - \\frac{\\lambda}{n}\\right)^{n-k} \\to e^{-\\lambda}$. This is the <strong>law of rare events</strong>: a huge number of trials, each with a tiny success chance, gives Poisson counts. That is why typos on a page (thousands of characters, each rarely a mistake) or accidents in a city (many drivers, each rarely crashing) follow Poisson so well.</p>\n\n<h3>5. A fully worked example</h3>\n<p>A call center receives an average of $\\lambda = 4$ calls per minute. What is the probability of receiving <strong>exactly 2 calls</strong> in a given minute?</p>\n$$P(X = 2) = \\frac{4^2 e^{-4}}{2!} = \\frac{16 \\cdot 0.018316}{2} = \\frac{0.29306}{2} \\approx 0.1465$$\n<p>So about a <strong>14.7%</strong> chance. And the probability of <strong>at least one</strong> call uses the complement: $P(X \\geq 1) = 1 - P(X=0) = 1 - e^{-4} \\approx 1 - 0.0183 = 0.9817$. Almost certainly the phone rings. Notice we never needed $n$ or $p$ — just the rate $\\lambda$.</p>\n\n<p><strong>Takeaway:</strong> when you count independent rare events at a steady rate, reach for Poisson. One number $\\lambda$ gives you the entire distribution, its mean, and its variance all at once.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "At the bakery, customers arrive at an average rate of 6 per hour. If arrivals follow a Poisson process, what is the expected number of customers in the next 20 minutes?",
+              "choices": [
+                "6",
+                "2",
+                "18",
+                "0.3"
+              ],
+              "answer": 1,
+              "explain": "The rate scales with the window: 20 minutes is $1/3$ of an hour, so $\\lambda = 6 \\times \\frac{1}{3} = 2$. The value 6 ignores the shorter window, and 18 wrongly multiplies instead of dividing."
+            },
+            {
+              "q": "With an expected $\\lambda = 2$ customers in 20 minutes, what is the probability that nobody shows up in that window?",
+              "choices": [
+                "$1 - 2 = -1$",
+                "$\\frac{2^0}{0!} = 1$",
+                "$e^{-2} \\approx 0.135$",
+                "$\\frac{1}{2} = 0.5$"
+              ],
+              "answer": 2,
+              "explain": "$P(X=0) = \\frac{\\lambda^0 e^{-\\lambda}}{0!} = e^{-2} \\approx 0.135$. Forgetting the $e^{-\\lambda}$ factor (just using $\\lambda^0/0! = 1$) is the classic mistake."
+            },
+            {
+              "q": "For a Poisson random variable $X$ with parameter $\\lambda$, what are its mean and variance?",
+              "choices": [
+                "Mean $\\lambda$, variance $\\lambda$",
+                "Mean $\\lambda$, variance $\\lambda^2$",
+                "Mean $\\lambda$, variance $\\sqrt{\\lambda}$",
+                "Mean $\\lambda$, variance $1$"
+              ],
+              "answer": 0,
+              "explain": "A defining property of the Poisson distribution is that its mean and variance are both equal to $\\lambda$. Confusing it with other distributions leads to guessing $\\lambda^2$ or $\\sqrt{\\lambda}$."
+            },
+            {
+              "q": "A help desk receives calls following a Poisson distribution with $\\lambda = 3$ per hour. What is the probability of receiving exactly 2 calls in an hour?",
+              "choices": [
+                "$\\frac{3^2}{2!} \\approx 4.5$",
+                "$\\frac{3^2 e^{-3}}{2!} \\approx 0.224$",
+                "$e^{-3} \\approx 0.050$",
+                "$\\frac{2^3 e^{-2}}{3!} \\approx 0.180$"
+              ],
+              "answer": 1,
+              "explain": "Plug into the PMF: $P(X=2) = \\frac{3^2 e^{-3}}{2!} = \\frac{9 e^{-3}}{2} \\approx 0.224$. Choice 0 drops the $e^{-\\lambda}$ term (and yields an impossible probability $> 1$); choice 3 swaps the roles of $k$ and $\\lambda$."
+            },
+            {
+              "q": "Why must a valid count from a Poisson distribution be a non-negative integer ($0, 1, 2, \\dots$) even though $\\lambda$ can be a decimal like $2.5$?",
+              "choices": [
+                "Because $\\lambda$ is always rounded to an integer before use",
+                "Because you cannot observe a fractional number of discrete events, but the average of those counts can be fractional",
+                "Because the PMF is only defined when $\\lambda$ is an integer",
+                "Because the Poisson distribution is continuous, not discrete"
+              ],
+              "answer": 1,
+              "explain": "You can never count 2.5 customers in a single window, but averaging many windows can give a non-integer mean. $\\lambda$ is the expected value, not a possible outcome, and the distribution is discrete."
+            },
+            {
+              "q": "Emails arrive at $\\lambda = 4$ per hour. Using the recurrence $P(X=k+1) = \\frac{\\lambda}{k+1}P(X=k)$, which count $k$ has the HIGHEST probability (the mode)?",
+              "choices": [
+                "$k = 0$",
+                "$k = 3$ and $k = 4$ (tied)",
+                "$k = 4$ only",
+                "$k = 8$"
+              ],
+              "answer": 1,
+              "explain": "When $\\lambda$ is an integer, the modes are at $k = \\lambda$ and $k = \\lambda - 1$, which are tied; here that is $k = 3$ and $k = 4$. The ratio $\\frac{\\lambda}{k+1}$ equals 1 exactly when $k+1 = \\lambda$, making those two values equal."
+            },
+            {
+              "q": "Two independent Poisson processes feed one inbox: work emails at $\\lambda_1 = 5$/hour and personal emails at $\\lambda_2 = 3$/hour. What is the distribution of the total number of emails per hour?",
+              "choices": [
+                "Poisson with $\\lambda = 8$",
+                "Poisson with $\\lambda = 15$",
+                "Poisson with $\\lambda = \\sqrt{34}$",
+                "Not Poisson; the sum of two Poissons is never Poisson"
+              ],
+              "answer": 0,
+              "explain": "The sum of independent Poisson variables is Poisson with parameter equal to the sum of the rates: $\\lambda = 5 + 3 = 8$. Rates add (not multiply, giving 15), and the sum remains Poisson."
+            },
+            {
+              "q": "A printed page has on average $\\lambda = 0.5$ typos. What is the probability a page has AT LEAST one typo?",
+              "choices": [
+                "$0.5$",
+                "$e^{-0.5} \\approx 0.607$",
+                "$1 - e^{-0.5} \\approx 0.393$",
+                "$1 - 0.5 = 0.5$"
+              ],
+              "answer": 2,
+              "explain": "Use the complement: $P(X \\ge 1) = 1 - P(X=0) = 1 - e^{-0.5} \\approx 0.393$. Confusing $\\lambda$ itself with a probability gives the tempting (wrong) answer 0.5."
+            },
+            {
+              "q": "A student computes $P(X=3)$ for $\\lambda = 2$ and gets $1.33$. What is the most likely error?",
+              "choices": [
+                "They used the wrong value of $k$",
+                "Nothing — probabilities can exceed 1 for Poisson",
+                "They forgot the $e^{-\\lambda}$ factor, since $\\frac{2^3}{3!} = 1.33$",
+                "They should have used $\\lambda = 3$ instead"
+              ],
+              "answer": 2,
+              "explain": "$\\frac{2^3}{3!} = \\frac{8}{6} \\approx 1.33$, exactly the PMF without the $e^{-\\lambda}$ multiplier. Any probability above 1 is impossible, signalling the missing decay factor $e^{-2} \\approx 0.135$ that brings it to $\\approx 0.180$."
+            },
+            {
+              "q": "Which assumption, if violated, would make the Poisson model INAPPROPRIATE for counting bakery arrivals over an afternoon?",
+              "choices": [
+                "Customers tend to arrive in coordinated tour-bus groups, so arrivals are not independent",
+                "The average rate is a non-integer like 6.5 per hour",
+                "Some afternoons had zero customers in a 5-minute slice",
+                "The window of interest is only 20 minutes rather than a full hour"
+              ],
+              "answer": 0,
+              "explain": "Poisson requires events to occur independently; clustered tour-bus arrivals break that assumption. A non-integer rate, occasional empty windows, and short windows are all perfectly compatible with the Poisson model."
+            },
+            {
+              "q": "As the rate $\\lambda$ grows large, the Poisson distribution becomes increasingly well-approximated by which distribution?",
+              "choices": [
+                "The uniform distribution on $[0, \\lambda]$",
+                "The normal (Gaussian) distribution with mean $\\lambda$ and variance $\\lambda$",
+                "The exponential distribution with rate $\\lambda$",
+                "The Bernoulli distribution"
+              ],
+              "answer": 1,
+              "explain": "For large $\\lambda$, the Poisson distribution approaches a normal distribution with mean $\\lambda$ and variance $\\lambda$ (matching its moments). The exponential describes the waiting time between events, not the count itself."
+            },
+            {
+              "q": "At the bakery, $\\lambda = 6$ customers per hour. Which statement correctly interprets the constant-rate assumption?",
+              "choices": [
+                "Exactly 6 customers arrive in every hour-long window",
+                "Customers are equally likely to arrive at any instant, so two disjoint 30-minute windows each have $\\lambda = 3$ on average",
+                "Once 6 customers have arrived, no more can come that hour",
+                "The probability of an arrival doubles after each customer leaves"
+              ],
+              "answer": 1,
+              "explain": "A constant rate means arrivals are spread uniformly in expectation, so any 30-minute slice averages $6 \\times \\frac{1}{2} = 3$. The count varies randomly around its mean, so it is not fixed at exactly 6, nor capped, nor dependent on prior arrivals."
+            }
+          ],
           "flashcards": [
             {
               "front": "What is the Poisson PMF?",
@@ -927,7 +1193,140 @@
           "title": "Geometric & Waiting-Time Distributions",
           "minutes": 14,
           "content": "<h3>1. The hook: how long until the first success?</h3>\n<p>You are rolling a fair die, hunting for your first six. It might come on roll one — or you might suffer through ten misses first. The <strong>Geometric distribution</strong> answers the question lurking behind every such wait: <em>how many independent attempts until something finally works?</em> Whether it is calls until the first sale, coin flips until the first heads, or job applications until the first offer, the same shape governs the wait. And it hides a property so strange it feels like a paradox — the dice have <em>no memory</em> of how long you have already been waiting.</p>\n\n<h3>2. Setup: a stream of Bernoulli trials</h3>\n<p>Imagine a sequence of <strong>independent</strong> trials, each a coin-flip-like <em>Bernoulli trial</em> with the same success probability $p$ (and failure probability $1-p$). Let $X$ count the <strong>number of trials up to and including the first success</strong>. Then $X$ can be $1, 2, 3, \\dots$ — there is no upper bound. We write $X \\sim \\text{Geometric}(p)$.</p>\n<p><em>Caution:</em> some textbooks instead count only the <em>failures before</em> the first success (support $0,1,2,\\dots$). We use the <strong>trials-until-success</strong> convention, the most common in intro courses.</p>\n\n<h3>3. The PMF and why it has that form</h3>\n<p>For $X = k$ to happen, the first $k-1$ trials must <em>all</em> fail and the $k$-th must succeed. Because trials are independent, we multiply: $$P(X = k) = (1-p)^{k-1}\\,p, \\qquad k = 1, 2, 3, \\dots$$</p>\n<p><strong>Concrete example.</strong> Rolling a die for the first six, $p = \\tfrac{1}{6}$. The chance the first six arrives exactly on roll 3 is $$P(X=3) = \\left(\\tfrac{5}{6}\\right)^{2}\\cdot \\tfrac{1}{6} = \\tfrac{25}{216} \\approx 0.116.$$ These probabilities form a geometric series that sums to 1: $\\sum_{k=1}^{\\infty}(1-p)^{k-1}p = p \\cdot \\frac{1}{1-(1-p)} = 1$. That is exactly why it earns the name <em>geometric</em>.</p>\n\n<h3>4. The mean: why $\\mathbb{E}[X] = 1/p$</h3>\n<p>The expected wait is $$\\mathbb{E}[X] = \\frac{1}{p}.$$ The intuition is irresistibly clean: if a success happens a fraction $p$ of the time, then on average you need $1/p$ tries to see one. Rare events ($p$ small) make for long waits — for the die, $p=\\tfrac16$ gives a mean of <strong>6 rolls</strong>. The variance is $\\text{Var}(X) = \\frac{1-p}{p^{2}}$; for the die that is $\\frac{5/6}{1/36} = 30$, so a standard deviation of about $5.5$ rolls — the wait is highly variable.</p>\n<p>A slick derivation: condition on the first trial. With probability $p$ you are done in 1 step; with probability $1-p$ you have \"wasted\" one trial and start over, so $\\mathbb{E}[X] = p\\cdot 1 + (1-p)(1 + \\mathbb{E}[X])$. Solving gives $\\mathbb{E}[X] = 1/p$.</p>\n\n<h3>5. The survival function and memorylessness</h3>\n<p>The probability the wait <em>exceeds</em> $n$ trials is the chance the first $n$ trials all fail: $$P(X > n) = (1-p)^{n}.$$ Now the magic. Suppose you have already failed $m$ times and are still waiting. What is the chance you must endure at least $n$ <em>more</em>? $$P(X > m+n \\mid X > m) = \\frac{P(X > m+n)}{P(X > m)} = \\frac{(1-p)^{m+n}}{(1-p)^{m}} = (1-p)^{n} = P(X > n).$$</p>\n<p>This is the <strong>memorylessness property</strong>: the past leaves no trace. The dice do not \"owe\" you a six for your earlier misses; your remaining wait has the <em>same</em> distribution as a fresh start. Strikingly, the geometric is the <strong>only</strong> discrete distribution with this property (its continuous cousin is the exponential distribution). It is also the source of the gambler's fallacy — believing a long drought makes success \"due\" is precisely the error memorylessness forbids.</p>\n<p><strong>Numeric check</strong> ($p = 0.2$): $P(X > 5 \\mid X > 2) = \\frac{(0.8)^5}{(0.8)^2} = (0.8)^3 = 0.512$, identical to $P(X > 3) = 0.512$.</p>\n\n<h3>6. Waiting for $r$ successes: the negative binomial</h3>\n<p>What if you want not the first success but the $r$-th? Let $Y$ be the number of trials until the $r$-th success — the <strong>Negative Binomial</strong> distribution. The last trial must be a success, and among the first $Y-1$ trials exactly $r-1$ must succeed: $$P(Y = k) = \\binom{k-1}{r-1}(1-p)^{k-r}\\,p^{\\,r}, \\qquad k = r, r+1, \\dots$$ Since $Y$ is a sum of $r$ independent geometric waits, its mean is simply $\\mathbb{E}[Y] = r/p$. The geometric is the special case $r = 1$.</p>\n\n<h3>7. The big picture</h3>\n<p>The geometric distribution is the discrete clock of \"keep trying until it works\": PMF $(1-p)^{k-1}p$, mean $1/p$, and a unique amnesia about the past. Stack $r$ of these clocks and you get the negative binomial. Whenever a problem says \"until the first / $r$-th time something happens,\" reach for these tools.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "Under the trials-until-success convention used here, what is the support (set of possible values) of $X \\sim \\text{Geometric}(p)$?",
+              "choices": [
+                "$\\{0, 1, 2, 3, \\dots\\}$",
+                "$\\{1, 2, 3, \\dots\\}$",
+                "$\\{0, 1\\}$",
+                "$\\{1, 2, \\dots, n\\}$ for some fixed $n$"
+              ],
+              "answer": 1,
+              "explain": "Counting trials up to and including the first success, the smallest possible value is 1 (success on the first trial) with no upper bound. The choice $\\{0,1,2,\\dots\\}$ is the rival 'failures-before-success' convention, not the one used here."
+            },
+            {
+              "q": "A machine produces a defective part independently with probability $0.05$. Let $X$ be the number of parts inspected until the first defective. What is the expected number of parts inspected?",
+              "choices": [
+                "$0.05$",
+                "$20$",
+                "$19$",
+                "$5$"
+              ],
+              "answer": 1,
+              "explain": "For a geometric variable $\\mathbb{E}[X] = 1/p = 1/0.05 = 20$. The tempting answer $19$ is the mean number of failures before the first success ($\\frac{1-p}{p}$), which belongs to the other convention."
+            },
+            {
+              "q": "For $X \\sim \\text{Geometric}(p)$, which expression correctly gives $P(X = k)$ for $k = 1, 2, 3, \\dots$?",
+              "choices": [
+                "$p^{k-1}(1-p)$",
+                "$(1-p)^{k-1}\\,p$",
+                "$\\binom{k}{1}p(1-p)^{k-1}$",
+                "$(1-p)^{k}\\,p$"
+              ],
+              "answer": 1,
+              "explain": "The first $k-1$ trials must fail (probability $(1-p)^{k-1}$) and the $k$-th must succeed (probability $p$), giving $(1-p)^{k-1}p$. The exponent $k$ instead of $k-1$ would double-count an extra failure."
+            },
+            {
+              "q": "A gambler has just lost 8 spins in a row on a machine that pays out independently with probability $p$ each spin. Compared with someone who has only played once and lost, how is the gambler's remaining wait until a win distributed?",
+              "choices": [
+                "It is shorter on average, because a win is now 'overdue'",
+                "It has exactly the same distribution as a fresh start",
+                "It is longer on average, because the machine is on a cold streak",
+                "It cannot be determined without knowing the value of $p$"
+              ],
+              "answer": 1,
+              "explain": "Memorylessness means $P(X > m+n \\mid X > m) = P(X > n)$, so the past run of losses leaves no trace and the remaining wait is distributed like a brand-new one. Believing a win is 'overdue' is exactly the gambler's fallacy."
+            },
+            {
+              "q": "Rolling a fair die for the first six ($p = 1/6$), what is the probability the first six does NOT appear within the first 4 rolls, i.e. $P(X > 4)$?",
+              "choices": [
+                "$\\left(\\tfrac{5}{6}\\right)^{4}$",
+                "$\\left(\\tfrac{1}{6}\\right)^{4}$",
+                "$1 - \\left(\\tfrac{1}{6}\\right)^{4}$",
+                "$4 \\cdot \\tfrac{5}{6} \\cdot \\tfrac{1}{6}$"
+              ],
+              "answer": 0,
+              "explain": "$P(X > n) = (1-p)^n$, so $P(X>4) = (5/6)^4$ — the event that all four rolls fail to show a six. The option $(1/6)^4$ wrongly uses the success probability for repeated failures."
+            },
+            {
+              "q": "The variance of $X \\sim \\text{Geometric}(p)$ is $\\frac{1-p}{p^2}$. As $p \\to 0$ (very rare successes), what happens to the standard deviation relative to the mean $1/p$?",
+              "choices": [
+                "The standard deviation grows much faster than the mean, so the wait becomes relatively more variable",
+                "The standard deviation and mean stay roughly equal, so relative variability is about constant",
+                "The standard deviation shrinks to zero, so the wait becomes nearly deterministic",
+                "The standard deviation stays fixed while the mean grows, so relative variability vanishes"
+              ],
+              "answer": 1,
+              "explain": "The SD is $\\sqrt{(1-p)/p^2} = \\sqrt{1-p}/p$, and the mean is $1/p$; their ratio is $\\sqrt{1-p} \\to 1$ as $p \\to 0$. So the SD tracks the mean closely and relative variability stays near 1 (a hallmark of the geometric)."
+            },
+            {
+              "q": "A salesperson closes each call independently with probability $0.3$. Let $Y$ be the number of calls until the SECOND sale. Which distribution does $Y$ follow, and what is $\\mathbb{E}[Y]$?",
+              "choices": [
+                "Geometric, with $\\mathbb{E}[Y] = 1/0.3 \\approx 3.33$",
+                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 2/0.3 \\approx 6.67$",
+                "Binomial, with $\\mathbb{E}[Y] = 2 \\cdot 0.3 = 0.6$",
+                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 1/0.3 \\approx 3.33$"
+              ],
+              "answer": 1,
+              "explain": "Waiting for the $r$-th success is Negative Binomial with mean $r/p$; here $2/0.3 \\approx 6.67$. Because $Y$ is the sum of two independent geometric waits, its mean is twice the single-success mean of $3.33$."
+            },
+            {
+              "q": "A free-throw shooter makes each shot independently with probability $0.9$. If $X$ is the number of shots until her first MISS, what is the success probability for the geometric model of $X$?",
+              "choices": [
+                "$0.9$, since that is the make probability",
+                "$0.1$, since the event we are waiting for is a miss",
+                "$0.5$, since make and miss must be combined",
+                "$0.81$, the probability of two makes"
+              ],
+              "answer": 1,
+              "explain": "The geometric 'success' is whatever event ends the wait — here a MISS, with probability $1 - 0.9 = 0.1$. Using $0.9$ confuses the per-trial outcome we are counting against with the one we are waiting for."
+            },
+            {
+              "q": "For $X \\sim \\text{Geometric}(p)$, what is the CDF $P(X \\le n)$ for a positive integer $n$?",
+              "choices": [
+                "$(1-p)^{n}$",
+                "$1 - (1-p)^{n}$",
+                "$n\\,p\\,(1-p)^{n-1}$",
+                "$1 - p^{n}$"
+              ],
+              "answer": 1,
+              "explain": "Since $P(X > n) = (1-p)^n$, complementing gives $P(X \\le n) = 1 - (1-p)^n$. The bare $(1-p)^n$ is the survival (tail) probability, not the CDF."
+            },
+            {
+              "q": "Which property makes the Geometric distribution UNIQUE among all discrete distributions?",
+              "choices": [
+                "It has the largest possible variance for a given mean",
+                "It is the only discrete distribution that is memoryless",
+                "It is the only discrete distribution whose probabilities sum to 1",
+                "It is the only discrete distribution defined on the positive integers"
+              ],
+              "answer": 1,
+              "explain": "The geometric is the unique discrete memoryless distribution (its continuous analogue is the exponential). All valid PMFs sum to 1, and many distributions live on the positive integers, so those choices are not distinguishing properties."
+            },
+            {
+              "q": "A web server's requests succeed independently with probability $0.8$; let $X$ count attempts until the first success. The probabilities $P(X=1), P(X=2), P(X=3), \\dots$ form what kind of sequence, and why must they sum to 1?",
+              "choices": [
+                "An arithmetic sequence; they sum to 1 by the trapezoid rule",
+                "A geometric sequence with ratio $1-p$; they sum to 1 as a convergent geometric series",
+                "A harmonic sequence; they sum to 1 because the terms shrink",
+                "A geometric sequence with ratio $p$; they sum to 1 because $p < 1$"
+              ],
+              "answer": 1,
+              "explain": "Successive PMF values $(1-p)^{k-1}p$ differ by the factor $(1-p)$, forming a geometric sequence with ratio $1-p$ (=0.2 here). Their sum is $p \\cdot \\frac{1}{1-(1-p)} = 1$ by the geometric-series formula — which is exactly where the distribution gets its name."
+            },
+            {
+              "q": "With $X \\sim \\text{Geometric}(0.25)$, you are told $X > 3$ (the first three trials all failed). What is $P(X > 7 \\mid X > 3)$?",
+              "choices": [
+                "$(0.75)^{7} \\approx 0.133$",
+                "$(0.75)^{4} \\approx 0.316$",
+                "$(0.75)^{10} \\approx 0.056$",
+                "$(0.25)^{4} \\approx 0.004$"
+              ],
+              "answer": 1,
+              "explain": "By memorylessness $P(X > 3+4 \\mid X > 3) = P(X > 4) = (0.75)^4 \\approx 0.316$; equivalently $(0.75)^7 / (0.75)^3 = (0.75)^4$. Using $(0.75)^7$ ignores the conditioning, and $(0.75)^{10}$ wrongly adds the exponents."
+            }
+          ],
           "flashcards": [
             {
               "front": "What does a Geometric($p$) random variable count, and what is its PMF?",
@@ -989,7 +1388,140 @@
           "title": "Uniform & Exponential Distributions",
           "minutes": 15,
           "content": "<p>Imagine waiting for a bus that's promised \"sometime in the next 10 minutes,\" with no further information. Every instant in that window feels equally likely — your ignorance is perfectly flat. That is the <strong>continuous Uniform</strong> distribution. Now imagine instead waiting for the next radioactive decay, or the next customer to walk through a door: events that arrive at random with no memory of the past. That is the <strong>Exponential</strong> distribution. These two are the workhorses of continuous probability — one models <em>total ignorance over an interval</em>, the other models <em>pure random waiting</em>.</p>\n\n<h3>1. The Continuous Uniform — flat ignorance</h3>\n<p>We write $X \\sim \\text{Uniform}(a,b)$ when $X$ is equally likely to fall anywhere in $[a,b]$. \"Equally likely\" means the density is <strong>constant</strong>. Since the total area under a density must equal 1, and the base has width $b-a$, the height must be</p>\n$$f(x) = \\frac{1}{b-a}, \\quad a \\le x \\le b,$$\n<p>and $f(x)=0$ elsewhere. The CDF accumulates area linearly: for $a \\le x \\le b$,</p>\n$$F(x) = \\frac{x-a}{b-a}.$$\n<p>By symmetry the mean sits at the midpoint, $\\mathbb{E}[X] = \\frac{a+b}{2}$. The variance comes from $\\mathbb{E}[X^2] - (\\mathbb{E}[X])^2$ and works out to</p>\n$$\\text{Var}(X) = \\frac{(b-a)^2}{12}.$$\n<p><em>Concrete:</em> for $X \\sim \\text{Uniform}(0,10)$ (the bus), $\\mathbb{E}[X]=5$ minutes, $\\text{Var}(X)=100/12 \\approx 8.33$, and $P(X > 7) = \\frac{10-7}{10} = 0.3$.</p>\n\n<h3>2. The Exponential — pure random waiting</h3>\n<p>We write $T \\sim \\text{Exponential}(\\lambda)$ for the time until a randomly-arriving event, where $\\lambda > 0$ is the <strong>rate</strong> (events per unit time). Its density and CDF are</p>\n$$f(t) = \\lambda e^{-\\lambda t}, \\qquad F(t) = 1 - e^{-\\lambda t}, \\quad t \\ge 0.$$\n<p>The density is largest at $t=0$ and decays — short waits are most common, but a long tail allows occasional long waits. The mean is the reciprocal of the rate:</p>\n$$\\mathbb{E}[T] = \\frac{1}{\\lambda}, \\qquad \\text{Var}(T) = \\frac{1}{\\lambda^2}.$$\n<p>Intuitively: if calls arrive at $\\lambda = 3$ per hour, you wait on average $1/3$ hour = 20 minutes for the next one. The survival function $P(T > t) = e^{-\\lambda t}$ is especially handy.</p>\n\n<h3>3. Memorylessness — the defining property</h3>\n<p>The Exponential is the <em>only</em> continuous distribution that is <strong>memoryless</strong>:</p>\n$$P(T > s + t \\mid T > s) = P(T > t).$$\n<p>If you've already waited $s$ minutes with no event, the remaining wait has the <em>same</em> distribution as if you'd just started. The check is one line: $P(T>s+t \\mid T>s) = \\frac{e^{-\\lambda(s+t)}}{e^{-\\lambda s}} = e^{-\\lambda t}$. A used lightbulb (under this model) is as good as new. This makes the Exponential the <strong>continuous analogue of the Geometric</strong> distribution, which is the unique <em>discrete</em> memoryless law counting trials until the first success.</p>\n\n<h3>4. Exponential waiting and the Poisson process</h3>\n<p>These ideas fuse in the <strong>Poisson process</strong>. Suppose events occur at rate $\\lambda$ such that the count $N(t)$ in an interval of length $t$ is $\\text{Poisson}(\\lambda t)$. Then:</p>\n<ul>\n<li>The <strong>waiting time between consecutive events</strong> (interarrival time) is $\\text{Exponential}(\\lambda)$.</li>\n<li>The link is direct: \"no event by time $t$\" means $N(t)=0$, and $P(N(t)=0) = e^{-\\lambda t} = P(T > t)$ — exactly the Exponential survival function.</li>\n<li>The sum of $k$ independent Exponential gaps (time to the $k$-th event) follows a Gamma (Erlang) distribution.</li>\n</ul>\n<p>So Poisson counts <em>how many</em> events in a window; Exponential measures <em>how long</em> between them. They are two views of the same random clock.</p>\n\n<h3>5. Putting it together</h3>\n<p>Both distributions answer probability questions by integrating the density — or, more cheaply, by reading off the CDF. For the Uniform, probabilities are ratios of lengths. For the Exponential, probabilities are exponentials of $-\\lambda t$. <em>Worked:</em> if a webpage's load time is $T \\sim \\text{Exponential}(\\lambda = 0.5)$ seconds$^{-1}$, the mean load is $1/0.5 = 2$ s, and $P(T > 4) = e^{-0.5 \\cdot 4} = e^{-2} \\approx 0.135$ — about a 13.5% chance of waiting over 4 seconds.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "For $X \\sim \\text{Uniform}(2, 8)$, what is the height of the density $f(x)$ on the interval $[2,8]$?",
+              "choices": [
+                "$\\frac{1}{6}$",
+                "$\\frac{1}{8}$",
+                "$\\frac{1}{10}$",
+                "$\\frac{1}{3}$"
+              ],
+              "answer": 0,
+              "explain": "The density is constant at $\\frac{1}{b-a} = \\frac{1}{8-2} = \\frac{1}{6}$ so the total area equals 1. Using $\\frac{1}{b}$ or $\\frac{1}{a+b}$ ignores that the width is $b-a$."
+            },
+            {
+              "q": "A friend says: 'For a continuous Uniform random variable, $P(X = 5)$ is small but positive because 5 is inside the support.' What is the correct statement?",
+              "choices": [
+                "$P(X=5)$ equals the density $f(5)$",
+                "$P(X=5) = 0$ because any single point has probability zero for a continuous variable",
+                "$P(X=5)$ is positive and equals $\\frac{1}{b-a}$",
+                "$P(X=5)$ depends on whether 5 is the midpoint"
+              ],
+              "answer": 1,
+              "explain": "For any continuous distribution, the probability of an exact single point is zero; probability comes from area over an interval, not height at a point. The density $f(5)$ is not a probability, which is the tempting confusion."
+            },
+            {
+              "q": "For $X \\sim \\text{Uniform}(0, 10)$, what is $P(3 < X < 7)$?",
+              "choices": [
+                "$0.3$",
+                "$0.7$",
+                "$0.4$",
+                "$0.5$"
+              ],
+              "answer": 2,
+              "explain": "For a Uniform, probability is the ratio of lengths: $\\frac{7-3}{10-0} = \\frac{4}{10} = 0.4$. Picking $0.3$ or $0.7$ confuses this with a single one-sided tail like $P(X>7)$."
+            },
+            {
+              "q": "Two Uniform variables have the same midpoint but $X \\sim \\text{Uniform}(4,6)$ and $Y \\sim \\text{Uniform}(0,10)$. How do their variances compare?",
+              "choices": [
+                "They are equal because the means are equal",
+                "$\\text{Var}(X) > \\text{Var}(Y)$ because $X$ is more concentrated",
+                "$\\text{Var}(X) < \\text{Var}(Y)$ because $Y$ spans a wider interval",
+                "Variance cannot be compared without knowing the densities"
+              ],
+              "answer": 2,
+              "explain": "Variance is $\\frac{(b-a)^2}{12}$, which depends only on the width: $X$ gives $\\frac{4}{12}\\approx0.33$ while $Y$ gives $\\frac{100}{12}\\approx8.33$. Equal means do not imply equal spread."
+            },
+            {
+              "q": "If a webpage's load time is $T \\sim \\text{Exponential}(\\lambda)$ with mean 4 seconds, what is $\\lambda$?",
+              "choices": [
+                "$\\lambda = 4$ per second",
+                "$\\lambda = 16$ per second",
+                "$\\lambda = 0.25$ per second",
+                "$\\lambda = 2$ per second"
+              ],
+              "answer": 2,
+              "explain": "The mean of an Exponential is $\\frac{1}{\\lambda}$, so $\\frac{1}{\\lambda} = 4$ gives $\\lambda = 0.25$ per second. Setting $\\lambda = 4$ confuses the rate with the mean wait, which are reciprocals."
+            },
+            {
+              "q": "Calls arrive at rate $\\lambda = 3$ per hour with interarrival time $T \\sim \\text{Exponential}(3)$. What is $P(T > 1)$ (probability of waiting more than 1 hour)?",
+              "choices": [
+                "$e^{-3} \\approx 0.050$",
+                "$1 - e^{-3} \\approx 0.950$",
+                "$3e^{-3} \\approx 0.149$",
+                "$e^{-1/3} \\approx 0.717$"
+              ],
+              "answer": 0,
+              "explain": "The survival function is $P(T>t) = e^{-\\lambda t} = e^{-3 \\cdot 1} = e^{-3} \\approx 0.050$. The answer $1-e^{-3}$ is the CDF $P(T \\le 1)$, the complementary event."
+            },
+            {
+              "q": "A lightbulb with Exponential lifetime has already burned for 1000 hours without failing. What is the distribution of its remaining lifetime?",
+              "choices": [
+                "Exponential with a smaller mean, since it is partly used up",
+                "The same Exponential distribution as a brand-new bulb",
+                "Uniform over the remaining expected hours",
+                "Exponential with a larger rate $\\lambda$ because it is aging"
+              ],
+              "answer": 1,
+              "explain": "By memorylessness, $P(T > 1000 + t \\mid T > 1000) = P(T > t)$, so the remaining life has the identical Exponential distribution. The intuition that the bulb is 'partly used up' is exactly what memorylessness contradicts."
+            },
+            {
+              "q": "Which statement correctly characterizes memorylessness among continuous distributions?",
+              "choices": [
+                "Both the Uniform and the Exponential are memoryless",
+                "The Uniform is the unique continuous memoryless distribution",
+                "The Exponential is the unique continuous memoryless distribution",
+                "No continuous distribution can be memoryless; only discrete ones can"
+              ],
+              "answer": 2,
+              "explain": "The Exponential is the only continuous distribution satisfying $P(T>s+t\\mid T>s)=P(T>t)$. The Uniform is not memoryless (a used bulb on a bounded interval has obviously less time left), and the Geometric is the discrete analogue."
+            },
+            {
+              "q": "In a Poisson process of rate $\\lambda$, why does the event 'no arrivals by time $t$' have probability $e^{-\\lambda t}$ both as a Poisson and as an Exponential statement?",
+              "choices": [
+                "Because $\\{N(t)=0\\}$ is the same event as $\\{T > t\\}$, where $T$ is the wait to the first arrival",
+                "Because the Poisson mean $\\lambda t$ always equals the Exponential mean $1/\\lambda$",
+                "It is a coincidence specific to $t=1$",
+                "Because the Exponential variance equals the Poisson variance"
+              ],
+              "answer": 0,
+              "explain": "'No event by time $t$' means $N(t)=0$, which is identical to 'the first arrival comes after $t$', i.e. $T>t$; both give $e^{-\\lambda t}$. The agreement is structural, not a coincidence and not about matching moments."
+            },
+            {
+              "q": "Server response time is $T \\sim \\text{Exponential}(\\lambda = 0.5)$ seconds$^{-1}$. What is $P(2 < T < 4)$?",
+              "choices": [
+                "$e^{-1} - e^{-2} \\approx 0.233$",
+                "$e^{-2} - e^{-4} \\approx 0.117$",
+                "$e^{-1} + e^{-2} \\approx 0.503$",
+                "$1 - e^{-2} \\approx 0.865$"
+              ],
+              "answer": 0,
+              "explain": "Using the survival function, $P(2<T<4) = P(T>2) - P(T>4) = e^{-0.5\\cdot2} - e^{-0.5\\cdot4} = e^{-1} - e^{-2} \\approx 0.368 - 0.135 = 0.233$. The choice $e^{-2}-e^{-4}$ wrongly uses $\\lambda=1$."
+            },
+            {
+              "q": "A student claims the median of $T \\sim \\text{Exponential}(\\lambda)$ equals its mean $\\frac{1}{\\lambda}$. Why is this wrong?",
+              "choices": [
+                "The mean and median are equal for all distributions",
+                "The median is $\\frac{\\ln 2}{\\lambda} \\approx \\frac{0.693}{\\lambda}$, smaller than the mean because the long right tail pulls the mean up",
+                "The median is $\\frac{2}{\\lambda}$, larger than the mean",
+                "The Exponential has no median because it is continuous"
+              ],
+              "answer": 1,
+              "explain": "Solving $1 - e^{-\\lambda m} = 0.5$ gives $m = \\frac{\\ln 2}{\\lambda} \\approx \\frac{0.693}{\\lambda} < \\frac{1}{\\lambda}$. The right-skewed tail makes the mean exceed the median; the mean equals the median only for symmetric distributions."
+            },
+            {
+              "q": "If $X \\sim \\text{Uniform}(a,b)$, what is the value of the CDF $F\\left(\\frac{a+b}{2}\\right)$ at the midpoint?",
+              "choices": [
+                "$0$",
+                "$\\frac{1}{b-a}$",
+                "$\\frac{1}{2}$",
+                "$1$"
+              ],
+              "answer": 2,
+              "explain": "By symmetry the midpoint is the median, so $F\\left(\\frac{a+b}{2}\\right) = \\frac{(a+b)/2 - a}{b-a} = \\frac{(b-a)/2}{b-a} = \\frac{1}{2}$. The value $\\frac{1}{b-a}$ is the density height, not the accumulated probability."
+            }
+          ],
           "flashcards": [
             {
               "front": "For $X \\sim \\text{Uniform}(a,b)$, state the density, mean, and variance.",
@@ -1051,7 +1583,140 @@
           "title": "The Normal Distribution & Standardization",
           "minutes": 16,
           "content": "<h3>1. The hook: the shape that nature keeps drawing</h3>\n<p>Measure the heights of 10,000 adults, the weights of bags of flour off a factory line, the errors a telescope makes pointing at a star, or the average of 50 dice rolls repeated endlessly — and the same silhouette appears again and again: a single hump, symmetric, fat in the middle, thin at the tails. This is the <strong>normal</strong> (or <strong>Gaussian</strong>) distribution, the most important curve in all of statistics. It shows up so relentlessly that for a century people simply called it the \"law of errors.\" The deep reason for its ubiquity is the <em>Central Limit Theorem</em>, which we tease at the end — but first, let us understand the bell itself.</p>\n\n<h3>2. The bell-curve density</h3>\n<p>A continuous random variable $X$ is <strong>normal</strong> with mean $\\mu$ and variance $\\sigma^2$, written $X \\sim N(\\mu, \\sigma^2)$, when its probability density function is\n$$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}}\\, e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}.$$\nDo not memorize this in a panic — read its anatomy. The term $-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2$ is a downward parabola in the exponent: it is zero at $x=\\mu$ (where $e^0=1$, the peak) and grows negative as $x$ moves away, so $e^{(\\cdot)}$ decays. The squaring makes it <em>symmetric</em> about $\\mu$. The front constant $\\frac{1}{\\sigma\\sqrt{2\\pi}}$ is just the normalizing factor that forces $\\int_{-\\infty}^{\\infty} f(x)\\,dx = 1$.</p>\n\n<h3>3. The roles of $\\mu$ and $\\sigma$</h3>\n<p>The two parameters do two visually distinct jobs:</p>\n<ul>\n<li><strong>$\\mu$ (the mean) is the <em>center</em>.</strong> It locates the peak and the axis of symmetry. Changing $\\mu$ slides the whole bell left or right without changing its shape. Here $\\mathbb{E}[X]=\\mu$.</li>\n<li><strong>$\\sigma$ (the standard deviation) is the <em>spread</em>.</strong> Small $\\sigma$ gives a tall, narrow, concentrated bell; large $\\sigma$ gives a short, wide, diffuse one. Here $\\text{Var}(X)=\\sigma^2$. The points $x=\\mu\\pm\\sigma$ are the <em>inflection points</em> where the curve switches from concave-down to concave-up.</li>\n</ul>\n<p>Crucially, the total area is always 1, so a narrower bell must be taller — squeezing horizontally pushes the curve upward.</p>\n\n<h3>4. The standard normal and standardization</h3>\n<p>There are infinitely many normal curves, one per $(\\mu,\\sigma)$. We tame them all with a single reference: the <strong>standard normal</strong> $Z \\sim N(0,1)$, with mean 0 and standard deviation 1. Any normal variable becomes standard by <strong>standardizing</strong>:\n$$z = \\frac{x-\\mu}{\\sigma}.$$\nThe resulting number is a <strong>z-score</strong>: it reports <em>how many standard deviations $x$ lies above ($z>0$) or below ($z<0$) the mean</em>. A z-score of $+2$ means \"two standard deviations above average,\" regardless of the original units. This is the master trick — it converts apples-and-oranges problems onto one universal ruler. The key fact: if $X\\sim N(\\mu,\\sigma^2)$ then $Z=\\frac{X-\\mu}{\\sigma}\\sim N(0,1)$, so every probability question reduces to the single standard curve.</p>\n<p><strong>Concrete number.</strong> Exam scores are $N(70, 8^2)$. A score of $x=86$ standardizes to $z=\\frac{86-70}{8}=\\frac{16}{8}=2.0$ — exactly two standard deviations above the mean. A score of $x=66$ gives $z=\\frac{66-70}{8}=-0.5$, half a standard deviation below.</p>\n\n<h3>5. The 68–95–99.7 empirical rule</h3>\n<p>Because the standard normal is fixed, the fraction of data within a given number of standard deviations is fixed too. The <strong>empirical rule</strong> records the three you must know cold:</p>\n<ul>\n<li>About <strong>68%</strong> of values fall within $\\mu\\pm 1\\sigma$ (i.e. $|z|\\le 1$).</li>\n<li>About <strong>95%</strong> fall within $\\mu\\pm 2\\sigma$ (i.e. $|z|\\le 2$).</li>\n<li>About <strong>99.7%</strong> fall within $\\mu\\pm 3\\sigma$ (i.e. $|z|\\le 3$).</li>\n</ul>\n<p>By symmetry, the leftover tail mass splits evenly. For example, outside $\\mu\\pm 2\\sigma$ lies $100\\%-95\\%=5\\%$, so each tail holds $2.5\\%$. Thus $P(Z>2)\\approx 0.025$ and $P(Z<-1)\\approx \\frac{1-0.68}{2}=0.16$. (More precise values are $P(|Z|\\le1)=0.6827$, $P(|Z|\\le2)=0.9545$, $P(|Z|\\le3)=0.9973$.)</p>\n\n\n<div data-viz=\"ps-clt\"></div>\n<h3>6. Why the normal is everywhere — a CLT teaser</h3>\n<p>The normal is not a coincidence imposed on data; it is forced by addition. The <strong>Central Limit Theorem</strong> says that when you <em>sum or average many independent small effects</em> — no matter how each individual effect is distributed — the result is approximately normal. A person's height is the accumulation of countless genetic and environmental nudges; measurement error is the sum of many tiny perturbations. Anywhere randomness piles up additively, the bell emerges. That is why we invest so heavily in mastering this one curve.</p>\n\n<h3>7. Worked example: putting it together</h3>\n<p>Suppose IQ scores are $N(100, 15^2)$, so $\\mu=100$, $\\sigma=15$. <em>What fraction of people score above 130?</em> Standardize: $z=\\frac{130-100}{15}=\\frac{30}{15}=2.0$. We want $P(Z>2)$. The empirical rule says $95\\%$ lie within $|z|\\le 2$, leaving $5\\%$ in the two tails, so the upper tail alone is $\\frac{5\\%}{2}=2.5\\%$. Therefore about <strong>2.5%</strong> of people score above 130. And <em>between 85 and 115?</em> Those are $z=\\pm 1$, the $\\mu\\pm 1\\sigma$ band, so about <strong>68%</strong>. The z-score plus the empirical rule answers both in seconds, with no calculus.</p>",
-          "mcq": [],
+          "mcq": [
+            {
+              "q": "For $X \\sim N(\\mu, \\sigma^2)$, what is the value of the density $f(x)$ at the peak $x = \\mu$?",
+              "choices": [
+                "$1$",
+                "$\\frac{1}{\\sigma\\sqrt{2\\pi}}$",
+                "$\\frac{1}{\\sqrt{2\\pi}}$",
+                "$\\frac{1}{2}$"
+              ],
+              "answer": 1,
+              "explain": "At $x=\\mu$ the exponent is $0$ so $e^0=1$, leaving only the front constant $\\frac{1}{\\sigma\\sqrt{2\\pi}}$. The value is not $1$: a probability density at a point is not a probability and need not be $\\le 1$."
+            },
+            {
+              "q": "A student claims '$f(\\mu) = 1$ because that's where the curve is tallest, and the total probability is 1.' What is the key error in this reasoning?",
+              "choices": [
+                "The curve is actually tallest at the tails, not at $\\mu$",
+                "The peak height $f(\\mu)$ is a density, not a probability, so it can exceed $1$ (e.g. when $\\sigma$ is small)",
+                "The total area is $\\sigma$, not $1$, so the peak must be $\\sigma$",
+                "The peak is always exactly $0.5$ for symmetric distributions"
+              ],
+              "answer": 1,
+              "explain": "$f$ is a probability density; only areas under it are probabilities. The peak height $\\frac{1}{\\sigma\\sqrt{2\\pi}}$ grows without bound as $\\sigma\\to 0$, so it can be far larger than $1$."
+            },
+            {
+              "q": "How does the standardization $Z = \\frac{X-\\mu}{\\sigma}$ transform the distribution of $X \\sim N(\\mu, \\sigma^2)$?",
+              "choices": [
+                "It makes $Z$ uniform on $[0,1]$",
+                "It gives $Z \\sim N(0, 1)$, the standard normal",
+                "It gives $Z \\sim N(\\mu, 1)$, keeping the original mean",
+                "It squares the variable to remove negative values"
+              ],
+              "answer": 1,
+              "explain": "Subtracting $\\mu$ recenters to mean $0$ and dividing by $\\sigma$ rescales to variance $1$, yielding $Z\\sim N(0,1)$. The mean becomes $0$, not $\\mu$, and the shape stays normal (not uniform)."
+            },
+            {
+              "q": "If $X \\sim N(100, 16)$ (so $\\sigma = 4$), what is the $z$-score of the observation $x = 108$?",
+              "choices": [
+                "$8$",
+                "$0.5$",
+                "$2$",
+                "$1.5$"
+              ],
+              "answer": 2,
+              "explain": "$z = \\frac{108-100}{4} = \\frac{8}{4} = 2$. The common trap is dividing by $\\sigma^2 = 16$ to get $0.5$, but standardization divides by the standard deviation $\\sigma$, not the variance."
+            },
+            {
+              "q": "Under the empirical (68-95-99.7) rule, approximately what fraction of a normal distribution lies within $\\pm 2\\sigma$ of the mean?",
+              "choices": [
+                "$68\\%$",
+                "$95\\%$",
+                "$99.7\\%$",
+                "$50\\%$"
+              ],
+              "answer": 1,
+              "explain": "About $95\\%$ falls within two standard deviations of the mean. The $68\\%$ figure is for $\\pm 1\\sigma$ and $99.7\\%$ is for $\\pm 3\\sigma$."
+            },
+            {
+              "q": "Test scores are $N(500, 100^2)$. Roughly what proportion of scores exceed $600$?",
+              "choices": [
+                "About $16\\%$",
+                "About $32\\%$",
+                "About $5\\%$",
+                "About $2.5\\%$"
+              ],
+              "answer": 0,
+              "explain": "A score of $600$ is $z=+1$. Since $\\approx 68\\%$ lies within $\\pm 1\\sigma$, about $32\\%$ lies in the two tails, and by symmetry half of that, $\\approx 16\\%$, is in the upper tail. The $32\\%$ answer mistakenly keeps both tails."
+            },
+            {
+              "q": "Two normal curves have the same mean but $\\sigma_1 = 2$ and $\\sigma_2 = 5$. How do their shapes compare?",
+              "choices": [
+                "The $\\sigma_1 = 2$ curve is taller and narrower; the $\\sigma_2 = 5$ curve is shorter and wider",
+                "The $\\sigma_2 = 5$ curve is taller and narrower",
+                "Both curves have identical peak heights since they share a mean",
+                "The $\\sigma_1 = 2$ curve has more total area under it"
+              ],
+              "answer": 0,
+              "explain": "Smaller $\\sigma$ concentrates probability near the mean, giving a taller, narrower peak (height $\\frac{1}{\\sigma\\sqrt{2\\pi}}$ is larger). Both curves enclose total area $1$; sharing a mean does not equalize peak heights."
+            },
+            {
+              "q": "The exponent in the normal density contains the term $-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2$. Why does this guarantee the curve is symmetric about $\\mu$?",
+              "choices": [
+                "Because $e^{(\\cdot)}$ is an even function for all inputs",
+                "Because the squaring makes the exponent depend only on the distance $|x-\\mu|$, so $x = \\mu+a$ and $x = \\mu-a$ give equal density",
+                "Because $\\sigma$ is always positive",
+                "Because the front constant $\\frac{1}{\\sigma\\sqrt{2\\pi}}$ is symmetric"
+              ],
+              "answer": 1,
+              "explain": "Squaring $(x-\\mu)$ erases the sign, so points equidistant from $\\mu$ on either side share the same exponent and hence the same density. Symmetry comes from the squared deviation, not from properties of $e$ or the front constant."
+            },
+            {
+              "q": "Heights are $N(170, 6^2)$ cm. A person with height $z = -1.5$ has what actual height?",
+              "choices": [
+                "$179$ cm",
+                "$161$ cm",
+                "$168.5$ cm",
+                "$155$ cm"
+              ],
+              "answer": 1,
+              "explain": "Inverting standardization: $x = \\mu + z\\sigma = 170 + (-1.5)(6) = 170 - 9 = 161$ cm. The sign of $z$ matters: a negative $z$ is below the mean, so the answer must be less than $170$."
+            },
+            {
+              "q": "Which statement about the standard normal $N(0,1)$ is TRUE?",
+              "choices": [
+                "$P(Z = 0) = \\frac{1}{\\sqrt{2\\pi}}$, the peak density",
+                "$P(Z = 0) = 0$ because $Z$ is continuous, even though density is highest there",
+                "$P(Z \\le 0) = 0$ since $0$ is the smallest value",
+                "$P(Z = 0)$ is undefined"
+              ],
+              "answer": 1,
+              "explain": "For any continuous distribution the probability of an exact single value is $0$, regardless of how tall the density is there. The value $\\frac{1}{\\sqrt{2\\pi}}$ is the density $f(0)$, not a probability, and $P(Z\\le 0)=0.5$ by symmetry."
+            },
+            {
+              "q": "Standardizing to $z$-scores is useful primarily because it lets you:",
+              "choices": [
+                "Convert any normal distribution to $N(0,1)$ so a single table or formula handles all probability questions",
+                "Turn a skewed distribution into a normal one",
+                "Guarantee all values become positive",
+                "Change the variance to match the mean"
+              ],
+              "answer": 0,
+              "explain": "Standardization maps every $N(\\mu,\\sigma^2)$ onto the same standard curve $N(0,1)$, so one reference suffices for all of them. It does not fix skewness (it preserves shape) nor force positivity ($z$ can be negative)."
+            },
+            {
+              "q": "The lesson teases that the normal distribution arises 'relentlessly' — e.g. for the average of 50 dice rolls. Which principle explains why averages of many independent quantities tend to look normal?",
+              "choices": [
+                "The Law of Large Numbers",
+                "The Central Limit Theorem",
+                "Bayes' Theorem",
+                "The Empirical Rule"
+              ],
+              "answer": 1,
+              "explain": "The Central Limit Theorem states that sums or averages of many independent random variables approach a normal distribution regardless of the original shape. The Law of Large Numbers concerns the average converging to the mean, not the bell shape of its distribution."
+            }
+          ],
           "flashcards": [
             {
               "front": "What is the probability density function of $X \\sim N(\\mu, \\sigma^2)$?",

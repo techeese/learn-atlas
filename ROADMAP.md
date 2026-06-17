@@ -10,11 +10,11 @@ done items move to CHANGELOG and out; new ideas land in the backlog.
 ## ★ OWNER DIRECTIVE (2026-06-17 — supersedes default rotation until delivered)
 The owner reviewed the mature site and set the next arc. Rotate across these (biggest-value first):
 1. **NEW SUBJECT: Probability & Statistics** — IN PROGRESS. ✅ iter 71: Foundations module (4 lessons +
-   cards/homework/examples; Bayes viz embedded). NEXT for this topic: (a) add 12 MCQs/lesson via the proven
-   MCQ pipeline (`/tmp/gen_mcq_target_wf.js probability-statistics "probability and statistics" 12`);
-   (b) more modules — Common Distributions (Binomial/Poisson/Normal/Exponential), Joint distributions &
-   independence, Limit theorems (LLN/CLT), Estimation & confidence intervals, Hypothesis testing, Bayesian
-   inference; (c) new viz (a CLT/sampling-distribution demo, a normal-distribution explorer).
+   cards/homework/examples; Bayes viz embedded). ✅ iter 73: Common Distributions module (5 lessons). ✅ iter 74:
+   CLT viz (`ps-clt`). ✅ iter 75: all 9 PS lessons now at 12 MCQs (108 topic / 1,464 site). NEXT for this topic:
+   (b) more modules — Joint distributions & independence (covariance/correlation), Limit theorems (LLN/CLT
+   formal), Estimation & confidence intervals, Hypothesis testing, Bayesian inference; (c) new viz (a
+   normal-distribution explorer: μ/σ sliders + shaded empirical rule).
    ⚠ Lesson-authoring workflow bug (iter 71): the VERIFY agent overwrote `content` with its review notes for
    3/4 lessons. When authoring future lessons, make the verify schema/prompt EXPLICIT: "return the corrected
    LESSON HTML in `content`; put commentary ONLY in `notes`; never write a summary into `content`." (Recovered
