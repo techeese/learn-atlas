@@ -105,6 +105,7 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 129: MCQ arc phase 6 — Algorithms·Complexity/Strings/ML (4 lessons) 12→16 (+16, bank →1,856). Algorithms 6/7.
    REMAINING in Algorithms: advanced-techniques (3 lessons) — then Algorithms fully at 16; move to LA/Calc/DL/RL/LLM/PS.
    (Each shuffled batch also de-biases its lessons: the gate's position-bias note is ticking down, 22→21 so far.)
+   ✅ iter 130: Cross-Entropy Loss & Perplexity viz (dl-cross-entropy, 33rd) in the DL loss lesson — ★130 checkpoint.
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is

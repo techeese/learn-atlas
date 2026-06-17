@@ -1744,4 +1744,53 @@
     draw();
   });
 
+  /* ========================================================
+     33. Cross-entropy loss & perplexity — why confident-and-wrong is catastrophic (DL)
+     ======================================================== */
+  register({ id: 'dl-cross-entropy', topic: 'deep-learning', title: 'Cross-Entropy Loss & Perplexity', blurb: 'Slide the probability the model puts on the TRUE class and watch the cross-entropy loss −ln(p) explode as it drops — and perplexity (1/p) with it. The reason confident-but-wrong predictions are punished so hard.' },
+  function (root) {
+    const W = 580, H = 424, padL = 48, padR = 16, topT = 24, curveB = 228, barsT = 290, barsB = 400, MONO = 'JetBrains Mono, monospace';
+    const { ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const PMIN = 0.02, LMAX = -Math.log(PMIN), K = 5, trueIdx = 2;
+    let pTrue = 0.5;
+    const Xc = p => padL + p * (W - padL - padR);
+    const Yc = L => curveB - (L / LMAX) * (curveB - topT);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // ---- loss curve L(p) = -ln(p) ----
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, topT); ctx.lineTo(padL, curveB); ctx.lineTo(W - padR, curveB); ctx.stroke();
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.6; ctx.beginPath();
+      for (let i = 0; i <= 200; i++) { const pp = PMIN + (1 - PMIN) * i / 200, x = Xc(pp), y = Yc(-Math.log(pp)); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke();
+      const L = -Math.log(pTrue), mx = Xc(pTrue), my = Yc(L);
+      ctx.strokeStyle = p.sage; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, curveB); ctx.stroke(); ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(padL, my); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.sage; ctx.beginPath(); ctx.arc(mx, my, 5, 0, 7); ctx.fill();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'right';
+      [0, 1, 2, 3].forEach(v => ctx.fillText(v.toFixed(0), padL - 5, Yc(v) + 3));
+      ctx.textAlign = 'center';
+      [0.1, 0.25, 0.5, 0.75, 1].forEach(v => ctx.fillText(v.toFixed(2), Xc(v), curveB + 13));
+      ctx.fillText('probability the model gives the TRUE class →', (padL + W - padR) / 2, curveB + 28);
+      ctx.save(); ctx.translate(13, (topT + curveB) / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('cross-entropy loss  −ln(p)  (nats)', 0, 0); ctx.restore();
+      // ---- distribution bars ----
+      const probs = []; for (let k = 0; k < K; k++) probs.push(k === trueIdx ? pTrue : (1 - pTrue) / (K - 1));
+      const bw = (W - padL - padR) / K * 0.62, gap = (W - padL - padR) / K;
+      probs.forEach((pr, k) => {
+        const cx = padL + gap * (k + 0.5), h = pr * (barsB - barsT), x = cx - bw / 2;
+        ctx.fillStyle = k === trueIdx ? p.sage : p.panel2 || p.panel; ctx.strokeStyle = k === trueIdx ? p.sage : p.line; ctx.lineWidth = 1;
+        ctx.fillRect(x, barsB - h, bw, h); ctx.strokeRect(x, barsB - h, bw, h);
+        ctx.fillStyle = p.mute; ctx.font = '9px ' + MONO; ctx.textAlign = 'center';
+        ctx.fillText(k === trueIdx ? 'TRUE' : 'c' + (k + 1), cx, barsB + 12);
+        ctx.fillStyle = k === trueIdx ? p.sage : p.mute; ctx.fillText(pr.toFixed(2), cx, barsB - h - 4);
+      });
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'left'; ctx.fillText('predicted distribution (5 classes)', padL, barsT - 4);
+      const ppl = 1 / pTrue;
+      info.innerHTML = `p(true) = <b>${pTrue.toFixed(2)}</b> &nbsp;→&nbsp; loss = −ln(${pTrue.toFixed(2)}) = <b style="color:${p.gold}">${L.toFixed(2)} nats</b> &nbsp;·&nbsp; perplexity = 1/p = <b style="color:${p.sage}">${ppl.toFixed(1)}</b><br>` +
+        `Confident <em>and</em> correct (p→1) drives the loss to ~0. But as the model's probability on the truth falls, −ln(p) <b>blows up</b> — a confidently wrong prediction (tiny p on the right answer) is punished enormously. Perplexity ≈ how many equally-likely options the model is effectively torn between.`;
+    }
+    slider(ctl, { label: 'p(true class)', min: 0.02, max: 0.99, step: 0.01, value: pTrue, fmt: v => v.toFixed(2), onInput: v => { pTrue = v; draw(); } });
+    draw();
+  });
+
 })();

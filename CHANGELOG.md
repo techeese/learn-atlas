@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 130 — Cross-Entropy Loss & Perplexity visualization — a 33rd widget (visualizations) — ★ 130-iteration checkpoint
+No viz existed for the loss function at the heart of every classifier and language model. Added **`dl-cross-entropy`**,
+embedded in the DL "Loss Functions: MSE, Cross-Entropy, and the Softmax Link" lesson. Slide the probability the model
+assigns to the <em>true</em> class and watch two things move together: the **−ln(p) loss curve** (with a marker + dashed
+guides) and a **5-class distribution bar chart** (the true class in sage). The payoff is visceral — at p=0.5 the loss is
+0.69 nats, but as the truth's probability falls the loss <strong>explodes</strong> (p=0.05 → 3.00 nats), showing exactly
+why a confident-but-wrong prediction is punished so hard; perplexity = 1/p is shown alongside ("how many options the
+model is effectively torn between"). Canvas widget, synchronous draw, no loops, plain-unicode note. SW cache →
+`atlas-v73`; README 32 → 33 widgets (+Lab blurb). Verified: `node gate.js` ALL GREEN (33 widgets); an in-browser run is
+**errs=0** — the Lab renders the canvas + slider, sliding p recomputes loss/perplexity correctly (0.69 → 3.00 nats), and
+it hydrates inline in the lesson; desktop + 390px screenshots confirm the layout (a label-overlap caught and fixed
+mid-iteration) reads cleanly.
+**★ 130-iteration checkpoint (iters 120–129).** A clean rhythm: the owner's #1 ask — the **12→16 MCQ arc** — advanced
+across five content iterations (Algorithms now 6/7 modules at 16, bank 1,776 → 1,856), each interleaved with a distinct
+compass move: achievement progress bars, flashcard juice, the Beam-Search viz, the Daily-Mix "redeem mistakes" phase, a
+hardened gate (which surfaced pre-existing answer-position bias), and now this viz. All four owner directives stay
+delivered/served. NEXT: finish Algorithms (advanced-techniques, 3 lessons) → fully at 16, then roll the arc through the
+other six topics; keep interleaving. Carry-forward debt: original-content answer-position skew (~21 lessons; needs
+careful per-MCQ de-skew because some explanations cite positions — each shuffled batch chips at it).
+
 ## iter 129 — MCQ arc phase 6: Algorithms · Complexity, Strings & ML Connections 12 → 16 (content — owner's #1 ask)
 Continuing the 12→16 arc (interleaved — iter 128 was dev-flow). This module has **4** lessons → **+16 (bank 1,840 →
 1,856)**. **+4 new MCQs each** to NP-Completeness, Approximation & Randomized Algorithms, String Matching & Tries, and
