@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 190: MCQ arc → **LLM·Transformer 12→16** (all 4 lessons — self-attention, multihead+masking, the block,
+   positional-encoding; +16, bank →2,240). The heart of the course. Adversarial ALL 16 PASS; positions balanced
+   0/1/2/3 (distinct per-lesson patterns); byte-stable inject; self-attn + pos-enc quizzes render "of 16" rawDollars=0
+   kErr=0; all-routes errs=0; SW →v133. **LLM now 2/6 modules at 16** (Foundations✓, Transformer✓).
+   ARC REMAINING: LLMs (4 modules: Training, Alignment, Inference, Applications), Probability & Statistics.
    ✅ iter 189: **FIX (broken-wins)** — math containing a literal `<`+letter (e.g. `x_{<t}`) was truncated site-wide
    (HTML tokenizer ate it as a tag start → raw `$` showed; 621 `<` across 332 strings, heaviest in LLM/DL).
    `escapeMathLt` + boot-time `normalizeMath()` in app.js escape `<`→`&lt;` *inside math spans only* (in-memory; data

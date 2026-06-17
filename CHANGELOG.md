@@ -2,6 +2,32 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 190 — MCQ arc → LLM Transformer module 12→16 (content — owner's #1 ask)
+Continued the 12→16 MCQ-growth arc into the **heart of the LLM course**: the **Transformer** module, all 4 lessons
+**12 → 16 MCQs** (+16; bank **2,224 → 2,240**). The `<`-in-math fix from iter 189 means these can use the dense
+notation (`x_{<t}`, `QK^\top`, offsets `i-j`, `R_m^\top R_n = R_{n-m}`) freely. New foundational questions per lesson,
+adversarially fact-checked (general-purpose agent, **ALL 16 PASS**), answer positions balanced 0/1/2/3 with distinct
+per-lesson patterns ([3,0,2,1] / [0,2,1,3] / [2,3,0,1] / [1,0,3,2]):
+- **Self-Attention**: the $O(n^2)$ cost traces to the $n\times n$ score matrix $QK^\top$; Q/K/V are *roles* (one token,
+  three matrices); matching ($q\cdot k$) is decoupled from content ($v$); self- vs cross-attention (where Q,K,V come from).
+- **Multi-Head + Causal Masking**: the KV cache turns per-token decoding $O(n^2)\to O(n)$ at a memory cost; the mask is
+  a fixed, *data-independent* lower-triangular pattern; whole-sequence parallel training is *valid only because* the
+  mask forbids peeking ahead; probing shows heads *specialize* (previous-token / syntactic / induction), fused by $W^O$.
+- **Transformer Block**: "mix (attention, across tokens) then mull (FFN, within each token)"; the *residual stream*
+  mental model; residuals make blocks $\approx$ identity at init (deep net starts shallow, grows); GELU vs ReLU (smooth,
+  nonzero gradient for small negatives).
+- **Positional Encoding**: RoPE rotates Q,K but *not* V (position shapes *which* tokens, not *what content*); absolute
+  PE is *added* at the input only (signal must survive every layer); relative schemes encode the offset $i-j$ in the
+  scores (T5 = a learned scalar bias per distance bucket); RoPE's continuous angles make context extension (PI/NTK/YaRN)
+  cheap where a learned table cannot.
+
+LLM topic now **2/6 modules at 16** (Foundations ✓ iter 189, Transformer ✓). Arc status: Algorithms ✓ · Linear Algebra ✓
+· Calculus ✓ · Deep Learning ✓ · RL ✓ · **LLM in progress (2/6)** · Probability & Statistics remaining.
+Verified: node syntax ALL JS OK; `gate.js` ALL GREEN (7 topics · 148 lessons · **2,240 MCQs** · 41 widgets); answer
+indices confirmed + 0/1/2/3-balanced per lesson; byte-stable injection (no-op round-trip guard); self-attention &
+positional-encoding quizzes render "Question 1 of 16" with rawDollars=0, kErr=0; all-routes smoke (15 routes) errs=0;
+self-attention quiz screenshot reads clean with all math typeset. SW cache `atlas-v132` → `atlas-v133`.
+
 ## iter 189 — FIX: math with "<" was silently truncated site-wide (bug) + LLM Foundations 12→16 MCQs (content)
 **Broken-always-wins.** While extending the LLM MCQ arc I discovered a real, *visible*, site-wide rendering bug.
 KaTeX delimiters (`$…$` / `$$…$$`) are injected into the DOM via `innerHTML` **before** `typeset()` runs. A literal

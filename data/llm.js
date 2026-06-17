@@ -872,6 +872,50 @@
               ],
               "answer": 1,
               "explain": "Row-wise softmax makes each token's weights over the keys sum to 1, giving a genuine weighted average of values per output row. Column-wise normalization would instead make the columns sum to 1, so an individual token's weights across the other tokens would not sum to 1 and the output would no longer be a convex combination of values."
+            },
+            {
+              "q": "Self-attention's $O(n^2)$ cost in sequence length comes from one specific intermediate object. Which one?",
+              "choices": [
+                "The value projection $V = XW^V$, which must be recomputed for every pair of tokens.",
+                "The softmax, which is applied $n$ separate times and each pass costs $O(n)$.",
+                "The three projection matrices $W^Q, W^K, W^V$, whose sizes grow with $n$.",
+                "The score matrix $S = QK^\\top \\in \\mathbb{R}^{n \\times n}$ — every token is scored against every token, giving $n^2$ entries."
+              ],
+              "answer": 3,
+              "explain": "$S = QK^\\top$ has one entry $S_{ij} = q_i \\cdot k_j$ for every ordered pair of tokens, so it is $n \\times n$ — quadratic in sequence length. The projections depend on $d_{\\text{model}}$, not $n$; the all-to-all scoring is what makes attention $O(n^2)$ and drives the research on efficient/sparse attention."
+            },
+            {
+              "q": "In self-attention, how do a single token's query, key, and value vectors relate to each other?",
+              "choices": [
+                "The same token simultaneously produces all three, via three different learned matrices ($W^Q, W^K, W^V$) applied to its embedding.",
+                "The query, key, and value are three different tokens the model selects at each step.",
+                "The query and key are the token's raw embedding; only the value is a learned projection.",
+                "They are computed sequentially, so a token's value depends on its own query and key."
+              ],
+              "answer": 0,
+              "explain": "$Q$, $K$, $V$ are roles, not data types: each token's embedding is projected by three separate matrices into a query, a key, and a value at once. In self-attention all three come from the same input $X$; in cross-attention $Q$ comes from one sequence and $K,V$ from another, but the mechanics are identical."
+            },
+            {
+              "q": "Why is it powerful that self-attention computes matching with $q \\cdot k$ but retrieves content from a separate vector $v$?",
+              "choices": [
+                "It isn't a design choice — $q$, $k$, and $v$ are always the same vector, just renamed for clarity.",
+                "It guarantees each token attends only to itself, preventing information leakage between tokens.",
+                "A token can be highly relevant to attend to (high key–query similarity) while the information it actually contributes lives in a different, independently learned subspace — decoupling \"what to retrieve from\" from \"what is retrieved.\"",
+                "It removes the need for a softmax, since the value already encodes the matching score."
+              ],
+              "answer": 2,
+              "explain": "Separating the matching signal (the dot product $q \\cdot k$) from the delivered content (the value $v$) lets the model learn these two functions independently — far more expressive than a fixed similarity over raw embeddings, where \"how relevant\" and \"what content\" would be forced to be the same vector."
+            },
+            {
+              "q": "What is the difference between self-attention and cross-attention?",
+              "choices": [
+                "Self-attention uses a softmax; cross-attention uses a hard argmax over keys.",
+                "In self-attention $Q$, $K$, and $V$ are all projected from the same input sequence; in cross-attention $Q$ comes from one sequence while $K$ and $V$ come from another — the math is otherwise identical.",
+                "Self-attention is always causal (masked); cross-attention can never use a mask.",
+                "Cross-attention scores keys against keys, whereas self-attention scores queries against values."
+              ],
+              "answer": 1,
+              "explain": "The scaled-dot-product computation is the same in both; only the source of the rows differs. Self-attention has $Q,K,V$ all from $X$ (a sequence attends to itself); cross-attention (e.g. an encoder–decoder) draws queries from one sequence and keys/values from another."
             }
           ],
           "flashcards": [
@@ -1067,6 +1111,50 @@
               ],
               "answer": 1,
               "explain": "Position 1 may only attend to position 1 ($j \\le i = 1$), so positions 2 and 3 get $-\\infty$ and post-softmax weight 0, leaving a single finite logit whose softmax is necessarily 1 no matter its value. This is purely the mask structure, not initialization, $W^O$, or the $\\sqrt{d_k}$ scaling (which divides all scores uniformly and cannot zero them)."
+            },
+            {
+              "q": "Beyond storing key/value vectors, what is the algorithmic payoff of the KV cache during autoregressive generation?",
+              "choices": [
+                "It reduces the per-token cost of decoding from $O(n^2)$ to $O(n)$ — only the one new query is projected and attended over the $n$ cached keys/values — at the price of memory to hold all past keys and values.",
+                "It eliminates the softmax entirely, since cached attention weights can be reused across steps.",
+                "It lets the model attend to future tokens, which is what makes generation possible.",
+                "It reduces memory usage, because keys and values no longer need to be stored after each step."
+              ],
+              "answer": 0,
+              "explain": "Without the cache, generating token $t{+}1$ would re-project every past key and value ($O(t^2)$ total work). Causality means past $K$/$V$ never change, so caching them lets each step attend one fresh query over $n$ cached entries — $O(n)$ per token. The cost is memory: for long contexts the KV cache, not the weights, often dominates GPU memory."
+            },
+            {
+              "q": "Which statement about the causal mask matrix is correct?",
+              "choices": [
+                "It is recomputed from the attention scores of each new sequence, since it depends on the data.",
+                "It is an upper-triangular matrix of $1$s that the model learns during training.",
+                "It is the same fixed lower-triangular pattern for every sequence and every head — data-independent, usually precomputed once and broadcast across the batch and head dimensions.",
+                "It differs per attention head, so each head learns which future positions it is allowed to peek at."
+              ],
+              "answer": 2,
+              "explain": "The mask encodes only the rule \"position $i$ may attend to positions $0 \\ldots i$\" — a lower-triangular pattern that never depends on the token values. It is identical across sequences and heads and is typically built once and broadcast, not learned."
+            },
+            {
+              "q": "Why can a decoder-only model be trained on a whole sequence in a single forward pass, getting a next-token loss term at every position at once?",
+              "choices": [
+                "Because the FFN sub-layer predicts all positions in parallel, independently of attention.",
+                "Because the causal mask forbids each position $t$ from attending to positions $> t$, so predicting the token at $t{+}1$ from position $t$ never \"sees the answer\" — every position is a valid simultaneous training example.",
+                "Because during training the KV cache stores the correct next tokens for every position.",
+                "Because teacher forcing replaces the model's predictions with ground-truth tokens, removing the need for any mask."
+              ],
+              "answer": 1,
+              "explain": "Feeding the full sequence and supervising every position is efficient, but only valid if position $t$ cannot read tokens after $t$. The causal mask guarantees this, so one forward pass yields a loss term at every position without the model trivially copying the target. At inference, by contrast, tokens are produced one at a time."
+            },
+            {
+              "q": "Probing trained Transformers, what do researchers typically find about what individual attention heads do?",
+              "choices": [
+                "All heads converge to the same attention pattern, making multi-head attention redundant.",
+                "Each head attends uniformly to all positions, so heads differ only in their value projections.",
+                "Heads can only ever attend to the immediately preceding token; depth, not heads, captures long-range structure.",
+                "Different heads specialize — some attend to the previous token, some to a phrase's syntactic head, some implement induction (\"find where X occurred before and copy what followed\") — and $W^O$ recombines these specialized read-outs."
+              ],
+              "answer": 3,
+              "explain": "Multi-head attention lets each head operate in its own subspace and learn a different relationship; probing reveals previous-token heads, syntactic heads, induction heads, and more. One averaged head cannot serve these competing demands simultaneously — the diversity is the point, and the output projection $W^O$ fuses them."
             }
           ],
           "flashcards": [
@@ -1262,6 +1350,50 @@
               ],
               "answer": 1,
               "explain": "Shape invariance means the residual stream is a fixed-width 'bus' that every block reads from and adds back into, which is exactly what lets identical-structure blocks compose freely to arbitrary depth. Parameter counts can differ per block and are not what shape preservation guarantees."
+            },
+            {
+              "q": "The lesson frames one Transformer block as \"mix, then mull.\" Which mapping of operations to that slogan is correct?",
+              "choices": [
+                "Attention \"mulls\" within each token; the FFN \"mixes\" information across tokens.",
+                "LayerNorm \"mixes\" across tokens; the residual connection \"mulls\" within each token.",
+                "Attention \"mixes\" across tokens (each position gathers context); the position-wise FFN \"mulls\" within each token (an independent per-position transform of what was gathered).",
+                "Both attention and the FFN mix across tokens; \"mulling\" refers to the final unembedding step."
+              ],
+              "answer": 2,
+              "explain": "Attention is the communication step — tokens exchange information across positions. The FFN is the computation step — applied independently to each position, it transforms the context each token gathered. Alternating \"mix across, then mull within\" many times builds the model's rich representations."
+            },
+            {
+              "q": "What is the \"residual stream\" mental model of a Transformer?",
+              "choices": [
+                "A separate recurrent memory that runs alongside the blocks and is reset at each layer.",
+                "The stream of gradients flowing backward, which residual connections amplify at each layer.",
+                "The sequence of attention weight matrices, stacked across layers into one tensor.",
+                "A $d$-dimensional vector carried forward like a shared bus; each attention head and FFN reads from it (via its input projection / LayerNorm) and writes back into it (via its output projection, added on)."
+              ],
+              "answer": 3,
+              "explain": "Because pre-LN blocks only ever do $x = x + (\\text{sub-layer output})$, the representation is a running \"bus\" that layers incrementally edit by reading and writing common subspaces. This reframes the Transformer from \"a pipeline of transformations\" into \"a sequence of additive edits to a shared representation.\""
+            },
+            {
+              "q": "Beyond the gradient argument, how do residual connections help a deep Transformer at the *start* of training?",
+              "choices": [
+                "If each sub-layer's output starts near zero, then $y \\approx x$: every block is approximately the identity, so the deep network initially behaves like a shallow one and gradually \"grows\" capacity as sub-layers learn to contribute.",
+                "They force every sub-layer output to be exactly zero, freezing the network until the learning rate is raised.",
+                "They normalize the residual stream to unit variance, a job LayerNorm cannot perform.",
+                "They randomly drop sub-layers at initialization, acting like dropout to prevent early overfitting."
+              ],
+              "answer": 0,
+              "explain": "With sub-layer outputs near zero at init, $y = x + F(x) \\approx x$ — the network starts close to the identity and never has to learn the identity from scratch through dozens of layers. This well-conditioned start complements the gradient benefit (the $I$ term that carries gradients undiminished)."
+            },
+            {
+              "q": "GPT and BERT replaced the original Transformer's ReLU activation with GELU. What practical property does GELU have that ReLU lacks?",
+              "choices": [
+                "GELU outputs are bounded to $[0,1]$, acting like a probability, whereas ReLU is unbounded.",
+                "GELU is smooth, so it has a nonzero gradient for small negative inputs, unlike ReLU's hard cutoff at zero — which tends to train slightly better.",
+                "GELU has no learnable parameters, while ReLU requires a learned slope per neuron.",
+                "GELU is exactly linear, removing the nonlinearity that ReLU introduces."
+              ],
+              "answer": 1,
+              "explain": "$\\text{GELU}(z) = z\\,\\Phi(z)$ is a smooth gate. Unlike ReLU, which is exactly zero (and has zero gradient) for all negative inputs, GELU passes a small, smoothly-varying signal for small negatives, so gradients don't hard-vanish there — it tends to optimize a bit better in practice. (GELU is not bounded to $[0,1]$, and neither activation has learnable parameters.)"
             }
           ],
           "flashcards": [
@@ -1457,6 +1589,50 @@
               ],
               "answer": 0,
               "explain": "Rotation matrices are orthogonal and preserve norm, so lengths are unchanged; the positional signal lives in the rotation angle, which alters the *relative* orientation between rotated queries and keys. RoPE multiplicatively rotates (it does not additively inject a vector like sinusoidal encodings, nor does it scale magnitudes by position)."
+            },
+            {
+              "q": "RoPE rotates the query and key vectors but is deliberately *not* applied to the value vectors. Why?",
+              "choices": [
+                "Because rotating $V$ would change its length, and only $V$'s length carries content.",
+                "Position should influence *which* tokens a query attends to (a function of $Q$ and $K$ in the score), not corrupt the *content* that is retrieved (carried by $V$).",
+                "Because $V$ is shared across all heads, so rotating it would break multi-head attention.",
+                "Because the value vectors are already rotated implicitly by the softmax, so rotating them again would double-count position."
+              ],
+              "answer": 1,
+              "explain": "Position belongs in the matching step — RoPE rotates $Q$ and $K$ so the score depends on the offset $n-m$. The values carry the information actually blended into the output; rotating them would inject position into the retrieved content itself, which is not wanted. (RoPE rotations are orthogonal, so they also don't change vector lengths.)"
+            },
+            {
+              "q": "How are sinusoidal (and learned absolute) positional encodings combined with the token representations, and what limitation does that placement create?",
+              "choices": [
+                "They are *added* to the token embeddings at the input ($X + PE$); because position is injected only once at the bottom, the signal must survive every subsequent layer's transformations to remain useful.",
+                "They are *multiplied* into the attention scores at every layer, so position is refreshed in each block.",
+                "They replace the token embeddings entirely, so the model sees position instead of token identity.",
+                "They are concatenated to the value vectors inside each attention head, doubling $d_v$."
+              ],
+              "answer": 0,
+              "explain": "The original scheme feeds the model $X + PE$ — a fixed (or learned) vector added to each token embedding at the input. A consequence is that the positional signal is present only at the bottom of the stack and must propagate through every layer; relative schemes and RoPE instead inject position inside the attention computation (and RoPE re-applies it every layer)."
+            },
+            {
+              "q": "Relative position schemes (Shaw et al. 2018, Transformer-XL, T5) differ from absolute encodings in what fundamental way?",
+              "choices": [
+                "They remove position information entirely and rely on the FFN to infer order from content.",
+                "They still tag each token with its absolute index, but use a larger lookup table to extend the context window.",
+                "They apply a different learned rotation to the value vectors at each position.",
+                "They encode position as a function of the *offset* $i-j$ between query position $i$ and key position $j$, injected into the attention scores — T5, for instance, adds a single learned scalar bias per distance bucket to the logits."
+              ],
+              "answer": 3,
+              "explain": "Instead of \"you are token #7,\" relative schemes ask \"how far apart are these two tokens?\" — adding a term that depends on $i-j$ to the attention score. This matches how language works (agreement depends on the gap, not the absolute indices) and behaves uniformly along the sequence. T5's variant is just a learned scalar bias per distance bucket."
+            },
+            {
+              "q": "Why is RoPE central to the rapid growth of context windows (2K → 128K+), in a way learned absolute embeddings could never be?",
+              "choices": [
+                "RoPE stores a separate trained embedding for every position up to 128K, so no extrapolation is ever needed.",
+                "RoPE removes the softmax, so attention cost no longer grows with sequence length.",
+                "RoPE's rotation angles are defined for *any* position (no lookup table to exhaust), so its continuous parametrization allows cheap extensions — Position Interpolation, NTK-aware scaling, YaRN — that rescale a few angles plus light fine-tuning; a learned table has nothing continuous to interpolate.",
+                "RoPE is applied to the values, which lets the model compress long contexts into fewer tokens."
+              ],
+              "answer": 2,
+              "explain": "Because position enters as a continuous rotation angle (no per-position parameter), you can rescale or reinterpolate angles to fit a longer range and recover quality with a little fine-tuning (PI, NTK, YaRN). A learned-embedding model has a hard wall at $L_{\\max}$ — there is no continuous quantity to interpolate, so extending it means retraining."
             }
           ],
           "flashcards": [
