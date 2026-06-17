@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 161 — MCQ arc → Deep Learning · Foundations 12 → 16 (content — owner's #1 ask; 4th topic opens)
+The arc opens its **fourth topic, Deep Learning**, with the *Foundations* module. **+4 new MCQs each** to all three
+lessons (**+12, bank 2,044 → 2,056**), stating the bedrock the existing 12 assumed: supervised-vs-unsupervised /
+classification-vs-regression / the goal is *generalization* / what a validation set is for; weights & bias are the
+learnable parameters / "hidden" layers / softmax for $K$-class output / the forward pass computes the output; ReLU
+$=\max(0,z)$ / $\tanh$ range $(-1,1)$ / why ReLU avoids vanishing gradients ($\phi'=1$ for $z>0$) / sigmoid for a binary
+output. Answer positions shuffled ([2,0,3,1]/[1,3,0,2]/[3,1,2,0]).
+- **Verified**: byte-stable JSON round-trip (diff +132 localized insertions); `node gate.js` ALL GREEN (2,056 MCQs);
+  direct key-dump confirms the shuffled indices; an independent adversarial fact-check agent returned **ALL PASS** (the
+  validation-vs-test, single-sigmoid-is-binary-only, forward-pass-not-backprop, and ReLU-not-smooth/bounded/probabilistic
+  distractors all checked); render-check on the Activation-Functions quiz → `errs=0 | "Question 1 of 16" | rawDollars=0 kErr=0`.
+  SW cache **v103 → v104**; README 2,044 → 2,056.
+- **Arc progress**: Algorithms ✓, Linear Algebra ✓, Calculus ✓; **Deep Learning now 1/7** (foundations). Remaining DL:
+  training-mechanics, generalization, convolutional, sequences-and-attention, transformers, generative. Then RL/LLM/PS.
+
 ## iter 160 — Per-route document titles (a11y / UX) + ★160 reflection
 The SPA left the browser-tab title stuck on "Atlas · Personal Learning Codex" for *every* route — so screen-reader users
 heard no page-change announcement on navigation, and browser history / bookmarks / open tabs were all indistinguishable.

@@ -149,6 +149,50 @@
               ],
               "answer": 2,
               "explain": "Parametric vs. non-parametric is about whether the effective complexity grows with the number of training examples $n$: $k$-NN's stored table grows with $n$ (non-parametric), while linear regression's $\\theta\\in\\mathbb{R}^d$ is fixed regardless of $n$ (parametric). 'Non-parametric' does not mean 'no parameters,' and the absolute count is irrelevant."
+            },
+            {
+              "q": "What distinguishes *supervised* learning from *unsupervised* learning?",
+              "choices": [
+                "Supervised learning is always faster",
+                "Supervised learning only uses neural networks",
+                "Supervised learning trains on labeled examples (input–target pairs); unsupervised learning finds structure in unlabeled data",
+                "Unsupervised learning requires more data by definition"
+              ],
+              "answer": 2,
+              "explain": "In supervised learning each training example carries a target/label, and the model learns the input→output mapping (classification, regression). Unsupervised learning has no labels — it discovers structure like clusters (k-means) or low-dimensional representations (PCA, autoencoders)."
+            },
+            {
+              "q": "The difference between *classification* and *regression* is that:",
+              "choices": [
+                "classification predicts a discrete category/label, while regression predicts a continuous numeric value",
+                "classification is supervised but regression is unsupervised",
+                "they are two names for the same task",
+                "regression always uses more features"
+              ],
+              "answer": 0,
+              "explain": "Both are supervised, but the *output type* differs: classification assigns a class (cat/dog, spam/not), regression outputs a real number (house price, temperature). The choice drives the loss (cross-entropy vs MSE) and the output activation (softmax/sigmoid vs identity)."
+            },
+            {
+              "q": "The ultimate goal of a supervised learning model is to:",
+              "choices": [
+                "drive the training error to exactly zero",
+                "memorize the training set perfectly",
+                "run as fast as possible",
+                "generalize — perform well on new, unseen data from the same distribution"
+              ],
+              "answer": 3,
+              "explain": "Training accuracy is only a proxy; what matters is *generalization* to unseen data. A model that memorizes the training set (zero training error) but fails on new data is *overfitting* — the central failure mode the whole field guards against."
+            },
+            {
+              "q": "What is the role of a separate *validation* set (distinct from the test set)?",
+              "choices": [
+                "to train the model's weights",
+                "to tune hyperparameters and choose between models during development, without touching the final test set",
+                "to report the final accuracy you publish",
+                "it has no real purpose"
+              ],
+              "answer": 1,
+              "explain": "Weights are learned on the *training* set; the *validation* set guides choices made by you — learning rate, architecture, when to stop. The *test* set is touched only once, at the end, for an honest generalization estimate. Tuning on the test set leaks information and inflates the reported score."
             }
           ],
           "flashcards": [
@@ -344,6 +388,50 @@
               ],
               "answer": 2,
               "explain": "As $z\\to+\\infty$, $\\sigma(z)\\to 1$, and then $\\sigma'(z)=\\sigma(z)(1-\\sigma(z))\\to 1\\cdot 0=0$. The output saturates and the gradient vanishes, slowing learning. The distractor wrongly assumes a large output means a large derivative; in fact saturation kills the gradient."
+            },
+            {
+              "q": "In a neuron's computation $\\sigma(\\mathbf{w}\\cdot\\mathbf{x}+b)$, the weights $\\mathbf{w}$ and bias $b$ are:",
+              "choices": [
+                "fixed constants chosen by hand",
+                "the learnable parameters adjusted during training (weights scale each input's influence; the bias shifts the threshold)",
+                "the inputs to the neuron",
+                "the neuron's outputs"
+              ],
+              "answer": 1,
+              "explain": "$\\mathbf{w}$ and $b$ are exactly what learning tunes (via gradient descent). Each weight sets how strongly its input pushes the pre-activation $z=\\mathbf{w}\\cdot\\mathbf{x}+b$; the bias offsets $z$ so the neuron can fire even when inputs are zero. A whole network is just many such parameters."
+            },
+            {
+              "q": "In a multilayer perceptron, the layers between the input and the output are called:",
+              "choices": [
+                "bias layers",
+                "activation layers",
+                "output layers",
+                "hidden layers"
+              ],
+              "answer": 3,
+              "explain": "The input layer holds the features and the output layer produces predictions; everything in between is a *hidden* layer — 'hidden' because its activations aren't directly observed as inputs or outputs. 'Deep' learning just means many hidden layers."
+            },
+            {
+              "q": "For a $K$-class classification network, the final layer typically applies ___ to turn its scores into class probabilities.",
+              "choices": [
+                "softmax",
+                "ReLU",
+                "the identity (no activation)",
+                "a single sigmoid"
+              ],
+              "answer": 0,
+              "explain": "Softmax exponentiates and normalizes the $K$ output scores into a probability distribution (all positive, summing to 1). A single sigmoid handles only the *binary* case; ReLU and the identity don't produce normalized probabilities."
+            },
+            {
+              "q": "The *forward pass* of a neural network:",
+              "choices": [
+                "computes the gradients of the loss",
+                "updates the weights",
+                "feeds the input through the layers to compute the output (prediction)",
+                "is just another name for backpropagation"
+              ],
+              "answer": 2,
+              "explain": "The forward pass evaluates the network — input → hidden layers → output — producing the prediction (and the loss). The *backward* pass (backpropagation) then computes gradients of that loss; the optimizer uses them to update weights. Forward computes, backward learns."
             }
           ],
           "flashcards": [
@@ -539,6 +627,50 @@
               ],
               "answer": 2,
               "explain": "GELU is smooth everywhere, so it has no nondifferentiable kink and retains a small nonzero gradient for slightly negative $z$, letting units near the threshold keep learning instead of being hard-clipped to zero like ReLU. It does not make outputs always positive, nor does it pass full gradient for large negative $z$ (where $\\Phi(z)\\to 0$ and the function saturates)."
+            },
+            {
+              "q": "The ReLU activation is defined as:",
+              "choices": [
+                "$\\dfrac{1}{1+e^{-z}}$",
+                "$\\tanh(z)$",
+                "$z^2$",
+                "$\\max(0, z)$"
+              ],
+              "answer": 3,
+              "explain": "ReLU (rectified linear unit) is $\\max(0,z)$: it passes positive inputs through unchanged and clamps negatives to $0$. Cheap to compute, and its derivative is $1$ for $z>0$ — which is why gradients don't vanish through many layers the way they do with sigmoid/tanh."
+            },
+            {
+              "q": "The $\\tanh$ activation outputs values in the range:",
+              "choices": [
+                "$(0, 1)$",
+                "$(-1, 1)$",
+                "$(0, \\infty)$",
+                "$(-\\infty, \\infty)$"
+              ],
+              "answer": 1,
+              "explain": "$\\tanh$ squashes any real input into $(-1, 1)$, and it is *zero-centered* (output $0$ at $z=0$) — its advantage over the sigmoid, whose $(0,1)$ output is always positive and can bias the next layer's gradients."
+            },
+            {
+              "q": "A key reason ReLU is preferred over sigmoid/tanh in deep hidden layers is that:",
+              "choices": [
+                "it outputs valid probabilities",
+                "it is bounded between 0 and 1",
+                "its gradient is exactly $1$ for positive inputs, so it doesn't saturate — gradients flow through many layers",
+                "it is smooth and differentiable everywhere"
+              ],
+              "answer": 2,
+              "explain": "Sigmoid and tanh *saturate*: for large $|z|$ their derivatives shrink toward $0$, so gradients vanish across deep stacks. ReLU's derivative is a constant $1$ wherever $z>0$, keeping the gradient signal alive — the key to training very deep networks. (It is *not* smooth at $0$, and its outputs aren't probabilities.)"
+            },
+            {
+              "q": "For the *output* layer of a *binary* classifier, the natural activation is:",
+              "choices": [
+                "the logistic sigmoid (maps the score to a probability in $(0,1)$)",
+                "ReLU",
+                "$\\tanh$",
+                "the identity (no activation)"
+              ],
+              "answer": 0,
+              "explain": "A binary classifier needs a single probability in $(0,1)$ — exactly what the sigmoid produces (paired with binary cross-entropy loss). ReLU/tanh/identity don't give a calibrated probability. (For $K>2$ classes you'd use softmax; for *regression*, the identity.)"
             }
           ],
           "flashcards": [

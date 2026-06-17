@@ -175,6 +175,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 159: MCQ arc → Calculus·Convex & Constrained Optimization 12→16 (+12, bank →2,044). ★ CALCULUS COMPLETE — all 25
    Calc lessons at 16 (3rd topic done, after Algorithms & LA). Adversarial agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v102.
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
+   ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
+   agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   DL REMAINING (MCQ arc): training-mechanics(4), generalization(3), convolutional(3), sequences-attention(3), transformers(3),
+   generative(3). Then RL/LLM/PS.
    ✅ iter 160 (★160): per-route document titles (a11y/UX) — router sets meaningful document.title (lesson/course/viz names
    resolved; pages labeled). errs=0 across ~20 routes; SW cache →v103. ★160 reflection in CHANGELOG (loop healthy, 3/7 topics
    migrated, compass well-rotated). Still-thin: examples, performance (both never a dedicated iter — candidates).
