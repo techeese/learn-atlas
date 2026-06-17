@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 215 — Orthogonal-projection visualizer: least-squares geometry (visualizations)
+New widget **`la-projection`** (the **46th**), embedded in `la-projection-least-squares` after "The Geometry of
+Orthogonal Projection". Chose a topic not visualized in many iters (Linear Algebra) and the concept that underpins
+linear regression / least squares / PCA reconstruction — none of which had a geometric viz.
+- A target vector **b** (gold), a line through the origin **span(a)**, the projection **p = (aᵀb)a** (sage, the
+  "shadow"), and the residual **e = b − p** (rust dashed) drawn with a right-angle marker at p.
+- **Drag b** (or tilt the line) and p slides to stay the **closest point on the line to b** while the right angle is
+  preserved — the live readout shows aᵀe ≈ 0 (the normal equation) and |e| (the minimized distance). This makes
+  "closest point ⇔ perpendicular error" tangible: the geometry behind least squares.
+- Mouse + touch drag; two handles (b-tip, line-tilt); fully synchronous first paint.
+Math validated in node before building: aᵀe = 0 to machine precision for all configs, and |e| equals a brute-force grid
+search of the minimum distance from b to the line — so p is provably the least-squares closest point.
+Verified: `gate.js` ALL GREEN (**46 widgets**, embed resolves); Lab-route screenshots — initial paint shows
+**p=(2.84,1.14)**, |e|=1.47, aᵀe≈0 (err=0), and after **dragging b to (−0.5, 3.2)** p tracks to **(0.67,0.27)**,
+|e|=3.16, aᵀe≈0, right angle preserved (err=0); all-routes smoke (10 routes incl. `#/lab/la-projection` + the embedded
+lesson) **errs=0/kErr=0**; mobile 390px the canvas scales and stays legible. SW cache `atlas-v157` → `atlas-v158`.
+
 ## iter 214 — Deeper dives for the LLM track + homework celebration fix (understandability · correctness)
 The LLMs topic — the owner's frontier interest — had just **1** "Deeper dive" (it sat in the self-attention lesson),
 while it holds some of the hardest "but *why* that detail?" ideas in modern AI. Added **3** (1 → 4), each a

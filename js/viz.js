@@ -2698,4 +2698,75 @@
     loop(function () { if (playing) { frame++; if (frame % 2 === 0) { xi += 1; if (xi >= N) { xi = N; setPlay(false); } if (xslider) xslider.value = (A0 + xi * dx).toFixed(3); draw(); } } });
   });
 
+  /* ========================================================
+     46. Orthogonal projection onto a line — least-squares geometry (Linear Algebra)
+     ===================================================== */
+  register({ id: 'la-projection', topic: 'linear-algebra', title: 'Orthogonal Projection: the Closest Point', blurb: 'Drag the target vector b and watch its shadow p land on the line — the closest point to b. The error e = b − p always meets the line at a right angle (aᵀe = 0, the normal equation). This perpendicular drop is the geometry behind least squares and linear regression.' },
+  function (root) {
+    const W = 520, H = 380, MONO = "JetBrains Mono, monospace";
+    const { c, ctx } = canvas(root, W, H);
+    const info = note(root);
+    const Ox = 200, Oy = 250, s = 46;                          // origin + pixels-per-unit
+    let bx = 2.3, by = 2.5, theta = 0.38, drag = null;        // b vector + line angle
+    const PX = (x, y) => [Ox + x * s, Oy - y * s];            // data -> pixel
+    const aVec = () => [Math.cos(theta), Math.sin(theta)];
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const [ax, ay] = aVec();
+      const dot = bx * ax + by * ay;                           // a·b (a is unit) = projection length
+      const px = dot * ax, py = dot * ay;                      // projection point p
+      const ex = bx - px, ey = by - py;                        // residual e = b - p (⊥ to line)
+      // light grid
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.globalAlpha = 0.5;
+      for (let gx = -3; gx <= 5; gx++) { ctx.beginPath(); ctx.moveTo(PX(gx, -3)[0], PX(gx, -3)[1]); ctx.lineTo(PX(gx, 4)[0], PX(gx, 4)[1]); ctx.stroke(); }
+      for (let gy = -3; gy <= 4; gy++) { ctx.beginPath(); ctx.moveTo(PX(-3, gy)[0], PX(-3, gy)[1]); ctx.lineTo(PX(5, gy)[0], PX(5, gy)[1]); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+      // the line (subspace) through origin, both directions
+      const L = 6; ctx.strokeStyle = p.soft; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(PX(-L * ax, -L * ay)[0], PX(-L * ax, -L * ay)[1]); ctx.lineTo(PX(L * ax, L * ay)[0], PX(L * ax, L * ay)[1]); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '600 11px ' + MONO; ctx.textAlign = 'left';
+      ctx.fillText('line = span(a)', PX(L * ax, L * ay)[0] - 90, PX(L * ax, L * ay)[1] - 8);
+      // residual e (p -> b), dashed, with right-angle marker at p
+      ctx.strokeStyle = p.rust; ctx.lineWidth = 2; ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(PX(px, py)[0], PX(px, py)[1]); ctx.lineTo(PX(bx, by)[0], PX(bx, by)[1]); ctx.stroke(); ctx.setLineDash([]);
+      // right-angle square at p
+      const u = 0.32, sq1 = [px + u * ax, py + u * ay], en = Math.hypot(ex, ey) || 1, sq2 = [px + u * ex / en, py + u * ey / en], sq3 = [sq1[0] + u * ex / en, sq1[1] + u * ey / en];
+      ctx.strokeStyle = p.rust; ctx.lineWidth = 1.4; ctx.beginPath();
+      ctx.moveTo(PX(sq1[0], sq1[1])[0], PX(sq1[0], sq1[1])[1]); ctx.lineTo(PX(sq3[0], sq3[1])[0], PX(sq3[0], sq3[1])[1]); ctx.lineTo(PX(sq2[0], sq2[1])[0], PX(sq2[0], sq2[1])[1]); ctx.stroke();
+      // projection p (sage arrow along the line)
+      arrow(ctx, ...PX(0, 0), ...PX(px, py), p.sage, 3);
+      // target b (gold arrow)
+      arrow(ctx, ...PX(0, 0), ...PX(bx, by), p.gold, 3);
+      // draggable handles
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(...PX(bx, by), 7, 0, 7); ctx.fill();
+      ctx.fillStyle = p.ink; ctx.font = '600 12px ' + MONO; ctx.textAlign = 'left';
+      ctx.fillText('b', PX(bx, by)[0] + 10, PX(bx, by)[1] - 6);
+      ctx.fillStyle = p.sage; ctx.fillText('p', PX(px, py)[0] + 8, PX(px, py)[1] + 16);
+      // a-direction handle (drag to rotate the line)
+      const ah = [2.6 * ax, 2.6 * ay];
+      ctx.strokeStyle = p.violet; ctx.fillStyle = p.violet; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(...PX(ah[0], ah[1]), 6, 0, 7); ctx.stroke();
+      ctx.fillStyle = p.violet; ctx.font = '10px ' + MONO; ctx.fillText('drag to tilt', PX(ah[0], ah[1])[0] + 9, PX(ah[0], ah[1])[1] + 4);
+      // origin dot
+      ctx.fillStyle = p.mute; ctx.beginPath(); ctx.arc(Ox, Oy, 3, 0, 7); ctx.fill();
+      // readout
+      const elen = Math.hypot(ex, ey), aDotE = ax * ex + ay * ey;
+      info.innerHTML = `<b style="color:${p.gold}">b</b> = (${bx.toFixed(2)}, ${by.toFixed(2)}). Its projection <b style="color:${p.sage}">p</b> = (aᵀb)a = (${px.toFixed(2)}, ${py.toFixed(2)}) is the <b>closest point on the line to b</b> — that minimization is exactly least squares. The error <b style="color:${p.rust}">e = b − p</b> has length ${elen.toFixed(2)} and is <b>perpendicular</b> to the line: aᵀe = ${aDotE.toFixed(3)} ≈ 0, the <b>normal equation</b>. Drag <b>b</b> (or tilt the line): p slides to stay directly under b and the right angle never breaks.`;
+    }
+    function hit(mx, my, dx, dy) { const [hx, hy] = PX(dx, dy); return (mx - hx) * (mx - hx) + (my - hy) * (my - hy) <= 196; }
+    function down(ev) { ev.preventDefault(); const q = pointer(c, W, H, ev); const [ax, ay] = aVec(); if (hit(q.x, q.y, bx, by)) drag = 'b'; else if (hit(q.x, q.y, 2.6 * ax, 2.6 * ay)) drag = 'a'; }
+    function move(ev) {
+      if (!drag) return; ev.preventDefault(); const q = pointer(c, W, H, ev);
+      const dx = (q.x - Ox) / s, dy = -(q.y - Oy) / s;
+      if (drag === 'b') { bx = Math.max(-3, Math.min(5, dx)); by = Math.max(-3, Math.min(4, dy)); }
+      else { theta = Math.atan2(dy, dx); }
+      draw();
+    }
+    function up() { drag = null; }
+    c.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+    c.addEventListener('touchstart', down, { passive: false }); c.addEventListener('touchmove', move, { passive: false }); c.addEventListener('touchend', up);
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Orthogonal projection visualizer: a target vector b, a line through the origin spanned by a, and the projection p of b onto the line (the closest point), with the residual e = b − p drawn perpendicular to the line. Drag b or tilt the line to see p track b while the right angle is preserved.');
+    draw();                                                    // synchronous first paint
+  });
+
 })();
