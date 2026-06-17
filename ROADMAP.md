@@ -62,6 +62,7 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    purely lexical); a "Daily Ritual" achievement once Daily-Mix completions are tracked.
    ✅ iter 111: worked examples for the 5 remaining LA lessons (diagonalization/spectral/SVD/PCA/four-subspaces) →
    examples coverage now 148/148 (298 total), all math numerically verified.
+   ✅ iter 112: Learning-Rate Schedule explorer (dl-lr-schedules, 30th viz) — constant/step/exp/cosine/linear + warmup.
    NEGLECTED compass areas to rotate toward: performance (since iter 58), mobile-specific polish, workflow/dev-flow,
    onboarding refresh, route-transition juice, and SVG Knowledge-Map keyboard access (deferred from iter 110).
    MORE VIZ IDEAS still open (backlog below): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space
@@ -127,7 +128,7 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
 - ~~Interleaved review sessions (mix topics) beyond the SRS queue.~~ **partly DONE iter 68** — Daily Mix (`#/session`) chains due cards + a weak-spot quiz + a next lesson into one guided flow.
 - More viz ideas (29 widgets now; CLT iter 74, normal-explorer iter 76, covariance-scatter iter 79, CI-coverage
   iter 84, diffusion noising iter 89, convex-landscape/GD-trap iter 92, hypothesis-test/p-value iter 98, BPE-merge
-  trainer iter 105): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space explorer, a GAN
+  trainer iter 105, LR-schedule explorer iter 112): MDP policy-iteration, a VAE latent-space explorer, a GAN
   training-dynamics demo, a Q-learning/SARSA path demo (would pair with the RL deepening).
   NOTE: viz blurbs AND notes are NOT KaTeX-typeset (the Lab shows them raw) — use plain unicode (xₜ, √, ε, ᾱ), not $...$.
 - Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.

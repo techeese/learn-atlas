@@ -1535,4 +1535,60 @@
     reset();
   });
 
+  /* ========================================================
+     30. Learning-rate schedules — constant / step / exp / cosine / linear, with warmup (DL)
+     ======================================================== */
+  register({ id: 'dl-lr-schedules', topic: 'deep-learning', title: 'Learning-Rate Schedules', blurb: 'Compare constant, step, exponential, cosine and linear schedules — add warmup, set the peak and floor — and watch the learning rate trace its path across training.' },
+  function (root) {
+    const W = 560, H = 320, padL = 60, padR = 16, padT = 22, padB = 40, MONO = 'JetBrains Mono, monospace';
+    const { ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let sched = 'cosine', warm = 0.08, minf = 0.05, peak = 0.0003, marker = 0;
+    const X = p => padL + p * (W - padL - padR);
+    const Y = lr => H - padB - (lr / (peak * 1.08)) * (H - padT - padB);
+    function lrAt(p) {
+      if (warm > 0 && p < warm) return peak * (p / warm);          // linear warmup
+      const q = warm < 1 ? (p - warm) / (1 - warm) : 0, mn = peak * minf;
+      if (sched === 'constant') return peak;
+      if (sched === 'step') return peak * Math.pow(0.5, Math.floor(q * 2.999));
+      if (sched === 'exp') return Math.max(mn, peak * Math.exp(-3 * q));
+      if (sched === 'cosine') return mn + (peak - mn) * 0.5 * (1 + Math.cos(Math.PI * q));
+      if (sched === 'linear') return peak + (mn - peak) * q;
+      return peak;
+    }
+    const LABEL = { constant: 'Constant', step: 'Step decay', exp: 'Exponential decay', cosine: 'Cosine annealing', linear: 'Linear decay' };
+    const DESC = {
+      constant: 'A flat rate — simple, but usually leaves accuracy on the table: nothing anneals it down to settle into a minimum.',
+      step: 'Hold, then cut by half at milestones — the classic ImageNet recipe. Effective, though the drops are abrupt.',
+      exp: 'Multiply the rate down smoothly every step — gentle monotonic decay toward a small floor.',
+      cosine: 'Anneal along a cosine from the peak to a small floor — the modern default for Transformers and LLMs; smooth, and ends very low.',
+      linear: 'Ramp straight down from peak to floor — common with warmup for fine-tuning (the "linear" scheduler).'
+    };
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      if (warm > 0) {                                              // warmup band
+        ctx.fillStyle = p.violet; ctx.globalAlpha = 0.13; ctx.fillRect(X(0), padT, X(warm) - X(0), H - padT - padB); ctx.globalAlpha = 1;
+        ctx.fillStyle = p.violet; ctx.font = '10px ' + MONO; ctx.textAlign = 'center'; ctx.fillText('warmup', (X(0) + X(warm)) / 2, padT + 12);
+      }
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.6; ctx.beginPath();
+      for (let i = 0; i <= 240; i++) { const pp = i / 240, x = X(pp), y = Y(lrAt(pp)); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.stroke();
+      const ml = lrAt(marker), mx = X(marker), my = Y(ml);          // sweeping marker
+      ctx.strokeStyle = p.sage; ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx, H - padB); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.sage; ctx.beginPath(); ctx.arc(mx, my, 5, 0, 7); ctx.fill();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'right';
+      ctx.fillText(peak.toExponential(1), padL - 6, Y(peak) + 3); ctx.fillText('0', padL - 6, H - padB + 3);
+      ctx.textAlign = 'center'; ctx.fillText('training step →', (padL + W - padR) / 2, H - 8);
+      ctx.save(); ctx.translate(15, (padT + H - padB) / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('learning rate', 0, 0); ctx.restore();
+      info.innerHTML = `<b style="color:${p.gold}">${LABEL[sched]}</b>${warm > 0 ? ` · ${Math.round(warm * 100)}% warmup` : ''} · peak ${peak.toExponential(1)}${(sched === 'cosine' || sched === 'linear' || sched === 'exp') ? ` · floor ${Math.round(minf * 100)}%` : ''} &nbsp;·&nbsp; at step ${Math.round(marker * 100)}% → lr ≈ <b style="color:${p.sage}">${ml.toExponential(2)}</b><br>${DESC[sched]}`;
+    }
+    select(ctl, { label: 'schedule', value: sched, options: [{ value: 'cosine', label: 'cosine' }, { value: 'linear', label: 'linear' }, { value: 'step', label: 'step' }, { value: 'exp', label: 'exponential' }, { value: 'constant', label: 'constant' }], onChange: v => { sched = v; draw(); } });
+    slider(ctl, { label: 'warmup %', min: 0, max: 25, step: 1, value: warm * 100, fmt: v => v + '%', onInput: v => { warm = v / 100; draw(); } });
+    slider(ctl, { label: 'floor %', min: 0, max: 50, step: 1, value: minf * 100, fmt: v => v + '%', onInput: v => { minf = v / 100; draw(); } });
+    slider(ctl, { label: 'peak LR', min: 1, max: 30, step: 1, value: peak * 1e4, fmt: v => (v * 1e-4).toExponential(0), onInput: v => { peak = v * 1e-4; draw(); } });
+    draw();                                                        // synchronous first paint
+    loop(() => { marker += 0.004; if (marker > 1) marker = 0; draw(); });
+  });
+
 })();

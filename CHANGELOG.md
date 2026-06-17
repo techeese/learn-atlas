@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 112 — Learning-Rate Schedule explorer — a 30th visualization (visualizations)
+Learning-rate schedules are one of the highest-leverage, least-intuitive training knobs — the DL lesson "Learning Rates,
+Schedules, and the Training Loop" and the LLM "AdamW, Schedules, and Stability" lesson both teach them in prose, but
+there was no way to *see* a schedule's shape. Added **`dl-lr-schedules`**, embedded in that DL lesson right before its
+warmup+cosine worked example. Pick a schedule — **constant · step decay · exponential · cosine annealing · linear** —
+add **linear warmup** (shaded band), set the **peak** and the **floor**, and a sage marker sweeps the curve showing
+"at step X% → lr ≈ …". The info line names the schedule and gives a one-sentence when-to-use (cosine = the modern
+Transformer/LLM default; step = the classic ImageNet recipe; etc.). Canvas widget with a synchronous first paint and a
+single `VIZUtil.loop` for the sweeping marker (no stray loops). Blurb/note use plain unicode (not `$…$`), per the Lab
+convention. SW cache → `atlas-v56`; README 29 → 30 widgets (+Lab blurb). Verified: `node gate.js` ALL GREEN (30 widgets);
+an in-browser run is **errs=0** — the Lab item renders a canvas + the schedule selector + 3 sliders, changing the
+schedule and warmup updates the readout ("Step decay · 15% warmup · peak 3.0e-4 …"), and the widget also hydrates inline
+in the lesson; desktop + 390px screenshots confirm the cosine curve with its warmup band, floor, marker and axes render
+cleanly with no overflow; stray Chrome cleaned up.
+
 ## iter 111 — Worked examples for the 5 remaining Linear-Algebra lessons (examples — owner ask)
 A coverage check found examples had quietly stalled at 143/148 lessons since the iter 47–52 sweep — and the 5 gaps were
 **all computational LA lessons** (Four Fundamental Subspaces/Rank, Diagonalization, Symmetric/Spectral, SVD,
