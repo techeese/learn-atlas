@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 177: MCQ arc → Reinforcement Learning·Dynamic Programming 12→16 (+8, bank →2,152). Both lessons (policy-
+   iteration/value-iteration). RL 2/7 modules. Adversarial agent ALL PASS; positions balanced 2/2/2/2 (distinct
+   patterns); render "of 16" errs=0; SW →v120. RL REMAINING (arc): model-free-prediction(4), function-approximation(2),
+   policy-gradient(3), practice-frontiers(3), advanced(3). Then LLMs, Prob & Stats.
    ✅ iter 176: Glossary expansion +14 ML terms (understandability — non-content; owner's hard-concept-support ask):
    cross-entropy, KL divergence, learning rate, dropout, batch/layer norm, logit, epoch, receptive field, gradient
    clipping, mixed precision, maximum likelihood, perplexity, Markov property (75→89). New terms auto-wrap as inline

@@ -872,6 +872,50 @@
               ],
               "answer": 1,
               "explain": "Greedy improvement always returns a policy with value $\\ge v_\\pi$ (policy improvement theorem). If improvement returns a policy with the same value (a fixed point), the Bellman optimality equation is satisfied, so $v_\\pi=v_*$. Distinct policies can indeed share a value function (e.g. ties in the $\\arg\\max$), so choice 2 is false."
+            },
+            {
+              "q": "What does <em>policy evaluation</em> compute?",
+              "choices": [
+                "It searches for the single best action to take in each state",
+                "The state-value function $v_\\pi$ of a <em>fixed</em> policy $\\pi$ — how much return that policy earns from each state — by iterating the Bellman expectation backup to convergence",
+                "It updates the policy to be greedy with respect to the current values",
+                "It estimates the environment's transition probabilities from sampled data"
+              ],
+              "answer": 1,
+              "explain": "Policy evaluation answers \"how good is <em>this</em> policy?\" — it computes $v_\\pi$ for a fixed $\\pi$. Because $v_\\pi$ is the fixed point of the Bellman expectation operator $T^\\pi$, you can reach it by applying the backup $v_{k+1}=T^\\pi v_k$ repeatedly from any start."
+            },
+            {
+              "q": "In policy iteration, what does the <em>policy-improvement</em> step do?",
+              "choices": [
+                "Re-runs policy evaluation with a smaller discount factor",
+                "Averages the values of all actions in each state",
+                "Adds noise to the policy to encourage exploration",
+                "Builds a new policy that acts greedily with respect to the current value function: $\\pi'(s)=\\arg\\max_a\\big[R(s,a)+\\gamma\\sum_{s'}P(s'\\mid s,a)\\,v_\\pi(s')\\big]$"
+              ],
+              "answer": 3,
+              "explain": "Improvement makes the policy greedy w.r.t. the value of the current policy. The policy-improvement theorem guarantees this new $\\pi'$ is at least as good as $\\pi$ everywhere — so alternating evaluation and improvement can only climb."
+            },
+            {
+              "q": "What is <em>policy iteration</em>?",
+              "choices": [
+                "Alternating policy evaluation and greedy policy improvement, repeating until the policy stops changing — at which point it is optimal",
+                "Running a single Bellman expectation backup once and stopping",
+                "Randomly trying many policies and keeping the best one seen",
+                "Estimating values from Monte-Carlo rollouts with no model"
+              ],
+              "answer": 0,
+              "explain": "Policy iteration loops: evaluate $\\pi$ → improve to $\\pi'$ → evaluate $\\pi'$ → … For a finite MDP it converges to an optimal policy in finitely many steps; when an improvement step returns the same policy, the Bellman optimality equation holds and you are done."
+            },
+            {
+              "q": "Dynamic programming (policy/value iteration) is called <em>planning</em> rather than <em>learning</em>. Why?",
+              "choices": [
+                "Because it uses a neural network to approximate the value function",
+                "Because it only works on continuous state spaces",
+                "Because it assumes the dynamics $P(s'\\mid s,a)$ and reward $R$ are fully known — it computes a solution from the model rather than learning from sampled experience",
+                "Because the agent must physically act in the environment to gather rewards"
+              ],
+              "answer": 2,
+              "explain": "DP needs a <em>model</em>: the transition and reward functions are given, so it solves the MDP by computation. Model-free methods (Monte-Carlo, TD, Q-learning — the next module) instead <em>learn</em> from sampled experience, with no access to $P$ or $R$."
             }
           ],
           "flashcards": [
@@ -1067,6 +1111,50 @@
               ],
               "answer": 0,
               "explain": "Greedifying changes the policy, so the value function (computed for the old policy) no longer matches the new policy — improvement 'breaks' evaluation's consistency, and evaluation then chases the moving target. They cooperate because both drive toward the same fixed point (the Bellman optimality equation), where the policy is greedy w.r.t. its own value."
+            },
+            {
+              "q": "What does <em>value iteration</em> do?",
+              "choices": [
+                "It evaluates a fixed policy to convergence and then stops",
+                "It samples trajectories and averages the observed returns",
+                "It repeatedly applies the Bellman <em>optimality</em> backup (a $\\max_a$ over a one-step lookahead) to the values until they converge to $v_*$ — with no explicit policy maintained until the end",
+                "It enumerates every possible policy and picks the best"
+              ],
+              "answer": 2,
+              "explain": "Value iteration iterates $v_{k+1}=T_* v_k$ where $(T_* v)(s)=\\max_a\\sum_{s',r}p(s',r\\mid s,a)[r+\\gamma v(s')]$. The $\\max_a$ folds greedy improvement into the backup, so there is no separate evaluate-then-improve loop; you read off the greedy policy only at the end."
+            },
+            {
+              "q": "What does the Bellman <em>optimality</em> equation say the optimal value $v_*(s)$ equals?",
+              "choices": [
+                "$\\max_a\\sum_{s',r}p(s',r\\mid s,a)\\big[r+\\gamma\\,v_*(s')\\big]$ — act optimally for one step, then continue optimally",
+                "$\\sum_a \\pi(a\\mid s)\\big[\\dots\\big]$ — an average over a fixed policy's actions",
+                "$R(s)$ — simply the immediate reward in state $s$",
+                "$\\min_a\\big[\\dots\\big]$ — the value of the worst available action"
+              ],
+              "answer": 0,
+              "explain": "The optimality equation replaces the expectation-over-the-policy with a <em>maximization</em> over actions: $v_*(s)=\\max_a q_*(s,a)$. That single $\\max$ is the difference from the Bellman <em>expectation</em> equation, and it is what makes $v_*$ describe optimal (not merely some policy's) behavior."
+            },
+            {
+              "q": "What is <em>Generalized Policy Iteration</em> (GPI)?",
+              "choices": [
+                "A method that only works when the discount factor is exactly 1",
+                "A way to evaluate a policy without any model of the environment",
+                "A schedule for decaying the learning rate during training",
+                "The general pattern of letting policy evaluation and policy improvement interact — at any granularity or order — until they converge to the optimal value and policy; nearly all of RL is an instance of it"
+              ],
+              "answer": 3,
+              "explain": "GPI abstracts away <em>how much</em> you evaluate or improve each round. Policy iteration (evaluate fully) and value iteration (one sweep) are both special cases; Monte-Carlo and TD control are too. Evaluation makes the value consistent with the policy; improvement makes the policy greedy w.r.t. the value; together they converge."
+            },
+            {
+              "q": "Value iteration's loop runs \"until $\\Delta<\\theta$.\" What is this stopping rule, and why is it sound?",
+              "choices": [
+                "Stop once the policy has been improved exactly $|\\mathcal{S}|$ times",
+                "Stop when the largest value change over a sweep, $\\Delta=\\max_s|v_{\\text{new}}(s)-v_{\\text{old}}(s)|$, drops below a small threshold $\\theta$ — sound because the $\\gamma$-contraction bounds the remaining distance to $v_*$",
+                "Stop when every state's value becomes exactly zero",
+                "Stop when the discount factor $\\gamma$ reaches 1"
+              ],
+              "answer": 1,
+              "explain": "Each sweep is a $\\gamma$-contraction, so consecutive iterates get geometrically closer to the unique fixed point $v_*$. A small max-change $\\Delta$ therefore certifies $v_k$ is close to $v_*$ (within $\\tfrac{\\gamma}{1-\\gamma}\\Delta$), giving a principled stopping test."
             }
           ],
           "flashcards": [

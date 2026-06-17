@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 177 — MCQ arc → Reinforcement Learning · Dynamic Programming 12 → 16 (content — owner's #1 ask)
+The arc continues through RL's *Planning with Dynamic Programming* module. Both lessons go 12 → 16 (**+8, bank
+2,144 → 2,152**), stating the bedrock the existing 12 assumed:
+- **Policy Evaluation & Policy Iteration**: what *policy evaluation* computes ($v_\pi$ of a fixed policy via Bellman
+  expectation backups) / what the *policy-improvement* step does (greedy w.r.t. $v_\pi$) / what *policy iteration* is
+  (alternate the two until the policy is stable → optimal) / why DP is *planning* not *learning* (it needs a known model).
+- **Value Iteration & GPI**: what *value iteration* does (iterate the Bellman *optimality* backup — the $\max_a$ —
+  to $v_*$) / what the *Bellman optimality equation* says ($v_*(s)=\max_a\dots$) / what *GPI* is (the unifying
+  evaluation⇄improvement pattern) / the *stopping rule* ($\Delta<\theta$, sound by the $\gamma$-contraction).
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,152 MCQs**; direct key-dump confirms
+  answer indices map to the intended choices, **balanced 2/2/2/2** with two *distinct* per-lesson patterns
+  (1,3,0,2 / 2,0,3,1); an independent adversarial fact-check agent returned **ALL PASS** (it validated the
+  contraction-bound justification of the stopping rule); render-checks on both quizzes → `errs=0 | "Question 1 of 16"
+  | rawDollars=0 kErr=0`; all-routes smoke (11) `errs=0`. SW cache **v119 → v120**; README 2,144 → 2,152. RL now
+  **2/7 modules at 16**.
+
 ## iter 176 — Glossary expansion: +14 high-frequency ML terms (understandability — owner's "hard-concept support" ask)
 The inline `.gloss` tooltips (and the searchable Glossary page) are a core understandability feature, but the 75-term
 glossary was **light on the dense modern-ML vocabulary** that saturates the DL/LLM/RL/Prob-&-Stats lectures — so many
