@@ -671,6 +671,27 @@ body::after {
 .lab-card p { font-size: 13.5px; color: var(--ink-soft); flex: 1; }
 .lab-card .lab-go { font-size: 13px; color: var(--c, var(--gold)); font-family: var(--font-disp); }
 .lab-card .lab-in { font-size: 12px; color: var(--ink-mute); }
+.lab-card .lab-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.lab-card.explored { border-top-color: var(--sage); }
+.lab-card .lab-seen { font-size: 11px; font-family: var(--font-mono); color: var(--sage); white-space: nowrap; flex: none; }
+.lab-hidden { display: none !important; }
+/* Lab browse controls: explored-progress + search + filter */
+.lab-controls { display: flex; flex-direction: column; gap: 14px; margin: 0 0 26px; }
+.lab-prog-top { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+.lab-prog-pct { font-family: var(--font-mono); color: var(--ink-mute); }
+.lab-prog-bar { height: 7px; border-radius: 7px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; }
+.lab-prog-fill { display: block; height: 100%; border-radius: 7px; background: linear-gradient(90deg, var(--sage), color-mix(in srgb, var(--sage) 55%, var(--gold))); transition: width .8s cubic-bezier(.2,.8,.2,1); }
+.lab-tools { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.lab-search { flex: 1; min-width: 200px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-size: 14px; font-family: inherit; }
+.lab-search::placeholder { color: var(--ink-mute); }
+.lab-search:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold-deep); }
+.lab-filter { display: flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; flex: none; }
+.lab-fbtn { padding: 9px 16px; background: var(--panel); color: var(--ink-soft); border: 0; font-family: var(--font-disp); font-size: 13px; cursor: pointer; transition: background .2s, color .2s; }
+.lab-fbtn + .lab-fbtn { border-left: 1px solid var(--line); }
+.lab-fbtn.active { background: var(--gold-deep); color: var(--bg); }
+.lab-fbtn:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.lab-noresults { color: var(--ink-mute); padding: 30px 6px; text-align: center; }
+@media (max-width: 480px) { .lab-tools { flex-direction: column; align-items: stretch; } .lab-fbtn { flex: 1; } }
 
 /* ============================================================
    References / Library

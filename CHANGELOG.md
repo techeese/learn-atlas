@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 193 — Lab gallery: searchable + explored-progress tracking (UI/UX — non-content)
+Non-content rebalance. The Visualization Lab had grown to **41 widgets in a flat, scroll-only grid** with no way to
+search and — despite the `vizSeen` state and the *Full Spectrum* achievement (open every viz) already existing — no
+sign of which you'd opened. Turned the Lab into a **navigable, completable collection** (UI/UX + understandability,
+light gamification), all client-side over the existing per-route render (no new state):
+- **Explored-progress header** — a "N of 41 explored" bar (sage→gold gradient fill) computed from `Store.raw.vizSeen`.
+- **Live search** — a search box filters all 41 cards by title / blurb / the lesson each is embedded in / topic
+  (substring match over a precomputed `data-s` attribute; hides emptied topic groups; shows a "no matches" note).
+- **Unexplored filter** — an All / Unexplored (N) toggle to jump straight to the widgets you haven't opened yet —
+  the fast path to completing *Full Spectrum*.
+- **Per-card "✓ explored" marker** + a sage top-border on opened widgets, so explored vs new is legible at a glance.
+- CSS: `.lab-controls`/`.lab-prog`/`.lab-search`/`.lab-filter`/`.lab-seen`, sage palette, 480px stacking.
+
+Verified: seeded a save with explored viz → "1 of 41 explored" + the explored card shows its ✓ marker + sage border;
+search "gradient" → 5 cards; the Unexplored toggle → 40 of 41; fresh user → "0 of 41", no explored cards, errs=0.
+All-routes smoke (13 routes) errs=0; **390px** the controls stack and the gallery stays legible (screenshot read clean);
+`gate.js` ALL GREEN (data untouched). SW cache `atlas-v135` → `atlas-v136`.
+
 ## iter 192 — MCQ arc → LLM Training module 12→16 (content — owner's #1 ask)
 Resumed the 12→16 MCQ-growth arc: the LLM **Training** module, all 3 lessons **12 → 16 MCQs** (+12; bank
 **2,240 → 2,252**). New foundational questions, adversarially fact-checked (**ALL 12 PASS**), answer positions

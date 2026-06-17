@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 193: **Lab gallery searchable + explored-progress** (UI/UX — non-content rebalance). 41-widget grid got a
+   "N of 41 explored" bar (from `vizSeen`), live search (title/blurb/lesson/topic), an All/Unexplored filter, and a
+   "✓ explored" marker + sage border per opened widget — navigable, completable, feeds *Full Spectrum*. Client-side
+   over the existing render, no new state. Verified: seeded→1/41 + marker; search "gradient"→5; Unexplored→40/41;
+   fresh→0/41; all-routes errs=0; 390px legible; SW →v136.
    ✅ iter 192: MCQ arc → **LLM·Training 12→16** (all 3 lessons — pretraining objective/data/compute, AdamW/schedules/
    stability, scaling laws; +12, bank →2,252). Adversarial ALL 12 PASS; positions balanced 0/1/2/3; byte-stable inject;
    opt + scaling quizzes render "of 16" rawDollars=0 kErr=0; all-routes errs=0; SW →v135. **LLM now 3/6 modules at 16**

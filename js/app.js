@@ -1500,22 +1500,68 @@
   }
   function viewLab() {
     const cat = window.VIZ_CATALOG || [];
+    const seen = Store.raw.vizSeen || {};
+    const total = cat.length;
+    const seenCount = cat.filter(v => seen[v.id]).length;
+    const pct = total ? Math.round(seenCount / total * 100) : 0;
     const byTopic = {};
     cat.forEach(v => { (byTopic[v.topic] = byTopic[v.topic] || []).push(v); });
     const groups = C().map(c => {
       const items = byTopic[c.id] || []; if (!items.length) return "";
-      return `<div class="module reveal"><div class="module-head"><span class="mnum" style="color:${c.color}">${esc(c.icon)}</span><h3>${esc(c.title)}</h3></div>
-        <div class="lab-grid">${items.map(v => { const vl = vizLesson(v.id);
-          return `<a class="lab-card" href="#/lab/${v.id}" data-route style="--c:${c.color}"><h4>${esc(v.title)}</h4><p>${esc(v.blurb)}</p>${vl ? `<span class="lab-in">↳ ${esc(vl.lesson.title)}</span>` : ""}<span class="lab-go">Open ↗</span></a>`; }).join("")}</div></div>`;
+      return `<div class="module reveal lab-group"><div class="module-head"><span class="mnum" style="color:${c.color}">${esc(c.icon)}</span><h3>${esc(c.title)}</h3></div>
+        <div class="lab-grid">${items.map(v => { const vl = vizLesson(v.id); const xp = !!seen[v.id];
+          const s = (v.title + " " + v.blurb + " " + (vl ? vl.lesson.title : "") + " " + c.title).toLowerCase().replace(/["<>]/g, "");
+          return `<a class="lab-card${xp ? " explored" : ""}" href="#/lab/${v.id}" data-route data-s="${s}" data-x="${xp ? 1 : 0}" style="--c:${c.color}"><h4>${esc(v.title)}</h4><p>${esc(v.blurb)}</p>${vl ? `<span class="lab-in">↳ ${esc(vl.lesson.title)}</span>` : ""}<div class="lab-foot"><span class="lab-go">Open ↗</span>${xp ? `<span class="lab-seen">✓ explored</span>` : ""}</div></a>`; }).join("")}</div></div>`;
     }).join("");
+    const unseen = total - seenCount;
     app.innerHTML = `
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Lab</div>
-      <div class="page-head reveal"><div class="eyebrow">${cat.length} interactive widgets</div><h2>Visualization <em>Lab</em></h2>
+      <div class="page-head reveal"><div class="eyebrow">${total} interactive widgets</div><h2>Visualization <em>Lab</em></h2>
       <p>Play with the ideas directly — drag, slide, and animate. Manipulating a concept builds intuition faster than reading about it.</p></div>
+      <div class="lab-controls reveal">
+        <div class="lab-prog">
+          <div class="lab-prog-top"><span>${seenCount} of ${total} explored</span><span class="lab-prog-pct">${pct}%</span></div>
+          <div class="lab-prog-bar" role="img" aria-label="${seenCount} of ${total} visualizations explored"><span class="lab-prog-fill" style="width:${pct}%"></span></div>
+        </div>
+        <div class="lab-tools">
+          <input id="lab-search" type="search" class="lab-search" placeholder="Search ${total} visualizations…" aria-label="Search visualizations">
+          <div class="lab-filter" role="group" aria-label="Filter visualizations">
+            <button class="lab-fbtn active" data-f="all" aria-pressed="true">All</button>
+            <button class="lab-fbtn" data-f="unseen" aria-pressed="false">Unexplored${unseen ? " (" + unseen + ")" : ""}</button>
+          </div>
+        </div>
+      </div>
+      <div id="lab-noresults" class="lab-noresults" hidden>No visualizations match — try another search.</div>
       ${groups || emptyState("🎛️", "No visualizations loaded.")}
     </div>`;
     bindGo();
+    // client-side filter: free-text search + All / Unexplored toggle (no re-render)
+    const search = document.getElementById("lab-search");
+    const fbtns = Array.prototype.slice.call(document.querySelectorAll(".lab-fbtn"));
+    const cards = Array.prototype.slice.call(document.querySelectorAll(".lab-card"));
+    const groupEls = Array.prototype.slice.call(document.querySelectorAll(".lab-group"));
+    const noRes = document.getElementById("lab-noresults");
+    let mode = "all";
+    function apply() {
+      const q = (search && search.value || "").trim().toLowerCase();
+      let shown = 0;
+      cards.forEach(card => {
+        const okText = !q || card.dataset.s.indexOf(q) >= 0;
+        const okMode = mode === "all" || card.dataset.x === "0";
+        const show = okText && okMode;
+        card.classList.toggle("lab-hidden", !show);
+        if (show) shown++;
+      });
+      groupEls.forEach(g => g.classList.toggle("lab-hidden", g.querySelectorAll(".lab-card:not(.lab-hidden)").length === 0));
+      if (noRes) noRes.hidden = shown > 0;
+    }
+    if (search) search.addEventListener("input", apply);
+    fbtns.forEach(b => b.addEventListener("click", () => {
+      mode = b.dataset.f;
+      fbtns.forEach(x => { const on = x === b; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
+      apply();
+    }));
   }
   function viewLabItem(id) {
     const meta = (window.VIZ_CATALOG || []).find(v => v.id === id);
