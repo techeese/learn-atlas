@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 96 — Algorithms — NEW advanced module: Advanced Algorithms & Analysis (3 lessons) (content; "deepen the existing six")
+Continued the deepen-the-six rotation into **Algorithms**, which ended at NP-completeness/strings with no amortized
+analysis, network flow, or advanced data structures — three classic gaps. New 7th module:
+**(1) Amortized Analysis** — average cost over a worst-case <em>sequence</em> (a guarantee, not average-case); the
+aggregate, accounting/banker's, and potential ($\hat c_i=c_i+\Phi_i-\Phi_{i-1}$) methods; the dynamic-array doubling
+($O(1)$ amortized append, and why geometric not constant growth) and binary-counter examples; the hash-table-resize tie-in.
+**(2) Network Flow: Max-Flow & Min-Cut** — flow networks, residual graphs & augmenting paths, Ford–Fulkerson /
+Edmonds–Karp ($O(VE^2)$), the max-flow min-cut theorem (with the residual reachable set as a certifying cut), bipartite
+matching by reduction, and why backward edges are essential.
+**(3) Advanced Data Structures: Union-Find & Range Queries** — DSU with union-by-rank + path compression ($O(\alpha(n))$,
+inverse Ackermann), Kruskal/connectivity uses; prefix sums (static) → Fenwick/BIT (dynamic prefix sums, $O(\log n)$) →
+segment tree (any associative op + range updates via lazy propagation), with a tool-selection guide.
+Each is a full lecture + 6 flashcards + 3 homework + 2 worked examples; MCQs deferred to the pipeline. Algorithms is now
+a **7-module, 23-lesson** course. Site: **145 lessons · 871 flashcards · 433 homework · 282 examples**. SW cache →
+`atlas-v40`; README counts refreshed (lessons/concepts 142→145). Verified: `node gate.js` ALL GREEN (7 topics · 145
+lessons); all three lessons render with **katex-error=0**; course/cheatsheet/map + lessons smoke errs=0; legible at 390px;
+stray Chrome cleaned up. Only **RL** remains for the deepen-the-six arc.
+
 ## iter 95 — "Deeper dive" collapsible for hard-concept support (new functionality / understandability; owner directive 3)
 Addressed a long-neglected owner directive (item 3: "for concepts that are hard to understand, add an EXTRA place/way
 to explain — a deeper-dive / intuition expandable — an alternative explanation"). Added a reusable **`<details class="deep-dive">`**

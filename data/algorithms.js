@@ -3938,6 +3938,198 @@
           ]
         }
       ]
+    },
+    {
+      "id": "a-advanced-techniques",
+      "title": "Advanced Algorithms & Analysis",
+      "lessons": [
+        {
+          "id": "a-amortized-analysis",
+          "title": "Amortized Analysis",
+          "minutes": 16,
+          "content": "<h3>1. The hook: when worst-case-per-operation lies</h3>\n<p>Some operations are <em>usually</em> cheap but <em>occasionally</em> expensive. A dynamic array append is instant — until the array is full and must be copied to a bigger block. Judging it by its worst single step ($O(n)$ for that one resize) wildly overstates the real cost of using it. <strong>Amortized analysis</strong> measures the average cost <em>per operation across a whole sequence</em>, giving an honest, <em>guaranteed</em> bound that the pessimistic per-operation worst case misses.</p>\n\n<h3>2. The idea: average over a sequence, with a guarantee</h3>\n<p>Amortized cost is the total cost of a sequence of $m$ operations divided by $m$. Crucially this is <strong>not</strong> average-case analysis: there is no probability involved. The amortized bound is a <em>worst-case guarantee over the sequence</em> — no matter which operations you run, the total is bounded, so the per-operation average holds even in the worst run. Three techniques compute it: the aggregate, accounting, and potential methods. They always agree; they are different lenses on the same total.</p>\n\n<h3>3. The aggregate method</h3>\n<p>The simplest approach: bound the <em>total</em> cost $T(m)$ of any sequence of $m$ operations, then declare the amortized cost per operation $T(m)/m$. No per-operation cleverness — just sum the whole thing. For a structure whose expensive steps are rare enough, the total stays linear even though individual steps spike.</p>\n\n<h3>4. The accounting (banker's) method</h3>\n<p>Here you <strong>overcharge</strong> cheap operations and store the surplus as <em>credit</em> on the data structure, then spend that saved credit to pay for the rare expensive operations. If you can pick per-operation charges (the amortized costs) so that the credit balance never goes negative, those charges are a valid amortized bound — because the real total can never exceed the total charged. The art is choosing a charge that prepays future blow-ups.</p>\n\n<h3>5. The potential method</h3>\n<p>The most powerful technique defines a <strong>potential function</strong> $\\Phi$ mapping the data structure's state to a non-negative number — \"stored energy.\" The amortized cost of an operation is its real cost plus the change in potential:\n$$\\hat{c}_i = c_i + \\Phi_i - \\Phi_{i-1}.$$\nSumming telescopes: $\\sum \\hat{c}_i = \\sum c_i + \\Phi_m - \\Phi_0$. If $\\Phi_m \\ge \\Phi_0$ (e.g. $\\Phi\\ge0$ and $\\Phi_0=0$), then $\\sum c_i \\le \\sum \\hat{c}_i$ — the amortized total bounds the real total. Cheap operations build potential; expensive ones release it.</p>\n\n<h3>6. The canonical example: a dynamic array</h3>\n<p>A growable array (Python's <code>list</code>, C++'s <code>vector</code>, Java's <code>ArrayList</code>) <strong>doubles</strong> its capacity when full. A single append that triggers a resize copies all $n$ elements — $O(n)$. Yet the amortized cost of append is $O(1)$. <strong>Aggregate view:</strong> across $n$ appends the resizes copy $1+2+4+\\cdots+n < 2n$ elements total, so $n$ appends cost $O(n)$ overall, i.e. $O(1)$ each. <strong>Accounting view:</strong> charge $3$ per append — $1$ to insert, and $2$ saved as credit; by the time the array fills, every element carries enough credit to pay for copying itself (and one earlier element) on the next doubling. <strong>Potential view:</strong> $\\Phi = 2\\cdot(\\text{size}) - (\\text{capacity})$ is $0$ right after a resize and rises to pay for the next one.</p>\n<div class=\"callout\">\n<div class=\"c-tag\">Why doubling, not adding a constant</div>\n<p>Growing by a fixed chunk (say $+10$) makes resizes frequent — $n$ appends would copy $O(n^2)$ elements total, an $O(n)$ amortized cost. <em>Geometric</em> growth (doubling) is exactly what makes the rare-but-big copies sum to $O(n)$, giving $O(1)$ amortized. The growth factor is the whole trick.</p>\n</div>\n\n<h3>7. Another: the binary counter</h3>\n<p>Incrementing a binary counter sometimes flips one bit ($0111 \\to 1000$ flips four) and sometimes flips just one. Worst case per increment is $O(\\text{bits})$, but amortized it is $O(1)$: over $n$ increments, bit $0$ flips $n$ times, bit $1$ flips $n/2$ times, bit $i$ flips $n/2^i$ times, so total flips $= n\\sum_i 2^{-i} < 2n$ — linear total, $O(1)$ amortized. The accounting view: charge $2$ per increment to set a bit and prepay its eventual reset.</p>\n\n<h3>8. Why this matters</h3>\n<p>Amortized analysis is how we honestly cost the data structures used everywhere: dynamic arrays, <strong>hash tables</strong> (which resize the same way — $O(1)$ amortized insert despite occasional rehash), splay trees, and union-find. Reporting a hash-table insert as \"$O(n)$ worst case\" would be technically true but practically misleading; \"$O(1)$ amortized\" is the number that actually predicts performance. Knowing the difference lets you choose and reason about structures correctly.</p>",
+          "mcq": [],
+          "flashcards": [
+            {
+              "front": "What does amortized analysis measure, and how does it differ from average-case analysis?",
+              "back": "The average cost per operation over a worst-case <em>sequence</em> of operations — a guarantee with NO probability involved. Average-case uses a probability distribution over inputs; amortized is a deterministic worst-case-over-the-sequence bound."
+            },
+            {
+              "front": "Name the three amortized-analysis methods.",
+              "back": "Aggregate (bound total cost $T(m)$, divide by $m$), accounting/banker's (overcharge cheap ops, store credit to pay expensive ones), and potential (amortized cost $=c_i+\\Phi_i-\\Phi_{i-1}$). All give the same total."
+            },
+            {
+              "front": "State the potential-method formula and why it bounds the real cost.",
+              "back": "$\\hat c_i=c_i+\\Phi_i-\\Phi_{i-1}$. Summing telescopes: $\\sum\\hat c_i=\\sum c_i+\\Phi_m-\\Phi_0$. If $\\Phi_m\\ge\\Phi_0$ then $\\sum c_i\\le\\sum\\hat c_i$, so the amortized total upper-bounds the real total."
+            },
+            {
+              "front": "Why is appending to a doubling dynamic array $O(1)$ amortized despite $O(n)$ worst-case resizes?",
+              "back": "Across $n$ appends the doublings copy $1+2+4+\\cdots+n<2n$ elements total, so $n$ appends cost $O(n)$ overall → $O(1)$ each. The rare big copies sum to linear because growth is geometric."
+            },
+            {
+              "front": "Why double the array instead of growing by a fixed constant?",
+              "back": "Geometric (doubling) growth → total copies $O(n)$ → $O(1)$ amortized. Fixed-increment growth makes resizes too frequent → $O(n^2)$ total copies → $O(n)$ amortized. The growth factor is the trick."
+            },
+            {
+              "front": "Why is incrementing a binary counter $O(1)$ amortized?",
+              "back": "Over $n$ increments, bit $i$ flips $n/2^i$ times, so total flips $=n\\sum_i 2^{-i}<2n$ — linear total → $O(1)$ amortized, even though one increment can flip $O(\\log n)$ bits."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "A dynamic array starts empty with capacity 1 and doubles on overflow. Trace the total number of element-copies caused by resizing during the first 8 appends, and confirm it is less than $2\\cdot8$.",
+              "hint": "A resize happens when appending into a full array; it copies all current elements. Capacities go 1,2,4,8.",
+              "solution": "Resizes trigger on appends 2, 3, 5, and 9 (when capacity 1,2,4,8 fills). Within the first 8 appends: append 2 copies 1, append 3 copies 2, append 5 copies 4 — total copies $=1+2+4=7$ (the doubling to capacity 16 happens on append 9, outside the window). $7 < 16 = 2\\cdot8$. ✓ The copies form a geometric series bounded by $2n$, giving $O(1)$ amortized."
+            },
+            {
+              "prompt": "Using the potential method with $\\Phi = 2\\cdot\\text{size} - \\text{capacity}$ for a doubling array, compute the amortized cost of an append that does NOT trigger a resize (real cost 1).",
+              "hint": "Appending without resize increases size by 1, capacity unchanged. $\\hat c = c + \\Delta\\Phi$.",
+              "solution": "Real cost $c=1$. Size goes up by 1, so $\\Phi$ increases by $2\\cdot1=2$; capacity unchanged, so $\\Delta\\Phi=+2$. Amortized $\\hat c = 1 + 2 = 3$ — a constant. (On a resize append, the real cost spikes but $\\Phi$ drops by about the copy amount, keeping the amortized cost at the same constant $\\approx3$; that cancellation is the whole point.)"
+            },
+            {
+              "prompt": "Explain why reporting a hash-table insert as \"$O(n)$ worst case\" is technically correct but practically misleading, and what bound you should report instead.",
+              "hint": "Hash tables resize (rehash all elements) like dynamic arrays.",
+              "solution": "A single insert can trigger a rehash that re-inserts all $n$ existing keys, so the worst-case <em>single</em> insert is indeed $O(n)$. But rehashes are rare and geometric (the table doubles), so across any sequence of inserts the total rehash work is $O(n)$, making each insert $O(1)$ <strong>amortized</strong>. Quoting only the $O(n)$ worst case predicts performance you will essentially never see in aggregate; the honest, useful bound is $O(1)$ amortized, which is what governs real throughput."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Three methods, one answer: the dynamic array",
+              "body": "Show that $n$ appends to a doubling dynamic array cost $O(n)$ total — hence $O(1)$ amortized — using (a) the aggregate method and (b) the accounting method.",
+              "solution": "(a) <strong>Aggregate.</strong> Each append does $O(1)$ base work, plus copies during resizes. Resizes occur at sizes $1,2,4,\\dots$ up to $n$, copying $1+2+4+\\cdots+2^{\\lfloor\\log_2 n\\rfloor} \\le 2n$ elements in total. So total cost $= O(n) + O(2n) = O(n)$, i.e. $O(1)$ per append amortized.\n\n(b) <strong>Accounting.</strong> Charge each append $\\$3$: $\\$1$ pays the immediate insertion, and $\\$2$ is banked on the newly inserted element. When the array (capacity $k$, now full with $k$ elements) doubles, each of the $k$ elements must be copied ($\\$1$ each). The $k/2$ elements inserted since the previous doubling each banked $\\$2$, totaling $\\$k$ in credit — exactly enough to pay for copying all $k$ elements. The balance never goes negative, so $\\$3$ amortized per append is valid: $O(1)$.\n\nBoth methods give $O(1)$ amortized — different bookkeeping, same conclusion."
+            },
+            {
+              "title": "Amortized ≠ average-case",
+              "body": "A colleague says \"amortized $O(1)$ just means it's $O(1)$ on average, so an adversary feeding worst-case inputs could still make every operation $O(n)$.\" Why is this wrong?",
+              "solution": "Amortized analysis carries <em>no</em> probability and assumes <em>no</em> input distribution — it bounds the total cost of the <strong>worst possible sequence</strong> of operations. For a doubling array, <em>any</em> sequence of $n$ appends (adversarial or not) copies at most $2n$ elements total; there is no ordering of appends that makes the aggregate worse than $O(n)$. So an adversary cannot force every operation to be $O(n)$ — the geometric resize schedule guarantees the expensive operations are spaced out so their costs sum to linear. Average-case analysis <em>would</em> be defeatable by adversarial inputs (it assumes a distribution); amortized analysis is a hard worst-case guarantee over the whole sequence, which is exactly why it's the right tool here."
+            }
+          ]
+        },
+        {
+          "id": "a-network-flow",
+          "title": "Network Flow: Max-Flow & Min-Cut",
+          "minutes": 18,
+          "content": "<h3>1. The hook: pushing the most through a network</h3>\n<p>How much water can flow from a source to a sink through a network of pipes with capacity limits? How many goods can ship from factories to stores through a constrained logistics graph? These are <strong>maximum-flow</strong> problems, and their theory — crowned by the elegant <strong>max-flow min-cut theorem</strong> — solves a startling range of seemingly unrelated tasks: bipartite matching, scheduling, image segmentation, and network reliability.</p>\n\n<h3>2. Flow networks</h3>\n<p>A <strong>flow network</strong> is a directed graph where each edge $(u,v)$ has a non-negative <strong>capacity</strong> $c(u,v)$, with a designated <strong>source</strong> $s$ and <strong>sink</strong> $t$. A <strong>flow</strong> assigns each edge a value $f(u,v)$ obeying two rules:</p>\n<ul>\n<li><strong>Capacity:</strong> $0 \\le f(u,v) \\le c(u,v)$ — no edge carries more than its limit.</li>\n<li><strong>Conservation:</strong> at every node except $s$ and $t$, flow in equals flow out — nothing is created or lost mid-network.</li>\n</ul>\n<p>The <strong>value</strong> of a flow is the net amount leaving the source (equivalently, arriving at the sink). The goal is to maximize it.</p>\n\n<h3>3. Residual graphs and augmenting paths</h3>\n<p>The key engine is the <strong>residual graph</strong>. For each edge, its <em>residual capacity</em> is how much more flow you could push: $c(u,v) - f(u,v)$ forward, plus a <em>backward</em> residual edge of capacity $f(u,v)$ that lets you <em>cancel</em> existing flow. An <strong>augmenting path</strong> is any path from $s$ to $t$ in the residual graph; pushing flow along it (by the path's bottleneck residual capacity) strictly increases the total. The backward edges are what make this correct — they let the algorithm \"undo\" a greedy choice that turned out to block a better routing.</p>\n\n<h3>4. The Ford–Fulkerson method</h3>\n<p><strong>Ford–Fulkerson</strong> is the resulting loop: while an augmenting path exists in the residual graph, push flow along it and update residuals; when none remains, the flow is maximum. With integer capacities it always terminates, since each augmentation raises the integer flow value by at least 1. Choosing augmenting paths by <strong>BFS</strong> (shortest path in edges) gives the <strong>Edmonds–Karp</strong> algorithm, which runs in $O(VE^2)$ — polynomial regardless of capacity sizes.</p>\n\n<h3>5. The max-flow min-cut theorem</h3>\n<p>An <strong>s–t cut</strong> partitions the vertices into two sets, one containing $s$ and the other $t$; its <strong>capacity</strong> is the total capacity of edges crossing from the $s$-side to the $t$-side. Any cut is a bottleneck — flow can never exceed any cut's capacity. The celebrated theorem says the bound is tight:\n$$\\text{maximum flow value} = \\text{minimum cut capacity}.$$\nWhen Ford–Fulkerson halts, the nodes still reachable from $s$ in the residual graph form exactly the minimum cut — so the same run that finds the max flow also <em>certifies</em> it by exhibiting a saturated cut of equal capacity. Max-flow and min-cut are two faces of one optimum (a clean instance of linear-programming duality).</p>\n<div class=\"callout sage\">\n<div class=\"c-tag\">Why a certificate matters</div>\n<p>The min cut is a <em>proof</em> the flow is optimal: every unit must cross that cut, and the cut is full, so no more can pass. You don't have to trust the algorithm — the saturated cut is independently checkable.</p>\n</div>\n\n<h3>6. Application: bipartite matching</h3>\n<p>A beautiful reduction: to find a maximum <strong>matching</strong> in a bipartite graph (pair workers to jobs, students to schools), build a flow network — add a source $s$ connected to every left vertex, a sink $t$ from every right vertex, direct each original edge left-to-right, and give <em>every</em> edge capacity $1$. The maximum integer flow equals the maximum matching: each unit of flow is one matched pair, and unit capacities force the matching constraints. A whole combinatorial problem dissolves into one max-flow call.</p>\n\n<h3>7. Worked intuition: why backward edges are essential</h3>\n<p>Suppose a greedy first path saturates an edge that, in hindsight, should have routed elsewhere. Without backward edges the algorithm would be stuck at a suboptimal flow. The residual backward edge lets a later augmenting path send flow \"in reverse\" along that edge — effectively rerouting the earlier commitment — so Ford–Fulkerson can always reach the true maximum, never trapped by an early greedy mistake. That undo capability is precisely what separates a correct max-flow algorithm from naive greedy.</p>\n\n<h3>8. Why this matters</h3>\n<p>Network flow is one of the most <em>reduction-friendly</em> tools in algorithms: bipartite matching, assignment, project selection, edge/vertex-disjoint paths (Menger's theorem), baseball elimination, and image segmentation (graph cuts in vision) all reduce to max-flow/min-cut. Recognizing that a problem is \"secretly a flow problem\" turns it from a custom puzzle into a solved one. The duality of max-flow and min-cut is also a gateway to linear programming, where the same primal-dual structure appears throughout optimization and ML.</p>",
+          "mcq": [],
+          "flashcards": [
+            {
+              "front": "What two constraints define a valid flow in a flow network?",
+              "back": "Capacity: $0\\le f(u,v)\\le c(u,v)$ on every edge. Conservation: at every node except source $s$ and sink $t$, flow in = flow out. The flow's value is the net amount leaving $s$ (= arriving at $t$)."
+            },
+            {
+              "front": "What is a residual graph and an augmenting path?",
+              "back": "The residual graph has forward residual capacity $c(u,v)-f(u,v)$ plus a backward edge of capacity $f(u,v)$ (to cancel flow). An augmenting path is any $s\\to t$ path in it; pushing its bottleneck capacity strictly increases total flow."
+            },
+            {
+              "front": "Describe the Ford–Fulkerson method and the Edmonds–Karp refinement.",
+              "back": "Ford–Fulkerson: while an augmenting path exists, push flow along it and update residuals; stop when none remains (flow is then max). Edmonds–Karp picks augmenting paths via BFS (shortest in edges), giving $O(VE^2)$."
+            },
+            {
+              "front": "State the max-flow min-cut theorem.",
+              "back": "The maximum $s$–$t$ flow value equals the minimum $s$–$t$ cut capacity. When Ford–Fulkerson halts, nodes reachable from $s$ in the residual graph form the min cut — certifying optimality."
+            },
+            {
+              "front": "Why are backward (residual) edges essential to max-flow correctness?",
+              "back": "They let later augmenting paths cancel/reroute flow committed by earlier greedy choices, so the algorithm is never trapped at a suboptimal flow. Without them, an early bad routing could block the true maximum."
+            },
+            {
+              "front": "How does maximum bipartite matching reduce to max-flow?",
+              "back": "Add source $s\\to$ all left vertices and all right vertices $\\to$ sink $t$, direct original edges left→right, give every edge capacity 1. The max integer flow = max matching (each flow unit = one matched pair; unit capacities enforce matching)."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "A flow network has an $s$–$t$ cut whose crossing edges have capacities $\\{4, 3, 5\\}$ (from the $s$-side to the $t$-side). What does this tell you about the maximum flow, and what additional fact would confirm this cut is minimum?",
+              "hint": "Cut capacity upper-bounds flow; the theorem says the min cut equals max flow.",
+              "solution": "This cut has capacity $4+3+5=12$, so the maximum flow is at most $12$ (any cut bounds the flow). It confirms nothing about the exact max unless this is the <em>minimum</em> cut. If you also exhibit a valid flow of value $12$ (or run Ford–Fulkerson and find the residual graph leaves $s$ reachable to exactly this cut), then by max-flow min-cut the maximum flow is exactly $12$ and this is a minimum cut. A single cut gives only an upper bound; matching it with an equal-value flow proves optimality."
+            },
+            {
+              "prompt": "Edmonds–Karp runs in $O(VE^2)$ while plain Ford–Fulkerson with poorly chosen augmenting paths can be much slower on large integer capacities. What single change produces the polynomial guarantee, and why does it remove the dependence on capacity values?",
+              "hint": "Edmonds–Karp specifies HOW to choose the augmenting path.",
+              "solution": "The change is choosing the augmenting path by <strong>BFS</strong> — always the shortest (fewest-edges) $s\\to t$ path in the residual graph. This caps the number of augmentations at $O(VE)$ regardless of capacities (one can show the BFS distance from $s$ to $t$ never decreases and each edge becomes \"critical\" $O(V)$ times), and each BFS is $O(E)$, giving $O(VE^2)$. Plain Ford–Fulkerson choosing paths badly can augment a number of times proportional to the max flow <em>value</em> (e.g. alternating through a tiny-capacity middle edge), which scales with capacity magnitude. BFS removes that dependence by bounding augmentations combinatorially, not by flow value."
+            },
+            {
+              "prompt": "You must assign 4 workers to 4 jobs where each worker is qualified for only some jobs, maximizing the number of filled jobs. Frame this as a max-flow problem (nodes, edges, capacities).",
+              "hint": "This is maximum bipartite matching; use the standard reduction.",
+              "solution": "Build a flow network: a source $s$, a node per worker (left), a node per job (right), and a sink $t$. Add edge $s\\to w_i$ (capacity 1) for each worker, edge $j_k\\to t$ (capacity 1) for each job, and edge $w_i\\to j_k$ (capacity 1) whenever worker $i$ is qualified for job $k$. Compute the maximum integer flow from $s$ to $t$: its value is the maximum number of worker–job assignments (a matching), and the saturated $w_i\\to j_k$ edges are the assignments. Unit capacities ensure each worker takes at most one job and each job at most one worker."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Finding max-flow and reading off the min-cut",
+              "body": "In a small network, Ford–Fulkerson finds augmenting paths until none remain, settling at flow value 7. Explain how to extract the minimum cut from the final residual graph and why its capacity must also be 7.",
+              "solution": "When no augmenting path remains, run a graph search (BFS/DFS) from $s$ in the <em>residual</em> graph and let $S$ be the set of reachable vertices; $T$ is the rest (which must contain $t$, since $t$ is unreachable — that's why the algorithm stopped). The cut $(S,T)$ is the minimum cut.\n\nIts capacity equals 7 because: (1) every original edge from $S$ to $T$ must be <strong>saturated</strong> ($f=c$), otherwise it would have leftover residual capacity and $t$'s side would be reachable, contradicting $T$ being unreachable; (2) every edge from $T$ back to $S$ must carry <strong>zero</strong> flow, else a backward residual edge would reach into $T$. So the net flow across the cut equals the sum of the saturated forward capacities = the cut capacity, and that net flow equals the flow value 7. Hence max flow (7) = min cut (7), and the cut is a checkable certificate of optimality."
+            },
+            {
+              "title": "Why naive greedy fails without backward edges",
+              "body": "Consider a network where a greedy first augmenting path routes flow through a central edge that a better solution would avoid. Explain, in terms of residual backward edges, how Ford–Fulkerson recovers the optimum where pure greedy would stall.",
+              "solution": "Pure greedy commits flow to the central edge and, finding no more <em>forward</em> capacity anywhere, would stop at a suboptimal value. Ford–Fulkerson instead works on the residual graph, which includes a <strong>backward edge</strong> for the committed central edge (capacity equal to the flow on it). A later augmenting path can travel along that backward edge — mathematically <em>subtracting</em> flow from the central edge — while adding flow on alternative edges, net-rerouting the earlier commitment to a better configuration and increasing the total. Because every greedy mistake leaves an undo path in the residual graph, the method can always keep augmenting until a true maximum is reached; the backward edges are precisely the mechanism that prevents greedy lock-in."
+            }
+          ]
+        },
+        {
+          "id": "a-union-find-range",
+          "title": "Advanced Data Structures: Union-Find & Range Queries",
+          "minutes": 17,
+          "content": "<h3>1. The hook: the right structure makes the impossible cheap</h3>\n<p>Two recurring needs defeat naive approaches at scale: repeatedly merging groups and asking \"are these two in the same group?\", and repeatedly querying a <em>range</em> of an array that keeps changing. Linear scans make each query $O(n)$. Two classic structures — <strong>union-find</strong> and the <strong>Fenwick/segment tree</strong> — crush these to near-constant and logarithmic time, and they power Kruskal's MST, connectivity, and countless competitive-programming and systems tasks.</p>\n\n<h3>2. Union-Find (disjoint-set union)</h3>\n<p><strong>Union-Find</strong> maintains a collection of disjoint sets under two operations: <strong>find(x)</strong> returns a canonical representative (\"root\") of x's set, and <strong>union(x,y)</strong> merges the two sets. Two elements are in the same set iff they share a root. The structure is a forest: each element points to a parent, and each tree's root represents one set. Naively, <code>find</code> walks to the root and <code>union</code> links one root under the other — but careless linking can build tall $O(n)$ chains.</p>\n\n<h3>3. Two optimizations → near-constant time</h3>\n<p>Two cheap tricks make it almost free:</p>\n<ul>\n<li><strong>Union by rank/size:</strong> always attach the <em>smaller</em> tree under the larger, keeping trees shallow.</li>\n<li><strong>Path compression:</strong> during <code>find</code>, re-point every node on the path directly to the root, flattening the tree for next time.</li>\n</ul>\n<p>Together they give an amortized cost of $O(\\alpha(n))$ per operation, where $\\alpha$ is the <strong>inverse Ackermann function</strong> — which is $\\le 4$ for any $n$ that could exist in the physical universe. So union and find are <em>effectively constant time</em>. (This is a famous triumph of amortized analysis — proving the $\\alpha(n)$ bound is deep.)</p>\n<div class=\"callout\">\n<div class=\"c-tag\">Where you've seen it</div>\n<p>Union-Find is the engine of <strong>Kruskal's MST</strong> (add the next-cheapest edge unless it joins two nodes already connected — a single <code>find</code> check), of dynamic <strong>connectivity</strong> queries, of cycle detection in undirected graphs, and of connected-component labeling in image processing.</p>\n</div>\n\n<h3>4. Range queries: the static case first</h3>\n<p>Suppose you must answer many \"sum of $a[i..j]$\" queries on a <em>fixed</em> array. Precompute a <strong>prefix-sum</strong> array $P$ where $P[k]=a[0]+\\cdots+a[k-1]$; then any range sum is $P[j+1]-P[i]$ in $O(1)$, after $O(n)$ preprocessing. Elegant — but it breaks the moment the array changes: a single update forces recomputing $O(n)$ prefix sums. Dynamic data needs more.</p>\n\n<h3>5. Fenwick tree (binary indexed tree)</h3>\n<p>A <strong>Fenwick tree</strong> supports both a point <em>update</em> and a prefix-sum <em>query</em> in $O(\\log n)$, using a clever indexing where each position is responsible for a range whose length is the lowest set bit of its index. Walking up via $i \\mathrel{+}= i\\,\\&\\,(-i)$ (for updates) or down via $i \\mathrel{-}= i\\,\\&\\,(-i)$ (for queries) touches only $O(\\log n)$ entries. It is compact ($n$ integers), cache-friendly, and the go-to for dynamic prefix sums and inversion counting.</p>\n\n<h3>6. Segment tree: the general workhorse</h3>\n<p>A <strong>segment tree</strong> is more general: a balanced binary tree over the array where each node stores an aggregate (sum, min, max, gcd, …) of its segment. Both range query and point update run in $O(\\log n)$, and with <strong>lazy propagation</strong> it also supports $O(\\log n)$ <em>range</em> updates (e.g. \"add 5 to all of $a[i..j]$\"). It uses $O(n)$ space and handles any <em>associative</em> combine operation, making it the Swiss-army knife of range problems where Fenwick (sums only, less flexible) falls short.</p>\n\n<h3>7. Choosing the right tool</h3>\n<p>Match the structure to the access pattern: static range sums → <strong>prefix sums</strong> ($O(1)$ query, no updates); dynamic prefix sums → <strong>Fenwick</strong> (compact, fast, sum-like ops); range min/max/gcd or range updates → <strong>segment tree</strong> (most general). And for \"same group?\" connectivity under merges → <strong>union-find</strong>. Picking correctly turns an $O(nq)$ brute force over $q$ queries into $O((n+q)\\log n)$ or better — often the difference between a solution that runs and one that times out.</p>\n\n<h3>8. Why this matters</h3>\n<p>These structures are the backbone of efficient algorithms on changing data: union-find underlies MST and clustering (single-linkage is Kruskal-like), and range structures power databases, time-series aggregation, computational geometry, and competitive programming. More broadly they teach the central lesson of advanced data structures — that the <em>right representation</em>, often justified by amortized or logarithmic analysis, converts an intractable repeated query into a cheap one.</p>",
+          "mcq": [],
+          "flashcards": [
+            {
+              "front": "What are the two union-find operations, and when are two elements in the same set?",
+              "back": "<code>find(x)</code> returns the canonical root of x's set; <code>union(x,y)</code> merges two sets. Two elements share a set iff <code>find</code> returns the same root. Implemented as a parent-pointer forest."
+            },
+            {
+              "front": "What two optimizations make union-find near-constant time, and what is the resulting bound?",
+              "back": "Union by rank/size (attach smaller tree under larger) + path compression (re-point nodes to the root during find). Together: $O(\\alpha(n))$ amortized per op, $\\alpha$ = inverse Ackermann ($\\le4$ for all practical $n$)."
+            },
+            {
+              "front": "How do prefix sums answer static range-sum queries, and why do they fail under updates?",
+              "back": "Precompute $P[k]=a[0]+\\cdots+a[k-1]$ in $O(n)$; then range sum $a[i..j]=P[j+1]-P[i]$ in $O(1)$. A single element update forces recomputing $O(n)$ prefix sums, so it fails for dynamic arrays."
+            },
+            {
+              "front": "What does a Fenwick tree (BIT) do and at what cost?",
+              "back": "Supports point update and prefix-sum query in $O(\\log n)$ each, using lowest-set-bit indexing ($i\\mathrel{+}=i\\&(-i)$ / $i\\mathrel{-}=i\\&(-i)$). Compact ($n$ ints), cache-friendly; ideal for dynamic prefix sums."
+            },
+            {
+              "front": "What does a segment tree offer beyond a Fenwick tree?",
+              "back": "A balanced tree of segment aggregates: $O(\\log n)$ range query AND point update for any associative op (sum/min/max/gcd), plus $O(\\log n)$ <em>range</em> updates via lazy propagation. More general than Fenwick (which is sum-focused)."
+            },
+            {
+              "front": "Which range structure fits: (a) static range sums, (b) dynamic prefix sums, (c) range min with range updates?",
+              "back": "(a) prefix sums ($O(1)$ query, no updates); (b) Fenwick tree (compact, $O(\\log n)$); (c) segment tree with lazy propagation ($O(\\log n)$, any associative op + range updates)."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "Using union-find with path compression and union by rank, you process the unions (1,2), (3,4), (2,3), then query whether 1 and 4 are connected. What is the answer, and roughly how many parent-pointer hops does the final find take?",
+              "hint": "Track which sets merge; path compression flattens trees so finds are near-constant.",
+              "solution": "After (1,2): {1,2}. After (3,4): {3,4}. After (2,3): the two sets merge into {1,2,3,4} (union by rank attaches one small tree under the other's root). So <code>find(1)</code> and <code>find(4)</code> return the same root — 1 and 4 <strong>are connected</strong>. With path compression, the trees stay essentially flat (height $\\le 2$), so each find takes about 1–2 hops to reach the root, and any longer path is compressed to direct root-pointers on first traversal — the source of the $O(\\alpha(n))\\approx O(1)$ amortized cost."
+            },
+            {
+              "prompt": "You have an array of $n=10^6$ numbers and must process $q=10^6$ operations that mix point-updates and range-sum queries. Compare brute force vs. a Fenwick tree in total time, and explain why prefix sums alone are inadequate.",
+              "hint": "Brute force is $O(n)$ per op; Fenwick is $O(\\log n)$ per op. Prefix sums can't handle updates cheaply.",
+              "solution": "Brute force: each range-sum scan or naive update is $O(n)$, so $q$ operations cost $O(nq)=10^{12}$ — far too slow. A Fenwick tree does each update and each prefix-sum query in $O(\\log n)\\approx20$ steps, so total $\\approx q\\log n = 2\\times10^7$ — about five orders of magnitude faster, easily within limits. Static prefix sums give $O(1)$ queries but a single point update requires rebuilding $O(n)$ of the prefix array, so with $10^6$ updates that is again $O(nq)$; they are only suitable when the array never changes. The Fenwick tree is the right tool precisely because it makes <em>both</em> updates and queries logarithmic."
+            },
+            {
+              "prompt": "For each task, name the most appropriate structure: (a) \"add 7 to every element in $a[3..9]$, repeatedly\" with range-sum queries; (b) detect whether adding an edge to an undirected graph creates a cycle; (c) static array, thousands of range-minimum queries, no updates.",
+              "hint": "Range updates → lazy segment tree; connectivity/cycles → union-find; static range min → sparse table or precomputation.",
+              "solution": "(a) <strong>Segment tree with lazy propagation</strong> — it supports $O(\\log n)$ range updates (\"add to a range\") together with range-sum queries; a plain Fenwick tree handles point updates well but range-update+range-query needs the lazy segment tree (or two BITs with a difference trick). (b) <strong>Union-Find</strong> — before adding edge $(u,v)$, check <code>find(u)==find(v)</code>; if equal, the edge closes a cycle; otherwise <code>union</code> them. (c) A <strong>sparse table</strong> (or any $O(n\\log n)$ precomputation) gives $O(1)$ static range-minimum queries; a segment tree also works at $O(\\log n)$ per query, but since there are no updates the static precomputation is ideal."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Union-Find powering Kruskal's MST",
+              "body": "Explain precisely how union-find makes Kruskal's minimum-spanning-tree algorithm efficient, including what <code>find</code> and <code>union</code> do at each step and the resulting complexity.",
+              "solution": "Kruskal's algorithm sorts all edges by weight, then scans them cheapest-first, adding an edge to the MST <em>only if</em> it connects two currently-separate components (adding an edge within one component would create a cycle). Union-Find tracks the components:\n\n· For each candidate edge $(u,v)$, call <code>find(u)</code> and <code>find(v)</code>. If the roots <strong>differ</strong>, the endpoints are in different components, so the edge is safe to add — include it and <code>union(u,v)</code> to merge the components. If the roots are <strong>equal</strong>, $u$ and $v$ are already connected, so the edge would form a cycle — skip it.\n\nComplexity: sorting the $E$ edges costs $O(E\\log E)$. Each of the $O(E)$ edges does a constant number of union-find operations at $O(\\alpha(V))\\approx O(1)$ amortized each, totaling $O(E\\,\\alpha(V))$. So Kruskal runs in $O(E\\log E)$ overall, dominated by the sort — and union-find is what makes the cycle-checking essentially free, turning a potential $O(VE)$ connectivity bottleneck into near-linear work."
+            },
+            {
+              "title": "Why a Fenwick tree beats recomputing prefix sums",
+              "body": "An array supports the operations: <code>update(i, delta)</code> (add delta to $a[i]$) and <code>prefixSum(k)</code> ($a[0]+\\cdots+a[k]$). Contrast maintaining a prefix-sum array vs. a Fenwick tree for a workload with many interleaved updates and queries.",
+              "solution": "<strong>Prefix-sum array:</strong> <code>prefixSum(k)</code> is $O(1)$ (just read $P[k+1]$), but <code>update(i,delta)</code> must add delta to <em>every</em> prefix entry $P[i+1..n]$ — $O(n)$ per update. With many updates this is $O(n)$ each and dominates; the structure is only good when updates are rare or absent.\n\n<strong>Fenwick tree:</strong> stores partial sums indexed by lowest-set-bit ranges. <code>update(i,delta)</code> climbs $i \\mathrel{+}= i\\,\\&\\,(-i)$, touching $O(\\log n)$ entries; <code>prefixSum(k)</code> descends $k \\mathrel{-}= k\\,\\&\\,(-k)$, also $O(\\log n)$. So <em>both</em> operations are $O(\\log n)$, with no operation ever costing $O(n)$.\n\nFor an interleaved workload of $m$ mixed operations, the prefix-sum array costs up to $O(mn)$ (whenever updates are frequent) while the Fenwick tree costs $O(m\\log n)$ — the latter is the clear winner whenever updates and queries are mixed, which is the realistic case."
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -36,8 +36,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    multipliers). ✅ iter 91: all 3 convex lessons to 12 MCQs (+36; calc topic now 300 / site 1,668) — Calculus fully
    complete again. ✅ iter 93: Linear Algebra → new "Matrix Calculus for ML" module. ✅ iter 94: all 3 matrix-calc
    lessons to 12 MCQs (+36; LA topic now 228 / site 1,704) — Linear Algebra fully complete again.
-   REMAINING advanced gaps to mine, one topic per rotation:
-   Algorithms → amortized analysis or max-flow/min-cut; RL → model-based or offline RL; LLMs are already very deep.
+   ✅ iter 96: Algorithms → new "Advanced Algorithms & Analysis" module (amortized analysis, network flow/max-flow-min-cut,
+   union-find & range queries) — content+cards+homework+examples, NO MCQs yet (add via pipeline next).
+   REMAINING advanced gaps, one topic per rotation:
+   RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
+   and the loop returns to the broad compass / more deeper-dives / new functionality.
    Author with `String.raw` + single-backslash LaTeX; the
    per-topic data file uses its OWN header comment — preserve it. NOTE: name the module variable anything but `module`
    (reserved in CommonJS), and run generators from the learn-atlas dir (relative `data/...` paths).
