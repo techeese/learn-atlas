@@ -12,9 +12,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
 1. **NEW SUBJECT: Probability & Statistics** — IN PROGRESS. ✅ iter 71: Foundations module (4 lessons +
    cards/homework/examples; Bayes viz embedded). ✅ iter 73: Common Distributions module (5 lessons). ✅ iter 74:
    CLT viz (`ps-clt`). ✅ iter 75: all 9 PS lessons now at 12 MCQs (108 topic / 1,464 site). NEXT for this topic:
-   (b) more modules — Joint distributions & independence (covariance/correlation), Limit theorems (LLN/CLT
-   formal), Estimation & confidence intervals, Hypothesis testing, Bayesian inference; (c) new viz (a
-   normal-distribution explorer: μ/σ sliders + shaded empirical rule).
+   ✅ iter 76: normal-distribution explorer viz (`ps-normal-explorer`: μ/σ + empirical-rule bands + interval CDF).
+   NEXT for this topic: (b) more modules — Joint distributions & independence (covariance/correlation), Limit
+   theorems (LLN/CLT formal), Estimation & confidence intervals, Hypothesis testing, Bayesian inference.
    ⚠ Lesson-authoring workflow bug (iter 71): the VERIFY agent overwrote `content` with its review notes for
    3/4 lessons. When authoring future lessons, make the verify schema/prompt EXPLICIT: "return the corrected
    LESSON HTML in `content`; put commentary ONLY in `notes`; never write a summary into `content`." (Recovered
@@ -68,9 +68,9 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
 - ~~"Explain it back" — free-text recall with self-grading (Feynman technique).~~ **DONE iter 53** (Recall tab; self-graded against the lesson's flashcards, feeds mastery + XP). Future: optional AI grading when the tutor lands.
 - Per-concept difficulty rating + adaptive question selection in tests.
 - ~~Interleaved review sessions (mix topics) beyond the SRS queue.~~ **partly DONE iter 68** — Daily Mix (`#/session`) chains due cards + a weak-spot quiz + a next lesson into one guided flow.
-- More viz ideas (22 widgets now; overfitting iter 54, backprop graph iter 59, decoding iter 67, CLT iter 74):
-  a normal-distribution explorer (μ/σ sliders + shaded empirical rule), MDP policy-iteration, a BPE-merge
-  animation, a learning-rate-schedule plot.
+- More viz ideas (23 widgets now; overfitting iter 54, backprop graph iter 59, decoding iter 67, CLT iter 74,
+  normal-explorer iter 76): MDP policy-iteration, a BPE-merge animation, a learning-rate-schedule plot,
+  a joint-distribution / covariance scatter (for the upcoming PS joint-distributions module).
 - Lesson-embedded code exercises (`data-code` with `data-expected`) tied to each algorithm/DL lesson.
 - Reduced-motion + high-contrast accessibility modes.
 - ~~Search ranking improvements (fuzzy, recency, mastery-weighted) in ⌘K.~~ **fuzzy DONE iter 70** (typo-tolerant subsequence tier). Recency/mastery-weighting still open.

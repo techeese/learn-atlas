@@ -207,9 +207,9 @@
     ov.innerHTML = `<div class="intro-card">
       <div class="intro-eyebrow">Welcome to your codex</div>
       <h2 class="intro-title">Atlas</h2>
-      <p class="intro-sub">A personal home for linear algebra, calculus, algorithms, deep learning, reinforcement learning & LLMs — built to make hard ideas <em>click</em> and <em>stick</em>.</p>
+      <p class="intro-sub">A personal home for linear algebra, calculus, algorithms, deep learning, reinforcement learning, LLMs & probability/statistics — built to make hard ideas <em>click</em> and <em>stick</em>.</p>
       <div class="intro-grid">
-        <div class="intro-item"><span>📖</span><b>Learn</b><small>113 lessons with rendered math, worked examples & interactive visualizations.</small></div>
+        <div class="intro-item"><span>📖</span><b>Learn</b><small>122 lessons with rendered math, worked examples & interactive visualizations.</small></div>
         <div class="intro-item"><span>📝</span><b>Master</b><small>Spawn a test in <b>Mastery mode</b> — wrong answers return until you pass.</small></div>
         <div class="intro-item"><span>🗺️</span><b>Navigate</b><small>The Knowledge Constellation maps every concept and what it builds on.</small></div>
         <div class="intro-item"><span>💻</span><b>Build</b><small>Run real Python & JS in the Code Playground, right in the browser.</small></div>

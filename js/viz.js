@@ -1068,4 +1068,77 @@
     reset(true);
   });
 
+  /* ========================================================
+     23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
+     ======================================================== */
+  register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
+  function (root) {
+    const W = 560, H = 380, padL = 30, padR = 14, padB = 42, padT = 22;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const MONO = "JetBrains Mono, monospace";
+    let mu = 0, sd = 1, mode = 'empirical', za = -1, zb = 1;
+    // standard normal CDF via the Abramowitz–Stegun erf approximation
+    function erf(x) { const s = x < 0 ? -1 : 1; x = Math.abs(x); const t = 1 / (1 + 0.3275911 * x);
+      const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
+    const Phi = z => 0.5 * (1 + erf(z / Math.SQRT2));
+    const dom = () => [mu - 4 * sd, mu + 4 * sd];
+    const X = x => { const [lo, hi] = dom(); return padL + (x - lo) / (hi - lo) * (W - padL - padR); };
+    const pdf = x => { const z = (x - mu) / sd; return Math.exp(-(z * z) / 2) / (sd * Math.sqrt(2 * Math.PI)); };
+    const peak = () => 1 / (sd * Math.sqrt(2 * Math.PI));
+    const Y = d => H - padB - (d / peak()) * (H - padT - padB) * 0.92;
+    function fillUnder(x0, x1, color, alpha) {
+      ctx.fillStyle = color; ctx.globalAlpha = alpha; ctx.beginPath();
+      const N = 180; ctx.moveTo(X(x0), H - padB);
+      for (let i = 0; i <= N; i++) { const x = x0 + (x1 - x0) * i / N; ctx.lineTo(X(x), Y(pdf(x))); }
+      ctx.lineTo(X(x1), H - padB); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+    }
+    function vline(x, color, dash) { ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 1.4; if (dash) ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(X(x), Y(pdf(x))); ctx.lineTo(X(x), H - padB); ctx.stroke(); ctx.restore(); }
+    select(ctl, { label: 'mode', value: mode, options: [{ value: 'empirical', label: 'empirical rule' }, { value: 'interval', label: 'interval P(a≤X≤b)' }], onChange: v => { mode = v; toggleIv(); draw(); } });
+    slider(ctl, { label: 'mean μ', min: -3, max: 3, step: 0.1, value: mu, fmt: v => 'μ=' + v.toFixed(1), onInput: v => { mu = v; draw(); } });
+    slider(ctl, { label: 'std dev σ', min: 0.4, max: 2.5, step: 0.1, value: sd, fmt: v => 'σ=' + v.toFixed(1), onInput: v => { sd = v; draw(); } });
+    const ivA = slider(ctl, { label: 'lower bound (z)', min: -4, max: 4, step: 0.1, value: za, fmt: v => 'a=μ' + (v < 0 ? '−' : '+') + Math.abs(v).toFixed(1) + 'σ', onInput: v => { za = v; if (za > zb) zb = za; draw(); } });
+    const ivB = slider(ctl, { label: 'upper bound (z)', min: -4, max: 4, step: 0.1, value: zb, fmt: v => 'b=μ' + (v < 0 ? '−' : '+') + Math.abs(v).toFixed(1) + 'σ', onInput: v => { zb = v; if (zb < za) za = zb; draw(); } });
+    function toggleIv() { const show = mode === 'interval' ? '' : 'none'; ivA.parentElement.style.display = show; ivB.parentElement.style.display = show; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      if (mode === 'empirical') {
+        fillUnder(mu - 3 * sd, mu + 3 * sd, p.sage, 0.16);
+        fillUnder(mu - 2 * sd, mu + 2 * sd, p.gold, 0.20);
+        fillUnder(mu - 1 * sd, mu + 1 * sd, p.rust, 0.30);
+      } else {
+        const a = mu + za * sd, b = mu + zb * sd;
+        fillUnder(a, b, p.gold, 0.34); vline(a, p.gold, false); vline(b, p.gold, false);
+      }
+      // the bell
+      ctx.strokeStyle = p.ink; ctx.lineWidth = 2.4; ctx.beginPath();
+      const [lo, hi] = dom();
+      for (let i = 0; i <= 240; i++) { const x = lo + (hi - lo) * i / 240; i ? ctx.lineTo(X(x), Y(pdf(x))) : ctx.moveTo(X(x), Y(pdf(x))); } ctx.stroke();
+      // baseline + μ marker
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      vline(mu, p.mute, true);
+      // x ticks at μ and μ±1,2,3σ
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'center';
+      for (let k = -3; k <= 3; k++) { const x = mu + k * sd; ctx.fillText((mu + k * sd).toFixed(k === 0 ? 1 : 1), X(x), H - padB + 14); }
+      if (mode === 'empirical') {
+        ctx.font = '600 12px ' + MONO; ctx.textAlign = 'center';
+        ctx.fillStyle = p.rust; ctx.fillText('68.3%', X(mu), Y(peak()) - 6);
+        ctx.fillStyle = p.gold; ctx.fillText('95.4%', X(mu + 1.5 * sd), Y(pdf(mu + 1.5 * sd)) - 6);
+        ctx.fillStyle = p.sage; ctx.fillText('99.7%', X(mu + 2.6 * sd), Y(pdf(mu + 2.6 * sd)) - 6);
+        info.innerHTML = `<b>N(μ=${mu.toFixed(1)}, σ=${sd.toFixed(1)})</b> — the <span style="color:${p.rust}">empirical rule</span>: ~<b>68%</b> of the mass lies within <b>±1σ</b> ` +
+          `(${(mu - sd).toFixed(1)} to ${(mu + sd).toFixed(1)}), ~<b>95%</b> within ±2σ, ~<b>99.7%</b> within ±3σ — for <i>every</i> normal, whatever μ and σ.`;
+      } else {
+        const a = mu + za * sd, b = mu + zb * sd, prob = Phi(zb) - Phi(za);
+        ctx.fillStyle = p.gold; ctx.font = '600 13px ' + MONO; ctx.textAlign = 'center';
+        const midx = (X(a) + X(b)) / 2; ctx.fillText((prob * 100).toFixed(1) + '%', midx, Y(pdf((a + b) / 2)) - 8);
+        info.innerHTML = `<b>P(${a.toFixed(2)} ≤ X ≤ ${b.toFixed(2)}) = <span style="color:${p.gold}">${(prob * 100).toFixed(2)}%</span></b><br>` +
+          `Standardize: z<sub>a</sub>=${za.toFixed(1)}, z<sub>b</sub>=${zb.toFixed(1)}, so it equals Φ(${zb.toFixed(1)}) − Φ(${za.toFixed(1)}) = ${Phi(zb).toFixed(3)} − ${Phi(za).toFixed(3)}. ` +
+          `The probability depends only on the <b>z-bounds</b>, never on μ or σ.`;
+      }
+    }
+    toggleIv(); draw();
+  });
+
 })();

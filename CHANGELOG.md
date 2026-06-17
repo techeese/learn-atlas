@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 76 — Normal Distribution Explorer visualization (visualizations; owner depth direction)
+A new interactive widget (`ps-normal-explorer`, the 23rd) that lets you *feel* the Gaussian. Drag **μ** to slide
+the whole bell; drag **σ** to stretch/pinch it (the x-domain auto-fits to μ±4σ so the curve always fills the
+frame). Two modes via a selector: **empirical rule** shades the nested ±1σ/±2σ/±3σ bands with their fixed
+68.3 / 95.4 / 99.7 % labels — visibly the *same* percentages no matter μ or σ; **interval P(a≤X≤b)** reveals two
+z-bound sliders and computes the exact probability live via the standard-normal CDF (Abramowitz–Stegun erf),
+showing the Φ(z_b)−Φ(z_a) decomposition and reinforcing that the answer depends only on the z-bounds. Embedded in
+the *Normal Distribution & Standardization* lesson (right after the empirical-rule section) and in the Lab.
+Also fixed **stale first-visit onboarding copy** (said "113 lessons" and listed only 6 topics → now "122 lessons"
+and includes Probability & Statistics). SW cache → `atlas-v20`. Verified: renders in Lab (empirical bell with
+shaded bands + labels); interval mode computes P(−1≤X≤1)=68.27 % via Φ; empirical mode hides the bound sliders
+(2 visible), interval shows 4; dragging μ/σ → errs=0; all 19 routes errs=0; legible at 390px (canvas `max-width:100%`);
+`node gate.js` ALL GREEN (23 widgets); stray Chrome cleaned up.
+
 ## iter 75 — Probability & Statistics distribution lessons to 12 MCQs each (content; owner depth direction)
 Brought the 5 *Common Distributions* lessons (Bernoulli & Binomial, Poisson, Geometric & waiting-time,
 Uniform & Exponential, Normal & standardization) from 0 → 12 MCQs each via the proven author→adversarial-verify
