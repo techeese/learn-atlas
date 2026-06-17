@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 182 — De-skew answer positions across the last 9 biased lessons (workflow / content quality)
+`node gate.js` had flagged "answer-position bias (>70% of answers at one index)" for ~120 iterations — a real quiz-
+quality smell in the *original* 12-MCQ sets (their author overwhelmingly favored option B; e.g. `rl-trpo-ppo` and
+`ps-geometric-waiting` were **11/12 at index 1**). The 12→16 arc had been diluting it (13→9 flagged), but 9 lessons
+remained. This resolves it directly with a **correctness-preserving de-skew**: a one-off script reorders each MCQ's
+choices so the correct one lands at a balanced target index, **updating `answer` accordingly** — the correct-choice
+*text is unchanged*, so the answer key is provably still right (the script asserts `choices[newAnswer] === original
+correctText` and aborts otherwise). **81 MCQs across 9 lessons** (in RL, LLM, and Prob-&-Stats) were rebalanced to
+~25–33% max per index.
+- **Safety**: MCQs whose stem/explanation/choices reference an answer by letter or order ("option B", "(a)", "the
+  former"…) were **skipped** (left untouched) so no explanation could end up pointing at a moved choice. A broader
+  positional-language scan surfaced 24 further mentions; each was reviewed and confirmed *content*-legitimate ("the
+  first success", "the first epochs", "compute-optimal choice", and stem scenario-labels "(a)/(b)/(c)" that each answer
+  restates in full) — not answer-position references. The two genuinely-ambiguous reordered MCQs were inspected by
+  hand and confirmed intact.
+- **Verified**: byte-stable JSON round-trip guard per file; the text-invariant assertion passed for all 81 reorders
+  (zero failures → no answer key altered); `node gate.js` **ALL GREEN — and the answer-position-bias note is now GONE
+  entirely** (every lesson ≤ 33% per index); render-checks on the de-skewed `rl-trpo-ppo` and `ps-geometric-waiting`
+  quizzes → `errs=0 | "Question 1 of 12" | rawDollars=0 kErr=0`; all-routes smoke (11) `errs=0`. SW cache **v124 →
+  v125** (3 data files touched). MCQ count unchanged (2,176 — only reordered).
+
 ## iter 181 — MCQ arc → Reinforcement Learning · Function Approximation 12 → 16 (content — owner's #1 ask)
 The arc continues through RL's *Function Approximation & Value-Based Deep RL* module. Both lessons go 12 → 16 (**+8,
 bank 2,168 → 2,176**), stating the bedrock the existing 12 assumed:

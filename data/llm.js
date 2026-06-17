@@ -1593,12 +1593,12 @@
             {
               "q": "In AdamW, what is the essential difference from Adam with L2 regularization (coupled weight decay)?",
               "choices": [
-                "AdamW uses a larger $\\beta_2$ so the variance estimate is smoother",
                 "AdamW applies the decay term directly to the weights, outside the adaptive $\\sqrt{\\hat v_t}$ normalization, instead of adding it to the gradient",
+                "AdamW uses a larger $\\beta_2$ so the variance estimate is smoother",
                 "AdamW removes bias correction from the moment estimates",
                 "AdamW divides the weight decay term by the gradient norm before applying it"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Coupled L2 adds $\\lambda\\theta$ to the gradient, so it flows through the moments and gets divided by $\\sqrt{\\hat v_t}$; AdamW decouples it, applying $\\eta\\lambda\\theta$ directly so every parameter shrinks by the same factor regardless of gradient statistics."
             },
             {
@@ -1616,110 +1616,110 @@
               "q": "A model trained with cross-entropy reaches a per-token loss of $\\mathcal{L} = \\log 10 \\approx 2.30$ nats. What does this tell you?",
               "choices": [
                 "The model is perfectly confident on every token",
-                "Its perplexity is about 10 — on average it is as uncertain as choosing uniformly among 10 tokens",
                 "Its vocabulary size is exactly 10",
+                "Its perplexity is about 10 — on average it is as uncertain as choosing uniformly among 10 tokens",
                 "The loss is in bits, so perplexity is $2^{2.30}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Perplexity is $e^{\\mathcal{L}} = e^{\\log 10} = 10$. The loss is in nats (natural log), so perplexity uses base $e$, and it reflects effective uncertainty, not vocabulary size."
             },
             {
               "q": "Why is global-norm gradient clipping preferred over clipping each gradient element independently?",
               "choices": [
                 "Element-wise clipping is slower to compute on GPUs",
-                "Global-norm clipping preserves the direction of the overall update and only caps its magnitude, whereas element-wise clipping distorts the update direction",
                 "Element-wise clipping cannot be combined with AdamW",
-                "Global-norm clipping also reduces memory usage"
+                "Global-norm clipping also reduces memory usage",
+                "Global-norm clipping preserves the direction of the overall update and only caps its magnitude, whereas element-wise clipping distorts the update direction"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Scaling the whole gradient vector by one factor keeps its direction intact and only bounds the step size; clipping each component separately changes the relative magnitudes and thus the descent direction."
             },
             {
               "q": "The per-position loss is written as $\\ell = \\log\\sum_j e^{z_j} - z_y$. Why is computing the log-sum-exp term directly (rather than first computing the softmax probability and then taking its log) numerically preferable?",
               "choices": [
-                "It is mathematically a different quantity that happens to give a smaller loss",
                 "The log-sum-exp can be stabilized by subtracting $\\max_j z_j$, avoiding overflow of $e^{z_j}$ for large logits",
+                "It is mathematically a different quantity that happens to give a smaller loss",
                 "It removes the dependence on the true-token logit $z_y$, simplifying the gradient",
                 "Softmax is undefined when the vocabulary size $V$ exceeds the batch size"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The fused log-sum-exp form admits the max-subtraction trick ($\\log\\sum_j e^{z_j} = m + \\log\\sum_j e^{z_j - m}$ with $m=\\max_j z_j$), preventing $e^{z_j}$ from overflowing for large logits."
             },
             {
               "q": "Per-token cross-entropy is defined as $\\mathcal{L} = -\\frac{1}{T}\\sum_t \\log p_\\theta(x_t \\mid x_{<t})$. What does minimizing this objective correspond to?",
               "choices": [
-                "Maximizing the likelihood the model assigns to the observed training sequence",
                 "Minimizing the variance of the logits across the vocabulary",
+                "Maximizing the likelihood the model assigns to the observed training sequence",
                 "Maximizing the entropy of the model's predictive distribution",
                 "Forcing the softmax to output a uniform distribution over tokens"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Minimizing the average negative log-likelihood is exactly equivalent to maximum-likelihood training, i.e. making the observed text as probable as possible under the model."
             },
             {
               "q": "In the training loop, `optimizer.zero_grad()` is called at the end of every step. What goes wrong if this call is omitted?",
               "choices": [
                 "The learning-rate schedule resets to its warmup value each step",
-                "Gradients from successive backward passes accumulate, so each `step()` uses the sum of several batches' gradients instead of the current batch's",
                 "The forward pass produces NaNs because logits are never cleared",
+                "Gradients from successive backward passes accumulate, so each `step()` uses the sum of several batches' gradients instead of the current batch's",
                 "Weight decay is applied twice per step instead of once"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "PyTorch accumulates `.grad` across backward calls by design, so skipping `zero_grad()` makes each update use a stale running sum of gradients rather than the current batch's gradient."
             },
             {
               "q": "The lesson frames warmup, cosine decay, gradient clipping, and bf16 as 'machinery that makes the loop stable and fast,' noting naive gradient descent 'diverges into NaNs' at scale. Which statement best captures the role of bf16 in this picture?",
               "choices": [
                 "bf16 changes the loss function from cross-entropy to a smoothed variant to prevent divergence",
-                "bf16 is a numerical format that trades mantissa precision for a wide exponent range, reducing overflow/underflow while speeding up matmuls",
                 "bf16 replaces AdamW by storing optimizer state more compactly",
-                "bf16 guarantees the gradient norm stays below the clipping threshold automatically"
+                "bf16 guarantees the gradient norm stays below the clipping threshold automatically",
+                "bf16 is a numerical format that trades mantissa precision for a wide exponent range, reducing overflow/underflow while speeding up matmuls"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "bf16 keeps fp32's exponent range (8 exponent bits) but uses fewer mantissa bits (7 vs 23), giving large dynamic range (fewer overflow/underflow NaNs) plus faster, memory-lighter matrix multiplications, while leaving the loss and optimizer unchanged."
             },
             {
               "q": "You train with a cosine schedule that warms up over the first 2000 steps to a peak LR of $3\\times10^{-4}$, then decays to a floor of $3\\times10^{-5}$ over the remaining steps. Midway through training you decide to extend the run from 100k to 200k total steps without restarting. What is the most important consequence of this naive change for the schedule?",
               "choices": [
-                "The warmup phase is automatically re-run, causing a second LR spike at step 100k",
                 "The cosine decay is recomputed against the new horizon, so the LR at any given step is higher than originally planned and the model spends much longer at high LR",
+                "The warmup phase is automatically re-run, causing a second LR spike at step 100k",
                 "Nothing changes; cosine decay is independent of the total step count",
                 "The floor LR of $3\\times10^{-5}$ is reached twice as fast, prematurely freezing training"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Cosine decay is parameterized by the fraction step/total_steps, so doubling total_steps stretches the curve: at any fixed step the LR is now higher than before and the LR stays elevated far longer. Warmup is not re-triggered, and the schedule is definitely not independent of the horizon."
             },
             {
               "q": "During training the gradient global norm is usually around $0.4$, but on one batch it spikes to $50$. With `clip_grad_norm_(..., max_norm=1.0)`, by what factor is EACH gradient component scaled on that spiking batch, and what happens to a normal batch with norm $0.4$?",
               "choices": [
-                "Spiking batch: each component multiplied by $1/50$; normal batch ($0.4$): left unchanged",
                 "Spiking batch: each component clamped to $\\pm 1.0$; normal batch: each component clamped to $\\pm 1.0$",
+                "Spiking batch: each component multiplied by $1/50$; normal batch ($0.4$): left unchanged",
                 "Spiking batch: each component multiplied by $1/50$; normal batch ($0.4$): scaled up by $1/0.4$",
                 "Spiking batch: norm set to $1.0$ by subtracting a constant; normal batch: left unchanged"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Global-norm clipping rescales the whole gradient vector by max_norm/norm only when norm exceeds max_norm, preserving direction: here $1.0/50 = 1/50$. A norm of $0.4 < 1.0$ is below the threshold so it is untouched (clipping never amplifies small gradients), and it does not clamp per-element to $\\pm 1.0$."
             },
             {
               "q": "A colleague claims AdamW's per-parameter adaptive scaling means the global learning rate barely matters, so warmup and cosine decay are mostly cosmetic. What is the best rebuttal grounded in how Adam normalizes updates?",
               "choices": [
                 "AdamW does not actually adapt per parameter; only the global LR controls step size, so the schedule is everything",
-                "Adam normalizes each update to roughly unit scale (gradient divided by its RMS), so the effective step size is set almost entirely by the global LR, making warmup and decay essential",
                 "The schedule only affects weight decay in AdamW, which is decoupled, so it has no effect on the gradient-driven update",
+                "Adam normalizes each update to roughly unit scale (gradient divided by its RMS), so the effective step size is set almost entirely by the global LR, making warmup and decay essential",
                 "Adaptive scaling makes early steps tiny automatically, so warmup is redundant even if decay still matters"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Because Adam divides each gradient by an estimate of its own root-mean-square, the update magnitude per parameter is normalized toward order 1, so the actual displacement is governed by the global LR multiplier; that is exactly why warmup (early estimates are noisy/biased) and decay (anneal near a minimum) are critical. The decoupled decay claim is wrong and the 'unit-scale updates make warmup redundant' reasoning ignores that early second-moment estimates are unreliable."
             },
             {
               "q": "Early in training, AdamW's bias-corrected second-moment estimate $\\hat{v}_t$ can be very small for a parameter whose gradients have been near zero, then that parameter suddenly receives a large gradient. Why does this scenario motivate both the $\\epsilon$ in the denominator and LR warmup?",
               "choices": [
                 "$\\epsilon$ and warmup both exist purely to prevent the loss from becoming negative",
-                "A tiny $\\hat{v}_t$ makes the update $\\propto g/(\\sqrt{\\hat{v}_t}+\\epsilon)$ blow up; $\\epsilon$ floors the denominator and warmup keeps the global LR small while the variance estimates are still unreliable",
                 "A tiny $\\hat{v}_t$ shrinks the update to zero, so $\\epsilon$ and warmup are needed to amplify it back to a usable size",
-                "Bias correction already fixes the small-$\\hat{v}_t$ problem, so $\\epsilon$ and warmup only matter in late training"
+                "Bias correction already fixes the small-$\\hat{v}_t$ problem, so $\\epsilon$ and warmup only matter in late training",
+                "A tiny $\\hat{v}_t$ makes the update $\\propto g/(\\sqrt{\\hat{v}_t}+\\epsilon)$ blow up; $\\epsilon$ floors the denominator and warmup keeps the global LR small while the variance estimates are still unreliable"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "When $\\hat{v}_t$ is near zero, dividing the gradient by $\\sqrt{\\hat{v}_t}$ produces an enormous step; $\\epsilon$ caps the denominator from below and warmup holds the overall LR down during the noisy early phase when these estimates are least trustworthy. The opposite claim (update shrinks to zero) inverts the math, and bias correction adjusts the magnitude of $\\hat{v}_t$ but does not stop it from being genuinely tiny."
             }
           ],
@@ -1799,34 +1799,34 @@
             {
               "q": "You want to train a compute-optimal model with $N = 7\\times10^9$ parameters following the Chinchilla rule. Approximately how many training tokens and total FLOPs does this imply?",
               "choices": [
-                "~140B tokens and ~$6\\times10^{21}$ FLOPs",
                 "~7B tokens and ~$3\\times10^{20}$ FLOPs",
+                "~140B tokens and ~$6\\times10^{21}$ FLOPs",
                 "~1.4T tokens and ~$6\\times10^{22}$ FLOPs",
                 "~20B tokens and ~$8\\times10^{20}$ FLOPs"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Chinchilla says $D \\approx 20N = 20 \\times 7\\times10^9 = 1.4\\times10^{11}$ (140B) tokens. Then $C \\approx 6ND = 6 \\times 7\\times10^9 \\times 1.4\\times10^{11} \\approx 5.9\\times10^{21}$ FLOPs, i.e. about $6\\times10^{21}$."
             },
             {
               "q": "What was the core correction the Chinchilla paper made to the earlier Kaplan scaling-law conclusions?",
               "choices": [
-                "Parameters and data should be scaled together (~equal exponents), not parameters far faster than data",
                 "The loss is not actually a power law; it is logarithmic in compute",
                 "The FLOPs heuristic should be $C \\approx 2ND$, not $6ND$",
+                "Parameters and data should be scaled together (~equal exponents), not parameters far faster than data",
                 "There is no irreducible loss floor; loss can be driven to zero with enough scale"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Kaplan recommended spending most extra compute on a bigger model. Chinchilla, with better learning-rate scheduling, found the data and parameter exponents are nearly equal, so both should scale roughly as $\\sqrt{C}$, implying ~20 tokens per parameter."
             },
             {
               "q": "Two labs each have the same training compute budget. Lab A trains a 280B model on ~300B tokens; Lab B trains a 70B model on ~1.4T tokens. The Chinchilla finding predicts that:",
               "choices": [
-                "Lab B's smaller-but-more-data model will generally outperform Lab A's",
                 "Lab A's larger model must win because parameter count dominates loss",
                 "Both will perform identically since FLOPs ($6ND$) are equal",
-                "Neither can be predicted without knowing the exact architecture"
+                "Neither can be predicted without knowing the exact architecture",
+                "Lab B's smaller-but-more-data model will generally outperform Lab A's"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "This mirrors the actual Chinchilla-vs-Gopher result: at equal compute, the smaller model trained on far more data (closer to ~20 tokens/param) won. Equal FLOPs do not imply equal performance — the split between $N$ and $D$ matters."
             },
             {
@@ -1843,34 +1843,34 @@
             {
               "q": "Ignoring the irreducible floor, the lesson notes that loss as a power law $L \\approx (N_c/N)^{\\alpha_N}$ becomes a straight line on a log-log plot. What is the slope of that line versus $\\log N$?",
               "choices": [
-                "$-\\alpha_N$",
                 "$+\\alpha_N$",
+                "$-\\alpha_N$",
                 "$\\alpha_N \\log N_c$",
                 "$L_\\infty$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Taking logs gives $\\log L \\approx \\alpha_N \\log N_c - \\alpha_N \\log N$, a line in $\\log N$ with slope $-\\alpha_N$ and intercept $\\alpha_N \\log N_c$."
             },
             {
               "q": "According to the lesson, what is the core practical payoff of loss being a 'smooth and predictable' function of scale?",
               "choices": [
-                "You can train a few small, cheap models, fit a curve, and forecast a 100x-larger model's loss before spending GPU-hours on it",
                 "You can guarantee any large model will eventually reach exactly zero test loss",
                 "You no longer need any validation data because the curve already tells you the loss",
+                "You can train a few small, cheap models, fit a curve, and forecast a 100x-larger model's loss before spending GPU-hours on it",
                 "Larger models train faster in wall-clock time than smaller ones"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The smoothness lets you extrapolate a power-law fit from small-scale runs to forecast (and de-risk) a much larger run, turning model development from alchemy into engineering."
             },
             {
               "q": "The lesson says each constant-factor increase in scale buys a constant multiplicative drop in the reducible loss. If $\\alpha_N = 0.1$ and the irreducible floor is negligible, roughly how much does the reducible loss change each time you multiply $N$ by 10?",
               "choices": [
-                "It is multiplied by $10^{-0.1} \\approx 0.79$ (about a 21% drop)",
                 "It is divided by 10 (a 90% drop)",
                 "It drops by a fixed 0.1 in absolute loss units",
-                "It is multiplied by 10 (it grows)"
+                "It is multiplied by 10 (it grows)",
+                "It is multiplied by $10^{-0.1} \\approx 0.79$ (about a 21% drop)"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Since $L \\propto N^{-\\alpha_N}$, scaling $N$ by 10 multiplies the reducible loss by $10^{-\\alpha_N} = 10^{-0.1} \\approx 0.79$, a constant multiplicative drop per decade."
             },
             {
@@ -1888,22 +1888,22 @@
               "q": "You have a fixed budget of $C = 1.2\\times10^{24}$ FLOPs and want a compute-optimal model. Using $D \\approx 20N$ and $C \\approx 6ND$, roughly how many parameters $N$ should the model have?",
               "choices": [
                 "~$10^{12}$ (a trillion)",
-                "~$3\\times10^{10}$ (30 billion)",
                 "~$10^{11}$ (100 billion)",
+                "~$3\\times10^{10}$ (30 billion)",
                 "~$2\\times10^{12}$ (two trillion)"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Substituting $D = 20N$ gives $C = 6N(20N) = 120N^2$, so $N = \\sqrt{C/120} = \\sqrt{1.2\\times10^{24}/120} = \\sqrt{10^{22}} = 10^{11}$. The other values either ignore the 120 factor or solve for $D$ instead of $N$."
             },
             {
               "q": "Chinchilla says ~20 tokens per parameter is compute-optimal. Yet production labs routinely train smaller models on far more than 20 tokens/param. Why is this not a contradiction?",
               "choices": [
                 "The 20:1 rule only holds for models under 10B parameters; above that the optimal ratio falls",
-                "Chinchilla minimizes training compute, but overtraining a smaller model lowers the per-query inference cost paid forever at deployment",
                 "Adding more data past 20 tokens/param always lowers training loss faster, so it is strictly better",
+                "Chinchilla minimizes training compute, but overtraining a smaller model lowers the per-query inference cost paid forever at deployment",
                 "More tokens are needed to avoid overfitting once the irreducible floor is reached"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Chinchilla optimizes the one-time training-compute spend. In deployment you pay inference compute per query indefinitely, so it is rational to overtrain a smaller (cheaper-to-serve) model past 20:1, accepting a slightly suboptimal training run. The 20:1 ratio does not depend on a 10B cutoff, and the choice is an economic trade-off, not about overfitting."
             },
             {
@@ -1990,55 +1990,55 @@
               "q": "What does supervised fine-tuning (SFT) primarily optimize, compared to pretraining?",
               "choices": [
                 "A brand-new reinforcement-learning reward objective replacing cross-entropy",
-                "The same cross-entropy next-token loss, but computed (typically) only over the response tokens of (instruction, response) pairs",
                 "A classification loss that labels each prompt with a task category",
+                "The same cross-entropy next-token loss, but computed (typically) only over the response tokens of (instruction, response) pairs",
                 "A contrastive loss that pushes good and bad responses apart"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "SFT keeps the standard next-token cross-entropy objective; what changes is the data (instruction/response demonstrations) and that loss is usually masked to the response tokens. Contrastive/reward objectives belong to later preference-optimization stages."
             },
             {
               "q": "Why does instruction tuning generalize to tasks that were never in the SFT dataset?",
               "choices": [
                 "SFT installs entirely new capabilities the base model lacked, one per training example",
-                "Training on diverse tasks under a common format teaches a transferable meta-skill ('respond to the instruction') that surfaces latent abilities learned during pretraining",
                 "The fine-tuned model memorizes every possible instruction phrasing",
-                "Generalization comes from increasing the model's parameter count during SFT"
+                "Generalization comes from increasing the model's parameter count during SFT",
+                "Training on diverse tasks under a common format teaches a transferable meta-skill ('respond to the instruction') that surfaces latent abilities learned during pretraining"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The capabilities are largely latent from pretraining; diverse-task SFT teaches the model to map instruction-format prompts onto those latent skills, which transfers to unseen instructions. SFT typically unlocks rather than installs skills, and does not change parameter count."
             },
             {
               "q": "A base model and the corresponding instruct/chat model differ mainly in that:",
               "choices": [
-                "The instruct model uses a fundamentally different neural architecture",
                 "The instruct model has had its output distribution reshaped by SFT (and often later alignment) toward helpful, format-consistent responses, while sharing the same architecture",
+                "The instruct model uses a fundamentally different neural architecture",
                 "The base model cannot represent any of the knowledge the instruct model has",
                 "The instruct model no longer predicts tokens; it classifies intents"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Both are next-token predictors with the same architecture; instruction tuning is continued training that shifts the high-probability continuations toward compliant responses. The base model usually already holds the knowledge."
             },
             {
               "q": "In a chat-formatted SFT example, which span is normally INCLUDED in the loss?",
               "choices": [
                 "The system prompt tokens",
-                "The user/instruction tokens",
                 "The assistant response tokens (and end-of-turn token)",
+                "The user/instruction tokens",
                 "All tokens equally, including special role markers"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Masking typically scores only the assistant turn so gradients improve the conditional p(response | prompt); system and user spans serve as context, not prediction targets."
             },
             {
               "q": "All three operations (pretraining, continued pretraining, SFT) share the same mathematical objective. According to the lesson, what actually differs between them?",
               "choices": [
                 "The loss function switches from cross-entropy to a reinforcement reward",
-                "The data distribution trained on and which tokens loss is computed over",
                 "The optimizer and learning-rate schedule are fundamentally different algorithms",
+                "The data distribution trained on and which tokens loss is computed over",
                 "Only SFT uses next-token prediction; the other two use masked language modeling"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The lesson states the objective never really changes (next-token cross-entropy); what changes is the data distribution you train on and which tokens you compute loss over."
             },
             {
@@ -2046,21 +2046,21 @@
               "choices": [
                 "It lacks the factual knowledge that Paris is the capital of France",
                 "Its context window is too short to hold the question",
-                "On the open web, such a prefix is often continued by more quiz questions or trivia, so the model autocompletes that distribution",
-                "Base models are trained to refuse factual questions by default"
+                "Base models are trained to refuse factual questions by default",
+                "On the open web, such a prefix is often continued by more quiz questions or trivia, so the model autocompletes that distribution"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The lesson notes the base model already 'knew' Paris from pretraining; it withholds the answer because on the open web a quiz-style prompt is plausibly continued by more questions or trivia rather than a direct answer."
             },
             {
               "q": "The lesson summarizes alignment as \"distribution engineering, not a new algorithm.\" Which statement best captures this claim?",
               "choices": [
-                "Aligning a model requires inventing a loss function distinct from cross-entropy",
                 "Behavior is shaped mainly by curating the data distribution while keeping the same training objective",
+                "Aligning a model requires inventing a loss function distinct from cross-entropy",
                 "Alignment replaces gradient descent with a sampling-based search procedure",
                 "Distribution engineering means changing the model architecture to add instruction layers"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The lesson frames alignment as steering the data distribution (and which tokens are scored) under the unchanged next-token cross-entropy objective, not as a fundamentally new algorithm."
             },
             {
@@ -2111,11 +2111,11 @@
               "q": "A practitioner claims: \"Instruction tuning works because each desired task (summarize, translate, answer questions) must appear explicitly in the SFT data, so the model memorizes a lookup of task to behavior.\" Why is this view mistaken?",
               "choices": [
                 "The model does learn a literal lookup table, so the claim is actually correct",
-                "SFT teaches the general format and intent of following instructions, letting the model leverage pretrained abilities to generalize to unseen tasks",
                 "Instruction tuning replaces the pretraining knowledge entirely, so no lookup is needed",
+                "SFT teaches the general format and intent of following instructions, letting the model leverage pretrained abilities to generalize to unseen tasks",
                 "Each task requires a separate fine-tuned model, so generalization never occurs"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Instruction tuning generalizes precisely because it teaches the behavior of responding to instructions, activating capabilities already present from pretraining, rather than memorizing a per-task mapping. The other options misstate SFT as a lookup table, as wholesale knowledge replacement, or as requiring one model per task."
             }
           ],

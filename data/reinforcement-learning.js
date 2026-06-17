@@ -2674,12 +2674,12 @@
             {
               "q": "In the policy gradient $\\nabla_\\theta J(\\theta) = \\mathbb{E}_{\\tau\\sim p_\\theta}[\\nabla_\\theta \\log p_\\theta(\\tau)\\, R(\\tau)]$, why does the environment's transition model $p(s_{t+1}\\mid s_t,a_t)$ not appear in the final estimator?",
               "choices": [
-                "Because the transitions are assumed to be deterministic in REINFORCE",
                 "Because $\\log p_\\theta(\\tau)$ splits into a sum, and the transition terms (like $\\rho_0$) contain no $\\theta$, so their gradients are zero",
+                "Because the transitions are assumed to be deterministic in REINFORCE",
                 "Because the transition probabilities are approximated by the value function",
                 "Because the log-derivative trick cancels all probability terms, including the policy"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Taking $\\nabla_\\theta$ of $\\log p_\\theta(\\tau)=\\log\\rho_0+\\sum\\log\\pi_\\theta+\\sum\\log p(s'\\mid s,a)$ kills every term independent of $\\theta$, leaving only $\\sum_t \\nabla_\\theta\\log\\pi_\\theta(a_t\\mid s_t)$ — this is exactly why the method is model-free."
             },
             {
@@ -2697,110 +2697,110 @@
               "q": "Why is subtracting a baseline that depends on the action a BAD idea, whereas one depending only on the state is fine?",
               "choices": [
                 "An action-dependent baseline makes the variance larger but keeps the estimator unbiased",
-                "An action-dependent baseline introduces bias, because the proof of unbiasedness relies on $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)]=0$, which requires $b$ to be constant in $a$",
                 "Both are equally valid; the distinction is only computational",
+                "An action-dependent baseline introduces bias, because the proof of unbiasedness relies on $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)]=0$, which requires $b$ to be constant in $a$",
                 "A state-only baseline is biased, so action-dependence is preferred in practice"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The cancellation $\\mathbb{E}_a[b(s)\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)] = b(s)\\,\\mathbb{E}_a[\\nabla_\\theta\\log\\pi_\\theta]=b(s)\\cdot 0=0$ only goes through when $b$ can be pulled out of the action-expectation; if $b$ depends on $a$ it cannot, and bias appears."
             },
             {
               "q": "Replacing the full return $R(\\tau)$ with the reward-to-go $G_t=\\sum_{t'\\ge t} r_{t'}$ in the REINFORCE estimator does what?",
               "choices": [
                 "Introduces bias but greatly reduces variance",
-                "Keeps the estimator unbiased and reduces variance, by dropping past rewards that an action at time $t$ cannot influence",
                 "Has no effect on either bias or variance",
-                "Reduces bias but increases variance"
+                "Reduces bias but increases variance",
+                "Keeps the estimator unbiased and reduces variance, by dropping past rewards that an action at time $t$ cannot influence"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Rewards before time $t$ are independent of $a_t$ and contribute zero in expectation to its term, so removing them is unbiased; it removes a noisy additive component, lowering variance — a free improvement, analogous in spirit to using a baseline."
             },
             {
               "q": "A robotic arm is controlled by 7 continuous joint torques, each $a_i \\in \\mathbb{R}$. Why does a value-based method like DQN struggle here, while a policy network does not?",
               "choices": [
-                "DQN cannot store a Q-table large enough for 7 dimensions, but a policy network compresses it",
                 "Selecting an action requires $\\arg\\max_a Q(s,a)$, which is itself a hard optimization over a 7-D continuous space at every step, whereas the policy outputs the action in one forward pass",
+                "DQN cannot store a Q-table large enough for 7 dimensions, but a policy network compresses it",
                 "Q-learning needs a reward function while policy gradients do not",
                 "Policy networks are always faster to train than value networks"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Greedy action selection requires solving the inner $\\arg\\max_a Q(s,a)$ at every timestep, which is intractable over continuous high-dimensional actions, whereas a policy network directly emits the action (or its distribution) in a single forward pass."
             },
             {
               "q": "In rock-paper-scissors against an adaptive opponent, the optimal play is uniformly random. Why can a deterministic greedy-over-$Q$ policy NOT achieve this, while a stochastic $\\pi_\\theta$ can?",
               "choices": [
-                "A greedy policy always picks a single action for a given state and cannot represent 'play each option one-third of the time'",
                 "Q-learning cannot handle adversarial rewards at all",
+                "A greedy policy always picks a single action for a given state and cannot represent 'play each option one-third of the time'",
                 "Stochastic policies have more parameters, so they memorize the opponent",
                 "Greedy policies require continuous actions, which RPS lacks"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Acting greedily with respect to $Q$ yields a deterministic action per state, so it cannot represent a genuinely random optimal policy, whereas a parameterized stochastic $\\pi_\\theta$ can output a probability distribution like uniform-random."
             },
             {
               "q": "The lesson argues policy gradients give 'smoother optimization' than value-based methods. What is the core mechanism behind this claimed stability advantage?",
               "choices": [
                 "Policy gradients ignore the value function entirely, removing a source of error",
-                "Small changes in $\\theta$ produce small changes in action probabilities, whereas a tiny change in $Q$ can discontinuously flip the $\\arg\\max$ and abruptly change the policy",
                 "Gradient ascent is mathematically guaranteed to reach the global optimum",
+                "Small changes in $\\theta$ produce small changes in action probabilities, whereas a tiny change in $Q$ can discontinuously flip the $\\arg\\max$ and abruptly change the policy",
                 "Policy networks use Adam while value methods are stuck with plain SGD"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Because the policy depends continuously on $\\theta$, small parameter updates shift action probabilities gradually, avoiding the discontinuous policy jumps that value-based methods suffer when a small $Q$ change flips the $\\arg\\max$."
             },
             {
               "q": "The lesson frames RLHF for large language models as an instance of policy gradients. In that mapping, what plays the role of the policy $\\pi_\\theta$, the action, and the reward respectively?",
               "choices": [
                 "The reward model is the policy, a sentence is the action, and human labels are the reward",
-                "The language model is the policy, a generated token is the action, and a learned preference (reward) model supplies the reward",
                 "The tokenizer is the policy, a word embedding is the action, and perplexity is the reward",
-                "The optimizer is the policy, a gradient step is the action, and the loss is the reward"
+                "The optimizer is the policy, a gradient step is the action, and the loss is the reward",
+                "The language model is the policy, a generated token is the action, and a learned preference (reward) model supplies the reward"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "In RLHF the language model itself is the policy $\\pi_\\theta$, each emitted token is an action, and the reward comes from a learned preference (reward) model, making REINFORCE the conceptual root of the alignment pipeline."
             },
             {
               "q": "In the autodiff implementation, the lesson builds the surrogate loss $L(\\theta) = -\\frac{1}{N}\\sum_t \\log \\pi_\\theta(a_t\\mid s_t)\\,\\hat A_t$ and calls <code>.backward()</code>. Why must $\\hat A_t$ be detached (stop-gradient) rather than left as a live function of $\\theta$?",
               "choices": [
-                "Detaching $\\hat A_t$ is purely a memory optimization and has no effect on the computed gradient",
                 "The policy gradient theorem treats the weight (return/advantage) as a fixed scalar multiplier on the score; letting gradients flow through $\\hat A_t$ would add spurious terms not present in $\\mathbb{E}[\\sum_t \\nabla_\\theta\\log\\pi_\\theta\\,A_t]$",
+                "Detaching $\\hat A_t$ is purely a memory optimization and has no effect on the computed gradient",
                 "Detaching is required because $\\hat A_t$ is always negative and would otherwise flip the sign of the ascent direction",
                 "Without detaching, the loss would be non-differentiable and <code>.backward()</code> would raise an error"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The derived estimator only differentiates the $\\log\\pi_\\theta$ factor and uses $A_t$ as a constant weight; if autodiff also backpropagated through $\\hat A_t$ (which may depend on $\\theta$ via the sampled trajectory or critic) it would inject extra gradient terms that do not belong to $\\nabla_\\theta J$, biasing the update. It is not merely a memory trick, and the sign claim is irrelevant."
             },
             {
               "q": "For a continuous Gaussian policy $\\pi_\\theta(a\\mid s)=\\mathcal{N}\\big(\\mu_\\theta(s),\\sigma^2\\big)$ with fixed $\\sigma$, what is the score $\\nabla_{\\mu}\\log\\pi_\\theta(a\\mid s)$ used to weight the return in REINFORCE?",
               "choices": [
-                "$\\dfrac{a-\\mu_\\theta(s)}{\\sigma^2}$",
                 "$\\dfrac{(a-\\mu_\\theta(s))^2}{2\\sigma^2}$",
+                "$\\dfrac{a-\\mu_\\theta(s)}{\\sigma^2}$",
                 "$\\dfrac{\\mu_\\theta(s)-a}{\\sigma}$",
                 "$-\\dfrac{1}{\\sigma^2}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "From $\\log\\pi_\\theta = -\\frac{(a-\\mu)^2}{2\\sigma^2}+\\text{const}$, differentiating w.r.t. $\\mu$ gives $(a-\\mu_\\theta(s))/\\sigma^2$. Weighted by a positive return, this nudges $\\mu$ toward the sampled action $a$ — the continuous analogue of 'make the chosen action more likely'; the squared and constant forms are the log-density itself or the $\\sigma$-gradient, not the $\\mu$-score."
             },
             {
               "q": "A student claims: 'Subtracting the value-function baseline $V^\\pi(s)$ works because it makes REINFORCE's gradient point in a better direction than the unbiased estimator does.' What is the precise correction?",
               "choices": [
                 "Correct — the baseline tilts the expected gradient toward higher-advantage actions",
-                "The baseline leaves the EXPECTED gradient exactly unchanged (still unbiased); it only reduces the VARIANCE of the single-sample estimate around that same expectation",
                 "The baseline changes both the expected gradient and the variance, trading a little bias for much less variance",
+                "The baseline leaves the EXPECTED gradient exactly unchanged (still unbiased); it only reduces the VARIANCE of the single-sample estimate around that same expectation",
                 "The baseline reduces variance but introduces bias proportional to $V^\\pi(s)$, which must be corrected separately"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Because $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)]=0$, any state-only $b(s)$ subtracts a mean-zero term, so $\\mathbb{E}[\\hat g]$ is identical to the no-baseline case — the bandit example confirms both give $(0.25,-0.25)$. The benefit is purely variance reduction, with no bias and no change of direction in expectation."
             },
             {
               "q": "The lesson notes the score function $\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)$ also appears 'in variational inference and in training discrete latent-variable models.' What general problem does this estimator solve in all those settings?",
               "choices": [
                 "It computes $\\arg\\max$ over a discrete action set without enumerating all actions",
-                "It estimates the gradient of an expectation $\\mathbb{E}_{x\\sim p_\\theta}[f(x)]$ with respect to the parameters $\\theta$ of the very distribution being sampled from",
                 "It differentiates through the environment's transition dynamics to enable model-based planning",
-                "It converts a stochastic policy into an equivalent deterministic one for faster inference"
+                "It converts a stochastic policy into an equivalent deterministic one for faster inference",
+                "It estimates the gradient of an expectation $\\mathbb{E}_{x\\sim p_\\theta}[f(x)]$ with respect to the parameters $\\theta$ of the very distribution being sampled from"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The log-derivative / score-function trick gives an unbiased estimate of $\\nabla_\\theta\\mathbb{E}_{x\\sim p_\\theta}[f(x)]$ even when $f$ is non-differentiable or the sampling distribution depends on $\\theta$ — exactly the obstacle named in the lesson ('the distribution we take the expectation over depends on $\\theta$'). It does not perform $\\arg\\max$, touch dynamics, or determinize the policy."
             }
           ],
@@ -3064,45 +3064,45 @@
             {
               "q": "In the PPO clipped objective $\\min\\!\\big(r_t \\hat A_t,\\ \\mathrm{clip}(r_t, 1-\\epsilon, 1+\\epsilon)\\hat A_t\\big)$ with $\\epsilon = 0.2$, suppose $\\hat A_t > 0$ and $r_t = 1.5$. What happens?",
               "choices": [
-                "The clipped term $1.2\\,\\hat A_t$ is selected and the gradient w.r.t. $\\theta$ is zero",
                 "The unclipped term $1.5\\,\\hat A_t$ is selected and the gradient drives $r_t$ higher",
+                "The clipped term $1.2\\,\\hat A_t$ is selected and the gradient w.r.t. $\\theta$ is zero",
                 "The ratio $r_t$ is hard-reset to $1.2$ in the parameters",
                 "The objective becomes negative, penalizing the good action"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "With $\\hat A_t>0$ and $r_t>1+\\epsilon$, the clipped value $1.2\\hat A_t$ is the smaller of the two, so $\\min$ picks it; being constant, it has zero gradient, so there is no incentive to push the probability further."
             },
             {
               "q": "Why does PPO take the $\\min$ of the clipped and unclipped terms rather than always using the clipped term?",
               "choices": [
                 "To make the objective differentiable everywhere",
-                "So that excessive updates can still be corrected: when a step overshoots harmfully, the unclipped term stays active and pulls the ratio back",
                 "To increase the variance of the gradient estimate",
+                "So that excessive updates can still be corrected: when a step overshoots harmfully, the unclipped term stays active and pulls the ratio back",
                 "Because the clipped term is biased and the unclipped term removes the bias"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The $\\min$ makes the bound one-sided: it removes the reward for moving too far in the advantage's favored direction, but keeps the gradient alive to undo overshoots (e.g., a positive-advantage action whose ratio fell below $1-\\epsilon$), so the policy can always be pulled back."
             },
             {
               "q": "What is the primary purpose of the importance-sampling ratio $r_t(\\theta) = \\pi_\\theta(a_t\\mid s_t)/\\pi_{\\theta_{\\text{old}}}(a_t\\mid s_t)$ in PPO?",
               "choices": [
                 "To normalize the advantages to zero mean",
-                "To reweight data collected by the old policy so it estimates the new policy's surrogate objective, enabling multiple epochs of reuse",
                 "To compute the KL divergence exactly",
-                "To replace the value-function baseline"
+                "To replace the value-function baseline",
+                "To reweight data collected by the old policy so it estimates the new policy's surrogate objective, enabling multiple epochs of reuse"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The ratio is an importance weight that lets a batch collected under $\\pi_{\\theta_{\\text{old}}}$ be reused to estimate the objective for the updated $\\pi_\\theta$ across several epochs; its variance grows as policies diverge, which is exactly why the trust region / clip is needed."
             },
             {
               "q": "How does TRPO differ from PPO in enforcing the trust region?",
               "choices": [
-                "TRPO clips the ratio while PPO uses a hard KL constraint",
                 "TRPO imposes an explicit KL-divergence constraint solved via natural gradient and line search, while PPO uses a cheap clipped surrogate optimizable by ordinary SGD",
+                "TRPO clips the ratio while PPO uses a hard KL constraint",
                 "TRPO constrains the parameter norm $\\|\\theta-\\theta_{\\text{old}}\\|$ while PPO constrains KL",
                 "They are identical; PPO is just a faster implementation of TRPO"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "TRPO solves a KL-constrained problem (second-order, Fisher-vector products, line search) giving a monotonic-improvement guarantee; PPO replaces all that with a first-order clipped objective that approximates the same 'stay close' effect at a fraction of the complexity."
             },
             {
@@ -3120,33 +3120,33 @@
               "q": "In the clipped objective with $\\epsilon = 0.2$, suppose $\\hat A_t < 0$ (the action was worse than average) and the new policy makes it more likely, giving $r_t = 0.7$. What is the value of the clipped surrogate term for this sample?",
               "choices": [
                 "$0.7\\,\\hat A_t$, because $0.7$ lies outside $[0.8, 1.2]$ but clipping only applies when $\\hat A_t > 0$",
-                "$0.8\\,\\hat A_t$, because $r_t = 0.7$ is clipped up to the lower bound $1 - \\epsilon = 0.8$ and the $\\min$ selects it",
                 "$1.2\\,\\hat A_t$, the upper clip bound",
+                "$0.8\\,\\hat A_t$, because $r_t = 0.7$ is clipped up to the lower bound $1 - \\epsilon = 0.8$ and the $\\min$ selects it",
                 "$\\hat A_t$, because the ratio is reset to $1$ whenever it leaves the trust region"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "With $\\hat A_t<0$, $\\mathrm{clip}(0.7, 0.8, 1.2)=0.8$. The unclipped term is $0.7\\hat A_t$ and the clipped term is $0.8\\hat A_t$; since $\\hat A_t<0$, $0.8\\hat A_t < 0.7\\hat A_t$, so the $\\min$ picks $0.8\\hat A_t$. This caps the incentive to keep increasing a bad action's probability."
             },
             {
               "q": "A practitioner reuses one batch of trajectories collected under $\\pi_{\\theta_{\\text{old}}}$ for many gradient epochs on the PPO objective. Why does this remain approximately valid, and what eventually breaks it?",
               "choices": [
                 "It is valid because PPO recomputes the advantages from scratch each epoch; nothing breaks",
-                "The importance ratio $r_t$ corrects for the mismatch between $\\pi_\\theta$ and $\\pi_{\\theta_{\\text{old}}}$, but as $\\theta$ drifts far from $\\theta_{\\text{old}}$ the ratios become large/small and the off-policy estimate degrades",
                 "It is valid only because the clip removes all bias from the importance sampling estimator",
-                "It works because the state distribution $d^{\\pi_\\theta}$ is guaranteed constant within a batch"
+                "It works because the state distribution $d^{\\pi_\\theta}$ is guaranteed constant within a batch",
+                "The importance ratio $r_t$ corrects for the mismatch between $\\pi_\\theta$ and $\\pi_{\\theta_{\\text{old}}}$, but as $\\theta$ drifts far from $\\theta_{\\text{old}}$ the ratios become large/small and the off-policy estimate degrades"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The ratio $r_t = \\pi_\\theta/\\pi_{\\theta_{\\text{old}}}$ is an importance-sampling correction that lets a sample from the old policy estimate the new policy's objective, but importance sampling only stays well-behaved while the policies are close. As $\\theta$ moves far, variance blows up; clipping limits but does not eliminate this degradation."
             },
             {
               "q": "The lesson's analogy is a car whose camera is bolted to the steering wheel. Which design principle of trust-region / PPO methods does this most directly illustrate?",
               "choices": [
-                "Increase the learning rate over time so corrections become sharper as training proceeds",
                 "Limit how far each update can move the policy, because the data (the \"view\") you use for the next correction depends on where this step lands you",
+                "Increase the learning rate over time so corrections become sharper as training proceeds",
                 "Always steer toward the highest-advantage action regardless of step size",
                 "Decouple the value function from the policy so the camera and wheel move independently"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The camera-on-the-wheel captures that your next observations depend on the current move, so the fix is bounding each step's size, which is precisely what trust regions and the PPO clip enforce. Cranking the learning rate or ignoring step size is the failure mode the analogy warns against."
             },
             {
@@ -3164,33 +3164,33 @@
               "q": "A common misconception is that the PPO clip is just gradient clipping under a different name. Which statement correctly distinguishes them?",
               "choices": [
                 "They are identical; both rescale the gradient vector to a fixed norm",
-                "The PPO clip bounds the probability ratio $r_t$ in the objective (limiting how much the policy distribution changes), whereas gradient clipping bounds the magnitude of the gradient vector regardless of distribution change",
                 "Gradient clipping bounds $r_t$, while the PPO clip bounds the gradient norm",
+                "The PPO clip bounds the probability ratio $r_t$ in the objective (limiting how much the policy distribution changes), whereas gradient clipping bounds the magnitude of the gradient vector regardless of distribution change",
                 "The PPO clip only affects the value-function loss, while gradient clipping affects the policy loss"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Gradient clipping caps the size of the update step in parameter space; the PPO clip caps how far the policy's output distribution can move (via $r_t$) regardless of the resulting gradient norm. They operate on different quantities, so they are not interchangeable."
             },
             {
               "q": "Suppose the optimal new policy would have $r_t = 3.0$ on a high-advantage sample. With $\\epsilon = 0.2$, what does the clipped objective accomplish, and what limitation remains?",
               "choices": [
                 "It hard-constrains $r_t$ so the policy can never reach $3.0$ in any number of updates",
-                "It removes the gradient incentive once $r_t > 1.2$, discouraging a single large jump, but multiple successive PPO updates can still move the policy far over many iterations",
                 "It guarantees a monotonic improvement bound, exactly like TRPO's constraint",
-                "It rescales the advantage to $\\hat A_t / 3.0$ to keep the effective ratio at $1$"
+                "It rescales the advantage to $\\hat A_t / 3.0$ to keep the effective ratio at $1$",
+                "It removes the gradient incentive once $r_t > 1.2$, discouraging a single large jump, but multiple successive PPO updates can still move the policy far over many iterations"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The clip only flattens the objective beyond $1\\pm\\epsilon$ within a single optimization phase; it discourages a large jump per update but each new round resamples and resets $\\theta_{\\text{old}}$, so cumulative drift over many iterations is allowed. It is a soft heuristic, not the hard monotonic-improvement guarantee that TRPO derives."
             },
             {
               "q": "PPO is usually trained on the advantage $\\hat A_t$ rather than the raw return $G_t$ inside the clipped ratio objective. What is the main benefit relevant to the trust-region motivation?",
               "choices": [
-                "Advantages are always positive, so the clip never has to handle the negative case",
                 "Subtracting the value baseline reduces variance of the policy-gradient estimate, giving cleaner update directions so that each bounded step is more likely to be an improvement",
+                "Advantages are always positive, so the clip never has to handle the negative case",
                 "Advantages make the importance ratio $r_t$ unnecessary",
                 "Using returns would make the objective off-policy, while advantages keep it on-policy"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The advantage centers the signal by subtracting a baseline (the value estimate), which lowers gradient variance without adding bias, so each clipped step points in a more reliable direction. Advantages can be negative, do not replace $r_t$, and both returns and advantages are estimated from the same sampled data."
             }
           ],
@@ -3852,22 +3852,22 @@
               "q": "A team trains a robotic arm where each real-world trial costs money and risks hardware damage. Why might model-based RL be preferred over Q-learning here?",
               "choices": [
                 "Model-based RL is guaranteed to find the optimal policy, while Q-learning is not",
-                "Model-based RL is typically more sample-efficient, extracting more learning per costly real interaction",
                 "Model-based RL never suffers from bias, unlike Q-learning",
+                "Model-based RL is typically more sample-efficient, extracting more learning per costly real interaction",
                 "Model-based RL does not require any reward signal to learn"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The whole appeal of model-based RL is sample efficiency: it plans against a learned model to get more out of each expensive real interaction. It is not guaranteed optimal (it is limited by model accuracy), and it certainly is not unbiased — a flawed model introduces bias."
             },
             {
               "q": "In a small, discrete environment, how are the transition model $\\hat{p}(s'\\mid s,a)$ and reward model $\\hat{r}(s,a)$ typically estimated from logged transitions $(s,a,r,s')$?",
               "choices": [
                 "By training a deep neural network with backpropagation",
-                "By counting visit frequencies for transitions and averaging observed rewards",
                 "By solving the Bellman optimality equation directly",
-                "By sampling from a fixed prior distribution over dynamics"
+                "By sampling from a fixed prior distribution over dynamics",
+                "By counting visit frequencies for transitions and averaging observed rewards"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "For small discrete problems the model reduces to tabulated frequencies (for $\\hat{p}$) and sample averages (for $\\hat{r}$). Neural networks are reserved for large or continuous spaces, and the Bellman equation is part of planning, not model fitting."
             },
             {
@@ -3884,12 +3884,12 @@
             {
               "q": "A student claims: 'Once we have learned a perfect model, planning against it gives the optimal policy, so model-based RL can never fail.' What is the flaw?",
               "choices": [
-                "The claim is correct; a perfect model always yields the optimal policy via planning",
                 "Models in practice are imperfect, and planning amplifies any model errors, so the policy is only as good as the learned model",
+                "The claim is correct; a perfect model always yields the optimal policy via planning",
                 "Planning ignores the reward model, so even a perfect transition model is useless",
                 "Optimal policies require model-free methods regardless of model quality"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The conditional 'once we have a perfect model' rarely holds — learned models have errors, and a planner can exploit those errors, producing a policy that fails in the real environment. This is the well-known model-bias pitfall the lesson warns about."
             },
             {
@@ -3907,33 +3907,33 @@
               "q": "Suppose a learned transition model is highly accurate near states the agent has visited but wildly wrong in rarely-visited states. Why is this dangerous for a planner seeking high return?",
               "choices": [
                 "The planner will avoid all unvisited states and stay perfectly safe",
-                "The planner may be drawn toward unvisited states where the erroneous model hallucinates high reward",
                 "Reward models are unaffected by transition errors, so there is no danger",
+                "The planner may be drawn toward unvisited states where the erroneous model hallucinates high reward",
                 "Accurate models near visited states guarantee globally accurate planning"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A planner optimizing predicted return can latch onto regions where model errors falsely promise high reward — exploiting the model's mistakes. This is why naive model exploitation in poorly-modeled regions is risky."
             },
             {
               "q": "A discrete environment has been observed taking action $a$ in state $s$ five times, landing in $s_1$ three times and $s_2$ twice, with rewards $2, 2, 2, 4, 4$. What does the tabular learned model give for $\\hat{p}(s_1\\mid s,a)$ and $\\hat{r}(s,a)$?",
               "choices": [
-                "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=2.8$",
                 "$\\hat{p}(s_1\\mid s,a)=0.5$ and $\\hat{r}(s,a)=3.0$",
                 "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=3.0$",
-                "$\\hat{p}(s_1\\mid s,a)=0.4$ and $\\hat{r}(s,a)=2.8$"
+                "$\\hat{p}(s_1\\mid s,a)=0.4$ and $\\hat{r}(s,a)=2.8$",
+                "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=2.8$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The frequency estimate is $3/5=0.6$, and the reward average is $(2+2+2+4+4)/5=14/5=2.8$. The distractors mix up the count ratio or miscompute the mean (e.g., 3.0 ignores the correct sum)."
             },
             {
               "q": "Why are neural networks used for the model in large or continuous state spaces, rather than the tabular tallying used for small discrete problems?",
               "choices": [
-                "Neural networks are unbiased estimators of dynamics, unlike tables",
                 "In large/continuous spaces, counts per exact state-action are sparse or undefined, so a function approximator is needed to generalize",
+                "Neural networks are unbiased estimators of dynamics, unlike tables",
                 "Tabular models cannot represent rewards, only transitions",
                 "Neural networks remove the need for any logged transitions"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With continuous or huge state spaces, you almost never revisit an exact state-action pair, so frequency tables fail; a neural network generalizes across similar states. Neural nets are not unbiased, and tables can represent rewards just fine in small problems."
             },
             {
@@ -3962,22 +3962,22 @@
               "q": "Which pair correctly identifies the two predictors fit when learning a model from data?",
               "choices": [
                 "A policy network and a value network",
-                "A transition model $\\hat{p}(s'\\mid s,a)$ and a reward model $\\hat{r}(s,a)$",
                 "An advantage estimator and a baseline",
+                "A transition model $\\hat{p}(s'\\mid s,a)$ and a reward model $\\hat{r}(s,a)$",
                 "A Q-function and an exploration schedule"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Learning a model means fitting the dynamics $\\hat{p}(s'\\mid s,a)$ and the reward $\\hat{r}(s,a)$ from logged $(s,a,r,s')$ tuples. Policies, values, advantages, and Q-functions are products of model-free learning or downstream planning, not the model itself."
             },
             {
               "q": "All else equal, if two agents reach the same final policy quality, which property most favors the model-based agent in a setting where real interactions are scarce and expensive?",
               "choices": [
-                "It used fewer real environment interactions to get there",
                 "It is mathematically simpler to implement",
                 "It is guaranteed to be unbiased",
-                "It avoids needing a reward signal"
+                "It avoids needing a reward signal",
+                "It used fewer real environment interactions to get there"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The defining advantage of model-based RL is sample efficiency — reaching comparable quality with fewer costly real interactions. Simplicity and unbiasedness are actually strengths of model-free methods, and a reward signal is still required to fit the reward model."
             }
           ],
@@ -4047,22 +4047,22 @@
               "q": "In offline RL, what makes the Q-learning target $r + \\gamma\\max_{a'}Q(s',a')$ more dangerous than a target that uses the dataset's logged next action, $r + \\gamma Q(s',a'_{\\text{data}})$?",
               "choices": [
                 "The $\\max$ operator is slower to compute over large action spaces",
-                "The $\\max$ actively selects the action with the highest estimated value, which is exactly the over-optimistic OOD extrapolation",
                 "The logged-action target ignores the discount factor $\\gamma$ entirely",
-                "The $\\max$ target requires a known transition model $P$, which is unavailable offline"
+                "The $\\max$ target requires a known transition model $P$, which is unavailable offline",
+                "The $\\max$ actively selects the action with the highest estimated value, which is exactly the over-optimistic OOD extrapolation"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "For actions absent from $\\mathcal{D}$, $Q$ is an unconstrained extrapolation that tends to be erroneously high; the $\\max$ deliberately seeks the highest value and so latches onto exactly those inflated OOD phantoms. The logged-action target only queries $Q$ where the data has evidence, so it is far more stable."
             },
             {
               "q": "A practitioner runs vanilla DQN on a fixed dataset and finds the Q-values blow up over training, even though the same DQN code works fine when allowed to interact online. What is the most likely root cause?",
               "choices": [
-                "The replay buffer is too small to hold the fixed dataset",
                 "Offline, overestimated OOD action values are never corrected by trying them, so the error feeds back through Bellman targets and compounds",
+                "The replay buffer is too small to hold the fixed dataset",
                 "The learning rate must always be larger offline than online",
                 "Distributional shift only affects policy-gradient methods, so DQN is immune"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Online, an overvalued action gets tried, the low reward is observed, and the estimate is corrected; offline that corrective loop is severed, so overestimation propagates through Bellman targets and compounds, often causing divergence. Buffer size and learning rate are not the defining issue."
             },
             {
@@ -4091,22 +4091,22 @@
               "q": "Which of the following best describes what 'distributional shift' refers to in offline RL?",
               "choices": [
                 "The reward distribution drifts over time within the logged dataset",
-                "The learned policy wants to take actions the dataset rarely or never contains, where $Q$ has no data to be evaluated against",
                 "The state visitation of the behavior policy is non-stationary across episodes",
-                "The discount factor must shift to account for the finite dataset size"
+                "The discount factor must shift to account for the finite dataset size",
+                "The learned policy wants to take actions the dataset rarely or never contains, where $Q$ has no data to be evaluated against"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Distributional shift is the mismatch between the actions the learned policy prefers and the actions present in $\\mathcal{D}$: the policy queries $Q$ at out-of-distribution actions the data cannot vouch for. It is about the action/state coverage gap, not a drifting reward or discount."
             },
             {
               "q": "Consider an offline learner that, instead of using $\\max_{a'}Q(s',a')$, restricts the maximization to actions with sufficient support in $\\mathcal{D}$ at state $s'$. How does this most directly help?",
               "choices": [
+                "It prevents the target from reaching for unsupported OOD actions whose $Q$-values are unreliable extrapolations",
                 "It guarantees the policy will exactly match the behavior policy",
                 "It eliminates the need for a discount factor in the Bellman backup",
-                "It prevents the target from reaching for unsupported OOD actions whose $Q$-values are unreliable extrapolations",
                 "It makes the algorithm on-policy rather than off-policy"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "By only maximizing over in-support actions, the target never queries $Q$ at OOD actions where the value is an over-optimistic extrapolation, breaking the overestimation loop. It does not force the policy to copy the behavior policy (it can still pick the best supported action) and does not remove $\\gamma$."
             },
             {
@@ -4124,22 +4124,22 @@
               "q": "A common misconception is that offline RL fails simply because the dataset is too small. Even with an arbitrarily LARGE logged dataset from a fixed behavior policy, why can naive off-policy RL still break down?",
               "choices": [
                 "Large datasets cause the discount factor to underflow numerically",
-                "If the behavior policy never takes certain actions, those actions remain OOD regardless of dataset size, so their $Q$-values stay unconstrained extrapolations",
                 "Larger datasets always increase variance of the Bellman target without bound",
+                "If the behavior policy never takes certain actions, those actions remain OOD regardless of dataset size, so their $Q$-values stay unconstrained extrapolations",
                 "With more data the $\\max$ operator becomes biased toward in-distribution actions"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The problem is coverage, not raw size: actions the behavior policy never selects have no transitions at any dataset size, so $Q$ there is pure extrapolation that the $\\max$ can still latch onto. More samples of the same restricted behavior do not fill the OOD gap."
             },
             {
               "q": "Suppose at state $s'$ an OOD action $a^*$ has an erroneously high $Q(s',a^*)$. Trace the most accurate description of how this single error corrupts an offline Q-learner across the state space.",
               "choices": [
                 "The error stays localized at $s'$ because Bellman backups only update the current state",
-                "The inflated value enters Bellman targets for predecessor states, raising their $Q$-values, which then inflate THEIR predecessors, propagating backward with no corrective signal",
                 "The error is automatically averaged away as more transitions into $s'$ are sampled",
-                "The error only affects the policy at $s'$ and never touches the value function"
+                "The error only affects the policy at $s'$ and never touches the value function",
+                "The inflated value enters Bellman targets for predecessor states, raising their $Q$-values, which then inflate THEIR predecessors, propagating backward with no corrective signal"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The Bellman target $r+\\gamma\\max_{a'}Q(s',a')$ for any transition landing in $s'$ becomes inflated, raising $Q$ for states leading to $s'$; those raised values then inflate their own predecessors, so the overestimation propagates backward and compounds. Offline, no real transition with $a^*$ ever reveals its true low reward to pull it back."
             },
             {
@@ -4156,23 +4156,23 @@
             {
               "q": "An offline learner is trained on hospital records containing only treatments A and B, never an untested drug C. A naive value method recommends C for every patient. What is the conservative-offline diagnosis and remedy?",
               "choices": [
-                "C is in-distribution but underrewarded; raise its learning rate to fix the estimate",
                 "C is OOD with an unconstrained, inflated $Q$; a conservative method pushes its value down (or forbids straying to it), keeping the policy to A/B where evidence exists",
+                "C is in-distribution but underrewarded; raise its learning rate to fix the estimate",
                 "The behavior policy was stochastic, so importance weights overcounted C; reweight the returns",
                 "C should be recommended because no data contradicts its high value"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With no $(s, C, r, s')$ transitions, $Q(s,C)$ is pure upward extrapolation, and the $\\max$ prefers C everywhere — a hallucination that can never be checked. CQL-style value penalization or a policy constraint distrusts unsupported actions, anchoring recommendations to A/B and yielding a policy that safely improves on logged practice."
             },
             {
               "q": "Which statement most accurately captures the core lesson offline RL teaches about decision-making under uncertainty?",
               "choices": [
-                "When you cannot gather more data, the safe move is pessimism about the unknown, not optimism",
                 "Uncertainty should always be resolved by exploring, regardless of the cost of mistakes",
+                "When you cannot gather more data, the safe move is pessimism about the unknown, not optimism",
                 "The right response to unseen actions is to assume they match the average value of seen actions",
                 "Pessimism is only appropriate when the dataset is small; large datasets justify optimism about OOD actions"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Because beliefs about unseen actions cannot be tested offline, an optimistic overestimate becomes a permanent, uncorrectable delusion the policy chases; pessimism about the unknown keeps the policy to improvements the data can justify. This principle echoes across robust ML and decision-making under uncertainty, independent of dataset size."
             }
           ],

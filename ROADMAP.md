@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 182: De-skew answer positions across the last 9 biased lessons (workflow/content-quality — non-content).
+   Correctness-preserving reorder (correct-choice text unchanged, answer index updated, asserted) of 81 MCQs in RL/LLM/
+   PS; position-referencing MCQs skipped + edge cases hand-reviewed. ★ The gate's long-standing answer-position-bias
+   note is now GONE (every lesson ≤33%/index). Gate GREEN; de-skewed quizzes render errs=0; smoke errs=0; SW →v125.
    ✅ iter 181: MCQ arc → Reinforcement Learning·Function Approximation 12→16 (+8, bank →2,176). Both lessons (value-
    approximation/dqn). RL 4/7 modules. Adversarial agent ALL PASS (Mnih-2015 DQN architecture confirmed); positions
    balanced 2/2/2/2 (distinct patterns); render "of 16" errs=0; SW →v124. RL REMAINING (arc): policy-gradient(3),

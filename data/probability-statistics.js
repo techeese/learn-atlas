@@ -807,12 +807,12 @@
             {
               "q": "For a Bernoulli($p$) variable, at which value of $p$ is the variance $p(1-p)$ largest, and what is that maximum?",
               "choices": [
-                "At $p=1$, where the variance equals $1$",
                 "At $p=0.5$, where the variance equals $0.25$",
+                "At $p=1$, where the variance equals $1$",
                 "At $p=0$, where the variance equals $0$",
                 "At $p=0.5$, where the variance equals $0.5$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The parabola $p(1-p)$ peaks at $p=0.5$ with value $0.5\\cdot0.5=0.25$ — maximum uncertainty. The tempting $0.5$ confuses the maximizing $p$ with the maximum value itself."
             },
             {
@@ -841,11 +841,11 @@
               "q": "Let $X\\sim\\text{Bin}(10,0.5)$. Using the symmetry of the distribution, what is $P(X\\ge 4)+P(X\\le 6)$ worth relative to $1$?",
               "choices": [
                 "It equals $1$, since the events partition the sample space",
-                "It exceeds $1$, because the events overlap on $4\\le X\\le 6$",
                 "It is less than $1$, because the tails are excluded",
-                "It cannot be computed without the full PMF"
+                "It cannot be computed without the full PMF",
+                "It exceeds $1$, because the events overlap on $4\\le X\\le 6$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The two events overlap on $\\{4,5,6\\}$, so their probabilities double-count that middle region; the sum is therefore greater than $1$. They do not partition the space, so the answer is not $1$."
             },
             {
@@ -874,33 +874,33 @@
               "q": "Why does the factor $\\binom{n}{k}$ appear in the Binomial PMF $\\binom{n}{k}p^k(1-p)^{n-k}$?",
               "choices": [
                 "It is the probability of any one sequence with $k$ successes",
-                "It counts the number of distinct orderings (which $k$ of the $n$ trials succeed), all sharing the same probability $p^k(1-p)^{n-k}$",
                 "It normalizes the probabilities so they exceed $1$",
+                "It counts the number of distinct orderings (which $k$ of the $n$ trials succeed), all sharing the same probability $p^k(1-p)^{n-k}$",
                 "It corrects for the trials not being independent"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A single specific sequence has probability $p^k(1-p)^{n-k}$; the coefficient counts how many such sequences exist, $\\binom{n}{k}$ ways to choose which trials succeed. It is a count of arrangements, not a probability itself."
             },
             {
               "q": "After 6 straight tails on a fair coin, a gambler bets heavily on heads next, reasoning heads is 'overdue.' From the Bernoulli/Binomial viewpoint, what is the flaw?",
               "choices": [
                 "He is right — the long-run frequency must force a head soon",
-                "Each flip is an independent Bernoulli($0.5$); past results do not change $P(\\text{heads})=0.5$ on the next flip",
                 "The next flip's probability of heads rises to compensate, but only slightly",
-                "The flips are not really independent, so the bet is justified"
+                "The flips are not really independent, so the bet is justified",
+                "Each flip is an independent Bernoulli($0.5$); past results do not change $P(\\text{heads})=0.5$ on the next flip"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Independence means the coin has no memory: $P(\\text{heads})=0.5$ regardless of history. The 'due' belief is the gambler's fallacy — long-run frequency convergence does not require short-run compensation."
             },
             {
               "q": "Let $X\\sim\\text{Bin}(9,0.5)$. Because $(n+1)p=10\\cdot0.5=5$ is an integer, what is true about the most likely value(s) of $X$?",
               "choices": [
-                "There is a unique mode at $k=5$",
                 "There are two equally likely modes, at $k=4$ and $k=5$",
+                "There is a unique mode at $k=5$",
                 "Every value is equally likely since $p=0.5$",
                 "The mode is the mean, $4.5$, which $X$ can attain"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "When $(n+1)p$ is an integer, the PMF ties at $k=(n+1)p-1$ and $k=(n+1)p$, here $k=4$ and $k=5$ (each $\\approx0.246$). The mean $4.5$ is not an attainable value of an integer-valued $X$."
             },
             {
@@ -918,22 +918,22 @@
               "q": "For $X\\sim\\text{Bin}(10,0.2)$, what is $P(X=0)$?",
               "choices": [
                 "$0.2^{10}$",
-                "$(0.8)^{10}\\approx0.107$",
                 "$0$, since at least one success is guaranteed",
+                "$(0.8)^{10}\\approx0.107$",
                 "$1-0.2=0.8$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Zero successes means all 10 trials fail: $P(X=0)=(1-p)^{10}=(0.8)^{10}\\approx0.107$. The choice $0.2^{10}$ would be the probability of all successes, and nothing forces at least one success."
             },
             {
               "q": "A coin is biased with $p=0.9$ for heads. Compared with a fair coin, how does the variance of the number of heads in $n=10$ flips change?",
               "choices": [
                 "It rises, because heads are more frequent",
-                "It falls (from $2.5$ to $0.9$), because outcomes are more predictable near $p=1$",
                 "It stays at $2.5$, since variance depends only on $n$",
-                "It becomes negative, reflecting the bias"
+                "It becomes negative, reflecting the bias",
+                "It falls (from $2.5$ to $0.9$), because outcomes are more predictable near $p=1$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Variance $np(1-p)$ is maximal at $p=0.5$ ($10\\cdot0.25=2.5$) and shrinks toward the extremes: at $p=0.9$ it is $10(0.9)(0.1)=0.9$. A near-certain outcome carries little uncertainty, so the spread drops; variance can never be negative."
             }
           ],
@@ -1209,77 +1209,77 @@
               "q": "A machine produces a defective part independently with probability $0.05$. Let $X$ be the number of parts inspected until the first defective. What is the expected number of parts inspected?",
               "choices": [
                 "$0.05$",
-                "$20$",
                 "$19$",
+                "$20$",
                 "$5$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "For a geometric variable $\\mathbb{E}[X] = 1/p = 1/0.05 = 20$. The tempting answer $19$ is the mean number of failures before the first success ($\\frac{1-p}{p}$), which belongs to the other convention."
             },
             {
               "q": "For $X \\sim \\text{Geometric}(p)$, which expression correctly gives $P(X = k)$ for $k = 1, 2, 3, \\dots$?",
               "choices": [
                 "$p^{k-1}(1-p)$",
-                "$(1-p)^{k-1}\\,p$",
                 "$\\binom{k}{1}p(1-p)^{k-1}$",
-                "$(1-p)^{k}\\,p$"
+                "$(1-p)^{k}\\,p$",
+                "$(1-p)^{k-1}\\,p$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The first $k-1$ trials must fail (probability $(1-p)^{k-1}$) and the $k$-th must succeed (probability $p$), giving $(1-p)^{k-1}p$. The exponent $k$ instead of $k-1$ would double-count an extra failure."
             },
             {
               "q": "A gambler has just lost 8 spins in a row on a machine that pays out independently with probability $p$ each spin. Compared with someone who has only played once and lost, how is the gambler's remaining wait until a win distributed?",
               "choices": [
-                "It is shorter on average, because a win is now 'overdue'",
                 "It has exactly the same distribution as a fresh start",
+                "It is shorter on average, because a win is now 'overdue'",
                 "It is longer on average, because the machine is on a cold streak",
                 "It cannot be determined without knowing the value of $p$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Memorylessness means $P(X > m+n \\mid X > m) = P(X > n)$, so the past run of losses leaves no trace and the remaining wait is distributed like a brand-new one. Believing a win is 'overdue' is exactly the gambler's fallacy."
             },
             {
               "q": "Rolling a fair die for the first six ($p = 1/6$), what is the probability the first six does NOT appear within the first 4 rolls, i.e. $P(X > 4)$?",
               "choices": [
-                "$\\left(\\tfrac{5}{6}\\right)^{4}$",
                 "$\\left(\\tfrac{1}{6}\\right)^{4}$",
+                "$\\left(\\tfrac{5}{6}\\right)^{4}$",
                 "$1 - \\left(\\tfrac{1}{6}\\right)^{4}$",
                 "$4 \\cdot \\tfrac{5}{6} \\cdot \\tfrac{1}{6}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$P(X > n) = (1-p)^n$, so $P(X>4) = (5/6)^4$ — the event that all four rolls fail to show a six. The option $(1/6)^4$ wrongly uses the success probability for repeated failures."
             },
             {
               "q": "The variance of $X \\sim \\text{Geometric}(p)$ is $\\frac{1-p}{p^2}$. As $p \\to 0$ (very rare successes), what happens to the standard deviation relative to the mean $1/p$?",
               "choices": [
                 "The standard deviation grows much faster than the mean, so the wait becomes relatively more variable",
-                "The standard deviation and mean stay roughly equal, so relative variability is about constant",
                 "The standard deviation shrinks to zero, so the wait becomes nearly deterministic",
+                "The standard deviation and mean stay roughly equal, so relative variability is about constant",
                 "The standard deviation stays fixed while the mean grows, so relative variability vanishes"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The SD is $\\sqrt{(1-p)/p^2} = \\sqrt{1-p}/p$, and the mean is $1/p$; their ratio is $\\sqrt{1-p} \\to 1$ as $p \\to 0$. So the SD tracks the mean closely and relative variability stays near 1 (a hallmark of the geometric)."
             },
             {
               "q": "A salesperson closes each call independently with probability $0.3$. Let $Y$ be the number of calls until the SECOND sale. Which distribution does $Y$ follow, and what is $\\mathbb{E}[Y]$?",
               "choices": [
                 "Geometric, with $\\mathbb{E}[Y] = 1/0.3 \\approx 3.33$",
-                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 2/0.3 \\approx 6.67$",
                 "Binomial, with $\\mathbb{E}[Y] = 2 \\cdot 0.3 = 0.6$",
-                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 1/0.3 \\approx 3.33$"
+                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 1/0.3 \\approx 3.33$",
+                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 2/0.3 \\approx 6.67$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Waiting for the $r$-th success is Negative Binomial with mean $r/p$; here $2/0.3 \\approx 6.67$. Because $Y$ is the sum of two independent geometric waits, its mean is twice the single-success mean of $3.33$."
             },
             {
               "q": "A free-throw shooter makes each shot independently with probability $0.9$. If $X$ is the number of shots until her first MISS, what is the success probability for the geometric model of $X$?",
               "choices": [
-                "$0.9$, since that is the make probability",
                 "$0.1$, since the event we are waiting for is a miss",
+                "$0.9$, since that is the make probability",
                 "$0.5$, since make and miss must be combined",
                 "$0.81$, the probability of two makes"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The geometric 'success' is whatever event ends the wait — here a MISS, with probability $1 - 0.9 = 0.1$. Using $0.9$ confuses the per-trial outcome we are counting against with the one we are waiting for."
             },
             {
@@ -1297,33 +1297,33 @@
               "q": "Which property makes the Geometric distribution UNIQUE among all discrete distributions?",
               "choices": [
                 "It has the largest possible variance for a given mean",
-                "It is the only discrete distribution that is memoryless",
                 "It is the only discrete distribution whose probabilities sum to 1",
+                "It is the only discrete distribution that is memoryless",
                 "It is the only discrete distribution defined on the positive integers"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The geometric is the unique discrete memoryless distribution (its continuous analogue is the exponential). All valid PMFs sum to 1, and many distributions live on the positive integers, so those choices are not distinguishing properties."
             },
             {
               "q": "A web server's requests succeed independently with probability $0.8$; let $X$ count attempts until the first success. The probabilities $P(X=1), P(X=2), P(X=3), \\dots$ form what kind of sequence, and why must they sum to 1?",
               "choices": [
                 "An arithmetic sequence; they sum to 1 by the trapezoid rule",
-                "A geometric sequence with ratio $1-p$; they sum to 1 as a convergent geometric series",
                 "A harmonic sequence; they sum to 1 because the terms shrink",
-                "A geometric sequence with ratio $p$; they sum to 1 because $p < 1$"
+                "A geometric sequence with ratio $p$; they sum to 1 because $p < 1$",
+                "A geometric sequence with ratio $1-p$; they sum to 1 as a convergent geometric series"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Successive PMF values $(1-p)^{k-1}p$ differ by the factor $(1-p)$, forming a geometric sequence with ratio $1-p$ (=0.2 here). Their sum is $p \\cdot \\frac{1}{1-(1-p)} = 1$ by the geometric-series formula — which is exactly where the distribution gets its name."
             },
             {
               "q": "With $X \\sim \\text{Geometric}(0.25)$, you are told $X > 3$ (the first three trials all failed). What is $P(X > 7 \\mid X > 3)$?",
               "choices": [
-                "$(0.75)^{7} \\approx 0.133$",
                 "$(0.75)^{4} \\approx 0.316$",
+                "$(0.75)^{7} \\approx 0.133$",
                 "$(0.75)^{10} \\approx 0.056$",
                 "$(0.25)^{4} \\approx 0.004$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "By memorylessness $P(X > 3+4 \\mid X > 3) = P(X > 4) = (0.75)^4 \\approx 0.316$; equivalently $(0.75)^7 / (0.75)^3 = (0.75)^4$. Using $(0.75)^7$ ignores the conditioning, and $(0.75)^{10}$ wrongly adds the exponents."
             }
           ],
