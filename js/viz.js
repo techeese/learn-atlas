@@ -1013,4 +1013,59 @@
     draw();
   });
 
+  /* ========================================================
+     22. Central Limit Theorem — sampling distribution of the mean
+     ======================================================== */
+  register({ id: 'ps-clt', topic: 'probability-statistics', title: 'Central Limit Theorem', blurb: 'Average n samples from a skewed or bimodal source and watch the distribution of the mean converge to a bell — whatever the source.' },
+  function (root) {
+    const W = 560, H = 380, padL = 38, padR = 14, padB = 42, padT = 16;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const MONO = "JetBrains Mono, monospace";
+    const sources = {
+      Exponential: { mu: 1, sd: 1, draw: () => -Math.log(Math.random() || 1e-12) },
+      Uniform:     { mu: 0.5, sd: Math.sqrt(1 / 12), draw: () => Math.random() },
+      Bimodal:     { mu: 0.5, sd: 0.5, draw: () => (Math.random() < 0.5 ? 0 : 1) }
+    };
+    let srcKey = "Exponential", n = 1, running = null;
+    const NB = 41, lo = -4, hi = 4, bw = (hi - lo) / NB;
+    let bins = new Array(NB).fill(0), total = 0;
+    function addSamples(k) {
+      const s = sources[srcKey];
+      for (let j = 0; j < k; j++) {
+        let sum = 0; for (let i = 0; i < n; i++) sum += s.draw();
+        const z = (sum / n - s.mu) / (s.sd / Math.sqrt(n));
+        const bi = Math.floor((z - lo) / bw); if (bi >= 0 && bi < NB) { bins[bi]++; total++; }
+      }
+    }
+    function reset(seed) { bins = new Array(NB).fill(0); total = 0; if (seed) addSamples(250); draw(); }
+    select(ctl, { label: 'source', value: srcKey, options: Object.keys(sources).map(k => ({ value: k, label: k })), onChange: v => { srcKey = v; reset(true); } });
+    slider(ctl, { label: 'sample size n', min: 1, max: 30, step: 1, value: n, fmt: v => 'n=' + v, onInput: v => { n = v; reset(true); } });
+    const runBtn = button(ctl, '▶ Run', () => {
+      if (running) { running.stop(); running = null; runBtn.innerHTML = '▶ Run'; }
+      else { runBtn.innerHTML = '⏸ Pause'; running = loop(() => { addSamples(14); if (total > 6000) { running.stop(); running = null; runBtn.innerHTML = '▶ Run'; } draw(); }); }
+    });
+    button(ctl, '↻ Reset', () => { if (running) { running.stop(); running = null; runBtn.innerHTML = '▶ Run'; } reset(false); });
+    const X = z => padL + (z - lo) / (hi - lo) * (W - padL - padR);
+    const ymax = 0.52, Y = d => H - padB - (d / ymax) * (H - padT - padB);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      for (let i = 0; i < NB; i++) {
+        const d = total ? bins[i] / (total * bw) : 0, x0 = X(lo + i * bw), x1 = X(lo + (i + 1) * bw), y = Y(d);
+        if (d > 0) { ctx.fillStyle = p.gold; ctx.globalAlpha = 0.82; ctx.fillRect(x0 + 0.5, y, Math.max(1, x1 - x0 - 1), (H - padB) - y); ctx.globalAlpha = 1; }
+      }
+      ctx.strokeStyle = p.rust; ctx.lineWidth = 2.4; ctx.beginPath();
+      for (let i = 0; i <= 220; i++) { const z = lo + (hi - lo) * i / 220, d = Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI); i ? ctx.lineTo(X(z), Y(d)) : ctx.moveTo(X(z), Y(d)); } ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'center';
+      [-3, -2, -1, 0, 1, 2, 3].forEach(z => ctx.fillText(String(z), X(z), H - padB + 14));
+      info.innerHTML = `source: <b>${srcKey}</b> &nbsp;·&nbsp; sample size <b>n=${n}</b> &nbsp;·&nbsp; ${total} sample means (standardized)<br>` +
+        (n === 1
+          ? `At <b>n=1</b> the bars trace the raw <b>${srcKey}</b> shape — often nothing like a bell. Now raise <b>n</b> and press Run.`
+          : `Each bar is the standardized <b>average of ${n}</b> draws; as n grows it snaps toward the <span style="color:${p.rust}">standard normal</span> — the Central Limit Theorem, no matter the source.`);
+    }
+    reset(true);
+  });
+
 })();

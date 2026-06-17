@@ -2,6 +2,31 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 74 — Central Limit Theorem visualization (visualizations; owner depth direction)
+A new interactive widget (`ps-clt`, the 22nd) for the deepest idea in statistics — and the reason the normal
+curve is everywhere. Pick a non-normal **source** (Exponential, Uniform, or Bimodal), set the **sample size n**,
+and press **Run**: it repeatedly draws n values, averages them, standardizes, and accumulates the result into a
+live histogram with the **standard-normal curve overlaid**. At n=1 the bars trace the raw (often skewed) source;
+as n grows the histogram visibly snaps toward the bell — the CLT, regardless of source. Animated via
+`VIZUtil.loop` (so `stopAll` cleans it up on nav) with a synchronous initial 250-sample draw. Embedded in the
+*Normal Distribution & Standardization* lesson (at its CLT teaser) and in the Lab. SW cache → `atlas-v18`.
+Verified: renders in Lab (n=10 → clean bell from an Exponential source), embedded canvas hydrates, scales at
+390px, all-routes errs=0, `node gate.js` ALL GREEN; stray Chrome cleaned up.
+
+## iter 73 — Probability & Statistics — Module 2: Common Distributions (5 lessons) (content; owner depth direction)
+Deepened the new topic with a Common Distributions module: Bernoulli & Binomial, Poisson, Geometric &
+waiting-time (memorylessness), Uniform & Exponential (the Poisson-process link), and the Normal distribution &
+standardization (z-scores, the 68–95–99.7 rule). Each is a full KaTeX lecture + flashcards + homework + worked
+examples, adversarially fact-checked. Fixed the iter-71 verify-prompt bug (verifier had overwritten `content`
+with its review notes) by making the prompt explicit that `content` = lesson HTML only, commentary in `notes` —
+all 5 lessons returned proper content. Site: 7 topics · 122 lessons · 733 flashcards · 364 homework · 236
+examples. Verified: lessons render (Normal lesson 62 KaTeX spans), errs=0, gate ALL GREEN.
+
+## iter 72 — Probability & Statistics — 12 MCQs per lesson (content; owner depth direction)
+Brought the 4 Foundations lessons to 12 MCQs each (+48; site bank 1,356 → 1,404) via the proven
+author→adversarial-verify MCQ pipeline (it caught a `\$$2` KaTeX bug and re-derived every probability). All 4
+PS Foundations lessons now at 12 MCQs. Verified: PS quiz renders 12 and answers cleanly (errs=0), gate ALL GREEN.
+
 ## iter 71 — NEW SUBJECT: Probability & Statistics (the 7th topic) — Foundations module (content; owner-approved)
 The owner explicitly greenlit a 7th subject. Launched **Probability & Statistics** (icon ℙ, azure #7aa7d0) with
 a complete **Foundations of Probability** module — 4 fully-authored lessons: (1) Sample Spaces, Events & the
