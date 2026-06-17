@@ -1595,6 +1595,50 @@
               ],
               "answer": 2,
               "explain": "On already-sorted input the last-element Lomuto pivot is always the maximum, producing maximally unbalanced partitions and $\\Theta(n^2)$ comparisons, while mergesort stays $\\Theta(n\\log n)$ regardless of input order. The trap is assuming sorted input is the easy case for quicksort — for this pivot rule it is the worst case."
+            },
+            {
+              "q": "Merge sort runs in $\\Theta(n\\log n)$ but is not in-place. Why?",
+              "choices": [
+                "Because it is unstable",
+                "Because it is recursive",
+                "Because it compares elements",
+                "It needs $\\Theta(n)$ auxiliary memory to merge the two halves"
+              ],
+              "answer": 3,
+              "explain": "The merge step copies the two sorted halves into a temporary buffer of size $\\Theta(n)$. Recursion depth ($\\Theta(\\log n)$ stack) isn't the issue — it's that linear scratch array. (Merge sort is, in fact, stable.)"
+            },
+            {
+              "q": "Quicksort's average-case running time is $\\Theta(n\\log n)$. What is its worst case?",
+              "choices": [
+                "$\\Theta(n\\log n)$",
+                "$\\Theta(n^2)$",
+                "$\\Theta(n)$",
+                "$\\Theta(\\log n)$"
+              ],
+              "answer": 1,
+              "explain": "With an unlucky pivot (e.g. always the smallest/largest, as on already-sorted input with a naive last-element pivot), each partition removes just one element, giving $n + (n-1) + \\dots = \\Theta(n^2)$. Randomized or median-of-three pivots make this case astronomically unlikely."
+            },
+            {
+              "q": "How long does insertion sort take on an array of $n$ elements that is already sorted?",
+              "choices": [
+                "$\\Theta(n\\log n)$",
+                "$\\Theta(n^2)$",
+                "$\\Theta(n)$ — each element is compared once and never shifted",
+                "$\\Theta(1)$"
+              ],
+              "answer": 2,
+              "explain": "Insertion sort's best case is a sorted (or nearly-sorted) array: each new element needs just one comparison against its predecessor and no shifting, so the inner loop never runs — $\\Theta(n)$. Its worst case (reverse-sorted) is $\\Theta(n^2)$."
+            },
+            {
+              "q": "What does it mean for a sorting algorithm to be <em>stable</em>?",
+              "choices": [
+                "Records with equal keys keep their original relative order",
+                "It uses only $O(1)$ extra space",
+                "It has no bad worst case",
+                "It works on any data type"
+              ],
+              "answer": 0,
+              "explain": "Stability means equal keys come out in the same order they went in — essential when sorting by one field after another (e.g. by first name, then a stable sort by last name). Using $O(1)$ space is <em>in-place</em>, a separate property."
             }
           ],
           "flashcards": [
@@ -1790,6 +1834,50 @@
               ],
               "answer": 2,
               "explain": "Bucket sort's $O(n)$ analysis relies on the uniformity assumption that keeps each bucket's expected size $O(1)$; with a skewed distribution a single bucket can hold $\\Theta(n)$ elements, and insertion-sorting that bucket alone costs $\\Theta(n^2)$. The 'total is still $n$' answer ignores that cost is quadratic within an overloaded bucket, not linear."
+            },
+            {
+              "q": "Counting sort sorts $n$ small-integer keys in $O(n+k)$, beating the $\\Omega(n\\log n)$ comparison bound. How?",
+              "choices": [
+                "It runs the comparisons in parallel",
+                "It uses a faster comparison operation",
+                "It never compares two keys — it uses each key directly as an array index",
+                "It sorts the array in place"
+              ],
+              "answer": 2,
+              "explain": "The $\\Omega(n\\log n)$ bound applies only to <em>comparison</em> sorts. Counting sort tallies how many times each key value occurs by indexing into a count array — no key-vs-key comparison ever happens — so the bound simply doesn't apply (the catch: it needs keys in a small integer range)."
+            },
+            {
+              "q": "Quickselect finds the $k$-th smallest element of an unsorted array in what <em>expected</em> time?",
+              "choices": [
+                "$O(n)$ (linear)",
+                "$O(n\\log n)$",
+                "$O(\\log n)$",
+                "$O(n^2)$"
+              ],
+              "answer": 0,
+              "explain": "Quickselect partitions like quicksort but recurses into only the <em>one</em> side containing rank $k$. The expected work is $n + n/2 + n/4 + \\dots = O(n)$. (Its worst case is $O(n^2)$; median-of-medians pivots make it worst-case $O(n)$.)"
+            },
+            {
+              "q": "LSD radix sort processes $n$ integers as $d$ digits, each drawn from a range of size $k$, using a stable counting sort per digit. What is its running time?",
+              "choices": [
+                "$O(n\\,k)$",
+                "$O(n\\log n)$",
+                "$O(n^2)$",
+                "$O(d\\,(n+k))$"
+              ],
+              "answer": 3,
+              "explain": "Each of the $d$ passes is one counting sort costing $O(n+k)$, so the total is $O(d(n+k))$. When $d$ and $k$ are small constants this is linear in $n$ — the reason radix sort can beat comparison sorts on fixed-width keys."
+            },
+            {
+              "q": "For which situation is counting sort a <em>poor</em> choice?",
+              "choices": [
+                "When there are many duplicate keys",
+                "When the range of key values $k$ is huge relative to $n$ (e.g. $k \\approx n^2$)",
+                "When the array is already sorted",
+                "When $n$ is large"
+              ],
+              "answer": 1,
+              "explain": "Counting sort uses $O(n+k)$ time and space, where $k$ is the size of the key range. If $k$ dwarfs $n$ (say 64-bit keys), that count array is enormous and the method becomes wasteful — switch to radix sort or a comparison sort. Duplicates and large $n$ are fine; it's <em>linear</em> in $n$."
             }
           ],
           "flashcards": [
@@ -1985,6 +2073,50 @@
               ],
               "answer": 2,
               "explain": "The <code>lower_bound</code> template assumes a false-then-true predicate and returns the first true index; a true-then-false predicate flips the other way, so keeping <code>hi = mid</code> on the true branch drives the search toward the wrong end. You must adapt the branches (e.g. <code>if (Q(mid)) lo = mid; else hi = mid - 1;</code>) to track the last-true boundary. A true-then-false predicate is perfectly monotone and does have a flip point, so it does not loop forever."
+            },
+            {
+              "q": "Binary search on a sorted array of $n$ elements runs in what time?",
+              "choices": [
+                "$O(n)$",
+                "$O(\\log n)$",
+                "$O(1)$",
+                "$O(n\\log n)$"
+              ],
+              "answer": 1,
+              "explain": "Each step discards half of the remaining range, so the number of steps is the number of times $n$ can be halved to reach 1 — that's $\\log_2 n$, i.e. $O(\\log n)$."
+            },
+            {
+              "q": "What must be true of an array for standard binary search to work correctly?",
+              "choices": [
+                "It must actually contain the target",
+                "Its elements must all be distinct",
+                "Its length must be a power of two",
+                "It must be sorted by the key being searched"
+              ],
+              "answer": 3,
+              "explain": "Binary search relies on order: comparing the target to the middle element tells you which half to keep only if the array is sorted. Duplicates are fine, any length works, and the target need not be present (the search just reports 'not found' / an insertion point)."
+            },
+            {
+              "q": "About how many comparisons does binary search make, in the worst case, on a sorted array of 1,000,000 elements?",
+              "choices": [
+                "About 20",
+                "About 1,000",
+                "About 500,000",
+                "About 1,000,000"
+              ],
+              "answer": 0,
+              "explain": "The worst case is $\\lceil\\log_2 n\\rceil$ comparisons, and $\\log_2(10^6)\\approx 19.9$ — roughly 20. That logarithmic shrink is why binary search scales so well: a billion elements needs only ~30."
+            },
+            {
+              "q": "How does binary search halve the search space at each step?",
+              "choices": [
+                "It hashes the target to a position",
+                "It checks every other element",
+                "It compares the target to the middle element and discards the half that cannot contain it",
+                "It re-sorts the remaining range"
+              ],
+              "answer": 2,
+              "explain": "Because the array is sorted, comparing the target to the middle element rules out an entire half: if the target is smaller, it can only be on the left; if larger, on the right. Discarding that half each step gives the logarithmic running time."
             }
           ],
           "flashcards": [

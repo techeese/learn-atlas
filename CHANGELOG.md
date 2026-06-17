@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 123 — MCQ arc phase 3: Algorithms · Sorting & Searching 12 → 16 (content — owner's #1 ask)
+Continuing the 12→16 arc (interleaved — iter 122 was animations). **+4 new MCQs each** to Comparison Sorts, Linear-Time
+Sorts & Selection, and Binary Search (**+12, bank 1,800 → 1,812**). New angles beyond the existing 12: merge sort's
+$\Theta(n)$ aux space (and that it's stable), quicksort's $\Theta(n^2)$ worst case, insertion sort's $\Theta(n)$ best
+case, the definition of a stable sort; counting sort beating the comparison bound by <em>indexing not comparing</em>,
+quickselect's expected $O(n)$, LSD radix's $O(d(n+k))$, and when counting sort is a poor choice ($k\gg n$); binary
+search's $O(\log n)$, its sorted precondition, ~20 comparisons for a million elements, and the halve-by-comparing-the-
+middle mechanism. Same verified pipeline: authored avoiding existing stems → **adversarial-verify agent → ALL 12 PASS**
+(keys correct, one defensible answer each, accurate explains, valid KaTeX; I also dumped all 12 directly to confirm keys
+after the agent's prose mislabeled an index) → correct-choice positions shuffled off A (3120 / 2031 / 1302). SW cache →
+`atlas-v67`; README 1,800 → 1,812. Verified: `node gate.js` ALL GREEN; quiz renders **"of 16"**, `.katex-error`=0,
+errs=0. **Algorithms now has 3 of 7 modules at 16 MCQs; 4 to go.**
+
 ## iter 122 — Flashcard grade juice: the card sails away in its grade colour (animations)
 Animations/juice was the most-neglected compass area (since iter 106). The flashcard <em>grade</em> action — the core
 spaced-repetition loop, done dozens of times a session — had no feedback: the card just swapped instantly. Now grading

@@ -85,6 +85,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 121: MCQ arc phase 2 — Algorithms·Core Data Structures 12→16 (+12, bank →1,800). Algorithms 2/7 modules done.
    ✅ iter 122: flashcard grade juice — graded card flies out in its grade colour (rust/gold/sage), reduced-motion safe.
    (animations/juice was the thin area since 106; now refreshed.)
+   ✅ iter 123: MCQ arc phase 3 — Algorithms·Sorting & Searching 12→16 (+12, bank →1,812). Algorithms 3/7 modules done.
+   REMAINING in Algorithms: algorithm-design, graphs, advanced-ml-connections, advanced-techniques (4). Then 6 topics.
+   VERIFY NOTE: the adversarial agent's prose sometimes mis-numbers indices — always dump the actual last-N MCQs +
+   keys to confirm before commit (the substance verdicts have been reliable).
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
