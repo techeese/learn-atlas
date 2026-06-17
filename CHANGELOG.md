@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 93 — Linear Algebra — NEW advanced module: Matrix Calculus for ML (3 lessons) (content; "deepen the existing six")
+Continued the deepen-the-six rotation into **Linear Algebra**, which ended at SVD/PCA with no matrix calculus — the
+language every gradient-based learner is written in. New 7th module:
+**(1) Gradients, Jacobians & the Layout Convention** — the scalar gradient, the $m\times n$ Jacobian, the denominator-
+vs-numerator layout fork (why a gradient has the same shape as its parameter), the Hessian, and shape-bookkeeping as
+the core bug-defense.
+**(2) Differentiating Vector & Matrix Expressions** — the five identities you reuse forever: $\nabla(\mathbf{a}^\top\mathbf{x})=\mathbf{a}$,
+$\nabla(\mathbf{x}^\top A\mathbf{x})=(A+A^\top)\mathbf{x}$, $\nabla\lVert\mathbf{x}\rVert^2=2\mathbf{x}$, the least-squares
+gradient $2A^\top(A\mathbf{x}-\mathbf{b})$ → normal equations, and the vector chain rule (Jacobian-transpose pullback).
+**(3) Matrix Calculus Behind Backpropagation** — backprop = the vector chain rule layer by layer: $\partial L/\partial\mathbf{x}=W^\top\boldsymbol{\delta}$,
+$\partial L/\partial W=\boldsymbol{\delta}\mathbf{x}^\top$ (outer product), why forward uses $W$ and backward uses $W^\top$,
+shape-checks, and the vanishing/exploding-gradient explanation.
+Each is a full KaTeX lecture + 6 flashcards + 3 homework + 2 worked examples; MCQs deferred to the pipeline. Linear
+Algebra is now a **7-module, 19-lesson** course. Site: **142 lessons · 853 flashcards · 424 homework · 276 examples**.
+SW cache → `atlas-v37`; README counts refreshed (lessons/concepts 139→142). Verified: `node gate.js` ALL GREEN (7
+topics · 142 lessons); all three lessons render math with **katex-error=0** (the $\mathbf{z}=W\mathbf{x}+\mathbf{b}$ /
+layer notation confirmed visually); course/cheatsheet/map + lessons smoke errs=0; legible at 390px; stray Chrome cleaned up.
+
 ## iter 92 — Convex vs. non-convex gradient-descent landscape visualization (visualizations; "deepen the existing six")
 A new interactive widget (`calc-convex-landscape`, the 27th) that makes the convexity lesson's central payoff *visible*.
 Pick a landscape — a **convex bowl** ($0.25x^2$) or a **bumpy non-convex** curve ($0.12x^2+0.8\cos 1.8x$ with several

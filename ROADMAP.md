@@ -34,10 +34,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    generative lessons to 12 MCQs (+36; DL topic now 264 / site 1,632) — DL fully complete again.
    ✅ iter 90: Calculus → new "Convex & Constrained Optimization" module (convexity, GD convergence, Lagrange
    multipliers). ✅ iter 91: all 3 convex lessons to 12 MCQs (+36; calc topic now 300 / site 1,668) — Calculus fully
-   complete again. REMAINING advanced gaps to mine, one topic per rotation:
-   Calculus → convex optimization / Lagrange multipliers (constrained optimization); Linear Algebra → matrix calculus
-   (gradients of vector/matrix expressions) or pseudoinverse/ridge; Algorithms → amortized analysis or max-flow/min-cut;
-   RL → model-based or offline RL; LLMs are already very deep. Author with `String.raw` + single-backslash LaTeX; the
+   complete again. ✅ iter 93: Linear Algebra → new "Matrix Calculus for ML" module (gradients/Jacobians/layout,
+   derivative identities, backprop as matrix calculus) — content+cards+homework+examples, NO MCQs yet (add via pipeline next).
+   REMAINING advanced gaps to mine, one topic per rotation:
+   Algorithms → amortized analysis or max-flow/min-cut; RL → model-based or offline RL; LLMs are already very deep.
+   Author with `String.raw` + single-backslash LaTeX; the
    per-topic data file uses its OWN header comment — preserve it. NOTE: name the module variable anything but `module`
    (reserved in CommonJS), and run generators from the learn-atlas dir (relative `data/...` paths).
 3. **Hard-concept support** — for concepts that are hard to understand, add an EXTRA place/way to explain
