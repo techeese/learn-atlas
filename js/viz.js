@@ -2830,4 +2830,92 @@
     draw();                                                    // synchronous first paint
   });
 
+  /* ========================================================
+     48. Binary vs linear search — O(log n) vs O(n) race (Algorithms)
+     ===================================================== */
+  register({ id: 'algo-binary-search', topic: 'algorithms', title: 'Binary vs Linear Search: O(log n) vs O(n)', blurb: 'Race binary search against linear search on the same sorted array. Binary halves the window every comparison and homes in within a handful of steps; linear scans one cell at a time. Watch the gap — then imagine it on a million items.' },
+  function (root) {
+    const W = 560, H = 300, MONO = "JetBrains Mono, monospace", N = 21;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const vals = []; for (let i = 0; i < N; i++) vals.push(3 + i * 2);   // sorted: 3,5,7,…,43
+    let target = vals[10], playing = false, frame = 0, playBtn = null;
+    let blo, bhi, bmid, bComps, bFound, bDone, lptr, lComps, lFound, lDone, lastBmsg;
+    function reset(newTarget) {
+      if (newTarget) target = vals[Math.floor(Math.random() * N)];
+      blo = 0; bhi = N - 1; bmid = (blo + bhi) >> 1; bComps = 0; bFound = -1; bDone = false; lastBmsg = "";
+      lptr = 0; lComps = 0; lFound = -1; lDone = false; setPlay(false);
+    }
+    function stepBinary() {
+      if (bDone) return;
+      bmid = (blo + bhi) >> 1; bComps++;
+      if (vals[bmid] === target) { bFound = bmid; bDone = true; lastBmsg = vals[bmid] + " = " + target + " → found!"; }
+      else if (vals[bmid] < target) { lastBmsg = vals[bmid] + " < " + target + " → search right half"; blo = bmid + 1; }
+      else { lastBmsg = vals[bmid] + " > " + target + " → search left half"; bhi = bmid - 1; }
+      if (blo > bhi && bFound < 0) bDone = true;
+    }
+    function stepLinear() {
+      if (lDone) return;
+      lComps++;
+      if (vals[lptr] === target) { lFound = lptr; lDone = true; }
+      else if (lptr >= N - 1) lDone = true;
+      else lptr++;
+    }
+    function step() { stepBinary(); stepLinear(); }
+    function setPlay(v) { playing = v; if (playBtn) { playBtn.innerHTML = v ? '⏸ Pause' : '▶ Play'; playBtn.classList.toggle('active', v); } }
+
+    const padX = 18, cw = (W - 2 * padX) / N, ch = 30;
+    function drawRow(y, label, comps, classify) {
+      const p = P();
+      ctx.fillStyle = p.mute; ctx.font = '600 11px ' + MONO; ctx.textAlign = 'left'; ctx.fillText(label, padX, y - 8);
+      ctx.textAlign = 'right'; ctx.fillStyle = p.soft; ctx.fillText(comps + " comparison" + (comps === 1 ? "" : "s"), W - padX, y - 8);
+      for (let i = 0; i < N; i++) {
+        const x = padX + i * cw, st = classify(i);
+        let bg = p.panel2, fg = p.soft, bd = p.line;
+        if (st === "found") { bg = p.sage; fg = "#16210f"; bd = p.sage; }
+        else if (st === "cur") { bg = p.gold; fg = "#1a1a1a"; bd = p.gold; }
+        else if (st === "out") { bg = p.bg; fg = p.mute; bd = p.line; }
+        ctx.fillStyle = bg; ctx.strokeStyle = bd; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.rect(x + 1.5, y, cw - 3, ch); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = fg; ctx.font = '600 10px ' + MONO; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(vals[i], x + cw / 2, y + ch / 2);
+      }
+      ctx.textBaseline = 'alphabetic';
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = p.ink; ctx.font = '600 13px ' + MONO; ctx.textAlign = 'center';
+      ctx.fillText("target = " + target, W / 2, 22);
+      drawRow(56, "Binary search · O(log n)", bComps, i => {
+        if (i === bFound) return "found";
+        if (!bDone && i === bmid) return "cur";
+        if (i < blo || i > bhi) return "out";
+        return "in";
+      });
+      drawRow(130, "Linear search · O(n)", lComps, i => {
+        if (i === lFound) return "found";
+        if (!lDone && i === lptr) return "cur";
+        if (i < lptr) return "out";
+        return "in";
+      });
+      // binary current-comparison caption
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + MONO; ctx.textAlign = 'left';
+      if (lastBmsg) ctx.fillText("binary: " + lastBmsg, padX, 186);
+      const maxB = Math.ceil(Math.log2(N + 1));
+      info.innerHTML = `Searching for <b>${target}</b> in ${N} sorted values. <b style="color:${p.gold}">Binary</b> halves the window each comparison (at most ⌈log₂ n⌉ = <b>${maxB}</b>); <b>linear</b> checks one cell at a time (up to ${N}). ` +
+        (bDone && lDone ? `Here: <b style="color:${p.sage}">binary ${bComps}</b> vs <b>linear ${lComps}</b> comparisons. ` : "") +
+        `The gap explodes with scale: at a <b>million</b> items, binary needs ~20 comparisons; linear, up to a million.`;
+    }
+    playBtn = button(ctl, '▶ Play', function () { if (bDone && lDone) reset(false); setPlay(!playing); });
+    button(ctl, 'Step', function () { setPlay(false); if (bDone && lDone) reset(false); step(); draw(); });
+    button(ctl, 'New target', function () { reset(true); draw(); });
+    button(ctl, 'Reset', function () { reset(false); draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Search race: a sorted array of 21 values searched by binary search (top row, narrowing a lo–hi window around a highlighted midpoint) and linear search (bottom row, a pointer scanning left to right) for the same target, with a live comparison count for each showing binary finishing in far fewer steps.');
+    reset(false);
+    draw();                                                    // synchronous first paint
+    loop(function () { if (playing && !(bDone && lDone)) { frame++; if (frame % 14 === 0) { step(); draw(); if (bDone && lDone) setPlay(false); } } });
+  });
+
 })();

@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 222: **New viz `algo-binary-search`** (visualizations — owner-loved; 4 iters since last viz). 48th widget, in
+   a-binary-search (which already had a code exercise → now read+watch+code). Binary-vs-linear race on one sorted array:
+   binary narrows a lo–hi window, linear scans, live comparison counts make O(log n) vs O(n) visceral. Counts node-validated
+   (midpoint→binary 1; last→binary 5/linear 21). Verified: gate GREEN (48); race renders err=0 (binary 1 vs linear mid-scan);
+   smoke errs=0/kErr=0 (10 routes); mobile 390px scales. SW →v165.
    ✅ iter 221: **Deeper dives for LA & Calc (1→3 each)** (understandability — completes raising the two thinnest topics).
    la-svd (rotate-stretch-rotate), la-four-subspaces-rank (the jigsaw), c-chain-rule (=backprop engine), c-gradient-directional
    (steepest ascent ⊥ level sets). Byte-stable inject across both files. Verified: gate GREEN (lints), four-subspaces dive

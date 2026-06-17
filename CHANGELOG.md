@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 222 — Binary-vs-linear search race visualizer (visualizations)
+New widget **`algo-binary-search`** (the **48th**), embedded in `a-binary-search` after the classic-algorithm section —
+which already had a Python code exercise, so the lesson is now read + watch + code. The most iconic O(log n)-vs-O(n)
+contrast, made a race.
+- The same 21-value sorted array is searched **two ways at once**: a top "Binary search · O(log n)" row narrows a
+  lo–hi window around a highlighted midpoint (eliminated cells grey out); a bottom "Linear search · O(n)" row scans a
+  pointer left-to-right. Each row shows a **live comparison count**, and a caption narrates the binary step
+  ("23 < 31 → search right half").
+- Play / Step / New target / Reset. The gap is visceral — binary finishes in ≤ ⌈log₂ n⌉ = 5 while linear can take 21 —
+  and the note scales it up ("at a million items: binary ~20, linear up to a million").
+Logic validated in node first: comparison counts are exact across all targets (midpoint → binary 1, last element →
+binary 5 / linear 21; max binary = 5 = ⌈log₂ 22⌉).
+Verified: `gate.js` ALL GREEN (**48 widgets**, embed resolves); Lab-route run shows the race (binary found in 1 while
+linear still scanning at 7 comparisons) — err=0; all-routes smoke (10 routes incl. `#/lab/algo-binary-search` + the
+embedded lesson) **errs=0/kErr=0**; mobile 390px the two rows scale and stay legible. SW cache `atlas-v164` → `atlas-v165`.
+
 ## iter 221 — Deeper dives for Linear Algebra & Calculus — the last two thin topics (understandability)
 LA and Calculus were the only topics still at **1** "Deeper dive" each; raised both to **3** (the depth pass now covers
 every subject — minimum is PS at 2). Four `<details class="deep-dive">` on foundational ML-math:
