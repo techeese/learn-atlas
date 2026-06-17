@@ -7,6 +7,28 @@ Optimize for: understanding faster, remembering longer, and *wanting* to come ba
 The autonomous loop (`/improve-atlas`) reads this file first. Keep it the live queue:
 done items move to CHANGELOG and out; new ideas land in the backlog.
 
+## ★ OWNER DIRECTIVE (2026-06-17 — supersedes default rotation until delivered)
+The owner reviewed the mature site and set the next arc. Rotate across these (biggest-value first):
+1. **NEW SUBJECT: Probability & Statistics** — IN PROGRESS. ✅ iter 71: Foundations module (4 lessons +
+   cards/homework/examples; Bayes viz embedded). NEXT for this topic: (a) add 12 MCQs/lesson via the proven
+   MCQ pipeline (`/tmp/gen_mcq_target_wf.js probability-statistics "probability and statistics" 12`);
+   (b) more modules — Common Distributions (Binomial/Poisson/Normal/Exponential), Joint distributions &
+   independence, Limit theorems (LLN/CLT), Estimation & confidence intervals, Hypothesis testing, Bayesian
+   inference; (c) new viz (a CLT/sampling-distribution demo, a normal-distribution explorer).
+   ⚠ Lesson-authoring workflow bug (iter 71): the VERIFY agent overwrote `content` with its review notes for
+   3/4 lessons. When authoring future lessons, make the verify schema/prompt EXPLICIT: "return the corrected
+   LESSON HTML in `content`; put commentary ONLY in `notes`; never write a summary into `content`." (Recovered
+   via transcript extraction this time.)
+2. **Deepen the existing six** — add ADVANCED lessons/modules (not just more of the same; go further than the
+   current depth) where each topic has frontier/advanced gaps.
+3. **Hard-concept support** — for concepts that are hard to understand, add an EXTRA place/way to explain
+   (e.g. a deeper-dive / "intuition" expandable, an alternative explanation), and SPLIT or MERGE lessons where
+   that makes a concept land better.
+4. **New learning functionality** is welcome too.
+Verification: owner chose KEEP FULL verification (screenshot every view desktop+mobile + DOM-dump errs=0) —
+but ALWAYS `pkill -f "Google Chrome.*--headless"` after each run so zombie Chrome can't accumulate (87 had
+piled up by iter 70; cleaned). Wrap chrome in `timeout` too.
+
 ## Now (highest priority)
 - **QUESTION BANK — phase 1 DONE (iters 7–9): all 6 topics at ~8 MCQs/lesson, bank 452 → 897.** Mastery mode
   (iter 6) recycles misses until passed. Standing low-priority job: keep topping up weak/thin lessons toward

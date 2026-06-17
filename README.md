@@ -3,9 +3,9 @@
 **Live: https://techeese.github.io/learn-atlas/**
 
 A gamified, self-hosted study site for the topics you're learning alongside a full-time job:
-**Linear Algebra, Calculus, Algorithms, Deep Learning, Reinforcement Learning, and LLMs**.
+**Linear Algebra, Calculus, Algorithms, Deep Learning, Reinforcement Learning, LLMs, and Probability & Statistics**.
 
-Currently **113 lessons · 1,356 fact-checked MCQs · 678 flashcards · 337 homework problems · 218 worked
+Currently **117 lessons · 1,356 fact-checked MCQs · 702 flashcards · 349 homework problems · 226 worked
 examples · 21 interactive visualizations**, each lesson with rendered math, step-by-step worked examples, and
 spaced-repetition cards — wrapped in an XP / level / streak / mastery / achievement system designed to make
 hard ideas *click* and *stick*.
@@ -27,7 +27,7 @@ Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys
 - **Knowledge Constellation** — a radial map of all 113 concepts branching out from a central hub (foundations near the core, advanced toward the rim), cross-topic prerequisites arcing through the middle, nodes colored by mastery; hover to trace dependencies, click to open. Fits-to-width on mobile.
 - **Learning paths + per-lesson Connections** — every lesson knows its prerequisites; open a concept's path for the ordered chain from the beginning, and each lecture ends with "Builds on / Leads to" chips to navigate the graph while reading.
 - **Code Playground** — run real **Python** (via Pyodide, incl. numpy) and **JavaScript** in the browser; in-lesson exercises self-check with `<div data-code="python" data-expected="...">starter</div>`.
-- **Glossary** — 48 plain-language definitions of the core terms across all six topics, searchable (and in ⌘K). Key terms are also **hover/tap tooltips inline in lessons**, so a definition is one glance away without leaving the page.
+- **Glossary** — 48 plain-language definitions of the core terms across all seven topics, searchable (and in ⌘K). Key terms are also **hover/tap tooltips inline in lessons**, so a definition is one glance away without leaving the page.
 - **Command palette (⌘K / Ctrl+K)** — relevance-ranked, typo-tolerant (fuzzy) search across concepts, visualizations, pages, glossary terms, and references.
 - **Keyboard shortcuts** — 1–4 to answer any MCQ, Space to flip flashcards (then 1–4 to grade), Enter to advance.
 - **Spaced repetition done right** — SM-2 scheduling with Anki-style interval previews on the grade buttons, a global **Daily Review** with a due-load forecast (now / 24h / 7 days), and weak concepts that resurface automatically.

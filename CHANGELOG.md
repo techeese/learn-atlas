@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 71 — NEW SUBJECT: Probability & Statistics (the 7th topic) — Foundations module (content; owner-approved)
+The owner explicitly greenlit a 7th subject. Launched **Probability & Statistics** (icon ℙ, azure #7aa7d0) with
+a complete **Foundations of Probability** module — 4 fully-authored lessons: (1) Sample Spaces, Events & the
+Axioms of Probability; (2) Conditional Probability, Independence & Bayes' Theorem (with the existing Bayes
+visualization embedded inline); (3) Random Variables & Their Distributions; (4) Expectation, Variance & the
+Shape of a Distribution. Each has rich KaTeX lecture content + flashcards + homework + worked examples
+(24 cards, 12 homework, 8 examples total). Authored and adversarially fact-checked by a workflow (every
+probability/Bayes/variance derivation independently re-checked). Site totals: **7 topics · 117 lessons · 702
+flashcards · 349 homework · 226 examples**. Wired in (index.html, sw.js ASSETS + `atlas-v17`, gate.js TOPICS).
+**Bug caught in verification:** the verify agent had overwritten the `content` field of 3 lessons with its own
+review notes ("VERIFICATION COMPLETE…") instead of the corrected lecture HTML — caught because a DOM dump
+showed `katex=0` on lessons full of math. Recovered the validated original author content from the workflow
+transcripts and patched it in (re-embedding the Bayes viz). Verified: dashboard shows 7 topic cards / 117
+lessons, lessons render (65 & 71 KaTeX spans, Bayes viz embeds), all-routes errs=0, `node gate.js` ALL GREEN.
+MCQs (→12/lesson) and more modules come next. Also cleaned up 87 zombie headless-Chrome processes from prior
+verification runs and now kill stray Chrome after every run (owner directive).
+
 ## iter 70 — Typo-tolerant fuzzy search in the ⌘K command palette (understandability / workflow) — 10-iter checkpoint
 The command palette is the core fast-navigation tool across 113 lessons + 21 visualizations + glossary + pages
 + references, but it only did exact substring matching — a small typo ("eignvalue", "softmx", "gradent")
