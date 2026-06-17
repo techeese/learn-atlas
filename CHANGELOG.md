@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 95 — "Deeper dive" collapsible for hard-concept support (new functionality / understandability; owner directive 3)
+Addressed a long-neglected owner directive (item 3: "for concepts that are hard to understand, add an EXTRA place/way
+to explain — a deeper-dive / intuition expandable — an alternative explanation"). Added a reusable **`<details class="deep-dive">`**
+component: a native, JS-free, accessible collapsible (keyboard-operable, focus-visible) styled in the violet
+deep-dive accent, collapsed by default so it never clutters the main flow, with a print rule that forces it open in
+cheatsheets/PDF. KaTeX inside renders fine (the global typeset pass covers hidden content). Demonstrated it on two
+genuinely hard concepts with *alternative-angle* explanations: **Bayes' base-rate trap** recast in natural frequencies
+("imagine 10,000 people: ~10 sick → ~10 true positives vs ~100 false alarms → 10/110 ≈ 9%", Gigerenzer's framing), and
+the **VAE reparameterization trick** explained as rerouting the randomness / a pathwise derivative ("you can't
+differentiate a coin flip; draw ε first, then z=μ+σ⊙ε is plain arithmetic"). Authors can now drop a deeper dive into any
+lesson for an alternative explanation. SW cache → `atlas-v39`. Verified: `node gate.js` ALL GREEN; both deep-dives are
+collapsed by default and open on click (PS: 14 KaTeX inside / DL: 12, katex-error=0 in both); errs=0; legible at 390px;
+print rule added; stray Chrome cleaned up.
+
 ## iter 94 — Linear Algebra Matrix-Calculus module — 12 MCQs per lesson (content; owner "more questions" ask)
 Completed the new Matrix Calculus module: all three lessons (gradients/Jacobians, derivative identities, backprop)
 brought from 0 → 12 MCQs each via the author→adversarial-verify pipeline — **+36 fact-checked questions**. Every

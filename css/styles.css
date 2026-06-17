@@ -314,6 +314,25 @@ body::after {
 .callout.sage .c-tag { color: var(--sage); }
 .callout.violet { border-color: var(--violet); background: color-mix(in srgb, var(--violet) 9%, transparent); }
 .callout.violet .c-tag { color: var(--violet); }
+
+/* collapsible "deeper dive" — an optional alternative/deeper explanation for hard concepts (native <details>) */
+.deep-dive {
+  border: 1px solid var(--line); border-left: 3px solid var(--violet);
+  background: color-mix(in srgb, var(--violet) 6%, transparent);
+  border-radius: 0 10px 10px 0; margin: 18px 0; padding: 2px 18px;
+}
+.deep-dive > summary {
+  cursor: pointer; list-style: none; padding: 12px 0;
+  font-family: var(--font-disp); font-size: 15px; font-weight: 600; color: var(--violet);
+  display: flex; align-items: center; gap: 9px; user-select: none;
+}
+.deep-dive > summary::-webkit-details-marker { display: none; }
+.deep-dive > summary::before { content: "▸"; transition: transform .2s ease; }
+.deep-dive[open] > summary::before { transform: rotate(90deg); }
+.deep-dive[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+.deep-dive > summary:hover { color: var(--ink); }
+.deep-dive > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+.deep-dive > :not(summary):last-child { margin-bottom: 14px; }
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: 6px 0; }
 
 .lesson-actions { display: flex; gap: 12px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); flex-wrap: wrap; }
@@ -835,5 +854,9 @@ kbd { font-family: var(--font-mono); background: var(--panel-2); border: 1px sol
   .prose code, .prose pre { background: #f2f2f2 !important; color: #111 !important; border-color: #ddd !important; }
   .callout { background: #f6f6f6 !important; border-color: #999 !important; }
   .callout *, .hw-item *, .katex { color: #111 !important; }
+  /* show "deeper dive" content in print even if collapsed on screen */
+  .deep-dive { background: #f6f6f6 !important; border-color: #999 !important; }
+  .deep-dive > * { display: block !important; }
+  .deep-dive *, .deep-dive .katex { color: #111 !important; }
   .hw-item { border: 1px solid #ccc !important; background: #fff !important; break-inside: avoid; }
 }

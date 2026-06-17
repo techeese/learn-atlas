@@ -43,7 +43,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    (reserved in CommonJS), and run generators from the learn-atlas dir (relative `data/...` paths).
 3. **Hard-concept support** — for concepts that are hard to understand, add an EXTRA place/way to explain
    (e.g. a deeper-dive / "intuition" expandable, an alternative explanation), and SPLIT or MERGE lessons where
-   that makes a concept land better.
+   that makes a concept land better. ✅ iter 95: built the reusable `<details class="deep-dive"><summary>Deeper dive: …</summary>…</details>`
+   component (native, accessible, collapsed by default, print-opens; KaTeX works inside). Seeded on Bayes (natural
+   frequencies) + the VAE reparameterization trick (pathwise derivative). NEXT: sprinkle deeper-dives on more hard
+   concepts (eigen-defectiveness, KKT/shadow-price, CLT "why", attention, policy-gradient) — one or two per content
+   iteration, with a genuinely DIFFERENT angle (not a restatement). Also consider SPLIT/MERGE where a lesson is overloaded.
 4. **New learning functionality** is welcome too.
 Verification: owner chose KEEP FULL verification (screenshot every view desktop+mobile + DOM-dump errs=0) —
 but ALWAYS `pkill -f "Google Chrome.*--headless"` after each run so zombie Chrome can't accumulate (87 had
