@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 106 — Answer-feedback juice on every MCQ (animations / juice)
+Put tactile feedback on the single most-used interaction in the app — answering a quiz question. Until now picking an
+answer just swapped colours; now the **correct** choice gives a satisfying **pop + a soft sage glow ring**, its letter
+badge does a little **spring-rotate (keyPop)**, and a **wrong** pick **shakes** side-to-side in rust. Because the
+correct choice always lights up (even when you missed it), every answer ends with your eye pulled to the right one. The
+feedback rides on the existing `.choice.correct` / `.choice.wrong` classes, so it fires everywhere those are used —
+**lesson quizzes and the mastery/redeem drills** alike — with zero JS changes. Three CSS keyframes (`choicePop`,
+`keyPop`, `choiceShake`); all transforms/box-shadow only (no layout shift), and the existing global reduced-motion rule
+neutralizes them automatically. SW cache → `atlas-v50`. Verified: synthetic-element checks confirm `.choice.correct`→
+`choicePop` and `.choice.wrong`→`choiceShake` are wired; a live lesson-quiz answer shows the correct choice carrying
+`choicePop` + the sage glow box-shadow + the `keyPop` badge; a 13-route smoke run is **errs=0**; desktop and **390px**
+screenshots confirm the green-glow / red states read clearly with no overflow; stray Chrome cleaned up.
+
 ## iter 105 — Byte-Pair Encoding (BPE) trainer — a 29th visualization for LLM tokenization (visualizations)
 The LLM topic had three viz (embeddings, attention, decoding) but **no tokenization viz** — yet "Tokenization and
 Subword Vocabularies (BPE)" is one of the most-asked-about, least-intuitive LLM topics, and its lesson had only a
