@@ -55,10 +55,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 108: four new deeper-dives (eigenvectors=power-iteration, CLT=why-a-bell, attention=soft-dictionary,
    policy-gradients=train-by-trial) — directive 3.
    ✅ iter 109: five new achievements (Curator, Annotator, Flawless Five, Crack Shot, Deep Thinker) → 40 total.
+   ✅ iter 110: keyboard a11y for clickable [data-go] cards (role/tabindex/Enter-Space via bindGo) — ★110 checkpoint.
    Ideas still open for this arc: onboarding refresh; flashcard flip/grade juice & route-transition polish; MORE
    deeper-dives (KKT/shadow-price, vanishing/exploding gradients, batch-norm, the kernel trick, dropout-as-ensemble);
    surfacing missed-deck stats on the Progress page; mastery-weighted/recency ranking in ⌘K (title tier is still
    purely lexical); a "Daily Ritual" achievement once Daily-Mix completions are tracked.
+   NEGLECTED compass areas to rotate toward (110 checkpoint): performance (since iter 58), examples (since 52),
+   mobile-specific polish, workflow/dev-flow, and SVG Knowledge-Map keyboard access (deferred from iter 110).
    MORE VIZ IDEAS still open (backlog below): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space
    explorer, a GAN training-dynamics demo, a Q-learning/SARSA path demo.
    (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE

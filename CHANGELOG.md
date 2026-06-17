@@ -2,6 +2,29 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 110 — Keyboard accessibility for clickable cards (accessibility) — ★ 110-iteration checkpoint
+Accessibility hadn't been touched since iter 81. Audit found grade buttons and lesson tabs were already accessible, but
+the site's many **clickable `<div data-go>` cards were mouse-only** — not in the Tab order and not operable by keyboard
+or screen reader: Concept of the Day, the "Continue where you left off" resume card, every course card on the dashboard,
+every lesson row on a course page, and the "Redeem your mistakes" CTA. Fixed it **centrally in `bindGo()`** (the one
+helper that binds every `[data-go]`): non-native-interactive elements (not `<a>`/`<button>`, not inside an `<svg>`) now
+get `role="link"` + `tabindex="0"` and an Enter/Space `keydown` handler, so they're reachable by Tab and activate like a
+link. Added a matching focus ring (`.cotd`/`.miss-cta`/`.lesson-row:focus-visible`); the global `:focus-visible` rule
+already covered them, this just gives the nicer 3px card offset. SVG Knowledge-Map nodes are deliberately left for a
+separate pass (focusing 148 `<g>` nodes needs its own UX thought; every lesson is already reachable by keyboard via the
+sidebar, course pages, and ⌘K). SW cache → `atlas-v54`; README accessibility bullet updated. Verified: `node gate.js`
+ALL GREEN; an in-browser run is **errs=0**, a course card now reports `role="link"` + `tabindex="0"`, takes focus, and
+**pressing Enter navigates** to the course page; lesson rows are focusable too; a dashboard screenshot confirms zero
+visual regression (attribute-only change); stray Chrome cleaned up.
+**★ 110-iteration checkpoint (iters 100–109).** Cleanly diversified across the compass after the long content/viz arc:
+bookmarks (101) · glossary (102) · mastery bars (103) · mistakes deck (104) · BPE viz (105) · quiz juice (106) ·
+full-text search (107) · deeper-dives ×4 (108) · achievements ×5 (109) · a11y (110). All four owner directives are
+delivered or actively served (PS subject ✓, deepen-the-six ✓, hard-concept support ongoing, new functionality ✓).
+Compass areas still thin and worth rotating toward next: **performance** (untouched since iter 58), **examples**
+(since 52), **mobile-specific** polish, and **workflow/dev-flow**. Content cadence note: every lesson still sits at
+exactly 12 MCQs — the owner's "more and more questions" ask could justify a future bounded growth pass (one topic 12→15)
+if it returns, but the uniform-12 property is worth keeping unless committing to a full multi-iteration sweep.
+
 ## iter 109 — Five new achievements covering bookmarks, notes, quiz skill & the deeper-dives (gamification)
 The owner explicitly loves "more achievements," and several now-shipped features had no reward hook. Added **5 (35 → 40)**,
 each tied to a distinct behavior so the collection rewards the *breadth* of how you use the site:

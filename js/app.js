@@ -1610,7 +1610,17 @@
 
   // ---------- navigation helpers ----------
   function bindGo() {
-    app.querySelectorAll("[data-go]").forEach(el => el.addEventListener("click", () => { location.hash = el.dataset.go; }));
+    app.querySelectorAll("[data-go]").forEach(el => {
+      const nav = () => { location.hash = el.dataset.go; };
+      el.addEventListener("click", nav);
+      // keyboard + screen-reader access for clickable cards (divs) that aren't native links/buttons
+      const tag = el.tagName.toLowerCase();
+      if (tag !== "a" && tag !== "button" && !el.closest("svg")) {
+        if (!el.hasAttribute("role")) el.setAttribute("role", "link");
+        if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "0");
+        el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); nav(); } });
+      }
+    });
   }
 
   // ---------- command palette (⌘K) ----------
