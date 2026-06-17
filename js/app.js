@@ -1623,12 +1623,34 @@
     Object.keys(window.REFERENCES || {}).forEach(k => (window.REFERENCES[k] || []).forEach(r => out.push({ t: r.title, sub: "Reference · " + r.by, hash: r.url, ext: true, icon: "🔖" })));
     return out;
   }
+  // full-text index of lesson bodies (built once, cached) — powers "search inside lessons"
+  let _lessonText = null;
+  function lessonTextIndex() {
+    if (_lessonText) return _lessonText;
+    _lessonText = [];
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
+      const raw = String(l.content || "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;|&rsquo;|&apos;/g, "'").replace(/&nbsp;/g, " ")
+        .replace(/\s+/g, " ").trim();
+      _lessonText.push({ title: l.title, courseTitle: c.title, hash: "#/lesson/" + c.id + "/" + l.id, raw: raw, low: raw.toLowerCase() });
+    })));
+    return _lessonText;
+  }
+  function snippetHtml(raw, low, tok) {
+    let at = low.indexOf(tok); if (at < 0) at = 0;
+    const start = Math.max(0, at - 32), end = Math.min(raw.length, at + tok.length + 52);
+    const pre = (start > 0 ? "…" : "") + raw.slice(start, at);
+    const mid = raw.slice(at, at + tok.length);
+    const post = raw.slice(at + tok.length, end) + (end < raw.length ? "…" : "");
+    return esc(pre) + "<mark>" + esc(mid) + "</mark>" + esc(post);
+  }
   let paletteEl = null;
   function openPalette() {
     if (paletteEl) return;
     const idx = searchIndex();
     paletteEl = document.createElement("div"); paletteEl.className = "palette-scrim";
-    paletteEl.innerHTML = `<div class="palette"><input class="palette-in" placeholder="Search concepts, visualizations, pages, references…"><div class="palette-list"></div><div class="palette-foot">↑↓ navigate · ↵ open · esc close</div></div>`;
+    paletteEl.innerHTML = `<div class="palette"><input class="palette-in" placeholder="Search lessons, concepts, visualizations, pages…"><div class="palette-list"></div><div class="palette-foot">🔎 also searches inside lessons · ↑↓ navigate · ↵ open · esc close</div></div>`;
     document.body.appendChild(paletteEl);
     const inp = paletteEl.querySelector(".palette-in"), list = paletteEl.querySelector(".palette-list");
     let sel = 0, results = [];
@@ -1656,9 +1678,22 @@
           return 9;
         };
         results = idx.map((x, i) => ({ x, s: score(x), i })).filter(o => o.s < 9).sort((a, b) => a.s - b.s || a.i - b.i).map(o => o.x).slice(0, 50);
+        // full-text: surface lessons whose BODY contains every query word (skip ones already matched by title)
+        if (q.length >= 3) {
+          const toks = q.split(/\s+/).filter(Boolean);
+          const shown = new Set(results.filter(r => r.hash && r.hash.indexOf("#/lesson/") === 0).map(r => r.hash));
+          const body = [];
+          lessonTextIndex().forEach(le => {
+            if (shown.has(le.hash)) return;
+            if (!toks.every(tk => le.low.indexOf(tk) >= 0)) return;
+            body.push({ t: le.title, subHtml: esc(le.courseTitle) + " · " + snippetHtml(le.raw, le.low, toks[0]), hash: le.hash, icon: "🔎", _at: le.low.indexOf(toks[0]) });
+          });
+          body.sort((a, b) => a._at - b._at);
+          results = results.concat(body).slice(0, 50);
+        }
       } else results = idx.slice(0, 50);
       if (sel >= results.length) sel = Math.max(0, results.length - 1);
-      list.innerHTML = results.length ? results.map((r, i) => `<div class="palette-item ${i === sel ? "sel" : ""}" data-i="${i}"><span class="pi-ico">${r.icon}</span><span class="pi-main"><span class="pi-t">${esc(r.t)}</span><span class="pi-sub">${esc(r.sub)}</span></span>${r.ext ? '<span class="pi-ext">↗</span>' : ""}</div>`).join("") : '<div class="palette-empty">No matches</div>';
+      list.innerHTML = results.length ? results.map((r, i) => `<div class="palette-item ${i === sel ? "sel" : ""}" data-i="${i}"><span class="pi-ico">${r.icon}</span><span class="pi-main"><span class="pi-t">${esc(r.t)}</span><span class="pi-sub">${r.subHtml ? r.subHtml : esc(r.sub)}</span></span>${r.ext ? '<span class="pi-ext">↗</span>' : ""}</div>`).join("") : '<div class="palette-empty">No matches</div>';
       list.querySelectorAll(".palette-item").forEach(e => e.addEventListener("click", () => go(parseInt(e.dataset.i, 10))));
     }
     function go(i) { const r = results[i]; if (!r) return; closePalette(); if (r.ext) window.open(r.hash, "_blank", "noopener"); else location.hash = r.hash; }

@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 107 — Full-text lesson search in the command palette (new functionality / understandability)
+The ⌘K palette searched concept titles, viz, pages, glossary, and references — but **not the text inside lessons**, so
+"where did I read about vanishing gradients?" was unanswerable. Now the palette also runs **full-text search across
+every lesson's body**: type a query (≥3 chars) and any lesson whose prose contains *all* the query words surfaces with a
+🔎 icon and a **highlighted context snippet** showing the match in situ. Title/glossary/page matches still rank first;
+body matches follow, ordered by how early in the lesson the term appears. This turns the whole 148-lesson corpus into a
+findable index — e.g. "vanishing gradient" returns 14 lessons (zero of which have it in the title), "bellman" finds it
+across Dynamic Programming, Shortest Paths, and MDPs. Implementation: a lazily-built, cached plaintext index (HTML
+stripped, common entities decoded) over `l.content`; per-keystroke substring match per word; snippet built around the
+first hit with the term wrapped in `<mark>` (snippet text is `esc()`-escaped before the mark is injected, so lesson
+content can't break the markup). Snippets/titles truncate to one line. SW cache → `atlas-v51`; README ⌘K bullet updated.
+Verified: `node gate.js` ALL GREEN; a Node replica confirms the body-only hit counts (chain rule 36, overfitting 10,
+vanishing gradient 14, bellman 12, p-value 1) with title matches correctly excluded; an in-browser run opens the
+palette, types three queries, finds 🔎 body results with `<mark>` highlights, and clicking one routes to the lesson —
+**errs=0**; desktop + **390px** screenshots confirm the highlighted snippets read cleanly with no overflow; stray Chrome
+cleaned up.
+
 ## iter 106 — Answer-feedback juice on every MCQ (animations / juice)
 Put tactile feedback on the single most-used interaction in the app — answering a quiz question. Until now picking an
 answer just swapped colours; now the **correct** choice gives a satisfying **pop + a soft sage glow ring**, its letter

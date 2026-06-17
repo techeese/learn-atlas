@@ -50,9 +50,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 104: "Redeem your mistakes" deck — every wrong MCQ is logged + drillable in mastery mode (the owner's
    "think again until you pass" loop); + a 35th achievement (♻️ Redeemer).
    ✅ iter 105: `llm-bpe` BPE tokenizer trainer (29th viz) — embedded in the LLM tokenization lesson.
-   ✅ iter 106: answer-feedback juice (correct pop+glow, key spring, wrong shake) on every MCQ. Ideas still open
-   for this arc: full-text lesson search in ⌘K; onboarding refresh; flashcard flip/grade juice & route-transition
-   polish; more deeper-dives; a bookmarks ("Curator") achievement; surfacing missed-deck stats on the Progress page.
+   ✅ iter 106: answer-feedback juice (correct pop+glow, key spring, wrong shake) on every MCQ.
+   ✅ iter 107: full-text lesson search in ⌘K (body matches with highlighted snippets). Ideas still open
+   for this arc: onboarding refresh; flashcard flip/grade juice & route-transition polish; more deeper-dives;
+   a bookmarks ("Curator") achievement; surfacing missed-deck stats on the Progress page; mastery-weighted/recency
+   ranking in ⌘K (the title-match tier is still purely lexical).
    MORE VIZ IDEAS still open (backlog below): MDP policy-iteration, a learning-rate-schedule plot, a VAE latent-space
    explorer, a GAN training-dynamics demo, a Q-learning/SARSA path demo.
    (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
