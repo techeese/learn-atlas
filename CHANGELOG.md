@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 152 — Taylor Polynomial approximator viz (visualization)
+The **36th** widget (`calc-taylor`), embedded in *Linear Approximation, Differentials & L'Hôpital's Rule* (which had no
+viz) right after the linearization section — because it **generalizes that lesson**: it overlays a function (sin x, cos x,
+or eˣ) with its degree-n Taylor polynomial about 0, and **degree 1 is exactly the tangent-line linearization** the lesson
+just taught. A degree slider (0–12, or a **▶ Build up** animation ramping it) shows each added term widening the interval
+where the gold polynomial hugs the sage curve — then a finite polynomial always peels away far from the centre. The note
+reports the max approximation error over the central window.
+- **Numerically pre-verified**: confirmed in Node that the partial sums converge to each function (e.g. sin at x=1: P₁=1.0
+  → P₃=0.833 → P₁₁=0.84147; err₁₁≈1.6e-10) and that P₁(x)=x for sin (the linearization), before writing the canvas.
+- **Verified**: `node gate.js` ALL GREEN (now **36 widgets**, the `data-viz` id resolves); Lab route → `errs=0`, note
+  reads "sin x · Taylor degree 5 · max error … 1.082" (matches: P₅ sin peels off by x≈3.5), **rawDollars=0** (plain-unicode
+  note); fixed a self-introduced shadowing bug (named the Taylor fn `P`, colliding with VIZUtil's palette `P()` — renamed
+  to `poly`) before first render; lesson embed + all-routes smoke `errs=0`; desktop + 390px mobile screenshots read.
+  SW cache **v94 → v95**; README 35 → 36.
+
 ## iter 151 — MCQ arc → Calculus · Applications of the Derivative 12 → 16 (content — owner's #1 ask)
 The Calculus arc's third module, *Applications of the Derivative*. **+4 new MCQs each** to all four lessons
 (**+16, bank 1,976 → 1,992**): when to use implicit differentiation / related-rates differentiate w.r.t. $t$ /

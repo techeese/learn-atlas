@@ -160,6 +160,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v94.
    CALC REMAINING (MCQ arc): integration(4), applications-integration(3), multivariable-bridge(3), convex-optimization(3).
    Then DL/RL/LLM/PS. (Bank approaching 2,000 MCQs.)
+   ✅ iter 152: Taylor Polynomial approximator viz (calc-taylor, 36th) in the linearization lesson — degree-n polynomial
+   hugging sin/cos/eˣ; degree 1 = the linearization. Numerics pre-verified; errs=0; SW cache →v95; README 35→36.
+   VIZ BACKLOG remaining: MDP policy-iteration (3rd gridworld — low priority), VAE latent-space, GAN training-dynamics.
    ✅ iter 148: Riemann Sum visualizer (calc-riemann, 35th viz; the first INTEGRATION viz) in the definite-integral lesson.
    Function/rule/n controls + Refine animation; numerics pre-verified; errs=0; SW cache →v91; README 34→35.
    VIZ BACKLOG remaining: MDP policy-iteration (3rd gridworld — low priority), VAE latent-space, GAN training-dynamics,

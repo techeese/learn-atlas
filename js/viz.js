@@ -1946,4 +1946,69 @@
     draw();
   });
 
+  /* ========================================================
+     36. Taylor polynomials: successive approximations hugging a curve
+     ======================================================== */
+  register({ id: 'calc-taylor', topic: 'calculus', title: 'Taylor Polynomials: Approximating a Curve', blurb: 'Watch the Taylor polynomial close in on a function as you raise its degree. Degree 1 is exactly the tangent-line linearization; each extra term widens the region where the polynomial hugs the true curve.' },
+  function (root) {
+    const W = 560, H = 400, padL = 44, padR = 16, padT = 16, padB = 34;
+    const MONO = "JetBrains Mono, monospace";
+    function fact(k) { let r = 1; for (let i = 2; i <= k; i++) r *= i; return r; }
+    const FNS = {
+      'sin x': { f: Math.sin, c: k => k % 2 === 1 ? Math.pow(-1, (k - 1) / 2) / fact(k) : 0, xlo: -7, xhi: 7, ylo: -2.3, yhi: 2.3 },
+      'cos x': { f: Math.cos, c: k => k % 2 === 0 ? Math.pow(-1, k / 2) / fact(k) : 0, xlo: -7, xhi: 7, ylo: -2.3, yhi: 2.3 },
+      'eˣ': { f: Math.exp, c: k => 1 / fact(k), xlo: -3.3, xhi: 3, ylo: -1, yhi: 9 }
+    };
+    const { c, ctx } = canvas(root, W, H);
+    let key = 'sin x', n = 1, runH = null;
+    function F() { return FNS[key]; }
+    const X = x => padL + (x - F().xlo) / (F().xhi - F().xlo) * (W - padL - padR);
+    const Y = y => { const o = F(); return H - padB - (y - o.ylo) / (o.yhi - o.ylo) * (H - padT - padB); };
+    function poly(x) { const o = F(); let s = 0; for (let k = 0; k <= n; k++) s += o.c(k) * Math.pow(x, k); return s; }
+    function plot(fn, color, lw) {
+      const o = F(); ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.beginPath(); let pen = false;
+      for (let i = 0; i <= 480; i++) {
+        const x = o.xlo + (o.xhi - o.xlo) * i / 480, y = fn(x);
+        if (!isFinite(y) || y < o.ylo - 0.4 || y > o.yhi + 0.4) { pen = false; continue; }
+        const px = X(x), py = Y(y);
+        if (!pen) { ctx.moveTo(px, py); pen = true; } else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+    function draw() {
+      const p = P(), o = F(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1;
+      if (o.ylo <= 0 && o.yhi >= 0) { ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke(); }
+      if (o.xlo <= 0 && o.xhi >= 0) { ctx.beginPath(); ctx.moveTo(X(0), padT); ctx.lineTo(X(0), H - padB); ctx.stroke(); }
+      // true function (sage) and Taylor polynomial (gold)
+      plot(o.f, p.sage, 2.6);
+      plot(poly, p.gold, 2.2);
+      // expansion point a=0
+      if (o.xlo <= 0 && o.xhi >= 0) { ctx.fillStyle = p.rust; ctx.beginPath(); ctx.arc(X(0), Y(o.f(0)), 4, 0, 7); ctx.fill(); ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'center'; ctx.fillText('a=0', X(0), Y(o.f(0)) + 16); }
+      // legend
+      ctx.textAlign = 'left'; ctx.font = '11px ' + MONO;
+      ctx.fillStyle = p.sage; ctx.fillText('● ' + key, 52, 22);
+      ctx.fillStyle = p.gold; ctx.fillText('● Taylor degree ' + n, 52, 38);
+      // max error over the central half of the window (rough "how wide does it match")
+      let maxE = 0; const lo = o.xlo / 2, hi = o.xhi / 2;
+      for (let i = 0; i <= 60; i++) { const x = lo + (hi - lo) * i / 60, e = Math.abs(o.f(x) - poly(x)); if (isFinite(e)) maxE = Math.max(maxE, e); }
+      info.innerHTML = `<b>${key}</b> · Taylor polynomial of degree <b>${n}</b> about a=0` + (n === 1 ? ' — this is exactly the tangent-line <b>linearization</b>' : '') + `<br>` +
+        `<span style="color:${p.mute}">The gold degree-${n} polynomial matches ${key} near x=0 (max error over the central window: ${maxE < 0.001 ? maxE.toExponential(1) : maxE.toFixed(3)}); raise the degree and the match widens outward. A finite polynomial always eventually peels away far from the centre.</span>`;
+    }
+    const ctl = controls(root);
+    select(ctl, { label: 'function', value: key, options: Object.keys(FNS).map(k => ({ value: k, label: k })), onChange: v => { key = v; draw(); } });
+    const nSlider = slider(ctl, { label: 'degree', min: 0, max: 12, step: 1, value: n, fmt: v => 'n=' + v, onInput: v => { n = v; draw(); } });
+    const btns = controls(root);
+    const buildBtn = button(btns, '▶ Build up', () => {
+      if (runH) { runH.stop(); runH = null; buildBtn.innerHTML = '▶ Build up'; return; }
+      n = 0; nSlider.value = 0; buildBtn.innerHTML = '⏸ Pause'; let fr = 0;
+      runH = loop(() => { fr++; if (fr % 18 === 0) { if (n < 12) { n++; nSlider.value = n; draw(); } else { runH.stop(); runH = null; buildBtn.innerHTML = '▶ Build up'; } } });
+    }, 'primary');
+    const info = note(root);
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'A function curve with its Taylor polynomial overlaid; a slider raises the polynomial degree and the approximation hugs the curve over a wider interval.');
+    draw();
+  });
+
 })();
