@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 82 — Probability & Statistics — Module 4: Statistical Inference (4 lessons) (content; owner depth direction)
+Added the fourth Probability & Statistics module — the payoff that turns probability into *statistics*: reasoning
+from a sample back to the unknown population. Four lessons that build on each other:
+**(1) The Law of Large Numbers** — the sample mean converges to $\mu$; the Weak Law via Chebyshev ($\operatorname{Var}(\bar X_n)=\sigma^2/n$);
+the gambler's-fallacy trap; Monte-Carlo estimation; LLN-vs-CLT (destination vs. the shape of the wobble).
+**(2) Sampling Distributions & the Standard Error** — a statistic is a random variable; $\mathbb{E}[\bar X]=\mu$,
+$\operatorname{Var}(\bar X)=\sigma^2/n$; the standard error $\sigma/\sqrt n$ and the $\sqrt n$ law; the CLT stated formally.
+**(3) Point Estimation: Bias, Variance & Consistency** — estimators, bias, MSE = variance + bias² (the same
+bias–variance split as model fitting), consistency, and why the sample variance divides by $n-1$ (Bessel's correction).
+**(4) Confidence Intervals** — $\bar X \pm z^{*}\sigma/\sqrt n$, the *correct* (procedural) interpretation of "95%
+confident", margin of error & sample-size planning, and the $t$-distribution when $\sigma$ is unknown.
+Each is a full KaTeX lecture + 6 flashcards + 3 homework (hint+solution) + 2 worked examples; MCQs deferred to the
+pipeline next iteration (the iter 71→72 / 73→75 / 77→78 pattern). Probability & Statistics is now a **four-module,
+16-lesson** course. Site: **129 lessons · 775 flashcards · 385 homework · 250 examples**. SW cache → `atlas-v26`;
+README counts refreshed (lessons 125→129, concepts 125→129). Verified: `node gate.js` ALL GREEN (7 topics · 129
+lessons); all four lessons render math with **katex-error=0** (CI derivation confirmed visually — $\bar X\approx
+N(\mu,\sigma^2/n)$, $\pm1.96$, fractions all proper); course/cheatsheet/map + lessons smoke errs=0; legible at 390px;
+stray Chrome cleaned up.
+
 ## iter 81 — Keyboard-accessible lesson tabs (ARIA tablist) (accessibility)
 Fixed a real accessibility defect the checkpoint surfaced: the per-lesson section tabs (Lecture / Examples / Quiz /
 Flashcards / Homework / Recall) were `<div>`s with click handlers only — no role, no `tabindex`, no keyboard support
