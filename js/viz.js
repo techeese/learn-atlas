@@ -2508,4 +2508,107 @@
     loop(function () { if (playing) { frame++; if (frame % 8 === 0) { step(); draw(); if (mode === 'single' && jsd() < 0.004) setPlay(false); } } });
   });
 
+  /* ========================================================
+     44. Graph traversal: BFS (queue) vs DFS (stack) (Algorithms)
+     ===================================================== */
+  register({ id: 'algo-graph-traversal', topic: 'algorithms', title: 'Graph Traversal: BFS vs DFS', blurb: 'Press play and watch a graph get explored. BFS rides a queue and fans out in rings (shortest paths in an unweighted graph); DFS rides a stack and plunges deep down one branch before backtracking. Click any node to start from there.' },
+  function (root) {
+    const W = 560, H = 380, MONO = "JetBrains Mono, monospace";
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    // hand-placed graph: branching + cycles so BFS and DFS visibly differ
+    const RX = [0.06, 0.28, 0.28, 0.28, 0.52, 0.52, 0.52, 0.76, 0.76];
+    const RY = [0.50, 0.18, 0.52, 0.85, 0.10, 0.45, 0.80, 0.28, 0.63];
+    const LBL = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+    const EDGES = [[0, 1], [0, 2], [0, 3], [1, 4], [1, 5], [2, 5], [2, 6], [3, 6], [4, 7], [5, 7], [5, 8], [6, 8], [7, 8]];
+    const N = RX.length;
+    const adj = Array.from({ length: N }, () => []);
+    EDGES.forEach(([u, v]) => { adj[u].push(v); adj[v].push(u); });
+    adj.forEach(a => a.sort((x, y) => x - y));
+    const gx0 = 34, gy0 = 26, gw = W - 68, gh = 232;
+    const NX = i => gx0 + RX[i] * gw, NY = i => gy0 + RY[i] * gh, RAD = 16;
+
+    let mode = 'bfs', start = 0, playing = false, frame = 0, playBtn = null;
+    let discovered, visited, order, frontier, current, treeEdge, counter, done;
+    function reset() {
+      discovered = new Set([start]); visited = new Set(); order = {};
+      frontier = [start]; current = null; treeEdge = new Set(); counter = 0; done = false;
+      setPlay(false); draw();
+    }
+    function step() {
+      if (!frontier.length) { done = true; current = null; return; }
+      const node = mode === 'bfs' ? frontier.shift() : frontier.pop();   // queue (FIFO) vs stack (LIFO)
+      current = node; visited.add(node); order[node] = ++counter;
+      adj[node].forEach(nb => { if (!discovered.has(nb)) { discovered.add(nb); frontier.push(nb); treeEdge.add(node < nb ? node + "-" + nb : nb + "-" + node); } });
+      if (!frontier.length) done = true;
+    }
+    function setPlay(v) { playing = v; if (playBtn) { playBtn.innerHTML = v ? '⏸ Pause' : '▶ Play'; playBtn.classList.toggle('active', v); } }
+
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // edges (discovery-tree edges highlighted)
+      EDGES.forEach(([u, v]) => {
+        const key = u < v ? u + "-" + v : v + "-" + u, tree = treeEdge.has(key);
+        ctx.strokeStyle = tree ? p.sage : p.line; ctx.lineWidth = tree ? 3 : 1.5;
+        ctx.beginPath(); ctx.moveTo(NX(u), NY(u)); ctx.lineTo(NX(v), NY(v)); ctx.stroke();
+      });
+      // nodes
+      for (let i = 0; i < N; i++) {
+        const x = NX(i), y = NY(i);
+        let fill = p.panel2, ring = p.mute, txt = p.soft;
+        if (i === current) { fill = p.rust; ring = p.rust; txt = '#fff'; }
+        else if (visited.has(i)) { fill = p.sage; ring = p.sage; txt = '#1a1a1a'; }
+        else if (discovered.has(i)) { fill = 'transparent'; ring = p.gold; txt = p.gold; }
+        ctx.lineWidth = 2.5; ctx.strokeStyle = ring; ctx.fillStyle = fill === 'transparent' ? p.bg : fill;
+        ctx.beginPath(); ctx.arc(x, y, RAD, 0, 7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = txt; ctx.font = '600 13px ' + MONO; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(LBL[i], x, y);
+        if (order[i]) { ctx.fillStyle = p.ink; ctx.font = '600 10px ' + MONO; ctx.fillText('#' + order[i], x, y + RAD + 9); }
+      }
+      ctx.textBaseline = 'alphabetic';
+      // frontier row
+      const fy = H - 70, isQ = mode === 'bfs';
+      ctx.fillStyle = p.mute; ctx.font = '600 11px ' + MONO; ctx.textAlign = 'left';
+      ctx.fillText(isQ ? 'QUEUE (FIFO) — take from front →' : 'STACK (LIFO) — take from top →', gx0, fy - 8);
+      const bw = 30, bh = 26;
+      frontier.forEach((nd, k) => {
+        const bx = gx0 + k * (bw + 6);
+        // the "next to be taken" cell: front for BFS (k=0), back for DFS (last)
+        const next = isQ ? (k === 0) : (k === frontier.length - 1);
+        ctx.fillStyle = next ? p.gold : p.panel2; ctx.strokeStyle = next ? p.gold : p.line; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.rect(bx, fy, bw, bh); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = next ? '#1a1a1a' : p.soft; ctx.font = '600 13px ' + MONO; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(LBL[nd], bx + bw / 2, fy + bh / 2);
+      });
+      ctx.textBaseline = 'alphabetic';
+      if (!frontier.length) { ctx.fillStyle = p.mute; ctx.font = 'italic 12px ' + MONO; ctx.textAlign = 'left'; ctx.fillText(done ? '(empty — traversal complete)' : '(empty)', gx0, fy + 18); }
+      // legend
+      ctx.font = '10px ' + MONO; ctx.textAlign = 'right';
+      ctx.fillStyle = p.gold; ctx.fillText('● discovered', W - 8, 18);
+      ctx.fillStyle = p.rust; ctx.fillText('● current', W - 8, 32);
+      ctx.fillStyle = p.sage; ctx.fillText('● visited', W - 8, 46);
+      // note
+      const seq = Object.keys(order).sort((a, b) => order[a] - order[b]).map(i => LBL[i]).join(" → ");
+      let msg = `<b>${mode.toUpperCase()}</b> from <b>${LBL[start]}</b> — visited <b>${visited.size}/${N}</b>${seq ? `, order: ${seq}` : ""}. `;
+      msg += isQ
+        ? `A <b>queue</b> finishes every node at distance <i>k</i> before any at <i>k+1</i>, so BFS fans out in rings and finds <b>shortest paths</b> in an unweighted graph.`
+        : `A <b>stack</b> always expands the most-recently-found node, so DFS <b>plunges deep</b> down one branch and backtracks only when stuck — the natural fit for recursion, cycle detection, and topological sort.`;
+      info.innerHTML = msg;
+    }
+
+    c.addEventListener('click', ev => {
+      const pt = pointer(c, W, H, ev);
+      for (let i = 0; i < N; i++) { const dx = pt.x - NX(i), dy = pt.y - NY(i); if (dx * dx + dy * dy <= (RAD + 4) * (RAD + 4)) { start = i; reset(); return; } }
+    });
+    playBtn = button(ctl, '▶ Play', function () { if (done) reset(); setPlay(!playing); });
+    button(ctl, 'Step', function () { setPlay(false); if (done) reset(); step(); draw(); });
+    button(ctl, 'Reset', reset);
+    select(ctl, { label: 'algorithm', value: mode, options: [{ value: 'bfs', label: 'BFS (queue)' }, { value: 'dfs', label: 'DFS (stack)' }], onChange: v => { mode = v; reset(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Graph traversal visualizer: a 9-node graph (A–I) explored by breadth-first search using a queue or depth-first search using a stack. Nodes are colored by state (discovered, current, visited), numbered in visit order, with the queue/stack contents shown below. Click a node to start from it.');
+    reset();                                                  // synchronous first paint
+    loop(function () { if (playing && !done) { frame++; if (frame % 9 === 0) { step(); draw(); if (done) setPlay(false); } } });
+  });
+
 })();

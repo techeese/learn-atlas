@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 211: **New viz `algo-graph-traversal`** (visualizations — owner-loved; anti-monotony, last viz iter 207). The
+   44th widget, embedded in `a-graph-representations-traversal` (the whole graph module had 0 viz). BFS (queue) vs DFS
+   (stack) on a 9-node graph: animated frontier, state-colored + visit-numbered nodes, lit discovery-tree edges, a live
+   queue/stack panel with the next-to-take cell highlighted, click-a-node-to-restart. BFS order A B C D E F G H I; DFS
+   A D G I H E F C B (validated vs node sim). Verified: gate GREEN (44), init/BFS/DFS/click screenshots err=0, smoke
+   errs=0/kErr=0 (10 routes), mobile 390px scales. SW →v154.
    ✅ iter 210: **Deeper dives for Algorithms** (understandability — owner's "depth/hard-concept" love). Algorithms was the
    only subject with 0 deep-dives; added 3 (`a-dynamic-programming` = memoized recomputation; `a-amortized-analysis` =
    the banker's $O(1)$ append argument; `a-recurrences-master-theorem` = read $n\log n$ off the recursion tree). Byte-stable

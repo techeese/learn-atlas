@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 211 — Graph-traversal visualizer: BFS vs DFS (visualizations)
+New widget **`algo-graph-traversal`** (the **44th**), embedded in `a-graph-representations-traversal`. The entire
+Algorithms **graph module** (traversal, shortest paths, MST) had **zero visualizations** — and traversal is both its
+most foundational idea and its most "watchable" one. Owner loves viz + delight; anti-monotony (last viz was iter 207).
+- A fixed 9-node graph (A–I, branching + cycles) is explored by **BFS (a queue)** or **DFS (a stack)**. Press **Play**
+  and the frontier animates; nodes are colored by state (gold = discovered, rust = current, green = visited) and stamped
+  with their **visit order**, while the **discovery-tree edges** light up green.
+- The live **queue/stack panel** below the graph shows the frontier contents with the "next to be taken" cell
+  highlighted (front for BFS, top for DFS) — making the FIFO-vs-LIFO distinction tangible.
+- **Click any node** to restart from it; **Step**/**Reset**; **BFS⇄DFS** select. The note explains why a queue gives
+  shortest paths (rings) and a stack gives a deep plunge (recursion / cycle detection / topo-sort).
+Correct by construction: BFS yields the clean ringed order **A B C D E F G H I**; DFS yields the deep order
+**A D G I H E F C B** — both validated against an independent node simulation before wiring up.
+Verified: `gate.js` ALL GREEN (**44 widgets**, embed id resolves); Lab-route screenshots of (a) initial synchronous
+paint, (b) BFS mid-traversal (rings + queue "G H I"), (c) full DFS (deep order, stack empty), (d) node-click changing
+the start to F — all **err=0**; all-routes smoke (10 routes incl. `#/lab/algo-graph-traversal` + the embedded lesson)
+**errs=0/kErr=0**; mobile 390px the canvas scales and stays legible. SW cache `atlas-v153` → `atlas-v154`.
+
 ## iter 210 — Deeper dives for the Algorithms track (understandability — owner's "depth / hard-concept" love)
 Algorithms was the **only one of the 7 subjects with zero "Deeper dive" expandables** — odd, since it holds some of the
 hardest "but *why* does this work?" ideas. Authored **3** of them (0 → 3), each a `<details class="deep-dive">` appended
