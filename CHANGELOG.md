@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 156 — Animated score reveal on result screens + countUp clock-skew hardening (animations)
+Quiz/test/recall/placement **result screens** now land with a celebratory flourish: the big score **counts up** from 0
+and springs in with a `bigPop` scale animation, turning the highest-emotion moment of a study session into a reward
+(perfect runs already fire confetti; a perfect 10+ test now does too). `animateBig()` is called at all five result
+points (quiz, mastery-drill all-correct, test, placement, recall); it's a no-op under reduced motion.
+- **Hardening (real bug found while verifying)**: the shared `countUp` mixed `performance.now()` (start) with the rAF
+  callback timestamp (elapsed). Those share a time origin in real browsers, but when they don't, `k` could go negative
+  and render a **negative score** ("-1%"). Added a `Math.max(0, …)` clamp so `k∈[0,1]` always — fixes the artifact and
+  hardens the dashboard stat count-up that uses the same helper.
+- **animations** was the most-neglected compass area (since iter 140); this revisits it.
+- **Verified**: `node gate.js` ALL GREEN; drove a full 16-question quiz to its result → `errs=0`, `big-pop` class applied,
+  and under `--force-prefers-reduced-motion` the score shows its exact final value (`13%` for 2/16) with no animation
+  (confirming the count-up — not the score — was the only thing affected); post-clamp the score never renders negative;
+  all-routes smoke `errs=0`. SW cache **v98 → v99**.
+
 ## iter 155 — MCQ arc → Calculus · Applications of Integration 12 → 16 (content — owner's #1 ask)
 The Calculus arc's fifth module, *Applications of Integration & Differential Equations*. **+4 new MCQs each** to all
 three lessons (**+12, bank 2,008 → 2,020**): area between curves $=\int(\text{top}-\text{bottom})$ / disk volume

@@ -17,7 +17,7 @@ Zero build step (pure HTML/CSS/JS, all progress in `localStorage`); auto-deploys
 - **Lectures** — readable lessons with KaTeX-rendered math, callouts, and code, each opening with an auto-generated **"On this page"** table of contents that jumps to any section and **highlights the section you're currently reading** as you scroll (every lesson has 4–11).
 - **Examples** — an optional per-lesson tab of worked examples with revealable working.
 - **"Deeper dive" expandables** — for genuinely hard concepts, an inline collapsible offers an *alternative* explanation or extra intuition (e.g. Bayes recast as natural frequencies; the reparameterization trick as a pathwise derivative; cross-entropy as a KL divergence to the true distribution) — kept out of the main flow until you want it.
-- **Quizzes** — instant feedback + explanations; earns XP, perfect-score bonus.
+- **Quizzes** — instant feedback + explanations; earns XP, perfect-score bonus; the result screen lands with a count-up score reveal (and confetti on a flawless run).
 - **Flashcards** — SM-2-style spaced repetition. A global **Daily Review** surfaces every card that's due across all topics.
 - **Recall ("explain it back")** — a free-recall study mode per lesson: write the whole concept from a blank page, then self-check against the lesson's key points and score yourself. Active recall done right — it feeds mastery and earns XP. (The Feynman technique, built in.)
 - **Homework** — practice problems with progressive hints and full solutions.

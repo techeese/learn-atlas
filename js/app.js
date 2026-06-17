@@ -144,6 +144,14 @@
     // start at 0 (inline), then flip to target on the next frames so the --p transition fires
     requestAnimationFrame(() => requestAnimationFrame(() => gr.style.setProperty("--p", target)));
   }
+  // celebrate a result screen: count the big score up + a spring "pop" entrance (reduced-motion safe)
+  function animateBig() {
+    const el = document.querySelector(".quiz-result .big") || document.querySelector(".recall-done .big");
+    if (!el) return;
+    countUp(el);   // counts the leading number (no-op under reduced-motion or for "✓ …")
+    if (reducedMotion()) return;
+    el.classList.remove("big-pop"); void el.offsetWidth; el.classList.add("big-pop");
+  }
   function countUp(el) {
     const m = String(el.textContent).trim().match(/^(\d[\d,]*)(.*)$/s);
     if (!m) return;
@@ -152,7 +160,7 @@
     const dur = 700, t0 = performance.now();
     el.textContent = "0" + rest;
     (function tick(t) {
-      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.max(0, Math.min(1, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);  // clamp k≥0 (rAF/now clock skew can't drive it negative)
       el.textContent = Math.round(target * e).toLocaleString() + rest;
       if (k < 1) requestAnimationFrame(tick); else el.textContent = target.toLocaleString() + rest;
     })(t0);
@@ -740,6 +748,7 @@
       </div>`;
       document.getElementById("retry").addEventListener("click", () => { i = 0; correct = 0; draw(); });
       if (pct === 100) confetti();
+      animateBig();
       flushAchievements();
       renderChrome();
     }
@@ -931,6 +940,7 @@
       document.getElementById("recall-again").addEventListener("click", () => renderRecall(body, course, lesson));
       Store.unlock("recaller");
       if (pct === 100) { Store.unlock("total-recall"); confetti(); }
+      animateBig();
       flushAchievements();
       renderChrome();
     }
@@ -1196,7 +1206,7 @@
       bindGo();
       if (opts.onDone) document.getElementById("md-continue").addEventListener("click", opts.onDone);
       else document.getElementById("md-again").addEventListener("click", () => { location.hash = "#/test"; });
-      confetti(); flushAchievements(); renderChrome();
+      confetti(); animateBig(); flushAchievements(); renderChrome();
     }
     draw();
   }
@@ -1245,7 +1255,8 @@
       bindGo();
       if (opts.onDone) document.getElementById("t-continue").addEventListener("click", opts.onDone);
       else document.getElementById("t-again").addEventListener("click", () => { location.hash = "#/test"; });
-      flushAchievements(); renderChrome(); typeset();
+      if (pct === 100 && items.length >= 10) confetti();
+      animateBig(); flushAchievements(); renderChrome(); typeset();
     }
     function finishPlacement() {
       const course = opts.course;
@@ -1268,7 +1279,7 @@
       <div class="hw reveal" style="margin-top:30px"><div class="module-head"><span class="mnum">🎚️</span><h3>Your results</h3></div>
         ${items.map((it, k) => { const ok = answers[k] === it.q.answer; return `<div class="lesson-row" style="cursor:default"><div class="lesson-check ${ok ? "done2" : ""}" style="${ok ? "background:var(--sage);border-color:var(--sage);color:var(--bg)" : "color:var(--rust);border-color:var(--rust)"}">${ok ? "✓" : "?"}</div><div style="flex:1"><div class="l-title" style="font-size:15px">${esc(it.lessonTitle)}</div><div class="l-meta">${ok ? "known — marked Proficient" : "to learn"}</div></div></div>`; }).join("")}
       </div></div>`;
-      bindGo(); renderChrome();
+      bindGo(); animateBig(); renderChrome();
     }
     draw();
   }
