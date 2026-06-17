@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 120 — Per-achievement progress bars on the Hall of Achievements (gamification) — ★ 120-iteration checkpoint
+The Achievements page showed each badge as a binary locked/unlocked tile — motivating once earned, but silent about
+*how close* you are. Added **live progress bars** to every locked, threshold-based achievement: a gold fill + "cur /
+target" (e.g. "90 / 100" cards, "22 / 25 Redeemer", "8 / 10 lessons"), computed on the fly from existing state for the
+22 countable achievements (streaks, cards, correct answers, lessons, XP, homework, tests, bookmarks, notes, perfect
+quizzes, mistakes-redeemed, concepts-mastered). Achievements at **≥80%** get a **"near" highlight** (brighter card + gold
+border + gold count) so the next unlock pops out — a concrete "you're almost there" nudge. Pure UI over existing state;
+no new save fields. SW cache → `atlas-v64`. Verified: `node gate.js` ALL GREEN; an in-browser run with seeded progress
+is **errs=0** — 40 cards render, 20 progress bars on the locked countable ones, 6 "near" highlights, and the values are
+correct (8/10 lessons, 90/100 cards, 6/7 streak…); desktop + 390px screenshots confirm the bars read cleanly.
+**★ 120-iteration checkpoint (iters 110–119).** Broad, healthy diversification: a11y ×2 (cards + the 148-node map →
+whole UI keyboard-operable), examples (LA → 148/148 coverage), 2 new viz (LR schedules, Q-learning gridworld → 31),
+Notebook, onboarding refresh, deeper-dives ×4 (→ 9), the Progress "Activity" panel, and — finally — the start of the
+owner's #1 ask, the 12→16 MCQ arc. All four owner directives remain delivered/served. NEXT: keep interleaving the MCQ
+arc (Algorithms has 6 modules left, then the other six topics) with compass variety; thin areas now are
+animations/juice (since 106) and a fresh content/viz idea (MDP policy-iteration, VAE latent space). Perf/mobile remain
+confirmed-tight (iter 113).
+
 ## iter 119 — More questions: Algorithms-foundations lessons 12 → 16 MCQs (content — owner's #1 ask) — phase 1 of a 12→16 arc
 The owner's single most-repeated request is *"more and more and more questions."* Every lesson has sat at exactly 12 MCQs
 since iter 100; the mistakes deck (104) addressed "re-think until you pass," but the literal *more questions* ask hadn't

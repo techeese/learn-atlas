@@ -80,6 +80,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    then LA / Calc / DL / RL / LLM / PS. Reusable approach: author 4/lesson avoiding existing stems → adversarial-verify
    Agent (ALL must PASS) → shuffle correct-choice positions → node injector (load course, push, rewrite JSON) → gate →
    quiz renders "of 16". Keep `String.raw`/double-backslash LaTeX discipline; bump bank count in README + CHANGELOG.
+   ✅ iter 120: per-achievement progress bars (gold fill + cur/target) on locked threshold achievements, ≥80% "near"
+   highlight — ★120 checkpoint. Thin areas now: animations/juice (since 106), a fresh viz (MDP policy-iteration, VAE).
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is
    already memoized; staggered page-entrance already exists (CSS :nth-child reveal delays). So perf/mobile/transitions
    have little headroom. NEGLECTED areas still worth a pass: onboarding refresh, SVG Knowledge-Map keyboard nav

@@ -1533,12 +1533,33 @@
 
   // ---------- achievements ----------
   function viewAchievements() {
-    const have = Store.raw.achievements;
-    const grid = Store.ACHIEVEMENTS.map(a => `
-      <div class="ach ${have[a.id] ? "unlocked" : ""}">
+    const have = Store.raw.achievements, R = Store.raw;
+    // live progress toward the threshold-based achievements (current, target) — shown on locked cards
+    let mastered = 0; C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (Store.effectiveMastery(l.id) >= 0.8) mastered++; })));
+    const lessonsDone = Object.keys(R.lessons || {}).length, hw = Object.keys(R.hwRevealed || {}).length;
+    const PROG = {
+      "streak3": [R.streak, 3], "streak7": [R.streak, 7], "streak30": [R.streak, 30], "streak100": [R.streak, 100],
+      "cards25": [R.cardsReviewed, 25], "century": [R.cardsReviewed, 100], "cards-500": [R.cardsReviewed, 500],
+      "mcq-100": [R.mcq.correct, 100], "mcq-500": [R.mcq.correct, 500], "crack-shot": [R.mcq.correct, 1000],
+      "ten-lessons": [lessonsDone, 10], "half-century": [lessonsDone, 50],
+      "erudite": [R.xp, 5000], "homework-hero": [hw, 25], "test-veteran": [(R.tests || []).length, 10],
+      "curator": [Object.keys(R.bookmarks || {}).length, 5], "annotator": [Object.keys(R.notes || {}).length, 5],
+      "flawless-five": [R.perfectQuizzes || 0, 5], "redeemer": [R.missedFixed || 0, 25],
+      "deep-diver": [mastered, 10], "loremaster": [mastered, 25]
+    };
+    const grid = Store.ACHIEVEMENTS.map(a => {
+      const unlocked = !!have[a.id], p = unlocked ? null : PROG[a.id];
+      let bar = "", near = "";
+      if (p && p[1] > 0) {
+        const cur = Math.max(0, Math.min(p[0], p[1])), frac = cur / p[1];
+        if (cur > 0) near = frac >= 0.8 ? " near" : "";
+        bar = `<div class="a-prog"><div class="a-prog-bar"><div class="a-prog-fill" style="width:${Math.round(frac * 100)}%"></div></div><span class="a-prog-txt">${cur} / ${p[1]}</span></div>`;
+      }
+      return `<div class="ach ${unlocked ? "unlocked" : ""}${near}">
         <div class="a-ico">${a.icon}</div>
-        <div><div class="a-t">${a.name}</div><div class="a-d">${a.desc}</div></div>
-      </div>`).join("");
+        <div class="a-body"><div class="a-t">${a.name}</div><div class="a-d">${a.desc}</div>${bar}</div>
+      </div>`;
+    }).join("");
     const total = Store.ACHIEVEMENTS.length;
     const got = Store.ACHIEVEMENTS.filter(a => have[a.id]).length;
     const pct = Math.round(got / total * 100);

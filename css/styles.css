@@ -432,9 +432,17 @@ body::after {
   display: flex; gap: 14px; align-items: center; transition: .2s; opacity: .5; filter: grayscale(.7);
 }
 .ach.unlocked { opacity: 1; filter: none; border-color: var(--gold-deep); }
-.ach .a-ico { font-size: 32px; }
+.ach.near { opacity: .92; filter: grayscale(.25); border-color: var(--gold); }   /* ≥80% toward unlocking */
+.ach { align-items: flex-start; }
+.ach .a-ico { font-size: 32px; line-height: 1; }
+.ach .a-body { flex: 1; min-width: 0; }
 .ach .a-t { font-family: var(--font-disp); font-size: 16px; font-weight: 600; }
 .ach .a-d { font-size: 12.5px; color: var(--ink-mute); margin-top: 3px; }
+.a-prog { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+.a-prog-bar { flex: 1; height: 6px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; }
+.a-prog-fill { height: 100%; background: linear-gradient(90deg, var(--gold-deep), var(--gold)); border-radius: 6px; }
+.a-prog-txt { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); white-space: nowrap; }
+.ach.near .a-prog-txt { color: var(--gold); }
 
 /* toast */
 .toast-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 100; display: flex; flex-direction: column; gap: 10px; }
