@@ -106,6 +106,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    REMAINING in Algorithms: advanced-techniques (3 lessons) — then Algorithms fully at 16; move to LA/Calc/DL/RL/LLM/PS.
    (Each shuffled batch also de-biases its lessons: the gate's position-bias note is ticking down, 22→21 so far.)
    ✅ iter 130: Cross-Entropy Loss & Perplexity viz (dl-cross-entropy, 33rd) in the DL loss lesson — ★130 checkpoint.
+   ✅ iter 131: MCQ arc phase 7 — Algorithms·Advanced Techniques 12→16 (+12, bank →1,868). ★ ALGORITHMS FULLY AT 16
+   (all 23 lessons, 7/7 modules) — first topic complete. NEXT TOPICS for the arc (interleave one module per content
+   iteration): Linear Algebra, Calculus, Deep Learning, RL, LLMs, Prob & Stats. (Authoring tip that worked: 4 NEW
+   foundational MCQs/lesson avoiding existing stems, adversarial-verify agent + key-dump, shuffle positions, gate.)
    ARC PROGRESS: Algorithms modules at 16 = foundations, data-structures. REMAINING in Algorithms: sorting-searching,
    algorithm-design, graphs, advanced-ml-connections, advanced-techniques (5). Then LA/Calc/DL/RL/LLM/PS. Interleave!
    CHECKED & FOUND HEALTHY (113): mobile renders clean across dashboard/map/lab/stats/test at 390px; `index()` is

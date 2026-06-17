@@ -4960,6 +4960,50 @@
               ],
               "answer": 1,
               "explain": "Amortized $O(1)$ for A directly implies total time $O(m)$ for the whole sequence — the relevant quantity. Using A's per-operation $O(n)$ worst case would give a needlessly loose $O(mn)$ total, even though both A and B finish in $O(m)$."
+            },
+            {
+              "q": "Amortized analysis has three standard methods. Which set names them?",
+              "choices": [
+                "Best, average, and worst case",
+                "The aggregate, accounting (banker's), and potential methods",
+                "Greedy, divide-and-conquer, and dynamic programming",
+                "Induction, recursion, and iteration"
+              ],
+              "answer": 1,
+              "explain": "All three bound the average cost over a worst-case sequence: the <strong>aggregate</strong> method totals the whole sequence and divides; the <strong>accounting</strong> method charges credits; the <strong>potential</strong> method tracks a stored-energy function. They always agree on the amortized cost."
+            },
+            {
+              "q": "In the accounting (banker's) method, cheap operations are deliberately charged <em>more</em> than they cost so that…",
+              "choices": [
+                "operations can run in parallel",
+                "the data structure uses less memory",
+                "expensive operations can be skipped entirely",
+                "the saved-up credit pays for later expensive operations, keeping the amortized cost bounded"
+              ],
+              "answer": 3,
+              "explain": "You overcharge the common cheap ops and bank the surplus as credit; when a rare expensive op (like a resize) happens, it spends that stored credit. As long as the bank never goes negative, the assigned per-op charge is a valid amortized bound."
+            },
+            {
+              "q": "In the potential method, the amortized cost of an operation is defined as…",
+              "choices": [
+                "its actual cost plus the change in potential, $\\Delta\\Phi$",
+                "its actual cost times the change in potential",
+                "just its actual cost",
+                "the potential of the structure alone"
+              ],
+              "answer": 0,
+              "explain": "Amortized cost $= c_i + \\Phi(\\text{after}) - \\Phi(\\text{before})$. A cheap op that raises $\\Phi$ 'saves up' for a costly op that releases it ($\\Delta\\Phi<0$), so the expensive op's amortized cost is small. Summed over a sequence, the $\\Phi$ terms telescope."
+            },
+            {
+              "q": "A stack with a MULTIPOP(k) operation can cost $O(n)$ for one call, yet any sequence of $n$ push/pop/multipop operations is $O(n)$ total. Why?",
+              "choices": [
+                "Pushes are free",
+                "Multipop is secretly $O(1)$",
+                "Each item can be popped at most once after it is pushed, so total pops ≤ total pushes ≤ $n$",
+                "The stack never grows"
+              ],
+              "answer": 2,
+              "explain": "An item must be pushed before it can be popped, and once popped it's gone — so across the whole sequence the number of pops (including those inside multipops) can't exceed the number of pushes. Total work is therefore linear, giving $O(1)$ amortized per operation."
             }
           ],
           "flashcards": [
@@ -5155,6 +5199,50 @@
               ],
               "answer": 2,
               "explain": "The theorem is an exact equality, max flow = min cut, a clean case of LP duality, not an approximation or strict inequality. The min cut also need not equal the total capacity leaving $s$ (that is merely one particular cut)."
+            },
+            {
+              "q": "If every edge capacity in a flow network is an integer, what does the integrality theorem guarantee about the maximum flow?",
+              "choices": [
+                "All capacities have to be powers of two",
+                "The maximum flow must be fractional",
+                "There is always a maximum flow in which every edge carries an integer amount of flow",
+                "Only Edmonds-Karp can find the maximum flow"
+              ],
+              "answer": 2,
+              "explain": "Ford-Fulkerson only ever adds an integer bottleneck amount to an integer flow, so with integer capacities it terminates at an all-integer maximum flow. That integrality is exactly what lets the max-flow reduction for <em>bipartite matching</em> (all capacities 1) return a valid 0/1 matching."
+            },
+            {
+              "q": "In a flow network, the flow $f(e)$ on an edge with capacity $c(e)$ must satisfy…",
+              "choices": [
+                "$0 \\le f(e) \\le c(e)$",
+                "$f(e) = c(e)$ always",
+                "$f(e)$ may exceed $c(e)$",
+                "$f(e) \\ge c(e)$"
+              ],
+              "answer": 0,
+              "explain": "The capacity constraint: flow is non-negative and never exceeds the edge's capacity. Together with conservation (flow in = flow out at every node but s and t), these define a valid flow."
+            },
+            {
+              "q": "Ford-Fulkerson increases the total flow by repeatedly finding…",
+              "choices": [
+                "a negative-weight cycle",
+                "the shortest path by number of edges",
+                "a minimum spanning tree of the network",
+                "an augmenting path from s to t in the residual graph (a path with spare capacity) and pushing flow along it"
+              ],
+              "answer": 3,
+              "explain": "While the residual graph still has an s→t path with leftover capacity, push as much flow as that path's bottleneck allows; repeat. When no augmenting path remains, the flow is maximum (and the reachable set defines the min cut)."
+            },
+            {
+              "q": "Edmonds-Karp is Ford-Fulkerson that always augments along the shortest path (fewest edges, via BFS). Its running time is…",
+              "choices": [
+                "exponential in the input size",
+                "$O(VE^2)$ — polynomial, independent of the capacity values",
+                "$O(V+E)$",
+                "proportional to the largest capacity"
+              ],
+              "answer": 1,
+              "explain": "Choosing the shortest augmenting path (BFS) bounds the number of augmentations at $O(VE)$, each found in $O(E)$, giving $O(VE^2)$. Plain Ford-Fulkerson with bad path choices can instead scale with the capacity magnitudes — pseudo-polynomial."
             }
           ],
           "flashcards": [
@@ -5350,6 +5438,50 @@
               ],
               "answer": 2,
               "explain": "For sum-like queries a Fenwick tree needs just $n$ entries with smaller constants and good cache behavior, matching the segment tree's $O(\\log n)$ per operation. It is less general (no arbitrary range-min, no built-in lazy range updates) and updates are $O(\\log n)$, not $O(1)$."
+            },
+            {
+              "q": "The union-find (disjoint-set) data structure efficiently supports which two operations?",
+              "choices": [
+                "push and pop",
+                "insert and delete",
+                "sort and search",
+                "find (which set an element belongs to) and union (merge two sets)"
+              ],
+              "answer": 3,
+              "explain": "Union-find maintains a partition of elements into disjoint sets: <code>find(x)</code> returns a canonical representative of x's set (so two elements are in the same set iff their roots match), and <code>union(x,y)</code> merges their sets. It's the backbone of Kruskal's MST and connectivity queries."
+            },
+            {
+              "q": "With BOTH union by rank and path compression, the amortized time per union-find operation is…",
+              "choices": [
+                "$O(\\log n)$",
+                "$O(\\alpha(n))$ — inverse Ackermann, effectively constant for any practical $n$",
+                "$O(n)$",
+                "exactly $O(1)$ with no qualification"
+              ],
+              "answer": 1,
+              "explain": "The two optimizations together give an amortized bound of $O(\\alpha(n))$, where $\\alpha$ is the inverse Ackermann function — below 5 for any $n$ that could ever be stored, so essentially (but not provably exactly) constant."
+            },
+            {
+              "q": "Path compression speeds up union-find by…",
+              "choices": [
+                "sorting the elements by value",
+                "balancing merges so the shorter tree hangs under the taller (that's union by rank)",
+                "repointing every node visited during a find directly to the root, flattening the tree for future queries",
+                "deleting interior nodes to save memory"
+              ],
+              "answer": 2,
+              "explain": "During <code>find(x)</code>, after locating the root you set the parent of every node on the path straight to that root. Subsequent finds on those nodes are then nearly $O(1)$. It's complementary to union by rank, which keeps trees shallow in the first place."
+            },
+            {
+              "q": "A Fenwick (binary indexed) tree supports a point update and a prefix-sum query each in…",
+              "choices": [
+                "$O(\\log n)$ time",
+                "$O(1)$ time",
+                "$O(n)$ time",
+                "$O(\\sqrt{n})$ time"
+              ],
+              "answer": 0,
+              "explain": "A Fenwick tree walks $O(\\log n)$ ancestors via the low-bit trick ($i \\mathrel{-}{=} i\\,\\&\\,(-i)$), giving $O(\\log n)$ point updates and prefix sums — the go-to structure for <em>dynamic</em> prefix sums, where a static prefix-sum array's $O(n)$ updates would be too slow."
             }
           ],
           "flashcards": [

@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 131 — MCQ arc phase 7: Algorithms · Advanced Techniques 12 → 16 — ★ ALGORITHMS NOW FULLY AT 16 (content — owner's #1 ask)
+The final Algorithms module. **+4 new MCQs each** to Amortized Analysis, Network Flow, and Union-Find & Range Queries
+(**+12, bank 1,856 → 1,868**) — and with it **every one of the 23 Algorithms lessons is now at 16 MCQs**, the first of the
+seven topics fully migrated in the 12→16 arc. New foundational angles: amortized's three methods (aggregate/accounting/
+potential), the accounting-credit idea, the potential-method formula (actual + ΔΦ), and the multipop amortized argument;
+the max-flow integrality theorem, the capacity constraint $0\le f\le c$, the augmenting-path loop, and Edmonds-Karp's
+$O(VE^2)$; union-find's find+union, the $O(\alpha(n))$ inverse-Ackermann bound, path compression, and the Fenwick-tree
+$O(\log n)$. Pipeline: authored avoiding existing stems → **adversarial-verify agent → ALL 12 PASS** (it also ran a
+duplicate check and flagged one soft thematic overlap — a max-flow-min-cut restatement vs an existing question — which I
+then **swapped for the integrality theorem** to keep the pool non-redundant, re-injecting and re-confirming) → positions
+shuffled (1302 / 2031 / 3120). SW cache → `atlas-v74`; README 1,856 → 1,868. Verified: `node gate.js` ALL GREEN; a Node
+check confirms all 23 Algorithms lessons == 16 MCQs; quiz renders **"of 16"**, `.katex-error`=0, errs=0. **Arc status:
+Algorithms ✓ (7/7 modules). NEXT: roll the arc through Linear Algebra, Calculus, Deep Learning, RL, LLMs, Prob & Stats.**
+
 ## iter 130 — Cross-Entropy Loss & Perplexity visualization — a 33rd widget (visualizations) — ★ 130-iteration checkpoint
 No viz existed for the loss function at the heart of every classifier and language model. Added **`dl-cross-entropy`**,
 embedded in the DL "Loss Functions: MSE, Cross-Entropy, and the Softmax Link" lesson. Slide the probability the model
