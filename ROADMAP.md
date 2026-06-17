@@ -28,8 +28,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    3/4 lessons. When authoring future lessons, make the verify schema/prompt EXPLICIT: "return the corrected
    LESSON HTML in `content`; put commentary ONLY in `notes`; never write a summary into `content`." (Recovered
    via transcript extraction this time.)
-2. **Deepen the existing six** — add ADVANCED lessons/modules (not just more of the same; go further than the
-   current depth) where each topic has frontier/advanced gaps. IN PROGRESS:
+2. **Deepen the existing six** — ✅✅ COMPLETE (iter 99). Every original topic now has a 7th frontier/advanced module,
+   each with full content + 12 MCQs + flashcards + homework + examples (RL's Module-5 MCQs are the only deferred bit, add next).
+   add ADVANCED lessons/modules (not just more of the same; go further than the
+   current depth) where each topic has frontier/advanced gaps. DONE:
    ✅ iter 87: Deep Learning → new "Generative Models" module (Autoencoders/VAEs, GANs, Diffusion). ✅ iter 88: all 3
    generative lessons to 12 MCQs (+36; DL topic now 264 / site 1,632) — DL fully complete again.
    ✅ iter 90: Calculus → new "Convex & Constrained Optimization" module (convexity, GD convergence, Lagrange
@@ -38,8 +40,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    lessons to 12 MCQs (+36; LA topic now 228 / site 1,704) — Linear Algebra fully complete again.
    ✅ iter 96: Algorithms → new "Advanced Algorithms & Analysis" module. ✅ iter 97: all 3 advanced-algo lessons to 12 MCQs
    (+36; algo topic now 276 / site 1,740) — Algorithms fully complete again.
-   REMAINING advanced gaps, one topic per rotation:
-   RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
+   ✅ iter 99: Reinforcement Learning → new "Model-Based, Offline & Imitation RL" module (the LAST of the six) — MCQs
+   deferred (add via pipeline next). deepen-the-six is now COMPLETE.
+   POST-ARC: the loop returns to the broad compass — more deeper-dives on hard concepts, UI/UX & animation polish,
+   onboarding, more achievements/gamification, new functionality, and topping up any new lessons' MCQs.
+   (former note) RL → model-based or offline RL (the LAST of the six; LLMs are already very deep). Then deepen-the-six is COMPLETE
    and the loop returns to the broad compass / more deeper-dives / new functionality.
    Author with `String.raw` + single-backslash LaTeX; the
    per-topic data file uses its OWN header comment — preserve it. NOTE: name the module variable anything but `module`

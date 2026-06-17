@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 99 — Reinforcement Learning — NEW frontier module: Model-Based, Offline & Imitation RL (3 lessons) — COMPLETES the deepen-the-six arc (content; "deepen the existing six")
+The final topic of the deepen-the-six rotation. RL ended at exploration/practice with no model-based, offline, or
+imitation learning — its three biggest frontier gaps. New 7th module:
+**(1) Model-Based RL & Planning** — model-free vs model-based, learning $\hat p(s'\mid s,a)$ & $\hat r$, planning/rollouts,
+Dyna-Q (learn+plan+act), MCTS (AlphaGo/AlphaZero), and the sample-efficiency-vs-model-bias / compounding-error tradeoff.
+**(2) Offline (Batch) RL** — learning from a fixed logged dataset with no interaction; distributional shift &
+overestimation of OOD actions (why $\max_{a'}Q$ is dangerous); why naive off-policy diverges offline; conservatism
+(policy constraints / CQL value penalization); healthcare/driving applications; pessimism-under-uncertainty.
+**(3) Imitation Learning & Inverse RL** — behavioral cloning, the covariate-shift / compounding-error flaw (quadratic in
+horizon), DAgger, inverse RL (recover the reward → generalizes), GAIL, and the RLHF connection.
+Each is a full lecture + 6 flashcards + 3 homework + 2 worked examples; MCQs deferred to the pipeline. RL is now a
+**7-module, 20-lesson** course. **★ With this, ALL SIX original topics now carry a 7th frontier/advanced module —
+the owner's "deepen the existing six" directive is COMPLETE** (DL generative models, Calculus convex optimization, LA
+matrix calculus, Algorithms advanced, RL frontier — and Probability & Statistics was built as a full 5-module subject).
+Site: **148 lessons · 889 flashcards · 442 homework · 288 examples**. SW cache → `atlas-v43`; README counts refreshed
+(lessons/concepts 145→148). Verified: `node gate.js` ALL GREEN (7 topics · 148 lessons); all three lessons render with
+**katex-error=0**; course/cheatsheet/map + lessons smoke errs=0; legible at 390px; stray Chrome cleaned up.
+
 ## iter 98 — Hypothesis-testing / p-value visualization (visualizations; understandability)
 A new interactive widget (`ps-hypothesis-test`, the 28th) that makes the most-misunderstood idea in statistics
 *operational*, and fills the one PS module that had no viz (Hypothesis Testing). On a standard-normal null distribution
