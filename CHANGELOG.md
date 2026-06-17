@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 212 — "Daily goal reached!" celebration the moment you cross it (animation/juice · retention)
+The daily XP goal is the core "come back every day" mechanic, yet **crossing it was silent** — only a static "hit! 🎉"
+appeared on the *next* dashboard visit. Now the instant today's XP crosses the goal — mid-quiz, mid-review, grading a
+card — you get **confetti + a "Daily goal reached!" toast**, rewarding the habit exactly when it happens. Anti-monotony:
+first animation/juice move in a while (last was ~iter 120); owner loves delight + the come-back loop.
+Implementation mirrors the existing `_freezeJustUsed`/`drainLevelUps` transient-flag pattern: `addXP` detects the
+once-per-day crossing (`prev < goalXp && now ≥ goalXp && goalCelebrated !== today`), sets a transient
+`_goalJustReached`, and stamps `goalCelebrated` (new state field). The universal `flushAchievements()` hook (already
+called on every XP-earning path — quiz/test/recall/flashcard/daily-mix) drains it and fires `confetti()` + a toast.
+State-safe: new `goalCelebrated` added to `blank()` and the `load()` typeof-merge, so prior saves load unchanged.
+Verified: `gate.js` ALL GREEN; **node tests** of the crossing logic — old-shape save (no field) loads, crossing 45→53
+fires `goalJustReached` exactly once, more XP the same day does **not** re-fire, starting already-above-goal never
+fires; **browser E2E** — seeding today at 49 XP then grading one flashcard fired **confetti + "Daily goal reached!"
+toast** (err=0); all-routes smoke (14 routes) **errs=0/kErr=0** (no regression from touching the core `addXP` +
+universal `flushAchievements`). SW cache `atlas-v154` → `atlas-v155`.
+
 ## iter 211 — Graph-traversal visualizer: BFS vs DFS (visualizations)
 New widget **`algo-graph-traversal`** (the **44th**), embedded in `a-graph-representations-traversal`. The entire
 Algorithms **graph module** (traversal, shortest paths, MST) had **zero visualizations** — and traversal is both its

@@ -174,6 +174,10 @@
     Store.drainUnlocked().forEach(a => toast(a.icon, "Achievement unlocked", a.name));
     const lus = Store.drainLevelUps ? Store.drainLevelUps() : [];
     if (lus.length) levelUpCelebrate(lus[lus.length - 1]); // celebrate the highest reached
+    if (Store.goalJustReached && Store.goalJustReached()) {  // crossed today's daily XP goal — celebrate the moment it happens
+      confetti();
+      toast("🎯", "Daily goal reached!", "You hit your " + (Store.raw.goalXp || 50) + " XP target for today — keep the streak alive.");
+    }
   }
 
   // ---------- juice: XP-gain float + ring pulse + stat count-up ----------

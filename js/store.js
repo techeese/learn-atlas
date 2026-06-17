@@ -98,6 +98,7 @@
       mastery: {},          // lessonId -> { s:0..1 score, ts:lastPracticeMs, n:attempts }
       notes: {},            // lessonId -> free text note
       goalXp: 50,           // daily XP goal
+      goalCelebrated: null, // "YYYY-MM-DD" the daily-goal celebration last fired (so it fires once/day)
       activity: {},         // "YYYY-MM-DD" -> xp earned that day (study heatmap)
       freezes: 1,           // streak-freeze tokens
       lastLesson: null,     // "courseId/lessonId" — resume point
@@ -141,6 +142,7 @@
       base.mastery = s.mastery || {};
       base.notes = s.notes || {};
       base.goalXp = num(s.goalXp) || 50;
+      base.goalCelebrated = typeof s.goalCelebrated === "string" ? s.goalCelebrated : null;
       base.activity = s.activity || {};
       base.freezes = Number.isFinite(s.freezes) ? s.freezes : 1;
       base.lastLesson = s.lastLesson || null;
@@ -217,14 +219,23 @@
 
   // ---- XP / level ------------------------------------------------------
   const levelUps = [];
+  let _goalJustReached = false;   // transient: set when today's XP first crosses the daily goal (drained by the UI)
   function levelNumFor(xp) { let lvl = 1; for (let i = 0; i < LEVELS.length; i++) if (xp >= LEVELS[i].t) lvl = i + 1; return lvl; }
   function drainLevelUps() { return levelUps.splice(0, levelUps.length); }
+  function goalJustReached() { const v = _goalJustReached; _goalJustReached = false; return v; }
   function addXP(amount) {
     amount = num(amount);
     const before = levelNumFor(state.xp);
     state.xp += amount;
     const after = levelNumFor(state.xp);
-    if (amount > 0) { const t = todayStr(); state.activity[t] = num(state.activity[t]) + amount; }
+    if (amount > 0) {
+      const t = todayStr(), prev = num(state.activity[t]);
+      state.activity[t] = prev + amount;
+      // fire the daily-goal celebration the moment today's XP crosses the goal (once per day)
+      if (prev < state.goalXp && state.activity[t] >= state.goalXp && state.goalCelebrated !== t) {
+        _goalJustReached = true; state.goalCelebrated = t;
+      }
+    }
     if (after > before) for (let lv = before + 1; lv <= after; lv++) levelUps.push({ level: lv, name: (LEVELS[lv - 1] || {}).name || "" });
     const lv = levelInfo();
     if (lv.level >= 4) unlock("scholar");
@@ -508,7 +519,7 @@
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
     gradeCard, cardDue, cardState, projectInterval,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, fadingConcepts, topicMastery, markKnown,
-    getNote, setNote, setGoal, todayXP, exportData, importData, freezeJustUsed, setLastLesson,
+    getNote, setNote, setGoal, todayXP, goalJustReached, exportData, importData, freezeJustUsed, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
     recordQuickCheck, recordVizOpen,

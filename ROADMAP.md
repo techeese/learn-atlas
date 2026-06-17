@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 212: **"Daily goal reached!" celebration** (animation/juice · retention). Crossing the daily XP goal was silent
+   (static text on next dashboard visit only); now the instant today's XP crosses the goal → confetti + toast, rewarding
+   the come-back habit when it happens. `addXP` detects the once-per-day crossing → transient `_goalJustReached` →
+   `flushAchievements()` (universal XP hook) fires it. New state field `goalCelebrated` (state-safe blank()+load()).
+   Verified: node tests (fires once, never re-fires, old saves load, no false-positive), browser E2E (seed 49 XP, grade
+   a card → confetti + toast, err=0), smoke errs=0/kErr=0 (14 routes). SW →v155.
    ✅ iter 211: **New viz `algo-graph-traversal`** (visualizations — owner-loved; anti-monotony, last viz iter 207). The
    44th widget, embedded in `a-graph-representations-traversal` (the whole graph module had 0 viz). BFS (queue) vs DFS
    (stack) on a 9-node graph: animated frontier, state-colored + visit-numbered nodes, lit discovery-tree edges, a live
