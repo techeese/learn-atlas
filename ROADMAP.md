@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 188: 4 endgame achievements (gamification — owner-loved; non-content; 46→50): 📕 Centenarian (100 lessons),
+   🏆 Marksman (2,000 correct), 🗿 Savant (50 concepts mastered), 🔬 Full Spectrum (open every viz — threshold reads
+   live VIZ_CATALOG). No new state (reuse existing counters → prior saves load). Node test: count 50, unlocks fire,
+   backward-compat ✓; Hall renders all 4, "0 of 50", errs=0; SW →v131.
    ✅ iter 187: MCQ arc → Reinforcement Learning·Advanced 12→16 (+12, bank →2,212). All 3 lessons (model-based/offline/
    imitation). ★★ RL COMPLETE — all 20 RL lessons / 7 modules at 16. Arc has finished 5/7 topics (Algo/LA/Calc/DL/RL).
    Adversarial agent ALL PASS; positions balanced 3/3/3/3 (distinct patterns); render "of 16" errs=0; SW →v130.

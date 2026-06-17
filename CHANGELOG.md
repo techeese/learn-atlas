@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 188 — 4 "endgame" achievements for the long-haul learner (gamification — owner-loved)
+Gamification was 20 iters stale (last at 168), and the achievement *progression* had clear ceilings now that the site
+is vast (148 lessons, 2,212-MCQ bank, 41 widgets, 5/7 topics complete): lessons capped at 50, correct-answers at 1,000,
+mastery at 25 concepts, and there was no viz-completionist. Added **4 higher tiers (46 → 50)** that give a dedicated
+learner months-long targets:
+- **📕 Centenarian** — complete 100 lessons (between Half-Century=50 and Atlas-Complete=148).
+- **🏆 Marksman** — answer 2,000 quiz questions correctly (above Crack Shot=1,000; the 2,212-bank makes it reachable).
+- **🗿 Savant** — reach 80% mastery on 50 concepts (above Loremaster=25).
+- **🔬 Full Spectrum** — open *every* visualization in the Lab (above Viz Voyager=15; threshold reads the live
+  `VIZ_CATALOG` length so it auto-tracks as widgets are added — currently 41).
+- **No new state needed**: all four reuse existing counters (`lessons`, `mcq.correct`, mastery scan, `vizSeen`), so a
+  prior-shape save loads unchanged. Unlock checks slotted beside the existing tiers in `store.js` (completeLesson,
+  recordQuiz+recordTest, bumpMastery, recordVizOpen); ids added to the Hall categories + progress map in `app.js`.
+- **Verified**: `store.js`+`app.js` syntax OK; a node test confirms **count 46→50**, a prior-shape save loads
+  (xp/mcq preserved), and the unlock logic fires correctly — `recordQuiz` with 2,100 correct → Marksman; opening all
+  41 distinct viz → Full Spectrum (dups don't double-count); browser → the Hall renders all four new badges in their
+  categories and the header reads **"0 of 50 unlocked"**, `errs=0`; all-routes smoke (10) `errs=0`; achievements
+  screenshot read clean. SW cache **v130 → v131**; README 46 → 50.
+
 ## iter 187 — MCQ arc → Reinforcement Learning · Advanced 12 → 16 — ★ RL COMPLETE (content — owner's #1 ask)
 The arc finishes RL's seventh and final module, *Model-Based, Offline & Imitation RL*. All **three** lessons go
 12 → 16 (**+12, bank 2,200 → 2,212**), stating the bedrock the existing (application-heavy) 12 assumed:

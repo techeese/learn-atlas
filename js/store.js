@@ -70,7 +70,11 @@
     { id: "sage",        icon: "🧙", name: "Sage",              desc: "Earn 25,000 total XP." },
     { id: "self-examiner",icon:"🔎", name: "Self-Examiner",     desc: "Try a lecture's Quick Check." },
     { id: "quick-ace",   icon: "🌟", name: "Quick Ace",         desc: "Ace a Quick Check — all answers right." },
-    { id: "viz-voyager", icon: "🛰️", name: "Viz Voyager",       desc: "Open 15 different visualizations." }
+    { id: "viz-voyager", icon: "🛰️", name: "Viz Voyager",       desc: "Open 15 different visualizations." },
+    { id: "lessons-100", icon: "📕", name: "Centenarian",       desc: "Complete 100 lessons." },
+    { id: "marksman",    icon: "🏆", name: "Marksman",          desc: "Answer 2,000 quiz questions correctly." },
+    { id: "savant",      icon: "🗿", name: "Savant",            desc: "Reach 80% mastery on 50 concepts." },
+    { id: "viz-complete",icon: "🔬", name: "Full Spectrum",     desc: "Open every visualization in the Lab." }
   ];
 
   function blank() {
@@ -199,6 +203,8 @@
     if (id) { if (!state.vizSeen || typeof state.vizSeen !== "object") state.vizSeen = {}; state.vizSeen[id] = true; }
     unlock("visualizer");
     if (Object.keys(state.vizSeen || {}).length >= 15) unlock("viz-voyager");
+    const vizTotal = (window.VIZ_CATALOG || []).length;   // "Full Spectrum": opened every widget in the Lab
+    if (vizTotal && Object.keys(state.vizSeen || {}).length >= vizTotal) unlock("viz-complete");
     save();
   }
 
@@ -262,6 +268,7 @@
       unlock("first-step");
       if (Object.keys(state.lessons).length >= 10) unlock("ten-lessons");
       if (Object.keys(state.lessons).length >= 50) unlock("half-century");
+      if (Object.keys(state.lessons).length >= 100) unlock("lessons-100");
       checkCourseCompletion();
       if (window.COURSES) {
         for (const c of window.COURSES) for (const m of c.modules) if (m.lessons.length && m.lessons.every(l => state.lessons[l.id])) unlock("module-master");
@@ -292,6 +299,7 @@
     if (state.mcq.correct >= 100) unlock("mcq-100");
     if (state.mcq.correct >= 500) unlock("mcq-500");
     if (state.mcq.correct >= 1000) unlock("crack-shot");
+    if (state.mcq.correct >= 2000) unlock("marksman");
     if (lessonId) { for (let k = 0; k < correct; k++) bumpMastery(lessonId, { correct: true }); for (let k = 0; k < total - correct; k++) bumpMastery(lessonId, { correct: false }); }
     save();
   }
@@ -306,6 +314,7 @@
     if (state.mcq.correct >= 100) unlock("mcq-100");
     if (state.mcq.correct >= 500) unlock("mcq-500");
     if (state.mcq.correct >= 1000) unlock("crack-shot");
+    if (state.mcq.correct >= 2000) unlock("marksman");
     state.tests.unshift({ label: String(label || "Test"), correct, total });
     state.tests = state.tests.slice(0, 25);
     if (state.tests.length >= 10) unlock("test-veteran");
@@ -337,6 +346,7 @@
       for (const c of window.COURSES) for (const mm of c.modules) for (const l of mm.lessons) if (effectiveMastery(l.id) >= 0.8) nMastered++;
       if (nMastered >= 10) unlock("deep-diver");
       if (nMastered >= 25) unlock("loremaster");
+      if (nMastered >= 50) unlock("savant");
       if (window.COURSES.length >= 6 && window.COURSES.every(c => topicMastery(c.id) >= 0.55)) unlock("well-rounded");
     }
     save();
