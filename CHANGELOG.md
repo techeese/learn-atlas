@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 187 — MCQ arc → Reinforcement Learning · Advanced 12 → 16 — ★ RL COMPLETE (content — owner's #1 ask)
+The arc finishes RL's seventh and final module, *Model-Based, Offline & Imitation RL*. All **three** lessons go
+12 → 16 (**+12, bank 2,200 → 2,212**), stating the bedrock the existing (application-heavy) 12 assumed:
+- **Model-Based RL**: what it *is* (learn $\hat p$/$\hat r$, then plan) / what *Dyna* does (real update + model update + k
+  simulated updates) / what *MCTS* is (select→expand→simulate→backup; the AlphaZero engine) / why it's sample-efficient
+  (model-learning is supervised, mining every transition).
+- **Offline RL**: what it *is* (best policy from a fixed dataset, no interaction) / why it matters (unsafe/costly live
+  exploration) / what the *behavior policy* is / the guiding principle (pessimism about unsupported actions).
+- **Imitation Learning**: what it *is* (learn from demonstrations, sidestep reward design) / *BC vs IRL* (clone actions
+  vs recover the reward) / what *DAgger* fixes (covariate shift, by labeling the agent's own states) / why IRL generalizes.
+- **Verified**: byte-stable JSON round-trip guard; `node gate.js` **ALL GREEN · 2,212 MCQs** (no bias note); direct
+  key-dump confirms answer indices map to the intended choices, **balanced 3/3/3/3** with three *distinct* per-lesson
+  patterns (0,2,1,3 / 3,1,2,0 / 1,3,0,2); an independent adversarial fact-check agent returned **ALL PASS** (it
+  validated the DAgger-vs-GAIL-vs-IRL distinctions); render-checks on the Offline and Imitation quizzes → `errs=0 |
+  "Question 1 of 16" | rawDollars=0 kErr=0`; all-routes smoke (10) `errs=0`. SW cache **v129 → v130**; README 2,200 →
+  2,212.
+- ★★ **REINFORCEMENT LEARNING IS NOW COMPLETE** — all **20 RL lessons across all 7 modules** at 16 MCQs. The 12→16 arc
+  has finished **5 of 7 topics** (Algorithms, Linear Algebra, Calculus, Deep Learning, Reinforcement Learning).
+  Remaining: **LLMs** and **Probability & Statistics**.
+
 ## iter 186 — Multi-armed bandit visualization (`rl-bandit`, the 41st widget) (visualizations)
 The iter-185 *Exploration* lesson (ε-greedy, UCB, regret, multi-armed bandits) had **no viz** — yet the bandit is the
 canonical explore/exploit testbed. New `rl-bandit` widget: 5 arms with hidden Bernoulli win-rates (best = C at 0.75).

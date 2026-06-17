@@ -4243,6 +4243,50 @@
               ],
               "answer": 3,
               "explain": "The defining advantage of model-based RL is sample efficiency — reaching comparable quality with fewer costly real interactions. Simplicity and unbiasedness are actually strengths of model-free methods, and a reward signal is still required to fit the reward model."
+            },
+            {
+              "q": "What is <em>model-based</em> RL?",
+              "choices": [
+                "Learn a model of the environment — the transition dynamics $\\hat p(s'\\mid s,a)$ and reward $\\hat r(s,a)$ — then <em>plan</em> against it to derive a policy, rather than learning a value/policy directly from experience",
+                "Learn a value function purely by trial and error, with no model",
+                "Memorize an expert's actions from demonstrations",
+                "Run gradient ascent directly on the policy's expected return"
+              ],
+              "answer": 0,
+              "explain": "Model-based RL first fits a model of how the world responds, then computes a good policy by planning against it (value/policy iteration on the model, or rollouts). The bet: squeeze far more from each costly real interaction — at the cost of being only as good as the learned model."
+            },
+            {
+              "q": "What does Dyna(-Q) do?",
+              "choices": [
+                "It trains two networks adversarially against each other",
+                "It plans once at the start, then acts greedily forever",
+                "After each real step it (1) updates values from the real transition, (2) updates the learned model, and (3) runs $k$ extra updates on <em>simulated</em> transitions sampled from the model — \"imagining\" experience to learn faster",
+                "It discards the model and uses only Monte-Carlo returns"
+              ],
+              "answer": 2,
+              "explain": "Dyna fuses learning and planning: each hard-won real transition is also used to improve the model and then \"rehearsed\" $k$ times via simulated updates. Those imagined experiences propagate value information far faster than real steps alone."
+            },
+            {
+              "q": "What is Monte Carlo Tree Search (MCTS)?",
+              "choices": [
+                "A method for inferring the reward function from demonstrations",
+                "A planner that grows a search tree of futures — repeatedly <em>select</em> a promising path (balancing exploration/exploitation, e.g. UCT), <em>expand</em> a node, <em>simulate</em> a rollout, and <em>back up</em> the value to ancestors — the planning engine behind AlphaGo/AlphaZero",
+                "A scheme for normalizing observations before training",
+                "A replay buffer that stores past transitions for reuse"
+              ],
+              "answer": 1,
+              "explain": "Given a model (often a known simulator), MCTS spends compute to look ahead selectively, focusing search on promising lines. In AlphaZero it is guided by learned value and policy networks — a celebrated marriage of planning and learning."
+            },
+            {
+              "q": "Why is model-based RL often far more sample-efficient than model-free?",
+              "choices": [
+                "Because model-based RL needs many more environment samples than model-free",
+                "Because the model is always given by the environment and never has to be learned",
+                "Because planning removes the need for any reward signal",
+                "Because model-learning is ordinary supervised regression that extracts signal from <em>every</em> transition (including failures), whereas a value update extracts only one scalar per step — and planning then trades compute for real samples"
+              ],
+              "answer": 3,
+              "explain": "A transition $(s,a,r,s')$ is a full supervised training example for the model, but only a single scalar of TD signal for a value function. Learning the dynamics once and then planning in it (Dyna, MCTS) reuses each precious real interaction many times over."
             }
           ],
           "flashcards": [
@@ -4438,6 +4482,50 @@
               ],
               "answer": 1,
               "explain": "Because beliefs about unseen actions cannot be tested offline, an optimistic overestimate becomes a permanent, uncorrectable delusion the policy chases; pessimism about the unknown keeps the policy to improvements the data can justify. This principle echoes across robust ML and decision-making under uncertainty, independent of dataset size."
+            },
+            {
+              "q": "What is <em>offline (batch)</em> reinforcement learning?",
+              "choices": [
+                "Reinforcement learning that simply runs without a GPU",
+                "RL where the reward arrives only at the very end of an episode",
+                "RL that learns a model of the dynamics and plans against it",
+                "Learning the best possible policy purely from a <em>fixed, pre-collected</em> dataset of logged transitions, with <em>no further interaction</em> with the environment"
+              ],
+              "answer": 3,
+              "explain": "Offline RL removes the agent's ability to act: you are handed a dataset $\\mathcal{D}$ of $(s,a,r,s')$ logged by some behavior policy and must produce a better policy from that alone — no exploration to test or fix new ideas."
+            },
+            {
+              "q": "Why does offline RL matter — when is it the right setting?",
+              "choices": [
+                "Because offline RL is guaranteed to reach the optimal policy",
+                "Because in domains like medicine, autonomous driving, or recommendation, letting an untrained agent explore for real is unethical, dangerous, or ruinously expensive — so you must learn from logged experience only",
+                "Because it removes the need for any reward function",
+                "Because it is mathematically simpler than online RL"
+              ],
+              "answer": 1,
+              "explain": "Online RL assumes the agent can try things and learn from consequences. In high-stakes domains that experimentation is unacceptable, yet large logs of past decisions already exist — offline RL is how you turn those logs into a better policy without risky live exploration."
+            },
+            {
+              "q": "In offline RL, what is the <em>behavior policy</em>?",
+              "choices": [
+                "The policy the offline algorithm outputs at the end",
+                "A learned model of the environment's dynamics",
+                "The policy that <em>generated</em> the logged dataset (e.g. the doctors' past decisions, a deployed recommender) — offline RL aims to learn a policy that beats it, using only that data",
+                "A uniformly random exploration policy"
+              ],
+              "answer": 2,
+              "explain": "The dataset $\\mathcal{D}$ is whatever the behavior policy did. Offline RL's goal is to <em>improve</em> on it from the logs alone — which is why simply cloning the behavior policy (behavioral cloning) can't exceed it."
+            },
+            {
+              "q": "What is the guiding principle that makes offline RL work?",
+              "choices": [
+                "Be <em>pessimistic</em> about actions the data can't vouch for — stay close to the dataset and distrust (or penalize) the values of out-of-distribution actions, since you can never test them",
+                "Be optimistic about unseen actions to encourage exploration",
+                "Always pick the action with the highest extrapolated $Q$-value",
+                "Ignore the logged rewards and learn the policy from scratch"
+              ],
+              "answer": 0,
+              "explain": "Online RL's safety net — try a bad guess, see it fail, correct it — is gone offline, so an over-estimated unseen action becomes a permanent delusion the $\\max$ actively chases. Conservatism (policy constraints like BCQ, or value penalties like CQL) keeps the policy to what the data supports. Pessimism, not optimism, is the right default when you can't test your beliefs."
             }
           ],
           "flashcards": [
@@ -4633,6 +4721,50 @@
               ],
               "answer": 1,
               "explain": "IRL's price is computational and statistical: it embeds an RL problem in its inner loop and the reward is under-determined (many rewards explain the same behavior). Better off-distribution generalization is an IRL advantage, not a drawback, and it does not need an interactive expert."
+            },
+            {
+              "q": "What is <em>imitation learning</em>?",
+              "choices": [
+                "Learning a reward function purely by trial and error",
+                "Learning a policy directly from <em>expert demonstrations</em> (state → action examples) — sidestepping the hard problem of hand-designing a reward that captures what you actually want",
+                "Learning a model of the environment's transition dynamics",
+                "Learning purely from a scalar reward signal with no examples"
+              ],
+              "answer": 1,
+              "explain": "Sometimes it's far easier to <em>show</em> good behavior than to specify a reward for it. Imitation learning turns expert demonstrations into a policy, avoiding the notoriously hard task of reward design."
+            },
+            {
+              "q": "What is the fundamental difference between behavioral cloning (BC) and inverse RL (IRL)?",
+              "choices": [
+                "They are two names for the same algorithm",
+                "BC recovers the reward function while IRL clones the actions",
+                "Both require an interactive expert available throughout training",
+                "BC copies the expert's <em>actions</em> (supervised state→action); IRL instead infers the <em>reward</em> the expert seems to be optimizing, then runs ordinary RL on it — a more compact, transferable description of the task"
+              ],
+              "answer": 3,
+              "explain": "BC learns \"what action did the expert take here?\"; IRL learns \"what was the expert trying to achieve?\" Recovering the objective lets an RL agent act sensibly even in states the demonstrations never covered — and potentially surpass the demonstrator."
+            },
+            {
+              "q": "What problem does DAgger address, and how?",
+              "choices": [
+                "It fixes covariate shift by running the current policy, having the expert label the correct action for the states the <em>agent</em> actually visits (including its mistakes), then aggregating those and retraining — aligning training data with deployment",
+                "It learns the reward function instead of the actions",
+                "It trains a discriminator to tell expert trajectories from agent ones",
+                "It plans against a learned model of the dynamics"
+              ],
+              "answer": 0,
+              "explain": "Plain BC trains only on expert-visited states, so the agent's own drift takes it into unseen territory where errors compound. DAgger (Dataset Aggregation) repeatedly labels the agent's <em>own</em> states with expert actions, teaching it to recover — at the cost of needing an interactive expert to query."
+            },
+            {
+              "q": "Why can an IRL-based agent generalize to situations where behavioral cloning fails?",
+              "choices": [
+                "Because IRL uses a larger neural network than BC",
+                "Because IRL needs no demonstrations at all",
+                "Because IRL learns <em>why</em> the expert acts (the objective), which an RL agent can optimize even in novel states the demos never showed — whereas BC's state→action mapping breaks off-distribution",
+                "Because IRL memorizes more of the expert's trajectories"
+              ],
+              "answer": 2,
+              "explain": "A learned reward (\"stay centered, avoid collisions, make progress\") is a compact, transferable description of the task that still gives sensible guidance on a brand-new road. Cloned actions, by contrast, are only defined on states resembling the demonstrations."
             }
           ],
           "flashcards": [

@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 187: MCQ arc → Reinforcement Learning·Advanced 12→16 (+12, bank →2,212). All 3 lessons (model-based/offline/
+   imitation). ★★ RL COMPLETE — all 20 RL lessons / 7 modules at 16. Arc has finished 5/7 topics (Algo/LA/Calc/DL/RL).
+   Adversarial agent ALL PASS; positions balanced 3/3/3/3 (distinct patterns); render "of 16" errs=0; SW →v130.
+   ARC REMAINING: LLMs, Probability & Statistics.
    ✅ iter 186: Multi-armed bandit viz (`rl-bandit`, **41st widget**, visualizations — non-content; pairs w/ iter-185
    exploration lesson which had no viz). 5 arms, strategy select (ε-greedy/UCB/greedy) + ε slider + Pull/Reset; arm
    est-vs-true bars + cumulative-regret curve. Honest note (no false "UCB wins"; multi-seed study showed greedy=high
