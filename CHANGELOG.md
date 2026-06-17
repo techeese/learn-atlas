@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 201 — Corpus render-hazard audit + permanent gate lints (workflow / quality — non-content)
+The iter-200 money-`\$` garble had been latent **~117 iterations** because hand render-checks only cover the lessons
+a turn touches. Ran a **whole-corpus static audit** (all 17,964 content strings across 148 lessons) for the silent
+render-wrong patterns — then made the gate catch the whole class so they can't recur.
+- **Found & fixed 3 real issues**: (a) `**inductive step**` raw markdown in an Algorithms MCQ stem (rendered as
+  literal asterisks via innerHTML) → `<strong>`; (b)/(c) two bare un-escaped `$500` money signs in an LLM RAG
+  homework prompt/solution (a lone `$` happens to render literal, but it's fragile next to math) → escaped to `\$500`
+  (the iter-200 normalizer now wraps them safely).
+- **New permanent lints in `gate.js`** (run on every content field — content, MCQ q/explain/choices, examples,
+  homework, flashcards): an **odd count of unescaped single-`$`** (unbalanced math, or a literal `$` that wasn't
+  written as `\$`), and **raw `**bold**` / `__italic__` outside `<code>`/`<pre>`/math**. These are exactly the bug
+  classes that render *silently wrong without throwing a KaTeX error*, so an automated gate is the only cheap catch.
+  Self-tested: the lint flags "wins $5 … $x$" and "the **inductive step**", and correctly ignores escaped money,
+  balanced math, `<code>S**2</code>`, `def __init__`, and `<strong>` — **zero false positives across the corpus**.
+
+No new MCQs (bank stays 2,304). Verified: `gate.js` ALL GREEN with the new lints active (7 topics · 148 lessons ·
+2,304 MCQs); lint self-test all-pass; browser — the Algorithms quiz shows no literal `**` and the RAG homework renders
+"…how many euros is $500?" cleanly (no garble, kErr=0); all-routes smoke (10 routes) errs=0. Data files
+`algorithms.js` + `llm.js` touched (the 3 fixes) → SW cache `atlas-v143` → `atlas-v144`. ROADMAP + skill landmines
+already note both delimiter hazards.
+
 ## iter 200 — Final topic opens: PS Foundations 12→16 + FIX money-"\$" math garble (content + bug)
 Two things, the second surfaced by the first. **(1) Content** — opened the **last** topic of the 12→16 arc:
 **Probability & Statistics → Foundations**, all 4 lessons **12 → 16 MCQs** (+16; bank **2,288 → 2,304**), adversarially

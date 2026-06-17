@@ -541,7 +541,7 @@
               "explain": "Amortized analysis gives a deterministic guarantee on the total cost of a worst-case operation sequence (then divided per op). Average-case analysis takes an expectation over a probability distribution on inputs. Doubling is amortized, not average-case, since no randomness is involved."
             },
             {
-              "q": "In the loop-invariant method, which part of the proof corresponds to the **inductive step** of a proof by induction?",
+              "q": "In the loop-invariant method, which part of the proof corresponds to the <strong>inductive step</strong> of a proof by induction?",
               "choices": [
                 "Initialization",
                 "Maintenance",

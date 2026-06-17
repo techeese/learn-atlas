@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 201: **Corpus render-hazard audit + permanent gate lints** (workflow/quality — non-content). Whole-corpus
+   static scan (17,964 strings) for silent render-wrong patterns; found+fixed 3 (a `**markdown**` MCQ stem → `<strong>`;
+   2 bare `$500` money → `\$`). Added `gate.js` lints: odd unescaped-`$` parity + raw `**`/`__` outside code/math —
+   the bug classes that render wrong WITHOUT a KaTeX error (iter-189/200/52). Self-tested, zero false positives; gate
+   GREEN; no new MCQs (bank 2,304); SW →v144.
    ✅ iter 200: MCQ arc → **PS·Foundations 12→16** (the FINAL topic opens; +16, bank →2,304) **+ FIX money-`\$` math
    garble** (broken-wins, surfaced while verifying). 4 PS lessons (sample-spaces/axioms, conditional/Bayes, random
    vars, expectation/variance) adversarial ALL 16 PASS, balanced. Bug: bare `\$` in prose mis-paired with the next
