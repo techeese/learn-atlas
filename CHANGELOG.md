@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 326 — Four more deeper-dives on flagship hard lessons (content / understandability)
+4 "Deeper dive" expandables across DL/RL/LA/calc (deep-dives 85 → **89**):
+- **dl-embeddings-and-tokenization** — embeddings turn **symbols into geometry**: a *trainable* lookup table where proximity
+  = learned similarity ("king − man + woman ≈ queen"); meaning stored as positions, not definitions.
+- **rl-policy-iteration** — a **monotone two-step dance**: evaluate `Vᵖ`, then act greedily w.r.t. it; the policy-improvement
+  theorem makes every step uphill, so it reaches optimal in finitely many iterations.
+- **la-gradients-jacobians** — the **Jacobian is the derivative generalized**: an `m×n` matrix of all partials, best linear
+  approx `f(x+δ)≈f(x)+Jδ`; the gradient is its `m=1` case, layout = a transpose-consistency choice for backprop.
+- **c-partial-derivatives** — a partial **freezes every axis but one**; assembled, the partials give the gradient, the tangent
+  plane, and (Clairaut) commuting mixed partials — multivariable calculus = one-variable calculus per axis.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 0 / 3 / 7 / 7 spans — embeddings is intentionally
+prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v266` → `atlas-v267`.
+
 ## iter 325 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons, each a new technique across algo/PS/calc (examples 316 → **319**):
 - **a-divide-and-conquer** — **Karatsuba**: multiply `12 × 34` with **three** products not four (`ac=3, bd=8, (a+b)(c+d)=21`
