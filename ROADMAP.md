@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 240: **Step-back + stronger gate** (workflow/dev-flow). ★240 reflection: compass well-rotated across 230–239 (no area
+   starved); site measurably richer (viz 50→52, code 14→21 all-topics, glossary 89→117, high-contrast, forecast, live flame,
+   mod-nav). Neglected: performance (deferred — minify breaks inject pipeline, lazy-load risky) + workflow (addressed now).
+   gate.js gains: (1) **runs every JS code-exercise** (emulates Playground runJS, asserts output===data-expected; 16
+   verified/run — replaces the manual browser pg-check ritual; Python skipped, needs Pyodide); (2) **lints all 117 glossary
+   defs** (parity/markdown) + dup-term check. Negative-tested (sabotaged expected → precise FAIL; restored → GREEN).
+   Summary now "· 117 glossary · 16 code-exercises verified". No user-facing change → no SW bump.
    ✅ iter 239: **Deepen the inline glossary — +28 terms** (understandability). Glossary 89→117; the thin/jargon-dense topics got
    the most: LLM +13 (positional encoding, KV cache, beam search, nucleus sampling, in-context learning, chain-of-thought,
    scaling laws, LoRA, quantization, RAG, hallucination, autoregressive…), LA +9 (dot product, orthogonality, projection,
@@ -657,6 +664,11 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
 12. **Gamification** — depth and motivation (without cheapening learning).
 
 ## Backlog (ideas — mine these; add as you discover more)
+- **(iter 240 note for future iters) JS code-exercises are now gate-verified** — `node gate.js` runs every
+  `data-code="javascript"` block and asserts output===`data-expected`. So when authoring a new JS exercise you no longer
+  need the manual browser pg-check ritual to confirm the answer key; the gate catches a wrong `data-expected`. (A quick
+  visual screenshot is still nice for layout, and **Python exercises still need a manual/browser check** — Pyodide can't
+  run in node.) Capture the expected via the runJS replay as before, then trust the gate.
 - AI tutor / infinite practice (opt-in, bring-your-own Claude API key). [owner deferred for now]
 - ~~Glossary with hover-definitions of key terms across lessons.~~ **DONE iter 57** (inline `.gloss` tooltips in lecture prose).
 - ~~"Explain it back" — free-text recall with self-grading (Feynman technique).~~ **DONE iter 53** (Recall tab; self-graded against the lesson's flashcards, feeds mastery + XP). Future: optional AI grading when the tutor lands.

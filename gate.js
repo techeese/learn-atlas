@@ -14,11 +14,23 @@ const TOPICS = ["linear-algebra", "calculus", "algorithms", "deep-learning", "re
 TOPICS.forEach(t => load("data/" + t + ".js"));
 load("data/prereqs.js");
 load("js/viz.js");
+load("data/glossary.js");
+
+// emulate the Playground's runJS console.log path exactly (objects→JSON, args joined by " ", logs by "\n")
+// so the gate can RUN every javascript code-exercise and confirm its data-expected actually matches.
+function runJS(src) {
+  const logs = [], orig = console.log;
+  console.log = (...a) => logs.push(a.map(x => typeof x === "object" ? JSON.stringify(x) : String(x)).join(" "));
+  try { new Function(src)(); } finally { console.log = orig; }
+  return logs.join("\n");
+}
+// reverse the HTML-escaping that code/expected go through in the data layer (decode &amp; LAST)
+function unesc(s) { return String(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#3?9;|&#x27;/g, "'").replace(/&amp;/g, "&"); }
 
 const C = global.window.COURSES || [];
 const vizIds = new Set((global.window.VIZ_CATALOG || []).map(v => v.id));
 const ids = new Set(), topicOf = {};
-let lessons = 0, mcq = 0, cards = 0, hw = 0, ex = 0, errors = [], warnings = [], skew = [];
+let lessons = 0, mcq = 0, cards = 0, hw = 0, ex = 0, codeChecked = 0, errors = [], warnings = [], skew = [];
 
 // ---- render-hazard lints (the class of bugs that render WRONG without throwing: iter 189 "<"-in-math,
 //      iter 200 money-"\$" garble, iter 52 raw markdown). The app normalizer escapes "<" and "\$" at boot,
@@ -59,13 +71,32 @@ C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
   (l.homework || []).forEach((h, i) => { hw++; if (h) Object.keys(h).forEach(k => checkRender(h[k], l.id + " hw#" + i + "." + k)); });
   (l.examples || []).forEach((e, i) => { ex++; if (e) Object.keys(e).forEach(k => checkRender(e[k], l.id + " ex#" + i + "." + k)); });
   ((l.content || "").match(/data-viz="([^"]+)"/g) || []).forEach(s => { const id = s.slice(10, -1); if (!vizIds.has(id)) errors.push("unknown data-viz id '" + id + "' in " + l.id); });
+  // run every embedded JavaScript code-exercise and confirm its output equals data-expected (catches a wrong
+  // expected string — which silently shows the learner "✗ Doesn't match" on correct code). Python can't run here.
+  const codeRe = /<div\s+data-code="([a-z]+)"\s+data-expected="([^"]*)"\s*>([\s\S]*?)<\/div>/g;
+  let cm; while ((cm = codeRe.exec(l.content || ""))) {
+    const lang = cm[1], expected = unesc(cm[2]).trim(), code = unesc(cm[3]).trim();
+    if (lang !== "javascript") continue;
+    codeChecked++;
+    let out; try { out = runJS(code).trim(); } catch (e) { errors.push("data-code threw in " + l.id + ": " + e.message); continue; }
+    if (out !== expected) errors.push("data-code expected-mismatch in " + l.id + "\n      got: " + JSON.stringify(out.slice(0, 90)) + "\n      exp: " + JSON.stringify(expected.slice(0, 90)));
+  }
 })));
+// glossary: render-hazard lint every definition + flag duplicate terms (the inline-tooltip source of truth)
+const gloss = global.window.GLOSSARY || [];
+const gseen = {};
+gloss.forEach((t, i) => {
+  if (!t || !t.term || !t.def) { errors.push("glossary entry missing term/def: #" + i); return; }
+  const k = String(t.term).toLowerCase();
+  if (gseen[k]) errors.push("duplicate glossary term: " + t.term); else gseen[k] = 1;
+  checkRender(t.def, "glossary['" + t.term + "'].def");
+});
 Object.entries(global.window.PREREQS || {}).forEach(([lid, arr]) => {
   if (!topicOf[lid]) errors.push("PREREQS lesson not found: " + lid);
   (arr || []).forEach(p => { if (!topicOf[p]) errors.push("PREREQS target not found: " + p + " (for " + lid + ")"); });
 });
 
-console.log(`GATE — ${C.length} topics · ${lessons} lessons · ${mcq} MCQs · ${cards} flashcards · ${hw} homework · ${ex} examples · ${vizIds.size} widgets`);
+console.log(`GATE — ${C.length} topics · ${lessons} lessons · ${mcq} MCQs · ${cards} flashcards · ${hw} homework · ${ex} examples · ${vizIds.size} widgets · ${gloss.length} glossary · ${codeChecked} code-exercises verified`);
 if (warnings.length) { console.log("warnings (" + warnings.length + ", non-blocking):"); warnings.slice(0, 40).forEach(w => console.log("  ⚠ " + w)); }
 if (skew.length) console.log("note: correct-answer-position bias (>70% at one index) in " + skew.length + " lesson(s) — pre-existing; de-skewing needs per-MCQ care (some explanations cite positions).");
 if (errors.length) { console.log("FAIL (" + errors.length + "):"); errors.slice(0, 30).forEach(e => console.log("  ✗ " + e)); process.exit(1); }

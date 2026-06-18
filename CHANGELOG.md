@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 240 — Step-back + a stronger safety net: the gate now runs the code exercises (workflow / dev-flow)
+The round-number reflection (every ~10 iters). **Loop health:** the compass rotated well across 230–239 — UI/UX, viz,
+content, gamification, accessibility, content, viz, animation, UI/UX, understandability — no area starved. The site is
+measurably richer than at iter 230 (viz 50→52, code exercises 14→21 covering **all 7 topics**, glossary 89→117,
+high-contrast mode, dashboard review-forecast, the living streak flame, the in-module navigator). **Most-neglected:**
+*performance* (untouched since iter 58 — but minifying the data breaks the byte-stable inject pipeline and lazy-loading is
+risky, so it stays deferred until it actually hurts) and *workflow* — which this iteration addresses.
+
+Shipped a **dev-flow** improvement that makes every future iteration safer (chosen over a learner-facing tweak precisely
+because it protects all the learner-facing work to come). `gate.js` gained two checks:
+1. **Code-exercise verification** — the gate now *emulates the Playground's `runJS` console.log path and executes every
+   embedded `data-code="javascript"` block*, asserting its output equals the (HTML-unescaped) `data-expected`. **16 JS
+   exercises are now verified on every run** (the 5 Python ones need Pyodide, so they're skipped). This replaces the
+   manual per-iteration browser `pg-check` ritual for JS exercises — a wrong answer key (which silently shows the learner
+   "✗ Doesn't match" on correct code) can no longer ship.
+2. **Glossary linting** — the gate now loads `data/glossary.js` and render-hazard-lints **all 117 definitions** (the
+   iter-239 additions had a parity guard only in the one-off injector, never in the gate) and flags **duplicate terms**.
+Summary line now reports `… · 117 glossary · 16 code-exercises verified`. **Negative-tested**: sabotaging one
+`data-expected` made the gate FAIL with a precise `data-code expected-mismatch in ps-expectation-variance` (exit 1);
+restoring it returned ALL GREEN. No user-facing assets changed → no SW-cache bump.
+
 ## iter 239 — Deepen the inline glossary: +28 terms (understandability)
 Rotating off UI/UX. The glossary powers **inline hover/tap tooltips** (the first occurrence of each term in lecture
 prose gets a definition), so its coverage directly shapes how much a reader can decode without leaving the page. Two
