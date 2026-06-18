@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 386 — Three more code exercises across algo/PS/calc (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** across algo/PS/calc (lessons-with-code 81 → **84**; the gate now runs **79**):
+- **a-shortest-paths-topo** — **Bellman-Ford edge relaxation**: relax every edge a few passes; `dist.D → 4` (`A→B→C→D` beats the
+  alternatives) — shortest paths as repeated "found a shorter route?" updates.
+- **ps-random-variables-distributions** — **expected value** `E[X]=Σ x·p(x)`: `{1,2,3}` with `[0.2,0.3,0.5]` → `2.30`.
+- **c-lagrange-multipliers** — **constrained minimization**: minimize `x²+y²` on `x+y=S` (`∇f=λ∇g ⇒ x=y=S/2`) → `8` at S=4 (the
+  point on the line nearest the origin).
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**79 code-exercises verified**); **via `--dump-dom`** the shortest-path widget runs → `4`,
+"✓ Output matches expected" (the `<` relax comparison works); all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape
+change. SW cache `atlas-v325` → `atlas-v326`.
+
 ## iter 385 — Three more worked examples across calc/RL/LLM (examples)
 A **3rd worked example** on three flagship lessons across calc/RL/LLM (examples 358 → **361**, all ⌘K-searchable):
 - **c-partial-derivatives** — **the gradient points uphill (directional derivatives)**: `∇f=(2,4)` at (1,2); rate toward `(3,4)` is
