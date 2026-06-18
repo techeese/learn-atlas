@@ -202,6 +202,11 @@
       requestAnimationFrame(() => requestAnimationFrame(() => { el.style.width = target; }));
     });
   }
+  function flareStreak() {   // one-time celebratory flare when the streak ticks up on a new day
+    const f = document.querySelector(".streak .flame"); if (!f || reducedMotion()) return;
+    f.classList.remove("flame-flare"); void f.offsetWidth; f.classList.add("flame-flare");
+    setTimeout(() => f.classList.remove("flame-flare"), 1300);
+  }
   function sweepForecast() {
     if (reducedMotion()) return;
     document.querySelectorAll(".fcst-bar").forEach(el => {
@@ -418,6 +423,11 @@
       : `${lv.xp.toLocaleString()} XP · max level`;
     const st = Store.stats();
     document.getElementById("streak-num").textContent = st.streak;
+    const flameEl = document.querySelector(".streak .flame");   // flame intensity tiers — the longer the streak, the hotter it glows
+    if (flameEl) {
+      const tier = st.streak <= 0 ? "unlit" : st.streak < 7 ? "lit" : st.streak < 30 ? "hot" : st.streak < 100 ? "blazing" : "inferno";
+      if (flameEl.dataset.tier !== tier) { flameEl.classList.remove("flame-unlit", "flame-lit", "flame-hot", "flame-blazing", "flame-inferno"); flameEl.classList.add("flame-" + tier); flameEl.dataset.tier = tier; }
+    }
     // highlight active nav
     const hash = location.hash || "#/";
     document.querySelectorAll("[data-route]").forEach(a => {
@@ -2596,6 +2606,7 @@
     router();
     flushAchievements();
     if (Store.freezeJustUsed()) toast("❄️", "Streak saved!", "A freeze covered the day you missed.");
+    if (Store.streakJustUp()) flareStreak();   // welcome-back flare when today extended the streak
     showIntro(false);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

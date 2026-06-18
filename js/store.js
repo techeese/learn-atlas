@@ -159,14 +159,14 @@
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
 
   // ---- streak ----------------------------------------------------------
-  let _freezeJustUsed = false;
+  let _freezeJustUsed = false, _streakJustUp = false;
   function touchStreak() {
     const t = todayStr();
     if (state.lastActive === t) return;
     const diff = dayDiff(state.lastActive, t);
-    if (diff === 1) state.streak += 1;
+    if (diff === 1) { state.streak += 1; _streakJustUp = true; }
     else if (diff <= 0) { /* same day or clock weirdness */ }
-    else if (diff === 2 && state.freezes > 0) { state.freezes -= 1; state.streak += 1; _freezeJustUsed = true; } // missed 1 day, freeze saves it
+    else if (diff === 2 && state.freezes > 0) { state.freezes -= 1; state.streak += 1; _freezeJustUsed = true; _streakJustUp = true; } // missed 1 day, freeze saves it
     else state.streak = 1;          // missed >1 day (or no freeze) -> reset
     if (state.streak < 1) state.streak = 1;
     state.lastActive = t;
@@ -180,6 +180,7 @@
     save();
   }
   function freezeJustUsed() { const v = _freezeJustUsed; _freezeJustUsed = false; return v; }
+  function streakJustUp() { const v = _streakJustUp; _streakJustUp = false; return v; }
   function markKnown(lessonId) { if (!lessonId) return; state.mastery[lessonId] = { s: 0.65, ts: Date.now(), n: 1 }; save(); }
   function setLastLesson(key) { if (state.lastLesson !== key) { state.lastLesson = key; save(); } }
   // ---- bookmarks (saved lessons) --------------------------------------
@@ -541,7 +542,7 @@
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
     gradeCard, cardDue, cardState, projectInterval, reviewForecast,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, fadingConcepts, topicMastery, markKnown,
-    getNote, setNote, setGoal, todayXP, goalJustReached, exportData, importData, freezeJustUsed, setLastLesson,
+    getNote, setNote, setGoal, todayXP, goalJustReached, exportData, importData, freezeJustUsed, streakJustUp, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
     recordQuickCheck, recordVizOpen,

@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 237 — The streak flame comes alive (animation / juice)
+Juice was the most-overdue lane (last at iter 228). The header's streak 🔥 was a static emoji — the one always-visible
+element with no life. Gave it an **ambient flicker** + **intensity that grows with the streak** + a **flare when today
+extends your run** — a small "joy to watch" beat squarely on the owner's north star, reused on every screen.
+- **Flicker**: a gentle, continuous `flameFlicker` (scale/rotate wobble, ~2.6s) so the ember always breathes.
+- **Tiers** (set in `renderChrome` by streak length, idempotent via a `data-tier` guard): `unlit` (0, greyed) · `lit`
+  (1–6) · `hot` (7–29) · `blazing` (30–99) · `inferno` (100+, bigger + double drop-shadow) — the glow literally
+  intensifies as your streak grows.
+- **Flare**: a one-time `flameFlare` burst (scale 1.7 + bright glow) when the streak ticks up on a new day, via a new
+  `Store.streakJustUp()` signal (set in `touchStreak` on a +1 day or a freeze-save; consumed once in `boot`) → a
+  welcome-back payoff that rewards the daily habit, like the daily-goal celebration.
+- **Reduced-motion safe**: the global `prefers-reduced-motion` rule stills the flicker, and `flareStreak()` early-returns.
+  No save-shape change (`streakJustUp` is a runtime flag).
+Verified: gate ALL GREEN; node-tested the signal (streak 5→6 ⇒ `streakJustUp=true`, consumed to false, same-day ⇒
+false); in-browser the tier class + `animationName=flameFlicker` apply (blazing at 45, lit at 6), the **flare fires on a
+yesterday→today increment** (`flareSeen=true`, streak 40→41), and a forced `.flame-flare` resolves to the `flameFlare`
+keyframe; all-routes smoke **errs=0/kErr=0 (12 routes)** with the flame classed on every page; `reducedMotion=false` in
+headless confirmed. SW cache `atlas-v179` → `atlas-v180`.
+
 ## iter 236 — Dot-product & angle visualizer — the 52nd widget (visualizations)
 Rotating off content. Linear algebra was the **thinnest topic** (5 widgets) and was missing the single most
 foundational visual: the **dot product**. The lesson `la-dot-product-norms` ("Dot Product, Norms, and Angles")

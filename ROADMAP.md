@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 237: **The streak flame comes alive** (animation/juice — most-overdue lane, last at 228). Header 🔥 was a static emoji;
+   now: ambient `flameFlicker`, intensity tiers by streak length (unlit/lit/hot≥7/blazing≥30/inferno≥100, set in
+   renderChrome via data-tier guard), and a one-time `flameFlare` when today extends the streak (new `Store.streakJustUp()`
+   signal from touchStreak, consumed in boot). Reduced-motion safe (global rule + flareStreak JS guard); no save-shape
+   change. Verified: gate GREEN; node signal test PASS (5→6 true, consumed, same-day false); in-browser flicker+tiers
+   apply, flare fires on yesterday→today (flareSeen=true, 40→41); smoke errs=0/kErr=0 (12 routes). SW →v180.
    ✅ iter 236: **Dot-product & angle visualizer — 52nd widget** (visualizations — rotating off content). LA was the thinnest topic
    (5 widgets) and lacked the dot product. New `la-dot-product` in la-dot-product-norms (had no viz): two draggable
    vectors, angle arc + a·b recolour by sign (sage acute / gold right-angle ⊥ / rust obtuse), b's scalar projection as a

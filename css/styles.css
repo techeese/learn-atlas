@@ -244,7 +244,28 @@ body::after {
   margin-left: auto; display: flex; align-items: center; gap: 9px;
   background: var(--panel); border: 1px solid var(--line); padding: 9px 15px; border-radius: 30px;
 }
-.streak .flame { font-size: 19px; filter: drop-shadow(0 0 6px rgba(210,113,90,.6)); }
+/* streak flame — a living, always-visible ember: a gentle ambient flicker whose glow
+   intensifies with the streak length, plus a one-time flare when today extends the streak.
+   (All animation auto-stilled under prefers-reduced-motion by the global rule above.) */
+.streak .flame { font-size: 19px; display: inline-block; transform-origin: 50% 78%; filter: drop-shadow(0 0 6px rgba(210,113,90,.6)); }
+.streak .flame.flame-lit, .streak .flame.flame-hot,
+.streak .flame.flame-blazing, .streak .flame.flame-inferno { animation: flameFlicker 2.6s ease-in-out infinite; }
+.streak .flame.flame-unlit { filter: grayscale(1) brightness(.7); opacity: .5; }
+.streak .flame.flame-hot { filter: drop-shadow(0 0 8px rgba(224,164,88,.72)); }
+.streak .flame.flame-blazing { filter: drop-shadow(0 0 11px rgba(224,164,88,.85)); }
+.streak .flame.flame-inferno { font-size: 20px; filter: drop-shadow(0 0 15px rgba(224,164,88,1)) drop-shadow(0 0 4px rgba(210,113,90,.9)); }
+@keyframes flameFlicker {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  22% { transform: scale(1.07, 1.04) rotate(-2.2deg); }
+  46% { transform: scale(.96, 1.03) rotate(1.6deg); }
+  72% { transform: scale(1.04, .98) rotate(-1deg); }
+}
+.streak .flame.flame-flare { animation: flameFlare 1.2s cubic-bezier(.2, 1.4, .4, 1); }
+@keyframes flameFlare {
+  0% { transform: scale(1); }
+  32% { transform: scale(1.7) rotate(-7deg); filter: drop-shadow(0 0 20px rgba(224,164,88,1)) drop-shadow(0 0 8px rgba(210,113,90,1)); }
+  100% { transform: scale(1); }
+}
 .streak .num { font-family: var(--font-disp); font-weight: 600; font-size: 18px; }
 .streak .lbl { font-size: 11px; color: var(--ink-mute); letter-spacing: .5px; }
 
