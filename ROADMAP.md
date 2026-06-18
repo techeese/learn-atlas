@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 264: **4 interactive code exercises for thinnest topics** (new functionality / active learning). Calculus & LA had only 1
+   code exercise each; added 4 JS (gate now runs 20, lessons-with-code 21→25): la-determinants (det=ad−bc → 5,0; ties to
+   262's viz), la-dot-product-norms (dot → 0,9), c-derivative-definition (secant limit → 6.00), c-chain-rule (central diff
+   vs analytic → 54 54). Byte-stable inject w/ round-trip guard. SELF-CORRECTION: first dropped a Riemann exercise into
+   c-definite-integral-riemann which ALREADY had one (per-topic count hid the per-lesson location) → reverted, re-injected
+   into code-free lessons, injector now refuses lessons with existing data-code. Verified: gate GREEN (20 verified);
+   dump-dom widgets run (det→"5 0", chain→"54 54", "✓ matches"); smoke errs=0/kErr=0 (12). SW →v205.
    ✅ iter 263: **Finish keyboard-viz a11y: projection + ? overlay** (accessibility). Closed the two loose ends from 259: (1)
    la-projection now keyboard-operable (its b is scalars bx/by → getter/setter wrapper onto dragKeys, keeps drag clamp
    x∈[−3,5] y∈[−3,4]); (2) `?` overlay gains an "Interactive visualizations" group (Tab/arrows/Shift+arrows). All 5

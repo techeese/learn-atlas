@@ -2,6 +2,28 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 264 — Four interactive code exercises for the thinnest topics (new functionality / active learning)
+Code exercises (write code → **Run** → instant ✓/✗ vs expected output, +15 XP on first solve) are some of the strongest
+active-learning on the site, but were lopsided: algorithms had 9 while **calculus and linear algebra had just 1 each**.
+Added **4 gate-verified JavaScript exercises** (21 → **25** lessons with code; gate now runs **20** JS exercises each
+build, up from 16) in those two topics, each computing a core idea so the concept becomes runnable:
+- **la-determinants** — `det` of a 2×2 as `ad − bc`, printing `5` (the area you drag above) and `0` (parallel columns →
+  singular). Ties directly to iter-262's determinant-as-area viz in the same lesson.
+- **la-dot-product-norms** — the dot product, showing orthogonality falls out as exactly `0` and `v·v = |v|²`.
+- **c-derivative-definition** — the secant-slope limit `(f(x+h)−f(x))/h → f'(x)`, homing in on `6.00` for `f(x)=x²` at 3.
+- **c-chain-rule** — central-difference vs analytic `f'(g)·g'`, both printing `54` (numeric == analytic).
+Injected byte-stably with a no-op round-trip guard; each placed in a lesson that had **no** code (verified — see the
+self-correction).
+SELF-CORRECTION: my first pass dropped a Riemann-sum exercise into `c-definite-integral-riemann`, which **already had
+one** (the count said "calculus: 1" but didn't say *where*) — so the lesson briefly held two near-identical Riemann
+exercises. Caught by listing per-lesson `data-expected` values post-inject (saw `0.3333` and `0.333` side by side),
+reverted `calculus.js`, and re-injected into code-free lessons instead (`c-derivative-definition`, `c-chain-rule`), with
+the injector now refusing any lesson that already contains `data-code`. Lesson: a per-*topic* count isn't enough — check
+the per-*lesson* target is actually empty before adding.
+Verified: gate ALL GREEN (**20 code-exercises verified** — every new one's output matches its `data-expected`); **via
+`--dump-dom`** the la-determinants widget runs → `5 0` and the c-chain-rule widget runs → `54 54`, both showing "✓ Output
+matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v204` → `v205`.
+
 ## iter 263 — Finish the keyboard-viz a11y story: projection + discoverability (accessibility)
 Closed the two loose ends logged after iter 259's keyboard-viz work. (1) **la-projection is now keyboard-operable** — it
 was the one draggable widget left out because its target `b` is stored as scalars `bx/by`, not an `{x,y}` object. Wired it
