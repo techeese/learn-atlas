@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 257: **Deepen inline glossary — algorithms + RL** (understandability). The two thinnest topics (11 each) → +8 each
+   (glossary 117→133): algo (binary search, recursion, memoization, BST, heap, topological sort, shortest path, loop
+   invariant); RL (discounted return, TD learning, SARSA, advantage function, actor-critic, off-policy, experience replay,
+   eligibility trace). Now balanced 16–22 across topics. Skipped over-generic terms (return/advantage/stack). Verified:
+   gate GREEN (lints defs + dups); glossary page renders 133; SARSA lesson wraps 6 inline tooltips w/ KaTeX popups; smoke
+   errs=0/kErr=0 (12 routes). SW →v198.
    ✅ iter 256: **Fix: consistency strip matched to the streak** (bugfix — owner reported "streak squares always empty"). Root cause: streak
    counts app-opens (touchStreak/lastActive), strip lit only XP-days (activity>0) → kept-streak-but-no-XP days showed
    empty squares. Fix: new `activeDays` map (blank+load merge; backfill the current streak's N days on load so the strip

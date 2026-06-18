@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 257 — Deepen the inline glossary for the two thinnest topics (understandability)
+The glossary powers inline hover/tap tooltips on the first occurrence of each term in lecture prose, so coverage shapes
+how much a reader can decode without leaving the page. **Algorithms and reinforcement learning were the two thinnest (11
+each)** despite dense vocabulary. Added **16 high-value terms** (glossary 117 → **133**):
+- **Algorithms (+8)**: binary search, recursion, memoization, binary search tree, heap, topological sort, shortest path,
+  loop invariant.
+- **Reinforcement learning (+8)**: discounted return, temporal-difference learning, SARSA, advantage function,
+  actor-critic, off-policy, experience replay, eligibility trace.
+Per-topic counts are now balanced (16–22 across all seven). Skipped over-generic terms that would false-match in prose
+(e.g. "return", "advantage", "stack" → used "discounted return", "advantage function" instead). Definitions carry KaTeX
+math; the injector guards even-`$` parity and bans raw `**`; the gate independently re-lints every def + flags dup terms.
+No save-shape change (static data).
+Verified: gate ALL GREEN; the **Glossary page renders all 133** (new terms present); on the SARSA lesson the new terms
+**wrap inline (6 tooltips)** with their definition math **KaTeX-rendered in the popup** (5 `.katex`); all-routes smoke
+**errs=0/kErr=0 (12 routes)**. SW cache `atlas-v197` → `atlas-v198`.
+
 ## iter 256 — Fix: consistency-strip squares now match the streak (bugfix — owner report)
 **Owner-reported:** the dashboard's 14-day consistency strip "always shows [empty] squares" despite a running streak.
 Root cause: the **streak and the strip measured different things.** The streak advances whenever you *open the app*
