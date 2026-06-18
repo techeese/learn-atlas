@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 310: **Step-back: full-site sweep (clean) + SR-complete Playground** (a11y). Step-back: 301–309 rotation diverse
+   (UI-UX/viz/content/examples/animation/viz/content/UI-UX/code), animation refreshed (305), no bugs shipped. Full 232-route
+   sweep (148 lessons + 66 lab + 7 courses + 11 pages), first since 300 → errs=0/kErrTotal=0/bad=none. Ship: code-exercise/
+   Playground output + ✓/✗ check had no live region (SR users couldn't hear the result); fixed — output wrap role=status
+   aria-live=polite, textarea aria-label, selects labeled; covers all 36 code exercises + the playground. Verified: gate GREEN;
+   dump-dom outWrap live=polite, editor labeled, ✓ check renders inside live region, errs=0; 232-sweep clean; smoke errs=0/kErr=0 (12). SW →v251.
    ✅ iter 309: **3 more code exercises across thinnest topics** (active learning). DL/PS thinnest (3 each); +3 JS (lessons-with-code
    33→36, gate runs 31): dl-convolution-operation (1-D conv edge detector → 0,5,0,0), dl-pooling-and-cnn-architectures
    (max-pool → 3,5,4), ps-covariance-correlation (Pearson r → 0.60). Hit + recorded the `**`-fails-rawMarkdown landmine (use

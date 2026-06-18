@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 310 — Step-back: full-site sweep (clean) + screen-reader-complete Playground (a11y)
+**Round-number step-back (iter 310).** Health check of 301–309: UI/UX · viz · content · examples · animation · viz · content ·
+UI/UX · code — a diverse rotation across every modality, the long-stale **animation** area finally refreshed (305, map
+reveal), and no bugs shipped (the `**`-vs-gate snag in 309 was caught pre-commit and recorded as a landmine).
+**Comprehensive route sweep** (first full one since iter 300): drove **all 232 routes** (148 lessons + 66 Lab widgets +
+7 courses + 11 pages) trapping JS + KaTeX errors → **errs=0, kErrTotal=0, bad=none**. The codex at 310: 148 lessons ·
+2,368 MCQs · 889 cards · 442 homework · 310 examples · 66 viz · 73 deep-dives · 36 code-exercise lessons · 138 glossary ·
+58 achievements. Mature, healthy, fully green end-to-end.
+**The ship (accessibility).** The code-exercise / Playground widget rendered its **output and the ✓/✗ "matches expected"
+result with no live region** — so screen-reader users couldn't hear whether their code passed (the core feedback), and the
+editor + selects were unlabeled. Made it SR-complete: the output wrapper is now **`role="status" aria-live="polite"`** (so
+the output *and* the dynamically-appended check are announced), the code `<textarea>` gets `aria-label="Code editor"`, and the
+language / examples selects + the status line are labeled. One template edit, covering **all 36 lesson code exercises + the
+full Code Playground**.
+Verified: gate ALL GREEN; **via `--dump-dom`** the output wrapper is `role=status aria-live=polite`, the editor is labeled,
+and after Run the **✓ check renders inside the live region** (`checkInLiveRegion=true`), `errs=0`; the 232-route sweep is
+clean; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v250` → `atlas-v251`.
+
 ## iter 309 — Three more code exercises across the thinnest topics (new functionality / active learning)
 DL and PS were the thinnest code-exercise topics (3 each); added **3 gate-verified JavaScript exercises** (lessons-with-code
 33 → **36**; the gate now runs **31**), each a flagship operation:

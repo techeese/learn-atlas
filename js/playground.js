@@ -40,13 +40,13 @@
     root.classList.add("pg");
     root.innerHTML = `
       <div class="pg-bar">
-        <select class="pg-lang">${["python", "javascript"].map(l => `<option value="${l}" ${l === lang0 ? "selected" : ""}>${l === "python" ? "🐍 Python" : "🟨 JavaScript"}</option>`).join("")}</select>
-        <select class="pg-ex"></select>
+        <select class="pg-lang" aria-label="Language">${["python", "javascript"].map(l => `<option value="${l}" ${l === lang0 ? "selected" : ""}>${l === "python" ? "🐍 Python" : "🟨 JavaScript"}</option>`).join("")}</select>
+        <select class="pg-ex" aria-label="Example snippets"></select>
         <button class="viz-btn primary pg-run">▶ Run</button>
-        <span class="pg-status"></span>
+        <span class="pg-status" aria-live="polite"></span>
       </div>
-      <textarea class="pg-code" spellcheck="false"></textarea>
-      <div class="pg-out-wrap"><div class="pg-out-label">Output</div><pre class="pg-out"></pre></div>`;
+      <textarea class="pg-code" spellcheck="false" aria-label="Code editor"></textarea>
+      <div class="pg-out-wrap" role="status" aria-live="polite"><div class="pg-out-label">Output</div><pre class="pg-out"></pre></div>`;
     const langSel = root.querySelector(".pg-lang"), exSel = root.querySelector(".pg-ex");
     const ta = root.querySelector(".pg-code"), out = root.querySelector(".pg-out"), status = root.querySelector(".pg-status");
 
