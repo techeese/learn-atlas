@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 319 — Joint-distribution visualizer — 69th widget (visualizations)
+`ps-joint-distributions` had no widget, and the joint → marginals → independence chain is core probability. Added the
+**69th Lab widget `ps-joint`**, embedded there: a 5×5 **P(X,Y) heatmap** (cell shade ∝ probability, value shown) with
+**marginal bars** — `P(X)` summed down each column (below), `P(Y)` summed across each row (left). Two presets: **Independent**
+(the joint is exactly `P(X)·P(Y)`, an outer product → independence error **0**) and **Correlated** (mass clusters on the
+diagonal → the joint no longer factors, error **0.083**). The note explains marginals = summing the joint, and independence
+⟺ joint = product of marginals. Plain-unicode note (no `$`). app.js `viz-complete` fallback 68 → 69.
+Verified: gate ALL GREEN (**69 widgets**, embed resolves); **node** prototype confirmed both joints sum to 1 and the
+independence error is 0 (independent) vs 0.083 (correlated); **via `--dump-dom`** the toggle drives the error `0.000 ↔ 0.083`
+and back, `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape
+change. SW cache `atlas-v259` → `atlas-v260`.
+
 ## iter 318 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons, each a new technique across DL/PS/algorithms (examples 313 → **316**):
 - **dl-attention-mechanism** — **why divide by √dₖ**: unscaled scores `[16,20]` → `softmax ≈ [0.018, 0.982]` (saturated,

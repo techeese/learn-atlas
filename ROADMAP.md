@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 319: **Joint-distribution visualizer — 69th widget** (visualizations). ps-joint-distributions had no viz. New `ps-joint`:
+   5×5 P(X,Y) heatmap + marginal P(X)/P(Y) bars; presets Independent (joint=outer product, indep error 0) vs Correlated (diagonal
+   mass, error 0.083). app.js fallback 68→69. Plain-unicode note. Verified: gate GREEN (69 widgets); node both sum to 1 + error
+   0 vs 0.083; dump-dom toggle drives error 0.000↔0.083, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v260.
    ✅ iter 318: **3 more worked examples on flagship hard lessons** (examples). +3 (313→316) across DL/PS/algo: dl-attention-mechanism
    (why √dₖ: unscaled softmax saturates [0.018,0.982] vs scaled [0.378,0.622]), ps-poisson (P(≥1)=1−e^−λ → 0.950), a-hash-tables
    (load factor α=0.75 → resize → 0.375, amortized O(1)). Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (316

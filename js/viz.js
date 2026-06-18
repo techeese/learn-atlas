@@ -1480,6 +1480,53 @@
   });
 
   /* ========================================================
+     69. Joint distributions, marginals & independence (Prob & Stats)
+     ======================================================== */
+  register({ id: 'ps-joint', topic: 'probability-statistics', title: 'Joint distributions, marginals & independence', blurb: 'A joint distribution P(X,Y) shown as a heatmap; sum a column for the marginal P(X), a row for P(Y). Toggle between an independent pair (the joint is exactly the outer product of its marginals — independence error 0) and a correlated one (mass clusters on the diagonal and the joint no longer factors).' },
+  function (root) {
+    const W = 540, H = 360, n = 5, px = [0.1, 0.2, 0.4, 0.2, 0.1], py = [0.15, 0.25, 0.3, 0.2, 0.1];
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let mode = 'indep';
+    function joint() {
+      const J = [];
+      if (mode === 'indep') { for (let i = 0; i < n; i++) { J[i] = []; for (let j = 0; j < n; j++) J[i][j] = px[i] * py[j]; } }
+      else { let s = 0; for (let i = 0; i < n; i++) { J[i] = []; for (let j = 0; j < n; j++) { const w = Math.exp(-(i - j) * (i - j) / 1.2) * (px[i] + 0.05); J[i][j] = w; s += w; } } for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) J[i][j] /= s; }
+      return J;
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const J = joint(), mx = Array(n).fill(0), my = Array(n).fill(0);
+      for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { mx[i] += J[i][j]; my[j] += J[i][j]; }
+      let peak = 0, ie = 0; for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { peak = Math.max(peak, J[i][j]); ie = Math.max(ie, Math.abs(J[i][j] - mx[i] * my[j])); }
+      const cell = 46, gx = 120, gy = 22, mmx = Math.max.apply(null, mx), mmy = Math.max.apply(null, my);
+      // heatmap (i = X column, j = Y row; j=0 drawn at bottom)
+      for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+        const x = gx + i * cell, y = gy + (n - 1 - j) * cell, v = J[i][j] / peak;
+        ctx.globalAlpha = 0.12 + 0.88 * v; ctx.fillStyle = p.violet; ctx.fillRect(x, y, cell - 2, cell - 2); ctx.globalAlpha = 1;
+        ctx.fillStyle = v > 0.55 ? p.bg : p.mute; ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText((J[i][j] * 100).toFixed(0), x + (cell - 2) / 2, y + (cell - 2) / 2);
+      }
+      const gw = n * cell, gridBottom = gy + gw;
+      // P(X) marginal bars below each column (sage)
+      ctx.fillStyle = p.sage; for (let i = 0; i < n; i++) { const h = mx[i] / mmx * 34; ctx.fillRect(gx + i * cell, gridBottom + 4, cell - 2, h); }
+      // P(Y) marginal bars left of each row (sage)
+      for (let j = 0; j < n; j++) { const wbar = my[j] / mmy * 34; const y = gy + (n - 1 - j) * cell; ctx.fillRect(gx - 6 - wbar, y, wbar, cell - 2); }
+      // labels
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.fillText('P(X,Y)', gx, gy - 7);
+      ctx.fillText('P(X) →', gx, gridBottom + 50);
+      ctx.save(); ctx.translate(gx - 48, gy + gw / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.fillText('← P(Y)', 0, 0); ctx.restore();
+      info.innerHTML = (mode === 'indep' ? 'Independent X, Y. ' : 'Correlated X, Y. ') + 'Each cell is P(X=i, Y=j); summing a column gives the bottom bar P(X), summing a row gives the left bar P(Y). Independence error max|P(X,Y) − P(X)P(Y)| = <b style="color:' + (ie < 1e-6 ? p.sage : p.rust) + '">' + ie.toFixed(3) + '</b> — ' + (mode === 'indep' ? 'exactly 0, so the joint <em>is</em> the product of its marginals: X and Y are independent.' : 'nonzero: mass clusters where X≈Y, so the joint does not factor — X and Y are dependent.');
+    }
+    button(ctl, 'Independent', () => { mode = 'indep'; draw(); });
+    button(ctl, 'Correlated', () => { mode = 'depend'; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Joint distribution visualizer: a 5 by 5 heatmap of P(X,Y) with marginal bars P(X) below and P(Y) to the left. In independent mode the joint equals the product of the marginals (independence error zero); in correlated mode mass concentrates on the diagonal and the joint no longer factors.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
