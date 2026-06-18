@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 410 — Step-back: full audit (clean) + three second deep-dives (content / depth)
+**Round-number step-back (iter 410).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive — including the 9 with two)
+  → errs=0, kErr=0, 0 bad; all **105 non-lesson routes** (courses, Lab + 87 widgets, every utility page) → errs=0, kErr=0. **253 routes green.**
+- **Structural coverage audit**: every one of 148 lessons has ≥2 examples (**400**), ≥8 MCQs (2368), ≥1 flashcard (889),
+  ≥1 homework (442) — **0 structurally-thin lessons**. Plus 154→**157 deep-dives**, 90 code lessons, 151 glossary, 16 playground snippets.
+**Reflection (401–409):** two fresh runways opened — secondary-feature gap-fills (playground 7→16, glossary→151, Library all 7
+topics) and **second deep-dives on the hardest lessons** — interleaved with worked examples (→400, milestone at 409). No red gate
+or broken push; the gate's render-hazard guards (incl. the iter-391 bare-`<`-in-math check) held throughout.
+**The paired ship — three more second deep-dives** (157 total; 9 lessons now carry two):
+- **a-dynamic-programming** → **top-down memoization vs bottom-up tabulation** (lazy on-demand vs ahead-of-time table fill; same recurrence).
+- **dl-loss-functions** → **why squared error is wrong for classification** (MSE's `σ'(z)` vanishes when confidently wrong; cross-entropy's
+  gradient is the clean `ŷ−y` — loss must pair with the output nonlinearity).
+- **ps-hypothesis-testing-logic** → **what a p-value is NOT** (`P(data|H₀)`, not `P(H₀|data)` — the prosecutor's fallacy).
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; both step-back
+sweeps clean; embed smoke (2 dd's × 3 + 8 pages) **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v349` → `atlas-v350`.
+
 ## iter 409 — Three more worked examples — the 400th (examples)
 A **3rd worked example** on three flagship lessons across calc/RL/LA, crossing **400 worked examples** (397 → **400**, all ⌘K-searchable):
 - **c-gradient-directional** — **directional derivative ⊥ gradient = 0**: at `(1,1)`, `∇f=(2,2)`, moving along `(1,−1)/√2` gives `D_u f=0`
