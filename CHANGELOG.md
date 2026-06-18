@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 402 — Three more worked examples across LLM/DL/LA (examples)
+A **3rd worked example** on three flagship lessons across LLM/DL/LA (examples 385 → **388**, all ⌘K-searchable):
+- **l-embeddings-and-prediction-head** — **weight tying**: input embedding + output head are each `V×d = 25.6M` params at `V=50k, d=512`;
+  sharing them (head = input embeddingᵀ) halves it to `25.6M` and adds an inductive bias.
+- **dl-dropout-and-normalization** — **BatchNorm train vs test**: train normalizes per-batch, test uses frozen running stats
+  (`μ_run ← 0.9μ_run + 0.1μ_batch`) so inference is deterministic and works at batch size 1 — forgetting `model.eval()` is a classic bug.
+- **la-orthonormal-gram-schmidt** — **Qᵀ = Q⁻¹**: for orthonormal `Q`, solving `Qx=(1,0)` is just `x=Qᵀ(1,0)=(0.6,−0.8)` — inversion
+  becomes transposition (`O(n²)` not `O(n³)`), lengths preserved, condition number 1.
+Every value node-verified (tying 25.6M; Qᵀb=(0.6,−0.8)→(1,0); BN 0.4); injected byte-stably with the full guard set.
+Verified: gate ALL GREEN (**388 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (88 / 54 / 73 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v341` → `atlas-v342`.
+
 ## iter 401 — Nine Code-Playground snippets — roughly doubled the library (new functionality)
 Varying from the examples streak: the Code Playground's "— examples —" dropdown had only **7 snippets** (5 Python, 2 JS) covering
 4 topics. Added **9 curated, runnable snippets** (→ **16**), filling the missing topics (probability/stats, RL, LLM) and adding
