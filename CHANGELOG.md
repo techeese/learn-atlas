@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 395 — Three more worked examples across LA/DL/PS (examples)
+A **3rd worked example** on three flagship lessons across LA/DL/PS (examples 370 → **373**, all ⌘K-searchable):
+- **la-gradients-jacobians** — **the Jacobian stacks gradients**: for `F=(x²y, x+y)`, `J(2,3)=[[12,4],[1,1]]`; it's the best linear
+  approximation `F(p+δ)≈F(p)+Jδ`, and chaining maps multiplies Jacobians (the chain rule behind backprop).
+- **dl-rnn-lstm-gru** — **why vanilla RNN gradients vanish/explode**: the multiplicative recurrence scales by `wᵀ` — `0.5¹⁰≈0.001`
+  (vanish), `1.5¹⁰≈57.7` (explode); only `w=1` is stable, and the LSTM's *additive* cell-state highway fixes it.
+- **ps-point-estimation** — **MLE for a coin is the sample frequency**: maximizing `log L = k log p + (n−k)log(1−p)` gives `p̂=k/n`
+  → `0.7` for 7/10; the binomial coefficient drops out.
+Every value node-verified (J=[[12,4],[1,1]]; 0.5¹⁰/1.5¹⁰; MLE 0.7); injected byte-stably with round-trip + even-`$` + tag-balance +
+unsupported-env + bare-`<`-letter-in-math pre-guards.
+Verified: gate ALL GREEN (**373 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (41 / 58 / 62 spans — `bmatrix` + `\binom`
+render clean) and **kErr=0, rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v334` → `atlas-v335`.
+Also checked (no build): the symmetric-stretch and BFS/DFS viz ideas are already covered by `la-eigen` and `algo-graph-traversal` —
+viz coverage is saturated, so this iter went to examples.
+
 ## iter 394 — Three more worked examples across DL/PS/calc (examples)
 A **3rd worked example** on three flagship lessons across DL/PS/calc (examples 367 → **370**, all ⌘K-searchable):
 - **dl-gradient-descent-and-optimizers** — **Adam's first step normalizes itself**: bias-corrected `m̂/√v̂ = 1` regardless of the

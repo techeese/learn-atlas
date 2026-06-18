@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 395: **3 more worked examples across LA/DL/PS** (examples). +3 (370→373): la-gradients-jacobians (Jacobian J(2,3)=[[12,4],[1,1]]),
+   dl-rnn-lstm-gru (vanish/explode wᵀ: 0.5¹⁰≈0.001, 1.5¹⁰≈57.7), ps-point-estimation (MLE p̂=k/n=0.7). Node-verified; byte-stable
+   inject w/ guards. Verified: gate GREEN (373 examples); dump-dom katex 41/58/62, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none.
+   SW →v335. NOTE: viz coverage saturated (checked la-eigen / algo-graph-traversal cover the remaining flagship gaps).
    ✅ iter 394: **3 more worked examples across DL/PS/calc** (examples). +3 (367→370): dl-gradient-descent-and-optimizers (Adam first
    step m̂/√v̂=1), ps-sampling-distributions (SE=σ/√n: 2→1), c-gradient-descent-convergence (LR window 0<η<2/a). Node-verified;
    byte-stable inject w/ guards. Verified: gate GREEN (370 examples); dump-dom katex 26/45/53, kErr=0, rawDollar=0; smoke
