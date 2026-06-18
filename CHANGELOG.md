@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 367 — Three more code exercises across LLM/LA/algo (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** across LLM/LA/algo (lessons-with-code 69 → **72**; the gate now runs **67**):
+- **l-positional-encoding** — **sinusoidal PE** `sin(pos/10000^(2i/d))`: position 1, dim 0 → `0.84` (= `sin(1)`; low dims wiggle
+  fast, high dims slowly).
+- **la-matrix-derivative-identities** — **the quadratic-form gradient** `∇(xᵀAx) = 2Ax` (A symmetric): `[[2,1],[1,2]]`, `[1,1]`
+  → `6 6`.
+- **a-network-flow** — **the augmenting-path bottleneck** (Ford-Fulkerson): `min[4,7,3,5]` → `3`, the most flow a path can push
+  in one step.
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**67 code-exercises verified**); **via `--dump-dom`** the quadratic-gradient widget runs → `6 6`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v306` → `atlas-v307`.
+
 ## iter 366 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons across algo/calc/LA (examples 346 → **349**, all ⌘K-searchable):
 - **a-np-completeness** — **verify-vs-solve is the heart of NP**: a Subset-Sum certificate checks in `O(n)`, but brute force tries
