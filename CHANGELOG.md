@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 365 — Four more deeper-dives on foundational lessons (content / understandability)
+4 "Deeper dive" expandables on foundational lessons across algo/LA/PS/calc (deep-dives 121 → **125**):
+- **a-hash-tables** — **O(1) lookup by turning keys into addresses**: a hash function maps key → slot; collisions are inevitable
+  (pigeonhole) so chaining/probing + the load factor `α=n/m` (`O(1+α)`) govern the speed-space tradeoff.
+- **la-matrices-as-transformations** — **a matrix's columns are where the basis vectors land**: read the transformation off the
+  columns; linearity does the rest — `[[0,−1],[1,0]]` is a 90° rotation.
+- **ps-t-tests** — **why t, not z, for small samples**: plugging sample `s` for `σ` adds uncertainty → heavier tails set by the
+  degrees of freedom `n−1`; as `n→∞`, t → normal. An honesty adjustment, not a rule.
+- **c-derivative-definition** — **the derivative is a secant in the limit**: `f'(a)=lim (f(a+h)−f(a))/h`; the secant pivots to
+  the tangent as `h→0`, resolving the "instantaneous rate" paradox without dividing by zero.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 6 / 11 / 13 / 10 spans) with **kErr=0, rawDollar=0**;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v304` → `atlas-v305`.
+
 ## iter 364 — PPO clipped-surrogate visualizer — 80th widget (visualizations)
 `rl-trpo-ppo` had no widget. Added the **80th Lab widget `rl-ppo-clip`**, embedded there: PPO's objective
 `min(r·A, clip(r,1−ε,1+ε)·A)` plotted against the policy ratio `r` (ε=0.2), with the raw `r·A` line faint behind it and the
