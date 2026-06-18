@@ -386,6 +386,13 @@
     }
     raf = requestAnimationFrame(frame);
   }
+  // a quick, joyful "you did it" beat for the core action — marking a lesson complete (reduced-motion safe)
+  function celebrateLessonDone(btn) {
+    if (btn) { btn.classList.remove("lesson-done-pop"); void btn.offsetWidth; btn.classList.add("lesson-done-pop"); }
+    if (reducedMotion()) return;
+    const s = document.createElement("div"); s.className = "lesson-stamp"; s.textContent = "✓"; s.setAttribute("aria-hidden", "true");
+    document.body.appendChild(s); setTimeout(() => s.remove(), 950);
+  }
   function levelUpCelebrate(info) {
     confetti();
     const ov = document.createElement("div"); ov.className = "levelup-ov";
@@ -884,6 +891,7 @@
       Store.completeLesson(lesson.id);
       btn.textContent = "✓ Completed";
       if (!was) {
+        celebrateLessonDone(btn);   // the "you did it" stamp — the core learning action deserves a beat
         toast("✨", "+50 XP", "Lesson complete: " + lesson.title);
         const newly = before ? [...readySet()].filter(id => !before.has(id)).map(id => index()[id]).filter(Boolean) : [];
         if (newly.length) toast("🔓", "Unlocked " + newly.length + " concept" + (newly.length > 1 ? "s" : ""), newly[0].lesson.title + (newly.length > 1 ? " · +" + (newly.length - 1) + " more" : ""));

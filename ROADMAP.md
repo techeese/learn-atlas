@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 247: **"You did it" lesson-complete celebration** (animation/juice — most overdue, last 237). The core action (mark complete,
+   up to 148×) was flat; now a sage ✓ stamps center-screen (scale-pop + glow) and the button pops sage, escalating to the
+   bigger 📗 module-complete confetti when a lesson finishes its module. New celebrateLessonDone(btn) (transient
+   .lesson-stamp + .lesson-done-pop class); reduced-motion safe; no state/data change (app.js+css). Verified: gate GREEN;
+   click adds stamp (✓, animationName=lessonStamp) + button pop + "✓ Completed" (errs=0); static render shows the glowing
+   ✓; smoke errs=0/kErr=0 (12 routes). SW →v189.
    ✅ iter 246: **Notes export to Markdown** (new functionality — rotating off 4 recent viz). Notebook notes were trapped in
    localStorage; added "⬇ Export all as Markdown" on #/notes (shown only when notes exist): builds a clean .md (title +
    summary, grouped by subject in curriculum order, each note under its lesson ### heading), downloads as

@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 247 — A "you did it" beat when you complete a lesson (animation / juice)
+Juice was the most-overdue lane (last at iter 237). The most *frequent meaningful* action — marking a lesson complete
+(done up to 148 times across the journey) — was flat: a toast + a button text swap. Gave it a celebration proportional to
+its meaning: on completion a **sage ✓ stamps in the center of the screen** (scale-pop with a soft glow, ~0.9s) and the
+**Mark-complete button pops** and turns sage. It escalates naturally — a lesson that *also* finishes its module still
+fires the bigger "📗 Module complete!" confetti on top, so single-lesson vs whole-module read as distinct tiers.
+New `celebrateLessonDone(btn)` helper (a transient `.lesson-stamp` element + a `.lesson-done-pop` button class), called
+from the complete handler; **reduced-motion safe** (the stamp is skipped under `prefers-reduced-motion`, and the global
+rule stills the button pop). No new state, no data change (app.js + css only).
+Verified: gate ALL GREEN; in-browser clicking Mark-complete adds the stamp (char `✓`, `animationName=lessonStamp`),
+applies `lesson-done-pop` to the button, and swaps the text to "✓ Completed" (`errs=0`); a static render confirms the
+big sage glowing ✓ centers on screen; all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v188` → `atlas-v189`.
+
 ## iter 246 — Notes export to Markdown (new functionality)
 Rotating off viz (which had run 231/236/242/245) to a fresh, learner-facing pillar. The Notebook gathers every
 "My notes" entry, but they were **trapped in localStorage** — no way to back them up or take them elsewhere. Added a
