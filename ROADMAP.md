@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 252: **Five more deeper-dives on hard concepts** (content depth — owner's "keep improve the depth", last content 241).
+   One per topic (~30→~35): DL Adam (momentum+RMSProp+bias correction), RL PPO clip (why a pessimistic bound — current
+   policy collects the data), Algo greedy (exchange argument; knapsack breaks it), Calc convexity (local=global, ∇f=0
+   sufficient), Prob independent-vs-uncorrelated (Y=X² counterexample, jointly-Gaussian exception). String.raw LaTeX;
+   byte-stable inject + no-op guard; no save-shape change. Verified: gate GREEN (lints dive content); Adam dive 6 katex/
+   kErr=0/rawDollar=0; smoke all 5 present, errs=0/kErr=0 (12 routes). SW →v193.
    ✅ iter 251: **Gram-Schmidt visualizer — 55th widget + focus-ring fix** (visualizations). LA had projection but not orthogonalization.
    New `la-gram-schmidt` in la-orthonormal-gram-schmidt: drag 2 vectors, keep u₁=v₁, subtract v₂'s projection (gold bar +
    dashed drop) → u₂ perpendicular (right-angle marker, live u₂·u₁=0); "normalize" → ê₁/ê₂ on unit circle. Deterministic.

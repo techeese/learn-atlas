@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 252 — Five more deeper-dives on hard concepts (content depth)
+Content depth was the least-recently-touched substantive learner-facing area (last at iter 241) and is the owner's most-
+stated love. Added **5 new "Deeper dive" expandables**, one per topic for breadth, each a genuine *aha* (deep-dive
+coverage ~30 → **~35**):
+- **Deep learning · Optimizers** — Adam decomposed: first moment = momentum, second moment = RMSProp's per-parameter
+  scale, plus the bias correction that keeps the first steps from being tiny.
+- **RL · Trust Regions & PPO** — *why clip?* The data is collected by the current policy, so one bad step poisons all
+  future rollouts; the clipped surrogate flattens the objective past 1±ε so there's no incentive to leap — a pessimistic
+  lower bound on improvement.
+- **Algorithms · Greedy** — when greedy is *provably* optimal: the exchange argument + greedy-choice property, and why
+  0/1 knapsack breaks it (so it needs DP).
+- **Calculus · Convexity** — why convexity makes optimization easy: the segment-above-the-graph definition ⇒ every local
+  min is global ⇒ `∇f=0` flips from necessary to sufficient.
+- **Prob & stats · Joint distributions** — independent (`p(x,y)=p(x)p(y)`) vs uncorrelated (`Cov=0`, linear only), with
+  the `Y=X²` counterexample (perfectly dependent yet uncorrelated) and the jointly-Gaussian exception.
+Authored with `String.raw` single-backslash LaTeX; byte-stable injector with a per-file no-op guard; content-append only,
+no save-shape change.
+Verified: gate ALL GREEN — its render-hazard lint covers the appended deep-dive content (`$`-parity, no raw markdown);
+the Adam dive renders with **6 KaTeX expressions, kErr=0, rawDollar=0** (both display equations correct); a smoke across
+all 5 lessons found **all 5 deep-dives present**, **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v192` → `atlas-v193`.
+
 ## iter 251 — Gram-Schmidt visualizer (55th widget) + focus-ring fix (visualizations)
 Linear algebra had `la-projection` (project onto a line) but not the process that *builds an orthogonal basis*. Added the
 **55th Lab widget `la-gram-schmidt`** in `la-orthonormal-gram-schmidt` (after the Gram-Schmidt section): drag two vectors
