@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 355 — Three more code exercises across DL/LLM lessons (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** across DL/LLM (lessons-with-code 60 → **63**; the gate now runs **58**):
+- **dl-attention-mechanism** — **scaled dot-product attention weights** `softmax(q·kᵢ/√d)`: a query aligned with the first key
+  → `0.67 0.33` (more weight on the matching key).
+- **dl-overfitting-and-regularization** — **L2 / weight-decay loss** `loss + λΣwᵢ²`: `1.0 + 0.01·25` → `1.25`.
+- **l-tokenization-bpe** — **the BPE merge step**: count adjacent pairs, return the most frequent → `ab` (the next merge).
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**58 code-exercises verified**); **via `--dump-dom`** the attention widget runs → `0.67 0.33`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v294` → `atlas-v295`.
+
 ## iter 354 — Gradient-descent convergence visualizer — 77th widget (visualizations)
 `c-gradient-descent-convergence` had no widget. Added the **77th Lab widget `calc-gd`**, embedded there: gradient descent on
 `f(x)=x²` from x=2, with the update `x ← x(1−2η)` drawn as a trajectory walking the parabola. Slide the **learning rate η**
