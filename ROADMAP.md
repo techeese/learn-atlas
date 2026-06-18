@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 256: **Fix: consistency strip matched to the streak** (bugfix — owner reported "streak squares always empty"). Root cause: streak
+   counts app-opens (touchStreak/lastActive), strip lit only XP-days (activity>0) → kept-streak-but-no-XP days showed
+   empty squares. Fix: new `activeDays` map (blank+load merge; backfill the current streak's N days on load so the strip
+   instantly matches; touchStreak marks today every open incl. same-day). Strip lights on activity>0 OR activeDays. No
+   XP/heatmap semantics change. Verified: gate GREEN; node test (5-streak/0-XP → last 5 lit, same-day re-mark, old save
+   {}); browser 4-day/0-XP streak → last 4 squares lit (were empty); smoke errs=0/kErr=0 (12 routes). SW →v197.
    ✅ iter 255: **Policy-gradient (REINFORCE) visualizer — 56th widget** (visualizations). RL thinnest viz topic; new `rl-policy-gradient`
    in rl-policy-gradient-theorem (mirrors its one-step-bandit example): softmax over 3 actions (rewards −1/+2/+0.5),
    step/play does exact gradient ascent ∂J/∂θⱼ=πⱼ(Rⱼ−J), bars rise for +advantage (▲) / fall for −(▼), expected-return

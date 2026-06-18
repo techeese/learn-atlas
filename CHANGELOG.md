@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 256 — Fix: consistency-strip squares now match the streak (bugfix — owner report)
+**Owner-reported:** the dashboard's 14-day consistency strip "always shows [empty] squares" despite a running streak.
+Root cause: the **streak and the strip measured different things.** The streak advances whenever you *open the app*
+(`touchStreak` at boot sets `lastActive`), but the strip lit a square only on days you *earned XP* (`activity[day] > 0`).
+So a user who kept a streak by visiting daily — without completing a lesson/quiz some days — saw a positive streak above
+a row of empty squares. (Verified: a fresh boot gives `streak=1` but `activity-days=0`; earning XP *does* light today's
+cell, confirming the strip itself worked — the inputs just diverged.)
+Fix: record **active days** and light the strip on *active-or-XP* days, so the squares reflect the same days the streak
+counts. New `activeDays` map in state (`blank()` + `load()` typeof-merge; old saves load as `{}`); `touchStreak` marks
+today on every open (even a no-XP visit, even a same-day repeat); and a **one-time backfill in `load()` reconstructs the
+current streak's N days** (a streak of N ⇒ the N consecutive days ending at `lastActive` were active) so the strip
+*immediately* matches the streak the header shows. The consistency strip now lights a cell when `activity[day] > 0` **or**
+`activeDays[day]`. No change to XP/heatmap/best-day semantics.
+Verified: gate ALL GREEN; **node test** — a 5-day-streak/zero-XP save backfills exactly the last 5 days, today stays
+marked after a same-day repeat-touch, and an old streakless save loads `activeDays={}`; **in-browser** — a 4-day streak
+with *zero* XP now lights the last 4 squares (today ringed, "studied 4 of the last 14 days") where before they were all
+empty; all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v196` → `atlas-v197`.
+
 ## iter 255 — Policy-gradient (REINFORCE) visualizer — 56th widget (visualizations)
 RL was the thinnest viz topic (5). Its advanced lessons (policy gradients, actor-critic, DQN) had no visuals because
 they're abstract — so the policy-gradient *update* never became concrete. Added the **56th Lab widget

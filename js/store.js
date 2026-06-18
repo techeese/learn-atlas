@@ -104,6 +104,7 @@
       newPerSession: 30,    // cap on brand-new flashcards introduced per Daily Review session
       goalCelebrated: null, // "YYYY-MM-DD" the daily-goal celebration last fired (so it fires once/day)
       activity: {},         // "YYYY-MM-DD" -> xp earned that day (study heatmap)
+      activeDays: {},       // "YYYY-MM-DD" -> 1 for every day the app counted toward the streak (lights the consistency strip even on a no-XP visit)
       freezes: 1,           // streak-freeze tokens
       lastLesson: null,     // "courseId/lessonId" — resume point
       bookmarks: {},        // lessonId -> true (saved/favorited lessons)
@@ -151,6 +152,7 @@
       base.newPerSession = Number.isFinite(s.newPerSession) ? Math.max(5, Math.min(100, s.newPerSession)) : 30;
       base.goalCelebrated = typeof s.goalCelebrated === "string" ? s.goalCelebrated : null;
       base.activity = s.activity || {};
+      base.activeDays = (s.activeDays && typeof s.activeDays === "object") ? s.activeDays : {};
       base.freezes = Number.isFinite(s.freezes) ? s.freezes : 1;
       base.lastLesson = s.lastLesson || null;
       base.bookmarks = s.bookmarks || {};
@@ -161,6 +163,18 @@
       base.vizSeen = (s.vizSeen && typeof s.vizSeen === "object") ? s.vizSeen : {};
       base.solvedCode = (s.solvedCode && typeof s.solvedCode === "object") ? s.solvedCode : {};
     }
+    // Backfill activeDays from the streak: a streak of N means the N consecutive days ending at lastActive were
+    // active. Reconstruct them so the consistency strip immediately matches the streak the header shows — otherwise a
+    // user who kept a streak by opening the app (but earned no XP some days) saw all-empty squares. One-time, idempotent.
+    if (base.lastActive && base.streak > 0) {
+      const p = base.lastActive.split("-").map(Number);
+      const end = new Date(p[0], p[1] - 1, p[2]), pad = n => String(n).padStart(2, "0");
+      for (let k = 0, cap = Math.min(base.streak, 400); k < cap; k++) {
+        const d = new Date(end); d.setDate(end.getDate() - k);
+        const key = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+        if (!base.activeDays[key]) base.activeDays[key] = 1;
+      }
+    }
     return base;
   }
   function num(v) { v = Number(v); return Number.isFinite(v) ? v : 0; }
@@ -170,7 +184,9 @@
   let _freezeJustUsed = false, _streakJustUp = false, _streakRecord = false;
   function touchStreak() {
     const t = todayStr();
-    if (state.lastActive === t) return;
+    if (!state.activeDays || typeof state.activeDays !== "object") state.activeDays = {};
+    state.activeDays[t] = 1;            // mark today active on every open, so the consistency strip lights up even without XP
+    if (state.lastActive === t) { save(); return; }
     const diff = dayDiff(state.lastActive, t);
     if (diff === 1) { state.streak += 1; _streakJustUp = true; }
     else if (diff <= 0) { /* same day or clock weirdness */ }

@@ -456,17 +456,17 @@
     const weak = Store.weakSpots();
     // 14-day consistency strip — reinforces the streak habit right at the daily landing
     const consHtml = (() => {
-      const act = Store.raw.activity || {}, pad = n => String(n).padStart(2, "0");
+      const act = Store.raw.activity || {}, active = Store.raw.activeDays || {}, pad = n => String(n).padStart(2, "0");
       const now = new Date(); now.setHours(0, 0, 0, 0);
       const key = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
       let studied = 0; const cells = [];
       for (let i = 13; i >= 0; i--) {
         const d = new Date(now); d.setDate(now.getDate() - i);
-        const xp = Number(act[key(d)]) || 0, on = xp > 0;
+        const k = key(d), xp = Number(act[k]) || 0, on = xp > 0 || !!active[k];   // lit on any active day (kept the streak), not only XP days
         if (on) studied++;
-        cells.push(`<span class="cs-cell${on ? " on" : ""}${i === 0 ? " today" : ""}" title="${key(d)}${on ? " · " + xp + " XP" : ""}"></span>`);
+        cells.push(`<span class="cs-cell${on ? " on" : ""}${i === 0 ? " today" : ""}" title="${k}${xp > 0 ? " · " + xp + " XP" : on ? " · active" : ""}"></span>`);
       }
-      const studiedToday = (Number(act[key(now)]) || 0) > 0;
+      const studiedToday = (Number(act[key(now)]) || 0) > 0 || !!active[key(now)];
       return `<div class="consistency reveal"><div class="cs-row">${cells.join("")}</div>
         <div class="cs-label">🔥 <b>${st.streak}-day streak</b> · studied <b>${studied}</b> of the last 14 days · ${studiedToday ? `<span style="color:var(--sage)">today ✓</span>` : `<span style="color:var(--gold)">study today to keep it alive</span>`}</div></div>`;
     })();
