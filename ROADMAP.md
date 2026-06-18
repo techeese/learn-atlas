@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 274: **Statistical-power visualizer — 59th widget** (visualizations). PS thinnest viz topic (6); ps-errors-and-power had no
+   viz. New `ps-power`: two normal curves (H₀, H₁ separated by effect size d), movable threshold; shaded α (rust) / β (gold)
+   / power (sage) with live numbers; sliders (threshold, d) + presets (α=.05/large/underpowered). erf-based Φ; plain-text
+   note (no $, viz-note landmine). app.js fallback 58→59. Verified: gate GREEN (59 widgets); dump-dom note z=1.65,d=2 →
+   α=0.050/β=0.361/power=0.639 (rawDollar=0); embed hydrates; smoke errs=0/kErr=0 (12). SW →v215.
    ✅ iter 273: **4 more deeper-dives on flagship hard lessons** (content). +4 (45→49) across topics 265 missed: dl-gans (two-player
    minimax game / Nash equilibrium), ps-poisson (law of rare events / binomial limit), a-mst-union-find (Kruskal + cut
    property + Union-Find), l-peft-lora (low-rank patch ΔW=BA, <1% of weights). String.raw LaTeX; byte-stable inject w/

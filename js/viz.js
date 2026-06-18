@@ -1468,6 +1468,64 @@
   });
 
   /* ========================================================
+     59. Type I/II errors & statistical power — the two-distribution picture (Prob & Stats)
+     ======================================================== */
+  register({ id: 'ps-power', topic: 'probability-statistics', title: 'Type I/II Errors & Statistical Power', blurb: 'Two worlds — H₀ (no effect) and H₁ (a real effect of size d) — overlap. Slide the decision threshold and the effect size and watch the false-positive rate α, the miss rate β, and the power (1−β) trade off against each other.' },
+  function (root) {
+    const W = 560, H = 380, padL = 20, padR = 20, padB = 46, padT = 18;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let zc = 1.645, d = 2;   // decision threshold (in σ units) and effect size (separation of the two means)
+    function erf(x) { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; }
+    const Phi = z => 0.5 * (1 + erf(z / Math.SQRT2));
+    const phi = z => Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI);
+    slider(ctl, { label: 'decision threshold (σ)', min: 0, max: 4, step: 0.005, value: zc, fmt: v => v.toFixed(2), onInput: v => { zc = v; draw(); } });
+    slider(ctl, { label: 'effect size d', min: 0, max: 4, step: 0.05, value: d, fmt: v => v.toFixed(2), onInput: v => { d = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const xMin = -4, xMax = Math.max(5, d + 4);
+      const X = x => padL + (x - xMin) / (xMax - xMin) * (W - padL - padR);
+      const peak = phi(0), Y = y => (H - padB) - y / peak * (H - padB - padT);
+      // baseline axis
+      ctx.strokeStyle = p.mute; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(xMin), H - padB); ctx.lineTo(X(xMax), H - padB); ctx.stroke();
+      const curve = mean => { const pts = []; for (let x = xMin; x <= xMax + 1e-9; x += (xMax - xMin) / 240) pts.push([x, phi(x - mean)]); return pts; };
+      const fillRegion = (mean, from, to, color, alpha) => {
+        ctx.beginPath(); ctx.moveTo(X(from), H - padB);
+        for (let x = from; x <= to + 1e-9; x += (to - from) / 80) ctx.lineTo(X(x), Y(phi(x - mean)));
+        ctx.lineTo(X(to), H - padB); ctx.closePath(); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.fill(); ctx.globalAlpha = 1;
+      };
+      // shaded areas: power (H1 right of zc), beta (H1 left of zc), alpha (H0 right of zc)
+      fillRegion(d, zc, xMax, p.sage, 0.45);     // power = 1 - beta
+      fillRegion(d, xMin, zc, p.gold, 0.30);     // beta (Type II / miss)
+      fillRegion(0, zc, xMax, p.rust, 0.45);     // alpha (Type I / false positive)
+      // the two curves
+      const stroke = (pts, col) => { ctx.strokeStyle = col; ctx.lineWidth = 2.5; ctx.beginPath(); pts.forEach((pt, i) => { const xx = X(pt[0]), yy = Y(pt[1]); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }); ctx.stroke(); };
+      stroke(curve(0), p.ink); stroke(curve(d), p.violet);
+      // threshold line
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(X(zc), padT - 4); ctx.lineTo(X(zc), H - padB); ctx.stroke(); ctx.setLineDash([]);
+      // labels
+      ctx.font = '600 12px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center';
+      ctx.fillStyle = p.ink; ctx.fillText('H₀', X(0), Y(peak) - 6);
+      ctx.fillStyle = p.violet; ctx.fillText('H₁', X(d), Y(peak) - 6);
+      ctx.fillStyle = p.gold; ctx.fillText('reject →', X(zc) + 36, padT + 8);
+      const alpha = 1 - Phi(zc), beta = Phi(zc - d), power = 1 - beta;
+      info.innerHTML = `Threshold at z = ${zc.toFixed(2)}, effect size d = ${d.toFixed(2)}. `
+        + `<b style="color:${p.rust}">α (Type I, false positive) = ${alpha.toFixed(3)}</b> · `
+        + `<b style="color:${p.gold}">β (Type II, miss) = ${beta.toFixed(3)}</b> · `
+        + `<b style="color:${p.sage}">power = 1 − β = ${power.toFixed(3)}</b>.<br>`
+        + `Move the threshold right and α shrinks but β grows (you miss more real effects); push the curves apart (larger d) or shrink their spread (more data) and power climbs for free.`;
+    }
+    const pre = controls(root);
+    button(pre, 'α = 0.05', () => { zc = 1.645; draw(); });
+    button(pre, 'Large effect', () => { d = 3; draw(); });
+    button(pre, 'Underpowered', () => { d = 1; zc = 1.645; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Statistical power visualizer: two overlapping normal curves, the null hypothesis H0 centered at 0 and the alternative H1 centered at the effect size d. A dashed decision threshold splits them; the area of H0 to its right is alpha (Type I error), the area of H1 to its left is beta (Type II error), and the area of H1 to its right is the power. Sliders adjust the threshold and the effect size.');
+    draw();
+  });
+
+  /* ========================================================
      29. Byte-Pair Encoding — watch a tokenizer learn its merges (LLM)
      ======================================================== */
   register({ id: 'llm-bpe', topic: 'llm', title: 'Byte-Pair Encoding (BPE) Merges', blurb: 'Train a tokenizer step by step: start from characters, then repeatedly merge the most frequent adjacent pair. The vocabulary grows; the corpus shrinks.' },

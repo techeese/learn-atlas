@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 274 — Statistical-power visualizer — 59th widget (visualizations)
+Probability & Statistics was the thinnest viz topic (6), and `ps-errors-and-power` ("Type I & II Errors and Statistical
+Power") — one of the most-misunderstood topics in stats — had **no widget**. Added the **59th Lab widget `ps-power`**,
+embedded in that lesson: two overlapping normal curves, the null **H₀** (mean 0) and an alternative **H₁** (mean = effect
+size *d*), with a draggable **decision threshold**. The shaded tails make the whole logic concrete — **α** (Type I /
+false positive: H₀ right of the threshold, rust), **β** (Type II / miss: H₁ left of it, gold), and **power = 1 − β** (H₁
+right of it, sage) — with live numbers. Two sliders (threshold, effect size) and presets (α=0.05, large effect,
+underpowered) let you *feel* the trade-offs: move the threshold right → α shrinks but β grows; push the curves apart →
+power climbs. Uses an erf-based Φ; note is **plain text** (no `$`, per the viz-note landmine). app.js `viz-complete`
+fallback 58 → 59.
+Verified: gate ALL GREEN (**59 widgets**, embed resolves); **via `--dump-dom`** the note computes correctly — at
+threshold z=1.65, d=2: **α=0.050 · β=0.361 · power=0.639** (and rawDollar=0, confirming no un-rendered `$`); sliders +
+presets update it; the lesson embed hydrates (canvas present); all-routes smoke **errs=0/kErr=0 (12 routes)**. No
+save-shape change. SW cache `atlas-v214` → `atlas-v215`.
+
 ## iter 273 — Four more deeper-dives on flagship hard lessons (content / understandability)
 Continuing the owner's depth directive, added **4 "Deeper dive" expandables** on flagship hard lessons that lacked one,
 spread across four topics 265 didn't deepen (deep-dives 45 → **49**):
