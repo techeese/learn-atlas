@@ -2106,6 +2106,48 @@
   });
 
   /* ========================================================
+     85. Monte Carlo estimation converges (RL)
+     ======================================================== */
+  register({ id: 'rl-mc-convergence', topic: 'reinforcement-learning', title: 'Monte Carlo estimation converges', blurb: 'Monte Carlo value estimation needs no model — just average the returns you actually observe. Slide the number of episodes and watch the running estimate settle onto the true value, its error shrinking like 1/√n.' },
+  function (root) {
+    const W = 540, H = 320, padL = 38, padR = 14, padT = 18, padB = 30;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const MU = 2.0, SIG = Math.sqrt(1.2), MAXN = 500, YMIN = 0.5, YMAX = 3.5;
+    let seed = 987654321; const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+    const vals = [0, 1, 2, 3, 4], probs = [0.1, 0.2, 0.4, 0.2, 0.1], cdf = []; let acc = 0; probs.forEach(p => { acc += p; cdf.push(acc); });
+    const returns = []; for (let i = 0; i < MAXN; i++) { const u = rnd(); let v = 4; for (let k = 0; k < cdf.length; k++) { if (u <= cdf[k]) { v = vals[k]; break; } } returns.push(v); }
+    const run = []; let s = 0; returns.forEach((r, i) => { s += r; run.push(s / (i + 1)); });
+    let N = 50;
+    slider(ctl, { label: 'episodes N', min: 5, max: MAXN, step: 5, value: N, fmt: v => v.toFixed(0), onInput: v => { N = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = n => padL + (n / N) * (W - padL - padR);
+      const Y = y => (H - padB) - (y - YMIN) / (YMAX - YMIN) * (H - padT - padB);
+      // standard-error band ±σ/√n around the true value
+      ctx.fillStyle = p.violet; ctx.globalAlpha = 0.13; ctx.beginPath(); let st = false;
+      for (let n = 1; n <= N; n++) { const xx = X(n), yy = Y(Math.min(YMAX, MU + SIG / Math.sqrt(n))); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; }
+      for (let n = N; n >= 1; n--) { ctx.lineTo(X(n), Y(Math.max(YMIN, MU - SIG / Math.sqrt(n)))); }
+      ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+      // true value line
+      ctx.strokeStyle = p.gold; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(padL, Y(MU)); ctx.lineTo(W - padR, Y(MU)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'left'; ctx.fillText('true value ' + MU.toFixed(1), padL + 5, Y(MU) - 5);
+      // running-average estimate
+      ctx.strokeStyle = p.sage; ctx.lineWidth = 2; ctx.beginPath(); st = false;
+      for (let n = 1; n <= N; n++) { const xx = X(n), yy = Y(Math.max(YMIN, Math.min(YMAX, run[n - 1]))); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; } ctx.stroke();
+      // axis
+      ctx.strokeStyle = p.mute; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(YMIN)); ctx.lineTo(W - padR, Y(YMIN)); ctx.moveTo(padL, Y(YMIN)); ctx.lineTo(padL, padT); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText('episodes (1 … ' + N + ')', W / 2, H - 4);
+      const est = run[N - 1], se = SIG / Math.sqrt(N);
+      info.innerHTML = 'Averaging the returns from <b>' + N + '</b> episodes estimates the value as <b style="color:' + p.sage + '">' + est.toFixed(3) + '</b>, converging to the true <b style="color:' + p.gold + '">' + MU.toFixed(1) + '</b> — using <em>no model</em> of the environment, only observed returns. The shaded band is the standard error ±σ/√N = ±<b>' + se.toFixed(3) + '</b>; it narrows like 1/√N, so halving the error needs <em>four times</em> the episodes.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Monte Carlo convergence visualizer: the running average of sampled returns versus episode count, settling onto the true value, with a standard-error band that narrows like one over root n as a slider increases the number of episodes.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 387 — Monte Carlo convergence visualizer — 85th widget (visualizations)
+`rl-monte-carlo` had no widget. Added the **85th Lab widget `rl-mc-convergence`**, embedded there: the **running average of sampled
+returns** plotted against episode count, settling onto the **true value** (gold dashed) inside a **standard-error band** that
+narrows like `±σ/√n` (violet). Slide the **episode count N** and watch the estimate converge — `N=50 → 2.280 (±0.155)`,
+`N=500 → 1.988 (±0.049)` toward the true `2.0`. The "aha": Monte Carlo needs *no model* — just average observed returns — and the
+error shrinks as `1/√n`, so halving it costs 4× the episodes. Seeded LCG for a reproducible run; plain-unicode note (no `$`).
+app.js `viz-complete` fallback 84 → 85.
+Verified: gate ALL GREEN (**85 widgets**, embed resolves); **node** prototype matched the in-browser values exactly; **via
+`--dump-dom`** the slider drives the estimate `2.280 → 1.988` and SE `0.155 → 0.049`, `rawDollar=0`, `errs=0`, the lesson embed
+hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v326` → `atlas-v327`.
+
 ## iter 386 — Three more code exercises across algo/PS/calc (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** across algo/PS/calc (lessons-with-code 81 → **84**; the gate now runs **79**):
 - **a-shortest-paths-topo** — **Bellman-Ford edge relaxation**: relax every edge a few passes; `dist.D → 4` (`A→B→C→D` beats the
