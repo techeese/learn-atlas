@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 390 — Step-back: full kErr/route + coverage audit (clean) + recursion-tree visualizer — 86th widget (visualizations)
+**Round-number step-back (iter 390).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive) → errs=0, kErr=0, 0 bad;
+  all **103 non-lesson routes** (courses, Lab + 85 widgets, every utility page) → errs=0, kErr=0. **251 routes green.**
+- **Structural coverage audit**: every one of 148 lessons has ≥2 examples (**364**), ≥8 MCQs (2368), ≥1 flashcard (889),
+  ≥1 homework (442) — **0 structurally-thin lessons**. Plus **148 deep-dive lessons (100%)** and 87 code lessons.
+**Reflection (381–389):** bug-fix → viz → content×2 (the 148/148 deep-dive milestone at 384) → examples → code → viz → examples
+→ code; all verified and pushed, no bugs; the gate hardening (330) + kErr-audit discipline have held across 90 iterations since the
+300 step-back. Depth is saturated; breadth (viz/examples/code) is rotating cleanly.
+**The paired ship — 86th Lab widget `algo-recursion-tree`** (embedded in viz-free `a-divide-and-conquer`): a stack of bars, one per
+recursion level, each spanning the **full width = n total work** but split into `2^L` pieces deeper down — `log₂ n + 1` levels in all.
+Slide n and the tree deepens by exactly **one level** each time n doubles, with the note comparing `n·log₂ n` against `n²`
+(`n=16 → 5 levels, 64 vs 256`; `n=64 → 7 levels, 384 vs 4096`). The "aha": balanced splitting makes a shallow tree of cheap merges.
+Plain-unicode note (no `$`). app.js `viz-complete` fallback 85 → 86.
+Verified: gate ALL GREEN (**86 widgets**, embed resolves); **via `--dump-dom`** the slider drives levels `5 → 7` and `n log n`
+`64 → 384`, `rawDollar=0`, `errs=0`, the lesson embed hydrates; both step-back sweeps clean; embed-route smoke **errs=0/kErr=0 (12
+routes)**. No save-shape change. SW cache `atlas-v329` → `atlas-v330`.
+
 ## iter 389 — Three more code exercises across LA/algo/calc (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** across LA/algo/calc (lessons-with-code 84 → **87**; the gate now runs **82**):
 - **la-diagonalization** — **eigenvalue from an eigenpair**: `Av=λv` recovers `λ=3` for `[[2,1],[1,2]]·[1,1]` — and then `Aⁿv=λⁿv`,

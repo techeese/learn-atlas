@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 390: **Step-back: full kErr/route + coverage audit (clean) + recursion-tree viz (86th widget)** (visualizations). Sweeps:
+   148 lessons errs=0/kErr=0/0 bad; 103 routes errs=0/kErr=0 (251 green). Coverage: 0 thin (148 dd=100%, 364 examples, 87 code).
+   Ship: new `algo-recursion-tree` in a-divide-and-conquer — bars per level (each = n work), log₂n+1 levels; slider n, n log n vs n²
+   (n=16→5/64, n=64→7/384). app.js fallback 85→86. Verified: gate GREEN (86 widgets); dump-dom levels 5→7, nlogn 64→384,
+   rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v330.
    ✅ iter 389: **3 more code exercises across LA/algo/calc** (active learning). +3 JS (84→87, gate runs 82): la-diagonalization
    (eigenvalue from eigenpair → 3), a-union-find-range (component count → 2), c-improper-integrals (p-test → 1). Node-verified;
    byte-stable inject w/ guards. Verified: gate GREEN (82 verified); dump-dom union-find runs → "2" "✓ matches"; smoke

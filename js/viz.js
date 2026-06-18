@@ -2148,6 +2148,41 @@
   });
 
   /* ========================================================
+     86. The recursion tree: why divide & conquer is n log n (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-recursion-tree', topic: 'algorithms', title: 'The recursion tree: why divide & conquer is n log n', blurb: 'Merge sort halves the array recursively until pieces of size 1 — a tree of depth log₂ n. Every level touches all n elements once, so the whole sort costs n log n. Slide n and watch the tree deepen by just one level each time n doubles.' },
+  function (root) {
+    const W = 540, H = 320, padL = 14, padR = 14, padT = 16, padB = 44;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let exp = 4;
+    slider(ctl, { label: 'array size n', min: 1, max: 6, step: 1, value: exp, fmt: v => '2^' + v + ' = ' + Math.pow(2, v), onInput: v => { exp = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const n = Math.pow(2, exp), levels = exp + 1, usableW = W - padL - padR;
+      const rowGap = 4, rowH = Math.min(30, (H - padT - padB) / levels - rowGap);
+      ctx.font = '10px ' + cssVar('--font-mono', 'monospace');
+      for (let L = 0; L <= exp; L++) {
+        const count = Math.pow(2, L), boxW = usableW / count, y = padT + L * (rowH + rowGap);
+        for (let i = 0; i < count; i++) {
+          const x = padL + i * boxW;
+          ctx.fillStyle = (L === exp) ? p.gold : p.sage; ctx.globalAlpha = 0.85;
+          ctx.fillRect(x + 1.5, y, Math.max(1, boxW - 3), rowH); ctx.globalAlpha = 1;
+        }
+        ctx.fillStyle = (L === exp) ? p.gold : p.mute; ctx.textAlign = 'right';
+        ctx.fillText(count + '×' + (n / count), padL + usableW - 3, y + rowH - 2);
+      }
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText('each level = n total work  ·  ' + (exp + 1) + ' levels = log₂ n + 1', W / 2, H - 6);
+      const opsNLogN = n * exp, opsN2 = n * n;
+      info.innerHTML = 'Splitting n = <b>' + n + '</b> in half until size 1 takes <b>' + exp + '</b> splits, giving <b style="color:' + p.sage + '">' + levels + ' levels</b> (log₂ n + 1). Each level\'s pieces re-cover all n elements during the merges, so <em>every row sums to n work</em> — total ≈ n·log₂ n = <b>' + opsNLogN + '</b>, versus n² = <b style="color:' + p.rust + '">' + opsN2 + '</b> for a quadratic sort. Doubling n adds just <em>one</em> level, which is why n log n scales so gently.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Recursion-tree visualizer for divide and conquer: a stack of bars, one per recursion level, each spanning the full width (n total work) but split into more pieces deeper down. The number of levels is log base 2 of n plus 1; a slider changes n and the note compares n log n against n squared.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
