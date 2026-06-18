@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 253: **Smoother entrance cascade + mobile re-verified** (animation/juice). `.reveal` stagger only covered nth-child(1–8);
+   items 9+ inherited delay:0 and popped in at once (a double-beat) on content-rich pages (dashboard/Progress/Hall have
+   15–18 reveals). Fixed: snappy .04s step through 14 items, nth-child(n+15) capped at .60s; reduced-motion still disables.
+   Paired with a fresh 390px audit of the ~14 features since iter 239 (mod-nav, personal bests, forecast, lesson-stamp,
+   gram-schmidt/dijkstra/dp viz) — all clean, nothing to fix. CSS-only. Verified: gate GREEN; computed delays climb
+   (.08→.36→.44) + cap .60 past 14 (no delay:0 items); smoke errs=0/kErr=0 (12 routes); 390px dashboard+lesson clean. SW →v194.
    ✅ iter 252: **Five more deeper-dives on hard concepts** (content depth — owner's "keep improve the depth", last content 241).
    One per topic (~30→~35): DL Adam (momentum+RMSProp+bias correction), RL PPO clip (why a pessimistic bound — current
    policy collects the data), Algo greedy (exchange argument; knapsack breaks it), Calc convexity (local=global, ∇f=0

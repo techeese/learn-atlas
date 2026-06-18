@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 253 — Smoother page-entrance cascade + mobile re-verified (animation / juice)
+The `.reveal` entrance stagger only assigned per-item delays to `nth-child(1–8)`; on content-rich pages (the dashboard,
+Progress, and Hall all render 15–18 `.reveal` sections) **every item from the 9th on inherited `animation-delay: 0` and
+popped in at once** — actually *before* the staggered ones finished, a visible double-beat. Reworked it: a snappier
+**.04s step extended through 14 items**, with everything past `nth-child(14)` sharing a single **capped .60s** delay, so
+long pages keep cascading smoothly and never feel sluggish. Reduced-motion still disables it entirely.
+Paired it with a **fresh 390px mobile audit** of the ~14 features shipped since the last dedicated pass (iter 239) —
+the in-module navigator, personal-bests panel, review forecast, lesson-complete stamp, and the new Gram-Schmidt/Dijkstra/
+DP widgets — all render cleanly at 390px (breadcrumb wraps, dot strip + forecast bars fit, no overflow). Nothing to fix.
+CSS-only change (+ SW bump).
+Verified: gate ALL GREEN; on the 18-section Progress page the computed `animation-delay` now climbs (`.08 → .36 → .44`)
+and **caps at `.60s` past item 14 — no `delay:0` items beyond the 8th** (the bug); all-routes smoke **errs=0/kErr=0
+(12 routes)**; dashboard + lesson screenshots clean at 390px. SW cache `atlas-v193` → `atlas-v194`.
+
 ## iter 252 — Five more deeper-dives on hard concepts (content depth)
 Content depth was the least-recently-touched substantive learner-facing area (last at iter 241) and is the owner's most-
 stated love. Added **5 new "Deeper dive" expandables**, one per topic for breadth, each a genuine *aha* (deep-dive

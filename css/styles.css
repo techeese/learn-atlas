@@ -683,10 +683,17 @@ body::after {
 @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 .reveal { animation: rise .5s both; }
-.reveal:nth-child(1){animation-delay:.04s} .reveal:nth-child(2){animation-delay:.10s}
-.reveal:nth-child(3){animation-delay:.16s} .reveal:nth-child(4){animation-delay:.22s}
-.reveal:nth-child(5){animation-delay:.28s} .reveal:nth-child(6){animation-delay:.34s}
-.reveal:nth-child(7){animation-delay:.40s} .reveal:nth-child(8){animation-delay:.46s}
+/* staggered entrance cascade — a snappy .04s step extended to 14 items so content-rich pages
+   (dashboard, Progress, Hall) keep cascading instead of popping the 9th-onward item in at once;
+   everything past 14 shares a single capped delay so very long pages never feel sluggish. */
+.reveal:nth-child(1){animation-delay:.04s} .reveal:nth-child(2){animation-delay:.08s}
+.reveal:nth-child(3){animation-delay:.12s} .reveal:nth-child(4){animation-delay:.16s}
+.reveal:nth-child(5){animation-delay:.20s} .reveal:nth-child(6){animation-delay:.24s}
+.reveal:nth-child(7){animation-delay:.28s} .reveal:nth-child(8){animation-delay:.32s}
+.reveal:nth-child(9){animation-delay:.36s} .reveal:nth-child(10){animation-delay:.40s}
+.reveal:nth-child(11){animation-delay:.44s} .reveal:nth-child(12){animation-delay:.48s}
+.reveal:nth-child(13){animation-delay:.52s} .reveal:nth-child(14){animation-delay:.56s}
+.reveal:nth-child(n+15){animation-delay:.60s}
 
 /* mobile menu button */
 .menu-btn { display: none; }
