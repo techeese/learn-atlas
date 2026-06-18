@@ -1220,6 +1220,11 @@
               "title": "Why discount?",
               "body": "Why must $\\gamma<1$ for an infinite-horizon task?",
               "solution": "With $\\gamma<1$ the geometric series $\\sum_k \\gamma^k r$ converges to a finite return even over infinitely many steps, so values are well-defined and the iteration contracts to a unique fixed point."
+            },
+            {
+              "title": "Value iteration converges as a contraction",
+              "body": "Value iteration repeatedly applies the Bellman update. Watch it converge on a single state with a self-loop: reward $r = 1$ each step, discount $\\gamma = 0.9$, so $V = r + \\gamma V$.",
+              "solution": "<strong>The fixed point.</strong> Solving $V = 1 + 0.9V$ gives $V^* = \\frac{1}{1 - 0.9} = 10$ — the true value. Value iteration finds it by repeatedly applying $V \\leftarrow 1 + 0.9V$ from $V_0 = 0$.\n<strong>Run the sweeps.</strong>\n$$V_0 = 0,\\quad V_1 = 1,\\quad V_2 = 1.9,\\quad V_3 = 2.71,\\ \\ldots \\to 10.$$\n<strong>It is a contraction.</strong> Track the error $V^* - V_n$: it goes $10,\\ 9,\\ 8.1,\\ 7.29,\\ \\ldots$ — each sweep multiplies the remaining error by exactly $\\gamma = 0.9$. The Bellman optimality operator is a $\\gamma$-contraction, so the error shrinks geometrically and convergence to the unique fixed point $V^*$ is guaranteed from any start.\n<strong>The aha.</strong> Value iteration is not guesswork — the discount $\\gamma \\lt 1$ makes each update a contraction mapping, and the Banach fixed-point theorem then guarantees one solution that the iteration always reaches, at a rate set by $\\gamma$."
             }
           ]
         }

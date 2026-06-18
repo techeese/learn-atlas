@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 349 — Three more worked examples on flagship hard lessons (examples)
+A **3rd worked example** on three flagship lessons across calc/PS/RL (examples 334 → **337**, all ⌘K-searchable):
+- **c-implicit-related-rates** — **the expanding balloon**: `dV/dt = 4πr² dr/dt` → at `r=5`, `dr/dt = 100/(100π) = 1/π ≈ 0.318`
+  cm/s; constant inflation means the radius grows *slower* as the balloon enlarges (`dr/dt ∝ 1/r²`).
+- **ps-geometric-waiting** — **expected wait & survival**: `E[X] = 1/p = 6` rolls for a six; `P(X>3) = (5/6)³ ≈ 0.579`; the
+  one-line `E[X] = 1 + (1−p)E[X]` derivation.
+- **rl-value-iteration** — **value iteration as a contraction**: on a self-loop `V = 1 + 0.9V`, sweeps `0→1→1.9→2.71 → 10`,
+  the error shrinking `×γ` each pass (`10,9,8.1,7.29`) — Banach guarantees the unique fixed point `V*=10`.
+Every value node-verified (1/π; E[X]=6 & 0.579; error ×0.9 to V*=10); injected byte-stably with round-trip + even-`$` +
+tag-balance + unsupported-env pre-guards (`\lt` for `γ<1`).
+Verified: gate ALL GREEN (**337 examples**); **via `--dump-dom`** each Examples tab shows 3, reveals with KaTeX
+(56 / 34 / 22 spans) and **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v288` → `atlas-v289`.
+
 ## iter 348 — Bias-variance tradeoff visualizer — 75th widget (visualizations)
 `ps-point-estimation` had no widget. Added the **75th Lab widget `ps-estimator`**, embedded there: for a shrinkage estimator
 `θ̂=(1−λ)X` (true θ=5, var=4), it plots **bias²** (rust, rising), **variance** (violet, falling), and their sum **MSE** (gold,
