@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 366 — Three more worked examples on flagship hard lessons (examples)
+A **3rd worked example** on three flagship lessons across algo/calc/LA (examples 346 → **349**, all ⌘K-searchable):
+- **a-np-completeness** — **verify-vs-solve is the heart of NP**: a Subset-Sum certificate checks in `O(n)`, but brute force tries
+  `2ⁿ` subsets (`2⁴⁰ ≈ 1.1×10¹²`); P = solvable, NP = verifiable, and the gap is the open P-vs-NP question.
+- **c-functions-and-graphs** — **composition shrinks the domain**: `(f∘g)(x)=√(x−4)`, domain `[4,∞)`, `(f∘g)(8)=2`; the output of
+  `g` must be a legal input to `f` — the same nesting the chain rule differentiates.
+- **la-basis-dimension** — **why dimension is well-defined**: every basis of `ℝ³` has exactly 3 vectors — 2 can't span, 4 must be
+  dependent; a basis is the "Goldilocks" set, so dimension is unambiguous and coordinates unique.
+Every value node-verified (`2⁴⁰`; `(f∘g)(8)=2`; span/independence counts); injected byte-stably with round-trip + even-`$` +
+tag-balance + unsupported-env pre-guards.
+Verified: gate ALL GREEN (**349 examples**); **via `--dump-dom`** each Examples tab shows 3, reveals with KaTeX (91 / 71 / 63
+spans) and **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v305` → `atlas-v306`.
+
 ## iter 365 — Four more deeper-dives on foundational lessons (content / understandability)
 4 "Deeper dive" expandables on foundational lessons across algo/LA/PS/calc (deep-dives 121 → **125**):
 - **a-hash-tables** — **O(1) lookup by turning keys into addresses**: a hash function maps key → slot; collisions are inevitable
