@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 241: **Five deeper-dives on hard concepts** (content depth / understandability — owner's "keep improve the depth" ask).
+   One per topic, breadth + difficulty (deep-dives ~25→~30): LA determinants (volume-scaling ⇒ det=0⟺singular,
+   det(AB) multiplicativity), DL backprop (why reverse-mode: one loss, millions of params), RL Bellman (γ-contraction
+   fixed point ⇒ convergence), LLM scaling (Chinchilla compute-optimal, ~20 tok/param), prob CIs (the procedure not the
+   interval). String.raw LaTeX; byte-stable inject + no-op guard per file; no save-shape change. Verified: gate GREEN
+   (now lints deep-dive content too); determinant dive 15 katex/kErr=0/rawDollar=0 (incl ⟺ display); smoke errs=0/kErr=0
+   (12 routes), all 5 present. SW →v183.
    ✅ iter 240: **Step-back + stronger gate** (workflow/dev-flow). ★240 reflection: compass well-rotated across 230–239 (no area
    starved); site measurably richer (viz 50→52, code 14→21 all-topics, glossary 89→117, high-contrast, forecast, live flame,
    mod-nav). Neglected: performance (deferred — minify breaks inject pipeline, lazy-load risky) + workflow (addressed now).

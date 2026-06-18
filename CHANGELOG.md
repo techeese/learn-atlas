@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 241 — Five deeper-dives on genuinely hard concepts (content depth / understandability)
+Rotating off workflow, straight at the owner's most-repeated ask — "keep improve the depth of the page" + hard-concept
+support. Added **5 new "Deeper dive" expandables**, one per topic where a real *aha* was missing, picked for breadth and
+difficulty (deep-dive coverage ~25 → **~30**):
+- **Linear algebra · Determinants** — read the determinant as volume-scaling, then $\det A=0 \iff$ dependent columns
+  $\iff$ singular falls out, and $\det(AB)=\det(A)\det(B)$ and $\det(A^{-1})=1/\det(A)$ come for free.
+- **Deep learning · Backpropagation** — *why backward?* The cost asymmetry of autodiff: one scalar loss, millions of
+  params ⇒ reverse-mode gets every gradient in one sweep where forward-mode would need a billion.
+- **Reinforcement learning · Bellman equations** — the Bellman operator as a $\gamma$-contraction whose unique fixed
+  point is $V^\pi$; Banach is why policy evaluation / value iteration converge from any start, and why $\gamma<1$ matters.
+- **LLMs · Scaling laws** — the Chinchilla correction: at fixed compute $C\approx 6ND$, scale $N$ and $D$ together
+  (~20 tokens/param), so a smaller, longer-trained model beats a bigger under-trained one.
+- **Prob & stats · Confidence intervals** — what "95% confidence" really means: $\mu$ is fixed, the *interval* is
+  random; the 95% is a property of the procedure, not of the one interval you computed.
+Authored with `String.raw` single-backslash LaTeX (correct runtime values); the byte-stable injector ran with a no-op
+round-trip guard per file. No save-shape change (content append only).
+Verified: gate ALL GREEN — and the gate's render-hazard lint now covers the appended deep-dive content ($-parity, no raw
+markdown); the determinant dive renders with **15 KaTeX expressions, kErr=0, rawDollar=0** (incl. the `⟺` display line);
+all-routes smoke across all 5 deep-dive lessons **errs=0/kErr=0 (12 routes)**, all 5 present. SW cache `atlas-v182` → `atlas-v183`.
+
 ## iter 240 — Step-back + a stronger safety net: the gate now runs the code exercises (workflow / dev-flow)
 The round-number reflection (every ~10 iters). **Loop health:** the compass rotated well across 230–239 — UI/UX, viz,
 content, gamification, accessibility, content, viz, animation, UI/UX, understandability — no area starved. The site is
