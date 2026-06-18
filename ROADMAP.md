@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 384: **★ MILESTONE — every lesson now has a deeper-dive (148/148)** (content). Final 3 dd (145→148): c-functions-and-graphs
+   (function⇄graph duality), la-span-independence (span=reach vs independence=non-redundancy), la-matrix-derivative-identities
+   (matrix calculus = shape-bookkept chain rule). Owner's #1 directive (depth) now fully delivered across the codex. Verified: gate
+   GREEN; dump-dom la-matrix katex=9/kErr=0; smoke errs=0/kErr=0/bad=none. SW →v324. NEXT: depth is saturated — rotate to
+   viz/examples/code, or DEEPEN existing dd's / add 2nd dd's on the hardest lessons.
    ✅ iter 383: **4 more deeper-dives — coverage now 145/148** (content). +4 dd (141→145; **3 left**) across LLM/calc/LA/RL:
    l-pretraining-objective-data (scaling laws), c-derivatives-special-functions (eˣ is its own derivative), la-basis-dimension
    (basis = chosen coordinate system), rl-connections-frontiers (RL behind aligned LLMs). String.raw LaTeX; byte-stable inject

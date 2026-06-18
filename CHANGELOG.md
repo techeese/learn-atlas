@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 384 — ★ MILESTONE: every lesson now has a deeper-dive (148/148) (content / understandability)
+The final 3 "Deeper dive" expandables — deep-dive coverage **145 → 148/148**. **Every lesson in the codex now carries a
+deeper-dive**, completing the owner's #1 directive (depth / hard-concept extra explanations):
+- **c-functions-and-graphs** — **a function is a machine, a graph is its fingerprint**: the single-valued rule, the vertical line
+  test, and reading slope/roots/turning-points off the curve; formula transformations as rigid motions (`f(x)+c`, `f(x-c)`, `-f(x)`, `f(ax)`).
+- **la-span-independence** — **independence is non-redundancy; span is reach**: the link via `c₁v₁+…+c_kv_k=0` (only trivial
+  solution ⇒ independent); a basis as the balance point — maximal reach, zero redundancy.
+- **la-matrix-derivative-identities** — **matrix calculus is the chain rule, bookkept by shapes**: the layout convention forces
+  the result (`∇ₓ(xᵀAx)=(A+Aᵀ)x` is the only vector that fits) — the same machinery backprop runs in reverse.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; **via `--dump-dom`** la-matrix (riskiest: `\operatorname{tr}`, `\nabla`, `\top`) renders KaTeX 9, kErr=0;
+smoke opening all 3 deep-dives + 8 pages **errs=0/kErr=0, bad=none**, rawDollar=0. No save-shape change. SW cache `atlas-v323` → `atlas-v324`.
+
 ## iter 383 — Four more deeper-dives — deep-dive coverage now 145/148 (content / understandability)
 4 "Deeper dive" expandables across LLM/calc/LA/RL (deep-dives 141 → **145**; only **3 of 148** lessons left without one):
 - **l-pretraining-objective-data** — **scaling laws**: test loss falls as a power law in params `N`, data `D`, compute `C`;
