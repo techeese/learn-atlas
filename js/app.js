@@ -940,9 +940,14 @@
         toast("✨", "+50 XP", "Lesson complete: " + lesson.title);
         const newly = before ? [...readySet()].filter(id => !before.has(id)).map(id => index()[id]).filter(Boolean) : [];
         if (newly.length) toast("🔓", "Unlocked " + newly.length + " concept" + (newly.length > 1 ? "s" : ""), newly[0].lesson.title + (newly.length > 1 ? " · +" + (newly.length - 1) + " more" : ""));
-        // module-completion celebration: did this lesson finish its whole module?
+        // completion celebrations: whole topic > module (the bigger beat wins when both land at once)
         const mod = course.modules.find(m => m.lessons.some(l => l.id === lesson.id));
-        if (mod && mod.lessons.length > 1 && mod.lessons.every(l => Store.isLessonDone(l.id))) {
+        const topicDone = course.modules.every(m => m.lessons.every(l => Store.isLessonDone(l.id)));
+        if (topicDone && Store.celebrateTopicOnce(course.id)) {
+          confetti();
+          const n = course.modules.reduce((s, m) => s + m.lessons.length, 0);
+          toast("🎓", course.title + " complete!", "All " + n + " lessons done — you've finished the whole subject. Outstanding.");
+        } else if (mod && mod.lessons.length > 1 && mod.lessons.every(l => Store.isLessonDone(l.id))) {
           confetti();
           toast("📗", "Module complete!", mod.title);
         }

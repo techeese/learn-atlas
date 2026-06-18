@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 287 — "Whole subject complete" celebration, once per topic (gamification)
+Completing an **entire subject** is one of the biggest milestones a multi-topic learner hits — but it passed almost
+silently: finishing the last lesson only fired the "📗 Module complete!" burst for the final module, and the `topic-clear`
+achievement unlocks just *once* (the first topic you finish, not the 2nd–7th). Added a distinct, **per-topic** celebration:
+when a lesson completes and its whole course is now done, fire confetti + a "🎓 *Topic* complete! All N lessons done…"
+toast — gated to fire **once per topic** so each of the seven subjects gets its own moment. The bigger beat supersedes the
+module toast when both land at once. New persisted field `topicDoneCelebrated` (courseId → timestamp) in `blank()` + the
+`load()` typeof-merge, with a `Store.celebrateTopicOnce(cid)` guard (returns true the first time, then false).
+Verified: gate ALL GREEN; **via `--dump-dom`** — seeded all 19 Linear-Algebra lessons done *except the last*, clicked
+**Mark complete**, and the "🎓 Linear Algebra complete! All 19 lessons done…" toast fired with `topicDoneCelebrated['linear-algebra']`
+persisted (`errs=0`); an **old-shape save with no `topicDoneCelebrated`** loads and upgrades cleanly; all-routes smoke
+**errs=0/kErr=0 (12 routes)**. SW cache `atlas-v227` → `atlas-v228`.
+
 ## iter 286 — Topic filter for the Visualization Lab (UI/UX)
 With **62 widgets** across 7 subjects, the Lab gallery had search + an All/Unexplored toggle but **no way to filter by
 topic** — to browse just the linear-algebra or RL widgets you had to scroll past everything. Added **per-topic filter

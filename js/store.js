@@ -105,6 +105,7 @@
       goalCelebrated: null, // "YYYY-MM-DD" the daily-goal celebration last fired (so it fires once/day)
       activity: {},         // "YYYY-MM-DD" -> xp earned that day (study heatmap)
       activeDays: {},       // "YYYY-MM-DD" -> 1 for every day the app counted toward the streak (lights the consistency strip even on a no-XP visit)
+      topicDoneCelebrated: {}, // courseId -> timestamp the "whole subject complete" celebration fired (once per topic)
       freezes: 1,           // streak-freeze tokens
       lastLesson: null,     // "courseId/lessonId" — resume point
       bookmarks: {},        // lessonId -> true (saved/favorited lessons)
@@ -153,6 +154,7 @@
       base.goalCelebrated = typeof s.goalCelebrated === "string" ? s.goalCelebrated : null;
       base.activity = s.activity || {};
       base.activeDays = (s.activeDays && typeof s.activeDays === "object") ? s.activeDays : {};
+      base.topicDoneCelebrated = (s.topicDoneCelebrated && typeof s.topicDoneCelebrated === "object") ? s.topicDoneCelebrated : {};
       base.freezes = Number.isFinite(s.freezes) ? s.freezes : 1;
       base.lastLesson = s.lastLesson || null;
       base.bookmarks = s.bookmarks || {};
@@ -335,6 +337,14 @@
     return true;
   }
   function drainUnlocked() { return newlyUnlocked.splice(0, newlyUnlocked.length); }
+  // Fire the "whole subject complete" celebration at most once per topic. Returns true the first time.
+  function celebrateTopicOnce(cid) {
+    if (!cid || (state.topicDoneCelebrated && state.topicDoneCelebrated[cid])) return false;
+    if (!state.topicDoneCelebrated || typeof state.topicDoneCelebrated !== "object") state.topicDoneCelebrated = {};
+    state.topicDoneCelebrated[cid] = Date.now();
+    save();
+    return true;
+  }
 
   // ---- lesson / mcq / homework ----------------------------------------
   function completeLesson(lessonId) {
@@ -601,7 +611,7 @@
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
     gradeCard, cardDue, cardState, projectInterval, reviewForecast,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, fadingConcepts, topicMastery, markKnown,
-    getNote, setNote, setGoal, setNewPerSession, todayXP, goalJustReached, bestDayJustSet, exportData, importData, freezeJustUsed, streakJustUp, streakRecord, freezeEarned, personalBests, setLastLesson,
+    getNote, setNote, setGoal, setNewPerSession, todayXP, goalJustReached, bestDayJustSet, exportData, importData, freezeJustUsed, streakJustUp, streakRecord, freezeEarned, personalBests, setLastLesson, celebrateTopicOnce,
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
     recordQuickCheck, recordVizOpen, recordCodeSolved,

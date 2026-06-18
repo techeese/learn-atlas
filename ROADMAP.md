@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 287: **"Whole subject complete" celebration, once per topic** (gamification). Finishing a whole subject passed almost
+   silently (only the final module's "📗 Module complete!" + topic-clear achievement which unlocks once). Added a per-topic
+   confetti + "🎓 Topic complete!" toast, gated once-per-topic (new persisted topicDoneCelebrated map + Store.celebrateTopicOnce);
+   supersedes the module toast when both land. Verified: gate GREEN; dump-dom — seeded 19 LA lessons minus the last, Mark
+   complete → "🎓 Linear Algebra complete!" toast + flag persisted, errs=0; old-shape save upgrades cleanly; smoke errs=0/kErr=0 (12). SW →v228.
    ✅ iter 286: **Topic filter for the Visualization Lab** (UI/UX). 62 widgets / 7 subjects had search + All/Unexplored but no topic
    filter. Added per-topic chips (All topics + 7); each card got data-topic; apply() composes topic × search × explored-mode
    (no re-render); pill chips, aria-pressed, mobile-wrap. Verified: gate GREEN; dump-dom — 8 chips, Calculus → exactly its 9
