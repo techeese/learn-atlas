@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 392 — Three more code exercises across LA/DL/LLM — computational coverage complete (new functionality)
+Added **3 gate-verified JavaScript exercises** across LA/DL/LLM (lessons-with-code 87 → **90**; the gate now runs **85**) — and
+with these, **every computational lesson now has a runnable code exercise**:
+- **la-symmetric-spectral** — **eigenvalues of a symmetric 2×2** via the characteristic equation `λ=(tr±√(tr²−4det))/2`:
+  `[[2,1],[1,2]]` → `3 1` (real eigenvalues, orthogonal eigenvectors — the spectral theorem).
+- **dl-transformer-architecture** — **parameters per block** `≈12·d²` (attention `4d²` + FFN `8d²`): `d=512` → `3,145,728` (~3.1M;
+  the FFN is ⅔ of the block).
+- **l-multihead-and-causal-masking** — **head splitting** `head_dim = d_model/h`: `512/8` → `64`; the Q/K/V projections stay
+  `d×d` total, so multi-head is *almost free*.
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**85 code-exercises verified**); **via `--dump-dom`** the transformer-params widget runs → `3145728`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v331` → `atlas-v332`.
+
 ## iter 391 — Three more worked examples across DL/calc/algo (examples)
 A **3rd worked example** on three flagship lessons across DL/calc/algo (examples 364 → **367**, all ⌘K-searchable):
 - **dl-the-artificial-neuron-and-mlp** — **a single neuron is logistic regression**: `σ(w·x+b)` → `0.5` at the boundary, `0.881`

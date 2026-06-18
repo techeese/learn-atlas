@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 392: **3 more code exercises across LA/DL/LLM — computational coverage complete** (new functionality). +3 JS (87→90, gate
+   runs 85): la-symmetric-spectral (eigenvalues → 3 1), dl-transformer-architecture (block params → 3145728), l-multihead-and-causal-masking
+   (head_dim → 64). Every computational lesson now has a code exercise. Node-verified; byte-stable inject w/ guards. Verified: gate
+   GREEN (85 verified); dump-dom transformer-params runs → "3145728" "✓ matches"; smoke errs=0/kErr=0 (12). SW →v332. NEXT: code
+   well is dry — rotate to examples/viz, or 2nd code exercises only where a genuinely distinct computation adds value.
    ✅ iter 391: **3 more worked examples across DL/calc/algo** (examples). +3 (364→367): dl-the-artificial-neuron-and-mlp (neuron =
    logistic regression, boundary w·x+b=0), c-definite-integral-riemann (L=1/R=5/M=2.5 vs 2.667), a-asymptotic-analysis (n log n vs
    n² → 100× at n=1000). Added a bare-`<`-letter-in-math inject pre-guard (neuron uses \lt/\gt/\lVert). Verified: gate GREEN (367
