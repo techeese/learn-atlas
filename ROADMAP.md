@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 331: **4 more deeper-dives on flagship hard lessons** (content). +4 dd (89→93) across LLM/algo/PS/LA:
+   l-transformer-block (mix-then-think + residuals), a-union-find-range (lazy+flat → O(α(n))), ps-covariance-correlation
+   (correlation = covariance normalized), la-matrix-multiplication (= function composition). String.raw LaTeX; byte-stable inject
+   w/ guards. Verified: gate GREEN; dump-dom each renders (katex 1/4/7/23, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v271.
    ✅ iter 330: **Step-back: full kErr+route sweep (clean) + gate hardened vs mathtools envs** (workflow/broken-proofing). Triggered by
    the 329 psmallmatrix discovery. kErr audit: all 148 lessons (reveal every example + open every deep-dive) → errs=0/kErr=0/0 bad;
    all 89 non-lesson routes → errs=0/kErr=0. 237 routes green; psmallmatrix was the only KaTeX error in the codex. Ship: gate.js

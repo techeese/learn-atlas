@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 331 — Four more deeper-dives on flagship hard lessons (content / understandability)
+4 "Deeper dive" expandables across LLM/algo/PS/LA (deep-dives 89 → **93**):
+- **l-transformer-block** — **mix-then-think, wrapped in residuals**: attention communicates across tokens, the FFN computes
+  per-token; residual `x + Sublayer(x)` + layer-norm make depth trainable (≈⅔ of params live in the FFNs).
+- **a-union-find-range** — **near-O(1) by being lazy and flat**: union-by-rank keeps trees shallow, path compression flattens
+  them on every `find`; together `O(α(n))`, effectively constant.
+- **ps-covariance-correlation** — **correlation = covariance with units divided out**: `ρ = Cov/(σₓσ_y) ∈ [−1,1]`; covariance
+  gives direction, correlation strength — both see only *linear* structure (`ρ=0` ≠ independent).
+- **la-matrix-multiplication** — **it's function composition**: `AB` = "do B then A", forced by `(AB)x=A(Bx)`; hence
+  non-commutativity, the shape-matching rule, and associativity all fall out — no rule to memorize.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance + the new
+unsupported-env guard.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 1 / 4 / 7 / 23 spans) with **kErr=0, rawDollar=0**;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v270` → `atlas-v271`.
+
 ## iter 330 — Step-back: full kErr + route sweep (clean) + gate hardened vs mathtools envs (workflow / broken-proofing)
 **Round-number step-back (iter 330),** triggered by the iter-329 discovery that a `psmallmatrix` KaTeX error had shipped
 unnoticed (static lints miss it; only `--dump-dom` kErr catches it). So this step-back's sweep was a **kErr audit**:
