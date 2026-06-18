@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 376 — KV-cache visualizer — 83rd widget (visualizations)
+`l-inference-efficiency` had no widget. Added the **83rd Lab widget `llm-kv-cache`**, embedded there: per-token generation work
+vs token position, plotting **no-cache `O(t²)`** (rust, reprocessing the whole prefix each step) against **with-cache `O(t)`**
+(sage, reusing stored keys/values). Slide the **context length N** and the quadratic curve pulls away — over `N` tokens the
+cumulative work is `Σt` (cached) vs `Σt²` (uncached), a gap that grows with N (`7× at N=10 → 20× at 30 → 40× at 60`). The cache
+is what makes long-context decoding feasible. Plain-unicode note (no `$`). app.js `viz-complete` fallback 82 → 83.
+Verified: gate ALL GREEN (**83 widgets**, embed resolves); **node** prototype confirmed the cumulative totals + gap ratio
+`(2N+1)/3`; **via `--dump-dom`** the slider grows the gap `20× → 40×`, `rawDollar=0`, `errs=0`, the lesson embed hydrates;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v315` → `atlas-v316`.
+
 ## iter 375 — Three more code exercises across calc/PS/LA (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** across calc/PS/LA (lessons-with-code 75 → **78**; the gate now runs **73**):
 - **c-convexity** — **the chord-above-curve check**: `gap = (f(a)+f(b))/2 − f((a+b)/2) ≥ 0` for convex `f` — `x²` on `[1,3]` → `1.00`.

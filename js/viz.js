@@ -2016,6 +2016,37 @@
   });
 
   /* ========================================================
+     83. Why the KV cache makes generation linear (LLM)
+     ======================================================== */
+  register({ id: 'llm-kv-cache', topic: 'llm', title: 'Why the KV cache makes generation linear', blurb: 'Generating token t needs attention over the t tokens before it. Without a KV cache the model reprocesses the whole prefix every step — O(t²) per token; caching the keys/values makes it O(t). Slide the context length and watch the quadratic curve pull away from the linear one.' },
+  function (root) {
+    const W = 540, H = 320, padL = 30, padR = 14, padT = 18, padB = 30;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let N = 30;
+    slider(ctl, { label: 'context length N', min: 10, max: 60, step: 2, value: N, fmt: v => v.toFixed(0), onInput: v => { N = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const YHI = N * N;
+      const X = t => padL + (t / N) * (W - padL - padR);
+      const Y = v => (H - padB) - Math.min(v, YHI) / YHI * (H - padT - padB);
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.moveTo(padL, Y(0)); ctx.lineTo(padL, padT); ctx.stroke();
+      ctx.strokeStyle = p.rust; ctx.lineWidth = 2.4; ctx.beginPath(); let st = false; for (let t = 0; t <= N; t += 0.5) { const xx = X(t), yy = Y(t * t); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; } ctx.stroke();
+      ctx.strokeStyle = p.sage; ctx.lineWidth = 2.4; ctx.beginPath(); st = false; for (let t = 0; t <= N; t += 0.5) { const xx = X(t), yy = Y(t); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; } ctx.stroke();
+      ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'right';
+      ctx.fillStyle = p.rust; ctx.fillText('no cache: O(t²)', W - padR - 4, padT + 12);
+      ctx.fillStyle = p.sage; ctx.fillText('with cache: O(t)', W - padR - 4, Y(N) - 6);
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText('token position t', W / 2, H - 4);
+      const totW = N * (N + 1) / 2, totN = N * (N + 1) * (2 * N + 1) / 6;
+      info.innerHTML = 'To generate token t the model attends to the t tokens before it. <b style="color:' + p.sage + '">With a KV cache</b> it reuses stored keys/values, so each token costs O(t) (sage, linear); <b style="color:' + p.rust + '">without</b>, it reprocesses the whole prefix every step — O(t²) per token (rust, quadratic). Over N = ' + N + ' tokens the cumulative work is ≈ <b>' + totW + '</b> (cached) vs <b>' + totN + '</b> (uncached) — a <b>' + (totN / totW).toFixed(0) + '×</b> gap that widens with context length. The cache is what makes long-context decoding feasible.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'KV-cache visualizer: per-token generation work versus token position. With a KV cache the cost grows linearly O(t); without it the model reprocesses the whole prefix each step, growing quadratically O(t^2). A slider varies the context length and the quadratic curve pulls further away.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
