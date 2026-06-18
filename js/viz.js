@@ -2183,6 +2183,45 @@
   });
 
   /* ========================================================
+     87. Curve sketching: the first derivative shapes the graph (Calculus)
+     ======================================================== */
+  register({ id: 'calc-curve-sketch', topic: 'calculus', title: 'Curve sketching: the first derivative shapes the graph', blurb: 'Where f′ > 0 the curve climbs; where f′ < 0 it falls; where f′ = 0 it turns. Slide the cubic f(x) = x³ − a·x and watch its max and min slide together and vanish as a → 0 — turning points need f′ to actually cross zero.' },
+  function (root) {
+    const W = 540, H = 320, padL = 30, padR = 14, padT = 18, padB = 28;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let a = 3;
+    const X0 = -2.3, X1 = 2.3, Y0 = -4, Y1 = 4;
+    const f = x => x * x * x - a * x, fp = x => 3 * x * x - a;
+    slider(ctl, { label: 'a  (in x³ − a·x)', min: 0, max: 4, step: 0.1, value: a, fmt: v => v.toFixed(1), onInput: v => { a = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = x => padL + (x - X0) / (X1 - X0) * (W - padL - padR);
+      const Y = y => (H - padB) - (y - Y0) / (Y1 - Y0) * (H - padT - padB);
+      ctx.strokeStyle = p.mute; ctx.globalAlpha = 0.4; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(X0), Y(0)); ctx.lineTo(X(X1), Y(0)); ctx.moveTo(X(0), Y(Math.max(Y0, -4))); ctx.lineTo(X(0), Y(Math.min(Y1, 4))); ctx.stroke(); ctx.globalAlpha = 1;
+      // curve, colored by the sign of f': sage where increasing, rust where decreasing
+      ctx.lineWidth = 2.6; let prev = null;
+      for (let x = X0; x <= X1; x += 0.02) {
+        const y = f(x), up = fp(x) >= 0;
+        if (prev) { ctx.strokeStyle = up ? p.sage : p.rust; ctx.beginPath(); ctx.moveTo(X(prev.x), Y(prev.y)); ctx.lineTo(X(x), Y(y)); ctx.stroke(); }
+        prev = { x: x, y: y };
+      }
+      // critical points
+      let crit = [];
+      if (a > 0) { const r = Math.sqrt(a / 3); crit = [{ x: -r, kind: 'max' }, { x: r, kind: 'min' }]; }
+      ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center';
+      crit.forEach(cp => { const y = f(cp.x); ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(X(cp.x), Y(y), 5, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = p.mute; ctx.fillText(cp.kind, X(cp.x), Y(y) + (cp.kind === 'max' ? -9 : 17)); });
+      info.innerHTML = a > 0
+        ? 'f′(x) = 3x² − a = 0 at x = ±√(a/3) = <b>±' + Math.sqrt(a / 3).toFixed(2) + '</b>: a <b style="color:' + p.rust + '">max</b> on the left, a <b>min</b> on the right. The curve is <b style="color:' + p.sage + '">green where f′ &gt; 0</b> (rising) and <b style="color:' + p.rust + '">rust where f′ &lt; 0</b> (falling); the turning points are exactly where it switches colour. As a shrinks the two critical points close in on each other.'
+        : 'At a = 0, f′(x) = 3x² is <b>never negative</b>, so the curve only ever rises (with a momentary flat spot at x = 0). The max and min have <em>merged and annihilated</em> — with no sign change in f′ there are no turning points, just an inflection. Turning points require f′ to actually cross zero, not merely touch it.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Curve-sketching visualizer: the cubic x^3 minus a x, drawn green where its derivative is positive (increasing) and rust where negative (decreasing), with gold dots at the maximum and minimum. A slider lowers a until the two turning points merge and vanish at a = 0.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

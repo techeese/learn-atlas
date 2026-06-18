@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 393 — Curve-sketching visualizer — 87th widget (visualizations)
+`c-extrema-curve-sketching` had no widget. Added the **87th Lab widget `calc-curve-sketch`**, embedded there: the cubic
+`f(x) = x³ − a·x` drawn **green where f′ > 0** (rising) and **rust where f′ < 0** (falling), with gold dots at the **max** and
+**min**. Slide **a**: the critical points `x = ±√(a/3)` slide toward each other (`a=3 → ±1.00`) and at **a=0 merge and vanish** —
+with no sign change in f′ there are no turning points, just an inflection. The "aha": the *sign* of the first derivative is the
+graph's shape, and a turning point needs f′ to actually cross zero, not merely touch it. Plain-HTML note (no `$`). app.js
+`viz-complete` fallback 86 → 87.
+Verified: gate ALL GREEN (**87 widgets**, embed resolves); **node** prototype matched (`a=3 → ±1`, `a=0 → none`); **via
+`--dump-dom`** the slider drives crit `±1.00 → none` and the a=0 "merged" message, `rawDollar=0`, `errs=0`, the lesson embed
+hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v332` → `atlas-v333`.
+
 ## iter 392 — Three more code exercises across LA/DL/LLM — computational coverage complete (new functionality)
 Added **3 gate-verified JavaScript exercises** across LA/DL/LLM (lessons-with-code 87 → **90**; the gate now runs **85**) — and
 with these, **every computational lesson now has a runnable code exercise**:

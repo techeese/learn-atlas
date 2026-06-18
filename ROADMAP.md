@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 393: **Curve-sketching visualizer — 87th widget** (visualizations). c-extrema-curve-sketching had no viz. New
+   `calc-curve-sketch`: cubic x³−a·x, green where f′>0 / rust where f′<0, max+min dots; slider a → crit ±√(a/3) merge at a=0
+   (±1.00→none). app.js fallback 86→87. Verified: gate GREEN (87 widgets); node matches; dump-dom crit ±1.00→none, a0 merged,
+   rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v333.
    ✅ iter 392: **3 more code exercises across LA/DL/LLM — computational coverage complete** (new functionality). +3 JS (87→90, gate
    runs 85): la-symmetric-spectral (eigenvalues → 3 1), dl-transformer-architecture (block params → 3145728), l-multihead-and-causal-masking
    (head_dim → 64). Every computational lesson now has a code exercise. Node-verified; byte-stable inject w/ guards. Verified: gate
