@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 285: **Master Theorem visualizer — 62nd widget** (visualizations). a-recurrences-master-theorem had no viz. New
+   `algo-master-theorem`: per-level work bars for T(n)=a·T(n/b)+nᵈ; ratio r=a/bᵈ tips root-heavy(Θ(nᵈ))/flat(Θ(nᵈ log n))/
+   leaf-heavy(Θ(n^log_b a)), dominant level highlighted, Θ named live; sliders a/b/d + presets (mergesort/strassen/binsearch).
+   Plain-unicode note. app.js fallback 61→62. Verified: gate GREEN (62 widgets); node log₂7=2.81; dump-dom presets give
+   right cases (merge r=1 balanced, strassen r=1.75 leaf→n^2.81, binsearch r=1 balanced), rawDollar=0, embed hydrates;
+   smoke errs=0/kErr=0 (12). SW →v226.
    ✅ iter 284: **3 more worked examples on flagship hard lessons** (examples). Confirmed MCQ answer-positions balanced (0 skewed).
    +3 examples (301→304), new techniques across DL/PS/algo: dl-backpropagation (2-step chain y=(wx+b)³ → 27/54),
    ps-confidence-intervals (CI for a proportion → [0.504,0.696]), a-greedy (fractional knapsack → 240, where greedy works).

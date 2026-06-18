@@ -369,6 +369,49 @@
   });
 
   /* ========================================================
+     62. The Master Theorem — which level of the recursion tree dominates (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-master-theorem', topic: 'algorithms', title: 'The Master Theorem: which level dominates?', blurb: 'For T(n) = a·T(n/b) + nᵈ, the recursion tree\'s per-level work is a geometric series with ratio a/bᵈ. Slide a, b, d and watch the work profile tip from root-heavy to balanced to leaf-heavy — that ratio is exactly which of the three master-theorem cases you land in.' },
+  function (root) {
+    const W = 540, H = 350, padL = 26, padR = 14, padT = 16, padB = 38;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let a = 2, b = 2, d = 1; const L = 7;
+    slider(ctl, { label: 'branches a', min: 1, max: 8, step: 1, value: a, fmt: v => '' + v, onInput: v => { a = v; draw(); } });
+    slider(ctl, { label: 'shrink b', min: 2, max: 4, step: 1, value: b, fmt: v => '' + v, onInput: v => { b = v; draw(); } });
+    slider(ctl, { label: 'work exponent d', min: 0, max: 3, step: 1, value: d, fmt: v => '' + v, onInput: v => { d = v; draw(); } });
+    const pre = controls(root);
+    button(pre, 'Merge sort (2,2,1)', () => { a = 2; b = 2; d = 1; draw(); });
+    button(pre, 'Strassen (7,2,2)', () => { a = 7; b = 2; d = 2; draw(); });
+    button(pre, 'Binary search (1,2,0)', () => { a = 1; b = 2; d = 0; draw(); });
+    const nd = e => e === 0 ? '1' : e === 1 ? 'n' : 'n^' + e;
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const r = a / Math.pow(b, d), logba = Math.log(a) / Math.log(b);
+      const work = []; for (let i = 0; i < L; i++) work.push(Math.pow(r, i));
+      const mx = Math.max.apply(null, work), bw = (W - padL - padR) / L;
+      let caseTxt, comp, dom;
+      if (Math.abs(r - 1) < 1e-9) { caseTxt = 'balanced — every level does equal work'; comp = d === 0 ? 'Θ(log n)' : 'Θ(' + nd(d) + ' log n)'; dom = -1; }
+      else if (r > 1) { caseTxt = 'leaf-heavy — the bottom level dominates'; comp = 'Θ(n^' + logba.toFixed(2) + ')'; dom = L - 1; }
+      else { caseTxt = 'root-heavy — the top level dominates'; comp = 'Θ(' + nd(d) + ')'; dom = 0; }
+      for (let i = 0; i < L; i++) {
+        const h = Math.max(1, (work[i] / mx) * (H - padT - padB)), x = padL + i * bw + 2, y = (H - padB) - h;
+        const isDom = dom === -1 || i === dom;
+        ctx.fillStyle = isDom ? p.gold : p.violet; ctx.globalAlpha = isDom ? 0.9 : 0.4; ctx.fillRect(x, y, bw - 4, h); ctx.globalAlpha = 1;
+      }
+      ctx.strokeStyle = p.mute; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center';
+      for (let i = 0; i < L; i++) ctx.fillText(i === L - 1 ? 'leaves' : 'L' + i, padL + i * bw + bw / 2, H - padB + 14);
+      ctx.fillStyle = p.ink; ctx.fillText('recursion level  →  total work at that level', W / 2, H - 6);
+      info.innerHTML = 'T(n) = ' + a + '·T(n/' + b + ') + ' + nd(d) + '. Per-level work is geometric with ratio r = a / bᵈ = ' + a + '/' + Math.pow(b, d) + ' = <b>' + r.toFixed(2) + '</b> → <b style="color:' + p.gold + '">' + caseTxt + '</b>. Complexity: <b style="color:' + p.gold + '">' + comp + '</b>.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Master theorem visualizer: a bar chart of the work done at each level of the recursion tree for T(n) = a T(n/b) + n^d. When the per-level ratio a over b-to-the-d exceeds 1 the bars grow toward the leaves (leaf-heavy, leaves dominate); equal to 1 they are flat (balanced); below 1 they shrink (root-heavy, the top dominates) — the three master-theorem cases.');
+    draw();
+  });
+
+  /* ========================================================
      8. Activation functions
      ======================================================== */
   register({ id: 'dl-activation', topic: 'deep-learning', title: 'Activation Functions', blurb: 'Plot ReLU, Sigmoid, Tanh and their derivatives — and see where gradients vanish.' },

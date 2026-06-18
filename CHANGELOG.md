@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 285 — Master Theorem visualizer — 62nd widget (visualizations)
+`a-recurrences-master-theorem` ("Recurrences and the Master Theorem") had **no widget** — and the master theorem is one of
+the most abstract results in the algorithms course. Added the **62nd Lab widget `algo-master-theorem`**, embedded in that
+lesson: a bar chart of the **total work at each level** of the recursion tree for `T(n) = a·T(n/b) + nᵈ`. Since per-level
+work is geometric with ratio **r = a/bᵈ**, the bar profile *is* the case — sliders for **a, b, d** tip it root-heavy
+(r<1 → Θ(nᵈ)), flat (r=1 → Θ(nᵈ log n)), or leaf-heavy (r>1 → Θ(n^log_b a)), with the dominant level highlighted and the
+resulting Θ(·) named live. Presets: Merge sort (2,2,1), Strassen (7,2,2), Binary search (1,2,0). Plain-unicode note (no
+`$`, viz-note landmine). app.js `viz-complete` fallback 61 → 62.
+Verified: gate ALL GREEN (**62 widgets**, embed resolves); **node** log₂7 = 2.81; **via `--dump-dom`** the presets give the
+right verdicts — Merge `r=2/2=1.00 balanced`, Strassen `r=7/4=1.75 leaf-heavy` (→ Θ(n^2.81)), Binary search
+`r=1/1=1.00 balanced`; `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**.
+No save-shape change. SW cache `atlas-v225` → `atlas-v226`.
+
 ## iter 284 — Three more worked examples on flagship hard lessons (examples)
 First, a quality check: confirmed MCQ **answer positions are well-balanced** (0 lessons exceed the 70%-at-one-index
 threshold) — quizzes aren't gameable by pattern-matching. For the ship, a fresh *content type* (worked examples, last
