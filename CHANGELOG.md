@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 239 — Deepen the inline glossary: +28 terms (understandability)
+Rotating off UI/UX. The glossary powers **inline hover/tap tooltips** (the first occurrence of each term in lecture
+prose gets a definition), so its coverage directly shapes how much a reader can decode without leaving the page. Two
+topics were thin — **LLM (9)** and **linear algebra (9)** — despite their lessons being the most jargon-dense. Added
+**28 high-value terms** (glossary 89 → **117**):
+- **LLM (+13)**: positional encoding, KV cache, beam search, nucleus sampling, greedy decoding, in-context learning,
+  chain-of-thought, scaling laws, LoRA, quantization, retrieval-augmented generation, hallucination, autoregressive.
+- **Linear algebra (+9)**: dot product, orthogonality, projection, linear transformation, column space, null space,
+  diagonalization, orthonormal basis, positive definite.
+- **Calculus (+6)**: continuity, critical point, saddle point, directional derivative, Riemann sum, the fundamental
+  theorem of calculus.
+Per-topic counts are now balanced (LA 18 · calc 16 · algos 11 · DL 22 · RL 11 · LLM 22 · prob-stats 16). Skipped
+over-generic terms (e.g. "Norm" would false-match "batch norm"). Definitions are concise with KaTeX math; the injector
+**guards even-`$` parity and bans raw `**`** before writing. No save-shape change (static data).
+Verified: gate ALL GREEN; the **Glossary page renders all 117** (`.gloss-item` count = 117, new terms present); on the
+dot-product lesson the new terms **"dot product" and "projection" now wrap inline** as tooltips and their definition math
+**renders via KaTeX in the popup** (2 `.katex` in gloss popups); all-routes smoke **errs=0/kErr=0 (12 routes)**.
+SW cache `atlas-v181` → `atlas-v182`.
+
 ## iter 238 — In-module navigator + module in the breadcrumb (UI/UX)
 Rotating off animation. The lesson view told you the course and the lesson but **not which module you were in or where you
 were within it** — and the footer prev/next silently crossed module boundaries (lessons come from a flattened list). Added

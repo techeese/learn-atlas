@@ -177,6 +177,14 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 239: **Deepen the inline glossary — +28 terms** (understandability). Glossary 89→117; the thin/jargon-dense topics got
+   the most: LLM +13 (positional encoding, KV cache, beam search, nucleus sampling, in-context learning, chain-of-thought,
+   scaling laws, LoRA, quantization, RAG, hallucination, autoregressive…), LA +9 (dot product, orthogonality, projection,
+   column/null space, diagonalization, orthonormal basis, positive definite), calc +6 (continuity, critical/saddle points,
+   directional derivative, Riemann sum, FTC). Powers inline hover-tooltips on first occurrence in prose. Injector guards
+   even-$ parity + bans raw **. Verified: gate GREEN; glossary page renders 117; "dot product"/"projection" now wrap inline
+   on the dot-product lesson with KaTeX-rendered popup math; smoke errs=0/kErr=0 (12 routes). SW →v182. (Skipped generic
+   "Norm" — false-matches "batch norm".)
    ✅ iter 238: **In-module navigator + module breadcrumb** (UI/UX — last at 230). Lesson view now shows where you are within a unit:
    a jump-anywhere dot strip under the title (sage done / gold-ring current / empty todo, each a real link), a "<module> ·
    X/N" label, and the module name added to the breadcrumb. Pure orientation (reads lesson-done; no state change); a11y
