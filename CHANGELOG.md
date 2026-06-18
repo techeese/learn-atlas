@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 330 — Step-back: full kErr + route sweep (clean) + gate hardened vs mathtools envs (workflow / broken-proofing)
+**Round-number step-back (iter 330),** triggered by the iter-329 discovery that a `psmallmatrix` KaTeX error had shipped
+unnoticed (static lints miss it; only `--dump-dom` kErr catches it). So this step-back's sweep was a **kErr audit**:
+- **Full kErr sweep — all 148 lessons**, revealing *every* example and opening *every* deep-dive → **errs=0, kErr=0, 0 bad
+  lessons**. The psmallmatrix was the *only* KaTeX error in the entire codex; all math now renders clean.
+- **All non-lesson routes** (courses, Lab + all 71 widgets, review/test/map/glossary/achievements/stats/playground/library/
+  notes) → **errs=0, kErr=0, bad=none**. Total **237 routes** green.
+**Reflection (321–329):** content(dd) · UI/UX · code · viz · examples · content(dd) · code · viz · examples+fix — healthy
+rotation across every modality plus two "amplify" UI/UX moves; all verified and pushed; one real bug found and fixed. Codex
+is mature and exhaustively complete (148 lessons · 71 viz · 89 deep-dives · 322 examples · 45 code lessons · 138 glossary).
+**The ship (broken-proofing the loop).** Hardened `gate.js` with an **`UNSUPPORTED_KATEX_ENV` lint** so the exact class of
+bug can't recur: it flags the `[pbBvV]smallmatrix` family and starred `matrix*/cases*` variants (mathtools envs this KaTeX
+build can't parse), which previously raised a real `.katex-error` invisible to the static $-parity/tag lints. Now caught at
+the cheap `node gate.js` step, no Chrome needed.
+Verified: gate ALL GREEN (zero false positives across the corpus — it only uses supported envs); **self-test** — reintroducing
+a `psmallmatrix` makes the gate FAIL with the new message, and removing it returns to green; `gate.js` is dev-only (not in
+`sw.js`), so no cache bump. The two runtime sweeps above confirm the live site is clean. No save-shape change, no asset change.
+
 ## iter 329 — Three more worked examples + a KaTeX render-bug fix (examples / broken)
 A **3rd worked example** on three flagship lessons across LA/algo/calc (examples 319 → **322**):
 - **la-inverse-and-systems** — **when there's no unique solution**: a singular `A=[[1,1],[2,2]]` (`det=0`); `x+y=2, 2x+2y=5`

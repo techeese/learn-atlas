@@ -41,10 +41,17 @@ let lessons = 0, mcq = 0, cards = 0, hw = 0, ex = 0, codeChecked = 0, errors = [
 function dollarOdd(s) { const t = String(s).replace(/\\\$/g, "").replace(/\$\$/g, ""); return ((t.match(/\$/g) || []).length % 2) === 1; }
 function stripCodeMath(s) { return String(s).replace(/<pre[\s\S]*?<\/pre>/gi, " ").replace(/<code[\s\S]*?<\/code>/gi, " ").replace(/\$\$[\s\S]*?\$\$/g, " ").replace(/\$[^$\n]*?\$/g, " "); }
 function rawMarkdown(s) { const t = stripCodeMath(s); return /\*\*[^*\n]{1,80}\*\*/.test(t) || /(?:^|[^_A-Za-z0-9])__[^_\n]{1,80}__(?:[^_A-Za-z0-9]|$)/.test(t); }
+// mathtools-only LaTeX envs that THIS KaTeX build can't parse → a real .katex-error at typeset time that the
+// static $-parity/tag lints miss (only --dump-dom kErr caught it). Found iter 329: a psmallmatrix had shipped
+// unnoticed in an example. KaTeX supports matrix/pmatrix/bmatrix/Bmatrix/vmatrix/Vmatrix/smallmatrix/array/cases/
+// aligned/gathered — but NOT the [pbBvV]smallmatrix family or the starred matrix*/cases* variants (those need
+// mathtools). Denylist exactly those (verified zero matches across the corpus). Fix: \left(\begin{smallmatrix}…\right).
+const UNSUPPORTED_KATEX_ENV = /\\begin\{(?:[pbBvV]smallmatrix|(?:matrix|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|smallmatrix|cases)\*)\}/;
 function checkRender(s, where) {
   if (typeof s !== "string" || !s) return;
   if (dollarOdd(s)) errors.push("unbalanced / unescaped $ (write a literal money $ as \\$): " + where);
   if (rawMarkdown(s)) errors.push("raw markdown ** or __ won't render via innerHTML (use <strong>/<em>): " + where);
+  if (UNSUPPORTED_KATEX_ENV.test(s)) errors.push("unsupported KaTeX env (mathtools, not in this build — use \\left(\\begin{smallmatrix}…\\right)): " + where);
 }
 // unbalanced HTML tags render silently-wrong: an unclosed <details>/<b>/<div> (e.g. from a bad byte-stable
 // injection) swallows or mis-styles the rest of the lesson. Count opens vs closes for these paired tags on

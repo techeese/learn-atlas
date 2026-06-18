@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 330: **Step-back: full kErr+route sweep (clean) + gate hardened vs mathtools envs** (workflow/broken-proofing). Triggered by
+   the 329 psmallmatrix discovery. kErr audit: all 148 lessons (reveal every example + open every deep-dive) → errs=0/kErr=0/0 bad;
+   all 89 non-lesson routes → errs=0/kErr=0. 237 routes green; psmallmatrix was the only KaTeX error in the codex. Ship: gate.js
+   UNSUPPORTED_KATEX_ENV lint flags [pbBvV]smallmatrix + starred matrix*/cases* (mathtools, unparseable) — caught statically now.
+   Verified: gate GREEN (0 false positives); self-test reintroduced psmallmatrix → gate FAILS correctly → removed → green; gate.js
+   not cached (no SW bump).
    ✅ iter 329: **3 more worked examples + a KaTeX render-bug fix** (examples / broken). +3 (319→322) across LA/algo/calc:
    la-inverse-and-systems (singular systems: no/infinite solutions), a-graph-representations-traversal (DFS cycle detection via
    back-edge), c-convexity (Jensen's inequality, gap = Var). BONUS: fixed a pre-existing KaTeX error in the MSE-convexity
