@@ -321,6 +321,18 @@ body::after {
 .crumbs { font-size: 13px; color: var(--ink-mute); margin-bottom: 18px; }
 .crumbs a { color: var(--gold); text-decoration: none; }
 .crumbs a:hover { text-decoration: underline; }
+.crumbs .crumb-mod { color: var(--ink-soft); }
+/* in-module navigator — a jump-anywhere dot strip + position, for orientation within a unit */
+.mod-nav { display: flex; align-items: center; gap: 12px 14px; flex-wrap: wrap; margin: 0 0 22px; }
+.mod-nav-label { font-size: 12.5px; color: var(--ink-mute); letter-spacing: .2px; }
+.mod-nav-label b { color: var(--ink-soft); font-weight: 600; }
+.mod-nav-dots { display: flex; gap: 7px; flex-wrap: wrap; }
+.mod-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 1.5px solid var(--line); background: transparent; transition: transform .15s ease, background .2s, border-color .2s, box-shadow .2s; }
+.mod-dot:hover { transform: scale(1.3); border-color: var(--gold); }
+.mod-dot.done { background: var(--sage); border-color: var(--sage); }
+.mod-dot.cur { border-color: var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 26%, transparent); }
+.mod-dot.cur.done { background: var(--gold); border-color: var(--gold); }
+.mod-dot:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .module { margin-bottom: 30px; }
 .module-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
@@ -1167,7 +1179,7 @@ kbd { font-family: var(--font-mono); background: var(--panel-2); border: 1px sol
   .katex, .cs-card * { color: #111 !important; }
   .cs-grid { grid-template-columns: 1fr 1fr; }
   /* printable lessons: keep the lecture + examples, drop everything interactive */
-  .crumbs, .tabs, .notes-box, .lesson-actions, .connections, .path-banner, .viz, [data-viz], .viz-controls, .pg, [data-code] { display: none !important; }
+  .crumbs, .mod-nav, .tabs, .notes-box, .lesson-actions, .connections, .path-banner, .viz, [data-viz], .viz-controls, .pg, [data-code] { display: none !important; }
   .page-head h2, .page-head .eyebrow { color: #111 !important; }
   .prose { max-width: none !important; color: #1a1a1a !important; font-size: 12pt !important; }
   .prose h3, .prose h4, .prose strong { color: #000 !important; }

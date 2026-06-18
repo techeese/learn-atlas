@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 238: **In-module navigator + module breadcrumb** (UI/UX — last at 230). Lesson view now shows where you are within a unit:
+   a jump-anywhere dot strip under the title (sage done / gold-ring current / empty todo, each a real link), a "<module> ·
+   X/N" label, and the module name added to the breadcrumb. Pure orientation (reads lesson-done; no state change); a11y
+   (nav aria-label, per-dot title/aria-current); print-hidden. Verified: gate GREEN; mid-module lesson dots
+   ["done","done","cur","todo"], label "Foundations of Probability · 3/4", dot click navigates (errs=0); 390px wraps;
+   smoke errs=0/kErr=0 (12 routes). SW →v181.
    ✅ iter 237: **The streak flame comes alive** (animation/juice — most-overdue lane, last at 228). Header 🔥 was a static emoji;
    now: ambient `flameFlicker`, intensity tiers by streak length (unlit/lit/hot≥7/blazing≥30/inferno≥100, set in
    renderChrome via data-tier guard), and a one-time `flameFlare` when today extends the streak (new `Store.streakJustUp()`

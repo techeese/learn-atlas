@@ -735,6 +735,17 @@
     const all = flatLessons(course);
     const idx = all.findIndex(l => l.id === lid);
     const prev = all[idx - 1], next = all[idx + 1];
+    // locate the module this lesson lives in (for orientation + a jump-anywhere dot navigator)
+    let mod = null, posInMod = 0;
+    course.modules.forEach(m => { const j = m.lessons.findIndex(l => l.id === lid); if (j >= 0) { mod = m; posInMod = j + 1; } });
+    const modNav = mod ? `
+      <nav class="mod-nav reveal" aria-label="Lessons in ${esc(mod.title)}">
+        <span class="mod-nav-label">${esc(mod.title)} · <b>${posInMod}/${mod.lessons.length}</b></span>
+        <span class="mod-nav-dots">${mod.lessons.map((l, j) => {
+          const cur = l.id === lid, dn = Store.isLessonDone(l.id);
+          return `<a class="mod-dot${cur ? " cur" : ""}${dn ? " done" : ""}" href="#/lesson/${course.id}/${l.id}" data-route title="${j + 1}. ${esc(l.title)}${dn ? " ✓" : ""}" aria-label="Lesson ${j + 1}: ${esc(l.title)}${dn ? ", completed" : ""}${cur ? ", current" : ""}"${cur ? ' aria-current="true"' : ""}></a>`;
+        }).join("")}</span>
+      </nav>` : "";
 
     const nMcq = (lesson.mcq || []).length, nCards = (lesson.flashcards || []).length, nHw = (lesson.homework || []).length, nEx = (lesson.examples || []).length;
     const tabs = [
@@ -756,12 +767,13 @@
 
     app.innerHTML = `
     <div class="view">
-      <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; <a href="#/course/${course.id}" data-route>${esc(course.title)}</a> &nbsp;›&nbsp; ${esc(lesson.title)}</div>
-      <div class="page-head" style="margin-bottom:18px">
+      <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; <a href="#/course/${course.id}" data-route>${esc(course.title)}</a>${mod ? ` &nbsp;›&nbsp; <span class="crumb-mod">${esc(mod.title)}</span>` : ""} &nbsp;›&nbsp; ${esc(lesson.title)}</div>
+      <div class="page-head" style="margin-bottom:14px">
         <div class="eyebrow" style="color:${course.color}">${esc(course.title)} · ${lesson.minutes || 10} min${(() => { const eff = Store.effectiveMastery(lid), L = Store.masteryLevel(eff); return ` · <span style="color:${L.color}">${L.label}${eff > 0 ? " · " + Math.round(eff * 100) + "%" : ""}</span>`; })()}</div>
         <h2>${esc(lesson.title)}</h2>
         ${(() => { const eff = Store.effectiveMastery(lid), L = Store.masteryLevel(eff); return eff > 0 ? `<div class="mastery-bar" style="margin-top:10px;max-width:220px"><div class="mastery-fill" style="width:${Math.round(eff * 100)}%;background:${L.color}"></div></div>` : ""; })()}
       </div>
+      ${modNav}
       ${pathBanner}
       <div class="tabs" role="tablist" aria-label="Lesson sections">${tabs.map((t, i) => `<button class="tab ${i === 0 ? "active" : ""}" role="tab" id="tab-${t.id}" data-tab="${t.id}" aria-controls="tab-body" aria-selected="${i === 0 ? "true" : "false"}" tabindex="${i === 0 ? "0" : "-1"}">${t.icon} ${t.label}${t.badge ? `<span class="badge">${t.badge}</span>` : ""}</button>`).join("")}</div>
       <div id="tab-body" role="tabpanel" tabindex="0" aria-labelledby="tab-lecture"></div>

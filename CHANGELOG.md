@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 238 — In-module navigator + module in the breadcrumb (UI/UX)
+Rotating off animation. The lesson view told you the course and the lesson but **not which module you were in or where you
+were within it** — and the footer prev/next silently crossed module boundaries (lessons come from a flattened list). Added
+orientation to the most-visited view:
+- a **jump-anywhere dot navigator** under the lesson title — one dot per lesson in the current module, **sage = completed,
+  gold ring = current, empty = still to do** — each a real link, so you can hop to any lesson in the unit in one tap;
+- a **"<module> · X/N" position label** beside the dots;
+- the **module name now appears in the breadcrumb** (Codex › Course › *Module* › Lesson).
+Pure orientation (reads existing lesson-done state; no new state field, no save-shape change). Dots carry `title` +
+`aria-label` + `aria-current`; the strip is `<nav aria-label>`; hidden in the print stylesheet.
+Verified: gate ALL GREEN; on a mid-module lesson (3rd of 4, first two done) the dot classes read exactly
+`["done","done","cur","todo"]`, label "Foundations of Probability · 3/4", breadcrumb includes the module, `errs=0`;
+**clicking the first dot navigates** (hash → ps-sample-spaces-events, heading updates); 390px mobile the breadcrumb wraps
+and the dot strip fits; all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v180` → `atlas-v181`.
+
 ## iter 237 — The streak flame comes alive (animation / juice)
 Juice was the most-overdue lane (last at iter 228). The header's streak 🔥 was a static emoji — the one always-visible
 element with no life. Gave it an **ambient flicker** + **intensity that grows with the streak** + a **flare when today
