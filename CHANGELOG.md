@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 419 — Three more worked examples across DL/RL/algo (examples)
+A **3rd worked example** on three flagship lessons across DL/RL/algo (examples 412 → **415**, all ⌘K-searchable):
+- **dl-learning-rate-schedules-and-tuning** — **the LR stability ceiling**: for `f=x²`, GD `x←(1−2η)x` converges iff `0<η<1` (η=0.5 →
+  one step; η>1 diverges); generally `η<2/L` — set by the largest curvature, which is why LR is tuned first and warmup/decay exist.
+- **rl-policy-gradient-theorem** — **the score-function trick**: `∇E[R] = E[R·∇log π]` via `∇π = π∇log π` — you can't differentiate
+  through a sample, but you can differentiate the probability that produced it; "gradient of an expectation → expectation of a gradient."
+- **a-arrays-lists-stacks-queues** — **array vs linked list**: complementary Big-O (`O(1)` access vs `O(1)` insert), but cache locality
+  decides real speed — contiguous arrays prefetch, list pointer-chasing misses, so Big-O is necessary but not sufficient.
+Every value node-verified (η threshold; log-derivative identity; Big-O table); injected byte-stably with the full guard set.
+Verified: gate ALL GREEN (**415 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (85 / 71 / 141 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v358` → `atlas-v359`.
+
 ## iter 418 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
 A **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 166 → **169**; 21 lessons now carry two):
 - **dl-backpropagation** (had: "why backprop goes backward") → **vanishing/exploding gradients as a product of Jacobians**: depth
