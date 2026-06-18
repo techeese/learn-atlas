@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 266: **Fix: glossary tooltips caused sideways scroll on mobile** (bugfix / mobile). 390px re-audit (first since 253) found
+   lessons overflowing horizontally (la-determinants +97px, c-chain-rule +116px; code-free lessons clean). Culprit:
+   `.gloss-pop` (absolute, left:0, ~270px, laid out even while visibility:hidden) — a right-side term pushes its hidden popup
+   past the viewport → persistent horizontal scroll. Long pre-existing. Fix: placeGlossPops() shifts any overflowing popup
+   left to fit (clamped to left edge), so tooltips stay fully visible & the page stops scrolling; runs post-layout (rAF +
+   post-KaTeX timeout) + debounced resize. Verified: 390px dump-dom docOver 97–125px→0 (popups clamped to right≤380, on-screen);
+   desktop unaffected (docOver=0); smoke errs=0/kErr=0 (12). SW →v207.
    ✅ iter 265: **5 more deeper-dives + performance verdict** (content). PERF (measured, logged): data ~5.3MB raw but ~1.5MB gzip
    (Pages serves gzip), SW-cached after first visit; lazy-load breaks all-COURSES search/map/daily-concept; minify breaks
    inject pipeline → **perf is fine for this single-user SW-cached site; not a must-do anymore.** Ship: +5 deep-dives (40→45)

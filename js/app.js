@@ -307,6 +307,29 @@
     }
   }
 
+  // Keep inline glossary tooltips inside the viewport. Each .gloss-pop is position:absolute, left:0, ~270px
+  // wide; a term in the right half pushes its popup past the right edge — and because the popup is laid out
+  // even while hidden (visibility:hidden), it adds horizontal page scroll on mobile. Shift any overflowing
+  // popup left just enough to fit (never past the left edge), so it stays fully visible and the page doesn't
+  // scroll sideways. Recompute after layout settles and on resize.
+  function placeGlossPops(root) {
+    const vw = document.documentElement.clientWidth, pad = 10;
+    (root || app).querySelectorAll(".gloss").forEach(g => {
+      const pop = g.querySelector(".gloss-pop"); if (!pop) return;
+      pop.style.left = "0px";                                  // reset to default anchor before measuring
+      const gl = g.getBoundingClientRect().left, w = pop.offsetWidth;
+      let shift = 0;
+      if (gl + w > vw - pad) shift = (vw - pad) - (gl + w);    // overflowing right → move left
+      if (gl + shift < pad) shift = pad - gl;                  // but never push the popup off the left edge
+      if (shift < 0) pop.style.left = Math.round(shift) + "px";
+    });
+  }
+  let _glossTO = 0;
+  window.addEventListener("resize", () => {
+    clearTimeout(_glossTO);
+    _glossTO = setTimeout(() => { if ((location.hash || "").indexOf("#/lesson/") === 0) placeGlossPops(app); }, 200);
+  });
+
   // ---------- onboarding / welcome tour ----------
   // ---------- accessible modal helper: dialog semantics + focus trap + focus restore ----------
   // Marks the card as role=dialog/aria-modal, moves focus inside, traps Tab within the modal,
@@ -915,6 +938,8 @@
     linkGlossary(body.querySelector(".prose"));   // inline term tooltips (before typeset, so tooltip math renders)
     typeset();
     offerResume(lesson.id);                        // if you left this lesson part-read, offer a one-tap jump back
+    requestAnimationFrame(() => placeGlossPops(body));         // keep glossary tooltips inside the viewport (no sideways scroll)
+    setTimeout(() => placeGlossPops(body), 450);               // ...and again once KaTeX has settled term positions
   }
 
   // ---------- inline "Quick Check": low-stakes retrieval at the end of the lecture ----------

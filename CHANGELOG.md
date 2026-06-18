@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 266 — Fix: inline glossary tooltips caused sideways scroll on mobile (bugfix / mobile)
+A 390px re-audit (first since iter 253, after ~10 UI iterations) found **lessons scrolling horizontally on mobile** —
+la-determinants overflowed the viewport by 97px, c-chain-rule by 116px, while code-free lessons were clean. Bisected with
+a per-element bounding-box probe (the `katex-mathml` a11y node was a red herring): the culprit is **`.gloss-pop`**, the
+inline glossary tooltips. Each is `position:absolute; left:0; ~270px` wide and — crucially — **laid out even while hidden**
+(`visibility:hidden`), so a glossary term in the right half of a line pushes its (invisible) popup past the right edge and
+adds persistent horizontal page scroll. Long pre-existing (every lesson with a right-side term; first surfaced now because
+my new code-exercise lessons happened to have such terms).
+Fix: a `placeGlossPops()` pass that shifts any popup left just enough to fit inside the viewport (clamped so it never
+leaves the left edge) — tooltips stay **fully visible**, no clipping, and the page stops scrolling sideways. Runs after the
+lecture lays out (rAF + a post-KaTeX timeout) and on a debounced resize. Pure JS; no save-shape or CSS change beyond it.
+Verified: **390px via dump-dom** — the four worst lessons went from docOver 97–125px → **0**, with popups now clamped to a
+right edge of 380 (viewport−10) and still on-screen; **desktop** (1200px) smoke unaffected (docOver=0, no popups shifted
+when there's room); all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v206` → `atlas-v207`.
+
 ## iter 265 — Five more deeper-dives + a performance verdict (content / understandability)
 **Performance check (logged so the loop stops re-flagging it).** Measured the asset weights: data is ~5.3 MB raw but
 **~1.5 MB gzipped** (GitHub Pages serves gzip), JS ~0.5 MB raw / ~0.13 MB gzipped, and the service worker caches
