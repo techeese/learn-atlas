@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 381: **BUG (owner report): streak/stat numbers could display 0 instead of the real value** (bug). Root cause: `countUp`
+   wrote "0" synchronously then restored the value via deferred setTimeout+rAF; if that stalled (background tab, slow device,
+   navigation) the number stuck at 0 — header (direct-set) was fine, dashboard/Progress (count-up'd) showed 0. Fix: move "0" into
+   run(); add a safety-net setTimeout(delay+dur+260) that forces the final value if rAF hasn't landed. Verified seeded headless
+   streak=1/12/100: header+dashboard+cs-label+Progress all correct, flame tiers lit/hot/inferno; all count-ups resolve (XP 1200,
+   streak 12). Smoke errs=0/kErr=0; gate GREEN. SW →v321. **LANDMINE: any synchronous "reset to 0 then animate up" needs a
+   guaranteed final-value fallback — rAF/deferred timers can stall and leave the number at 0.**
    ✅ iter 380: **Step-back: full kErr/route + coverage audit (clean) + 4 deeper-dives toward full coverage** (content). Sweeps: 148
    lessons errs=0/kErr=0/0 bad; 101 routes errs=0/kErr=0 (249 green). Coverage: 0 thin lessons (358 examples, 81 code-lessons).
    Ship: +4 dd (137→141; 7 left) rl-practical-rl, c-limits-intuition, la-vectors-operations, a-algorithms-for-ml. Verified: gate

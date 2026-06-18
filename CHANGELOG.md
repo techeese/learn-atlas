@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 381 — Fix: streak (and all stat numbers) could display 0 instead of the real value (bug — owner report)
+**Owner bug report:** the "N-day streak" display was rendering wrong. **Root cause:** the `countUp` animation (dashboard
+stat-strip, Progress-page tiles) wrote `el.textContent = "0"` *synchronously*, then restored the real value only via a deferred
+`setTimeout` + `requestAnimationFrame` chain. If that async path stalled — a backgrounded tab (rAF pauses), a slow device, or
+navigating before the deferred timer fired — the number was **left stuck at "0"**. This explains the exact symptom: the header
+streak counter (set directly in `renderChrome`, no animation) always showed the right value, while the **dashboard and Progress
+"Day streak" (count-up'd) could show 0**. Seeded headless repro: with `streak=12`, header=12 but dashboard/stats="0" (and *every*
+count-up number — Total XP, Cards, accuracy — was 0, confirming it's the shared count-up, not streak-specific).
+**Fix (`js/app.js` `countUp`):**
+- Moved the `"0"` zero-state *inside* `run()` so it's written only when the animation actually starts — a deferred-but-never-run
+  element keeps its real value (and there's no pre-delay 0-flash).
+- Added a **safety net**: a `setTimeout` after the animation window (`delay + dur + 260ms`) that forces the final real value if
+  rAF hasn't landed it — so a stalled/throttled animation can never leave a number stuck at 0.
+- Reduced-motion path unchanged (returns early, real value never zeroed).
+Verified (seeded headless, `--dump-dom`): post-fix every count-up resolves to its real value — **Day streak 12** (was 0), Total XP
+1,200, Cards 7, accuracy 90%. Across `streak = 1 / 12 / 100`: header, dashboard, the `cs-label` ("🔥 N-day streak …"), and the
+Progress tile all show the correct value with correct flame tiers (lit / hot / inferno). All-routes smoke **errs=0/kErr=0**; gate
+ALL GREEN. SW cache `atlas-v320` → `atlas-v321` (app.js is a cached asset).
+
 ## iter 380 — Step-back: full kErr/route + coverage audit (clean) + four deeper-dives toward full coverage (content)
 **Round-number step-back (iter 380).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive) → errs=0, kErr=0, 0 bad;

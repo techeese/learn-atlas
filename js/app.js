@@ -242,18 +242,21 @@
     const m = String(el.textContent).trim().match(/^(\d[\d,]*)(.*)$/s);
     if (!m) return;
     const target = parseInt(m[1].replace(/,/g, ""), 10), rest = m[2];
-    if (!(target > 0) || reducedMotion()) return;
-    const dur = 700;
-    el.textContent = "0" + rest;                       // zero-state immediately (so a staggered start shows no value-flash)
+    if (!(target > 0) || reducedMotion()) return;     // reduced-motion / zero keeps the real value untouched
+    const dur = 700, finalText = target.toLocaleString() + rest;
     const run = () => {
+      el.textContent = "0" + rest;                     // zero-state only when the animation actually starts (a deferred-but-never-run el keeps its real value, no 0-flash)
       const t0 = performance.now();
       (function tick(t) {
         const k = Math.max(0, Math.min(1, (t - t0) / dur)), e = 1 - Math.pow(1 - k, 3);  // clamp k≥0 (rAF/now clock skew can't drive it negative)
         el.textContent = Math.round(target * e).toLocaleString() + rest;
-        if (k < 1) requestAnimationFrame(tick); else el.textContent = target.toLocaleString() + rest;
+        if (k < 1) requestAnimationFrame(tick); else el.textContent = finalText;
       })(performance.now());
     };
     delay > 0 ? setTimeout(run, delay) : run();        // optional delay → cascade across a group of numbers
+    // safety net: if rAF is throttled/stalled (background tab, slow device, navigation) the number must never be
+    // left stuck at 0 — after the animation window, force the real value if it hasn't landed (fixes streak/stats showing 0).
+    setTimeout(() => { if (el.textContent !== finalText) el.textContent = finalText; }, (delay > 0 ? delay : 0) + dur + 260);
   }
 
   // ---------- inline glossary tooltips (understandability) ----------
