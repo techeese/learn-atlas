@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 400 — ★ Step-back at iteration 400: full audit (clean) + three worked examples (examples)
+**Round-number step-back — the 400th iteration (100 since the iter-300 step-back).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive) → errs=0, kErr=0, 0 bad;
+  all **105 non-lesson routes** (courses, Lab + 87 widgets, every utility page) → errs=0, kErr=0. **253 routes green.**
+- **Structural coverage audit**: every one of 148 lessons has ≥2 examples (**382**), ≥8 MCQs (2368), ≥1 flashcard (889),
+  ≥1 homework (442) — **0 structurally-thin lessons**. Plus 148 deep-dives (100%), 90 code lessons, 151 glossary terms.
+**Reflection — 100 iters since the 300 step-back:** deep-dives 117 → **148 (100%, milestone at iter 384)**, viz ~75 → **87**,
+examples ~290 → **385**, code lessons ~60 → **90 (computational coverage complete, 392)**, glossary → **151 (397)**; one owner bug
+fixed (streak/stat count-up, 381); the gate hardened twice (unsupported-KaTeX-env 330; bare-`<`-letter-in-math 391). No red gate
+or broken push in 100 iterations. Depth/viz/code are saturated; worked examples (distinct flagship angles) are the active runway.
+**The paired ship — three worked examples** across calc/PS/algo (examples 382 → **385**):
+- **c-intro-differential-equations** — **separable ODE → exponential**: `dy/dx=2y, y(0)=3` ⇒ `y=3e^{2x}` (verified `y'=2y`); "rate ∝ amount"
+  always gives `y₀e^{kx}`.
+- **ps-joint-distributions** — **testing independence**: `P(X=0)P(Y=0)=0.12 ≠ 0.1 = P(X=0,Y=0)`, so dependent — one failing cell suffices.
+- **a-linear-sorts-selection** — **quickselect**: the median of `[7,2,9,4,1]` is `4`, found in `O(n)` average (partition toward the
+  target rank) vs `O(n log n)` to sort.
+Every value node-verified; injected byte-stably with the full guard set.
+Verified: gate ALL GREEN (**385 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (69 / 39 / 132 spans) and **kErr=0,
+rawDollar=0**; both step-back sweeps clean; embed-route smoke **errs=0/kErr=0 (8 routes)**. No save-shape change. SW cache
+`atlas-v339` → `atlas-v340`.
+
 ## iter 399 — Three more worked examples across DL/RL/algo (examples)
 A **3rd worked example** on three flagship lessons across DL/RL/algo (examples 379 → **382**, all ⌘K-searchable):
 - **dl-pooling-and-cnn-architectures** — **the conv output-size formula** `⌊(W−K+2P)/S⌋+1`: `7,3,0,1 → 5`; `7,3,1,2 → 4` —

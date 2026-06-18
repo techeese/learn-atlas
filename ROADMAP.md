@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 400: **★ STEP-BACK at iter 400: full audit (clean) + 3 worked examples** (examples). Sweeps: 148 lessons errs=0/kErr=0/0
+   bad; 105 routes errs=0/kErr=0 (253 green). Coverage: 0 thin (148 dd=100%, 382 examples, 90 code, 151 glossary). Reflection
+   (100 iters since 300): dd 117→148, viz→87, examples→385, code→90 lessons, glossary→151; 1 owner bug fixed (381); gate hardened
+   twice (330, 391); zero red gates. Ship: +3 examples (382→385) c-intro-differential-equations (3e^{2x}), ps-joint-distributions
+   (independence 0.12≠0.1), a-linear-sorts-selection (quickselect median=4). Verified: gate GREEN (385); dump-dom katex 69/39/132,
+   kErr=0, rawDollar=0; smoke errs=0/kErr=0. SW →v340.
    ✅ iter 399: **3 more worked examples across DL/RL/algo** (examples). +3 (379→382): dl-pooling-and-cnn-architectures (conv
    output-size ⌊(W−K+2P)/S⌋+1 → 5/4), rl-monte-carlo (discounted return G₀=2.62), a-backtracking-branch-bound (4-Queens = 2,
    pruning 256/24). Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (382 examples); dump-dom katex 80/81/149,

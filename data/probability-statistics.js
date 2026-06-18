@@ -2455,6 +2455,11 @@
               "title": "Using independence to build a joint from marginals",
               "body": "A factory's two machines fail independently on a given day. Machine A fails with probability $0.1$, machine B with probability $0.2$. Find the probability that (i) both fail, (ii) exactly one fails, (iii) neither fails.",
               "solution": "Because the failures are independent, the joint is the product of marginals.\n\n(i) Both fail: $P(A)P(B)=0.1\\times 0.2 = 0.02$.\n\n(ii) Exactly one fails $=P(A\\text{ only})+P(B\\text{ only}) = (0.1)(0.8) + (0.9)(0.2) = 0.08 + 0.18 = 0.26$.\n\n(iii) Neither fails: $(0.9)(0.8)=0.72$. Check: $0.02+0.26+0.72=1.00$. Independence is what let us multiply marginals cell-by-cell instead of needing a measured joint table."
+            },
+            {
+              "title": "Testing independence from a joint table",
+              "body": "A joint distribution over $X, Y \\in \\{0, 1\\}$ is $P = \\begin{bmatrix} 0.1 & 0.2 \\\\ 0.3 & 0.4 \\end{bmatrix}$ (rows = $X$, columns = $Y$). Are $X$ and $Y$ independent?",
+              "solution": "<strong>Get the marginals.</strong> Sum across rows for $P(X)$ and down columns for $P(Y)$: $P(X=0) = 0.1 + 0.2 = 0.3$ and $P(Y=0) = 0.1 + 0.3 = 0.4$.\n<strong>Does the joint factor?</strong> $X$ and $Y$ are independent iff $P(X, Y) = P(X)\\,P(Y)$ in <em>every</em> cell. Check the top-left: $P(X=0)\\,P(Y=0) = 0.3 \\times 0.4 = 0.12$, but the table has $P(X=0, Y=0) = 0.1$. Since $0.12 \\ne 0.1$, the factorization fails — so $X$ and $Y$ are <b>dependent</b>.\n<strong>One failing cell is enough.</strong> Independence needs the product rule to hold in <em>all</em> cells; a single violation breaks it. (Conversely, if every cell equals its row-sum times its column-sum, the variables are independent.)\n<strong>The aha.</strong> Independence is exactly \"the joint is the outer product of the marginals\" — knowing $X$ tells you nothing about $Y$. The gap between $P(X,Y)$ and $P(X)\\,P(Y)$ is what covariance and mutual information measure; here it is nonzero, so the variables carry information about each other."
             }
           ]
         },
