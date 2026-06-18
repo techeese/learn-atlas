@@ -3326,4 +3326,74 @@
     draw();                                                    // synchronous first paint
   });
 
+  /* ========================================================
+     55. Gram-Schmidt — subtract the projection to orthogonalize
+     ======================================================== */
+  register({ id: 'la-gram-schmidt', topic: 'linear-algebra', title: 'Gram-Schmidt Orthogonalization', blurb: 'Drag two vectors and watch Gram-Schmidt build an orthogonal set: keep u₁ = v₁, then subtract v₂\'s projection onto u₁ so the remainder u₂ is exactly perpendicular (u₂·u₁ = 0). Toggle "normalize" to get the orthonormal basis ê₁, ê₂.' },
+  function (root) {
+    const W = 540, H = 380, S = 42, cx = W / 2, cy = H / 2;
+    const { c, ctx } = canvas(root, W, H);
+    const info = note(root);
+    let v1 = { x: 3, y: 0.5 }, v2 = { x: 1.5, y: 2.5 }, drag = null, normalized = false;
+    const toPx = p => ({ x: cx + p.x * S, y: cy - p.y * S });
+    const toMath = p => ({ x: (p.x - cx) / S, y: (cy - p.y) / S });
+    const near = (mp, vec) => { const q = toPx(vec); return Math.hypot(q.x - mp.x, q.y - mp.y) < 16; };
+    function down(ev) { const m = pointer(c, W, H, ev); if (near(m, v1)) drag = 'v1'; else if (near(m, v2)) drag = 'v2'; if (drag) ev.preventDefault(); }
+    function move(ev) { if (!drag) return; const m = toMath(pointer(c, W, H, ev)); const g = x => Math.round(x * 2) / 2; const t = drag === 'v1' ? v1 : v2; t.x = g(m.x); t.y = g(m.y); draw(); ev.preventDefault(); }
+    function up() { drag = null; }
+    c.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+    c.addEventListener('touchstart', down, { passive: false }); c.addEventListener('touchmove', move, { passive: false }); c.addEventListener('touchend', up);
+    const ctl = controls(root);
+    button(ctl, 'normalize', () => { normalized = !normalized; draw(); });
+    button(ctl, 'reset', () => { v1 = { x: 3, y: 0.5 }; v2 = { x: 1.5, y: 2.5 }; normalized = false; draw(); });
+    const fmt = n => (Math.round(n * 100) / 100).toString();
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1;
+      for (let x = cx % S; x < W; x += S) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = cy % S; y < H; y += S) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(W, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke();
+      // Gram-Schmidt
+      const u1 = { x: v1.x, y: v1.y };
+      const u1sq = u1.x * u1.x + u1.y * u1.y;
+      const dot = v2.x * u1.x + v2.y * u1.y;
+      const k = u1sq > 1e-9 ? dot / u1sq : 0;
+      const proj = { x: u1.x * k, y: u1.y * k };
+      const u2 = { x: v2.x - proj.x, y: v2.y - proj.y };
+      const n1 = Math.hypot(u1.x, u1.y) || 1, n2 = Math.hypot(u2.x, u2.y) || 1;
+      const e1 = { x: u1.x / n1, y: u1.y / n1 }, e2 = { x: u2.x / n2, y: u2.y / n2 };
+      const O = toPx({ x: 0, y: 0 });
+      const D1 = normalized ? e1 : u1, D2 = normalized ? e2 : u2;
+      if (normalized) {   // unit circle to show ê are length 1
+        ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(O.x, O.y, S, 0, 7); ctx.stroke();
+      } else {
+        // show v2 (original) + its projection onto u1 + the dashed perpendicular drop (= u2 translated)
+        const V2 = toPx(v2), Pp = toPx(proj);
+        arrow(ctx, O.x, O.y, V2.x, V2.y, p.sage, 2.5);
+        ctx.setLineDash([4, 4]); ctx.strokeStyle = p.mute; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(V2.x, V2.y); ctx.lineTo(Pp.x, Pp.y); ctx.stroke(); ctx.setLineDash([]);
+        ctx.strokeStyle = p.gold; ctx.lineWidth = 5; ctx.globalAlpha = 0.4; ctx.beginPath(); ctx.moveTo(O.x, O.y); ctx.lineTo(Pp.x, Pp.y); ctx.stroke(); ctx.globalAlpha = 1;  // the projection along u1
+      }
+      const A = toPx(D1), B = toPx(D2);
+      // right-angle marker between the two orthogonal vectors
+      if (n2 > 1e-6) {
+        const a1 = Math.atan2(D1.y, D1.x), a2 = Math.atan2(D2.y, D2.x), r = 16;
+        ctx.strokeStyle = p.sage; ctx.lineWidth = 1.5;
+        const c1 = { x: O.x + r * Math.cos(a1), y: O.y - r * Math.sin(a1) }, c2 = { x: O.x + r * Math.cos(a2), y: O.y - r * Math.sin(a2) };
+        ctx.beginPath(); ctx.moveTo(c1.x, c1.y); ctx.lineTo(c1.x + (c2.x - O.x), c1.y + (c2.y - O.y)); ctx.lineTo(c2.x, c2.y); ctx.stroke();
+      }
+      arrow(ctx, O.x, O.y, A.x, A.y, p.gold, 3);
+      arrow(ctx, O.x, O.y, B.x, B.y, p.violet, 3);
+      const orth = u2.x * u1.x + u2.y * u1.y;
+      info.innerHTML = normalized
+        ? `<b style="color:${p.gold}">ê₁</b> = u₁/|u₁| &nbsp; <b style="color:${p.violet}">ê₂</b> = u₂/|u₂| — an <b>orthonormal</b> basis: both unit length, mutually perpendicular (the dashed circle has radius 1).`
+        : `<b style="color:${p.gold}">u₁</b> = v₁ = (${v1.x}, ${v1.y}) &nbsp; <b style="color:${p.sage}">v₂</b> = (${v2.x}, ${v2.y})<br>` +
+          `subtract the projection: <b style="color:${p.violet}">u₂</b> = v₂ − (v₂·u₁ / u₁·u₁) u₁ = (${fmt(u2.x)}, ${fmt(u2.y)})<br>` +
+          `now <b style="color:${p.violet}">u₂</b>·<b style="color:${p.gold}">u₁</b> = <b>${fmt(orth)}</b> — orthogonal. <span style="color:${p.mute}">(drag the tips; “normalize” for ê)</span>`;
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', "Gram-Schmidt visualizer: two draggable vectors. It keeps u1 equal to v1, then subtracts v2's projection onto u1 so the remainder u2 is perpendicular to u1 (their dot product is zero). A normalize toggle shows the orthonormal basis of unit vectors.");
+    draw();                                                    // synchronous first paint
+  });
+
 })();

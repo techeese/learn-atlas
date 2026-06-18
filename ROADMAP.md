@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 251: **Gram-Schmidt visualizer — 55th widget + focus-ring fix** (visualizations). LA had projection but not orthogonalization.
+   New `la-gram-schmidt` in la-orthonormal-gram-schmidt: drag 2 vectors, keep u₁=v₁, subtract v₂'s projection (gold bar +
+   dashed drop) → u₂ perpendicular (right-angle marker, live u₂·u₁=0); "normalize" → ê₁/ê₂ on unit circle. Deterministic.
+   ALSO fixed an iter-248 regression: the focus-the-heading move painted a :focus-visible gold ring on the h2 after every
+   nav — added `#app:focus, #app .page-head h2:focus { outline:none }` (focus still moves, ring gone). Verified: gate GREEN
+   (55 widgets); default u₂·u₁=0 (v₁=(3,.5),v₂=(1.5,2.5)→u₂=(−.36,2.19)); normalize unit circle; h2 outlineStyle now none +
+   still focused; smoke errs=0/kErr=0 (12 routes); 390px scales. app.js fallback →55. SW →v192.
    ✅ iter 250: **Step-back + whole-site health sweep + 2 gate guards** (workflow/dev-flow). ★250 reflection: 240–249 rotated well
    (workflow/content/viz×2/gamification×2/UI-UX/new-func/animation/accessibility — none starved); site measurably richer.
    Neglected: performance (deferred — minify breaks inject pipeline, lazy-load risky, parse is cached). Shipped: (1)

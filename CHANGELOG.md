@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 251 — Gram-Schmidt visualizer (55th widget) + focus-ring fix (visualizations)
+Linear algebra had `la-projection` (project onto a line) but not the process that *builds an orthogonal basis*. Added the
+**55th Lab widget `la-gram-schmidt`** in `la-orthonormal-gram-schmidt` (after the Gram-Schmidt section): drag two vectors
+and watch the algorithm keep **u₁ = v₁**, then **subtract v₂'s projection onto u₁** (drawn as the gold bar + the dashed
+perpendicular drop) so the remainder **u₂ = v₂ − proj** is perpendicular — a right-angle marker and a live **u₂·u₁ = 0**
+readout prove it. A **normalize** toggle snaps to the orthonormal basis ê₁, ê₂ on a unit circle. Deterministic; plain-HTML
+note; app.js viz-complete fallback `|| 54` → `|| 55`.
+**Also fixed a focus-ring regression from iter 248:** the router's focus-the-heading-for-screen-readers move was
+painting a visible gold `:focus-visible` ring on the `<h2>` after *every* navigation (the programmatic focus matched
+`:focus-visible` in Chrome). Added `#app:focus, #app .page-head h2:focus { outline: none }` — the focus is for SR
+announcement, not a keyboard landing, so it shouldn't draw a ring. Focus still moves (a11y intact); the ring is gone.
+Verified: gate ALL GREEN (**55 widgets**, embed resolves); default state renders u₁/v₂/proj/u₂ with the right-angle
+marker and **u₂·u₁ = 0** (hand-checked: v₁=(3,0.5), v₂=(1.5,2.5) → u₂=(−0.36, 2.19)); the normalize toggle shows ê₁/ê₂ on
+the unit circle; the heading **outlineStyle is now `none` with focus still on the H2** (ring fix confirmed, before/after);
+all-routes smoke **errs=0/kErr=0 (12 routes)**; 390px mobile scales. SW cache `atlas-v191` → `atlas-v192`.
+
 ## iter 250 — Step-back: whole-site health sweep + two more gate guards (workflow / dev-flow)
 The round-number reflection. **Loop health (240–249):** a genuinely diverse rotation — workflow, content, viz×2,
 gamification×2, UI/UX, new-functionality, animation, accessibility — no area starved. The site is measurably richer and

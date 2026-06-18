@@ -116,6 +116,9 @@ body {
 }
 .skip-link:focus { top: 12px; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+/* the router moves focus to the view's heading (or #app) for screen-reader announcement on navigation — that focus is
+   programmatic, not a keyboard landing on an interactive control, so it must not paint a focus ring on the heading. */
+#app:focus, #app .page-head h2:focus { outline: none; }
 .nav a:focus-visible, .btn:focus-visible, .choice:focus-visible, .lab-card:focus-visible,
 .course-card:focus-visible, .ref-item:focus-visible, .grade-btn:focus-visible, .tab:focus-visible,
 .cotd:focus-visible, .miss-cta:focus-visible, .lesson-row:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
