@@ -697,6 +697,7 @@ body::after {
 
 /* mobile menu button */
 .menu-btn { display: none; }
+.topbar-search { display: none; }   /* one-tap search affordance, shown only when the sidebar collapses (mobile/tablet) */
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
@@ -706,7 +707,8 @@ body::after {
     transform: translateX(-100%); transition: transform .3s; box-shadow: 0 0 60px var(--shadow);
   }
   .sidebar.open { transform: none; }
-  .menu-btn { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; font-size: 20px; }
+  .menu-btn, .topbar-search { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; font-size: 20px; }
+  .topbar-search { font-size: 18px; }
   .topbar { padding: 12px 18px; gap: 12px; flex-wrap: wrap; }
   .xp-wrap { order: 5; max-width: 100%; flex-basis: 100%; }
   .view { padding: 24px 18px 80px; }
@@ -1214,7 +1216,7 @@ kbd { font-family: var(--font-mono); background: var(--panel-2); border: 1px sol
 @media (max-width: 640px) { .cs-grid { grid-template-columns: 1fr; } }
 
 @media print {
-  .sidebar, .topbar, .no-print, .toast-wrap, .menu-btn { display: none !important; }
+  .sidebar, .topbar, .no-print, .toast-wrap, .menu-btn, .topbar-search { display: none !important; }
   .shell, .main, .view { display: block !important; background: #fff !important; color: #111 !important; max-width: none !important; }
   body { background: #fff !important; }
   body::before, body::after { display: none !important; }

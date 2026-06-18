@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 272 — One-tap search on mobile (UI/UX)
+Global search / the command palette is a flagship feature, but on mobile it was effectively hidden: the only tap target
+(`🔎 Search`) lives in the **sidebar footer** — behind the hamburger, requiring tap-☰ → scroll → tap — and its on-screen
+hint is the meaningless-on-touch "⌘K". Added a **search icon in the topbar** (`#topbar-search`, 🔎) wired to the same
+`openPalette()`, shown **only when the sidebar collapses** (≤900px, mirroring the existing `.menu-btn` hamburger) so it
+costs one tap on mobile and stays out of the way on desktop (which keeps the sidebar button + ⌘K). Also hidden in print.
+Verified: **390px via dump-dom** — the icon computes `display: grid` (visible) and a click opens the palette
+(`.palette-scrim` present), `errs=0`; **desktop 1200px** — it computes `display: none` (no desktop redundancy/clutter);
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v212` → `atlas-v213`.
+
 ## iter 271 — Three more worked examples on flagship hard lessons (examples)
 Content is uniform (every lesson: 16 MCQs, ≥2 worked examples), so there were no thin spots to fill — but worked examples
 are top-tier active learning and a fresher content type than my last two deep-dive iterations. Added a **3rd worked

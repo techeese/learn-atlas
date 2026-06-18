@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 272: **One-tap search on mobile** (UI/UX). Search/command-palette was buried in the sidebar footer on mobile (tap-☰ →
+   scroll → tap; "⌘K" hint meaningless on touch). Added a topbar 🔎 (#topbar-search → openPalette), shown only ≤900px
+   (mirrors .menu-btn), hidden on desktop + print. Verified: 390px dump-dom display:grid + click opens palette (errs=0);
+   desktop display:none; smoke errs=0/kErr=0 (12). SW →v213.
    ✅ iter 271: **3 more worked examples on flagship hard lessons** (examples). Content uniform (no thin spots); added a 3rd worked
    example to 3 lessons at 2, each a NEW technique (298→301): la-determinants (3×3 det by cofactor = 49), a-dynamic-programming
    (0/1 knapsack 2-D table, max=9, why greedy fails), ps-normal-distribution (z-score beyond empirical rule, z≈1.33,
