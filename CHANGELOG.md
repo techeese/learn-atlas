@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 282 — Law of Large Numbers visualizer — 61st widget (visualizations)
+`ps-law-of-large-numbers` had a deeper-dive but **no widget**, and the LLN is one of the most fundamental — and most
+mis-felt — ideas in probability. Added the **61st Lab widget `ps-lln`**, embedded in that lesson: sample **a fair die**
+(or a coin) and the **running average** is plotted as the count climbs — wandering wildly early, then **settling onto the
+true mean** (μ = 3.5 for the die), staying inside a shaded **±2σ/√n band** that visibly narrows. Controls: **Play** (rAF
+animation), **+ 100** (a synchronous batch), **Reset**, and **Fair die / Coin** sources — so you watch convergence happen
+for two different distributions. Distinct from the CLT viz (which shows the sample-mean *distribution*); this shows a
+single average *converging*. Plain-unicode note (no `$`, viz-note landmine). app.js `viz-complete` fallback 60 → 61.
+Verified: gate ALL GREEN (**61 widgets**, embed resolves); **node** — 400 die rolls average to ~3.41 (within 0.25 of 3.5);
+**via `--dump-dom`** four "+ 100" clicks bring n to 400 with a running average of ~3.38 (converging to 3.5), `rawDollar=0`,
+`errs=0`, lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache
+`atlas-v222` → `atlas-v223`.
+
 ## iter 281 — Three interactive code exercises for the thinnest topics (new functionality / active learning)
 Code exercises (write → **Run** → instant ✓/✗ vs expected, +15 XP on first solve) are top-tier active learning but were
 lopsided: **deep learning had only 1** despite being the biggest topic, with RL next-thinnest. Added **3 gate-verified

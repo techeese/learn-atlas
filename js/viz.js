@@ -1143,6 +1143,58 @@
   });
 
   /* ========================================================
+     61. The Law of Large Numbers — the running average settles onto the true mean (Prob & Stats)
+     ======================================================== */
+  register({ id: 'ps-lln', topic: 'probability-statistics', title: 'The Law of Large Numbers', blurb: 'Sample a die (or a coin) over and over and watch the running average wander at first, then settle onto the true mean as the count grows. Each draw stays random; their average becomes predictable — and the error shrinks like 1/√n.' },
+  function (root) {
+    const W = 540, H = 350, padL = 32, padR = 14, padT = 14, padB = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const DIST = {
+      die: { name: 'a fair die', f: () => 1 + Math.floor(Math.random() * 6), mu: 3.5, sd: Math.sqrt(35 / 12), lo: 1, hi: 6 },
+      coin: { name: 'a coin (0 or 1)', f: () => Math.random() < 0.5 ? 0 : 1, mu: 0.5, sd: 0.5, lo: 0, hi: 1 }
+    };
+    const MAXN = 400;
+    let dist = DIST.die, n = 0, sum = 0, avgs = [], anim = null;
+    const X = i => padL + (i / MAXN) * (W - padL - padR);
+    function reset() { if (anim) { anim.stop(); anim = null; } n = 0; sum = 0; avgs = []; draw(); }
+    function addSamples(k) { for (let i = 0; i < k && n < MAXN; i++) { sum += dist.f(); n++; avgs.push(sum / n); } draw(); }
+    function play() { if (anim) { anim.stop(); anim = null; return; } anim = loop(() => { addSamples(4); if (n >= MAXN && anim) { anim.stop(); anim = null; } }); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const yLo = dist.lo, yHi = dist.hi, Y = v => (H - padB) - (v - yLo) / (yHi - yLo) * (H - padB - padT);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'right';
+      for (let g = Math.ceil(yLo); g <= yHi; g++) { ctx.beginPath(); ctx.moveTo(padL, Y(g)); ctx.lineTo(W - padR, Y(g)); ctx.stroke(); ctx.fillStyle = p.mute; ctx.fillText(g, padL - 5, Y(g) + 3); }
+      // shrinking ±2σ/√n band around the mean
+      ctx.fillStyle = p.sage; ctx.globalAlpha = 0.13; ctx.beginPath();
+      for (let i = 1; i <= MAXN; i++) { const b = 2 * dist.sd / Math.sqrt(i), yy = Y(Math.min(yHi, dist.mu + b)); i === 1 ? ctx.moveTo(X(i), yy) : ctx.lineTo(X(i), yy); }
+      for (let i = MAXN; i >= 1; i--) { const b = 2 * dist.sd / Math.sqrt(i); ctx.lineTo(X(i), Y(Math.max(yLo, dist.mu - b))); }
+      ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+      // true-mean line
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(padL, Y(dist.mu)); ctx.lineTo(W - padR, Y(dist.mu)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.textAlign = 'left'; ctx.font = '600 11px ' + cssVar('--font-mono', 'monospace'); ctx.fillText('μ = ' + dist.mu, W - padR - 56, Y(dist.mu) - 5);
+      // running-average curve
+      if (avgs.length) {
+        ctx.strokeStyle = p.violet; ctx.lineWidth = 2; ctx.beginPath();
+        avgs.forEach((a, i) => { const xx = X(i + 1), yy = Y(Math.max(yLo, Math.min(yHi, a))); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }); ctx.stroke();
+        const last = avgs[avgs.length - 1]; ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(X(avgs.length), Y(Math.max(yLo, Math.min(yHi, last))), 3.5, 0, 7); ctx.fill();
+      }
+      info.innerHTML = n === 0
+        ? 'Press “+ 100” or Play to start sampling ' + dist.name + '. The running average will wander at first, then settle onto the true mean μ = ' + dist.mu + '.'
+        : 'After <b>' + n + '</b> samples of ' + dist.name + ', the running average is <b style="color:' + p.violet + '">' + (sum / n).toFixed(3) + '</b> — converging to the true mean <b style="color:' + p.gold + '">μ = ' + dist.mu + '</b>. The error shrinks like 1/√n (the sage band): each draw is random, but the average is not.';
+    }
+    button(ctl, '▶ Play / pause', play);
+    button(ctl, '+ 100', () => addSamples(100));
+    button(ctl, 'Reset', reset);
+    button(ctl, 'Fair die', () => { dist = DIST.die; reset(); });
+    button(ctl, 'Coin', () => { dist = DIST.coin; reset(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Law of Large Numbers visualizer: as the sample count grows, the running average of die rolls or coin flips converges to the true mean, staying within a band of width about two sigma over the square root of n around the mean that shrinks as more samples accumulate.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
