@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 297 — Four more deeper-dives on flagship hard lessons (content / understandability)
+First confirmed an existing-feature suspicion was already handled: **number-key/A–D quiz selection and 1–4 flashcard grading
+already exist** (global keydown), documented in the `?` shortcuts overlay and via inline "1–4 to answer" hints — so no work
+there. Shipped instead **4 "Deeper dive" expandables** on flagship hard lessons that lacked one, across four topics
+(deep-dives 61 → **65**):
+- **a-np-completeness** — why NP-complete problems stand or fall together: NP = *verifiable* fast (not solvable), and a
+  polynomial reduction maps every NP problem onto any NP-complete one, so one fast algorithm would crack them all (P = NP).
+- **c-implicit-related-rates** — related rates are the chain rule wearing a clock: differentiate a constraint w.r.t. the
+  hidden variable (time) and each quantity contributes its rate, so the ladder's `2x x' + 2y y' = 0` links the two speeds.
+- **l-prompting-and-in-context-learning** — in-context learning isn't learning: no weights change; the prompt *conditions*
+  a frozen model, and chain-of-thought works by buying forward-pass compute + a scratchpad.
+- **ps-hypothesis-testing-logic** — testing as proof by contradiction with a dial: assume `H₀`, reject if the data are too
+  surprising (p < α); you never *prove* H₀, and α is the false-alarm rate you accept.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each dive renders (KaTeX 0 / 13 / 0 / 9 spans — NP & ICL are
+intentionally prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v237` → `atlas-v238`.
+
 ## iter 296 — Student's-t vs. normal visualizer — 64th widget (visualizations)
 `ps-t-tests` had no widget, and the t-distribution's fatter tails are exactly *why* small-sample tests differ from
 z-tests. Added the **64th Lab widget `ps-t-dist`**, embedded in that lesson: it overlays the **t-distribution** (violet) on

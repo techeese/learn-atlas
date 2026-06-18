@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 297: **4 more deeper-dives on flagship hard lessons** (content). (First confirmed number-key/A–D quiz keys + 1–4 flashcard
+   grading already exist + are documented.) +4 dd (61→65) across algo/calc/LLM/PS: a-np-completeness (NP-complete interreducible →
+   P=NP), c-implicit-related-rates (chain rule wearing a clock), l-prompting-and-in-context-learning (ICL conditions, doesn't
+   teach), ps-hypothesis-testing-logic (proof by contradiction with a dial). String.raw LaTeX; byte-stable inject w/ guards.
+   Verified: gate GREEN; dump-dom each renders (katex 0/13/0/9, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v238.
    ✅ iter 296: **Student's-t vs. normal visualizer — 64th widget** (visualizations). ps-t-tests had no viz. New `ps-t-dist`: t-curve
    (violet) over standard normal (dashed), shaded |t|>2 tails + live P(t>2); slide df 1–40 → P(t>2) falls 14%→5.2%→~2.5%,
    converging to normal's 2.3% by df≈30. PDF numerically normalized (no gamma). app.js fallback 63→64. Plain-unicode note.
