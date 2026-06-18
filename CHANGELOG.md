@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 298 — Accessible flashcard flip (accessibility)
+A real a11y bug in the core study mode: both faces of the 3-D flashcard were always in the DOM with **no `aria-hidden`**,
+so a screen reader read the **answer aloud before you flipped** — leaking the answer and defeating the whole point of
+retrieval practice — while the card itself wasn't announced as interactive. Fixed:
+- The card is now a proper **`role="button"` `tabindex="0"`** with an `aria-label` ("Flashcard — activate to reveal the
+  answer", updated to "Answer revealed — grade how well you recalled it" on flip). Enter/Space already flipped it via the
+  global handler; now SR users are told it's interactive and can focus it.
+- The hidden face is kept **out of the accessibility tree**: `aria-hidden` toggles by flip state (back hidden until you
+  flip, front hidden after), so SR users get the prompt first and the answer only on reveal — same as sighted users.
+- The card's inner is an **`aria-live="polite"`** region, so flipping announces the revealed answer.
+Verified: gate ALL GREEN; **via `--dump-dom`** the card renders as `role=button tabindex=0` with `aria-live=polite`; before
+flip front is visible / back `aria-hidden=true`, after a click front `aria-hidden=true` / back visible and the label updates;
+`errs=0`; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v238` → `atlas-v239`.
+
 ## iter 297 — Four more deeper-dives on flagship hard lessons (content / understandability)
 First confirmed an existing-feature suspicion was already handled: **number-key/A–D quiz selection and 1–4 flashcard grading
 already exist** (global keydown), documented in the `?` shortcuts overlay and via inline "1–4 to answer" hints — so no work

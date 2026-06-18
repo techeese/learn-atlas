@@ -1129,10 +1129,10 @@
       body.innerHTML = `
       <div class="flash-wrap reveal">
         <div class="flash-counter">${label} · ${i + 1} / ${cards.length}</div>
-        <div class="card3d" id="card3d">
-          <div class="card3d-inner">
-            <div class="card-face"><span class="ftag">Prompt</span><div class="fcontent">${c.front}</div></div>
-            <div class="card-face card-back"><span class="ftag">Answer</span><div class="fcontent">${c.back}</div></div>
+        <div class="card3d" id="card3d" role="button" tabindex="0" aria-label="Flashcard — activate to reveal the answer">
+          <div class="card3d-inner" aria-live="polite">
+            <div class="card-face" id="card-front"><span class="ftag">Prompt</span><div class="fcontent">${c.front}</div></div>
+            <div class="card-face card-back" id="card-back" aria-hidden="true"><span class="ftag">Answer</span><div class="fcontent">${c.back}</div></div>
           </div>
         </div>
         <div id="flash-controls"></div>
@@ -1145,7 +1145,14 @@
     }
     function flip() {
       flipped = !flipped;
-      document.getElementById("card3d").classList.toggle("flipped", flipped);
+      const card = document.getElementById("card3d");
+      card.classList.toggle("flipped", flipped);
+      // a11y: keep the hidden face out of the accessibility tree so the answer isn't read before the flip,
+      // and update the label; the polite live region announces the revealed answer.
+      const front = document.getElementById("card-front"), back = document.getElementById("card-back");
+      if (front) front.setAttribute("aria-hidden", flipped ? "true" : "false");
+      if (back) back.setAttribute("aria-hidden", flipped ? "false" : "true");
+      card.setAttribute("aria-label", flipped ? "Answer revealed — grade how well you recalled it" : "Flashcard — activate to reveal the answer");
       drawControls();
     }
     function drawControls() {
