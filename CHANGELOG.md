@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 248 — SPA focus management on route change (accessibility)
+Accessibility was the most-overdue lane (last at iter 234). A classic single-page-app gap: the router updated the page
+`<title>` and scrolled to top, but **never moved focus** — after navigating, a keyboard or screen-reader user was
+stranded on the (now-removed) element they clicked, with no announcement of the new view. Fixed it the standard way:
+after each route renders, **move focus to the new view's main `<h2>` heading** (falling back to the `#app` main region),
+so screen readers announce the page name and keyboard focus lands at the top of the new content.
+- Guarded against modals (`.intro-ov`/`.palette-scrim`/`.levelup-ov`/`.sc-ov` keep their own focus), uses
+  `focus({preventScroll:true})` so there's **no scroll jump**, and sets `tabindex="-1"` on the heading so programmatic
+  focus produces **no visible focus ring** for mouse users (only keyboard `:focus-visible` would).
+No new state, no data change (app.js only).
+Verified: gate ALL GREEN; navigating to a lesson moved focus to its H2 ("Vectors and Vector Operations") and to Progress
+moved it to "Your Progress", with **scrollTop=0** and the heading's `outlineStyle=none`; the **modal guard holds** (with
+the intro tour open, focus stays on its "Start learning" button, `focusInsideIntro=true`); an all-routes pass showed
+**14/14 routes move focus to the heading**, `errs=0/kErr=0`. SW cache `atlas-v189` → `atlas-v190`.
+
 ## iter 247 — A "you did it" beat when you complete a lesson (animation / juice)
 Juice was the most-overdue lane (last at iter 237). The most *frequent meaningful* action — marking a lesson complete
 (done up to 148 times across the journey) — was flat: a toast + a button text swap. Gave it a celebration proportional to

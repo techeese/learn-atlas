@@ -2479,6 +2479,13 @@
     else view404();
     renderChrome();
     closeSidebar();
+    // SPA focus management (a11y): move keyboard/screen-reader focus to the new view's heading so navigation is
+    // announced and the focus point isn't stranded on the removed element. Skip while a modal owns focus.
+    if (!document.querySelector(".intro-ov, .palette-scrim, .levelup-ov, .sc-ov")) {
+      const fh = app.querySelector(".page-head h2") || app.querySelector("h2") || app;
+      if (fh !== app) fh.setAttribute("tabindex", "-1");
+      try { fh.focus({ preventScroll: true }); } catch (e) { try { fh.focus(); } catch (e2) {} }
+    }
     updateReadProgress(); updateToTop();                   // recompute bar + hide back-to-top for the new (top-scrolled) page
     setTimeout(updateReadProgress, 200);                   // ...and again once KaTeX/viz settle the height
   }
