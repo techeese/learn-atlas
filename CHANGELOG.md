@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 422 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/LLM (deep-dives 172 → **175**; 27 lessons now carry two):
+- **c-convexity** (had: "local minimum is global") → **how to recognize/build convex functions**: the Hessian-PSD test (`f''≥0`) plus the
+  convex calculus (nonneg sums, pointwise max, affine composition) — why `‖Ax−b‖²+λ‖x‖₁` is provably convex.
+- **a-divide-and-conquer** (had: "balanced splits") → **the Master Theorem**: compare `f(n)` to `n^{log_b a}` — mergesort/binary search
+  are the tie case, Karatsuba (`log₂3≈1.585`) is leaf-dominated. "Which level of the tree holds most of the work?"
+- **l-scaling-laws** (had: "the Chinchilla correction") → **what scaling laws can't predict**: smooth loss can hide *emergent* skills,
+  and a power-law fit is only evidence within its range — a trend, not a guarantee.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + duplicate-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3
++ 8 pages) **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v361` → `atlas-v362`.
+
 ## iter 421 — Three more worked examples across LLM/DL (examples)
 A **3rd worked example** on three flagship lessons (examples 415 → **418**, all ⌘K-searchable):
 - **l-rag-and-tools** — **the retrieval context budget**: a `4000`-token window minus `500` overhead fits `⌊3500/500⌋=7` chunks;

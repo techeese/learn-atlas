@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 422: **3 more second deep-dives on the hardest lessons** (content/depth — owner's #1). +3 dd (172→175; 27 lessons have 2):
+   c-convexity (recognize/build convex fns — Hessian PSD + convex calculus), a-divide-and-conquer (the Master Theorem), l-scaling-laws
+   (what scaling laws can't predict — emergence/extrapolation). Append-second-dd inject w/ full guards. Verified: gate GREEN;
+   dump-dom each nDD=2, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none. SW →v362.
    ✅ iter 421: **3 more worked examples across LLM/DL** (examples). +3 (415→418): l-rag-and-tools (context budget → 7 chunks),
    dl-transformer-architecture (why /√dₖ), dl-autoencoders-vae (reparameterization trick). Node-verified; byte-stable inject w/ guards.
    Verified: gate GREEN (418 examples); dump-dom katex 70/85/26, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none. SW →v361.
