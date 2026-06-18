@@ -1750,6 +1750,47 @@
   });
 
   /* ========================================================
+     76. Critical points: min, max, saddle (Calculus)
+     ======================================================== */
+  register({ id: 'calc-saddle', topic: 'calculus', title: 'Critical points: min, max, and saddle', blurb: 'At a critical point (∇f=0) the Hessian decides the type: both eigenvalues positive → minimum, both negative → maximum, mixed signs → saddle. Switch between a bowl, a dome, and a saddle and read the classification off the surface curvature.' },
+  function (root) {
+    const W = 380, H = 380, N = 60, LO = -2, HI = 2;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const fns = {
+      bowl: { f: (x, y) => x * x + y * y, ev: '+2, +2', cls: 'local MINIMUM', H: '[[2, 0], [0, 2]]' },
+      saddle: { f: (x, y) => x * x - y * y, ev: '+2, −2', cls: 'SADDLE point', H: '[[2, 0], [0, −2]]' },
+      dome: { f: (x, y) => -x * x - y * y, ev: '−2, −2', cls: 'local MAXIMUM', H: '[[−2, 0], [0, −2]]' }
+    };
+    let mode = 'saddle';
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const F = fns[mode].f, cw = W / N, ch = H / N;
+      let mx = 0;
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { const x = LO + (i + 0.5) / N * (HI - LO), y = LO + (j + 0.5) / N * (HI - LO); mx = Math.max(mx, Math.abs(F(x, y))); }
+      mx = mx || 1;
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+        const x = LO + (i + 0.5) / N * (HI - LO), y = LO + (j + 0.5) / N * (HI - LO), v = F(x, y) / mx;
+        ctx.fillStyle = v >= 0 ? p.violet : p.rust; ctx.globalAlpha = 0.1 + 0.85 * Math.abs(v);
+        ctx.fillRect(i * cw, H - (j + 1) * ch, cw + 1, ch + 1);
+      }
+      ctx.globalAlpha = 1;
+      const ox = W / 2, oy = H / 2;
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(ox, oy, 5, 0, 7); ctx.fill();
+      ctx.strokeStyle = p.bg; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(ox, oy, 5, 0, 7); ctx.stroke();
+      const d = fns[mode];
+      info.innerHTML = 'f(x,y) as a heatmap (violet = higher, rust = lower) with the critical point ∇f=0 at the gold origin. Hessian H = ' + d.H + ', eigenvalues ' + d.ev + ' → <b>' + d.cls + '</b>. Both eigenvalues positive ⇒ the surface curves up in every direction (a bowl); both negative ⇒ down (a dome); <em>mixed</em> signs ⇒ up one way and down another — a saddle, which is neither a max nor a min.';
+    }
+    button(ctl, 'Bowl (min)', () => { mode = 'bowl'; draw(); });
+    button(ctl, 'Saddle', () => { mode = 'saddle'; draw(); });
+    button(ctl, 'Dome (max)', () => { mode = 'dome'; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Critical-point visualizer: a heatmap of f(x,y) around the origin critical point. Bowl mode (x^2+y^2) curves up everywhere (minimum); dome mode curves down (maximum); saddle mode (x^2-y^2) curves up along one axis and down the other, classified by the signs of the two Hessian eigenvalues.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

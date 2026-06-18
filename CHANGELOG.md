@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 350 — Step-back: full kErr/route + coverage audit (clean) + critical-point viz — 76th widget (visualizations)
+**Round-number step-back (iter 350).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive) → errs=0, kErr=0, 0 bad;
+  all **93 non-lesson routes** (courses, Lab + 76 widgets, every utility page) → errs=0, kErr=0. **241 routes green.**
+- **Structural coverage audit**: every one of 148 lessons has ≥2 examples (**337** total), a uniform **16 MCQs** (2368), ≥1
+  flashcard (889) and ≥1 homework (442) — **zero gaps**. The codex is structurally complete and uniform.
+**Reflection (341–349):** steady 3-per-modality across examples/code/content/viz — all verified and pushed, no bugs; the gate
+hardening (330) and kErr-audit discipline have held. Non-content compass areas remain saturated, so the loop's value is now
+incremental depth + the occasional fresh viz.
+**The ship.** `c-multivariable-optimization` had no widget — added the **76th Lab widget `calc-saddle`**: a heatmap of `f(x,y)`
+around the origin critical point with three presets — **Bowl** (`x²+y²`, Hessian eigenvalues +,+ → minimum), **Saddle**
+(`x²−y²`, +,− → saddle), **Dome** (`−x²−y²`, −,− → maximum). The note ties the classification to the sign pattern of the
+Hessian's eigenvalues. Plain-unicode note (no `$`). app.js `viz-complete` fallback 75 → 76.
+Verified: gate ALL GREEN (**76 widgets**, embed resolves); **via `--dump-dom`** the presets drive the classification
+`saddle → min (Bowl) → max (Dome)`, `rawDollar=0`, `errs=0`, the lesson embed hydrates; both step-back sweeps clean;
+embed-route smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v289` → `atlas-v290`.
+
 ## iter 349 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons across calc/PS/RL (examples 334 → **337**, all ⌘K-searchable):
 - **c-implicit-related-rates** — **the expanding balloon**: `dV/dt = 4πr² dr/dt` → at `r=5`, `dr/dt = 100/(100π) = 1/π ≈ 0.318`

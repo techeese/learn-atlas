@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 350: **Step-back: full kErr/route + coverage audit (clean) + critical-point viz (76th widget)** (visualizations). Sweeps: 148
+   lessons (reveal examples + open deep-dives) errs=0/kErr=0/0 bad; 93 routes errs=0/kErr=0 (241 green). Coverage audit: all 148
+   lessons ≥2 examples (337), 16 MCQs (2368), ≥cards/hw — zero gaps. Ship: c-multivariable-optimization had no viz → `calc-saddle`
+   (heatmap of f(x,y), presets Bowl/Saddle/Dome classified by Hessian eigenvalue signs). app.js fallback 75→76. Verified: gate GREEN
+   (76 widgets); dump-dom presets → saddle/min/max, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v290.
    ✅ iter 349: **3 more worked examples on flagship hard lessons** (examples). +3 (334→337) across calc/PS/RL: c-implicit-related-rates
    (expanding balloon dr/dt=1/π), ps-geometric-waiting (E[X]=6, P(X>3)=0.579), rl-value-iteration (contraction: error ×γ → V*=10).
    Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (337 examples); dump-dom each shows 3, reveals (katex 56/34/22,
