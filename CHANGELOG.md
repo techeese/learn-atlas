@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 314 — In-app "reduce motion" toggle (accessibility)
+Every animation already respected the OS `prefers-reduced-motion` setting, but a user who wants calmer motion had **no in-app
+control** — they'd have to change a system-wide OS preference. Added a **"Reduce motion" toggle in Settings** (a11y best
+practice: offer motion control in the app itself). It sets `data-reduce-motion="on"` on `<html>`, which (a) makes the shared
+`reducedMotion()` helper return true — so every JS-driven animation already gated on it (confetti, sweep-bars, cascades,
+count-ups, the map reveal, card flips, fly-outs) is suppressed — and (b) triggers a **CSS guard mirroring the OS-pref block**
+(`[data-reduce-motion="on"] *` zeroes animation/transition durations; `.reveal` shows instantly). Persisted to localStorage
+and re-applied on boot; the button is `aria-pressed` and relabels on toggle. Independent of (and additive to) the OS setting.
+Verified: gate ALL GREEN; **via `--dump-dom`** the toggle is off by default (`data-reduce-motion=null`), turning it on sets
+the attribute + persists (`localStorage.reduceMotion=1`, `aria-pressed=true`, label "🌿 Reduced motion: on"); with the pref
+**preset, boot re-applies it** (`data-reduce-motion=on`); all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape
+change. SW cache `atlas-v254` → `atlas-v255`.
+
 ## iter 313 — Four more deeper-dives on flagship hard lessons (content / understandability)
 Continuing the depth directive — 4 "Deeper dive" expandables across LLM/DL/algo/PS (deep-dives 73 → **77**):
 - **l-optimization-and-stability** — why LLM training needs **warmup** (early gradients are huge/noisy), **AdamW's decoupled

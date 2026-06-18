@@ -182,7 +182,7 @@
   }
 
   // ---------- juice: XP-gain float + ring pulse + stat count-up ----------
-  function reducedMotion() { return !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }
+  function reducedMotion() { return document.documentElement.getAttribute("data-reduce-motion") === "on" || !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }
   function floatXP(n) {
     if (!(n > 0) || reducedMotion()) return;
     const ring = document.getElementById("ring"); if (!ring) return;
@@ -401,7 +401,7 @@
   }
 
   // ---------- juice: confetti + level-up celebration (respects reduced-motion) ----------
-  function reducedMotion() { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } }
+  function reducedMotion() { try { return document.documentElement.getAttribute("data-reduce-motion") === "on" || window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } }
   function confetti() {
     if (reducedMotion()) return;
     const cv = document.createElement("canvas"), W = cv.width = window.innerWidth, H = cv.height = window.innerHeight;
@@ -2345,6 +2345,9 @@
           <button class="btn ghost rs-btn" data-rs="1">A</button>
           <button class="btn ghost rs-btn" data-rs="1.15">A+</button>
         </div>
+        <div class="viz-slider" style="gap:10px;margin-top:14px"><span class="viz-slab">Motion</span>
+          <button class="btn ghost" id="rm-btn" aria-pressed="${reduceMotionOn()}">${reduceMotionOn() ? "🌿 Reduced motion: on" : "✦ Reduce motion"}</button>
+        </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
           <button class="btn ghost" id="export-btn">⬇ Export progress</button>
           <button class="btn ghost" id="import-btn">⬆ Import progress</button>
@@ -2355,6 +2358,8 @@
     </div>`;
     bindGo();
     app.querySelectorAll(".rs-btn").forEach(b => b.addEventListener("click", () => { localStorage.setItem("atlas.textScale", b.dataset.rs); applyTextScale(); toast("🔠", "Text size set", "Reading text scaled to " + Math.round(b.dataset.rs * 100) + "%"); }));
+    const rmBtn = document.getElementById("rm-btn");
+    if (rmBtn) rmBtn.addEventListener("click", () => { const on = toggleReduceMotion(); rmBtn.setAttribute("aria-pressed", on); rmBtn.innerHTML = on ? "🌿 Reduced motion: on" : "✦ Reduce motion"; toast(on ? "🌿" : "✦", "Reduced motion " + (on ? "on" : "off"), on ? "Animations and transitions are now minimized." : "Animations restored."); });
     document.getElementById("heatmap").appendChild(buildHeatmap());
     // "look how far I've come" — cascade-count the progress numbers on load (earned moment; no-op under reduced-motion)
     app.querySelectorAll(".stat-strip .v, .act-num, .dist-num").forEach((el, i) => countUp(el, Math.min(i * 32, 430)));
@@ -2666,6 +2671,18 @@
   function updateThemeLabel(t) {
     document.getElementById("theme-toggle").innerHTML = t === "ink" ? "☾ &nbsp;Ink theme" : "☀ &nbsp;Parchment theme";
   }
+  // ---------- in-app "reduce motion" (overrides OS pref; gates JS animations via reducedMotion() + CSS via [data-reduce-motion]) ----------
+  function initReduceMotion() {
+    if (localStorage.getItem("atlas.reduceMotion") === "1") document.documentElement.setAttribute("data-reduce-motion", "on");
+  }
+  function reduceMotionOn() { return document.documentElement.getAttribute("data-reduce-motion") === "on"; }
+  function toggleReduceMotion() {
+    const on = !reduceMotionOn();
+    if (on) { document.documentElement.setAttribute("data-reduce-motion", "on"); localStorage.setItem("atlas.reduceMotion", "1"); }
+    else { document.documentElement.removeAttribute("data-reduce-motion"); localStorage.removeItem("atlas.reduceMotion"); }
+    return on;
+  }
+
   // ---------- high-contrast accessibility mode (layers on either theme) ----------
   function initContrast() {
     const saved = localStorage.getItem("atlas.contrast") === "high" ? "high" : "normal";
@@ -2833,6 +2850,7 @@
     applyTextScale();
     initTheme();
     initContrast();
+    initReduceMotion();
     initMobile();
     window.addEventListener("hashchange", router);
     window.addEventListener("keydown", e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); openPalette(); } });

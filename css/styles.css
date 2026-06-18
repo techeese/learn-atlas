@@ -126,6 +126,9 @@ body {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
+/* in-app "reduce motion" override (Settings) — mirrors the OS-pref guard above without needing an OS change */
+[data-reduce-motion="on"] *, [data-reduce-motion="on"] *::before, [data-reduce-motion="on"] *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+[data-reduce-motion="on"] .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
 
 /* atmospheric background: gradient mesh + grain */
 body::before {

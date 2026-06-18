@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 314: **In-app "reduce motion" toggle** (a11y). Animations respected OS prefers-reduced-motion but had no in-app control.
+   Added a Settings toggle → data-reduce-motion="on" on <html>, which makes reducedMotion() true (gates all JS animations) +
+   triggers a CSS guard mirroring the OS-pref block; persisted + re-applied on boot, aria-pressed. Verified: gate GREEN; dump-dom
+   off by default, toggle sets attr + persists + relabels, boot re-applies a preset pref; smoke errs=0/kErr=0 (12). SW →v255.
    ✅ iter 313: **4 more deeper-dives on flagship hard lessons** (content). +4 dd (73→77) across LLM/DL/algo/PS:
    l-optimization-and-stability (warmup/AdamW/clipping = stability), dl-pooling-and-cnn-architectures (invariance + receptive
    field), a-approximation-randomized (keep a guarantee: c-approx or randomized), ps-sample-spaces-events (probability = set
