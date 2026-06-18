@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 391 — Three more worked examples across DL/calc/algo (examples)
+A **3rd worked example** on three flagship lessons across DL/calc/algo (examples 364 → **367**, all ⌘K-searchable):
+- **dl-the-artificial-neuron-and-mlp** — **a single neuron is logistic regression**: `σ(w·x+b)` → `0.5` at the boundary, `0.881`
+  off it; the decision boundary is the line `w·x+b=0` — one neuron draws only a *linear* split (why a single unit can't do XOR).
+- **c-definite-integral-riemann** — **left/right/midpoint sums**: for `∫₀²x²` (true `2.667`), `L=1`, `R=5`, `M=2.5`; midpoint's
+  over/under-shoot cancels per strip, so its error shrinks as `O(1/n²)` vs `O(1/n)`.
+- **a-asymptotic-analysis** — **n log n vs n² at scale**: at `n=1000`, `≈9,966` vs `1,000,000` (100×); growth rate, not the
+  constant, decides feasibility — the crossover Big-O captures.
+Every value node-verified; injected byte-stably with round-trip + even-`$` + tag-balance + unsupported-env + **a new bare-`<`-letter-in-math
+pre-guard** (the neuron example uses `\lt`/`\gt`/`\lVert` to stay safe).
+Verified: gate ALL GREEN (**367 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (65 / 67 / 93 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v330` → `atlas-v331`.
+
 ## iter 390 — Step-back: full kErr/route + coverage audit (clean) + recursion-tree visualizer — 86th widget (visualizations)
 **Round-number step-back (iter 390).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive) → errs=0, kErr=0, 0 bad;

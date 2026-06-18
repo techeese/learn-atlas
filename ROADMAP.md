@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 391: **3 more worked examples across DL/calc/algo** (examples). +3 (364→367): dl-the-artificial-neuron-and-mlp (neuron =
+   logistic regression, boundary w·x+b=0), c-definite-integral-riemann (L=1/R=5/M=2.5 vs 2.667), a-asymptotic-analysis (n log n vs
+   n² → 100× at n=1000). Added a bare-`<`-letter-in-math inject pre-guard (neuron uses \lt/\gt/\lVert). Verified: gate GREEN (367
+   examples); dump-dom katex 65/67/93, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none. SW →v331.
    ✅ iter 390: **Step-back: full kErr/route + coverage audit (clean) + recursion-tree viz (86th widget)** (visualizations). Sweeps:
    148 lessons errs=0/kErr=0/0 bad; 103 routes errs=0/kErr=0 (251 green). Coverage: 0 thin (148 dd=100%, 364 examples, 87 code).
    Ship: new `algo-recursion-tree` in a-divide-and-conquer — bars per level (each = n work), log₂n+1 levels; slider n, n log n vs n²
