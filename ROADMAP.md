@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 291: **Scaling-laws visualizer — 63rd widget** (visualizations). l-scaling-laws had no viz. New `llm-scaling`: for fixed
+   compute C=6ND, loss-vs-model-size U-curve (L=E+A/Nᵃ+B/Dᵃ), marks compute-optimal N* at the dip; slide budget 10¹⁸–10²⁴
+   and N* climbs 91M→2.9B→91B at constant ~20 tok/param (constants tuned (B/A)^(1/a)≈20). app.js fallback 62→63. Plain-unicode
+   note. Verified: gate GREEN (63 widgets); node U-curve + 21 tok/param constant; dump-dom slider grows N* 91M→2.9B→91.2B,
+   rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v232.
    ✅ iter 290: **Step-back: full-site sweep (clean) + 2 LLM code exercises** (active learning). Step-back: 281–289 rotation diverse
    (code/viz/content/examples/viz/UI-UX/gamification/a11y/content), no bugs. Full 228-route sweep (148 lessons + 62 lab + 7
    courses + 11 pages), first since 280 → errs=0/kErrTotal=0/bad=none. Ship: LLM was thinnest code topic (2); +2 JS

@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 291 — Scaling-laws visualizer — 63rd widget (visualizations)
+`l-scaling-laws` had no widget, and scaling laws are one of the most abstract — and most consequential — ideas in the
+LLM course. Added the **63rd Lab widget `llm-scaling`**, embedded in that lesson: for a fixed compute budget `C = 6ND`,
+it plots **loss vs. model size** as a **U-curve** (Chinchilla-style `L = E + A/Nᵃ + B/Dᵃ`) and marks the **compute-optimal
+size N\*** at the dip. Slide the compute budget (10¹⁸–10²⁴ FLOPs) and `N*` marches up the curve — `91M → 2.9B → 91B` — while
+the optimum stays at **~20 tokens per parameter** (the famous Chinchilla rule; constants tuned so `(B/A)^(1/a) ≈ 20`,
+giving a constant optimal ratio). The note names `N*`, `D*`, the tokens/param ratio, and the predicted loss live — the
+visceral "bigger isn't better at fixed compute; you'd starve it of tokens" lesson. Plain-unicode note + unicode-superscript
+axis labels (no `$`, viz-note landmine). app.js `viz-complete` fallback 62 → 63.
+Verified: gate ALL GREEN (**63 widgets**, embed resolves); **node** prototype confirmed the U-curve, ~21 tokens/param
+constant across budgets, and N\* growing ~√C with loss dropping along a power law; **via `--dump-dom`** the slider grows
+`N*` `91M → 2.9B → 91.2B` across `10¹⁸/10²¹/10²⁴`, `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke
+**errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v231` → `atlas-v232`.
+
 ## iter 290 — Step-back: full-site sweep (clean) + two LLM code exercises (new functionality / active learning)
 **Step-back (every ~10 iters).** Health check of 281–289: code · viz · content · examples · viz · UI/UX · gamification ·
 a11y · content — a genuinely diverse rotation (four distinct non-content areas in the last four iters: UI/UX, gamification,

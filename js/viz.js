@@ -412,6 +412,46 @@
   });
 
   /* ========================================================
+     63. Scaling laws — the compute-optimal model size (LLMs)
+     ======================================================== */
+  register({ id: 'llm-scaling', topic: 'llm', title: 'Scaling laws: the compute-optimal model size', blurb: 'For a fixed training budget, loss versus model size is a U-curve — too small underfits, too large is under-trained (too few tokens left for it). Slide the compute budget and watch the optimal size N* march up the curve, always near ~20 tokens per parameter (the Chinchilla rule).' },
+  function (root) {
+    const W = 540, H = 350, padL = 30, padR = 14, padT = 18, padB = 40;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const E = 1.69, A = 400, B = 1080, a = 0.33, NLO = 7, NHI = 12;
+    let logC = 21;
+    const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '.': '·' };
+    const sup = n => String(n).split('').map(d => SUP[d] || d).join('');
+    const L = (N, D) => E + A / Math.pow(N, a) + B / Math.pow(D, a);
+    const fmtNum = x => x >= 1e12 ? (x / 1e12).toFixed(1) + 'T' : x >= 1e9 ? (x / 1e9).toFixed(1) + 'B' : x >= 1e6 ? (x / 1e6).toFixed(0) + 'M' : x.toFixed(0);
+    slider(ctl, { label: 'compute (FLOPs)', min: 18, max: 24, step: 0.5, value: logC, fmt: v => '10' + sup(v), onInput: v => { logC = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const C = Math.pow(10, logC);
+      const pts = []; let bestN = 0, bestL = 1e9, bestD = 0;
+      for (let lx = NLO; lx <= NHI; lx += 0.02) { const N = Math.pow(10, lx), D = C / (6 * N); if (D < 1) continue; const l = L(N, D); pts.push([lx, l]); if (l < bestL) { bestL = l; bestN = N; bestD = D; } }
+      let ymin = 1e9, ymax = -1e9; pts.forEach(([, l]) => { ymin = Math.min(ymin, l); ymax = Math.max(ymax, l); }); ymax = Math.min(ymax, bestL + 2.2);
+      const X = lx => padL + (lx - NLO) / (NHI - NLO) * (W - padL - padR);
+      const Y = l => (H - padB) - (l - ymin) / (ymax - ymin) * (H - padT - padB);
+      ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center';
+      for (let lx = NLO; lx <= NHI; lx++) { ctx.strokeStyle = p.line; ctx.globalAlpha = 0.25; ctx.beginPath(); ctx.moveTo(X(lx), padT); ctx.lineTo(X(lx), H - padB); ctx.stroke(); ctx.globalAlpha = 1; ctx.fillStyle = p.mute; ctx.fillText('10' + sup(lx), X(lx), H - padB + 14); }
+      ctx.strokeStyle = p.violet; ctx.lineWidth = 2.2; ctx.beginPath(); pts.forEach(([lx, l], i) => { const xx = X(lx), yy = Y(Math.min(l, ymax)); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }); ctx.stroke();
+      const ox = X(Math.log10(bestN)), oy = Y(bestL);
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 4]); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox, H - padB); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(ox, oy, 5, 0, 7); ctx.fill();
+      ctx.fillStyle = p.gold; ctx.textAlign = 'center'; ctx.font = '600 11px ' + cssVar('--font-mono', 'monospace'); ctx.fillText('N* = ' + fmtNum(bestN), ox, oy - 10);
+      ctx.fillStyle = p.mute; ctx.textAlign = 'left'; ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.fillText('loss (lower is better)', padL + 2, padT + 2);
+      ctx.textAlign = 'center'; ctx.fillText('model size (parameters) — fixed compute, varying N', W / 2, H - 4);
+      info.innerHTML = 'At compute C = 10' + sup(logC) + ' FLOPs, the best split is N* ≈ <b style="color:' + p.gold + '">' + fmtNum(bestN) + '</b> parameters trained on D* ≈ <b>' + fmtNum(bestD) + '</b> tokens — about <b>' + Math.round(bestD / bestN) + ' tokens per parameter</b> (Chinchilla’s rule), reaching loss ≈ <b>' + bestL.toFixed(2) + '</b>. Build it <em>bigger</em> at the same budget and you slide right of the dip: too few tokens left to train it. More compute drops the whole curve (a power law) and marches N* upward.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Scaling-laws visualizer: for a fixed compute budget, training loss versus model size is a U-shaped curve with an optimal parameter count N-star, marked on the curve, sitting at roughly twenty tokens per parameter. Increasing the compute budget lowers the whole curve and moves the optimum to larger models.');
+    draw();
+  });
+
+  /* ========================================================
      8. Activation functions
      ======================================================== */
   register({ id: 'dl-activation', topic: 'deep-learning', title: 'Activation Functions', blurb: 'Plot ReLU, Sigmoid, Tanh and their derivatives — and see where gradients vanish.' },
