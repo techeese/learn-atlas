@@ -3155,4 +3155,95 @@
     draw();                                                    // synchronous first paint
   });
 
+  /* ========================================================
+     53. Dynamic programming — the edit-distance (Levenshtein) table
+     ======================================================== */
+  register({ id: 'algo-dp-editdistance', topic: 'algorithms', title: 'Dynamic Programming: the Edit-Distance Table', blurb: 'Watch the Levenshtein DP table fill cell by cell — each cell is the diagonal neighbour on a character match, otherwise 1 + the min of its top/left/diagonal. Step or play, then trace one optimal edit path back from the corner.' },
+  function (root) {
+    const A = 'kitten', B = 'sitting';            // rows = A (+ε prefix), cols = B (+ε prefix)
+    const R = A.length, Cn = B.length, TOT = R * Cn;
+    const cell = 42, x0 = 64, y0 = 54;
+    const W = x0 + (Cn + 1) * cell + 14, H = y0 + (R + 1) * cell + 16;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root), info = note(root);
+    let dp = [], src = [], step = 0, anim = null, frame = 0, btnPlay = null;
+    const idxOf = k => ({ i: Math.floor(k / Cn) + 1, j: (k % Cn) + 1 });
+    function compute() {
+      dp = []; src = [];
+      for (let i = 0; i <= R; i++) { dp[i] = []; src[i] = []; for (let j = 0; j <= Cn; j++) { dp[i][j] = i === 0 ? j : (j === 0 ? i : null); src[i][j] = null; } }
+      for (let t = 0; t < step; t++) {
+        const { i, j } = idxOf(t), match = A[i - 1] === B[j - 1];
+        if (match) { dp[i][j] = dp[i - 1][j - 1]; src[i][j] = 'diag'; }
+        else { const top = dp[i - 1][j], left = dp[i][j - 1], diag = dp[i - 1][j - 1], m = Math.min(top, left, diag);
+          dp[i][j] = 1 + m; src[i][j] = (diag <= top && diag <= left) ? 'diag' : (left <= top ? 'left' : 'top'); }
+      }
+    }
+    function backtrace() {                         // only meaningful once the table is full
+      const path = new Set(), ops = []; let i = R, j = Cn;
+      while (i > 0 || j > 0) {
+        path.add(i + ',' + j);
+        if (i === 0) { ops.push('insert ' + B[j - 1]); j--; }
+        else if (j === 0) { ops.push('delete ' + A[i - 1]); i--; }
+        else { const s = src[i][j];
+          if (s === 'diag') { ops.push(A[i - 1] === B[j - 1] ? 'keep ' + A[i - 1] : 'sub ' + A[i - 1] + '→' + B[j - 1]); i--; j--; }
+          else if (s === 'left') { ops.push('insert ' + B[j - 1]); j--; }
+          else { ops.push('delete ' + A[i - 1]); i--; } }
+      }
+      path.add('0,0');
+      return { path, ops: ops.reverse() };
+    }
+    function draw() {
+      compute();
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const cur = step < TOT ? idxOf(step) : null;
+      const srcCell = cur ? (() => { const { i, j } = cur; const match = A[i - 1] === B[j - 1];
+        if (match) return { i: i - 1, j: j - 1 };
+        const top = dp[i - 1][j], left = dp[i][j - 1], diag = dp[i - 1][j - 1], m = Math.min(top, left, diag);
+        return (diag <= top && diag <= left) ? { i: i - 1, j: j - 1 } : (left <= top ? { i, j: j - 1 } : { i: i - 1, j }); })() : null;
+      const done = step >= TOT;
+      const bt = done ? backtrace() : { path: new Set() };
+      ctx.font = '600 15px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      // labels (ε + the two strings)
+      ctx.fillStyle = p.mute;
+      for (let j = 0; j <= Cn; j++) ctx.fillText(j === 0 ? 'ε' : B[j - 1], x0 + j * cell + cell / 2, y0 - 20);
+      for (let i = 0; i <= R; i++) ctx.fillText(i === 0 ? 'ε' : A[i - 1], x0 - 22, y0 + i * cell + cell / 2);
+      ctx.fillStyle = p.gold; ctx.font = '600 12px ' + cssVar('--font-disp', 'serif');
+      ctx.fillText('B →', x0 + (Cn + 1) * cell / 2, 16); ctx.save(); ctx.translate(16, y0 + (R + 1) * cell / 2); ctx.rotate(-Math.PI / 2); ctx.fillStyle = p.sage; ctx.fillText('A →', 0, 0); ctx.restore();
+      for (let i = 0; i <= R; i++) for (let j = 0; j <= Cn; j++) {
+        const X = x0 + j * cell, Y = y0 + i * cell, v = dp[i][j];
+        const isCur = cur && cur.i === i && cur.j === j, isSrc = srcCell && srcCell.i === i && srcCell.j === j;
+        const isPath = bt.path.has(i + ',' + j), base = i === 0 || j === 0;
+        ctx.fillStyle = isCur ? p.gold + '55' : isSrc ? p.sage + '44' : isPath ? p.violet + '44' : base ? p.panel2 : (v != null ? p.panel : 'transparent');
+        ctx.fillRect(X + 1, Y + 1, cell - 2, cell - 2);
+        ctx.strokeStyle = isCur ? p.gold : isPath ? p.violet : p.line; ctx.lineWidth = isCur || isPath ? 2 : 1;
+        ctx.strokeRect(X + 1, Y + 1, cell - 2, cell - 2);
+        if (v != null) { ctx.fillStyle = isCur ? p.gold : base ? p.mute : p.ink; ctx.font = '600 15px ' + cssVar('--font-mono', 'monospace'); ctx.fillText(String(v), X + cell / 2, Y + cell / 2); }
+      }
+      if (done) { const X = x0 + Cn * cell, Y = y0 + R * cell; ctx.strokeStyle = p.sage; ctx.lineWidth = 3; ctx.strokeRect(X + 1, Y + 1, cell - 2, cell - 2); }
+      // note
+      if (!done && cur) {
+        const { i, j } = cur, ca = A[i - 1], cb = B[j - 1], match = ca === cb;
+        info.innerHTML = match
+          ? `Cell (${i},${j}): <b>'${ca}' = '${cb}'</b> — match, so copy the <span style="color:${p.sage}">diagonal</span> for free → <b style="color:${p.gold}">${dp[i - 1][j - 1]}</b>.`
+          : `Cell (${i},${j}): <b>'${ca}' ≠ '${cb}'</b> → 1 + min(top ${dp[i - 1][j]}, left ${dp[i][j - 1]}, diag ${dp[i - 1][j - 1]}) = <b style="color:${p.gold}">${1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])}</b>. The chosen source is shaded <span style="color:${p.sage}">sage</span>.`;
+      } else {
+        const r = backtrace();
+        info.innerHTML = `<b>Edit distance("${A}", "${B}") = <span style="color:${p.sage}">${dp[R][Cn]}</span></b> — the bottom-right cell. One optimal path (<span style="color:${p.violet}">violet</span>): ${r.ops.join(' · ')}.`;
+      }
+    }
+    function stopPlay() { if (anim) { anim.stop(); anim = null; } if (btnPlay) btnPlay.innerHTML = '▶ play'; }
+    btnPlay = button(ctl, '▶ play', function () {
+      if (anim) { stopPlay(); return; }
+      if (step >= TOT) { step = 0; }
+      btnPlay.innerHTML = '⏸ pause'; frame = 0;
+      anim = VIZUtil.loop(function () { frame++; if (frame % 14 === 0) { if (step < TOT) { step++; draw(); } else stopPlay(); } });
+    });
+    button(ctl, 'step ▶', function () { stopPlay(); if (step < TOT) { step++; draw(); } });
+    button(ctl, 'skip ⏭', function () { stopPlay(); step = TOT; draw(); });
+    button(ctl, '⏮ reset', function () { stopPlay(); step = 0; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Dynamic-programming edit-distance table between the words kitten and sitting. Each cell holds the edit distance between prefixes; on a character match it copies the diagonal neighbour, otherwise it is one plus the minimum of the top, left, and diagonal neighbours. The final bottom-right cell is the edit distance, 3, and an optimal sequence of edits is traced back through the table.');
+    draw();                                                    // synchronous first paint
+  });
+
 })();

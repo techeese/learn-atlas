@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 242 — Dynamic-programming visualizer: the edit-distance table (visualizations)
+Rotating off content. Algorithms was the **thinnest viz topic (6)** and was missing the entire **dynamic-programming
+pillar** — a notoriously hard idea that a table-fill animation makes click. Added the **53rd Lab widget
+`algo-dp-editdistance`**: the Levenshtein DP table between *kitten* and *sitting*.
+- **Step / play / skip / reset** fill the (7×8) grid in row-major order; each computed cell is highlighted **gold**, and
+  the **single source neighbour it takes is shaded sage** (the diagonal on a character match — free — otherwise the
+  argmin of top/left/diagonal, +1).
+- A live note narrates the current cell ("'i' = 'i' — match, copy the diagonal for free → 4", or the 1 + min(…) choice).
+- When the table is full the **bottom-right answer (3) is ringed** and an **optimal edit path is traced back in violet**,
+  decoded into operations ("sub k→s · keep i · keep t · keep t · sub e→i · keep n · insert g").
+Auto-play uses `VIZUtil.loop` (so `stopAll()` kills it on navigation); synchronous first paint; note is plain HTML
+(viz-note landmine). Embedded after §8 (Edit Distance) of `a-dynamic-programming`; app.js viz-complete fallback `|| 52`
+→ `|| 53`.
+Verified: gate ALL GREEN (**53 widgets**, embed resolves); skip-to-end renders the **correct full table with answer 3**
+and the right backtrace ops; a mid-fill step shows the current cell + sage source + correct match note; all-routes smoke
+**errs=0/kErr=0 (12 routes)**; 390px mobile the canvas scales to width. SW cache `atlas-v183` → `atlas-v184`.
+
 ## iter 241 — Five deeper-dives on genuinely hard concepts (content depth / understandability)
 Rotating off workflow, straight at the owner's most-repeated ask — "keep improve the depth of the page" + hard-concept
 support. Added **5 new "Deeper dive" expandables**, one per topic where a real *aha* was missing, picked for breadth and

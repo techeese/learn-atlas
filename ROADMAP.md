@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 242: **Dynamic-programming visualizer — 53rd widget** (visualizations — rotating off content). Algorithms was the thinnest
+   viz topic (6) and missing the DP pillar. New `algo-dp-editdistance` in a-dynamic-programming (§8 Edit Distance): the
+   Levenshtein table (kitten→sitting) fills cell-by-cell (step/play/skip/reset), current cell gold + chosen source sage
+   (diagonal-free on match, else 1+min top/left/diag), live note narrates each step, then the answer (3) is ringed and an
+   optimal edit path traces back in violet with decoded ops. VIZUtil.loop (stopAll-safe); plain-HTML note. Verified: gate
+   GREEN (53 widgets); skip-to-end correct full table+answer 3+backtrace; mid-step highlight+note correct; smoke
+   errs=0/kErr=0 (12 routes); 390px scales. app.js fallback →53. SW →v184.
    ✅ iter 241: **Five deeper-dives on hard concepts** (content depth / understandability — owner's "keep improve the depth" ask).
    One per topic, breadth + difficulty (deep-dives ~25→~30): LA determinants (volume-scaling ⇒ det=0⟺singular,
    det(AB) multiplicativity), DL backprop (why reverse-mode: one loss, millions of params), RL Bellman (γ-contraction
