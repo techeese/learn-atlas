@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 329 — Three more worked examples + a KaTeX render-bug fix (examples / broken)
+A **3rd worked example** on three flagship lessons across LA/algo/calc (examples 319 → **322**):
+- **la-inverse-and-systems** — **when there's no unique solution**: a singular `A=[[1,1],[2,2]]` (`det=0`); `x+y=2, 2x+2y=5`
+  has **no** solution (parallel distinct lines), `x+y=2, 2x+2y=4` has **infinitely many** (same line) — the det=0 dichotomy.
+- **a-graph-representations-traversal** — **cycle detection with DFS**: a gray (on-stack) vertex reached by an edge is a
+  **back edge** → cycle (`A→B→C→A`); a DAG has none, so topological sort succeeds.
+- **c-convexity** — **Jensen's inequality**: convex `f`, `f(E[X]) ≤ E[f(X)]`; with `x²` on `{1,3}`, `f(2)=4 ≤ 5=E[f(X)]`,
+  and the gap `1` is exactly `Var(X)` — convexity turns spread into upward bias.
+**Bonus fix (broken render).** While verifying, found a **pre-existing KaTeX error** in the existing MSE-convexity example:
+`\begin{psmallmatrix}` needs the mathtools package, which this KaTeX build lacks (`No such environment: psmallmatrix`).
+Replaced both with `\left(\begin{smallmatrix}…\end{smallmatrix}\right)` (supported, keeps the parentheses) — c-convexity
+now renders **kErr=0**.
+Every value node-verified; injected byte-stably with round-trip + even-`$` + tag-balance pre-guards.
+Verified: gate ALL GREEN (**322 examples**); **via `--dump-dom`** each Examples tab shows 3, reveals with KaTeX
+(62 / 137 / 41 spans) and **kErr=0, rawDollar=0** (the psmallmatrix error gone); all-routes smoke **errs=0/kErr=0 (12 routes)**.
+No save-shape change. SW cache `atlas-v269` → `atlas-v270`.
+
 ## iter 328 — Newton's-method visualizer — 71st widget (visualizations)
 No widget showed Newton's method, a flagship numerical root-finder — and it's *iterated linearization*, so it fits the
 linear-approximation lesson perfectly. Added the **71st Lab widget `calc-newton`** (a 2nd viz on `c-linearization-lhopital`):

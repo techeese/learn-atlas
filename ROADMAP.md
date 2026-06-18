@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 329: **3 more worked examples + a KaTeX render-bug fix** (examples / broken). +3 (319→322) across LA/algo/calc:
+   la-inverse-and-systems (singular systems: no/infinite solutions), a-graph-representations-traversal (DFS cycle detection via
+   back-edge), c-convexity (Jensen's inequality, gap = Var). BONUS: fixed a pre-existing KaTeX error in the MSE-convexity
+   example (`psmallmatrix` → `\left(\begin{smallmatrix}…\right)`); c-convexity now kErr=0. Verified: gate GREEN (322 examples);
+   dump-dom each shows 3, reveals (katex 62/137/41, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v270.
    ✅ iter 328: **Newton's-method visualizer — 71st widget** (visualizations). No Newton viz; it's iterated linearization → 2nd viz on
    c-linearization-lhopital. New `calc-newton`: on f(x)=x²−2, Step draws the tangent to its x-intercept (next guess), Run iterates
    to √2 (2→1.5→1.4167→1.41421), quadratic convergence note. app.js fallback 70→71. Verified: gate GREEN (71 widgets); node
@@ -1184,6 +1189,12 @@ workflow author agent on all 6 retries (~3h wasted) — author those DIRECTLY wi
 iter 52. If the pipeline is reused, make the author/verify prompts mandate `<strong>`/`<em>`, never markdown.
 
 ## Notes / discoveries
+- **★ LANDMINE — mathtools-only LaTeX envs silently fail KaTeX (found+fixed iter 329):** `\begin{psmallmatrix}` /
+  `bsmallmatrix` / `Bmatrix*` etc. come from the `mathtools` package, which the bundled KaTeX build does NOT load —
+  they raise `No such environment: …` at typeset time (a real `.katex-error`, but the gate's static lints don't catch it;
+  only the `--dump-dom` kErr count does). KaTeX DOES support `matrix/pmatrix/bmatrix/vmatrix/smallmatrix`. For an inline
+  parenthesized small matrix use `\left(\begin{smallmatrix}…\end{smallmatrix}\right)`. Lesson: ALWAYS run the dump-dom
+  kErr check after adding/reveal-checking math content — a pre-existing example had shipped this error unnoticed.
 - **★ LANDMINE — `**` in code-exercise source fails the gate (iter 309):** the gate's `rawMarkdown` lint flags `**` as
   markdown bold, so JS exponentiation (`x ** 2`) in a `data-code` exercise trips it. Use multiplication (`x * x`) or
   `Math.pow` in exercise code, never `**`. (Caught a ps-covariance exercise; reverted + re-injected.)
