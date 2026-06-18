@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 407 — Second deep-dives on three of the hardest lessons (content / depth — owner's #1)
+Varying from the examples streak back to the owner's #1 directive (depth): added a **distinct second "Deeper dive"** to three
+flagship lessons (deep-dives 148 → **151**; these lessons now carry two), each a different hard sub-concept from the existing one:
+- **l-self-attention** (had: "soft dictionary lookup") → **why Q, K, V are separate projections**: raw-embedding scores would be
+  symmetric (`xᵢ·xⱼ`), forcing reciprocal attention; separate `W_Q, W_K` break that, `W_V` decouples delivered content from match.
+- **la-eigenvalues-eigenvectors** (had: "eigenvectors decide the long run") → **real eigenvalues stretch, complex ones rotate**:
+  a real `λ` scales along its eigenvector; complex pairs `a±bi` have no real eigenvector and rotate in a 2-D plane by `|λ|=√(a²+b²)`.
+- **dl-gradient-descent-and-optimizers** (had: "Adam = momentum + RMSProp") → **SGD's noise is a feature**: mini-batch jitter
+  escapes saddles (`∇f=0`) and biases toward flat, better-generalizing minima — an implicit regularizer.
+Authored with `String.raw` LaTeX; injected byte-stably with an *append-second-dd* path (round-trip + even-`$` + tag-balance +
+unsupported-env + bare-`<`-letter + duplicate-summary guards).
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** deep-dives (nDD=2) — la-eigenvalues KaTeX 21 with
+`\lt`/`\gt`/`\pm`/`\sqrt` — with **kErr=0, rawDollar=0**; smoke opening 2 dd's × 3 lessons + 8 pages **errs=0/kErr=0, bad=none**. No
+save-shape change. SW cache `atlas-v346` → `atlas-v347`.
+
 ## iter 406 — Three more worked examples across DL/algo (examples)
 A **3rd worked example** on three flagship lessons (examples 394 → **397**, all ⌘K-searchable):
 - **dl-overfitting-and-regularization** — **L1 vs L2**: L2's penalty gradient `2λw=0.02` fades as `w→0` (shrinks, never zero); L1's

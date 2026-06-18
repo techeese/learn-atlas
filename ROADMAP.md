@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 407: **Second deep-dives on 3 of the hardest lessons** (content/depth — owner's #1). +3 dd (148→151; these lessons now
+   carry 2): l-self-attention (why Q/K/V are separate projections), la-eigenvalues-eigenvectors (real=stretch vs complex=rotate),
+   dl-gradient-descent-and-optimizers (SGD noise as implicit regularizer). Append-second-dd inject w/ dup-summary + full guards.
+   Verified: gate GREEN; dump-dom each lesson nDD=2, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none. SW →v347. (Opens a new
+   runway: 2nd dd's on the ~15 hardest lessons — high-value depth, owner's #1.)
    ✅ iter 406: **3 more worked examples across DL/algo** (examples). +3 (394→397): dl-overfitting-and-regularization (L1 vs L2
    sparsity: grads 0.1 vs 0.02), dl-practical-training-and-debugging (gradient checking → 4.000), a-algorithms-for-ml (one k-means
    step → centroids 1.5/9.5). Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (397 examples); dump-dom katex
