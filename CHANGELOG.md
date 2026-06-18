@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 275 — Screen-reader fixes: live quiz feedback + labeled test selects (accessibility)
+An a11y pass (the stalest area, last 263) caught two real gaps. **(1) Quiz feedback was silent to screen readers.** When
+you answer a question, "Correct ✓ / Not quite" plus the explanation is injected into a slot — but those slots weren't
+live regions, so a screen-reader user heard *nothing* and had to go hunting for the result. Added `aria-live="polite"` to
+all three instant-feedback slots: the per-lesson **Quiz** (`#explain-slot`), the inline **Quick Check**
+(`.qc-explain-slot`), and the **Daily-Mix / mastery drill** (`#md-explain`) — so the verdict and explanation are now
+announced the moment they appear. **(2) The test-config selects were unlabeled.** The "Scope" and "Length" `<label>`s sat
+next to `#t-scope` / `#t-len` with no `for=`, so they weren't programmatically associated — a screen reader announced the
+dropdowns with no name. Added `for="t-scope"` / `for="t-len"` (which also makes the label text click-to-focus the select).
+Verified: gate ALL GREEN; **via `--dump-dom`** — answering a quiz question leaves `#explain-slot` with
+`aria-live="polite"` and the "Correct/Not quite" text inside it; on `#/test` both `label[for="t-scope"]` and
+`label[for="t-len"]` resolve to their selects; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW
+cache `atlas-v215` → `atlas-v216`.
+
 ## iter 274 — Statistical-power visualizer — 59th widget (visualizations)
 Probability & Statistics was the thinnest viz topic (6), and `ps-errors-and-power` ("Type I & II Errors and Statistical
 Power") — one of the most-misunderstood topics in stats — had **no widget**. Added the **59th Lab widget `ps-power`**,

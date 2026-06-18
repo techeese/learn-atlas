@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 275: **SR fixes: live quiz feedback + labeled test selects** (accessibility). Two real gaps: (1) quiz "Correct/Not quite"
+   + explanation was injected into non-live slots → screen readers heard nothing; added aria-live="polite" to #explain-slot
+   (quiz), .qc-explain-slot (quick check), #md-explain (mastery/daily-mix). (2) test-config Scope/Length labels lacked for=
+   → added for="t-scope"/"t-len" (also click-to-focus). Verified: gate GREEN; dump-dom — answered quiz leaves #explain-slot
+   aria-live=polite + feedback text; #/test labels resolve; smoke errs=0/kErr=0 (12). SW →v216.
    ✅ iter 274: **Statistical-power visualizer — 59th widget** (visualizations). PS thinnest viz topic (6); ps-errors-and-power had no
    viz. New `ps-power`: two normal curves (H₀, H₁ separated by effect size d), movable threshold; shaded α (rust) / β (gold)
    / power (sage) with live numbers; sliders (threshold, d) + presets (α=.05/large/underpowered). erf-based Φ; plain-text

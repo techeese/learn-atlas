@@ -994,7 +994,7 @@
       const q = picks[idx];
       frame(`<div class="q-stem qc-stem">${q.q}</div>
         <div class="choices">${q.choices.map((ch, ci) => `<button class="choice" data-ci="${ci}"><span class="key">${String.fromCharCode(65 + ci)}</span><span>${ch}</span></button>`).join("")}</div>
-        <div class="qc-explain-slot"></div>
+        <div class="qc-explain-slot" aria-live="polite"></div>
         <div class="qc-next-slot"></div>`);
       let locked = false;
       host.querySelectorAll(".choice").forEach(btn => btn.addEventListener("click", () => {
@@ -1044,7 +1044,7 @@
         <div class="choices">
           ${q.choices.map((ch, ci) => `<button class="choice" data-ci="${ci}"><span class="key">${String.fromCharCode(65 + ci)}</span><span>${ch}</span></button>`).join("")}
         </div>
-        <div id="explain-slot"></div>
+        <div id="explain-slot" aria-live="polite"></div>
         <div id="next-slot" style="margin-top:22px"></div>
       </div>`;
       locked = false;
@@ -1465,7 +1465,7 @@
       </div>` : ""; })()}
       <div class="test-config reveal">
         <div class="tc-row">
-          <label class="viz-slab">Scope</label>
+          <label class="viz-slab" for="t-scope">Scope</label>
           <select id="t-scope">
             <option value="mastered">✓ Only lessons I've completed (${completed.length})</option>
             <option value="weak">⚠ Focus my weak spots (${Store.weakSpots().length})</option>
@@ -1474,7 +1474,7 @@
           </select>
         </div>
         <div class="tc-row">
-          <label class="viz-slab">Length</label>
+          <label class="viz-slab" for="t-len">Length</label>
           <select id="t-len"><option value="5">5 questions</option><option value="10" selected>10 questions</option><option value="20">20 questions</option><option value="40">40 questions</option></select>
         </div>
         <div id="t-avail" class="tc-avail" aria-live="polite"></div>
@@ -1587,7 +1587,7 @@
         <div class="mastery-track"><div class="mastery-track-fill" style="width:${Math.round(masteredN / total * 100)}%"></div></div>
         <div class="q-stem">${q.q}</div>
         <div class="choices">${q.choices.map((ch, ci) => `<button class="choice" data-ci="${ci}"><span class="key">${String.fromCharCode(65 + ci)}</span><span>${ch}</span></button>`).join("")}</div>
-        <div id="md-explain"></div><div id="md-next" style="margin-top:20px"></div>
+        <div id="md-explain" aria-live="polite"></div><div id="md-next" style="margin-top:20px"></div>
       </div></div>`;
       let locked = false;
       app.querySelectorAll(".choice").forEach(b => b.addEventListener("click", () => {
