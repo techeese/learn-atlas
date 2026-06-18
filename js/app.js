@@ -2072,7 +2072,7 @@
       "deep-diver": [mastered, 10], "loremaster": [mastered, 25], "savant": [mastered, 50],
       "habit": [Object.keys(R.activity || {}).length, 14], "sage": [R.xp, 25000],
       "viz-voyager": [Object.keys(R.vizSeen || {}).length, 15],
-      "viz-complete": [Object.keys(R.vizSeen || {}).length, (window.VIZ_CATALOG || []).length || 56],
+      "viz-complete": [Object.keys(R.vizSeen || {}).length, (window.VIZ_CATALOG || []).length || 57],
       "code-adept": [Object.keys(R.solvedCode || {}).length, 10]
     };
   }

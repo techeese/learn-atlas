@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 262: **Determinant-as-signed-area visualizer — 57th widget** (visualizations). LA had fewest viz (7); determinants lesson
+   only had the generic transform viz. New `la-determinant` (in la-determinants): drag the 2 columns of a 2×2 matrix →
+   parallelogram area = |det|, sage(det>0)/rust(det<0)/collapses-to-line(det=0=singular); faint unit square; presets
+   (Identity/Shear/Scale×2/Reflect/Singular). Keyboard-accessible via dragKeys (arrows=col1, Shift=col2) + role=img.
+   app.js viz-complete fallback 56→57. Verified: gate GREEN (57 widgets); dump-dom note math across presets (det 5/0/1,
+   keyboard→1.5); lesson embeds + renders; smoke errs=0/kErr=0 (12). SW →v203.
    ✅ iter 261: **Resume-reading position for long lessons** (UI/UX — step-back flagged this overdue). Saves per-lesson scroll depth
    (own `atlas.readPos` key, no save-shape change; capped 40) on the existing reading-progress rAF; reopening a part-read
    lesson shows a dismissible "⤓ Resume where you left off" pill that smooth-scrolls back. Not auto-scroll (jarring while

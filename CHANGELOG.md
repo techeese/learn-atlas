@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 262 — Determinant-as-signed-area visualizer — 57th widget (visualizations)
+Linear algebra had the fewest widgets (7), and the determinants lesson ("Volume, Orientation, and Invertibility") only
+embedded the *generic* transform viz — nothing showing the determinant itself, even though a deep-dive already leans on
+"det = volume-scaling." Added the **57th Lab widget `la-determinant`**, embedded in `la-determinants` alongside the
+transform viz: drag the **two columns of a 2×2 matrix** and the parallelogram they span updates live — its **area is
+|det|**, the fill is **sage when det > 0** (orientation preserved) and **rust when det < 0** (flipped), and it
+**collapses to a line exactly when det = 0** (columns parallel → singular, no inverse). A faint dashed unit square anchors
+the "area-scaling factor" reading; preset buttons (Identity, Shear area=1, Scale ×2 area=4, Reflect, Singular) make the
+key cases one tap away. Built keyboard-accessible from the start via the iter-259 `VIZUtil.dragKeys` helper (arrows move
+column 1, Shift+arrows column 2) + `role="img"` aria description. Note is plain HTML (no `$`, per the viz-note landmine).
+app.js `viz-complete` achievement fallback 56 → 57.
+Verified: gate ALL GREEN (**57 widgets**, embed resolves); **via `--dump-dom`** the live note computes correctly across
+presets — default `det=(2)(2)−(-1)(1)=5`, Singular `(2)(2)−(4)(1)=0` ("collapses to a line → singular"), Identity `=1`,
+and a keyboard ArrowRight on Identity moves column 1 → `det=1.5`; lesson `la-determinants` embeds it and renders clean;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v202` → `atlas-v203`.
+
 ## iter 261 — Resume-reading position for long lessons (UI/UX)
 The step-back (260) flagged UI/UX as overdue. Long lessons are easy to leave half-read, but reopening one always dropped
 you back at the top. Now Atlas **remembers how far you scrolled in each lesson** and offers a one-tap jump back. Saved on

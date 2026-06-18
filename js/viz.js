@@ -3176,6 +3176,63 @@
   });
 
   /* ========================================================
+     57. The determinant as signed area — det = how the unit area scales (sign = orientation)
+     ======================================================== */
+  register({ id: 'la-determinant', topic: 'linear-algebra', title: 'The Determinant as Signed Area', blurb: 'Drag the two columns of a 2×2 matrix and watch the parallelogram they span: its area is |det|, the sign flips when orientation flips, and it collapses to a line exactly when det = 0 — the matrix is singular (no inverse).' },
+  function (root) {
+    const W = 540, H = 380, S = 40, cx = W / 2, cy = H / 2;
+    const { c, ctx } = canvas(root, W, H);
+    const info = note(root);
+    let col1 = { x: 2, y: 1 }, col2 = { x: -1, y: 2 }, drag = null;   // the two columns of M = [col1 | col2]
+    const toPx = p => ({ x: cx + p.x * S, y: cy - p.y * S });
+    const toMath = p => ({ x: (p.x - cx) / S, y: (cy - p.y) / S });
+    const near = (mp, vec) => { const q = toPx(vec); return Math.hypot(q.x - mp.x, q.y - mp.y) < 16; };
+    function down(ev) { const m = pointer(c, W, H, ev); if (near(m, col1)) drag = 'c1'; else if (near(m, col2)) drag = 'c2'; if (drag) ev.preventDefault(); }
+    function move(ev) { if (!drag) return; const m = toMath(pointer(c, W, H, ev)); const g = x => Math.round(x * 2) / 2; const t = drag === 'c1' ? col1 : col2; t.x = g(m.x); t.y = g(m.y); draw(); ev.preventDefault(); }
+    function up() { drag = null; }
+    c.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+    c.addEventListener('touchstart', down, { passive: false }); c.addEventListener('touchmove', move, { passive: false }); c.addEventListener('touchend', up);
+    const pre = controls(root);
+    button(pre, 'Identity', () => { col1 = { x: 1, y: 0 }; col2 = { x: 0, y: 1 }; draw(); });
+    button(pre, 'Shear (area=1)', () => { col1 = { x: 1, y: 0 }; col2 = { x: 1.5, y: 1 }; draw(); });
+    button(pre, 'Scale ×2 (area=4)', () => { col1 = { x: 2, y: 0 }; col2 = { x: 0, y: 2 }; draw(); });
+    button(pre, 'Reflect (det<0)', () => { col1 = { x: 0, y: 1 }; col2 = { x: 1, y: 0 }; draw(); });
+    button(pre, 'Singular (det=0)', () => { col1 = { x: 2, y: 1 }; col2 = { x: 4, y: 2 }; draw(); });
+    function fmt(n) { return (Math.round(n * 100) / 100).toString(); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1;
+      for (let x = cx % S; x < W; x += S) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = cy % S; y < H; y += S) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      ctx.strokeStyle = p.mute; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(W, cy); ctx.moveTo(cx, 0); ctx.lineTo(cx, H); ctx.stroke();
+      const det = col1.x * col2.y - col1.y * col2.x;
+      const sing = Math.abs(det) < 1e-9;
+      const fill = sing ? p.gold : (det > 0 ? p.sage : p.rust);
+      const O = toPx({ x: 0, y: 0 }), C1 = toPx(col1), C2 = toPx(col2), SUM = toPx({ x: col1.x + col2.x, y: col1.y + col2.y });
+      // faint unit square for reference (det = area-scale relative to this)
+      ctx.setLineDash([3, 3]); ctx.strokeStyle = p.mute; ctx.lineWidth = 1; ctx.globalAlpha = 0.7;
+      const q00 = toPx({ x: 0, y: 0 }), q10 = toPx({ x: 1, y: 0 }), q11 = toPx({ x: 1, y: 1 }), q01 = toPx({ x: 0, y: 1 });
+      ctx.beginPath(); ctx.moveTo(q00.x, q00.y); ctx.lineTo(q10.x, q10.y); ctx.lineTo(q11.x, q11.y); ctx.lineTo(q01.x, q01.y); ctx.closePath(); ctx.stroke();
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+      // the parallelogram spanned by the columns
+      ctx.beginPath(); ctx.moveTo(O.x, O.y); ctx.lineTo(C1.x, C1.y); ctx.lineTo(SUM.x, SUM.y); ctx.lineTo(C2.x, C2.y); ctx.closePath();
+      ctx.fillStyle = fill; ctx.globalAlpha = 0.22; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = fill; ctx.lineWidth = 2; ctx.stroke();
+      // column vectors
+      arrow(ctx, O.x, O.y, C1.x, C1.y, p.gold, 3);
+      arrow(ctx, O.x, O.y, C2.x, C2.y, p.violet, 3);
+      info.innerHTML = `det = (<b style="color:${p.gold}">${fmt(col1.x)}</b>)(<b style="color:${p.violet}">${fmt(col2.y)}</b>) − (<b style="color:${p.violet}">${fmt(col2.x)}</b>)(<b style="color:${p.gold}">${fmt(col1.y)}</b>) = <b style="color:${fill}">${fmt(det)}</b> &nbsp;→&nbsp; area = <b>${fmt(Math.abs(det))}</b><br>` +
+        (sing
+          ? `<b style="color:${p.gold}">det = 0 → the columns are parallel, the parallelogram collapses to a line → the matrix is singular (no inverse).</b>`
+          : `orientation ${det > 0 ? `<b style="color:${p.sage}">preserved</b> (det &gt; 0)` : `<b style="color:${p.rust}">flipped</b> (det &lt; 0)`} → the matrix is <b>invertible</b>.`);
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Determinant visualizer: two draggable column vectors of a 2x2 matrix span a parallelogram whose area equals the absolute value of the determinant. The fill is sage when the determinant is positive (orientation preserved), rust when negative (orientation flipped), and the shape collapses to a line when the determinant is zero (singular). Focus this canvas and use the arrow keys to move the first column, Shift+arrow keys to move the second.');
+    dragKeys(c, () => [col1, col2], draw);   // keyboard a11y: arrows move column 1, Shift+arrows move column 2
+    draw();                                                    // synchronous first paint
+  });
+
+  /* ========================================================
      53. Dynamic programming — the edit-distance (Levenshtein) table
      ======================================================== */
   register({ id: 'algo-dp-editdistance', topic: 'algorithms', title: 'Dynamic Programming: the Edit-Distance Table', blurb: 'Watch the Levenshtein DP table fill cell by cell — each cell is the diagonal neighbour on a character match, otherwise 1 + the min of its top/left/diagonal. Step or play, then trace one optimal edit path back from the corner.' },
