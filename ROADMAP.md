@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 368: **Transformer-block schematic — 81st widget** (visualizations). l-transformer-block had no viz. New
+   `llm-transformer-block`: residual stream through Multi-Head Attention + Feed-Forward (each Add & Norm), gold residual skips,
+   toggle highlighting attention=communicate / FFN=compute. app.js fallback 80→81. Verified: gate GREEN (81 widgets); dump-dom
+   toggle drives both notes, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v308.
    ✅ iter 367: **3 more code exercises across LLM/LA/algo** (active learning). +3 JS (69→72, gate runs 67): l-positional-encoding
    (sinusoidal PE → 0.84), la-matrix-derivative-identities (∇xᵀAx=2Ax → 6 6), a-network-flow (augmenting-path bottleneck → 3).
    Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (67 verified); dump-dom quad-grad runs → "6 6" "✓ matches";

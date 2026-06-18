@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 368 — Transformer-block schematic — 81st widget (visualizations)
+`l-transformer-block` had no widget — and the transformer block is *the* architecture in modern ML. Added the **81st Lab widget
+`llm-transformer-block`**, embedded there: a labeled schematic of the **residual stream** rising from token+positional
+embeddings through **Multi-Head Self-Attention** (Add & Norm) then a **Feed-Forward MLP** (Add & Norm) to the next block, with
+gold dashed **residual skip** arrows around each sublayer. A **toggle** highlights each sublayer and explains its role —
+attention *communicates* across tokens, the FFN *computes* per token (≈⅔ of the parameters). Pairs with the
+"mix-then-think" deep-dive on the same lesson. Plain-unicode note (no `$`). app.js `viz-complete` fallback 80 → 81.
+Verified: gate ALL GREEN (**81 widgets**, embed resolves); **via `--dump-dom`** the toggle drives the attention/FFN notes
+(communicate ↔ compute), `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**.
+No save-shape change. SW cache `atlas-v307` → `atlas-v308`.
+
 ## iter 367 — Three more code exercises across LLM/LA/algo (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** across LLM/LA/algo (lessons-with-code 69 → **72**; the gate now runs **67**):
 - **l-positional-encoding** — **sinusoidal PE** `sin(pos/10000^(2i/d))`: position 1, dim 0 → `0.84` (= `sin(1)`; low dims wiggle

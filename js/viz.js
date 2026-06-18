@@ -1925,6 +1925,65 @@
   });
 
   /* ========================================================
+     81. Anatomy of a transformer block (LLM)
+     ======================================================== */
+  register({ id: 'llm-transformer-block', topic: 'llm', title: 'Anatomy of a transformer block', blurb: 'A transformer block is two sublayers on a residual stream: multi-head self-attention (mix information across tokens) then a position-wise feed-forward network (compute per token), each wrapped in a residual add and a layer norm. Toggle the sublayers to see what each does.' },
+  function (root) {
+    const W = 460, H = 430;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let mode = 'attn';
+    // boxes: {y, h, label, key}  (x centered band)
+    const cx = W * 0.40, bw = 210;
+    const boxes = [
+      { y: 372, h: 40, label: 'Token + positional embeddings', key: 'in' },
+      { y: 300, h: 46, label: 'Multi-Head Self-Attention', key: 'attn' },
+      { y: 256, h: 30, label: 'Add  &  Norm', key: 'an1' },
+      { y: 178, h: 46, label: 'Feed-Forward (MLP)', key: 'ffn' },
+      { y: 134, h: 30, label: 'Add  &  Norm', key: 'an2' },
+      { y: 58, h: 40, label: 'To the next block', key: 'out' }
+    ];
+    function rrect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // residual stream (vertical spine) connecting box centers
+      ctx.strokeStyle = p.mute; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(cx, boxes[0].y); ctx.lineTo(cx, boxes[boxes.length - 1].y + boxes[boxes.length - 1].h); ctx.stroke();
+      // residual skip arrows (around attention, around FFN) on the right
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5;
+      [[boxes[1], boxes[2]], [boxes[3], boxes[4]]].forEach(pair => {
+        const xR = cx + bw / 2 + 16, yTop = pair[0].y, yBot = pair[1].y + pair[1].h;
+        ctx.beginPath(); ctx.moveTo(cx + bw / 2, yBot - 6); ctx.lineTo(xR, yBot - 6); ctx.lineTo(xR, yTop + 8); ctx.lineTo(cx + bw / 2, yTop + 8); ctx.stroke();
+      });
+      ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.font = '9px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'left'; ctx.fillText('residual', cx + bw / 2 + 20, 240); ctx.fillText('residual', cx + bw / 2 + 20, 118);
+      // boxes
+      boxes.forEach(b => {
+        const x = cx - bw / 2, hot = (b.key === mode);
+        let fill = p.line, edge = p.mute, txt = p.ink;
+        if (b.key === 'attn') { edge = p.sage; if (mode === 'attn') { fill = p.sage; txt = p.bg; } }
+        else if (b.key === 'ffn') { edge = p.violet; if (mode === 'ffn') { fill = p.violet; txt = p.bg; } }
+        else if (b.key === 'in' || b.key === 'out') { edge = p.gold; }
+        ctx.globalAlpha = hot ? 1 : (b.key === 'attn' || b.key === 'ffn' ? 0.85 : 0.6);
+        ctx.fillStyle = fill; rrect(x, b.y, bw, b.h, 7); ctx.fill();
+        ctx.globalAlpha = 1; ctx.strokeStyle = edge; ctx.lineWidth = hot ? 2.4 : 1.4; rrect(x, b.y, bw, b.h, 7); ctx.stroke();
+        ctx.fillStyle = txt; ctx.font = (hot ? 'bold ' : '') + '12px ' + cssVar('--font-disp', 'sans-serif'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(b.label, cx, b.y + b.h / 2);
+      });
+      ctx.textBaseline = 'alphabetic';
+      info.innerHTML = mode === 'attn'
+        ? 'Highlighted: <b style="color:' + p.sage + '">Multi-Head Self-Attention</b> — the <em>communicate</em> step. Every token looks at every other and pulls in relevant context; it is the only place positions exchange information. Its output is <b>added back</b> to the residual stream (the gold skip) and layer-normalized, so the block learns a correction, not a replacement.'
+        : 'Highlighted: <b style="color:' + p.violet + '">Feed-Forward (MLP)</b> — the <em>compute</em> step. The same little network is applied to each token independently (no cross-token mixing), transforming its now-contextualized vector. Roughly two-thirds of a transformer\'s parameters live here. Its output is also <b>added back</b> via the residual and normalized.';
+    }
+    button(ctl, 'Attention', () => { mode = 'attn'; draw(); });
+    button(ctl, 'Feed-Forward', () => { mode = 'ffn'; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Transformer-block schematic: a residual stream rising from token+positional embeddings through Multi-Head Self-Attention (with Add and Norm), then a Feed-Forward MLP (with Add and Norm), to the next block. Gold dashed skip arrows mark the residual connections around each sublayer. Attention mixes information across tokens; the feed-forward network computes per token.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
