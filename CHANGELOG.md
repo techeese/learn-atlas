@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 333 — Three more code exercises across computational lessons (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** on flagship computational lessons across LA/RL/PS (lessons-with-code
+45 → **48**; the gate now runs **43**):
+- **la-projection-least-squares** — **vector projection** `(v·u/u·u)·u`, the foundation of least-squares: `[2,3]` onto
+  `[1,1]` → `2.5 2.5` (the closest point on the line).
+- **rl-monte-carlo** — **Monte-Carlo value estimate**: average the full-episode returns from a state (no bootstrapping) —
+  `[2,0,4,2]` → `2.00`.
+- **ps-conditional-expectation** — **law of total expectation** (tower rule): `E[X]=Σ E[X|group]·P(group)` — group means
+  `10`/`20` with weights `0.6`/`0.4` → `14.00`.
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**43 code-exercises verified**); **via `--dump-dom`** the Monte-Carlo widget runs → `2.00`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v272` → `atlas-v273`.
+
 ## iter 332 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons across calc/algo/RL (examples 322 → **325**):
 - **c-optimization** — **max area, fixed perimeter**: `20 m` of fence → `A(x)=x(10−x)`, `A'=0 ⇒ x=5`, a `5×5` square with
