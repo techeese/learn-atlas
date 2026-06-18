@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 342 — Three more code exercises across computational lessons (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** on flagship computational lessons across PS/calc/LLM (lessons-with-code
+51 → **54**; the gate now runs **49**):
+- **ps-confidence-intervals** — **margin of error** `z·(σ/√n)`: z=1.96, σ=10, n=100 → `1.96` (the CI is `x̄ ± 1.96`).
+- **c-multivariable-optimization** — **Hessian second-derivative test** `D = f_xx·f_yy − f_xy²`: for `x²+xy+y²` → `3`
+  (`D>0`, `f_xx>0` ⇒ local minimum).
+- **l-optimization-and-stability** — **gradient clipping by norm**: a gradient of norm 5 capped at 1 → `0.6 0.8` (same
+  direction, magnitude rescaled).
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**49 code-exercises verified**); **via `--dump-dom`** the gradient-clip widget runs → `0.6 0.8`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v281` → `atlas-v282`.
+
 ## iter 341 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons across algo/calc/LA (examples 328 → **331**, all ⌘K-searchable):
 - **a-trees-heaps** — **a heap needs no pointers**: 0-indexed array, node `i` → parent `⌊(i−1)/2⌋`, children `2i+1`, `2i+2`;
