@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 411 — Three more worked examples across DL/LLM/PS (examples)
+A **3rd worked example** on three flagship lessons across DL/LLM/PS (examples 400 → **403**, all ⌘K-searchable):
+- **dl-embeddings-and-tokenization** — **word analogies as vector arithmetic**: `king − man + woman = (2,4) = queen`; relationships are
+  consistent directions, which a one-hot vector can't represent.
+- **l-peft-lora** — **the 2r/d savings ratio**: at `d=4096, r=8`, LoRA trains `2dr=65,536` of `d²=16.78M` params = `0.39%` — tiny
+  checkpoints, swappable adapters, because the fine-tuning update is low-rank.
+- **ps-hypothesis-testing-logic** — **one-sided vs two-sided**: `z=1.8` rejects at the one-sided cutoff `1.645` but fails the two-sided
+  `1.96`; the cutoff depends on the hypothesis, which must be fixed before looking (else p-hacking).
+Every value node-verified ((2,4); 0.39%; reject/fail); injected byte-stably with the full guard set.
+Verified: gate ALL GREEN (**403 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (63 / 64 / 42 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v350` → `atlas-v351`.
+
 ## iter 410 — Step-back: full audit (clean) + three second deep-dives (content / depth)
 **Round-number step-back (iter 410).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive — including the 9 with two)
