@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 418 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
+A **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 166 → **169**; 21 lessons now carry two):
+- **dl-backpropagation** (had: "why backprop goes backward") → **vanishing/exploding gradients as a product of Jacobians**: depth
+  multiplies per-layer factors `cⁿ` (`0.9⁵⁰≈0.005`, `1.1⁵⁰≈117`) — init, normalization, residuals, and clipping all attack this product.
+- **rl-value-iteration** (had: "Bellman operator is a contraction") → **value iteration vs policy iteration**: VI = *truncated* PI —
+  one backup/sweep (cheap, many, asymptotic at rate γ) vs full evaluation (costly, few, exact). A dial on how much you evaluate before improving.
+- **ps-normal-distribution** (had: "why the normal is everywhere") → **standardization & the 68-95-99.7 rule**: the z-score collapses
+  every normal onto one curve; 3σ (`z=3`) is ~1-in-740 per tail — "how unusual" becomes a single universal number.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + duplicate-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3
++ 8 pages) **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v357` → `atlas-v358`.
+
 ## iter 417 — Three more worked examples across LLM/LA/calc (examples)
 A **3rd worked example** on three flagship lessons across LLM/LA/calc (examples 409 → **412**, all ⌘K-searchable):
 - **l-what-is-a-language-model** — **perplexity**: `PPL = exp(avg NLL)`; for `p=[0.5,0.25,0.5]` it's `e^0.924 ≈ 2.52` — the effective
