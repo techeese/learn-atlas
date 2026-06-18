@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 244: **Keyboard lesson navigation [ / ]** (UI/UX). Step to prev/next lesson while reading (complements the iter-238 dot nav).
+   Self-contained in studyKeys (parses route, prev/next from flatLessons); guarded: ignored mid-quiz (no nav when live
+   choices exist), no-op at course boundaries, inherits input/modal guards. Documented in the ? overlay ("Lessons" group).
+   app.js only — no CSS/data/state change. Verified: gate GREEN; ] advances + [ returns (errs=0); quiz-guard holds (4
+   choices → hash unchanged); boundary holds (first lesson [ = no-op); overlay shows the group; smoke errs=0/kErr=0 (12
+   routes). NOTE (content status): every lesson now has ≥2 examples — examples coverage complete, not a gap. SW →v186.
    ✅ iter 243: **Personal bests panel** (gamification — most overdue, last 233). Beat-your-record loop on the Progress page: 🔥 longest
    streak (+"at your peak!" tag), ⚡ best day XP, 🎯 best test %, 📅 days studied — gold-framed tiles. 3/4 computed from
    existing history; only longest streak needed new `maxStreak` (blank+load back-fill to max(maxStreak,streak); old saves

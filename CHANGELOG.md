@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 244 — Keyboard lesson navigation: [ / ] (UI/UX)
+Rotating off gamification. With the content layer exhaustive (every lesson ≥2 worked examples, ~30 deep-dives, 21 code
+exercises, 117 glossary terms, 53 widgets), the highest-value fresh win is reading-flow polish. Added **`[` / `]` to step
+to the previous / next lesson** while reading — sequential study without reaching for the footer buttons, complementing
+the in-module dot navigator (iter 238).
+- Self-contained in `studyKeys`: parses the lesson route, computes prev/next from `flatLessons(course)`, and navigates.
+- **Guarded**: ignored mid-quiz (only fires when there are no live MCQ choices, so it can't yank you out of a test),
+  **stays within the course** (no-op at the first/last lesson), and inherits the existing input/modal guards (won't fire
+  while typing in the notes box or with a dialog open).
+- Documented in the **`?` shortcuts overlay** under a new "Lessons" group.
+No CSS/data/state change (app.js only). Verified: gate ALL GREEN; in-browser `]` advances to the next lesson and `[`
+returns (heading updates, `errs=0`); the **quiz-guard holds** (on the Quiz tab with 4 live choices, `]` leaves the hash
+unchanged) and the **boundary holds** (on the first lesson, `[` is a no-op); the shortcuts overlay shows the new group;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v185` → `atlas-v186`.
+
 ## iter 243 — Personal bests: a high score to chase (gamification)
 Gamification was the most-overdue learner-facing lane (last at iter 233). Rather than pad the already-comprehensive 55
 achievements, added a **"Personal bests" panel** on the Progress page — the beat-your-own-record loop that keeps a

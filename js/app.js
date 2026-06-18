@@ -2540,6 +2540,13 @@
     // MCQ choices (quiz / test / mastery drill): 1-4 or a-d to pick
     const choices = document.querySelectorAll(".choice:not(.locked)");
     if (choices.length) { let i = "1234".indexOf(e.key); if (i < 0) i = "abcd".indexOf(e.key.toLowerCase()); if (i >= 0 && i < choices.length) { e.preventDefault(); choices[i].click(); return; } }
+    // lesson flow: [ previous · ] next — sequential reading without reaching for the footer (not mid-quiz; stays in-course)
+    if ((e.key === "[" || e.key === "]") && !choices.length && (location.hash || "").indexOf("#/lesson/") === 0) {
+      const parts = location.hash.slice(2).split("/"); const course = findCourse(parts[1]);
+      if (course) { const flat = flatLessons(course), idx = flat.findIndex(l => l.id === parts[2]), tgt = e.key === "[" ? flat[idx - 1] : flat[idx + 1];
+        if (tgt) { e.preventDefault(); location.hash = "#/lesson/" + course.id + "/" + tgt.id; } }
+      return;
+    }
     // Enter advances (next / submit / continue)
     if (e.key === "Enter") { const nb = document.getElementById("t-next") || document.querySelector("#md-next .btn, #next-slot .btn"); if (nb) { e.preventDefault(); nb.click(); } }
   }
@@ -2551,6 +2558,7 @@
     if (shortcutsEl) return;
     const groups = [
       ["Global", [["⌘K / Ctrl K", "Search anything — concepts, pages, and inside lessons"], ["?", "Show this shortcuts list"], ["Esc", "Close a dialog or overlay"]]],
+      ["Lessons", [["[ / ]", "Previous · next lesson in this unit"]]],
       ["Quizzes & tests", [["1–4 / A–D", "Pick an answer"], ["Enter", "Next question · submit · continue"]]],
       ["Flashcards", [["Space / Enter", "Flip the card"], ["1–4", "Grade: Again · Hard · Good · Easy"]]],
       ["Knowledge Map", [["Tab", "Enter the constellation"], ["← ↑ → ↓", "Move between concepts"], ["Enter", "Open the focused concept"]]]
