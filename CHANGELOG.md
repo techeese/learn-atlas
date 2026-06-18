@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 412 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
+A **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 157 → **160**; 12 lessons now carry two):
+- **l-rlhf-and-preference-optimization** (had: "DPO drops the reward model") → **why RLHF needs a KL leash**: optimizing a *learned*
+  reward invites reward hacking (Goodhart), so `E[r] − β·D_KL(π‖π_ref)` anchors the policy near the SFT model — the same objective DPO bakes in.
+- **a-greedy** (had: "exchange argument") → **fractional vs 0/1 knapsack**: greedy-by-ratio is optimal when items are divisible, but
+  0/1 strands capacity (cap 10: greedy takes a 6-item, B+C=10 wins) — divisibility/matroid structure is what licenses greedy.
+- **la-determinants** (had: "det=0 ⇒ singular; det(AB)=detA·detB") → **the determinant is signed volume-scaling**: every det fact
+  follows from "oriented volume scaling" (collapse ⇒ 0, products multiply, triangular = diagonal product).
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + duplicate-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3
++ 8 pages) **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v351` → `atlas-v352`.
+
 ## iter 411 — Three more worked examples across DL/LLM/PS (examples)
 A **3rd worked example** on three flagship lessons across DL/LLM/PS (examples 400 → **403**, all ⌘K-searchable):
 - **dl-embeddings-and-tokenization** — **word analogies as vector arithmetic**: `king − man + woman = (2,4) = queen`; relationships are
