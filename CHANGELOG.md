@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 316 — Kruskal's MST visualizer — 68th widget (visualizations)
+`a-mst-union-find` had no widget, and Kruskal's algorithm is a perfect visual: greedy + a union-find cycle test. Added the
+**68th Lab widget `algo-kruskal`**, embedded there: a 6-node weighted graph where **Step** considers edges cheapest-first —
+adding one in **sage** if its ends are in different components, or **rejecting** it in dashed **rust** when union-find finds
+they're already connected (a cycle). **Run** completes it, **Reset** restarts. The note narrates each decision and the
+running tree weight, which climbs to the minimum **13** (5 edges). Plain-unicode note (no `$`). app.js `viz-complete`
+fallback 67 → 68.
+Verified: gate ALL GREEN (**68 widgets**, embed resolves); **node** prototype confirmed the MST (edges 1-2,1-3,3-4,0-2,3-5;
+weight 13; 4 cycle-edges rejected); **via `--dump-dom`** Step adds the lightest edge (1–2, w=1), **Run → weight 13, 5 edges,
+complete**, `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape
+change. SW cache `atlas-v256` → `atlas-v257`.
+(Tooling landmine: `node -e '…'` inline breaks on apostrophes — e.g. "Kruskal's" closes the quote and zsh glob-errors on the
+rest; use a heredoc script file for README/doc edits with apostrophes. Re-did the README update that way.)
+
 ## iter 315 — Three more code exercises across the 4-count topics (new functionality / active learning)
 With code exercises evenly spread (most topics at 4), added **3 more gate-verified JavaScript exercises** across LA/RL/PS
 (lessons-with-code 36 → **39**; the gate now runs **34**), each a flagship one-liner of a concept:

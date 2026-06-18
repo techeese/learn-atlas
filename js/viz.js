@@ -1434,6 +1434,52 @@
   });
 
   /* ========================================================
+     68. Kruskal's MST — greedy edge-adding with a union-find cycle check (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-kruskal', topic: 'algorithms', title: "Kruskal's MST (greedy + union-find)", blurb: "Kruskal builds a minimum spanning tree greedily: sort edges by weight and add each one unless it would close a cycle — a check union-find answers in near-constant time. Step through it and watch the cheapest safe edges accumulate into the lightest tree connecting every node." },
+  function (root) {
+    const W = 540, H = 340, N = 6;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const POS = [[140, 55], [400, 55], [120, 175], [420, 175], [150, 295], [395, 295]];
+    const EDGES = [[0, 1, 4], [0, 2, 3], [1, 2, 1], [1, 3, 2], [2, 3, 4], [3, 4, 2], [4, 5, 6], [3, 5, 5], [2, 4, 7]];
+    const sorted = EDGES.map(e => ({ u: e[0], v: e[1], w: e[2] })).sort((a, b) => a.w - b.w);
+    let parent, step, mst, last;
+    const find = x => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+    function reset() { parent = Array.from({ length: N }, (_, i) => i); step = 0; mst = []; last = null; draw(); }
+    function doStep() { if (step >= sorted.length) return; const e = sorted[step]; const ra = find(e.u), rb = find(e.v); if (ra !== rb) { parent[ra] = rb; mst.push(e); last = { e, added: true }; } else last = { e, added: false }; step++; draw(); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const inMst = new Set(mst.map(e => e.u + '-' + e.v)), cur = last ? last.e : null;
+      EDGES.forEach(([u, v, w]) => {
+        const a = POS[u], b = POS[v], isMst = inMst.has(u + '-' + v), isCur = cur && cur.u === u && cur.v === v;
+        ctx.strokeStyle = isCur ? (last.added ? p.gold : p.rust) : (isMst ? p.sage : p.line);
+        ctx.lineWidth = (isMst || isCur) ? 3 : 1.2; ctx.globalAlpha = (isMst || isCur) ? 1 : 0.45;
+        if (isCur && !last.added) ctx.setLineDash([5, 4]);
+        ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+        const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+        ctx.fillStyle = p.bg; ctx.fillRect(mx - 8, my - 7, 16, 14);
+        ctx.fillStyle = isMst ? p.sage : p.mute; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(w, mx, my);
+      });
+      POS.forEach((pt, i) => { ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(pt[0], pt[1], 15, 0, 7); ctx.fill(); ctx.fillStyle = p.bg; ctx.font = '600 13px ' + cssVar('--font-mono', 'monospace'); ctx.fillText(i, pt[0], pt[1]); });
+      ctx.textBaseline = 'alphabetic';
+      const total = mst.reduce((s, e) => s + e.w, 0);
+      let msg = step === 0 ? 'Edges sorted by weight; press Step to consider the lightest first.'
+        : 'Edge ' + last.e.u + '–' + last.e.v + ' (w=' + last.e.w + '): ' + (last.added
+          ? '<b style="color:' + p.sage + '">added</b> — its ends were in different components.'
+          : '<b style="color:' + p.rust + '">rejected</b> — both ends already connected, so it would close a cycle.');
+      info.innerHTML = msg + ' MST so far: <b>' + mst.length + '</b> edge' + (mst.length === 1 ? '' : 's') + ', total weight <b style="color:' + p.sage + '">' + total + '</b>' + (mst.length === N - 1 ? ' — complete: the lightest tree connecting all ' + N + ' nodes.' : '.');
+    }
+    button(ctl, 'Step', doStep);
+    button(ctl, 'Run', () => { while (step < sorted.length) doStep(); });
+    button(ctl, 'Reset', reset);
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', "Kruskal's minimum-spanning-tree visualizer: a weighted graph of 6 nodes; edges are considered in increasing weight order and added to the tree (sage) unless they would form a cycle (rejected, rust), with union-find tracking connected components. The running total weight reaches the minimum 13.");
+    reset();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
