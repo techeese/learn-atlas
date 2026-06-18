@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 302 — The ε–δ limit visualizer — 65th widget (visualizations)
+`c-limits-intuition` had no widget, and the ε–δ definition is the single most-feared idea in early calculus. Added the
+**65th Lab widget `calc-limit-epsilon`**, embedded in that lesson: pick a tolerance **ε** (a sage horizontal band around the
+limit **L**) and the widget computes the **δ** interval around **a** (violet) that keeps the whole curve inside the band.
+Shrink ε and δ shrinks with it — but a δ always exists, which *is* the definition (∀ε ∃δ). Two presets: the classic
+`(x²−1)/(x−1)` (a line with a **removable hole** at a — an open circle, showing the limit ignores `f(a)` entirely, here
+δ = ε) and `x²` (where δ < ε and is asymmetric). δ is found numerically by scanning outward from a until the curve leaves
+the band. Plain-unicode note (no `$`, viz-note landmine). app.js `viz-complete` fallback 64 → 65.
+Verified: gate ALL GREEN (**65 widgets**, embed resolves); **node** prototype confirmed δ ≈ ε for the hole (0.60→0.60,
+0.10→0.10) and δ < ε for x² (0.6→0.26, 0.1→0.05); **via `--dump-dom`** the ε slider drives δ (`0.60→0.10`), the function
+toggle switches presets (x², δ=0.05 at ε=0.10), `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke
+**errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v242` → `atlas-v243`.
+
 ## iter 301 — Topic filter for the Glossary + a stale-copy fix (UI/UX)
 With the glossary now **138 terms** across 7 subjects + general, it had search but **no way to browse by topic**. Added
 **per-topic filter chips** (All topics + one per subject present), mirroring the Lab's filter (iter 286): each chip filters

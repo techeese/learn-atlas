@@ -1316,6 +1316,51 @@
   });
 
   /* ========================================================
+     65. The ε–δ definition of a limit — for every tolerance there is an interval (Calculus)
+     ======================================================== */
+  register({ id: 'calc-limit-epsilon', topic: 'calculus', title: 'The ε–δ definition of a limit', blurb: 'The formal limit made visual: choose a tolerance ε (a horizontal band around L) and the widget finds a δ (an interval around a) that keeps the whole curve inside the band. Shrink ε and δ shrinks too — but one always exists. That "for every ε there is a δ" is exactly what lim f = L means.' },
+  function (root) {
+    const W = 540, H = 350, padL = 32, padR = 14, padT = 16, padB = 28;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const FUNCS = {
+      hole: { f: x => x + 1, a: 1, L: 2, hole: true, lo: -1, hi: 3, name: 'f(x) = (x²−1)/(x−1)' },
+      quad: { f: x => x * x, a: 1, L: 1, hole: false, lo: -0.5, hi: 2.5, name: 'f(x) = x²' }
+    };
+    let fn = FUNCS.hole, eps = 0.6;
+    slider(ctl, { label: 'tolerance ε', min: 0.1, max: 1, step: 0.05, value: eps, fmt: v => v.toFixed(2), onInput: v => { eps = v; draw(); } });
+    button(ctl, 'f(x)=(x²−1)/(x−1)', () => { fn = FUNCS.hole; draw(); });
+    button(ctl, 'f(x)=x²', () => { fn = FUNCS.quad; draw(); });
+    function findDelta() {
+      let d = 0; const step = 0.002, max = Math.min(fn.a - fn.lo, fn.hi - fn.a);
+      while (d < max) { const dn = d + step; if (Math.abs(fn.f(fn.a - dn) - fn.L) > eps || Math.abs(fn.f(fn.a + dn) - fn.L) > eps) break; d = dn; }
+      return d;
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const a = fn.a, L = fn.L, lo = fn.lo, hi = fn.hi, yspan = 2.2, yLo = L - yspan, yHi = L + yspan;
+      const X = x => padL + (x - lo) / (hi - lo) * (W - padL - padR);
+      const Y = y => (H - padB) - (y - yLo) / (yHi - yLo) * (H - padT - padB);
+      const d = findDelta();
+      ctx.fillStyle = p.sage; ctx.globalAlpha = 0.14; ctx.fillRect(padL, Y(L + eps), W - padL - padR, Y(L - eps) - Y(L + eps)); ctx.globalAlpha = 1;
+      ctx.fillStyle = p.violet; ctx.globalAlpha = 0.14; ctx.fillRect(X(a - d), padT, X(a + d) - X(a - d), H - padT - padB); ctx.globalAlpha = 1;
+      ctx.strokeStyle = p.line; ctx.globalAlpha = 0.4; ctx.beginPath(); ctx.moveTo(padL, Y(L)); ctx.lineTo(W - padR, Y(L)); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(X(a), padT); ctx.lineTo(X(a), H - padB); ctx.stroke(); ctx.setLineDash([]);
+      ctx.strokeStyle = p.ink; ctx.lineWidth = 2.2; ctx.beginPath(); let started = false;
+      for (let x = lo; x <= hi; x += (hi - lo) / 320) { if (fn.hole && Math.abs(x - a) < 0.012) { started = false; continue; } const yy = Y(fn.f(x)); if (yy < padT || yy > H - padB) { started = false; continue; } const xx = X(x); started ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); started = true; }
+      ctx.stroke();
+      if (fn.hole) { ctx.fillStyle = p.bg; ctx.strokeStyle = p.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(a), Y(L), 4, 0, 7); ctx.fill(); ctx.stroke(); }
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.fillText('a = ' + a, X(a), H - padB + 13);
+      ctx.fillStyle = p.sage; ctx.textAlign = 'left'; ctx.fillText('L ± ε', W - padR - 36, Y(L + eps) - 4);
+      info.innerHTML = 'For ' + fn.name + ' near x = ' + a + ', the limit is L = ' + L + '. With tolerance ε = <b style="color:' + p.sage + '">' + eps.toFixed(2) + '</b>, an interval δ = <b style="color:' + p.violet + '">' + d.toFixed(2) + '</b> around a keeps the whole curve inside L ± ε. ' + (fn.hole ? 'Note the open circle — the function isn’t even defined at a, yet the limit exists: the limit ignores f(a).' : 'Shrink ε and δ shrinks with it, but one always exists — that is exactly what lim f(x) = L means.');
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Epsilon-delta limit visualizer: a function curve with a horizontal epsilon band around the limit value L and a vertical delta interval around the point a; shrinking epsilon shrinks delta, but a delta interval keeping the curve inside the band always exists.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
