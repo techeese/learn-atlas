@@ -2,6 +2,27 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 250 — Step-back: whole-site health sweep + two more gate guards (workflow / dev-flow)
+The round-number reflection. **Loop health (240–249):** a genuinely diverse rotation — workflow, content, viz×2,
+gamification×2, UI/UX, new-functionality, animation, accessibility — no area starved. The site is measurably richer and
+more polished than at iter 240 (viz 52→54, glossary 117, code exercises now rewarded with XP+achievements, lesson-complete
+celebration, SPA focus management, notes export, in-module navigator, personal bests). **Most-neglected:** performance
+(still deferred — minifying the data breaks the byte-stable inject pipeline; lazy-loading is risky; first-load parse is
+cached after visit one, so it doesn't yet hurt enough to justify the risk).
+
+Shipped a **dev-flow** ship in the iter-240 spirit (protect all the work to come):
+1. **Comprehensive health sweep** (verification): drove **all 202 routes — every one of the 148 lessons + all 54 lab
+   widgets** — trapping `error`/`unhandledrejection`/`.katex-error` per route. Result: **errs=0, kErr=0, zero problems on
+   any route.** The whole surface renders clean, not just the usual ~12-route smoke.
+2. **Two new gate guards** (`gate.js`): (a) **dangling internal links** — any hand-authored `#/lesson/<topic>/<id>` in
+   content must resolve to a real lesson (future-proofs deep-dive cross-references; 0 today); (b) **achievement
+   reachability** — loads `store.js` (localStorage-stubbed) for the `ACHIEVEMENTS` ids and cross-checks app.js's
+   `ACH_CATEGORIES`, failing if any achievement is in `store.js` but no Hall category (would be invisible) or if a
+   category names a non-existent id. Summary line gains `· N internal links ok`.
+Verified: gate ALL GREEN with the new checks (57 achievements all reachable); **negative-tested** the achievement guard
+(injecting an orphan achievement made the gate FAIL with a precise message + exit 1; restoring → GREEN). `gate.js` is a
+dev tool (not served), so no SW-cache bump and no app change.
+
 ## iter 249 — Solving a code exercise now rewards XP + achievements (gamification / new functionality)
 The 21 embedded code exercises were *disconnected from the progression loop* — getting one right showed a green "✓
 matches" and nothing else (no XP, no achievement), so a whole pillar didn't "count." Wired solving into the reward system:

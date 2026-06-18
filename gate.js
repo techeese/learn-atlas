@@ -82,6 +82,13 @@ C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
     if (out !== expected) errors.push("data-code expected-mismatch in " + l.id + "\n      got: " + JSON.stringify(out.slice(0, 90)) + "\n      exp: " + JSON.stringify(expected.slice(0, 90)));
   }
 })));
+// dangling internal links: any hand-authored "#/lesson/<topic>/<id>" in content must resolve to a real lesson
+// (a renamed/removed lesson leaves a link that silently 404s on click). Second pass — all ids are now known.
+let linksChecked = 0;
+C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
+  const re = /#\/lesson\/[a-z0-9-]+\/([a-z0-9-]+)/g; let lm;
+  while ((lm = re.exec(l.content || ""))) { linksChecked++; if (!ids.has(lm[1])) errors.push("dangling lesson link '#/lesson/.../" + lm[1] + "' in " + l.id); }
+})));
 // glossary: render-hazard lint every definition + flag duplicate terms (the inline-tooltip source of truth)
 const gloss = global.window.GLOSSARY || [];
 const gseen = {};
@@ -95,8 +102,25 @@ Object.entries(global.window.PREREQS || {}).forEach(([lid, arr]) => {
   if (!topicOf[lid]) errors.push("PREREQS lesson not found: " + lid);
   (arr || []).forEach(p => { if (!topicOf[p]) errors.push("PREREQS target not found: " + p + " (for " + lid + ")"); });
 });
+// achievement consistency: every defined achievement must appear in a Hall category (else it is invisible to the
+// learner), and every category id must be a real achievement (else a dead reference). store.js (needs a localStorage
+// stub) provides the ids; app.js's ACH_CATEGORIES is parsed as text. Degrades to a warning if it can't introspect.
+let achIds = [];
+try { global.localStorage = { getItem() { return null; }, setItem() {}, removeItem() {} }; load("js/store.js"); achIds = ((global.window.Store || {}).ACHIEVEMENTS || []).map(a => a.id); }
+catch (e) { warnings.push("achievement check skipped — couldn't load store.js (" + e.message + ")"); }
+if (achIds.length) {
+  const appSrc = fs.readFileSync("js/app.js", "utf8");
+  const block = appSrc.match(/ACH_CATEGORIES\s*=\s*\[([\s\S]*?)\n\s*\];/);
+  if (!block) warnings.push("achievement check skipped — ACH_CATEGORIES not found in app.js");
+  else {
+    const catIds = new Set((block[1].match(/"([a-z0-9-]+)"/g) || []).map(s => s.slice(1, -1)));
+    const achSet = new Set(achIds);
+    achIds.forEach(id => { if (!catIds.has(id)) errors.push("achievement '" + id + "' is in store.js but no Hall category — it would be invisible; add it to ACH_CATEGORIES"); });
+    catIds.forEach(id => { if (!achSet.has(id)) errors.push("ACH_CATEGORIES references unknown achievement id '" + id + "'"); });
+  }
+}
 
-console.log(`GATE — ${C.length} topics · ${lessons} lessons · ${mcq} MCQs · ${cards} flashcards · ${hw} homework · ${ex} examples · ${vizIds.size} widgets · ${gloss.length} glossary · ${codeChecked} code-exercises verified`);
+console.log(`GATE — ${C.length} topics · ${lessons} lessons · ${mcq} MCQs · ${cards} flashcards · ${hw} homework · ${ex} examples · ${vizIds.size} widgets · ${gloss.length} glossary · ${codeChecked} code-exercises verified · ${linksChecked} internal links ok`);
 if (warnings.length) { console.log("warnings (" + warnings.length + ", non-blocking):"); warnings.slice(0, 40).forEach(w => console.log("  ⚠ " + w)); }
 if (skew.length) console.log("note: correct-answer-position bias (>70% at one index) in " + skew.length + " lesson(s) — pre-existing; de-skewing needs per-MCQ care (some explanations cite positions).");
 if (errors.length) { console.log("FAIL (" + errors.length + "):"); errors.slice(0, 30).forEach(e => console.log("  ✗ " + e)); process.exit(1); }

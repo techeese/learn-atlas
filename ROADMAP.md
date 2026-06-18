@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 250: **Step-back + whole-site health sweep + 2 gate guards** (workflow/dev-flow). ★250 reflection: 240–249 rotated well
+   (workflow/content/viz×2/gamification×2/UI-UX/new-func/animation/accessibility — none starved); site measurably richer.
+   Neglected: performance (deferred — minify breaks inject pipeline, lazy-load risky, parse is cached). Shipped: (1)
+   comprehensive sweep of ALL 202 routes (148 lessons + 54 lab) → errs=0/kErr=0, zero problems anywhere; (2) gate guards —
+   dangling internal `#/lesson/` links (0 today, future-proofs deep-dive cross-refs) + achievement reachability (loads
+   store.js, every ACHIEVEMENT must be in an ACH_CATEGORY, no dead category refs). Negative-tested the achievement guard
+   (orphan → FAIL exit 1; restore → GREEN). gate.js is dev-only → no SW bump, no app change.
    ✅ iter 249: **Code exercises reward XP + achievements** (gamification / new functionality). The 21 exercises gave only a ✓ — now
    solving one (output matches) awards +15 XP once (deduped via new `solvedCode` map; blank+load merge) + a toast, and
    unlocks 🧪 "It Runs!" (1) / ⌨️ "Code Adept" (10). Playground check() → onSolve callback; hydrateCode keys it by
