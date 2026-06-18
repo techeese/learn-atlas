@@ -22,7 +22,7 @@
   function canvas(parent, w, h) {
     const c = el('canvas', 'viz-canvas', parent);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    c.style.width = w + 'px'; c.style.height = h + 'px';
+    c.style.width = w + 'px';   // height left to CSS (height:auto) so the canvas scales proportionally on narrow screens
     c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
     const ctx = c.getContext('2d'); ctx.scale(dpr, dpr);
     return { c, ctx, w, h };

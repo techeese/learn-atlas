@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 292: **Fix: visualizations were squished on mobile** (mobile/bug). .viz-canvas had max-width:100% (width shrank) but
+   canvas() set a fixed inline height (didn't shrink) → all 63 widgets squished horizontally on phones (ratio 0.90 vs 1.54).
+   Fix: drop inline height + add height:auto so canvas scales proportionally from its intrinsic w:h. Pointer helper uses
+   getBoundingClientRect so drag unaffected. Verified (iframe@390px+postMessage): scaling/master-theorem now 316×205 ratio 1.54
+   (was 316×350); desktop unchanged 540×350; gate GREEN; smoke errs=0/kErr=0 (12). SW →v233.
    ✅ iter 291: **Scaling-laws visualizer — 63rd widget** (visualizations). l-scaling-laws had no viz. New `llm-scaling`: for fixed
    compute C=6ND, loss-vs-model-size U-curve (L=E+A/Nᵃ+B/Dᵃ), marks compute-optimal N* at the dip; slide budget 10¹⁸–10²⁴
    and N* climbs 91M→2.9B→91B at constant ~20 tok/param (constants tuned (B/A)^(1/a)≈20). app.js fallback 62→63. Plain-unicode

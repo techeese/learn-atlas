@@ -742,7 +742,7 @@ body::after {
    Visualization widgets
    ============================================================ */
 .viz { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin: 22px 0; }
-.viz-canvas { display: block; margin: 0 auto 8px; border-radius: 10px; background: var(--bg); max-width: 100%; touch-action: none; }
+.viz-canvas { display: block; margin: 0 auto 8px; border-radius: 10px; background: var(--bg); max-width: 100%; height: auto; touch-action: none; }
 .viz-canvas:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }   /* keyboard focus on a drag-operable widget */
 /* resume-reading pill — appears bottom-center when reopening a part-read lesson */
 .resume-pill {

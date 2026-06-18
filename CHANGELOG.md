@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 292 — Fix: visualizations were squished on mobile (mobile / bug)
+A real, longstanding mobile bug found by re-measuring the recent widgets at 390px: `.viz-canvas` had `max-width: 100%`
+(so the **width** shrank to fit a narrow screen) but `canvas()` also set a **fixed inline `height`** (e.g. 350px), so the
+height *didn't* shrink — every one of the 63 widgets rendered **squished horizontally** on phones (a 540×350 drawing
+crammed into ~316×350, ratio 0.90 instead of 1.54 — circles became tall ellipses, labels compressed). Fix: stop setting the
+inline height in `canvas()` and add `height: auto` to `.viz-canvas`, so the canvas scales **proportionally** from its own
+intrinsic width:height attribute ratio. The pointer/drag helper already maps via `getBoundingClientRect()`, so dragging
+stays correct at any display size — no widget logic changed.
+Verified (iframe @ 390px + `postMessage`, the mobile gate): the scaling and master-theorem widgets now render **316×205,
+ratio 1.54** (was 316×350, ratio 0.90); **desktop is unchanged at 540×350**; gate ALL GREEN; all-routes smoke
+**errs=0/kErr=0 (12 routes)** including several Lab widgets + a viz-embedding lesson. One-line CSS + one-line JS change,
+fixes all **63** visualizations on mobile. No save-shape change. SW cache `atlas-v232` → `atlas-v233`.
+
 ## iter 291 — Scaling-laws visualizer — 63rd widget (visualizations)
 `l-scaling-laws` had no widget, and scaling laws are one of the most abstract — and most consequential — ideas in the
 LLM course. Added the **63rd Lab widget `llm-scaling`**, embedded in that lesson: for a fixed compute budget `C = 6ND`,
