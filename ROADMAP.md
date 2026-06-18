@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 323: **3 more code exercises across computational lessons** (active learning). +3 JS (lessons-with-code 39→42, gate runs 37)
+   across LA/algo/PS: la-gradients-jacobians (gradient → 8 7), a-linear-sorts-selection (counting sort → 0,0,2,2,3,3,3,5),
+   ps-normal-distribution (z-score → 2.00). Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (37 verified);
+   dump-dom counting-sort runs → "0,0,2,2,3,3,3,5" "✓ matches"; smoke errs=0/kErr=0 (12). SW →v264.
    ✅ iter 322: **Inline-extras icons in the course lesson list** (UI/UX). Extends the 320 amplify theme: course lesson rows now flag
    inline 🎛️ viz / 🧩 deeper-dive / 💻 code exercise (computed from content, aria-label/title for SR) so hands-on lessons are
    spottable at a glance — depth advertised before AND inside a lesson. Verified: gate GREEN; dump-dom PS course shows icons on

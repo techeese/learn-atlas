@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 323 — Three more code exercises across computational lessons (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** on flagship computational lessons that still lacked one, across LA/algo/PS
+(lessons-with-code 39 → **42**; the gate now runs **37**):
+- **la-gradients-jacobians** — the **gradient** of `f(x,y)=x²+3xy+y²`: `[∂f/∂x, ∂f/∂y] = [2x+3y, 3x+2y]` → `8 7` at (1,2),
+  the direction of steepest ascent.
+- **a-linear-sorts-selection** — **counting sort** (tally values, emit in order, no comparisons): `[2,5,3,0,2,3,0,3]`
+  → `0,0,2,2,3,3,3,5` — O(n + range), linear when the range is small.
+- **ps-normal-distribution** — the **z-score** `(x−μ)/σ`: `(130−100)/15` → `2.00`, i.e. two standard deviations above the mean.
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**37 code-exercises verified**); **via `--dump-dom`** the counting-sort widget runs →
+`0,0,2,2,3,3,3,5`, "✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache
+`atlas-v263` → `atlas-v264`.
+
 ## iter 322 — Inline-extras icons in the course lesson list (UI/UX)
 Extending the "amplify what exists" theme from iter 320: the course page's lesson rows already show MCQ/cards/HW pill
 counts, but nothing flagged which lessons carry an inline **visualization, deeper-dive, or code exercise** — you only found
