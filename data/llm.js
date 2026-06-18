@@ -971,6 +971,11 @@
               "title": "Why divide by √dₖ?",
               "body": "Why does scaled dot-product attention divide the scores by $\\sqrt{d_k}$?",
               "solution": "Dot products grow with dimension $d_k$, which would push softmax into saturated regions with vanishing gradients. Dividing by $\\sqrt{d_k}$ keeps the scores at a stable scale so training stays well-conditioned."
+            },
+            {
+              "title": "From scores to weights: the softmax step",
+              "body": "A query produces raw attention scores $[2, 1, 0]$ over three positions whose values are $[10, 20, 30]$. Compute the attention weights and the output.",
+              "solution": "<strong>Softmax turns scores into weights.</strong> The attention weights are the softmax of the scores: $w_i = \\tfrac{e^{s_i}}{\\sum_j e^{s_j}}$. With scores $[2, 1, 0]$: $e^2 = 7.39$, $e^1 = 2.72$, $e^0 = 1$, summing to $11.11$, so\n$$w = \\Big[\\tfrac{7.39}{11.11},\\ \\tfrac{2.72}{11.11},\\ \\tfrac{1}{11.11}\\Big] \\approx [0.665,\\ 0.245,\\ 0.090].$$\nThe weights are positive and sum to 1 — a probability distribution over positions.\n<strong>The output is the weighted sum of values.</strong> $\\text{out} = \\sum_i w_i v_i = 0.665(10) + 0.245(20) + 0.090(30) \\approx 14.25$. Position 1 has the highest score, so the output leans toward its value $10$, but the others still contribute.\n<strong>Why softmax.</strong> It maps arbitrary real scores to normalized, all-positive weights, and it is <em>smooth</em> — small score changes nudge the weights gently (unlike a hard argmax), which is what lets attention be trained by gradient descent. Larger score gaps make the distribution sharper (more \"look at one place\").\n<strong>The aha.</strong> Attention is \"soft\" dictionary lookup: scores rank how relevant each position is, softmax converts that ranking into mixing weights, and the output is a content-weighted blend of values — fully differentiable, so the model learns <em>what</em> to attend to."
             }
           ]
         },

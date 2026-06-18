@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 396 — Three more worked examples across algo/RL/LLM (examples)
+A **3rd worked example** on three flagship lessons across algo/RL/LLM (examples 373 → **376**, all ⌘K-searchable), each a distinct
+angle from the lesson's existing two (read first to avoid overlap):
+- **a-shortest-paths-topo** — **why Dijkstra needs non-negative edges**: on `S→A(1), S→B(2), B→A(−2)` the true dist to A is `0`
+  (via B) but Dijkstra finalizes A at `1` and never revisits — the greedy "finalize and forget" rule needs Bellman-Ford when
+  weights can be negative. (Complements the existing BF + critical-path examples.)
+- **rl-what-is-rl** — **explore vs exploit (ε-greedy)**: with `ε=0.1, k=3`, `P(greedy)=1−ε+ε/k≈0.933`, `P(other)=ε/k≈0.033`;
+  exploration is the price of learning from evaluative feedback.
+- **l-self-attention** — **from scores to weights (the softmax step)**: scores `[2,1,0]` → softmax `[0.665,0.245,0.090]` → output
+  `14.25`; the existing example was *given* the weights, this one derives them and explains why softmax (smooth, differentiable).
+Every value node-verified; injected byte-stably with the full guard set (round-trip + even-`$` + tag-balance + unsupported-env +
+bare-`<`-letter-in-math).
+Verified: gate ALL GREEN (**376 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (209 / 62 / 18 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v335` → `atlas-v336`.
+Also confirmed saturated (no build): flashcards uniform (6/lesson), viz achievements + bias-variance/overfitting viz already exist.
+
 ## iter 395 — Three more worked examples across LA/DL/PS (examples)
 A **3rd worked example** on three flagship lessons across LA/DL/PS (examples 370 → **373**, all ⌘K-searchable):
 - **la-gradients-jacobians** — **the Jacobian stacks gradients**: for `F=(x²y, x+y)`, `J(2,3)=[[12,4],[1,1]]`; it's the best linear

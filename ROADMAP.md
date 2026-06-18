@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 396: **3 more worked examples across algo/RL/LLM** (examples). +3 (373→376): a-shortest-paths-topo (Dijkstra fails on
+   negative edge: true 0, Dijkstra 1), rl-what-is-rl (ε-greedy P(greedy)≈0.933), l-self-attention (softmax scores→weights→14.25).
+   Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (376 examples); dump-dom katex 209/62/18, kErr=0, rawDollar=0;
+   smoke errs=0/kErr=0/bad=none. SW →v336. (Checked saturated: flashcards uniform 6/lesson, viz achievements + bias-variance viz exist.)
    ✅ iter 395: **3 more worked examples across LA/DL/PS** (examples). +3 (370→373): la-gradients-jacobians (Jacobian J(2,3)=[[12,4],[1,1]]),
    dl-rnn-lstm-gru (vanish/explode wᵀ: 0.5¹⁰≈0.001, 1.5¹⁰≈57.7), ps-point-estimation (MLE p̂=k/n=0.7). Node-verified; byte-stable
    inject w/ guards. Verified: gate GREEN (373 examples); dump-dom katex 41/58/62, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none.
