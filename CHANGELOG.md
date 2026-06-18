@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 335 — Four more deeper-dives on flagship hard lessons (content / understandability)
+4 "Deeper dive" expandables across DL/DL/LLM/algo (deep-dives 93 → **97**):
+- **dl-convolution-operation** — **weight-sharing + locality**: a conv layer is a restricted matmul (`3×3` = 9 weights, not
+  millions); the local+shared restriction is the inductive bias that makes it translation-equivariant and data-efficient.
+- **dl-practical-training-and-debugging** — **the order to debug**: overfit a tiny batch first (isolates code bugs), check the
+  initial loss (`≈ ln C`), *then* tune the learning rate — top-down (code → data → optimization → capacity).
+- **l-decoding-strategies** — **temperature/top-k/top-p as three knobs on one trade-off**: `T` reshapes the whole distribution,
+  top-k/top-p truncate its tail; they compose along the coherence-vs-diversity dial.
+- **a-shortest-paths-topo** — **why Dijkstra needs non-negative edges**: greedy settling is valid only if no detour can
+  shorten a settled distance; negatives break it → Bellman-Ford relaxes `V−1×` at `O(VE)` (DAGs: one topo pass, `O(V+E)`).
+Authored with `String.raw` LaTeX (`\lt`/`\gt` for the temperature inequalities); injected byte-stably with round-trip +
+even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 2 / 2 / 9 / 4 spans) with **kErr=0, rawDollar=0**;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v274` → `atlas-v275`.
+
 ## iter 334 — Area-between-curves visualizer — 72nd widget (visualizations)
 `c-area-volume` had no widget. Added the **72nd Lab widget `calc-area`**, embedded there: the line `y=2x` above the parabola
 `y=x²` on `[0,2]`, with the region between them **shaded from 0 to a movable right edge b**. Slide `b` and the accumulated
