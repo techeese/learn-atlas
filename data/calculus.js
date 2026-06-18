@@ -1459,6 +1459,11 @@
               "title": "Quotient Rule with a Negative Exponent Check",
               "body": "Differentiate $g(x) = \\dfrac{x^2 + 1}{x - 3}$ using the quotient rule, then evaluate the slope at $x = 1$.",
               "solution": "The <strong>quotient rule</strong> states that for $g(x) = \\dfrac{u}{v}$,\n$$g'(x) = \\frac{u'v - uv'}{v^2}.$$\n\nIdentify the pieces:\n- $u = x^2 + 1 \\;\\Rightarrow\\; u' = 2x$ (power rule on $x^2$, constant rule on $1$).\n- $v = x - 3 \\;\\Rightarrow\\; v' = 1$ (power rule on $x$, constant rule on $-3$).\n\nSubstitute into the formula:\n$$g'(x) = \\frac{(2x)(x-3) - (x^2+1)(1)}{(x-3)^2}.$$\n\nExpand the numerator carefully:\n$$2x(x-3) = 2x^2 - 6x, \\qquad (x^2 + 1)(1) = x^2 + 1.$$\n$$\\text{numerator} = (2x^2 - 6x) - (x^2 + 1) = x^2 - 6x - 1.$$\n\nSo\n$$g'(x) = \\frac{x^2 - 6x - 1}{(x-3)^2}.$$\n\n<strong>Evaluate at $x = 1$:</strong>\n$$g'(1) = \\frac{(1)^2 - 6(1) - 1}{(1-3)^2} = \\frac{1 - 6 - 1}{(-2)^2} = \\frac{-6}{4} = -\\frac{3}{2}.$$\n\n<strong>Answer:</strong> $g'(x) = \\dfrac{x^2 - 6x - 1}{(x-3)^2}$, and the slope at $x = 1$ is $-\\dfrac{3}{2}$."
+            },
+            {
+              "title": "The product rule",
+              "body": "Differentiate $f(x) = x^2 \\sin x$. It is a product of two functions, so neither the power rule nor term-by-term differentiation applies directly.",
+              "solution": "<strong>The product rule.</strong> For a product $f = u \\cdot v$, the derivative is $f' = u'v + uv'$ — <em>not</em> $u'v'$ (a common trap). Differentiate each factor in turn, keeping the other intact.\n<strong>Apply it.</strong> With $u = x^2$ (so $u' = 2x$) and $v = \\sin x$ (so $v' = \\cos x$):\n$$f'(x) = (2x)(\\sin x) + (x^2)(\\cos x) = 2x \\sin x + x^2 \\cos x.$$\n<strong>Why it isn't $u'v'$.</strong> Picture a rectangle with sides $u$ and $v$; its area is $uv$. Nudge $x$ a little: the area grows by a strip along the $v$ side ($u'v$) plus a strip along the $u$ side ($uv'$). The two contributions add — and the tiny corner term vanishes in the limit.\n<strong>The takeaway.</strong> The product rule is the workhorse behind the chain rule and integration by parts: whenever two varying quantities multiply, their rates of change combine additively, each weighted by the other's current value."
             }
           ]
         },

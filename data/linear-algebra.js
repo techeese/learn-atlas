@@ -1937,6 +1937,11 @@
               "title": "Rank and nullity of a wide matrix",
               "body": "Let $A=\\begin{bmatrix}1&1&1&1\\\\1&1&2&3\\end{bmatrix}$ (a $2\\times4$ matrix). Find the rank and nullity, and give a basis for $N(A)$.",
               "solution": "<strong>Row reduce.</strong> Subtract Row 1 from Row 2 to get $\\begin{bmatrix}0&0&1&2\\end{bmatrix}$, then clear column 3 from Row 1:\n$$\\operatorname{RREF}=\\begin{bmatrix}1&1&0&-1\\\\0&0&1&2\\end{bmatrix}.$$\nPivots sit in columns $1$ and $3$, so $\\operatorname{rank}(A)=2$.\n\n<strong>Free variables.</strong> Columns $2$ and $4$ are free, so $\\text{nullity}=2$. The pivot rows give $x_1=-x_2+x_4$ and $x_3=-2x_4$. Choosing $(x_2,x_4)=(1,0)$ and $(0,1)$:\n$$N(A)=\\operatorname{span}\\left\\{\\begin{bmatrix}-1\\\\1\\\\0\\\\0\\end{bmatrix},\\ \\begin{bmatrix}1\\\\0\\\\-2\\\\1\\end{bmatrix}\\right\\}.$$\n\n<strong>Rank–Nullity.</strong> $2+2=4=n$. ✓ A wide matrix ($n>m$) must have a nontrivial null space — here it is $2$-dimensional."
+            },
+            {
+              "title": "The four subspaces fit together by the numbers",
+              "body": "A matrix's four fundamental subspaces have dimensions that interlock. For a $3 \\times 5$ matrix $A$ of rank $r = 2$, find all four and check they add up.",
+              "solution": "<strong>Rank sets everything.</strong> With $A$ an $m \\times n = 3 \\times 5$ matrix of rank $r = 2$: the <b>column space</b> (in $\\mathbb{R}^3$) and <b>row space</b> (in $\\mathbb{R}^5$) each have dimension $r = 2$ — row rank equals column rank; the <b>null space</b> (in $\\mathbb{R}^5$) has dimension $n - r = 3$; and the <b>left null space</b> (in $\\mathbb{R}^3$) has dimension $m - r = 1$.\n<strong>The two checks.</strong> In the input space $\\mathbb{R}^5$: row space $+$ null space $= 2 + 3 = 5 = n$ (the rank-nullity theorem). In the output space $\\mathbb{R}^3$: column space $+$ left null space $= 2 + 1 = 3 = m$.\n<strong>The aha.</strong> One number — the rank — pins down all four dimensions. Row space and null space are orthogonal complements in $\\mathbb{R}^n$; column space and left null space are orthogonal complements in $\\mathbb{R}^m$ — the heart of the Fundamental Theorem of Linear Algebra."
             }
           ]
         },

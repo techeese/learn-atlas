@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 345 — Three more worked examples on flagship hard lessons (examples)
+A **3rd worked example** on three flagship lessons across LA/calc/RL (examples 331 → **334**, all ⌘K-searchable):
+- **la-four-subspaces-rank** — **the four subspaces fit together by the numbers**: a `3×5` rank-2 matrix → col/row dim `2`,
+  null dim `3`, left-null dim `1`; row+null `= 5 = n`, col+left-null `= 3 = m` (orthogonal complements filling each space).
+- **c-differentiation-rules** — **the product rule** `(uv)' = u'v + uv'` (not `u'v'`): `x²sin x → 2x sin x + x² cos x`, with the
+  rectangle-area intuition for why the two strips add.
+- **rl-exploration** — **UCB: optimism under uncertainty**: `x̄ + c√(ln t / nₐ)` scores arm 2 (`1.615`) over arm 1 (`1.099`)
+  despite a lower mean, because its bonus from few pulls is larger — regret grows only like `ln t`.
+Every value node-verified (dims sum to n,m; product-rule derivative; UCB 1.615 > 1.099); injected byte-stably with round-trip +
+even-`$` + tag-balance + unsupported-env pre-guards.
+Verified: gate ALL GREEN (**334 examples**); **via `--dump-dom`** each Examples tab shows 3, reveals with KaTeX
+(58 / 46 / 122 spans) and **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v284` → `atlas-v285`.
+
 ## iter 344 — Hypothesis-test visualizer — 74th widget (visualizations)
 `ps-hypothesis-testing-logic` had no widget. Added the **74th Lab widget `ps-hyptest`**, embedded there: the standard-normal
 null distribution with the two-tailed **rejection region** `|z| > 1.96` (α=0.05) shaded in rust. Slide the **observed z** and
