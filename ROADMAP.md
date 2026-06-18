@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 394: **3 more worked examples across DL/PS/calc** (examples). +3 (367→370): dl-gradient-descent-and-optimizers (Adam first
+   step m̂/√v̂=1), ps-sampling-distributions (SE=σ/√n: 2→1), c-gradient-descent-convergence (LR window 0<η<2/a). Node-verified;
+   byte-stable inject w/ guards. Verified: gate GREEN (370 examples); dump-dom katex 26/45/53, kErr=0, rawDollar=0; smoke
+   errs=0/kErr=0/bad=none. SW →v334.
    ✅ iter 393: **Curve-sketching visualizer — 87th widget** (visualizations). c-extrema-curve-sketching had no viz. New
    `calc-curve-sketch`: cubic x³−a·x, green where f′>0 / rust where f′<0, max+min dots; slider a → crit ±√(a/3) merge at a=0
    (±1.00→none). app.js fallback 86→87. Verified: gate GREEN (87 widgets); node matches; dump-dom crit ±1.00→none, a0 merged,

@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 394 — Three more worked examples across DL/PS/calc (examples)
+A **3rd worked example** on three flagship lessons across DL/PS/calc (examples 367 → **370**, all ⌘K-searchable):
+- **dl-gradient-descent-and-optimizers** — **Adam's first step normalizes itself**: bias-corrected `m̂/√v̂ = 1` regardless of the
+  gradient's size (`= sign(g)` at t=1); Adam = momentum + RMSProp + bias correction, robust to badly-scaled losses.
+- **ps-sampling-distributions** — **the 1/√n law**: `SE = σ/√n` → `2` at n=100, `1` at n=400; 4× the data halves the error
+  (diminishing returns of precision).
+- **c-gradient-descent-convergence** — **the learning-rate window**: GD on `½ax²` multiplies x by `(1−ηa)`, converging iff
+  `0 < η < 2/a` (=1 for a=2), fastest at `η=1/a` (one step); curvature bounds the safe rate.
+Every value node-verified (Adam ratio 1; SE 2→1; threshold 2/a=1); injected byte-stably with round-trip + even-`$` + tag-balance +
+unsupported-env + bare-`<`-letter-in-math pre-guards (GD-convergence uses `\lt`/`\ge`).
+Verified: gate ALL GREEN (**370 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (26 / 45 / 53 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v333` → `atlas-v334`.
+
 ## iter 393 — Curve-sketching visualizer — 87th widget (visualizations)
 `c-extrema-curve-sketching` had no widget. Added the **87th Lab widget `calc-curve-sketch`**, embedded there: the cubic
 `f(x) = x³ − a·x` drawn **green where f′ > 0** (rising) and **rust where f′ < 0** (falling), with gold dots at the **max** and

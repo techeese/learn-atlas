@@ -3422,6 +3422,11 @@
               "title": "The CLT rescues a skewed distribution",
               "body": "Customer wait times are strongly right-skewed (most short, a few very long) with mean $\\mu=4$ min and $\\sigma=4$ min. A manager averages the wait times of $n=100$ customers. Can she use a normal approximation for the average even though individual waits are not normal?",
               "solution": "Yes. Individual waits are skewed, but the CLT says the sampling distribution of the <em>mean</em> of $n=100$ i.i.d. waits is approximately normal: $\\bar{X}\\approx N(4,\\ \\sigma^2/n)$ with $\\operatorname{SE}=4/\\sqrt{100}=0.4$ min. So $\\bar{X}\\approx N(4, 0.4^2)$, and she can say about $95\\%$ of such samples give an average wait within $\\pm 0.8$ min of $4$. The skew of individuals is irrelevant once $n$ is large enough — that is the power and the point of the CLT."
+            },
+            {
+              "title": "The 1/√n law: quadruple the sample to halve the error",
+              "body": "A population has standard deviation $\\sigma = 20$. What is the standard error of the sample mean for $n = 100$, and for $n = 400$?",
+              "solution": "<strong>Standard error of the mean.</strong> The sample mean's standard deviation — the <b>standard error</b> — is $\\text{SE} = \\tfrac{\\sigma}{\\sqrt{n}}$, not $\\sigma$. For $n = 100$: $\\text{SE} = \\tfrac{20}{\\sqrt{100}} = \\tfrac{20}{10} = 2$. For $n = 400$: $\\text{SE} = \\tfrac{20}{\\sqrt{400}} = \\tfrac{20}{20} = 1$.\n<strong>The square root is the catch.</strong> Going from 100 to 400 samples — <em>four times</em> the data — cut the error only in <em>half</em> (2 to 1). Because $\\text{SE} \\propto 1/\\sqrt{n}$, halving the error costs $4\\times$ the data, and reaching a tenth costs $100\\times$.\n<strong>Why $\\sqrt{n}$.</strong> The variance of a sum of $n$ independent draws grows like $n$; dividing by $n$ to average shrinks variance by $n^2$, so the mean has variance $\\sigma^2/n$ and standard deviation $\\sigma/\\sqrt{n}$.\n<strong>The aha.</strong> This one law governs the cost of precision everywhere — poll margins, Monte Carlo error, A/B tests. Estimation has <em>diminishing returns</em>: each extra digit of accuracy is far more expensive in samples than the last."
             }
           ]
         },

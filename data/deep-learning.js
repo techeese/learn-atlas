@@ -1469,6 +1469,11 @@
               "title": "What momentum adds",
               "body": "In one sentence, why does momentum speed up gradient descent?",
               "solution": "It accumulates an exponentially-decaying average of past gradients (a velocity), so it keeps moving fast along consistent directions and damps oscillations across steep, narrow valleys."
+            },
+            {
+              "title": "Adam's first step: the gradient's size cancels out",
+              "body": "Run one Adam update from rest (moments $m_0 = v_0 = 0$) with gradient $g = 0.5$, $\\beta_1 = 0.9$, $\\beta_2 = 0.999$. How big is the step relative to the learning rate $\\eta$?",
+              "solution": "<strong>Update the two moments.</strong> Adam keeps a running mean of the gradient and of its square: $m_1 = \\beta_1 m_0 + (1-\\beta_1)g = 0.05$ and $v_1 = \\beta_2 v_0 + (1-\\beta_2)g^2 = 0.00025$.\n<strong>Bias-correct (crucial at step 1).</strong> Starting from zero biases both moments low, so divide by $1 - \\beta^t$: $\\hat m_1 = \\tfrac{0.05}{1 - 0.9} = 0.5$ and $\\hat v_1 = \\tfrac{0.00025}{1 - 0.999} = 0.25$.\n<strong>The step normalizes itself.</strong> The parameter moves by $\\eta \\cdot \\tfrac{\\hat m_1}{\\sqrt{\\hat v_1}} = \\eta \\cdot \\tfrac{0.5}{0.5} = \\eta \\cdot 1$. The ratio is exactly <b>1</b> — and it would be 1 for <em>any</em> $g$, since $\\hat m_1 = g$ and $\\sqrt{\\hat v_1} = |g|$ at $t = 1$, so $\\hat m_1/\\sqrt{\\hat v_1} = \\operatorname{sign}(g)$.\n<strong>The aha.</strong> Adam is momentum (the $\\hat m$ mean) + RMSProp (dividing by $\\sqrt{\\hat v}$, a per-parameter scale) + bias correction. The square-root normalization makes each step roughly $\\eta$ in size <em>regardless of the gradient's magnitude</em> — which is why Adam is robust to badly-scaled losses and needs little learning-rate tuning."
             }
           ]
         },
