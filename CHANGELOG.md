@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 352 — Four more deeper-dives on flagship hard lessons (content / understandability)
+4 "Deeper dive" expandables across algo/DL/PS/calc (deep-dives 109 → **113**):
+- **a-graph-representations-traversal** — **BFS vs DFS = queue vs stack**: a FIFO queue fans out level-by-level (shortest
+  paths); a LIFO stack dives deep (topo sort, cycle detection, components) — one traversal, swap the frontier; both `O(V+E)`.
+- **dl-learning-rate-schedules-and-tuning** — **why warmup then decay**: warmup avoids early blow-up on noisy random-init
+  gradients (and unreliable Adam variance estimates); decay settles into the minimum — cautious → confident → gentle.
+- **ps-bernoulli-binomial** — **where `C(n,k)p^k(1−p)^(n−k)` comes from**: `p^k(1−p)^(n−k)` is one ordering's probability,
+  `C(n,k)` counts the orderings — the coefficient exists only because we count *how many* successes, not *which*.
+- **c-linearization-lhopital** — **why L'Hôpital works**: near a `0/0` point each function ≈ its tangent line, the `(x−a)`
+  factors cancel, leaving the ratio of slopes `f'(a)/g'(a)` — `0/0` just means "depends how fast each goes to zero."
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 1 / 0 / 12 / 14 spans — BFS/DFS & warmup are
+intentionally prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v291` → `atlas-v292`.
+
 ## iter 351 — Three more code exercises — lessons-with-code past 60 (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** on flagship computational lessons across LA/DL/RL (lessons-with-code
 57 → **60**; the gate now runs **55**):
