@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 397 — Thirteen flagship glossary terms (content / reference — fresh modality)
+Varying from three examples-iters in a row, filled a genuine **glossary gap**: audited 92 flagship concepts against the 138-term
+glossary and added the **13 that were genuinely missing** (most candidates were already covered under other names) → **151 terms**:
+- **DL**: ReLU, Momentum, **Adam**, Vanishing gradient, Residual connection, Batch / mini-batch.
+- **LLM**: Temperature (`T<1` sharpen / `T>1` flatten), Self-attention (vs the general Attention entry).
+- **Stats**: Monte Carlo method (`1/√n` error), Entropy (`H=−Σ pᵢ log pᵢ`).
+- **LA**: Spectral theorem (`A=QΛQᵀ`), Condition number.
+- **Algo**: Graph (the data structure).
+These power the **inline glossary tooltips** (auto-linked in lecture prose) as well as the Glossary page. Concise one-liners in the
+existing house style; math uses `\lt`/`\gt` to stay safe.
+Verified: gate ALL GREEN; **via `--dump-dom`** the Glossary page shows all 13 (11/11 searchable names found), KaTeX 130 typeset,
+**kErr=0, rawDollar=0**; injected byte-stably (append before the closing `]`, JSON-escaped defs, dup-term + even-`$` +
+`<`-letter-in-math pre-guards); all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v336` → `atlas-v337`.
+
 ## iter 396 — Three more worked examples across algo/RL/LLM (examples)
 A **3rd worked example** on three flagship lessons across algo/RL/LLM (examples 373 → **376**, all ⌘K-searchable), each a distinct
 angle from the lesson's existing two (read first to avoid overlap):

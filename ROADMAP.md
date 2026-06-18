@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 397: **13 flagship glossary terms** (content/reference — fresh modality). Audited 92 concepts vs the 138-term glossary;
+   added the 13 genuinely-missing flagship terms (→151): ReLU, Momentum, Adam, Vanishing gradient, Residual connection,
+   Batch/mini-batch, Temperature, Self-attention, Monte Carlo method, Entropy, Spectral theorem, Condition number, Graph. Power the
+   inline lecture tooltips too. Byte-stable append w/ dup + even-$ + <-letter guards. Verified: gate GREEN; dump-dom glossary
+   11/11 found, katex 130, kErr=0, rawDollar=0; smoke errs=0/kErr=0 (12). SW →v337.
    ✅ iter 396: **3 more worked examples across algo/RL/LLM** (examples). +3 (373→376): a-shortest-paths-topo (Dijkstra fails on
    negative edge: true 0, Dijkstra 1), rl-what-is-rl (ε-greedy P(greedy)≈0.933), l-self-attention (softmax scores→weights→14.25).
    Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (376 examples); dump-dom katex 209/62/18, kErr=0, rawDollar=0;
