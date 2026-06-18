@@ -1597,6 +1597,41 @@
   });
 
   /* ========================================================
+     72. Area between two curves (Calculus)
+     ======================================================== */
+  register({ id: 'calc-area', topic: 'calculus', title: 'Area between two curves', blurb: 'The area between an upper and a lower curve is the integral of their difference. Here the region between the line y=2x and the parabola y=x² on [0,2]: slide the right edge and watch the shaded area accumulate as ∫(2x−x²)dx = b²−b³/3, reaching 4/3 at b=2.' },
+  function (root) {
+    const W = 540, H = 350, padL = 32, padR = 14, padT = 16, padB = 28, XLO = -0.2, XHI = 2.4, YLO = 0, YHI = 4.3;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const f = x => 2 * x, g = x => x * x;
+    let b = 1.2;
+    slider(ctl, { label: 'right edge b', min: 0, max: 2, step: 0.05, value: b, fmt: v => v.toFixed(2), onInput: v => { b = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = x => padL + (x - XLO) / (XHI - XLO) * (W - padL - padR);
+      const Y = y => (H - padB) - (y - YLO) / (YHI - YLO) * (H - padT - padB);
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(0), padT); ctx.stroke();
+      ctx.fillStyle = p.violet; ctx.globalAlpha = 0.26; ctx.beginPath();
+      let first = true;
+      for (let x = 0; x <= b + 1e-9; x += 0.02) { const xx = X(x), yy = Y(f(x)); first ? ctx.moveTo(xx, yy) : ctx.lineTo(xx, yy); first = false; }
+      for (let x = b; x >= 0; x -= 0.02) ctx.lineTo(X(x), Y(g(x)));
+      ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.beginPath(); first = true; for (let x = XLO; x <= XHI; x += 0.02) { const xx = X(x), yy = Y(f(x)); first ? ctx.moveTo(xx, yy) : ctx.lineTo(xx, yy); first = false; } ctx.stroke();
+      ctx.strokeStyle = p.ink; ctx.beginPath(); first = true; for (let x = XLO; x <= XHI; x += 0.02) { const xx = X(x), yy = Y(g(x)); first ? ctx.moveTo(xx, yy) : ctx.lineTo(xx, yy); first = false; } ctx.stroke();
+      ctx.strokeStyle = p.sage; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(X(b), Y(g(b))); ctx.lineTo(X(b), Y(f(b))); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'left'; ctx.fillText('y = 2x', X(1.62), Y(f(1.62)) - 6);
+      ctx.fillStyle = p.ink; ctx.fillText('y = x²', X(2.02), Y(g(2.02)));
+      const area = b * b - b * b * b / 3;
+      info.innerHTML = 'Area between curves = ∫(upper − lower) dx. Here ∫₀ᵇ(2x − x²) dx = b² − b³/3 with b = <b>' + b.toFixed(2) + '</b>, a shaded area of <b style="color:' + p.violet + '">' + area.toFixed(3) + '</b>. At b = 2 the curves meet again and the full enclosed area is 4/3 ≈ 1.333. The recipe never changes: subtract the lower curve from the upper, then integrate.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Area-between-curves visualizer: the line y=2x above the parabola y=x^2 on [0,2], with the region between them shaded from 0 to a movable right edge b; the accumulated area b^2 - b^3/3 reaches 4/3 at b=2.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

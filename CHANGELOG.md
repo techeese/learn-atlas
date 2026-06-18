@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 334 — Area-between-curves visualizer — 72nd widget (visualizations)
+`c-area-volume` had no widget. Added the **72nd Lab widget `calc-area`**, embedded there: the line `y=2x` above the parabola
+`y=x²` on `[0,2]`, with the region between them **shaded from 0 to a movable right edge b**. Slide `b` and the accumulated
+area updates live as `∫₀ᵇ(2x−x²)dx = b²−b³/3` — `0.864` at b=1.2, `0.667` at b=1, reaching the full enclosed `4/3 ≈ 1.333`
+at b=2 (where the curves meet). The note drives home the one rule: subtract the lower curve from the upper, then integrate.
+Plain-unicode note (no `$`). app.js `viz-complete` fallback 71 → 72.
+Verified: gate ALL GREEN (**72 widgets**, embed resolves); **node** prototype confirmed the area formula (full = 4/3); **via
+`--dump-dom`** the slider drives the area `0.864 → 1.333 (b=2) → 0.667 (b=1)`, `rawDollar=0`, `errs=0`, the lesson embed
+hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v273` → `atlas-v274`.
+
 ## iter 333 — Three more code exercises across computational lessons (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** on flagship computational lessons across LA/RL/PS (lessons-with-code
 45 → **48**; the gate now runs **43**):
