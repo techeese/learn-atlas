@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 277 — Four more deeper-dives on flagship hard lessons (content / understandability)
+Continuing the owner's depth directive, added **4 "Deeper dive" expandables** on flagship hard lessons that lacked one,
+across four topics (deep-dives 49 → **53**):
+- **dl-attention-mechanism** — attention as a *soft, differentiable dictionary lookup*: query·key → softmax → weighted
+  values; content-addressable memory made continuous (scaled by $1/\sqrt{d_k}$).
+- **c-improper-integrals** — an improper integral as a *limit in disguise*: $\int_1^{\infty}=\lim_{b\to\infty}\int_1^{b}$;
+  $\int_1^{\infty}x^{-p}$ converges iff $p>1$ ($1/x^2$ converges, $1/x$ diverges).
+- **rl-actor-critic** — actor-critic as *REINFORCE with a baseline*: act on the advantage $A=G_t-V(s)$ — same expectation
+  (no bias), far less variance.
+- **la-inverse-and-systems** — why you *almost never* form $A^{-1}$: solving $A\mathbf{x}=\mathbf{b}$ by $LU$/elimination
+  is ~3× cheaper and numerically safer; the inverse is the right mental model, the wrong computation.
+Authored with `String.raw` LaTeX; injected byte-stably with a round-trip guard + even-`$`, no-`**`, and tag-balance
+pre-guards (incl. `<code>`).
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each dive renders with its summary, KaTeX typesets
+(1 / 7 / 3 / 11 spans) and **kErr=0, rawDollar=0** on all four; all-routes smoke **errs=0/kErr=0 (12 routes)**. No
+save-shape change. SW cache `atlas-v217` → `atlas-v218`.
+
 ## iter 276 — "Best study day yet!" — completing the personal-bests celebration trio (gamification)
 The Personal Bests panel tracks three lifetime records — longest streak, best test score, and **biggest single-day XP**.
 Two of the three already celebrate *in the moment* (🏆 record streak, 🎯 best test), but beating your best-ever day was

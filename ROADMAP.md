@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 277: **4 more deeper-dives on flagship hard lessons** (content). +4 (49→53) across DL/calc/RL/LA:
+   dl-attention-mechanism (soft differentiable dictionary lookup), c-improper-integrals (limit in disguise; 1/x² vs 1/x),
+   rl-actor-critic (REINFORCE + baseline → advantage), la-inverse-and-systems (don't form A⁻¹; solve by LU/elimination).
+   String.raw LaTeX; byte-stable inject w/ even-$, no-**, tag-balance (incl <code>) pre-guards. Verified: gate GREEN;
+   dump-dom each renders (katex 1/7/3/11, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v218.
    ✅ iter 276: **"Best study day yet!" toast** (gamification). Completed the personal-bests celebration trio (record-streak ✓,
    best-test ✓, now best-day ✓). Fires once the instant today's XP crosses your prior best-ever day — detected as the
    crossing inside addXP (fires once/day, never on day 1, no new persisted state; transient _bestDaySet drained in
