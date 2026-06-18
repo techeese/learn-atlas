@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 284: **3 more worked examples on flagship hard lessons** (examples). Confirmed MCQ answer-positions balanced (0 skewed).
+   +3 examples (301→304), new techniques across DL/PS/algo: dl-backpropagation (2-step chain y=(wx+b)³ → 27/54),
+   ps-confidence-intervals (CI for a proportion → [0.504,0.696]), a-greedy (fractional knapsack → 240, where greedy works).
+   Node-verified; byte-stable inject w/ even-$ + tag-balance guards. Verified: gate GREEN (304 examples); dump-dom each
+   Examples tab shows 3, reveal renders (katex 26/45/131, kErr=0, rawDollar=0, answers present); smoke errs=0/kErr=0 (12). SW →v225.
    ✅ iter 283: **4 more deeper-dives on flagship hard lessons** (content). +4 (53→57) across algo/LLM/PS/DL: a-string-algorithms
    (KMP failure-function, O(nm)→O(n+m)), l-hallucination (fluency optimizes plausible not true), ps-point-estimation
    (n−1 Bessel's correction), dl-diffusion-models (learn to denoise). String.raw LaTeX; byte-stable inject w/ guards.

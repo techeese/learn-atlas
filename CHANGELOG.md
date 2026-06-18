@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 284 — Three more worked examples on flagship hard lessons (examples)
+First, a quality check: confirmed MCQ **answer positions are well-balanced** (0 lessons exceed the 70%-at-one-index
+threshold) — quizzes aren't gameable by pattern-matching. For the ship, a fresh *content type* (worked examples, last
+271): added a **3rd worked example** to three flagship lessons at two, each a new technique across DL/PS/algorithms
+(examples 301 → **304**):
+- **dl-backpropagation** — backprop through a *two-step* chain `y=(wx+b)³` (existing examples were single-weight): forward
+  caches `z=3, y=27`; backward `∂y/∂z·∂z/∂w = 27·2 = 54`.
+- **ps-confidence-intervals** — a 95% CI for a *proportion* (existing were for a mean): `p̂=0.6, n=100` → SE≈0.049,
+  margin≈0.096 → `[0.504, 0.696]`.
+- **a-greedy** — *fractional* knapsack, where greedy *is* optimal (existing: activity-selection + coin-change): sort by
+  value density, take densest first, fraction the last → **240** — and why 0/1 (all-or-nothing) breaks greedy.
+Every value node-verified; injected byte-stably with round-trip + even-`$` + `<strong>`/`<em>` tag-balance pre-guards.
+Verified: gate ALL GREEN (**304 examples**); **via `--dump-dom`** each lesson's Examples tab now shows 3, the new
+solution reveals with KaTeX (26 / 45 / 131 spans) and **kErr=0, rawDollar=0**, and the answer (54 / 0.696 / 240) appears;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v224` → `atlas-v225`.
+
 ## iter 283 — Four more deeper-dives on flagship hard lessons (content / understandability)
 Continuing the owner's depth directive, added **4 "Deeper dive" expandables** on flagship hard lessons that lacked one,
 across four topics (deep-dives 53 → **57**):

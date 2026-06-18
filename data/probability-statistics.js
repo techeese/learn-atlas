@@ -3860,6 +3860,11 @@
               "title": "Known $\\sigma$ vs. unknown $\\sigma$: z vs. t",
               "body": "Two analysts each have a sample of $n=16$ with sample mean $\\bar{X}=40$. Analyst 1 knows the population $\\sigma=8$. Analyst 2 does not know $\\sigma$ and computes a sample standard deviation $s=8$. Explain which reference distribution each should use and why analyst 2's 95% interval is wider, given $z^{*}=1.96$ and $t^{*}_{15}\\approx 2.131$.",
               "solution": "Analyst 1 (known $\\sigma$) uses the normal: margin $=1.96\\cdot\\frac{8}{\\sqrt{16}}=1.96\\cdot 2=3.92$, CI $=40\\pm 3.92=[36.08, 43.92]$.\n\nAnalyst 2 (unknown $\\sigma$, estimated by $s$) must use Student's $t$ with $n-1=15$ d.f.: margin $=2.131\\cdot\\frac{8}{\\sqrt{16}}=2.131\\cdot 2=4.26$, CI $=40\\pm 4.26=[35.74, 44.26]$.\n\nAnalyst 2's interval is wider because estimating $\\sigma$ with $s$ adds uncertainty; the $t$-distribution's heavier tails ($t^{*}=2.131>1.96=z^{*}$) account for it. With a small sample ($n=16$) the gap is noticeable; for large $n$, $t^{*}\\to z^{*}$ and the two intervals nearly coincide."
+            },
+            {
+              "title": "A 95% confidence interval for a proportion",
+              "body": "In a poll, $60$ of $n = 100$ respondents favor a proposal, so the sample proportion is $\\hat{p} = 0.6$. Build a 95% confidence interval for the true proportion $p$.",
+              "solution": "<strong>Standard error of a proportion.</strong> For a sample proportion, $\\mathrm{SE} = \\sqrt{\\hat{p}(1 - \\hat{p}) / n}$:\n$$\\mathrm{SE} = \\sqrt{\\frac{0.6 \\times 0.4}{100}} = \\sqrt{0.0024} \\approx 0.049.$$\n<strong>Margin of error.</strong> A 95% interval uses the critical value $z = 1.96$:\n$$E = 1.96 \\times 0.049 \\approx 0.096.$$\n<strong>The interval.</strong>\n$$\\hat{p} \\pm E = 0.6 \\pm 0.096 = [0.504,\\ 0.696].$$\nSo we are about 95% confident the true proportion lies between roughly 50% and 70%. The interval is wide because $n$ is small — quadrupling $n$ to 400 would halve the margin (it shrinks like $1/\\sqrt{n}$), the same $\\sqrt{n}$ law behind every confidence interval."
             }
           ]
         }

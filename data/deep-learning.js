@@ -1210,6 +1210,11 @@
               "title": "Why cache the forward pass?",
               "body": "Why does backpropagation store the activations computed during the forward pass?",
               "solution": "Each weight's gradient is built from the inputs/activations it multiplied going forward (e.g. $\\partial\\hat{y}/\\partial w=x$). Caching those values lets the backward pass reuse them instead of recomputing, so backprop costs about the same as a single forward pass."
+            },
+            {
+              "title": "Backprop through a two-step chain",
+              "body": "A tiny network computes $y = (wx + b)^3$. With $w = 1$, $x = 2$, $b = 1$, find $y$ and the gradient $\\frac{\\partial y}{\\partial w}$ that backprop would use to update $w$.",
+              "solution": "<strong>Forward pass.</strong> Compute inner-to-outer, caching each value:\n$$z = wx + b = (1)(2) + 1 = 3, \\qquad y = z^3 = 27.$$\n<strong>Backward pass (chain rule).</strong> Differentiate outer-to-inner, reusing the cached $z$:\n$$\\frac{\\partial y}{\\partial z} = 3z^2 = 27, \\qquad \\frac{\\partial z}{\\partial w} = x = 2.$$\nMultiply along the chain:\n$$\\frac{\\partial y}{\\partial w} = \\frac{\\partial y}{\\partial z} \\cdot \\frac{\\partial z}{\\partial w} = 27 \\cdot 2 = 54.$$\n<strong>Why it's cheap.</strong> Each local derivative ($3z^2$ and $x$) is read off values the forward pass already stored — backprop is just the chain rule applied right-to-left, reusing the cache so the whole gradient costs about one extra forward pass."
             }
           ]
         },
