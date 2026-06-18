@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 321: **4 more deeper-dives on flagship hard lessons** (content). +4 dd (81→85) across LLM/algo/PS/calc:
+   l-finetuning-and-instruction-tuning (SFT shapes behaviour not knowledge), a-correctness-invariants (loop invariant = induction),
+   ps-random-variables-distributions (random variable = function), c-antiderivatives (why +C). String.raw LaTeX; byte-stable inject
+   w/ guards. Verified: gate GREEN; dump-dom each renders (katex 0/0/9/8, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v262.
    ✅ iter 320: **Step-back: full-site sweep (clean) + "In this lesson" extras strip** (UI/UX). Step-back: 311–319 verified, no bugs
    (2 landmines caught pre-commit); codex exhaustively complete → surface depth over adding more. Full 235-route sweep, first
    since 310 → errs=0/kErrTotal=0/bad=none. Ship: clickable "In this lesson" badge strip (🎛️ interactive / 🧩 deeper dive / 💻

@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 321 — Four more deeper-dives on flagship hard lessons (content / understandability)
+Back to the owner's depth directive — 4 "Deeper dive" expandables across LLM/algo/PS/calc (deep-dives 81 → **85**):
+- **l-finetuning-and-instruction-tuning** — SFT shapes **behaviour, not knowledge**: the objective stays next-token
+  prediction; only the *data* changes (helpful-assistant demonstrations), so "follow the instruction" becomes the likely
+  continuation.
+- **a-correctness-invariants** — a **loop invariant is induction**: initialization (base case), maintenance (inductive step),
+  termination ⟹ correctness — testing shows a bug's presence, an invariant shows its absence.
+- **ps-random-variables-distributions** — a **random variable is a function** $X$ from outcomes to numbers; its distribution
+  is the pushforward of the sample-space probabilities onto the number line — what makes probability quantitative.
+- **c-antiderivatives** — why the **+C**: differentiation kills constants ($\frac{d}{dx}C=0$), so antidifferentiation recovers
+  a whole *family* of curves, pinned down only by an initial condition — and why integration is harder than differentiation.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards (incl. `<code>`).
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 0 / 0 / 9 / 8 spans — instruction-tuning & loop
+invariants are intentionally prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape
+change. SW cache `atlas-v261` → `atlas-v262`.
+
 ## iter 320 — Step-back: full-site sweep (clean) + "In this lesson" extras strip (UI/UX)
 **Round-number step-back (iter 320).** Health check of 311–319: examples · viz · content · a11y · code · viz · content ·
 examples · viz — all verified, no bugs shipped (two tooling landmines — `**`-in-code, `node -e` apostrophes — were caught
