@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 307 — Four more deeper-dives on flagship hard lessons (content / understandability)
+Continuing the depth directive, deliberately steering to the **less-recently-covered topics** (PS/RL/algo/calc) — 4 "Deeper
+dive" expandables (deep-dives 69 → **73**):
+- **ps-uniform-exponential** — the exponential **forgets**: `P(X>s+t | X>s)=P(X>t)` because `e^{-λ(s+t)}/e^{-λs}=e^{-λt}` —
+  the only memoryless continuous law (no aging, no internal clock).
+- **rl-model-based** — a model lets you **plan**: learn `P(s'|s,a)` and `R(s,a)`, then simulate rollouts / tree-search
+  (AlphaZero) for sample efficiency — at the cost of compounding model error.
+- **a-divide-and-conquer** — why **balanced splits** win: halving makes the recursion tree `log₂n` deep, so linear combines
+  total `O(n log n)`; uneven splits collapse to `O(n²)` — the win is geometric shrinkage, decided by the master theorem.
+- **c-integration-techniques** — the tricks are **derivative rules reversed**: substitution is the chain rule backward,
+  integration by parts is the product rule backward — "what was this the derivative of?"
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 6 / 2 / 6 / 7 spans) with **kErr=0,
+rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v247` → `atlas-v248`.
+
 ## iter 306 — Binary Min-Heap visualizer — 66th widget (visualizations)
 `a-trees-heaps` had no widget, and the heap is one of the most important data structures — its array↔tree duality is a
 classic "click" moment. Added the **66th Lab widget `algo-heap`**, embedded there: the same values drawn **as a binary tree

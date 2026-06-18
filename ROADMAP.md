@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 307: **4 more deeper-dives on flagship hard lessons** (content). Steered to less-covered topics (PS/RL/algo/calc); +4 dd
+   (69→73): ps-uniform-exponential (memorylessness), rl-model-based (plan vs react), a-divide-and-conquer (balanced splits →
+   O(n log n)), c-integration-techniques (sub=chain reversed, parts=product reversed). String.raw LaTeX; byte-stable inject w/
+   guards. Verified: gate GREEN; dump-dom each renders (katex 6/2/6/7, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v248.
    ✅ iter 306: **Binary Min-Heap visualizer — 66th widget** (visualizations). a-trees-heaps had no viz. New `algo-heap`: values as a
    tree + the contiguous array below, min at root; Insert sifts up, Extract-min sifts down, Reset; note carries the live array
    (verifiable + SR-readable). (Confirmed 58-achievement set already exhaustive → viz higher value.) app.js fallback 65→66.
