@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 377: **4 more deeper-dives — toward full coverage** (content). +4 dd (133→137; 11 lessons left without one) across
+   RL/LLM/calc/PS: rl-what-is-rl (evaluation not instruction), l-what-is-a-language-model (next-token machine), c-area-volume
+   (slice-approximate-integrate), ps-geometric-waiting (discrete memoryless wait). String.raw LaTeX; byte-stable inject w/ guards.
+   Verified: gate GREEN; dump-dom each renders (katex 0/1/12/5, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v317.
    ✅ iter 376: **KV-cache visualizer — 83rd widget** (visualizations). l-inference-efficiency had no viz. New `llm-kv-cache`: per-token
    work vs position — no-cache O(t²) (rust) vs with-cache O(t) (sage); slider N grows the cumulative gap (20× at 30 → 40× at 60).
    app.js fallback 82→83. Verified: gate GREEN (83 widgets); node totals+ratio; dump-dom gap grows 20×→40×, rawDollar=0, embed

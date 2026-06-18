@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 377 — Four more deeper-dives — toward full coverage (content / understandability)
+4 "Deeper dive" expandables on foundational lessons across RL/LLM/calc/PS (deep-dives 133 → **137**; only **11 of 148** lessons
+now lack one):
+- **rl-what-is-rl** — **RL learns from evaluation, not instruction**: a scalar reward, not the right answer — hence explore-vs-exploit
+  and delayed credit assignment, which supervised learning never faces.
+- **l-what-is-a-language-model** — **a next-token probability machine**: `P(next|context)`, applied autoregressively; competence
+  *emerges* from doing that one thing well at scale.
+- **c-area-volume** — **slice, approximate, integrate**: one template (`dx` strips, disks `πr²`, shells `2πx·h`) behind every
+  area/volume formula — set up one representative slice and integrate.
+- **ps-geometric-waiting** — **the discrete memoryless wait**: the *only* discrete distribution with `P(X>m+n|X>m)=P(X>n)` —
+  constant hazard, the gambler's fallacy made true for independent trials; the exponential's discrete twin.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 0 / 1 / 12 / 5 spans — the RL/LM ones are
+intentionally prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v316` → `atlas-v317`.
+
 ## iter 376 — KV-cache visualizer — 83rd widget (visualizations)
 `l-inference-efficiency` had no widget. Added the **83rd Lab widget `llm-kv-cache`**, embedded there: per-token generation work
 vs token position, plotting **no-cache `O(t²)`** (rust, reprocessing the whole prefix each step) against **with-cache `O(t)`**
