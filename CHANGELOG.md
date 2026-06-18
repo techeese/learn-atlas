@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 351 — Three more code exercises — lessons-with-code past 60 (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** on flagship computational lessons across LA/DL/RL (lessons-with-code
+57 → **60**; the gate now runs **55**):
+- **la-svd** — **singular values from `AᵀA`**: `σ = √eigenvalues` — `[16,9]` → `4 3`, the stretch factors of the map.
+- **dl-initialization-and-vanishing-gradients** — **He initialization**: weight std `√(2/fan_in)` — `fan_in=128` → `0.1250`
+  (wider layers get a smaller std to keep signal variance stable).
+- **rl-policy-gradient-theorem** — **REINFORCE gradient**: scale the score by the return, `G·∇log π` — `G=2`, score `[0.5,−0.3]`
+  → `1.0 -0.6`.
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**55 code-exercises verified**); **via `--dump-dom`** the He-init widget runs → `0.1250`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v290` → `atlas-v291`.
+
 ## iter 350 — Step-back: full kErr/route + coverage audit (clean) + critical-point viz — 76th widget (visualizations)
 **Round-number step-back (iter 350).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive) → errs=0, kErr=0, 0 bad;
