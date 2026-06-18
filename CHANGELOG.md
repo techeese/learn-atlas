@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 406 — Three more worked examples across DL/algo (examples)
+A **3rd worked example** on three flagship lessons (examples 394 → **397**, all ⌘K-searchable):
+- **dl-overfitting-and-regularization** — **L1 vs L2**: L2's penalty gradient `2λw=0.02` fades as `w→0` (shrinks, never zero); L1's
+  `λ·sign(w)=0.1` is constant, so it pins weights to exactly 0 — sparsity / feature selection (the diamond's corners).
+- **dl-practical-training-and-debugging** — **gradient checking**: central difference `(f(2.001)−f(1.999))/0.002 = 4.000` matches the
+  analytic `f'(2)=4`; `O(h²)` error verifies backprop before you trust it.
+- **a-algorithms-for-ml** — **one k-means step**: assign `[1,2,9,10]` to centroids `0,8`, recompute means → `[1.5, 9.5]`;
+  assign-average-repeat (Lloyd's) is coordinate descent to a local optimum.
+Every value node-verified (4.000; L1 0.1 vs L2 0.02; centroids 1.5/9.5); injected byte-stably with the full guard set.
+Verified: gate ALL GREEN (**397 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (75 / 59 / 79 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v345` → `atlas-v346`.
+
 ## iter 405 — Three more worked examples across PS/LLM/LA (examples)
 A **3rd worked example** on three flagship lessons across PS/LLM/LA (examples 391 → **394**, all ⌘K-searchable):
 - **ps-random-variables-distributions** — **mean & variance of a fair die**: `E[X]=3.5`, `Var=E[X²]−E[X]²=91/6−12.25=35/12≈2.92`,
