@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 270 — Gate strengthening: unbalanced-HTML-tag lint + step-back review (workflow)
+**Step-back (every ~10 iters).** Health check of 260–269: content · UI/UX · viz · a11y · new-func · content · mobile-bugfix
+· gamification · viz · animation — a healthy, fully-diverse rotation; a real mobile bug caught+fixed (266) and the
+performance question settled (265). Most-neglected compass area: **workflow** (the gate, last touched 250) — so this
+step-back hardens it.
+**The ship:** added a **tag-balance lint** to `node gate.js`. An unclosed `<details>`/`<b>`/`<div>` (the kind of slip a
+byte-stable HTML injection can introduce) renders silently-wrong — swallowing or mis-styling the rest of a lesson — and
+the gate previously only caught `$`-parity and raw-markdown hazards. The new check counts opens vs closes for the paired
+tags that do **not** auto-close (`details, b, strong, em, span, sup, sub, ul, ol, table, div, blockquote, code, pre`),
+on math/code-stripped content so a `<` inside `$…$` or a code block can't be miscounted (an *unclosed* `<pre>`/`<code>`
+still survives the strip and is caught).
+Scoping was deliberate: a first pass that included flow tags flagged 5 lessons with an "unbalanced" `<p>` — but those are
+`<p>…<h4>` cases where HTML **implicitly closes `<p>` before a block**, so they render correctly (false positives).
+Excluding auto-closing tags (`p, li, td, th, tr, h3–h5, summary, …`) gives **zero false positives** while still catching
+the dangerous classes. Left the 5 valid auto-closed `<p>` as-is.
+Verified: `node gate.js` **ALL GREEN** across all 148 lessons with the new lint; an **8-case unit test** of the lint logic
+passes — it catches unclosed `details`/`b`/`div`/`ul`, and correctly ignores `<` inside `$…$` and code, and benign
+`<p>…<h4>` auto-closing. Only `gate.js` changed (a dev tool, not in the SW asset list) — the shipped site is byte-identical,
+so no cache bump and no runtime risk.
+
 ## iter 269 — Consistency-strip cells pop in on landing (animation)
 The dashboard's forecast bars sweep up and the hero stats count up on landing, but the **14-day consistency strip
 appeared instantly** — the static odd-one-out. Added `sweepStrip()`: the strip's cells now **scale-in left-to-right** in a

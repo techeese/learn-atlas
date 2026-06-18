@@ -46,10 +46,27 @@ function checkRender(s, where) {
   if (dollarOdd(s)) errors.push("unbalanced / unescaped $ (write a literal money $ as \\$): " + where);
   if (rawMarkdown(s)) errors.push("raw markdown ** or __ won't render via innerHTML (use <strong>/<em>): " + where);
 }
+// unbalanced HTML tags render silently-wrong: an unclosed <details>/<b>/<div> (e.g. from a bad byte-stable
+// injection) swallows or mis-styles the rest of the lesson. Count opens vs closes for these paired tags on
+// math/code-stripped content (so "<" inside $…$ or a code block isn't miscounted; an *unclosed* <pre>/<code>
+// survives the strip and is still caught). ONLY tags that do NOT auto-close in the HTML parser are listed:
+// flow tags like <p>/<li>/<td>/<h3> are implicitly closed by a following block (e.g. "<p>…<h4>"), so their raw
+// imbalance is benign and would be a false positive. Void tags (br/img/hr) are excluded too.
+const PAIRED_TAGS = ["details", "b", "strong", "em", "span", "sup", "sub", "ul", "ol", "table", "div", "blockquote", "code", "pre"];
+function tagBalance(s, where) {
+  if (typeof s !== "string" || !s) return;
+  const t = stripCodeMath(s);
+  for (const tag of PAIRED_TAGS) {
+    const open = (t.match(new RegExp("<" + tag + "(?=[\\s/>])", "gi")) || []).length;
+    const close = (t.match(new RegExp("</" + tag + "\\s*>", "gi")) || []).length;
+    if (open !== close) errors.push("unbalanced <" + tag + "> in " + where + " (" + open + " open / " + close + " close)");
+  }
+}
 C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
   lessons++; if (ids.has(l.id)) errors.push("duplicate lesson id: " + l.id); ids.add(l.id); topicOf[l.id] = c.id;
   const ansPos = {}, stems = {};
   checkRender(l.content, l.id + ".content");
+  tagBalance(l.content, l.id + ".content");
   (l.mcq || []).forEach((q, i) => {
     mcq++;
     const choices = Array.isArray(q.choices) ? q.choices : [];

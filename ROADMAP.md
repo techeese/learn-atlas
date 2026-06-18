@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 270: **Gate: unbalanced-HTML-tag lint + step-back** (workflow). Step-back: 260–269 rotation healthy+diverse, mobile bug
+   caught (266), perf settled (265); workflow (gate) most-neglected → hardened it. Added tag-balance lint to gate.js:
+   counts open/close for non-auto-closing paired tags (details,b,strong,em,span,sup,sub,ul,ol,table,div,blockquote,code,pre)
+   on math/code-stripped content → catches an unclosed <details>/<b>/<div> from a bad injection. Scoped OUT auto-closing
+   flow tags (p/li/td/h3…) after a first pass false-flagged 5 valid <p>…<h4> (implicit close); zero false positives now.
+   Verified: gate GREEN across 148 lessons; 8-case unit test of the logic passes. gate.js is dev-only (not in SW ASSETS) →
+   no cache bump, site byte-identical.
    ✅ iter 269: **Consistency-strip cells pop in on landing** (animation). The forecast bars swept + stats counted up, but the 14-day
    strip appeared instantly. sweepStrip(): cells scale-in left-to-right (chronological wave) via CSS @keyframes csPop +
    fill-mode:both + per-cell inline animation-delay (i·38ms, cap 540) — fill-mode guarantees they settle at scale(1) (can't
