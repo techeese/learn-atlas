@@ -44,6 +44,13 @@ window.REFERENCES = {
     { title: "The Annotated Transformer", by: "Harvard NLP", kind: "article", url: "https://nlp.seas.harvard.edu/annotated-transformer/", note: "The paper, line-by-line, as runnable code." },
     { title: "Transformer Circuits", by: "Anthropic", kind: "reference", url: "https://transformer-circuits.pub/", note: "How attention & MLPs work mechanistically inside." }
   ],
+  "probability-statistics": [
+    { title: "Seeing Theory", by: "Daniel Kunin · Brown University", kind: "interactive", url: "https://seeing-theory.brown.edu/", note: "A visual, interactive introduction to probability and statistics. Start here." },
+    { title: "Introduction to Probability (Stat 110)", by: "Joseph Blitzstein · Harvard", kind: "course", url: "https://projects.iq.harvard.edu/stat110/home", note: "The definitive intro course — superb intuition; free lectures and book." },
+    { title: "Think Stats", by: "Allen B. Downey", kind: "book", url: "https://greenteapress.com/wp/think-stats-2e/", note: "Statistics through Python: exploratory, computational, and free." },
+    { title: "StatQuest", by: "Josh Starmer", kind: "video", url: "https://www.youtube.com/@statquest", note: "Clear, friendly video explanations of statistics and ML concepts." },
+    { title: "An Introduction to Statistical Learning", by: "James, Witten, Hastie & Tibshirani", kind: "book", url: "https://www.statlearning.com/", note: "Free textbook bridging statistics and machine learning — the gentle ISL." }
+  ],
   "general": [
     { title: "Distill.pub", by: "Distill", kind: "interactive", url: "https://distill.pub/", note: "Interactive, visual ML explanations." },
     { title: "Brilliant", by: "Brilliant.org", kind: "interactive", url: "https://brilliant.org/", note: "Active, problem-first courses across math & CS." },

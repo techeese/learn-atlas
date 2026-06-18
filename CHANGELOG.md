@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 403 — Library: the missing Probability & Statistics references (content / reference)
+The Library covered 6 topics + General but had **no Probability & Statistics section** — the owner's 7th topic was absent from the
+curated-resources page. Added a **`probability-statistics` references block (5 entries)**, so the Library now spans all 7 topics:
+- **Seeing Theory** (Brown, interactive) · **Stat 110 / Introduction to Probability** (Blitzstein, course) · **Think Stats**
+  (Downey, book) · **StatQuest** (Starmer, video) · **An Introduction to Statistical Learning / ISL** (book).
+`viewLibrary` iterates the course order and shows any topic with a refs entry, so the new key (matching course id
+`probability-statistics`) renders automatically under the right heading and topic color.
+Verified: all 5 non-dup vs existing refs; valid `https` URLs + known `kind`s; **via `--dump-dom`** the Library now shows **8
+sections** with the "Probability & Statistics" heading and all 5 refs present, `errs=0`; gate ALL GREEN; all-routes smoke
+**errs=0/kErr=0 (12 routes)**. Byte-stable insert (new key before `"general"`); SW cache `atlas-v342` → `atlas-v343`.
+
 ## iter 402 — Three more worked examples across LLM/DL/LA (examples)
 A **3rd worked example** on three flagship lessons across LLM/DL/LA (examples 385 → **388**, all ⌘K-searchable):
 - **l-embeddings-and-prediction-head** — **weight tying**: input embedding + output head are each `V×d = 25.6M` params at `V=50k, d=512`;
