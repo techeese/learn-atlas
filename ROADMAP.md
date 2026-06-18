@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 295: **"Deep Work" achievement ties the focus timer into progression** (gamification). Focus timer (279) had no reward
+   tie-in. New 🧘 Deep Work achievement (complete 5 sessions): Store.addFocusSession() increments persisted focusSessions +
+   unlocks at 5, wired into stopFocusTimer(done); added to Exploration Hall category + progress map [focusSessions,5]. New
+   persisted focusSessions field (blank+load). Achievements 57→58. Verified: gate GREEN (reachability ok); dump-dom — Hall shows
+   it locked on old save (loads 0), 5 calls → unlock + both persist; smoke errs=0/kErr=0 (12). SW →v236.
    ✅ iter 294: **3 more worked examples on flagship hard lessons** (examples). +3 (304→307) across calc/PS/DL: c-fundamental-theorem
    (average value of a function → 3), ps-conditional-independence-bayes (Monty Hall → switch wins 2/3), dl-loss-functions
    (binary cross-entropy → 0.105/0.693/2.303). Node-verified; byte-stable inject w/ even-$ + tag-balance guards. Verified: gate

@@ -65,6 +65,7 @@
     { id: "flawless-five",icon:"💎", name: "Flawless Five",     desc: "Ace 5 quizzes with a perfect score." },
     { id: "crack-shot",  icon: "🎖️", name: "Crack Shot",        desc: "Answer 1,000 quiz questions correctly." },
     { id: "deep-thinker",icon: "🧩", name: "Deep Thinker",      desc: "Expand a “Deeper dive” intuition." },
+    { id: "deep-work",   icon: "🧘", name: "Deep Work",         desc: "Complete 5 focus-timer sessions." },
     { id: "daily-ritual",icon: "🌅", name: "Daily Ritual",      desc: "Finish a Daily Mix session." },
     { id: "habit",       icon: "📆", name: "Creature of Habit", desc: "Study on 14 different days." },
     { id: "sage",        icon: "🧙", name: "Sage",              desc: "Earn 25,000 total XP." },
@@ -112,6 +113,7 @@
       missed: {},           // "lessonId#qIdx" -> 1 (questions answered wrong, waiting to be redeemed)
       missedFixed: 0,       // lifetime count of missed questions later answered correctly
       perfectQuizzes: 0,    // lifetime count of 100% lesson quizzes (for the Flawless Five achievement)
+      focusSessions: 0,     // lifetime count of completed focus-timer sessions (for the Deep Work achievement)
       quickChecks: 0,       // lifetime count of inline Quick Checks completed (low-stakes retrieval)
       vizSeen: {},          // vizId -> true (distinct visualizations opened, for Viz Voyager)
       solvedCode: {}        // codeKey -> true (distinct code-exercises solved, output matched)
@@ -161,6 +163,7 @@
       base.missed = (s.missed && typeof s.missed === "object") ? s.missed : {};
       base.missedFixed = num(s.missedFixed);
       base.perfectQuizzes = num(s.perfectQuizzes);
+      base.focusSessions = Number.isFinite(s.focusSessions) ? s.focusSessions : 0;
       base.quickChecks = num(s.quickChecks);
       base.vizSeen = (s.vizSeen && typeof s.vizSeen === "object") ? s.vizSeen : {};
       base.solvedCode = (s.solvedCode && typeof s.solvedCode === "object") ? s.solvedCode : {};
@@ -338,6 +341,13 @@
   }
   function drainUnlocked() { return newlyUnlocked.splice(0, newlyUnlocked.length); }
   // Fire the "whole subject complete" celebration at most once per topic. Returns true the first time.
+  // Record a completed focus-timer session and unlock Deep Work at 5.
+  function addFocusSession() {
+    state.focusSessions = (Number.isFinite(state.focusSessions) ? state.focusSessions : 0) + 1;
+    if (state.focusSessions >= 5) unlock("deep-work");
+    save();
+    return state.focusSessions;
+  }
   function celebrateTopicOnce(cid) {
     if (!cid || (state.topicDoneCelebrated && state.topicDoneCelebrated[cid])) return false;
     if (!state.topicDoneCelebrated || typeof state.topicDoneCelebrated !== "object") state.topicDoneCelebrated = {};
@@ -615,7 +625,7 @@
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
     recordQuickCheck, recordVizOpen, recordCodeSolved,
-    unlock, drainUnlocked, drainLevelUps,
+    unlock, drainUnlocked, drainLevelUps, addFocusSession,
     stats, courseProgress, resetAll, touchStreak
   };
 })();

@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 295 — "Deep Work" achievement ties the focus timer into progression (gamification)
+The focus timer (iter 279) was the one feature with **no reward tie-in** — completing sessions counted toward nothing.
+Added a **"🧘 Deep Work" achievement** (complete 5 focus-timer sessions), so the timer now feeds the progression loop and
+rewards the exact behavior the busy-learner persona needs: sustained, distraction-free study blocks. Each completed
+session calls a new `Store.addFocusSession()` (increments the persisted `focusSessions` count, unlocks the achievement at
+5), wired into `stopFocusTimer(done=true)` beside the existing chime/toast. Added to the "Exploration & Practice" Hall
+category and the locked-achievement progress map (`[focusSessions, 5]`), so it shows a live progress bar before unlocking.
+New persisted field `focusSessions` in `blank()` + the `load()` `Number.isFinite` merge. Achievement total **57 → 58**.
+Verified: gate ALL GREEN (achievement-reachability passes — it's in a Hall category); **via `--dump-dom`** the Hall shows
+"Deep Work" (locked) on an old-shape save with no `focusSessions` (loads as 0); after 5 `addFocusSession()` calls
+`focusSessions=5`, the achievement unlocks, and both **persist** to localStorage; all-routes smoke **errs=0/kErr=0
+(12 routes)**. SW cache `atlas-v235` → `atlas-v236`.
+
 ## iter 294 — Three more worked examples on flagship hard lessons (examples)
 Pivoting off the two-iteration mobile pass back to content: a **3rd worked example** on three flagship lessons at two, each
 a new technique across calc/PS/DL (examples 304 → **307**):

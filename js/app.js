@@ -2136,7 +2136,8 @@
       "habit": [Object.keys(R.activity || {}).length, 14], "sage": [R.xp, 25000],
       "viz-voyager": [Object.keys(R.vizSeen || {}).length, 15],
       "viz-complete": [Object.keys(R.vizSeen || {}).length, (window.VIZ_CATALOG || []).length || 63],
-      "code-adept": [Object.keys(R.solvedCode || {}).length, 10]
+      "code-adept": [Object.keys(R.solvedCode || {}).length, 10],
+      "deep-work": [R.focusSessions || 0, 5]
     };
   }
   // the locked, in-progress achievement closest to unlocking (for the dashboard nudge)
@@ -2159,7 +2160,7 @@
     { label: "Flashcards & Recall", ids: ["cards25", "century", "cards-500", "recaller", "total-recall"] },
     { label: "Mastery", ids: ["mastered-one", "deep-diver", "loremaster", "savant", "summit", "well-rounded"] },
     { label: "Levels & XP", ids: ["scholar", "polymath", "erudite", "sage", "luminary"] },
-    { label: "Exploration & Practice", ids: ["curious", "visualizer", "viz-voyager", "viz-complete", "pathfinder", "coder", "code-solver", "code-adept", "curator", "annotator", "deep-thinker", "homework-hero"] }
+    { label: "Exploration & Practice", ids: ["curious", "visualizer", "viz-voyager", "viz-complete", "pathfinder", "coder", "code-solver", "code-adept", "curator", "annotator", "deep-thinker", "deep-work", "homework-hero"] }
   ];
   function viewAchievements() {
     const have = Store.raw.achievements;
@@ -2412,7 +2413,7 @@
     if (!_ft) return;
     clearInterval(_ft.id); if (_ft.pill) _ft.pill.remove();
     const ctx = _ft.audio, mins = _ft.mins; _ft = null;
-    if (done) { ftChime(ctx); toast("⏳", "Focus session complete!", mins + " minutes of focused study — nice block. Take a breather, then keep going."); ftFlashTitle("✓ Focus complete"); }
+    if (done) { ftChime(ctx); toast("⏳", "Focus session complete!", mins + " minutes of focused study — nice block. Take a breather, then keep going."); ftFlashTitle("✓ Focus complete"); Store.addFocusSession(); flushAchievements(); }
     if (ctx) setTimeout(() => { try { ctx.close(); } catch (e) {} }, done ? 1200 : 0);
   }
   function startFocusTimer(minutes) {
