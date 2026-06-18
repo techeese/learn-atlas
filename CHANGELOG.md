@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 385 — Three more worked examples across calc/RL/LLM (examples)
+A **3rd worked example** on three flagship lessons across calc/RL/LLM (examples 358 → **361**, all ⌘K-searchable):
+- **c-partial-derivatives** — **the gradient points uphill (directional derivatives)**: `∇f=(2,4)` at (1,2); rate toward `(3,4)` is
+  `∇f·û = 4.4`; steepest ascent is `∇f` itself at rate `|∇f|=√20≈4.47` — why gradient descent steps along `−∇f`.
+- **rl-dqn** — **the DQN target**: `y = r + γ·maxₐ Q(s′,a) = 1+0.9·5 = 5.5`; terminal drops the bootstrap (`y=r=1`); the `max`
+  is what makes Q-learning off-policy.
+- **l-decoding-strategies** — **top-p (nucleus) sampling**: grow the nucleus to cover `p=0.9` → keep `{0.5,0.25,0.15}`, renormalize
+  to `[0.556,0.278,0.167]`; a dynamic cutoff that adapts to the model's confidence (unlike fixed top-k).
+Every value node-verified (4.4 / 4.47; 5.5 / 1.0; nucleus renorm); injected byte-stably with round-trip + even-`$` + tag-balance +
+unsupported-env pre-guards.
+Verified: gate ALL GREEN (**361 examples**); **via `--dump-dom`** the math-heavy two render (l-decoding KaTeX 101 with `\underbrace`,
+rl-dqn 90 with `\max_{a'}`), **kErr=0, rawDollar=0**; smoke revealing all 3 + 8 pages **errs=0/kErr=0, bad=none**. No save-shape
+change. SW cache `atlas-v324` → `atlas-v325`.
+
 ## iter 384 — ★ MILESTONE: every lesson now has a deeper-dive (148/148) (content / understandability)
 The final 3 "Deeper dive" expandables — deep-dive coverage **145 → 148/148**. **Every lesson in the codex now carries a
 deeper-dive**, completing the owner's #1 directive (depth / hard-concept extra explanations):
