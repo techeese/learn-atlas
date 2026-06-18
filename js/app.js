@@ -1848,7 +1848,7 @@
   }
 
   // ---------- glossary ----------
-  function viewGlossary() {
+  function viewGlossary(preTerm) {
     const g = window.GLOSSARY || [];
     const topicName = id => id === "general" ? "General" : (findCourse(id) || {}).title || id;
     const topicColor = id => id === "general" ? "var(--gold)" : (findCourse(id) || {}).color || "var(--gold)";
@@ -1886,7 +1886,8 @@
       document.querySelectorAll(".lab-tbtn").forEach(x => { const on = x === b; x.classList.toggle("active", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
       render(gs.value);
     }));
-    render("");
+    if (preTerm) gs.value = preTerm;        // ⌘K → a glossary term lands pre-filtered to its definition
+    render(preTerm || "");
   }
 
   // ---------- library (all references) ----------
@@ -2467,7 +2468,7 @@
     });
     (window.VIZ_CATALOG || []).forEach(v => out.push({ t: v.title, sub: "Visualization", hash: "#/lab/" + v.id, icon: "🎛️" }));
     [["Dashboard", "#/", "⌂"], ["Daily Mix", "#/session", "🎯"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Glossary", "#/glossary", "📔"], ["Library", "#/library", "📚"], ["My Notes", "#/notes", "📓"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
-    (window.GLOSSARY || []).forEach(e => out.push({ t: e.term, sub: "Glossary", hash: "#/glossary", icon: "📔" }));
+    (window.GLOSSARY || []).forEach(e => out.push({ t: e.term, sub: "Glossary", hash: "#/glossary/" + encodeURIComponent(e.term), icon: "📔" }));
     Object.keys(window.REFERENCES || {}).forEach(k => (window.REFERENCES[k] || []).forEach(r => out.push({ t: r.title, sub: "Reference · " + r.by, hash: r.url, ext: true, icon: "🔖" })));
     return out;
   }
@@ -2618,7 +2619,7 @@
     else if (parts[0] === "playground") viewPlayground();
     else if (parts[0] === "library") viewLibrary();
     else if (parts[0] === "notes") viewNotebook();
-    else if (parts[0] === "glossary") viewGlossary();
+    else if (parts[0] === "glossary") viewGlossary(parts[1] ? decodeURIComponent(parts[1]) : null);
     else if (parts[0] === "cheatsheet") viewCheatsheet(parts[1]);
     else if (parts[0] === "placement") viewPlacement(parts[1]);
     else if (parts[0] === "path") viewPath(parts[1], parts[2]);

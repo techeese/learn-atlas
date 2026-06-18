@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 308 — ⌘K glossary terms deep-link to their definition (UI/UX / workflow)
+The ⌘K palette already indexes everything (lessons, the 66 viz, pages, all 138 glossary terms, references, commands), but
+**every glossary hit just opened `#/glossary`** — dropping you in a 138-item list to hunt for the term you literally just
+picked. Now each glossary entry deep-links to `#/glossary/<term>`: the router passes the (decoded) term to `viewGlossary`,
+which **pre-fills the search box** so you land on a focused, definition-visible view. The bare `#/glossary` route is unchanged
+(all 138, empty box). One-line change at each of three points (search index, router, view).
+Verified: gate ALL GREEN; **via `--dump-dom`** `#/glossary/Posterior` pre-fills the search ("Posterior") and narrows to the
+3 posterior-related entries (definition visible), while `#/glossary` still lists all **138** with an empty box; `errs=0`;
+all-routes smoke **errs=0/kErr=0 (12 routes, incl. a deep-linked term)**. No save-shape change. SW cache `atlas-v248` → `atlas-v249`.
+
 ## iter 307 — Four more deeper-dives on flagship hard lessons (content / understandability)
 Continuing the depth directive, deliberately steering to the **less-recently-covered topics** (PS/RL/algo/calc) — 4 "Deeper
 dive" expandables (deep-dives 69 → **73**):
