@@ -1828,6 +1828,35 @@
   });
 
   /* ========================================================
+     78. The chain rule: rates multiply (Calculus)
+     ======================================================== */
+  register({ id: 'calc-chain', topic: 'calculus', title: 'The chain rule: rates multiply', blurb: 'For a composition y=f(g(x)) the derivative is f′(g(x))·g′(x) — the inner and outer rates multiply. Here y=sin²x: slide x and watch the tangent slope equal (2·sin x)·(cos x), the outer rate 2u (with u=sin x) times the inner rate cos x.' },
+  function (root) {
+    const W = 540, H = 320, padL = 28, padR = 14, padT = 18, padB = 26, XLO = 0, XHI = 2 * Math.PI, YLO = -0.1, YHI = 1.1;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const g = x => Math.sin(x), f = u => u * u, y = x => f(g(x)), slope = x => 2 * Math.sin(x) * Math.cos(x);
+    let xp = 0.6;
+    slider(ctl, { label: 'x', min: 0, max: 6.28, step: 0.02, value: xp, fmt: v => v.toFixed(2), onInput: v => { xp = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = x => padL + (x - XLO) / (XHI - XLO) * (W - padL - padR);
+      const Y = v => (H - padB) - (v - YLO) / (YHI - YLO) * (H - padT - padB);
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke();
+      ctx.strokeStyle = p.ink; ctx.lineWidth = 2; ctx.beginPath(); let st = false; for (let x = XLO; x <= XHI; x += 0.02) { const xx = X(x), yy = Y(y(x)); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; } ctx.stroke();
+      const m = slope(xp), y0 = y(xp), dx = 0.8;
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(xp - dx), Y(y0 - m * dx)); ctx.lineTo(X(xp + dx), Y(y0 + m * dx)); ctx.stroke();
+      ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(X(xp), Y(y0), 5, 0, 7); ctx.fill();
+      const gp = Math.cos(xp), fp = 2 * Math.sin(xp);
+      info.innerHTML = 'y = sin²x = f(g(x)) with g(x)=sin x, f(u)=u². The gold tangent has slope dy/dx = <b style="color:' + p.gold + '">' + m.toFixed(3) + '</b>. The chain rule splits it: outer rate f′(g)=2·sin x = <b>' + fp.toFixed(3) + '</b>, inner rate g′(x)=cos x = <b>' + gp.toFixed(3) + '</b>, and their product ' + fp.toFixed(3) + ' × ' + gp.toFixed(3) + ' = <b>' + (fp * gp).toFixed(3) + '</b> matches the slope. A nudge in x is scaled by g′ into u, then by f′ into y — the rates multiply.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Chain-rule visualizer: the curve y=sin^2 x with a movable tangent line whose slope equals the product of the inner rate cos x and the outer rate 2 sin x, demonstrating dy/dx = f-prime(g(x)) times g-prime(x).');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

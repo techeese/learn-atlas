@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 358 — Chain-rule visualizer — 78th widget (visualizations)
+`c-chain-rule` had no widget — and it's the foundation of backprop. Added the **78th Lab widget `calc-chain`**, embedded
+there: the curve `y = sin²x = f(g(x))` with `g(x)=sin x`, `f(u)=u²`. Slide **x** and the gold tangent's slope `dy/dx` is shown
+to equal the **product of the rates** — the inner rate `g′=cos x` times the outer rate `f′(g)=2·sin x` — live, with both
+factors and the product matching the slope. The "aha": a nudge in x is scaled by `g′` into u, then by `f′` into y, so the
+rates multiply (exactly how backprop chains them). Plain-unicode note (no `$`). app.js `viz-complete` fallback 77 → 78.
+Verified: gate ALL GREEN (**78 widgets**, embed resolves); **node** prototype confirmed `dy/dx = (2 sin x)(cos x) = sin 2x`;
+**via `--dump-dom`** at x=0.78 the tangent slope `1.000` equals the rate product `1.000`, `rawDollar=0`, `errs=0`, the lesson
+embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v297` → `atlas-v298`.
+
 ## iter 357 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons across PS/calc/DL (examples 340 → **343**, all ⌘K-searchable):
 - **ps-uniform-exponential** — **the exponential is memoryless**: `P(X>5|X>3) = e⁻¹ ≈ 0.368`, identical to a fresh `P(X>2)`;
