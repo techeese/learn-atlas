@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 281: **3 interactive code exercises for thinnest topics** (new functionality / active learning). DL had only 1 (biggest
+   topic), RL next-thinnest; +3 JS (lessons-with-code 25→28, gate runs 23): dl-activation-functions (neuron forward pass +
+   ReLU → 0.00 1.70), dl-gradient-descent-and-optimizers (one GD step x←x−lr·2x, 5→2.56), rl-mdp-formalism (discounted
+   return G=Σγᵏrₖ → 1.729). Node-verified; byte-stable inject w/ round-trip + no-existing-data-code guards. Verified: gate
+   GREEN (23 verified); dump-dom dl-activation runs → "0.00 1.70" "✓ matches"; smoke errs=0/kErr=0 (12). SW →v222.
    ✅ iter 280: **Step-back: full-site sweep (clean) + Hall progress-bar sweep** (animation). Step-back: 270–279 rotation
    healthy+diverse, no bugs. Full 226-route sweep (148 lessons + 60 lab + 7 courses + 11 pages), first since 250 →
    errs=0/kErr=0 everywhere; 30 iters of injections broke nothing. Ship: achievement-Hall bars now sweep-fill on landing

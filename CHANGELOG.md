@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 281 — Three interactive code exercises for the thinnest topics (new functionality / active learning)
+Code exercises (write → **Run** → instant ✓/✗ vs expected, +15 XP on first solve) are top-tier active learning but were
+lopsided: **deep learning had only 1** despite being the biggest topic, with RL next-thinnest. Added **3 gate-verified
+JavaScript exercises** (lessons-with-code 25 → 28; the gate now runs **23** each build, up from 20):
+- **dl-activation-functions** — a neuron's forward pass: weighted sum + bias → **ReLU**; one neuron's pre-activation is
+  negative (→ 0.00), the other survives (→ 1.70).
+- **dl-gradient-descent-and-optimizers** — one **gradient-descent step** `x ← x − lr·2x` on `f(x)=x²`, iterated three
+  times from 5 → **2.56**, sliding toward the minimum.
+- **rl-mdp-formalism** — the **discounted return** `G = Σ γᵏrₖ` via Horner's rule: `[1,0,0,1]` at γ=0.9 → `1 + 0.9³` = **1.729**.
+Every output node-verified before authoring; injected byte-stably with a round-trip guard and the injector refusing any
+lesson that already has `data-code`.
+Verified: gate ALL GREEN (**23 code-exercises verified** — every new output matches its `data-expected`); **via
+`--dump-dom`** the dl-activation widget hydrates, runs → `0.00 1.70`, and shows "✓ Output matches expected"; all-routes
+smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v221` → `atlas-v222`.
+
 ## iter 280 — Step-back: full-site health sweep (clean) + Hall progress-bar sweep (animation)
 **Step-back (every ~10 iters).** Health check of 270–279: workflow · examples · UI/UX · content · viz · a11y · gamification
 · content · viz · new-functionality — a healthy, fully-diverse rotation; no bugs shipped (caught the focus-timer debris and
