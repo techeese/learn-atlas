@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 364: **PPO clipped-surrogate visualizer — 80th widget** (visualizations). rl-trpo-ppo had no viz. New `rl-ppo-clip`:
+   min(r·A, clip(r,1−ε,1+ε)·A) vs the policy ratio r; toggle advantage sign — A>0 flattens at r=1.2 (capped), A<0 floored at
+   0.8 but unclipped past 1.2 (the asymmetry). app.js fallback 79→80. Verified: gate GREEN (80 widgets); node clip (caps 1.20 /
+   floors -0.80); dump-dom toggle drives both notes, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v304.
    ✅ iter 363: **3 more code exercises across RL/PS/DL** (active learning). +3 JS (66→69, gate runs 64): rl-actor-critic
    (advantage/TD error → 1.50), ps-t-tests (t-statistic → 1.00), dl-rnn-lstm-gru (one RNN step tanh → 0.76). Node-verified;
    byte-stable inject w/ guards. Verified: gate GREEN (64 verified); dump-dom RNN-step runs → "0.76" "✓ matches"; smoke errs=0/kErr=0 (12). SW →v303.

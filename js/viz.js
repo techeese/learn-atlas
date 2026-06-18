@@ -1891,6 +1891,40 @@
   });
 
   /* ========================================================
+     80. PPO's clipped surrogate objective (Reinforcement Learning)
+     ======================================================== */
+  register({ id: 'rl-ppo-clip', topic: 'reinforcement-learning', title: "PPO's clipped surrogate objective", blurb: 'PPO maximizes min(r·A, clip(r,1−ε,1+ε)·A), where r is the new/old policy ratio and A the advantage. Toggle the advantage sign and watch the clip flatten the objective beyond r=1±ε — capping how far one update can move the policy.' },
+  function (root) {
+    const W = 540, H = 330, padL = 30, padR = 14, padT = 16, padB = 28, RLO = 0, RHI = 2, YLO = -2, YHI = 1.5, eps = 0.2;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const clip = (r, lo, hi) => Math.max(lo, Math.min(hi, r));
+    let A = 1;
+    const L = r => Math.min(r * A, clip(r, 1 - eps, 1 + eps) * A);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = r => padL + (r - RLO) / (RHI - RLO) * (W - padL - padR);
+      const Y = v => (H - padB) - (v - YLO) / (YHI - YLO) * (H - padT - padB);
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke();
+      ctx.strokeStyle = p.line; ctx.setLineDash([3, 3]); [1 - eps, 1, 1 + eps].forEach(r => { ctx.beginPath(); ctx.moveTo(X(r), padT); ctx.lineTo(X(r), H - padB); ctx.stroke(); }); ctx.setLineDash([]);
+      ctx.strokeStyle = p.mute; ctx.globalAlpha = 0.5; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(X(RLO), Y(RLO * A)); ctx.lineTo(X(RHI), Y(RHI * A)); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = A > 0 ? p.sage : p.rust; ctx.lineWidth = 2.4; ctx.beginPath(); let st = false; for (let r = RLO; r <= RHI; r += 0.01) { const yy = Y(L(r)), xx = X(r); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; } ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '9px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('1−ε', X(1 - eps), H - padB + 12); ctx.fillText('1', X(1), H - padB + 12); ctx.fillText('1+ε', X(1 + eps), H - padB + 12);
+      ctx.fillText('policy ratio r', W / 2, H - 3);
+      info.innerHTML = A > 0
+        ? 'Advantage A = +1 (a good action). The raw objective r·A (faint) rises with r, but the clipped objective (sage) <b>flattens at r = 1+ε = 1.2</b>: once the new policy makes this good action 20% more likely, pushing further earns no extra reward — so the update is capped, with no incentive to over-commit on one batch.'
+        : 'Advantage A = −1 (a bad action). The clip <b>floors the objective at r = 1−ε = 0.8</b> (decreasing the probability further earns nothing), but on the other side it keeps falling for r &gt; 1.2 — <em>unclipped</em>. That asymmetry is deliberate: if a bad action somehow became more likely, PPO still pushes hard to bring its probability back down (no cap on undoing a mistake).';
+    }
+    button(ctl, 'Positive advantage', () => { A = 1; draw(); });
+    button(ctl, 'Negative advantage', () => { A = -1; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', "PPO clipped-surrogate visualizer: the objective as a function of the policy ratio r. For positive advantage it rises then flattens at r=1+epsilon (capping the update); for negative advantage it is floored at r=1-epsilon but keeps decreasing past r=1+epsilon, showing the asymmetric clip.");
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

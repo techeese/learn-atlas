@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 364 — PPO clipped-surrogate visualizer — 80th widget (visualizations)
+`rl-trpo-ppo` had no widget. Added the **80th Lab widget `rl-ppo-clip`**, embedded there: PPO's objective
+`min(r·A, clip(r,1−ε,1+ε)·A)` plotted against the policy ratio `r` (ε=0.2), with the raw `r·A` line faint behind it and the
+clip boundaries marked. Toggle the **advantage sign**: for a good action (`A>0`) the objective rises then **flattens at r=1.2**
+(capping the update); for a bad action (`A<0`) it's **floored at r=0.8** but keeps falling past r=1.2, **unclipped** — the
+deliberate asymmetry that still pushes hard to undo a mistake. Plain-unicode/entity note (no `$`). app.js `viz-complete`
+fallback 79 → **80**.
+Verified: gate ALL GREEN (**80 widgets**, embed resolves); **node** prototype confirmed the clip (A=+1 caps at 1.20; A=−1 floors
+at −0.80 yet reaches −1.60 at r=1.6); **via `--dump-dom`** the toggle drives the positive-clip and negative-asymmetry notes,
+`rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v303` → `atlas-v304`.
+
 ## iter 363 — Three more code exercises across RL/PS/DL (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** across RL/PS/DL (lessons-with-code 66 → **69**; the gate now runs **64**):
 - **rl-actor-critic** — **the advantage (TD error)** `A = r + γ·V(s′) − V(s)`: `1 + 0.9·5 − 4` → `1.50` (better than expected →
