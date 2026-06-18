@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 259: **Keyboard-operable draggable-vector viz** (accessibility). The drag-only vector widgets were mouse/touch-only; added
+   shared `VIZUtil.dragKeys(c, getItems, redraw)` — canvas tabindex=0 + gold focus ring, arrows nudge vector 1, Shift+arrows
+   vector 2 (½-grid snap, ±7 clamp; getItems() survives preset reassignment). Applied to la-dot-product, la-vector-add,
+   la-gram-schmidt (+ aria-labels mention the keys; vector-add gained role=img). Verified via --dump-dom (screenshots were
+   black-PNG flaky): all 3 tabIndex=0+focusable, keys move the right vector (dot a→3.5/b→3, vector-add u/v, gram v1/v2);
+   smoke errs=0/kErr=0 (12 routes). SW →v200. NOTE: la-projection drags scalar bx/by (not {x,y}) — keyboard TODO there.
    ✅ iter 258: **Two silent reward moments now celebrate** (gamification). ❄️ "Streak freeze earned!" toast at boot when a 7-day
    milestone grants a freeze (new freezeEarned() signal, only below the cap of 3); 🎯 "New best test score!" toast from
    the test result when % strictly beats every prior ≥5Q test (first-ever stays quiet; computed from tests history, no new

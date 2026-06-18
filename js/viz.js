@@ -71,8 +71,24 @@
     ctx.closePath(); ctx.fill();
   }
 
+  // keyboard operation for drag-based widgets (a11y): focus the canvas, then arrow keys nudge the first
+  // vector and Shift+arrows the second (snap to the same ½-grid as dragging). getItems() returns the live
+  // vector objects so it survives widgets that reassign them on a preset.
+  function dragKeys(c, getItems, redraw) {
+    c.tabIndex = 0;
+    c.addEventListener('keydown', function (e) {
+      const M = { ArrowLeft: [-0.5, 0], ArrowRight: [0.5, 0], ArrowUp: [0, 0.5], ArrowDown: [0, -0.5] };
+      const d = M[e.key]; if (!d) return;
+      const items = getItems(); if (!items || !items.length) return;
+      const v = items[e.shiftKey && items.length > 1 ? 1 : 0]; if (!v) return;
+      const clamp = n => Math.max(-7, Math.min(7, Math.round(n * 2) / 2));
+      v.x = clamp(v.x + d[0]); v.y = clamp(v.y + d[1]);
+      e.preventDefault(); redraw();
+    });
+  }
+
   window.VIZ = VIZ; window.VIZ_CATALOG = CATALOG;
-  window.VIZUtil = { register, P, el, canvas, controls, slider, button, select, note, loop, stopAll, pointer, arrow };
+  window.VIZUtil = { register, P, el, canvas, controls, slider, button, select, note, loop, stopAll, pointer, arrow, dragKeys };
 
   /* ========================================================
      1. Vector addition (drag the tips)
@@ -106,6 +122,9 @@
       arrow(ctx, O.x, O.y, V.x, V.y, p.sage, 3);
       info.innerHTML = `<b style="color:${p.gold}">u</b> = (${u.x}, ${u.y}) &nbsp; <b style="color:${p.sage}">v</b> = (${v.x}, ${v.y}) &nbsp; → &nbsp; <b style="color:${p.violet}">u + v</b> = (${w.x}, ${w.y})`;
     }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Vector addition: two draggable vectors u and v from the origin, added tip-to-tail to form u + v with a parallelogram. Focus this canvas and use the arrow keys to move u, Shift+arrow keys to move v.');
+    dragKeys(c, () => [u, v], draw);   // keyboard a11y: arrows move u, Shift+arrows move v
     draw();
   });
 
@@ -3151,7 +3170,8 @@
         `a·b = (${a.x})(${b.x}) + (${a.y})(${b.y}) = <b>${fmt(dot)}</b> &nbsp;=&nbsp; |a||b|cosθ = ${fmt(la)}·${fmt(lb)}·${fmt(cos)} &nbsp;·&nbsp; θ = <b>${deg}°</b><br>${kind}`;
     }
     c.setAttribute('role', 'img');
-    c.setAttribute('aria-label', 'Dot product visualizer: two draggable vectors a and b from the origin, the angle between them, and the scalar projection of b onto a shown as a shaded bar. The dot product is positive for an acute angle, zero at a right angle, and negative for an obtuse angle.');
+    c.setAttribute('aria-label', 'Dot product visualizer: two draggable vectors a and b from the origin, the angle between them, and the scalar projection of b onto a shown as a shaded bar. The dot product is positive for an acute angle, zero at a right angle, and negative for an obtuse angle. Focus this canvas and use the arrow keys to move a, Shift+arrow keys to move b.');
+    dragKeys(c, () => [a, b], draw);   // keyboard a11y: arrows move a, Shift+arrows move b
     draw();                                                    // synchronous first paint
   });
 
@@ -3392,7 +3412,8 @@
           `now <b style="color:${p.violet}">u₂</b>·<b style="color:${p.gold}">u₁</b> = <b>${fmt(orth)}</b> — orthogonal. <span style="color:${p.mute}">(drag the tips; “normalize” for ê)</span>`;
     }
     c.setAttribute('role', 'img');
-    c.setAttribute('aria-label', "Gram-Schmidt visualizer: two draggable vectors. It keeps u1 equal to v1, then subtracts v2's projection onto u1 so the remainder u2 is perpendicular to u1 (their dot product is zero). A normalize toggle shows the orthonormal basis of unit vectors.");
+    c.setAttribute('aria-label', "Gram-Schmidt visualizer: two draggable vectors. It keeps u1 equal to v1, then subtracts v2's projection onto u1 so the remainder u2 is perpendicular to u1 (their dot product is zero). A normalize toggle shows the orthonormal basis of unit vectors. Focus this canvas and use the arrow keys to move v1, Shift+arrow keys to move v2.");
+    dragKeys(c, () => [v1, v2], draw);   // keyboard a11y: arrows move v1, Shift+arrows move v2
     draw();                                                    // synchronous first paint
   });
 

@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 259 — Keyboard-operable draggable-vector visualizers (accessibility)
+The signature draggable-vector widgets were **mouse/touch-only** — a keyboard or screen-reader user couldn't change the
+inputs at all. Made the three `{x,y}`-vector canvases keyboard-operable via a shared `VIZUtil.dragKeys(c, getItems,
+redraw)` helper: the canvas becomes focusable (`tabindex=0`, with a gold `:focus-visible` ring), **arrow keys nudge the
+first vector and Shift+arrows the second** (same ½-grid snap as dragging, clamped to ±7). `getItems()` returns the live
+vectors so it survives widgets that *reassign* them on a preset (e.g. dot-product's Acute/Obtuse buttons). Applied to
+**la-dot-product, la-vector-add, la-gram-schmidt**, each with an updated `aria-label` telling the user about the keys
+(and vector-add gained a `role="img"` label it previously lacked).
+Verified: gate ALL GREEN; **via `--dump-dom`** (screenshots were hitting the known black-PNG profile-lock flakiness) —
+all three report `tabIndex=0` and focusable, and key events move the right vector: dot-product `a (3,1)→(3.5,1)` on
+ArrowRight + `b (1,2.5)→(1,3)` on Shift+ArrowUp; vector-add `u→(2.5,1)`, `v→(-1,1.5)` with `u+v` recomputed; gram-schmidt
+`v1→(3.5,0.5)`, `v2→(1.5,2)`; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache
+`atlas-v199` → `atlas-v200`.
+
 ## iter 258 — Two reward moments that used to pass silently (gamification)
 Two genuine rewards happened with **no feedback**: you'd *earn a streak-freeze* at a 7-day milestone (set silently in
 `touchStreak`) and *beat your best test score* with nothing to mark it. Surfaced both as celebratory toasts, matching the
