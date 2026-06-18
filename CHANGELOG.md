@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 405 — Three more worked examples across PS/LLM/LA (examples)
+A **3rd worked example** on three flagship lessons across PS/LLM/LA (examples 391 → **394**, all ⌘K-searchable):
+- **ps-random-variables-distributions** — **mean & variance of a fair die**: `E[X]=3.5`, `Var=E[X²]−E[X]²=91/6−12.25=35/12≈2.92`,
+  `σ≈1.71`; the mean is a balance point, not an attainable face.
+- **l-tokenization-bpe** — **vocab vs sequence length**: "strawberry" → ~2 BPE tokens (≈5× shorter sequence) but the model loses the
+  character view — why "count the r's" and digit arithmetic are hard.
+- **la-matrix-derivative-identities** — **the quadratic-form gradient**: `∇(xᵀAx)=(A+Aᵀ)x = 2Ax` for symmetric `A` → `(6,6)`; the
+  matrix analogue of `d/dx(ax²)=2ax`, the gradient behind every least-squares objective.
+Every value node-verified (die 3.5 / 35/12; ∇=(6,6)); injected byte-stably with the full guard set.
+Verified: gate ALL GREEN (**394 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (44 / 50 / 72 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v344` → `atlas-v345`.
+
 ## iter 404 — Three more worked examples across calc/RL/algo (examples)
 A **3rd worked example** on three flagship lessons across calc/RL/algo (examples 388 → **391**, all ⌘K-searchable):
 - **c-limits-intuition** — **the squeeze theorem**: `x²sin(1/x) → 0`, trapped between `±x²` (both → 0); bound a wild function instead
