@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 325: **3 more worked examples on flagship hard lessons** (examples). +3 (316→319) across algo/PS/calc: a-divide-and-conquer
+   (Karatsuba 12×34 → 408 in 3 mults), ps-bernoulli-binomial (binomial mean 6 / var 4.2 / sd 2.05), c-extrema-curve-sketching
+   (closed-interval extremes: max at endpoint x=2). Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (319
+   examples); dump-dom each shows 3, reveal renders (katex 93/41/101, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v266.
    ✅ iter 324: **Geometric-distribution visualizer — 70th widget** (visualizations). ps-geometric-waiting had no viz. New
    `ps-geometric`: PMF bars P(X=k)=(1−p)^(k−1)p, p slider, dashed mean line at 1/p, memorylessness note. app.js fallback 69→70.
    Verified: gate GREEN (70 widgets); node PMF sums to 1 + mean=1/p; dump-dom slider drives mean 3.33→1.25→10.00, rawDollar=0,

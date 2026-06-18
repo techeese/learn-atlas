@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 325 — Three more worked examples on flagship hard lessons (examples)
+A **3rd worked example** on three flagship lessons, each a new technique across algo/PS/calc (examples 316 → **319**):
+- **a-divide-and-conquer** — **Karatsuba**: multiply `12 × 34` with **three** products not four (`ac=3, bd=8, (a+b)(c+d)=21`
+  → cross term `10` by subtraction) → `408`; recursively this is `O(n^1.585)` (existing: merge-sort trace + a recurrence).
+- **ps-bernoulli-binomial** — **mean & variance of a binomial** as a sum of Bernoullis: `np = 6`, `np(1−p) = 4.2`,
+  `sd ≈ 2.05`; why `p(1−p)` peaks at `p=0.5` (existing: heads-in-5-flips PMF + defective bulbs).
+- **c-extrema-curve-sketching** — **closed-interval extreme values**: `x³−3x` on `[0,2]` → check the critical point `x=1`
+  *and* the endpoints; the max `2` is at the **endpoint** `x=2`, which the derivative test alone would miss (existing:
+  first- and second-derivative classification).
+Every value node-verified (408; mean 6 / var 4.2; max 2 / min −2); injected byte-stably with round-trip + even-`$` +
+tag-balance pre-guards.
+Verified: gate ALL GREEN (**319 examples**); **via `--dump-dom`** each Examples tab shows 3, the new solution reveals with
+KaTeX (93 / 41 / 101 spans) and **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v265` → `atlas-v266`.
+
 ## iter 324 — Geometric-distribution visualizer — 70th widget (visualizations)
 `ps-geometric-waiting` had no widget. Added the **70th Lab widget `ps-geometric`**, embedded there: a bar chart of the
 geometric PMF `P(X=k) = (1−p)^(k−1)·p` — the probability the first success lands on trial `k`. Slide the **success

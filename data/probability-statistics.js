@@ -1215,6 +1215,11 @@
               "title": "Defective light bulbs from a large shipment",
               "body": "A large shipment of light bulbs has a true defect rate of $p=0.10$. A quality inspector samples $n=8$ bulbs (the shipment is large enough that removing 8 barely changes $p$, so trials are effectively independent and identical). Let $X$ be the number of defective bulbs found. What is the probability of finding at most one defective bulb, and what is the expected number?",
               "solution": "Model: $X\\sim\\text{Bin}(8,0.10)$ — the large-shipment assumption is what justifies treating the draws as independent with constant $p$. 'At most one' means $X=0$ or $X=1$: $P(X\\le1)=P(X=0)+P(X=1)$. $P(X=0)=\\binom{8}{0}(0.1)^0(0.9)^8=(0.9)^8\\approx0.4305$. $P(X=1)=\\binom{8}{1}(0.1)^1(0.9)^7=8\\times0.1\\times(0.9)^7=0.8\\times0.4783\\approx0.3826$. Adding: $P(X\\le1)\\approx0.4305+0.3826=0.8131$, about 81.3%. Expected defectives: $\\mathbb{E}[X]=np=8\\times0.10=0.8$, with variance $\\text{Var}(X)=np(1-p)=8\\times0.1\\times0.9=0.72$."
+            },
+            {
+              "title": "Mean and variance of a binomial",
+              "body": "A factory's bulbs are defective with probability $p = 0.3$. In a box of $n = 20$, how many defectives do you expect, and how spread out is that count?",
+              "solution": "<strong>A binomial is a sum of Bernoullis.</strong> $X = \\sum_{i=1}^{n} X_i$, where each $X_i$ is 1 (defective) with probability $p$. That makes its moments fall out of the single-trial ones.\n<strong>Mean.</strong> By linearity of expectation, $\\mathbb{E}[X] = n p = 20 \\times 0.3 = 6$ defectives.\n<strong>Variance.</strong> The trials are independent, so variances add: $\\mathrm{Var}(X) = n p (1 - p) = 20 \\times 0.3 \\times 0.7 = 4.2$, a standard deviation of $\\sqrt{4.2} \\approx 2.05$.\n<strong>Reading it.</strong> Expect about $6 \\pm 2$ defectives per box. The variance is largest at $p = 0.5$ (maximum uncertainty) and vanishes at $p = 0$ or $1$ (no randomness) — the $p(1-p)$ factor is one coin flip's spread, scaled up by $n$."
             }
           ]
         },
