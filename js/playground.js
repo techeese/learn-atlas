@@ -95,6 +95,7 @@
       const tag = document.createElement("div"); tag.className = "pg-check " + (ok ? "ok" : "no");
       tag.textContent = ok ? "✓ Output matches expected" : "✗ Doesn't match expected output yet";
       out.parentNode.appendChild(tag); setTimeout(() => tag.remove(), 4000);
+      if (ok && typeof opts.onSolve === "function") { try { opts.onSolve(); } catch (e) {} }
     }
   }
 

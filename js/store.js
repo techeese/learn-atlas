@@ -75,6 +75,8 @@
     { id: "marksman",    icon: "🏆", name: "Marksman",          desc: "Answer 2,000 quiz questions correctly." },
     { id: "savant",      icon: "🗿", name: "Savant",            desc: "Reach 80% mastery on 50 concepts." },
     { id: "viz-complete",icon: "🔬", name: "Full Spectrum",     desc: "Open every visualization in the Lab." },
+    { id: "code-solver", icon: "🧪", name: "It Runs!",          desc: "Solve a lesson code exercise — output matches." },
+    { id: "code-adept",  icon: "⌨️", name: "Code Adept",        desc: "Solve 10 lesson code exercises." },
     // ── endgame capstones (matched to the complete site: 148 lessons, 2,368 MCQs, all topics) ──
     { id: "summit",      icon: "🗻", name: "Summit",            desc: "Reach 80% mastery on 100 concepts." },
     { id: "streak-365",  icon: "🎇", name: "Year of Fire",      desc: "Reach a 365-day streak." },
@@ -108,7 +110,8 @@
       missedFixed: 0,       // lifetime count of missed questions later answered correctly
       perfectQuizzes: 0,    // lifetime count of 100% lesson quizzes (for the Flawless Five achievement)
       quickChecks: 0,       // lifetime count of inline Quick Checks completed (low-stakes retrieval)
-      vizSeen: {}           // vizId -> true (distinct visualizations opened, for Viz Voyager)
+      vizSeen: {},          // vizId -> true (distinct visualizations opened, for Viz Voyager)
+      solvedCode: {}        // codeKey -> true (distinct code-exercises solved, output matched)
     };
   }
 
@@ -154,6 +157,7 @@
       base.perfectQuizzes = num(s.perfectQuizzes);
       base.quickChecks = num(s.quickChecks);
       base.vizSeen = (s.vizSeen && typeof s.vizSeen === "object") ? s.vizSeen : {};
+      base.solvedCode = (s.solvedCode && typeof s.solvedCode === "object") ? s.solvedCode : {};
     }
     return base;
   }
@@ -234,6 +238,18 @@
     const vizTotal = (window.VIZ_CATALOG || []).length;   // "Full Spectrum": opened every widget in the Lab
     if (vizTotal && Object.keys(state.vizSeen || {}).length >= vizTotal) unlock("viz-complete");
     save();
+  }
+
+  // ---- code exercises (output matched the expected) ----
+  function recordCodeSolved(key) {
+    if (!state.solvedCode || typeof state.solvedCode !== "object") state.solvedCode = {};
+    const first = !!key && !state.solvedCode[key];
+    if (first) { state.solvedCode[key] = true; addXP(15); }      // reward only the first solve of each exercise
+    const count = Object.keys(state.solvedCode).length;
+    unlock("code-solver");
+    if (count >= 10) unlock("code-adept");
+    save();
+    return { first: first, count: count };
   }
 
   // ---- XP / level ------------------------------------------------------
@@ -563,7 +579,7 @@
     getNote, setNote, setGoal, todayXP, goalJustReached, exportData, importData, freezeJustUsed, streakJustUp, streakRecord, personalBests, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
-    recordQuickCheck, recordVizOpen,
+    recordQuickCheck, recordVizOpen, recordCodeSolved,
     unlock, drainUnlocked, drainLevelUps,
     stats, courseProgress, resetAll, touchStreak
   };

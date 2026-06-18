@@ -1918,13 +1918,16 @@
     if (window.Playground) { window.Playground.mount(document.getElementById("pg-host"), { lang: "python" }); Store.unlock("coder"); flushAchievements(); }
     else document.getElementById("pg-host").innerHTML = emptyState("💻", "Playground failed to load.");
   }
+  function codeKey(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return "c" + (h >>> 0).toString(36); }
   function hydrateCode(root) {
     if (!window.Playground) return;
     (root || app).querySelectorAll("[data-code]").forEach(node => {
       if (node.dataset.codeDone) return; node.dataset.codeDone = "1";
       const lang = node.getAttribute("data-code") || "python", expected = node.getAttribute("data-expected"), code = node.textContent.trim();
       const host = document.createElement("div"); node.textContent = ""; node.appendChild(host);
-      window.Playground.mount(host, { lang, code, expected: expected });
+      const key = expected != null ? codeKey(lang + "|" + expected + "|" + code) : null;   // stable per-exercise id (solved-once)
+      const onSolve = key ? () => { const r = Store.recordCodeSolved(key); if (r.first) { toast("🧪", "+15 XP", "Exercise solved — output matches!"); flushAchievements(); renderChrome(); } } : null;
+      window.Playground.mount(host, { lang, code, expected: expected, onSolve: onSolve });
     });
   }
 
@@ -2065,7 +2068,8 @@
       "deep-diver": [mastered, 10], "loremaster": [mastered, 25], "savant": [mastered, 50],
       "habit": [Object.keys(R.activity || {}).length, 14], "sage": [R.xp, 25000],
       "viz-voyager": [Object.keys(R.vizSeen || {}).length, 15],
-      "viz-complete": [Object.keys(R.vizSeen || {}).length, (window.VIZ_CATALOG || []).length || 54]
+      "viz-complete": [Object.keys(R.vizSeen || {}).length, (window.VIZ_CATALOG || []).length || 54],
+      "code-adept": [Object.keys(R.solvedCode || {}).length, 10]
     };
   }
   // the locked, in-progress achievement closest to unlocking (for the dashboard nudge)
@@ -2088,7 +2092,7 @@
     { label: "Flashcards & Recall", ids: ["cards25", "century", "cards-500", "recaller", "total-recall"] },
     { label: "Mastery", ids: ["mastered-one", "deep-diver", "loremaster", "savant", "summit", "well-rounded"] },
     { label: "Levels & XP", ids: ["scholar", "polymath", "erudite", "sage", "luminary"] },
-    { label: "Exploration & Practice", ids: ["curious", "visualizer", "viz-voyager", "viz-complete", "pathfinder", "coder", "curator", "annotator", "deep-thinker", "homework-hero"] }
+    { label: "Exploration & Practice", ids: ["curious", "visualizer", "viz-voyager", "viz-complete", "pathfinder", "coder", "code-solver", "code-adept", "curator", "annotator", "deep-thinker", "homework-hero"] }
   ];
   function viewAchievements() {
     const have = Store.raw.achievements;

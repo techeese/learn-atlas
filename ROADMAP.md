@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 249: **Code exercises reward XP + achievements** (gamification / new functionality). The 21 exercises gave only a ✓ — now
+   solving one (output matches) awards +15 XP once (deduped via new `solvedCode` map; blank+load merge) + a toast, and
+   unlocks 🧪 "It Runs!" (1) / ⌨️ "Code Adept" (10). Playground check() → onSolve callback; hydrateCode keys it by
+   hash(lang|expected|code). Achievements 55→57 (Exploration category + progress map). Verified: gate GREEN; node test
+   (+15 once, dedup on re-solve, unlocks at 1 & 10); end-to-end click Run → xp 0→15, solvedCode=1, code-solver unlocked,
+   toast, pg-check ok (errs=0); Hall shows "It Runs!"; smoke errs=0/kErr=0 (12 routes). SW →v191.
    ✅ iter 248: **SPA focus management on route change** (accessibility — most overdue, last 234). Router updated title + scrolled top
    but never moved focus; keyboard/SR users were stranded on the removed element. Now after each view renders, focus moves
    to the new view's <h2> (fallback #app) so the page name is announced. Modal-guarded (intro/palette/levelup/shortcuts

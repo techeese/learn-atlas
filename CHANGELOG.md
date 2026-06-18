@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 249 — Solving a code exercise now rewards XP + achievements (gamification / new functionality)
+The 21 embedded code exercises were *disconnected from the progression loop* — getting one right showed a green "✓
+matches" and nothing else (no XP, no achievement), so a whole pillar didn't "count." Wired solving into the reward system:
+- The Playground's `check()` now fires an **`onSolve` callback** when output matches; `hydrateCode` passes one keyed by a
+  stable hash of `lang|expected|code`, so each exercise is **rewarded once**: **+15 XP** + a "🧪 +15 XP — Exercise solved!"
+  toast on the first solve, deduped via a new `solvedCode` map in state (added to `blank()` + the `load()` typeof-merge).
+- Two new achievements: **🧪 "It Runs!"** (solve your first exercise) and **⌨️ "Code Adept"** (solve 10), wired into the
+  Hall's *Exploration & Practice* category and the nearest-achievement progress map (**55 → 57 achievements**).
+No data change (store/app/playground only).
+Verified: gate ALL GREEN; **node unit test** — first solve +15 XP, re-solving the same exercise awards nothing (dedup),
+distinct solves increment the count, `code-solver` then `code-adept` unlock at 1 and 10; **end-to-end in-browser** —
+clicking Run on the expectation/variance exercise took XP 0→15, `solvedCode`=1, unlocked `code-solver`, showed the
+`pg-check.ok` + the toast (`errs=0`); the Hall renders "It Runs!"; all-routes smoke **errs=0/kErr=0 (12 routes)**.
+SW cache `atlas-v190` → `atlas-v191`.
+
 ## iter 248 — SPA focus management on route change (accessibility)
 Accessibility was the most-overdue lane (last at iter 234). A classic single-page-app gap: the router updated the page
 `<title>` and scrolled to top, but **never moved focus** — after navigating, a keyboard or screen-reader user was
