@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 254: **Adjustable new-cards-per-session pace** (new functionality). Daily Review's new-card intake was a fixed const (30);
+   made it a Settings control (5–100) backed by new `newPerSession` state (blank+load, Number.isFinite clamp; old saves
+   default 30). Review caps at Store.raw.newPerSession. Tunes the core SRS loop to the learner. Verified: gate GREEN; node
+   test (default 30, clamps 999→100/1→5/NaN→30, old save→30); in-browser cap=8 → review shows 8 new; settings save →15 +
+   toast (errs=0); smoke errs=0/kErr=0 (12 routes). SW →v195.
    ✅ iter 253: **Smoother entrance cascade + mobile re-verified** (animation/juice). `.reveal` stagger only covered nth-child(1–8);
    items 9+ inherited delay:0 and popped in at once (a double-beat) on content-rich pages (dashboard/Progress/Hall have
    15–18 reveals). Fixed: snappy .04s step through 14 items, nth-child(n+15) capped at .60s; reduced-motion still disables.

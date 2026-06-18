@@ -101,6 +101,7 @@
       mastery: {},          // lessonId -> { s:0..1 score, ts:lastPracticeMs, n:attempts }
       notes: {},            // lessonId -> free text note
       goalXp: 50,           // daily XP goal
+      newPerSession: 30,    // cap on brand-new flashcards introduced per Daily Review session
       goalCelebrated: null, // "YYYY-MM-DD" the daily-goal celebration last fired (so it fires once/day)
       activity: {},         // "YYYY-MM-DD" -> xp earned that day (study heatmap)
       freezes: 1,           // streak-freeze tokens
@@ -147,6 +148,7 @@
       base.mastery = s.mastery || {};
       base.notes = s.notes || {};
       base.goalXp = num(s.goalXp) || 50;
+      base.newPerSession = Number.isFinite(s.newPerSession) ? Math.max(5, Math.min(100, s.newPerSession)) : 30;
       base.goalCelebrated = typeof s.goalCelebrated === "string" ? s.goalCelebrated : null;
       base.activity = s.activity || {};
       base.freezes = Number.isFinite(s.freezes) ? s.freezes : 1;
@@ -455,6 +457,7 @@
   function getNote(lessonId) { return state.notes[lessonId] || ""; }
   function setNote(lessonId, text) { if (text && text.trim()) { state.notes[lessonId] = text; if (Object.keys(state.notes).length >= 5) unlock("annotator"); } else delete state.notes[lessonId]; save(); }
   function setGoal(xp) { state.goalXp = Math.max(10, num(xp)); save(); }
+  function setNewPerSession(n) { state.newPerSession = Math.max(5, Math.min(100, num(n) || 30)); save(); }
   function todayXP() { return num(state.activity[todayStr()]); }
   function exportData() { return JSON.stringify(state); }
   function importData(json) {
@@ -576,7 +579,7 @@
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
     gradeCard, cardDue, cardState, projectInterval, reviewForecast,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, fadingConcepts, topicMastery, markKnown,
-    getNote, setNote, setGoal, todayXP, goalJustReached, exportData, importData, freezeJustUsed, streakJustUp, streakRecord, personalBests, setLastLesson,
+    getNote, setNote, setGoal, setNewPerSession, todayXP, goalJustReached, exportData, importData, freezeJustUsed, streakJustUp, streakRecord, personalBests, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
     recordQuickCheck, recordVizOpen, recordCodeSolved,

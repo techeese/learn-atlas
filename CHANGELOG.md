@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 254 — Adjustable new-cards-per-session pace (new functionality)
+The Daily Review introduced new flashcards at a **fixed `NEW_CARDS_PER_SESSION = 30`** — fine as a default, but a power
+user wants to learn faster and a stretched one wants lighter sessions, with no way to choose. Made it a **personalization
+setting**: a "New flashcards / review session" control in Settings (5–100), backed by a new `newPerSession` state field
+(`blank()` + `load()` with a `Number.isFinite` clamp to 5–100; old saves default to 30 — a prior-shape save still loads).
+The Daily Review now caps new-card intake at `Store.raw.newPerSession` (falling back to the constant). This directly tunes
+the core "remember longer" loop to the learner's bandwidth.
+Verified: gate ALL GREEN; **node test** — default 30, `setNewPerSession` clamps (999→100, 1→5, NaN→30), and a save lacking
+the field loads as 30; **in-browser** — with the cap seeded to 8, the Daily Review shows exactly **8 "new this session"**
+(out of 889 new cards), the Settings input reflects the stored value and saving it updates `Store.newPerSession` to 15
+with a toast (`errs=0`); all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v194` → `atlas-v195`.
+
 ## iter 253 — Smoother page-entrance cascade + mobile re-verified (animation / juice)
 The `.reveal` entrance stagger only assigned per-item delays to `nth-child(1–8)`; on content-rich pages (the dashboard,
 Progress, and Hall all render 15–18 `.reveal` sections) **every item from the 9th on inherited `animation-delay: 0` and

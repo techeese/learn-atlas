@@ -1265,7 +1265,7 @@
         if (rec) { seen++; const d = rec.due || 0; if (d > now && d <= now + DAY) soon++; if (d > now && d <= now + 7 * DAY) week++; }
       });
     })));
-    const newBatch = shuffle(newCards).slice(0, NEW_CARDS_PER_SESSION);
+    const newBatch = shuffle(newCards).slice(0, Store.raw.newPerSession || NEW_CARDS_PER_SESSION);
     const session = shuffle(dueReviews.concat(newBatch));   // due reviews first-class, plus a capped trickle of new cards
     const forecast = `<div class="today-strip reveal" style="gap:0">
       <div class="fc-cell"><div class="fc-n" style="color:var(--rust)">${dueReviews.length}</div><div class="fc-k">due to review</div></div>
@@ -2244,6 +2244,10 @@
           <input id="goal-input" type="number" min="10" step="10" value="${Store.raw.goalXp}" style="width:90px">
           <button class="btn" id="goal-save">Save</button>
         </label>
+        <label class="viz-slider" style="gap:10px;margin-top:14px">New flashcards / review session
+          <input id="newcap-input" type="number" min="5" max="100" step="5" value="${Store.raw.newPerSession || 30}" style="width:90px">
+          <button class="btn" id="newcap-save">Save</button>
+        </label>
         <div class="viz-slider" style="gap:10px;margin-top:14px"><span class="viz-slab">Reading text size</span>
           <button class="btn ghost rs-btn" data-rs="0.9">A−</button>
           <button class="btn ghost rs-btn" data-rs="1">A</button>
@@ -2264,6 +2268,7 @@
     app.querySelectorAll(".stat-strip .v, .act-num, .dist-num").forEach((el, i) => countUp(el, Math.min(i * 32, 430)));
     sweepBars(app);                                            // animate the recent-test score bars filling in
     document.getElementById("goal-save").addEventListener("click", () => { Store.setGoal(parseInt(document.getElementById("goal-input").value, 10)); toast("🎯", "Goal updated", "Daily target set to " + Store.raw.goalXp + " XP"); });
+    document.getElementById("newcap-save").addEventListener("click", () => { Store.setNewPerSession(parseInt(document.getElementById("newcap-input").value, 10)); document.getElementById("newcap-input").value = Store.raw.newPerSession; toast("🃏", "Review pace updated", "Up to " + Store.raw.newPerSession + " new cards per session"); });
     document.getElementById("export-btn").addEventListener("click", () => {
       const blob = new Blob([Store.exportData()], { type: "application/json" }); const a = document.createElement("a");
       a.href = URL.createObjectURL(blob); a.download = "atlas-progress.json"; a.click();
