@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 343 — Four more deeper-dives on foundational lessons (content / understandability)
+4 "Deeper dive" expandables across DL/algo/PS/calc (deep-dives 101 → **105**):
+- **dl-the-artificial-neuron-and-mlp** — **one neuron is logistic regression; many are a universal approximator**: each unit is
+  weighted-sum-then-squash; composition (not a new kind of arithmetic) is what makes a hidden layer approximate any function.
+- **a-asymptotic-analysis** — **why Big-O throws away constants**: the fastest-growing term dominates for large `n`, so
+  `5n²+100n+9000 = O(n²)`; an `O(n log n)` sort eventually beats `O(n²)` whatever the constants.
+- **ps-expectation-variance** — **expectation always adds; variance is pickier**: `E[X+Y]=E[X]+E[Y]` always, but
+  `Var(X+Y)` needs `Cov=0` and `Var(aX+b)=a²Var(X)` — the asymmetry behind the `1/n` shrinkage of an average's variance.
+- **c-definite-integral-riemann** — **the integral is a limit of rectangles**: `∫ = lim Σ f(xᵢ)Δx`; the `∫` is a stretched "S"
+  for sum — addition taken to a limit, which is why the Fundamental Theorem is so surprising.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 3 / 18 / 9 / 13 spans) with **kErr=0, rawDollar=0**;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v282` → `atlas-v283`.
+
 ## iter 342 — Three more code exercises across computational lessons (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** on flagship computational lessons across PS/calc/LLM (lessons-with-code
 51 → **54**; the gate now runs **49**):
