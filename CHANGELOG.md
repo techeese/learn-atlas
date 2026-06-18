@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 356 — Four more deeper-dives on foundational lessons (content / understandability)
+4 "Deeper dive" expandables across algo/calc/RL/LA (deep-dives 113 → **117**):
+- **a-arrays-lists-stacks-queues** — **array vs linked list = a memory-layout tradeoff**: contiguous gives `O(1)` access +
+  cache speed but `O(n)` mid-edits; linked gives `O(1)` edits but `O(n)` access + pointer-chasing.
+- **c-optimization** — **∇f=0 is necessary, not sufficient**: it flags minima, maxima, *and* saddles; the second-order
+  condition + boundary checks (or convexity) finish the job.
+- **rl-imitation** — **why behavioural cloning drifts**: per-step error compounds (≈`T²`) as the agent strays into states the
+  expert never visited; DAgger + inverse RL restore the broken i.i.d. assumption.
+- **la-matrix-calculus-backprop** — **backprop = chain rule in the cheap multiplication order**: a scalar loss makes
+  right-to-left (reverse-mode) Jacobian-vector products vastly cheaper — all gradients at ~one forward pass.
+Authored with `String.raw` LaTeX (`\lt`/`\gt` for the second-order signs); injected byte-stably with round-trip +
+even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 7 / 4 / 3 / 2 spans) with **kErr=0, rawDollar=0**;
+all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v295` → `atlas-v296`.
+
 ## iter 355 — Three more code exercises across DL/LLM lessons (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** across DL/LLM (lessons-with-code 60 → **63**; the gate now runs **58**):
 - **dl-attention-mechanism** — **scaled dot-product attention weights** `softmax(q·kᵢ/√d)`: a query aligned with the first key

@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 356: **4 more deeper-dives on foundational lessons** (content). +4 dd (113→117) across algo/calc/RL/LA:
+   a-arrays-lists-stacks-queues (array vs linked = layout tradeoff), c-optimization (∇f=0 necessary not sufficient),
+   rl-imitation (behavioural cloning drift / compounding error), la-matrix-calculus-backprop (backprop = chain rule, cheap order).
+   String.raw LaTeX (\lt/\gt); byte-stable inject w/ guards. Verified: gate GREEN; dump-dom each renders (katex 7/4/3/2, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v296.
    ✅ iter 355: **3 more code exercises across DL/LLM lessons** (active learning). +3 JS (60→63, gate runs 58): dl-attention-mechanism
    (attention weights → 0.67 0.33), dl-overfitting-and-regularization (L2 loss → 1.25), l-tokenization-bpe (BPE merge step → ab).
    Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (58 verified); dump-dom attention runs → "0.67 0.33" "✓ matches";
