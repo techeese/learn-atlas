@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 338 — Three more code exercises across computational lessons (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** on flagship computational lessons across LA/PS/RL (lessons-with-code
+48 → **51**; the gate now runs **46**):
+- **la-orthonormal-gram-schmidt** — **Gram-Schmidt**: subtract `v2`'s projection onto `u1` → `[1,0]` vs `[1,1]` gives
+  `u2 = 0.5 -0.5`, now orthogonal (`u1·u2 = 0`).
+- **ps-hypothesis-testing-logic** — **z-test statistic** `(x̄−μ₀)/(σ/√n)`: sample mean 52 under H₀ μ=50, σ=10, n=100 → `2.00`
+  (two SEs above, beyond ±1.96 → reject at 5%).
+- **rl-policy-iteration** — **greedy policy improvement**: pick `argmax Q(s,a)` over `[3,7,2,5]` → `1`.
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**46 code-exercises verified**); **via `--dump-dom`** the greedy-action widget runs → `1`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v277` → `atlas-v278`.
+
 ## iter 337 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons across DL/calc/RL (examples 325 → **328**, all now ⌘K-searchable):
 - **dl-convolution-operation** — **two 3×3 convs beat one 5×5**: same `5×5` receptive field, but `2×9=18` weights vs `25`
