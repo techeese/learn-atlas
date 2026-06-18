@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 245: **Dijkstra's shortest-path visualizer — 54th widget** (visualizations). Graph-traversal viz only covers unweighted
+   BFS/DFS; weighted shortest paths had none. New `algo-dijkstra` in a-shortest-paths-topo (after the worked example):
+   6-node weighted graph from A, step/play/skip/reset settle the closest unsettled node (gold) and relax its edges
+   (badges tick ∞→down), settled nodes sage, shortest-path-tree edges thicken sage, live note narrates each settle/relax.
+   Run precomputed into per-settlement events; VIZUtil.loop (stopAll-safe); plain-HTML note. Verified: gate GREEN (54
+   widgets); skip-to-end correct (A0 B3 C2 D8 E10 F13, tree A→C→B→D→E→F); mid-run settle-C relaxations correct
+   (B4→3,D→10,E→12); smoke errs=0/kErr=0 (12 routes); 390px scales. app.js fallback →54. SW →v187.
    ✅ iter 244: **Keyboard lesson navigation [ / ]** (UI/UX). Step to prev/next lesson while reading (complements the iter-238 dot nav).
    Self-contained in studyKeys (parses route, prev/next from flatLessons); guarded: ignored mid-quiz (no nav when live
    choices exist), no-op at course boundaries, inherits input/modal guards. Documented in the ? overlay ("Lessons" group).

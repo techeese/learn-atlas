@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 245 — Dijkstra's shortest-path visualizer — the 54th widget (visualizations)
+The graph-traversal widget only covers *unweighted* BFS/DFS; **weighted shortest paths** — a hard, fundamental idea —
+had no visual. Added the **54th Lab widget `algo-dijkstra`** in `a-shortest-paths-topo` (after the Dijkstra worked
+example), on a 6-node weighted graph from source A:
+- **step / play / skip / reset** drive the algorithm one settlement at a time. Each step **settles the closest unsettled
+  node** (gold ring), then **relaxes its edges** — a neighbour's tentative distance drops only when a shorter route is
+  found; distance badges tick from ∞ downward live.
+- Settled nodes go **sage**; reached-but-unsettled (frontier) nodes get a gold border with their current tentative
+  distance; the **shortest-path-tree edges (`prev`) light up sage and thicken** as the tree grows.
+- A live note narrates each step ("Settle C at distance 2 … Relax its neighbours: B→3, D→10, E→12") and the final
+  distances (A0 B3 C2 D8 E10 F13).
+The run is precomputed into per-settlement events so stepping is exact; auto-play uses `VIZUtil.loop` (so `stopAll()`
+kills it on nav); synchronous first paint; plain-HTML note. app.js viz-complete fallback `|| 53` → `|| 54`.
+Verified: gate ALL GREEN (**54 widgets**, embed resolves); skip-to-end shows the **correct distances and tree** (matches a
+hand trace: A→C→B→D→E→F = 13); a mid-run step (settle C) shows the right relaxations (B 4→3, D→10, E→12) and highlights;
+all-routes smoke **errs=0/kErr=0 (12 routes)**; 390px mobile the canvas scales to width. SW cache `atlas-v186` → `atlas-v187`.
+
 ## iter 244 — Keyboard lesson navigation: [ / ] (UI/UX)
 Rotating off gamification. With the content layer exhaustive (every lesson ≥2 worked examples, ~30 deep-dives, 21 code
 exercises, 117 glossary terms, 53 widgets), the highest-value fresh win is reading-flow polish. Added **`[` / `]` to step

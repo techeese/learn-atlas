@@ -3246,4 +3246,84 @@
     draw();                                                    // synchronous first paint
   });
 
+  /* ========================================================
+     54. Dijkstra's shortest paths — settle the nearest, relax its neighbours
+     ======================================================== */
+  register({ id: 'algo-dijkstra', topic: 'algorithms', title: "Dijkstra's Shortest Paths", blurb: 'Watch Dijkstra grow a shortest-path tree from a source: each step settles the closest unsettled node (gold), then relaxes its edges — lowering a neighbour\'s tentative distance only when a shorter route is found. Step or play; the sage edges are the final shortest-path tree.' },
+  function (root) {
+    const SRC = 'A';
+    const POS = { A: [70, 190], B: [200, 78], C: [200, 302], D: [340, 190], E: [452, 88], F: [452, 292] };
+    const NODES = Object.keys(POS);
+    const EDGES = [['A', 'B', 4], ['A', 'C', 2], ['B', 'C', 1], ['B', 'D', 5], ['C', 'D', 8], ['C', 'E', 10], ['D', 'E', 2], ['D', 'F', 6], ['E', 'F', 3]];
+    const adj = {}; NODES.forEach(n => adj[n] = []);
+    EDGES.forEach(([a, b, w]) => { adj[a].push([b, w]); adj[b].push([a, w]); });
+    const W = 524, H = 384;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root), info = note(root);
+    // precompute the run: one event per settlement (node, dist snapshot, settled set, prev, which neighbours relaxed)
+    function runDijkstra() {
+      const dist = {}, prev = {}, settled = {}, events = [];
+      NODES.forEach(n => { dist[n] = Infinity; prev[n] = null; });
+      dist[SRC] = 0;
+      for (let it = 0; it < NODES.length; it++) {
+        let u = null; NODES.forEach(n => { if (!settled[n] && dist[n] < Infinity && (u === null || dist[n] < dist[u])) u = n; });
+        if (u === null) break;
+        settled[u] = true; const relaxed = [];
+        adj[u].forEach(([v, w]) => { if (!settled[v] && dist[u] + w < dist[v]) { dist[v] = dist[u] + w; prev[v] = u; relaxed.push([v, dist[v]]); } });
+        events.push({ u: u, dist: Object.assign({}, dist), settled: Object.keys(settled).slice(), prev: Object.assign({}, prev), relaxed: relaxed });
+      }
+      return events;
+    }
+    const EV = runDijkstra(), TOT = EV.length;
+    let step = 0, anim = null, frame = 0, btnPlay = null;
+    function stateAt(k) {                                       // {dist, settled:Set, prev, cur}
+      if (k <= 0) { const d = {}; NODES.forEach(n => d[n] = Infinity); d[SRC] = 0; return { dist: d, settled: new Set(), prev: {}, cur: null }; }
+      const e = EV[k - 1]; return { dist: e.dist, settled: new Set(e.settled), prev: e.prev, cur: e.u, relaxed: e.relaxed };
+    }
+    function stopPlay() { if (anim) { anim.stop(); anim = null; } if (btnPlay) btnPlay.innerHTML = '▶ play'; }
+    function draw() {
+      const p = P(), s = stateAt(step); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // edges
+      ctx.lineWidth = 1.5; ctx.font = '600 12px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      EDGES.forEach(([a, b, w]) => {
+        const A = POS[a], B = POS[b];
+        const tree = (s.prev[a] === b || s.prev[b] === a);    // an edge in the current shortest-path tree
+        ctx.strokeStyle = tree ? p.sage : p.line; ctx.lineWidth = tree ? 3 : 1.5;
+        ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(B[0], B[1]); ctx.stroke();
+        const mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2;
+        ctx.fillStyle = p.panel; ctx.fillRect(mx - 9, my - 8, 18, 16);
+        ctx.fillStyle = tree ? p.sage : p.mute; ctx.fillText(String(w), mx, my);
+      });
+      // nodes
+      NODES.forEach(n => {
+        const [x, y] = POS[n], settled = s.settled.has(n), isCur = s.cur === n, d = s.dist[n];
+        ctx.beginPath(); ctx.arc(x, y, 21, 0, 7);
+        ctx.fillStyle = settled ? p.sage + '33' : (d < Infinity ? p.panel2 : p.panel); ctx.fill();
+        ctx.lineWidth = isCur ? 3.5 : 2; ctx.strokeStyle = isCur ? p.gold : settled ? p.sage : (d < Infinity ? p.gold + '99' : p.line); ctx.stroke();
+        ctx.fillStyle = settled ? p.sage : p.ink; ctx.font = '600 16px ' + cssVar('--font-disp', 'serif'); ctx.fillText(n, x, y - 1);
+        // tentative distance badge above the node
+        ctx.font = '600 12px ' + cssVar('--font-mono', 'monospace');
+        ctx.fillStyle = p.panel; ctx.fillRect(x - 14, y - 38, 28, 17);
+        ctx.strokeStyle = settled ? p.sage : (d < Infinity ? p.gold : p.line); ctx.lineWidth = 1; ctx.strokeRect(x - 14, y - 38, 28, 17);
+        ctx.fillStyle = d < Infinity ? (settled ? p.sage : p.gold) : p.mute; ctx.fillText(d < Infinity ? String(d) : '∞', x, y - 29);
+      });
+      // note
+      if (step === 0) info.innerHTML = `Start at <b style="color:${p.gold}">${SRC}</b>: its distance is 0, every other node is ∞. Each step settles the closest unsettled node, then relaxes its edges.`;
+      else if (step >= TOT) { const fin = EV[TOT - 1].dist; info.innerHTML = `<b>All settled.</b> Shortest distances from ${SRC}: ${NODES.map(n => `${n}=<b style="color:${p.sage}">${fin[n]}</b>`).join(', ')}. The <span style="color:${p.sage}">sage</span> edges are the shortest-path tree.`; }
+      else { const e = EV[step - 1]; const rel = e.relaxed.length ? e.relaxed.map(([v, d]) => `<b>${v}</b>→${d}`).join(', ') : 'nothing (no shorter route through it)'; info.innerHTML = `Settle <b style="color:${p.gold}">${e.u}</b> at distance <b>${e.dist[e.u]}</b> (the closest unsettled node). Relax its neighbours: ${rel}.`; }
+    }
+    btnPlay = button(ctl, '▶ play', function () {
+      if (anim) { stopPlay(); return; }
+      if (step >= TOT) step = 0;
+      btnPlay.innerHTML = '⏸ pause'; frame = 0;
+      anim = VIZUtil.loop(function () { frame++; if (frame % 24 === 0) { if (step < TOT) { step++; draw(); } else stopPlay(); } });
+    });
+    button(ctl, 'step ▶', function () { stopPlay(); if (step < TOT) { step++; draw(); } });
+    button(ctl, 'skip ⏭', function () { stopPlay(); step = TOT; draw(); });
+    button(ctl, '⏮ reset', function () { stopPlay(); step = 0; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', "Dijkstra's shortest-path visualizer on a 6-node weighted graph from source A. Each step settles the nearest unsettled node and relaxes its edges, lowering neighbours' tentative distances when a shorter route is found. The final shortest distances from A are B=3, C=2, D=8, E=10, F=13, and the settled tree edges form the shortest-path tree.");
+    draw();                                                    // synchronous first paint
+  });
+
 })();
