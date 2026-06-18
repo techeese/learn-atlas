@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 299: **3 more interactive code exercises across thin topics** (active learning). LA/calc/DL/RL/PS were tied at 3; +3 JS
+   (lessons-with-code 30→33, gate runs 28): la-inverse-and-systems (Cramer's rule → 1 3), rl-value-iteration (Bellman update →
+   9.0), c-intro-differential-equations (Euler's method → 2.25, pairs w/ the 289 slope-field dd). Node-verified; byte-stable
+   inject w/ guards. Verified: gate GREEN (28 verified); dump-dom rl-value-iteration runs → "9.0" "✓ matches"; smoke errs=0/kErr=0 (12). SW →v240.
    ✅ iter 298: **Accessible flashcard flip** (a11y). Both 3-D card faces were always in the DOM with no aria-hidden → SR read the
    answer before flipping (leak + defeats retrieval). Fix: card = role=button tabindex=0 + aria-label (updates on flip);
    aria-hidden toggles per flip state (back hidden until flip); card3d-inner aria-live=polite announces the reveal. Verified:

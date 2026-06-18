@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 299 — Three more interactive code exercises across thin topics (new functionality / active learning)
+Rebalancing the gate-verified code exercises (LA/calc/DL/RL/PS were all tied at the floor of 3): added **3 JavaScript
+exercises** (lessons-with-code 30 → **33**; the gate now runs **28**), each a flagship numerical method:
+- **la-inverse-and-systems** — **Cramer's rule** for a 2×2 system: `2x+y=5, x+3y=10` → each unknown is a determinant ratio
+  → `1 3`.
+- **rl-value-iteration** — one **Bellman optimality update** `V(s)=max_a[r+γ·V(next)]`: the patient action `0+0.9·10` beats
+  the greedy `1+0.9·5` → `9.0`.
+- **c-intro-differential-equations** — **Euler's method** stepping the slope field for `y'=y`, `y(0)=1`, `h=0.5` → `2.25`
+  (undershooting the true `e≈2.718`) — pairs with the slope-field deeper-dive from iter 289.
+Every output node-verified; injected byte-stably with a round-trip guard + the injector refusing any lesson with existing
+`data-code`.
+Verified: gate ALL GREEN (**28 code-exercises verified** — all three outputs match `data-expected`); **via `--dump-dom`** the
+rl-value-iteration widget hydrates, runs → `9.0`, "✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**.
+No save-shape change. SW cache `atlas-v239` → `atlas-v240`.
+
 ## iter 298 — Accessible flashcard flip (accessibility)
 A real a11y bug in the core study mode: both faces of the 3-D flashcard were always in the DOM with **no `aria-hidden`**,
 so a screen reader read the **answer aloud before you flipped** — leaking the answer and defeating the whole point of
