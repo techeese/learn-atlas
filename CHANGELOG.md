@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 305 — The Knowledge Map draws its constellation on landing (animation)
+The flagship Knowledge Map rendered its ~148-node SVG constellation **instantly** — no reveal. Added a **one-time staged
+"draw-in"** when you land on the map: the colored **sector wedges + rings** fade first, then the **prerequisite edges**, then
+the **nodes** pop in last (a structure → connections → concepts reveal). Pure CSS opacity animation (the nodes carry an SVG
+`transform`, so opacity-only avoids clobbering their positions). The `drawing` class is added **before first paint** (set
+synchronously right after `innerHTML`, so no flash) and **removed after ~1s** so the hover/keyboard-dim opacity control
+resumes cleanly. Reduced-motion safe (the global guard zeroes animation durations; the JS also skips it under
+`prefers-reduced-motion`). Confirmed it never strands the map invisible: even if the animation didn't run, fill-mode and the
+1s class-removal leave every node at the default opacity 1.
+Verified: gate ALL GREEN; **via `--dump-dom`** the map adds `drawing` on load and **removes it after 1s** (`drawingEarly=true`,
+`drawingLate=false`), all **148 nodes** render and end at **opacity 1**, `errs=0`; all-routes smoke **errs=0/kErr=0
+(12 routes)**. No save-shape change. SW cache `atlas-v245` → `atlas-v246`.
+
 ## iter 304 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons at two, each a new technique across LA/algo/RL (examples 307 → **310**):
 - **la-matrix-multiplication** — `Ax` two ways: the row view (dot products → `[4,10]`) *and* the column view (`2·[1,3]+1·[2,4]`),

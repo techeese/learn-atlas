@@ -1118,6 +1118,12 @@ body::after {
 .map-label { font-family: var(--font-body); font-size: 13px; fill: var(--ink-soft); }
 .map-node:hover .map-label { fill: var(--ink); }
 .map-svg.dim .map-node { opacity: .28; }
+/* one-time "draw the constellation" reveal on landing the map — staged: structure, then edges, then nodes.
+   The `drawing` class is removed ~1s after load so hover/dim opacity control resumes normally. */
+@keyframes mapDrawIn { from { opacity: 0; } to { opacity: 1; } }
+.map-svg.drawing .map-sector, .map-svg.drawing .map-ring { animation: mapDrawIn .45s ease both; }
+.map-svg.drawing .map-edge { animation: mapDrawIn .5s ease both; animation-delay: .18s; }
+.map-svg.drawing .map-node { animation: mapDrawIn .55s ease both; animation-delay: .38s; }
 .map-svg.dim .map-node.lit { opacity: 1; }
 .map-svg.dim .map-edge { opacity: .12; }
 .map-svg.dim .map-edge.lit { opacity: 1; }

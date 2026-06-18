@@ -2101,6 +2101,8 @@
     const sc = document.getElementById("map-scroll");
     setTimeout(() => { sc.scrollLeft = (size - sc.clientWidth) / 2; sc.scrollTop = (size - sc.clientHeight) / 2; }, 0);
     const svg = app.querySelector(".map-svg"), cap = document.getElementById("map-caption");
+    // one-time constellation reveal (staged via CSS); class added before paint (no flash), removed after so hover/dim resume
+    if (svg && !reducedMotion()) { svg.classList.add("drawing"); setTimeout(() => svg.classList.remove("drawing"), 1000); }
     const mapNodes = [...svg.querySelectorAll(".map-node")];
     function highlight(g) {
       const id = g.dataset.id, node = index()[id]; svg.classList.add("dim");
