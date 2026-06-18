@@ -3396,4 +3396,67 @@
     draw();                                                    // synchronous first paint
   });
 
+  /* ========================================================
+     56. Policy gradient (REINFORCE) — raise the probability of high-advantage actions
+     ======================================================== */
+  register({ id: 'rl-policy-gradient', topic: 'reinforcement-learning', title: 'Policy Gradient (REINFORCE)', blurb: 'A one-step softmax policy over three actions, each with a fixed reward. Step the policy-gradient ascent and watch it push probability onto the actions whose reward beats the current average (positive advantage) — and the expected return climb toward the best action.' },
+  function (root) {
+    const ACTS = ['A', 'B', 'C'], REW = [-1, 2, 0.5];          // fixed rewards; B is best
+    const W = 520, H = 360, alpha = 0.6;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root), info = note(root);
+    let theta = [0, 0, 0], step = 0, anim = null, frame = 0, btnPlay = null, Jhist = [];
+    function softmax(t) { const m = Math.max.apply(null, t), ex = t.map(v => Math.exp(v - m)), s = ex.reduce((a, b) => a + b, 0); return ex.map(e => e / s); }
+    function expectedJ(p) { return p.reduce((a, _, i) => a + p[i] * REW[i], 0); }
+    function reset() { theta = [0, 0, 0]; step = 0; Jhist = [expectedJ(softmax(theta))]; stopPlay(); draw(); }
+    function gradStep() {                                       // exact policy-gradient ascent on J = Σ πᵢ Rᵢ : ∂J/∂θⱼ = πⱼ(Rⱼ − J)
+      const p = softmax(theta), J = expectedJ(p);
+      for (let j = 0; j < 3; j++) theta[j] += alpha * p[j] * (REW[j] - J);
+      step++; Jhist.push(expectedJ(softmax(theta))); if (Jhist.length > 120) Jhist.shift();
+    }
+    function stopPlay() { if (anim) { anim.stop(); anim = null; } if (btnPlay) btnPlay.innerHTML = '▶ play'; }
+    function draw() {
+      const p = P(), pi = softmax(theta), J = expectedJ(pi);
+      ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const x0 = 70, baseY = 250, bw = 84, gap = 56, maxH = 180;
+      // axis
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x0 - 16, baseY); ctx.lineTo(W - 20, baseY); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      [0, 0.5, 1].forEach(t => { const y = baseY - t * maxH; ctx.fillText(t.toFixed(1), x0 - 22, y); ctx.strokeStyle = p.line + '88'; ctx.beginPath(); ctx.moveTo(x0 - 16, y); ctx.lineTo(W - 20, y); ctx.stroke(); });
+      ctx.textAlign = 'center';
+      for (let i = 0; i < 3; i++) {
+        const x = x0 + i * (bw + gap), h = pi[i] * maxH, adv = REW[i] - J;
+        const col = REW[i] > 0 ? p.sage : REW[i] < 0 ? p.rust : p.gold;
+        ctx.fillStyle = col + '55'; ctx.fillRect(x, baseY - h, bw, h);
+        ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.strokeRect(x, baseY - h, bw, h);
+        ctx.fillStyle = p.ink; ctx.font = '600 15px ' + cssVar('--font-mono', 'monospace'); ctx.fillText((pi[i] * 100).toFixed(0) + '%', x + bw / 2, baseY - h - 14);
+        ctx.fillStyle = col; ctx.font = '600 16px ' + cssVar('--font-disp', 'serif'); ctx.fillText(ACTS[i], x + bw / 2, baseY + 18);
+        ctx.fillStyle = p.mute; ctx.font = '12px ' + cssVar('--font-mono', 'monospace'); ctx.fillText('R=' + REW[i], x + bw / 2, baseY + 36);
+        // advantage arrow hint (which way this step pushes the probability)
+        ctx.fillStyle = adv > 0.02 ? p.sage : adv < -0.02 ? p.rust : p.mute; ctx.font = '13px ' + cssVar('--font-mono', 'monospace');
+        ctx.fillText(adv > 0.02 ? '▲' : adv < -0.02 ? '▼' : '·', x + bw / 2, baseY - h - 32);
+      }
+      // J history sparkline (expected return climbing)
+      if (Jhist.length > 1) {
+        const sx = x0, sw = W - 20 - x0, sy = 300, sh = 44, lo = -1, hi = 2;
+        ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.beginPath();
+        Jhist.forEach((v, k) => { const X = sx + sw * k / (Jhist.length - 1), Y = sy + sh - sh * (v - lo) / (hi - lo); k === 0 ? ctx.moveTo(X, Y) : ctx.lineTo(X, Y); });
+        ctx.stroke();
+      }
+      info.innerHTML = `Step <b>${step}</b> · expected return <b style="color:${p.gold}">J = ${J.toFixed(3)}</b> (climbing toward the best reward, +2).<br>` +
+        `Each step nudges every action by its <b>advantage</b> (R − J): <span style="color:${p.sage}">▲ raises</span> actions that beat the average, <span style="color:${p.rust}">▼ lowers</span> the rest. Probabilities concentrate on <b style="color:${p.sage}">B</b>.`;
+    }
+    btnPlay = button(ctl, '▶ play', function () {
+      if (anim) { stopPlay(); return; }
+      btnPlay.innerHTML = '⏸ pause'; frame = 0;
+      anim = VIZUtil.loop(function () { frame++; if (frame % 8 === 0) { if (step < 80) { gradStep(); draw(); } else stopPlay(); } });
+    });
+    button(ctl, 'step ▶', function () { stopPlay(); if (step < 200) { gradStep(); draw(); } });
+    button(ctl, '⏮ reset', function () { reset(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Policy-gradient (REINFORCE) visualizer: three actions A, B, C with fixed rewards -1, +2, +0.5 under a softmax policy. Each gradient-ascent step raises the probability of actions whose reward exceeds the current average return (positive advantage) and lowers the others, so probability concentrates on action B and the expected return climbs toward +2.');
+    Jhist = [expectedJ(softmax(theta))];
+    draw();                                                    // synchronous first paint
+  });
+
 })();

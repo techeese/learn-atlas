@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 255 — Policy-gradient (REINFORCE) visualizer — 56th widget (visualizations)
+RL was the thinnest viz topic (5). Its advanced lessons (policy gradients, actor-critic, DQN) had no visuals because
+they're abstract — so the policy-gradient *update* never became concrete. Added the **56th Lab widget
+`rl-policy-gradient`** in `rl-policy-gradient-theorem` (after its "one-step bandit" worked example, which it mirrors): a
+softmax policy over three actions A/B/C with fixed rewards (−1, +2, +0.5). Each **step / play** does exact gradient ascent
+on `J = Σ πᵢRᵢ` (`∂J/∂θⱼ = πⱼ(Rⱼ − J)`): bars rise for actions whose reward beats the running average (positive
+**advantage**, ▲ sage) and fall for the rest (▼ rust), so probability concentrates on **B** and the expected-return
+sparkline climbs toward +2. Deterministic (exact expected gradient, no sampling); `VIZUtil.loop` for play (stopAll-safe);
+plain-HTML note (no `$`, per the viz-note landmine). app.js viz-complete fallback `|| 55` → `|| 56`.
+Verified: gate ALL GREEN (**56 widgets**, embed resolves); after 40 steps B → **98%**, expected return **J = 1.969**
+climbing toward +2 with the sparkline rising; all-routes smoke **errs=0/kErr=0 (12 routes)**; 390px mobile scales.
+SW cache `atlas-v195` → `atlas-v196`.
+
 ## iter 254 — Adjustable new-cards-per-session pace (new functionality)
 The Daily Review introduced new flashcards at a **fixed `NEW_CARDS_PER_SESSION = 30`** — fine as a default, but a power
 user wants to learn faster and a stretched one wants lighter sessions, with no way to choose. Made it a **personalization

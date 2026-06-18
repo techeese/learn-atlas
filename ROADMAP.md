@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 255: **Policy-gradient (REINFORCE) visualizer — 56th widget** (visualizations). RL thinnest viz topic; new `rl-policy-gradient`
+   in rl-policy-gradient-theorem (mirrors its one-step-bandit example): softmax over 3 actions (rewards −1/+2/+0.5),
+   step/play does exact gradient ascent ∂J/∂θⱼ=πⱼ(Rⱼ−J), bars rise for +advantage (▲) / fall for −(▼), expected-return
+   sparkline climbs. Deterministic; VIZUtil.loop; plain-HTML note. Verified: gate GREEN (56 widgets); 40 steps→B 98%,
+   J=1.969→+2; smoke errs=0/kErr=0 (12 routes); 390px scales. app.js fallback →56. SW →v196.
    ✅ iter 254: **Adjustable new-cards-per-session pace** (new functionality). Daily Review's new-card intake was a fixed const (30);
    made it a Settings control (5–100) backed by new `newPerSession` state (blank+load, Number.isFinite clamp; old saves
    default 30). Review caps at Store.raw.newPerSession. Tunes the core SRS loop to the learner. Verified: gate GREEN; node
