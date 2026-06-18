@@ -1677,6 +1677,42 @@
   });
 
   /* ========================================================
+     74. Hypothesis testing: p-value & rejection region (Prob & Stats)
+     ======================================================== */
+  register({ id: 'ps-hyptest', topic: 'probability-statistics', title: 'Hypothesis testing: the p-value and rejection region', blurb: 'Under H0 the test statistic follows the standard normal. The rejection region |z| > 1.96 (α=0.05, two-tailed) is shaded; slide the observed z and watch the p-value — the tail area beyond ±|z| — and the reject / fail-to-reject decision.' },
+  function (root) {
+    const W = 540, H = 320, padL = 14, padR = 14, padT = 16, padB = 28, ZLO = -4, ZHI = 4, ZC = 1.96;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    function erf(x) { const s = x < 0 ? -1 : 1; x = Math.abs(x); const t = 1 / (1 + 0.3275911 * x); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
+    const Phi = z => 0.5 * (1 + erf(z / Math.SQRT2));
+    const pdf = z => Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI);
+    let zobs = 2.3;
+    slider(ctl, { label: 'observed z', min: -3.5, max: 3.5, step: 0.05, value: zobs, fmt: v => v.toFixed(2), onInput: v => { zobs = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = z => padL + (z - ZLO) / (ZHI - ZLO) * (W - padL - padR);
+      const ymax = pdf(0), Y = v => (H - padB) - v / ymax * (H - padT - padB);
+      function fillArea(a, b, col, alpha) { ctx.fillStyle = col; ctx.globalAlpha = alpha; ctx.beginPath(); ctx.moveTo(X(a), Y(0)); for (let z = a; z <= b + 1e-9; z += 0.02) ctx.lineTo(X(z), Y(pdf(z))); ctx.lineTo(X(b), Y(0)); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1; }
+      fillArea(ZLO, -ZC, p.rust, 0.18); fillArea(ZC, ZHI, p.rust, 0.18);
+      const az = Math.abs(zobs);
+      fillArea(ZLO, -az, p.violet, 0.42); fillArea(az, ZHI, p.violet, 0.42);
+      ctx.strokeStyle = p.ink; ctx.lineWidth = 2; ctx.beginPath(); let st = false; for (let z = ZLO; z <= ZHI; z += 0.02) { const xx = X(z), yy = Y(pdf(z)); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; } ctx.stroke();
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke();
+      ctx.strokeStyle = p.rust; ctx.setLineDash([3, 3]); [-ZC, ZC].forEach(zc => { ctx.beginPath(); ctx.moveTo(X(zc), Y(0)); ctx.lineTo(X(zc), padT); ctx.stroke(); }); ctx.setLineDash([]);
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(zobs), Y(0)); ctx.lineTo(X(zobs), Y(pdf(zobs))); ctx.stroke();
+      ctx.fillStyle = p.gold; ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.fillText('z=' + zobs.toFixed(2), X(zobs), padT + 8);
+      ctx.fillStyle = p.mute; ctx.font = '9px ' + cssVar('--font-mono', 'monospace'); [-3, -1.96, 0, 1.96, 3].forEach(z => ctx.fillText(z, X(z), H - padB + 12));
+      const pv = 2 * (1 - Phi(az)), reject = az >= ZC;
+      info.innerHTML = 'Under H₀, z follows the standard normal. The rust tails are the rejection region |z| &gt; 1.96 (α = 0.05, two-tailed). The violet area is the <b>p-value</b> = P(|Z| ≥ |z|) = <b style="color:' + p.violet + '">' + pv.toFixed(3) + '</b>. With z = ' + zobs.toFixed(2) + ' we <b style="color:' + (reject ? p.rust : p.sage) + '">' + (reject ? 'REJECT H₀' : 'FAIL TO REJECT H₀') + '</b> (' + (reject ? 'p &lt; 0.05; the statistic fell in the tail' : 'p ≥ 0.05; not extreme enough') + '). The p-value is the chance of data this extreme <em>if</em> H₀ were true — not the chance H₀ is true.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Hypothesis-test visualizer: the standard-normal curve with the two-tailed rejection region |z| beyond 1.96 shaded in rust; a movable observed-z line shades the p-value tail area in violet, and the note reports the p-value and the reject / fail-to-reject decision.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 344 — Hypothesis-test visualizer — 74th widget (visualizations)
+`ps-hypothesis-testing-logic` had no widget. Added the **74th Lab widget `ps-hyptest`**, embedded there: the standard-normal
+null distribution with the two-tailed **rejection region** `|z| > 1.96` (α=0.05) shaded in rust. Slide the **observed z** and
+the **p-value** — the violet tail area `P(|Z| ≥ |z|)` — updates live, along with the **reject / fail-to-reject** decision.
+The note hammers the correct reading: the p-value is the chance of data this extreme *if* H₀ were true, not the chance H₀ is
+true. Standard-normal CDF computed via an erf approximation (Φ(1.96)=0.975 → p=0.05). Plain-unicode/entity note (no `$`).
+app.js `viz-complete` fallback 73 → 74.
+Verified: gate ALL GREEN (**74 widgets**, embed resolves); **node** prototype confirmed the CDF (p(1.96)=0.050, p(2.58)=0.010);
+**via `--dump-dom`** the slider drives p `0.317 (z=1) → 0.051 (z→1.95, fail) → 0.009 (z=2.58)`, z=3 → **REJECT**, `rawDollar=0`,
+`errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache
+`atlas-v283` → `atlas-v284`.
+
 ## iter 343 — Four more deeper-dives on foundational lessons (content / understandability)
 4 "Deeper dive" expandables across DL/algo/PS/calc (deep-dives 101 → **105**):
 - **dl-the-artificial-neuron-and-mlp** — **one neuron is logistic regression; many are a universal approximator**: each unit is

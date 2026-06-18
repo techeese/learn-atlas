@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 344: **Hypothesis-test visualizer — 74th widget** (visualizations). ps-hypothesis-testing-logic had no viz. New `ps-hyptest`:
+   standard-normal null + |z|>1.96 rejection region (rust); slide observed z → p-value tail (violet) + reject/fail decision; Φ via
+   erf approx. app.js fallback 73→74. Verified: gate GREEN (74 widgets); node p(1.96)=0.050; dump-dom slider drives p 0.317→0.051→0.009,
+   z=3→REJECT, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v284.
    ✅ iter 343: **4 more deeper-dives on foundational lessons** (content). +4 dd (101→105) across DL/algo/PS/calc:
    dl-the-artificial-neuron-and-mlp (neuron=logistic reg, MLP=universal approx), a-asymptotic-analysis (why Big-O drops constants),
    ps-expectation-variance (E always adds, Var pickier), c-definite-integral-riemann (integral = limit of rectangles). String.raw
