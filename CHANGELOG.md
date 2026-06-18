@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 303 — Four more deeper-dives on flagship hard lessons (content / understandability)
+Continuing the owner's depth directive with **4 "Deeper dive" expandables** across four topics (deep-dives 65 → **69**):
+- **la-orthonormal-gram-schmidt** — why orthonormal bases are computationally golden: `QᵀQ=I` makes the inverse free
+  (`Q⁻¹=Qᵀ`), coordinates mere dot products, and maps length-preserving (numerically stable) — the payoff for Gram-Schmidt's work.
+- **dl-overfitting-and-regularization** — regularization as a vote for simpler explanations: L2 (`λ‖w‖²`) makes big weights
+  expensive, dropout spreads bets, early-stopping halts before memorization — all the same "prefer the simplest fit" prior.
+- **l-rag-and-tools** — RAG separates *what a model knows* (a retrievable, updatable, citable store) from *how it reasons*
+  (the frozen weights) — turning a closed-book exam into an open-book one.
+- **c-gradient-descent-convergence** — why GD zigzags: the condition number `κ=λ_max/λ_min` mismatches curvature across
+  directions, so one learning rate can't serve all — the problem momentum/Adam/preconditioning fix.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 6 / 2 / 0 / 6 spans — RAG is intentionally
+prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache
+`atlas-v243` → `atlas-v244`.
+
 ## iter 302 — The ε–δ limit visualizer — 65th widget (visualizations)
 `c-limits-intuition` had no widget, and the ε–δ definition is the single most-feared idea in early calculus. Added the
 **65th Lab widget `calc-limit-epsilon`**, embedded in that lesson: pick a tolerance **ε** (a sage horizontal band around the

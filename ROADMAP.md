@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 303: **4 more deeper-dives on flagship hard lessons** (content). +4 dd (65→69) across LA/DL/LLM/calc:
+   la-orthonormal-gram-schmidt (QᵀQ=I → free inverse/dot-product coords/stability), dl-overfitting-and-regularization
+   (regularization = prefer simplest fit), l-rag-and-tools (RAG separates knowledge from reasoning), c-gradient-descent-convergence
+   (condition number κ → zigzag). String.raw LaTeX; byte-stable inject w/ guards. Verified: gate GREEN; dump-dom each renders
+   (katex 6/2/0/6, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v244.
    ✅ iter 302: **The ε–δ limit visualizer — 65th widget** (visualizations). c-limits-intuition had no viz. New `calc-limit-epsilon`:
    pick tolerance ε (band around L), widget finds δ interval around a keeping the curve inside; shrink ε → δ shrinks but always
    exists (∀ε ∃δ). Presets: (x²−1)/(x−1) with removable hole (δ=ε, limit ignores f(a)) and x² (δ<ε, asymmetric). δ found
