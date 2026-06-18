@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 382 — Intermediate Value Theorem visualizer — 84th widget (visualizations)
+`c-continuity` had no widget. Added the **84th Lab widget `calc-ivt`**, embedded there: a continuous curve on `[a, b]` with a
+**draggable target level k** (slider). The IVT guarantees that for any k between f(a) and f(b) there's a point c with f(c)=k — the
+curve is marked (violet dot + drop-line) wherever it crosses k. A **"Add a jump" toggle** introduces a discontinuity: now a level
+inside the gap has **0 crossings**, visibly breaking the theorem — continuity is exactly what forbids skipping a value. Plain-unicode
+note (no `$`). app.js `viz-complete` fallback 83 → 84.
+Verified: gate ALL GREEN (**84 widgets**, embed resolves); **node** prototype confirmed the crossing logic (jump gap `[3.0, 4.7]`,
+`k=3.8` → 1 crossing continuous, 0 with the jump); **via `--dump-dom`** the slider/toggle drive crossings `1 → 1 → 0` and the
+button relabels, `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape
+change. SW cache `atlas-v321` → `atlas-v322`.
+
 ## iter 381 — Fix: streak (and all stat numbers) could display 0 instead of the real value (bug — owner report)
 **Owner bug report:** the "N-day streak" display was rendering wrong. **Root cause:** the `countUp` animation (dashboard
 stat-strip, Progress-page tiles) wrote `el.textContent = "0"` *synchronously*, then restored the real value only via a deferred

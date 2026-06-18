@@ -2047,6 +2047,65 @@
   });
 
   /* ========================================================
+     84. The Intermediate Value Theorem (Calculus)
+     ======================================================== */
+  register({ id: 'calc-ivt', topic: 'calculus', title: 'The Intermediate Value Theorem', blurb: 'If f is continuous on [a, b], it must hit every value between f(a) and f(b). Drag the target level k and watch the curve cross it; toggle a jump discontinuity to see the guarantee break — a gap lets the function skip over k.' },
+  function (root) {
+    const W = 540, H = 320, padL = 34, padR = 16, padT = 16, padB = 28;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const a = 0, b = 4, YMIN = 0.5, YMAX = 6.3;
+    let k = 2.5, jump = false, toggleBtn;
+    function f(x) { let y = 1.0 + 0.9 * x + 0.6 * Math.sin(x * 1.4); if (jump && x >= 2) y += 1.7; return y; }
+    const X = x => padL + (x - a) / (b - a) * (W - padL - padR);
+    const Y = y => (H - padB) - (y - YMIN) / (YMAX - YMIN) * (H - padT - padB);
+    slider(ctl, { label: 'target level k', min: 1.3, max: 4.5, step: 0.05, value: k, fmt: v => v.toFixed(2), onInput: v => { k = v; draw(); } });
+    toggleBtn = button(ctl, 'Add a jump', () => { jump = !jump; toggleBtn.innerHTML = jump ? 'Make continuous' : 'Add a jump'; draw(); });
+    function crossings() {
+      const step = 0.004, res = []; let px = a, pv = f(a) - k;
+      for (let x = a + step; x <= b; x += step) {
+        if (jump && px < 2 && x >= 2) { px = x; pv = f(x) - k; continue; }   // don't bridge the discontinuity
+        const v = f(x) - k;
+        if (pv === 0 || (pv < 0) !== (v < 0)) res.push((px + x) / 2);
+        px = x; pv = v;
+      }
+      return res;
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = p.mute; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(YMIN)); ctx.lineTo(W - padR, Y(YMIN)); ctx.moveTo(padL, Y(YMIN)); ctx.lineTo(padL, padT); ctx.stroke();
+      ctx.font = '11px ' + cssVar('--font-mono', 'monospace');
+      // target level k
+      ctx.strokeStyle = p.gold; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(padL, Y(k)); ctx.lineTo(W - padR, Y(k)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.textAlign = 'left'; ctx.fillText('k = ' + k.toFixed(2), padL + 5, Y(k) - 4);
+      // curve (break the path at the jump)
+      ctx.strokeStyle = p.sage; ctx.lineWidth = 2.5; ctx.beginPath(); let started = false;
+      for (let x = a; x <= b; x += 0.01) {
+        if (jump && x >= 2 && x < 2 + 0.011) { ctx.stroke(); ctx.beginPath(); started = false; }
+        const xx = X(x), yy = Y(f(x)); started ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); started = true;
+      }
+      ctx.stroke();
+      // endpoint dots
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center';
+      [[a, 'a'], [b, 'b']].forEach(([x, lbl]) => { ctx.fillText(lbl, X(x), Y(YMIN) + 14); });
+      // crossings
+      const cr = crossings();
+      cr.forEach(cx => {
+        ctx.strokeStyle = p.violet; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(X(cx), Y(k)); ctx.lineTo(X(cx), Y(YMIN)); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(X(cx), Y(k), 5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillText('c', X(cx), Y(YMIN) + 14);
+      });
+      info.innerHTML = jump
+        ? 'With a <b style="color:' + p.rust + '">jump discontinuity</b> the guarantee breaks: for a level k inside the gap the curve <b>never</b> equals k (here <b>' + cr.length + '</b> crossing' + (cr.length === 1 ? '' : 's') + '). Continuity is exactly what the theorem needs — a single break lets the function leap over values.'
+        : 'f is <b style="color:' + p.sage + '">continuous</b> on [a, b], so the IVT guarantees: for any level k between f(a) and f(b) there is a point c with f(c) = k. At k = <b>' + k.toFixed(2) + '</b> the curve meets the level at <b>' + cr.length + '</b> point' + (cr.length === 1 ? '' : 's') + ' — no jumps means no value can be skipped over.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Intermediate Value Theorem visualizer: a continuous curve on an interval with a draggable horizontal target level k, marked where the curve crosses k. A toggle adds a jump discontinuity, after which a level inside the gap has no crossing — showing the theorem requires continuity.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

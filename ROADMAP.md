@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 382: **Intermediate Value Theorem visualizer — 84th widget** (visualizations). c-continuity had no viz. New `calc-ivt`:
+   continuous curve on [a,b], draggable target level k, marks crossings (f(c)=k); "Add a jump" toggle breaks the guarantee (k in
+   the gap → 0 crossings). app.js fallback 83→84. Verified: gate GREEN (84 widgets); node crossing logic; dump-dom slider/toggle
+   drive crossings 1→1→0, button relabels, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v322.
    ✅ iter 381: **BUG (owner report): streak/stat numbers could display 0 instead of the real value** (bug). Root cause: `countUp`
    wrote "0" synchronously then restored the value via deferred setTimeout+rAF; if that stalled (background tab, slow device,
    navigation) the number stuck at 0 — header (direct-set) was fine, dashboard/Progress (count-up'd) showed 0. Fix: move "0" into
