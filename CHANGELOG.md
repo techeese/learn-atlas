@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 417 — Three more worked examples across LLM/LA/calc (examples)
+A **3rd worked example** on three flagship lessons across LLM/LA/calc (examples 409 → **412**, all ⌘K-searchable):
+- **l-what-is-a-language-model** — **perplexity**: `PPL = exp(avg NLL)`; for `p=[0.5,0.25,0.5]` it's `e^0.924 ≈ 2.52` — the effective
+  branching factor (cross-entropy in "number of choices" units).
+- **la-low-rank-pca** — **why PCA needs centering**: PCA diagonalizes the *covariance* (defined about the mean); skip centering and
+  the top direction is dragged toward the centroid (where the data *is*, not how it *varies*).
+- **c-lagrange-multipliers** — **λ is a shadow price**: for `max xy s.t. x+y=S`, `λ=S/2=df*/dS` (envelope theorem) — the marginal
+  value of relaxing the constraint, the same idea behind sensitivity analysis and regularization strength.
+Every value node-verified (2.52; centering contrast; λ=5=df*/dS); injected byte-stably with the full guard set. (LA & calc are now
+nearly exhausted at the 2-example level; LLM has the most remaining.)
+Verified: gate ALL GREEN (**412 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (54 / 32 / 41 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v356` → `atlas-v357`.
+
 ## iter 416 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
 A **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 163 → **166**; 18 lessons now carry two):
 - **a-binary-search** (had: "the invariant & its bugs") → **binary search on the answer**: it needs only a *monotone predicate*, not a

@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 417: **3 more worked examples across LLM/LA/calc** (examples). +3 (409→412): l-what-is-a-language-model (perplexity → 2.52),
+   la-low-rank-pca (why PCA needs centering), c-lagrange-multipliers (λ as shadow price = S/2). Node-verified; byte-stable inject
+   w/ guards. Verified: gate GREEN (412 examples); dump-dom katex 54/32/41, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none. SW →v357.
+   (LA & calc nearly exhausted at 2-example level; LLM has the most remaining — and the 2nd-dd runway stays open for depth.)
    ✅ iter 416: **3 more second deep-dives on the hardest lessons** (content/depth — owner's #1). +3 dd (163→166; 18 lessons have 2):
    a-binary-search (binary search on the answer / monotone predicate), dl-pooling-and-cnn-architectures (convolution = weight sharing),
    ps-conditional-independence-bayes (what naive Bayes assumes). Append-second-dd inject w/ full guards. Verified: gate GREEN;
