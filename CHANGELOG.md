@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 372 — Cross-entropy / perplexity visualizer — 82nd widget (visualizations)
+`l-pretraining-objective-data` (the next-token objective) had no widget. Added the **82nd Lab widget `llm-cross-entropy`**,
+embedded there: a bar chart of the model's predicted distribution over 5 candidate tokens with the **true token highlighted**.
+Slide the probability mass on the true token and the **cross-entropy loss `−log(p)`** and **perplexity `e^loss = 1/p`** update
+live — `p=0.2 → loss 1.61 / ppl 5`, `p=0.9 → loss 0.11 / ppl 1.11`. The "aha": the loss depends *only* on the mass on the true
+token — confident-and-right costs almost nothing, confident-and-wrong (`p→0`) is punished without bound. Plain-unicode note
+(no `$`). app.js `viz-complete` fallback 81 → 82.
+Verified: gate ALL GREEN (**82 widgets**, embed resolves); **node** prototype confirmed loss=−ln(p), ppl=1/p; **via `--dump-dom`**
+the slider drives loss `1.61 → 0.11` and ppl `5.00 → 1.11`, `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke
+**errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v311` → `atlas-v312`.
+
 ## iter 371 — Three more code exercises across LLM/algo/calc (new functionality / active learning)
 Added **3 gate-verified JavaScript exercises** across LLM/algo/calc (lessons-with-code 72 → **75**; the gate now runs **70**):
 - **l-rlhf-and-preference-optimization** — **Bradley-Terry preference** `σ(r_A−r_B)`: scores 2 vs 1 → `0.73` (a 1-point reward edge

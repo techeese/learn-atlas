@@ -1984,6 +1984,38 @@
   });
 
   /* ========================================================
+     82. The next-token loss: cross-entropy & perplexity (LLM)
+     ======================================================== */
+  register({ id: 'llm-cross-entropy', topic: 'llm', title: 'The next-token loss: cross-entropy & perplexity', blurb: 'Pretraining minimizes the cross-entropy of the next token: loss = −log(probability the model gave the actual next token). Slide the mass on the true token and watch the loss — and perplexity = e^loss — fall as the model grows confident in the right answer.' },
+  function (root) {
+    const W = 540, H = 320, padL = 28, padR = 14, padT = 18, padB = 46, N = 5;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const tokens = ['the', 'a', 'cat', 'of', 'to'], TRUE = 2;
+    let p = 0.4;
+    slider(ctl, { label: 'P(true token)', min: 0.05, max: 0.95, step: 0.05, value: p, fmt: v => v.toFixed(2), onInput: v => { p = v; draw(); } });
+    function draw() {
+      const pr = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pr.bg; ctx.fillRect(0, 0, W, H);
+      const other = (1 - p) / (N - 1), probs = tokens.map((t, i) => i === TRUE ? p : other);
+      const bw = (W - padL - padR) / N, ymax = Math.max(p, other, 0.05);
+      const X = i => padL + i * bw, Y = v => (H - padB) - v / ymax * (H - padT - padB);
+      ctx.strokeStyle = pr.mute; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      probs.forEach((q, i) => {
+        ctx.fillStyle = (i === TRUE) ? pr.sage : pr.violet; ctx.globalAlpha = (i === TRUE) ? 1 : 0.55; ctx.fillRect(X(i) + 6, Y(q), bw - 12, (H - padB) - Y(q)); ctx.globalAlpha = 1;
+        ctx.fillStyle = pr.mute; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.fillText('"' + tokens[i] + '"', X(i) + bw / 2, H - padB + 16);
+        ctx.fillText(q.toFixed(2), X(i) + bw / 2, Y(q) - 4);
+      });
+      ctx.fillStyle = pr.sage; ctx.textAlign = 'center'; ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.fillText('↑ true next token', X(TRUE) + bw / 2, H - padB + 30);
+      const loss = -Math.log(p), ppl = Math.exp(loss);
+      info.innerHTML = 'The model predicts a distribution over the next token; the true one is <b style="color:' + pr.sage + '">"cat"</b>, given probability <b>' + p.toFixed(2) + '</b>. Cross-entropy loss = −log(p) = <b style="color:' + pr.gold + '">' + loss.toFixed(2) + '</b> nats; perplexity = e^loss = 1/p = <b>' + ppl.toFixed(2) + '</b>. The loss depends <em>only</em> on the mass placed on the true token — confident-and-right costs almost nothing; confident-and-wrong (p → 0) is punished without bound.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Next-token cross-entropy visualizer: a bar chart of the model probability over five candidate tokens with the true token highlighted; a slider sets the probability mass on the true token, and the note reports cross-entropy loss = minus log p and perplexity = 1/p.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

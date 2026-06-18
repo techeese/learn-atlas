@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 372: **Cross-entropy / perplexity visualizer — 82nd widget** (visualizations). l-pretraining-objective-data had no viz. New
+   `llm-cross-entropy`: bar chart of predicted next-token distribution (true token highlighted), slider for P(true) → loss −log(p)
+   + perplexity 1/p (p=0.2→1.61/5, p=0.9→0.11/1.11). app.js fallback 81→82. Verified: gate GREEN (82 widgets); node loss/ppl;
+   dump-dom slider drives loss 1.61→0.11, ppl 5→1.11, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v312.
    ✅ iter 371: **3 more code exercises across LLM/algo/calc** (active learning). +3 JS (72→75, gate runs 70): l-rlhf-and-preference-optimization
    (Bradley-Terry σ(rA−rB) → 0.73), a-np-completeness (brute-force subset-sum count → 1), c-extrema-curve-sketching (critical
    points f'=0 → -1 1). Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (70 verified); dump-dom subset-sum runs
