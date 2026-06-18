@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 337 — Three more worked examples on flagship hard lessons (examples)
+A **3rd worked example** on three flagship lessons across DL/calc/RL (examples 325 → **328**, all now ⌘K-searchable):
+- **dl-convolution-operation** — **two 3×3 convs beat one 5×5**: same `5×5` receptive field, but `2×9=18` weights vs `25`
+  (and a ReLU between them adds nonlinearity) — the VGG insight behind `3×3` as the default.
+- **c-derivative-definition** — **a corner where the derivative fails**: `|x|` at `0` has right-limit `+1`, left-limit `−1`;
+  the two-sided limit disagrees, so `f'(0)` doesn't exist — continuity isn't enough for differentiability.
+- **rl-td-learning** — **TD vs Monte Carlo targets** on one step: MC aims at the actual return `G=3` (unbiased, high-variance);
+  TD bootstraps `r+γV(s')=5.5` (lower-variance, biased) — same update form, different target.
+Every value node-verified (18<25; ±1 corner; 5.5 vs 3); injected byte-stably with round-trip + even-`$` + tag-balance +
+unsupported-env pre-guards (`\lt`/`\gt` for the one-sided limits).
+Verified: gate ALL GREEN (**328 examples**); **via `--dump-dom`** each Examples tab shows 3, reveals with KaTeX
+(119 / 57 / 74 spans) and **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v276` → `atlas-v277`.
+
 ## iter 336 — Worked examples are now searchable + tab deep-linking (workflow / discoverability)
 The ⌘K palette indexed lessons, viz, glossary, and full-text lesson *bodies* — but worked examples live in `l.examples`
 (rendered in the Examples tab), not `l.content`, so **all 325 examples were invisible to search**. Fixed two ways:
