@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 306: **Binary Min-Heap visualizer — 66th widget** (visualizations). a-trees-heaps had no viz. New `algo-heap`: values as a
+   tree + the contiguous array below, min at root; Insert sifts up, Extract-min sifts down, Reset; note carries the live array
+   (verifiable + SR-readable). (Confirmed 58-achievement set already exhaustive → viz higher value.) app.js fallback 65→66.
+   Verified: gate GREEN (66 widgets); node siftUp/down keep heap property; dump-dom 3 inserts + extract → valid min-heap, root=min
+   both times, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v247.
    ✅ iter 305: **Knowledge Map draws its constellation on landing** (animation). Map rendered instantly; added a staged CSS
    opacity reveal (wedges/rings → edges → nodes), opacity-only (nodes carry SVG transform), `drawing` class added pre-paint +
    removed after 1s so hover/dim resume, reduced-motion safe + never strands invisible (fill-mode + class removal → opacity 1).

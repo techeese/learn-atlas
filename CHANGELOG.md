@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 306 — Binary Min-Heap visualizer — 66th widget (visualizations)
+`a-trees-heaps` had no widget, and the heap is one of the most important data structures — its array↔tree duality is a
+classic "click" moment. Added the **66th Lab widget `algo-heap`**, embedded there: the same values drawn **as a binary tree
+above and the contiguous array below**, with the **minimum at the root** (index 0). **+ Insert** pushes a random value and
+**sifts it up** (the swap path lights gold); **Extract min** removes the root, moves the last leaf up, and **sifts it down**;
+**Reset** restores. The note carries the live array (`[3, 7, 5, …]`) — verifiable *and* screen-reader-readable, since the
+canvas array row isn't. Confirmed the gamification achievement set is already exhaustive (58 across every behavior), so this
+viz is the higher-value ship.
+Verified: gate ALL GREEN (**66 widgets**, embed resolves); **node** prototype confirmed siftUp/siftDown keep the min-heap
+property; **via `--dump-dom`** after 3 inserts (9 elts) and an extract (8 elts) the array parsed from the note is a **valid
+min-heap with root = min** both times, `rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0
+(12 routes)**. No save-shape change. SW cache `atlas-v246` → `atlas-v247`.
+
 ## iter 305 — The Knowledge Map draws its constellation on landing (animation)
 The flagship Knowledge Map rendered its ~148-node SVG constellation **instantly** — no reveal. Added a **one-time staged
 "draw-in"** when you land on the map: the colored **sector wedges + rings** fade first, then the **prerequisite edges**, then

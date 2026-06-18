@@ -1361,6 +1361,42 @@
   });
 
   /* ========================================================
+     66. Binary min-heap — the array you read as a tree (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-heap', topic: 'algorithms', title: 'Binary Min-Heap', blurb: "A heap is an array you read as a tree: node i's children sit at 2i+1 and 2i+2, and every parent is ≤ its children. Insert a value and watch it sift up; extract the minimum and watch the last leaf sift down — both in O(log n), the engine behind priority queues and heapsort." },
+  function (root) {
+    const W = 540, H = 360, padT = 18, treeBottom = 250;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const START = [5, 9, 8, 15, 12, 11];
+    let heap = START.slice(), hi = [];
+    function siftUp(i) { const path = [i]; while (i > 0) { const p = (i - 1) >> 1; if (heap[p] <= heap[i]) break;[heap[p], heap[i]] = [heap[i], heap[p]]; i = p; path.push(i); } return path; }
+    function siftDown(i) { const n = heap.length, path = [i]; for (;;) { let s = i, l = 2 * i + 1, r = 2 * i + 2; if (l < n && heap[l] < heap[s]) s = l; if (r < n && heap[r] < heap[s]) s = r; if (s === i) break;[heap[s], heap[i]] = [heap[i], heap[s]]; i = s; path.push(i); } return path; }
+    const maxDepth = () => heap.length ? Math.floor(Math.log2(heap.length)) : 0;
+    function nodePos(i) { const d = Math.floor(Math.log2(i + 1)), j = i - ((1 << d) - 1), slots = 1 << d; const x = (j + 0.5) / slots * (W - 36) + 18; const y = padT + 16 + d * ((treeBottom - padT - 26) / Math.max(1, maxDepth())); return { x, y }; }
+    function draw(extracted) {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1.5;
+      for (let i = 1; i < heap.length; i++) { const a = nodePos((i - 1) >> 1), b = nodePos(i); ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      heap.forEach((v, i) => { const { x, y } = nodePos(i); const onPath = hi.indexOf(i) >= 0; ctx.fillStyle = onPath ? p.gold : (i === 0 ? p.sage : p.violet); ctx.beginPath(); ctx.arc(x, y, 15, 0, 7); ctx.fill(); ctx.fillStyle = p.bg; ctx.font = '600 13px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(v, x, y); });
+      ctx.textBaseline = 'alphabetic';
+      // array row (the same data, contiguous) — the tree-array duality
+      const n = heap.length, cw = Math.min(40, (W - 36) / Math.max(1, n)), ay = treeBottom + 34, ax = (W - cw * n) / 2;
+      ctx.font = '12px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center';
+      ctx.fillStyle = p.mute; ctx.fillText('the same heap, stored as an array →', W / 2, ay - 16);
+      heap.forEach((v, i) => { const x = ax + i * cw; const onPath = hi.indexOf(i) >= 0; ctx.fillStyle = onPath ? p.gold : p.bg; ctx.strokeStyle = p.line; ctx.fillRect(x, ay, cw - 2, 26); ctx.strokeRect(x, ay, cw - 2, 26); ctx.fillStyle = onPath ? p.bg : p.ink; ctx.fillText(v, x + cw / 2 - 1, ay + 17); ctx.fillStyle = p.mute; ctx.font = '9px ' + cssVar('--font-mono', 'monospace'); ctx.fillText(i, x + cw / 2 - 1, ay + 38); ctx.font = '12px ' + cssVar('--font-mono', 'monospace'); });
+      info.innerHTML = 'Array: [' + heap.join(', ') + ']. Min at the root = <b style="color:' + p.sage + '">' + (n ? heap[0] : '∅') + '</b>. ' + (extracted != null ? 'Extracted the min (<b>' + extracted + '</b>); the last leaf moved to the root and <b style="color:' + p.gold + '">sifted down</b>. ' : (hi.length > 1 ? 'The new value <b style="color:' + p.gold + '">sifted up</b> until its parent was no larger. ' : '')) + 'Children of index i sit at 2i+1 and 2i+2, every parent ≤ its children — so the minimum is always at index 0: O(1) to peek, O(log n) to insert or remove.';
+    }
+    button(ctl, '+ Insert', () => { heap.push(1 + Math.floor(Math.random() * 20)); hi = siftUp(heap.length - 1); draw(); });
+    button(ctl, 'Extract min', () => { if (!heap.length) return; const m = heap[0]; heap[0] = heap[heap.length - 1]; heap.pop(); hi = heap.length ? siftDown(0) : []; draw(m); });
+    button(ctl, 'Reset', () => { heap = START.slice(); hi = []; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Binary min-heap visualizer: values drawn as a binary tree above and as the equivalent contiguous array below, with the minimum at the root (array index 0). Inserting sifts a value up the tree; extracting the minimum moves the last leaf to the root and sifts it down.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
