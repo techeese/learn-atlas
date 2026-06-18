@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 263: **Finish keyboard-viz a11y: projection + ? overlay** (accessibility). Closed the two loose ends from 259: (1)
+   la-projection now keyboard-operable (its b is scalars bx/by → getter/setter wrapper onto dragKeys, keeps drag clamp
+   x∈[−3,5] y∈[−3,4]); (2) `?` overlay gains an "Interactive visualizations" group (Tab/arrows/Shift+arrows). All 5
+   draggable widgets now keyboard-operable + discoverable. Verified: gate GREEN; dump-dom — projection tab=0, arrows move b
+   (2.3,2.5)→(3,3), 20×→x clamps 5.0; `?` overlay has the viz group; smoke errs=0/kErr=0 (12). SW →v204.
    ✅ iter 262: **Determinant-as-signed-area visualizer — 57th widget** (visualizations). LA had fewest viz (7); determinants lesson
    only had the generic transform viz. New `la-determinant` (in la-determinants): drag the 2 columns of a 2×2 matrix →
    parallelogram area = |det|, sage(det>0)/rust(det<0)/collapses-to-line(det=0=singular); faint unit square; presets

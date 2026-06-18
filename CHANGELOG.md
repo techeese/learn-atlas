@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 263 — Finish the keyboard-viz a11y story: projection + discoverability (accessibility)
+Closed the two loose ends logged after iter 259's keyboard-viz work. (1) **la-projection is now keyboard-operable** — it
+was the one draggable widget left out because its target `b` is stored as scalars `bx/by`, not an `{x,y}` object. Wired it
+to the shared `VIZUtil.dragKeys` helper via a tiny getter/setter wrapper that maps `.x/.y` onto `bx/by` *and keeps the
+same drag clamp* (x∈[−3,5], y∈[−3,4]); arrow keys now move `b` (canvas focusable, `role="img"` + aria updated). (2) **The
+`?` shortcuts overlay now documents the viz controls** — a new "Interactive visualizations" group (Tab to focus · arrows
+move the first vector/point · Shift+arrows the second), so the iter-259/262 keyboard support is discoverable instead of
+hidden in aria-labels. All five draggable widgets (dot-product, vector-add, Gram-Schmidt, determinant, projection) are now
+keyboard-operable and surfaced.
+Verified: gate ALL GREEN; **via `--dump-dom`** la-projection reports `tabIndex=0`, ArrowRight+ArrowUp move `b`
+(2.30,2.50)→(3.00,3.00), and 20×ArrowRight clamps x at 5.00 (drag range preserved); pressing `?` opens an overlay
+containing "Interactive visualizations" and "Shift"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v203` → `atlas-v204`.
+
 ## iter 262 — Determinant-as-signed-area visualizer — 57th widget (visualizations)
 Linear algebra had the fewest widgets (7), and the determinants lesson ("Volume, Orientation, and Invertibility") only
 embedded the *generic* transform viz — nothing showing the determinant itself, even though a deep-dive already leans on

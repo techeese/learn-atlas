@@ -2604,7 +2604,8 @@
       ["Lessons", [["[ / ]", "Previous · next lesson in this unit"]]],
       ["Quizzes & tests", [["1–4 / A–D", "Pick an answer"], ["Enter", "Next question · submit · continue"]]],
       ["Flashcards", [["Space / Enter", "Flip the card"], ["1–4", "Grade: Again · Hard · Good · Easy"]]],
-      ["Knowledge Map", [["Tab", "Enter the constellation"], ["← ↑ → ↓", "Move between concepts"], ["Enter", "Open the focused concept"]]]
+      ["Knowledge Map", [["Tab", "Enter the constellation"], ["← ↑ → ↓", "Move between concepts"], ["Enter", "Open the focused concept"]]],
+      ["Interactive visualizations", [["Tab", "Focus a draggable widget (gold ring)"], ["← ↑ → ↓", "Move the first vector / point"], ["Shift + arrows", "Move the second vector"]]]
     ];
     shortcutsEl = document.createElement("div"); shortcutsEl.className = "sc-ov";
     shortcutsEl.innerHTML = `<div class="sc-card" role="dialog" aria-label="Keyboard shortcuts">

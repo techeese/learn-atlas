@@ -2784,7 +2784,9 @@
     c.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
     c.addEventListener('touchstart', down, { passive: false }); c.addEventListener('touchmove', move, { passive: false }); c.addEventListener('touchend', up);
     c.setAttribute('role', 'img');
-    c.setAttribute('aria-label', 'Orthogonal projection visualizer: a target vector b, a line through the origin spanned by a, and the projection p of b onto the line (the closest point), with the residual e = b − p drawn perpendicular to the line. Drag b or tilt the line to see p track b while the right angle is preserved.');
+    c.setAttribute('aria-label', 'Orthogonal projection visualizer: a target vector b, a line through the origin spanned by a, and the projection p of b onto the line (the closest point), with the residual e = b − p drawn perpendicular to the line. Drag b or tilt the line to see p track b while the right angle is preserved. Focus this canvas and use the arrow keys to move the target vector b.');
+    // keyboard a11y: arrows move b (stored as scalars bx/by) — a getter/setter wrapper keeps the same clamp as dragging
+    dragKeys(c, () => [{ get x() { return bx; }, set x(v) { bx = Math.max(-3, Math.min(5, v)); }, get y() { return by; }, set y(v) { by = Math.max(-3, Math.min(4, v)); } }], draw);
     draw();                                                    // synchronous first paint
   });
 
