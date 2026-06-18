@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 348 — Bias-variance tradeoff visualizer — 75th widget (visualizations)
+`ps-point-estimation` had no widget. Added the **75th Lab widget `ps-estimator`**, embedded there: for a shrinkage estimator
+`θ̂=(1−λ)X` (true θ=5, var=4), it plots **bias²** (rust, rising), **variance** (violet, falling), and their sum **MSE** (gold,
+U-shaped) against the shrinkage λ. Slide λ and the decomposition updates; a marker sits on the **MSE minimum**. The payoff is
+visible: the unbiased estimator (λ=0) has MSE `4.00`, but the minimum at λ≈`0.14` reaches `3.45` — a little bias buys a big
+cut in variance. Plain-unicode note (no `$`). app.js `viz-complete` fallback 74 → 75.
+Verified: gate ALL GREEN (**75 widgets**, embed resolves); **node** prototype confirmed the curve (min MSE 3.45 < 4 at
+λ*=8/58≈0.138); **via `--dump-dom`** the slider drives MSE `4.00 (λ=0) → 3.45 (λ=.14) → 7.25 (λ=.5)`, minimum below unbiased,
+`rawDollar=0`, `errs=0`, the lesson embed hydrates; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v287` → `atlas-v288`.
+
 ## iter 347 — Four more deeper-dives on flagship hard lessons (content / understandability)
 4 "Deeper dive" expandables across RL/algo/LLM/calc (deep-dives 105 → **109**):
 - **rl-eligibility-traces** — **TD(λ) dials between TD and Monte Carlo**: a fading trace decaying by `γλ` spreads credit

@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 348: **Bias-variance tradeoff visualizer — 75th widget** (visualizations). ps-point-estimation had no viz. New `ps-estimator`:
+   shrinkage estimator θ̂=(1−λ)X — plots bias²(rust)/variance(violet)/MSE(gold U-curve) vs λ, slider + MSE-minimum marker;
+   unbiased MSE 4.00 vs minimum 3.45 at λ≈0.14. app.js fallback 74→75. Verified: gate GREEN (75 widgets); node min 3.45<4;
+   dump-dom slider drives MSE 4.00→3.45→7.25, rawDollar=0, embed hydrates; smoke errs=0/kErr=0 (12). SW →v288.
    ✅ iter 347: **4 more deeper-dives on flagship hard lessons** (content). +4 dd (105→109) across RL/algo/LLM/calc:
    rl-eligibility-traces (TD(λ) dial), a-comparison-sorts (quicksort vs mergesort trade-offs), l-safety-and-frontier (alignment =
    proxy problem), c-extrema-curve-sketching (f'/f'' draw the shape). String.raw LaTeX (\lt/\gt); byte-stable inject w/ guards.

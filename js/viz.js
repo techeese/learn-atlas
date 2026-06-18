@@ -1713,6 +1713,43 @@
   });
 
   /* ========================================================
+     75. Bias-variance tradeoff via shrinkage (Prob & Stats)
+     ======================================================== */
+  register({ id: 'ps-estimator', topic: 'probability-statistics', title: 'Bias-variance tradeoff: why a little shrinkage helps', blurb: "An estimator's error decomposes as MSE = bias² + variance. For a shrinkage estimator θ̂=(1−λ)X, more shrinkage (λ up) adds bias but cuts variance — and the MSE is minimized at some λ>0, so a slightly biased estimator can beat the unbiased one. Slide λ and watch the decomposition." },
+  function (root) {
+    const W = 540, H = 330, padL = 38, padR = 14, padT = 16, padB = 30, LO = 0, HI = 0.5, YHI = 5;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const theta = 5, s2 = 4;
+    const bias2 = l => (l * theta) * (l * theta), variance = l => (1 - l) * (1 - l) * s2, mse = l => bias2(l) + variance(l);
+    const lamStar = s2 / (theta * theta + s2);
+    let lam = 0.0;
+    slider(ctl, { label: 'shrinkage λ', min: 0, max: 0.5, step: 0.01, value: lam, fmt: v => v.toFixed(2), onInput: v => { lam = v; draw(); } });
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = l => padL + (l - LO) / (HI - LO) * (W - padL - padR);
+      const Y = y => (H - padB) - Math.min(y, YHI) / YHI * (H - padT - padB);
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.moveTo(padL, H - padB); ctx.lineTo(padL, padT); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '9px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'right'; for (let y = 0; y <= YHI; y += 1) ctx.fillText(y, padL - 4, Y(y) + 3);
+      function curve(fn, col, w) { ctx.strokeStyle = col; ctx.lineWidth = w; ctx.beginPath(); let st = false; for (let l = LO; l <= HI + 1e-9; l += 0.005) { const yy = Y(fn(l)), xx = X(l); st ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); st = true; } ctx.stroke(); }
+      curve(bias2, p.rust, 1.6); curve(variance, p.violet, 1.6); curve(mse, p.gold, 2.4);
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(X(lamStar), Y(mse(lamStar)), 4, 0, 7); ctx.fill();
+      ctx.strokeStyle = p.ink; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(X(lam), H - padB); ctx.lineTo(X(lam), padT); ctx.stroke(); ctx.setLineDash([]);
+      [[bias2, p.rust], [variance, p.violet], [mse, p.gold]].forEach(d => { ctx.fillStyle = d[1]; ctx.beginPath(); ctx.arc(X(lam), Y(d[0](lam)), 3, 0, 7); ctx.fill(); });
+      ctx.font = '10px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'left';
+      ctx.fillStyle = p.rust; ctx.fillText('bias²', X(0.42), Y(bias2(0.42)) - 4);
+      ctx.fillStyle = p.violet; ctx.fillText('variance', padL + 6, Y(variance(0.0)) - 4);
+      ctx.fillStyle = p.gold; ctx.fillText('MSE', X(0.27), Y(mse(0.27)) - 6);
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText('shrinkage λ', W / 2, H - 4);
+      info.innerHTML = 'MSE(λ) = bias² + variance. At λ = <b>' + lam.toFixed(2) + '</b>: bias² = <b style="color:' + p.rust + '">' + bias2(lam).toFixed(2) + '</b>, variance = <b style="color:' + p.violet + '">' + variance(lam).toFixed(2) + '</b>, MSE = <b style="color:' + p.gold + '">' + mse(lam).toFixed(2) + '</b>. The unbiased estimator (λ=0) has MSE ' + mse(0).toFixed(2) + ', but the minimum sits at λ ≈ ' + lamStar.toFixed(2) + ' with MSE ' + mse(lamStar).toFixed(2) + ' — a little bias buys a big cut in variance.';
+    }
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Bias-variance tradeoff visualizer: as shrinkage lambda increases, the bias-squared curve (rust) rises while variance (violet) falls; their sum, the MSE (gold), is U-shaped and minimized at a positive lambda, below the unbiased estimator at lambda zero.');
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },
