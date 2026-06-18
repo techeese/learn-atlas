@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 327 — Three more code exercises across computational lessons (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** on flagship computational lessons across calc/DL/algo (lessons-with-code
+42 → **45**; the gate now runs **40**):
+- **c-fundamental-theorem** — a **definite integral via the FTC**: `∫₀² 3x² dx = F(2)−F(0)` with `F(x)=x³` → `8`, no limit
+  of sums needed.
+- **dl-dropout-and-normalization** — **batch normalization**: recenter/rescale `[1,2,3,4,5]` to mean 0, variance 1 → the
+  post-norm `mean var` is `0.00 1.00`.
+- **a-hash-tables** — **hashing** `h(k)=k mod m`: keys `[10,22,31,4,15]` mod 7 → buckets `3,1,3,4,1` (10 & 31 collide, 22 & 15 collide).
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**40 code-exercises verified**); **via `--dump-dom`** the batch-norm widget runs → `0.00 1.00`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v267` → `atlas-v268`.
+
 ## iter 326 — Four more deeper-dives on flagship hard lessons (content / understandability)
 4 "Deeper dive" expandables across DL/RL/LA/calc (deep-dives 85 → **89**):
 - **dl-embeddings-and-tokenization** — embeddings turn **symbols into geometry**: a *trainable* lookup table where proximity
