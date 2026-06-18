@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 420 — Step-back: full audit (clean) + three second deep-dives (content / depth)
+**Round-number step-back (iter 420).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (revealing every example, opening every deep-dive — incl. the 21→24 with two)
+  → errs=0, kErr=0, 0 bad; all **105 non-lesson routes** (courses, Lab + 87 widgets, every utility page) → errs=0, kErr=0. **253 routes green.**
+- **Structural coverage audit**: every one of 148 lessons has ≥2 examples (**415**; dist 29×2, 119×3), ≥8 MCQs (2368), ≥1 flashcard
+  (889), ≥1 homework (442) — **0 structurally-thin lessons**. Plus 169→**172 deep-dives**, 90 code lessons, 151 glossary, 16 playground.
+**Reflection (411–419):** clean alternation of the two content runways — worked examples (397→415, milestone 400 at 409) and second
+deep-dives on the hardest lessons (154→172; 24/148 now carry two). Zero red gates / broken pushes; caught & correctly dismissed one
+false-positive (iter-415 escaped-money rawDollar, screenshot-confirmed). The render-hazard guards held throughout.
+**The paired ship — three more second deep-dives** (172 total; 24 lessons now carry two):
+- **c-multivariable-optimization** → **the 2D second-derivative test** (`D=f_xx f_yy − f_xy²=det(H)=λ₁λ₂`; the eigenvalue test made computable).
+- **dl-rnn-lstm-gru** → **why transformers replaced RNNs** (recurrence is sequential — no time-parallelism, `O(n)` path length; attention is `O(1)` path, fully parallel).
+- **rl-exploration** → **optimism/UCB** (`Q̂ + c√(ln t / nₐ)` — explore guided by uncertainty, not blind ε-greedy randomness).
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; both step-back
+sweeps clean; embed smoke (2 dd's × 3 + 8 pages) **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v359` → `atlas-v360`.
+
 ## iter 419 — Three more worked examples across DL/RL/algo (examples)
 A **3rd worked example** on three flagship lessons across DL/RL/algo (examples 412 → **415**, all ⌘K-searchable):
 - **dl-learning-rate-schedules-and-tuning** — **the LR stability ceiling**: for `f=x²`, GD `x←(1−2η)x` converges iff `0<η<1` (η=0.5 →

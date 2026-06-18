@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 420: **STEP-BACK: full audit (clean) + 3 second deep-dives** (content/depth). Sweeps: 148 lessons errs=0/kErr=0/0 bad; 105
+   routes errs=0/kErr=0 (253 green). Coverage: 0 thin (415 examples [29×2,119×3], 172 dd, 90 code, 151 glossary). Reflection (411–419):
+   clean alternation examples↔2nd-dd; no red gates; dismissed iter-415 money false-positive. Ship: +3 2nd-dd (169→172; 24 lessons have 2)
+   c-multivariable-optimization (2D second-derivative test), dl-rnn-lstm-gru (why transformers replaced RNNs), rl-exploration (UCB/optimism).
+   Verified: gate GREEN; dump-dom each nDD=2, kErr=0, rawDollar=0; smoke errs=0/kErr=0/bad=none. SW →v360.
    ✅ iter 419: **3 more worked examples across DL/RL/algo** (examples). +3 (412→415): dl-learning-rate-schedules-and-tuning (LR
    stability ceiling η<2/L), rl-policy-gradient-theorem (score-function trick ∇E[R]=E[R∇log π]), a-arrays-lists-stacks-queues (array
    vs linked list / cache locality). Node-verified; byte-stable inject w/ guards. Verified: gate GREEN (415 examples); dump-dom katex
