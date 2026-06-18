@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 317 — Four more deeper-dives on flagship hard lessons (content / understandability)
+Steering to the topics the last few dd batches skipped (RL/calc/LA/DL) — 4 "Deeper dive" expandables (deep-dives 77 → **81**):
+- **rl-offline** — offline RL fights **distribution shift**: value estimates extrapolate wildly on actions the dataset never
+  tried, so the fix is conservatism (CQL/BCQ) — don't trust values where you have no data.
+- **la-projection-least-squares** — least squares **is** an orthogonal projection: `Ax̂` is `b`'s shadow on the column space,
+  the residual ⊥ the columns gives `AᵀAx̂ = Aᵀb` — dropping a perpendicular, not curve-fitting magic.
+- **c-continuity** — the **IVT** guarantees a root exists (sign change → `f(c)=0` somewhere) before you find it — the basis
+  of bisection.
+- **dl-transfer-learning** — why pretrained features transfer: early layers learn **general** representations (edges,
+  syntax), so reuse the backbone + retrain the head — amortizing the expensive part once.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards (used `\lt`/`\gt`
+for the IVT sign inequalities to dodge the `<`-in-math landmine).
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 0 / 10 / 10 / 0 spans — offline-RL & transfer
+are intentionally prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change.
+SW cache `atlas-v257` → `atlas-v258`.
+
 ## iter 316 — Kruskal's MST visualizer — 68th widget (visualizations)
 `a-mst-union-find` had no widget, and Kruskal's algorithm is a perfect visual: greedy + a union-find cycle test. Added the
 **68th Lab widget `algo-kruskal`**, embedded there: a 6-node weighted graph where **Step** considers edges cheapest-first —

@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 317: **4 more deeper-dives on flagship hard lessons** (content). Steered to RL/calc/LA/DL; +4 dd (77→81): rl-offline
+   (distribution shift → conservatism), la-projection-least-squares (least squares = orthogonal projection), c-continuity (IVT
+   guarantees a root), dl-transfer-learning (general features transfer). String.raw LaTeX; \lt/\gt for sign inequalities; byte-stable
+   inject w/ guards. Verified: gate GREEN; dump-dom each renders (katex 0/10/10/0, kErr=0, rawDollar=0); smoke errs=0/kErr=0 (12). SW →v258.
    ✅ iter 316: **Kruskal's MST visualizer — 68th widget** (visualizations). a-mst-union-find had no viz. New `algo-kruskal`: 6-node
    weighted graph, Step takes edges cheapest-first (added sage / rejected dashed-rust via union-find cycle test), Run/Reset; note
    narrates each + the running weight to the minimum 13. app.js fallback 67→68. Verified: gate GREEN (68 widgets); node MST weight
