@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 415 — Three more worked examples across DL/PS/RL (examples)
+A **3rd worked example** on three flagship lessons across DL/PS/RL (examples 406 → **409**, all ⌘K-searchable):
+- **dl-gans** — **the GAN equilibrium**: optimal `D*=p_data/(p_data+p_g)`; when `p_g=p_data`, `D=0.5` everywhere and `V=−log4≈−1.386` —
+  success is a stalemate, which is why GANs lack a single decreasing loss to watch.
+- **ps-conditional-expectation** — **E[X|Y] from a joint table**: slice the `Y=0` column, renormalize, average → `E[X|Y=0]=0.75`
+  (vs marginal `E[X]=0.7`); "slice, renormalize, average."
+- **rl-policy-iteration** — **why it terminates fast**: strictly-improving over `|A|^|S|` finite policies (`2³=8` here), so it reaches
+  the optimum in finitely many steps — a monotone climb, unlike value iteration's asymptotic convergence.
+Every value node-verified (−log4; 0.75; ≤8); injected byte-stably with the full guard set (now incl. a stray-`<p>` check).
+Verified: gate ALL GREEN (**409 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (29 / 51 / 104 spans) and **kErr=0**; the new
+examples carry **rawDollar=0**. (The smoke's `rawDollar=2` on this lesson traces to the *pre-existing* tower-property example's escaped
+money `$\$2000$` / `\$100{,}000` — KaTeX renders `\$` to a real `$` glyph, the known iter-200 false-positive; **screenshot confirmed**
+"$2000" / "$100,000" render as clean money, not garbled italic — not a regression.) Smoke + 8 pages **errs=0/kErr=0**. No save-shape
+change. SW cache `atlas-v354` → `atlas-v355`.
+
 ## iter 414 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
 A **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 160 → **163**; 15 lessons now carry two):
 - **rl-sarsa-qlearning** (had: "on-policy vs off-policy") → **bootstrapping**: TD updates toward `r+γQ(s′,·)`, learning a guess from a
