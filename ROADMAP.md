@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 258: **Two silent reward moments now celebrate** (gamification). ❄️ "Streak freeze earned!" toast at boot when a 7-day
+   milestone grants a freeze (new freezeEarned() signal, only below the cap of 3); 🎯 "New best test score!" toast from
+   the test result when % strictly beats every prior ≥5Q test (first-ever stays quiet; computed from tests history, no new
+   state). No save-shape change. Verified: gate GREEN; node tests (freeze 6→7 signals once + not at cap; best-test logic 6
+   cases); browser freeze toast shows on 6→7; smoke errs=0/kErr=0 (12 routes). SW →v199.
    ✅ iter 257: **Deepen inline glossary — algorithms + RL** (understandability). The two thinnest topics (11 each) → +8 each
    (glossary 117→133): algo (binary search, recursion, memoization, BST, heap, topological sort, shortest path, loop
    invariant); RL (discounted return, TD learning, SARSA, advantage function, actor-critic, off-policy, experience replay,

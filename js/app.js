@@ -1606,7 +1606,10 @@
       if (opts.placement) return finishPlacement();
       let correct = 0; items.forEach((it, k) => { const ok = answers[k] === it.q.answer; if (ok) correct++; Store.bumpMastery(it.lessonId, { correct: ok }); if (it.qIdx != null) { if (ok) Store.clearMiss(it.lessonId, it.qIdx); else Store.recordMiss(it.lessonId, it.qIdx); } });
       const pct = Math.round(correct / items.length * 100);
+      const priorTests = (Store.raw.tests || []).filter(t => t.total >= 5);   // best-score-so-far BEFORE recording this one
+      const priorBest = priorTests.length ? Math.max.apply(null, priorTests.map(t => Math.round(t.correct / t.total * 100))) : -1;
       Store.recordTest(correct, items.length, `${label} · ${items.length}Q`);
+      if (items.length >= 5 && priorBest >= 0 && pct > priorBest) setTimeout(() => toast("🎯", "New best test score!", "Your highest yet — " + pct + "% (beat " + priorBest + "%)."), 400);
       const missed = items.filter((it, k) => answers[k] !== it.q.answer);   // redrill exactly these, right now
       app.innerHTML = `
       <div class="view"><div class="quiz quiz-result reveal">
@@ -2676,6 +2679,7 @@
     if (Store.freezeJustUsed()) toast("❄️", "Streak saved!", "A freeze covered the day you missed.");
     if (Store.streakJustUp()) flareStreak();   // welcome-back flare when today extended the streak
     if (Store.streakRecord()) toast("🏆", "New record streak!", "Your longest ever — " + Store.raw.streak + " days. Keep it going.");
+    if (Store.freezeEarned()) toast("❄️", "Streak freeze earned!", "Hit a 7-day milestone — this freeze will cover one missed day (you have " + Store.raw.freezes + ").");
     showIntro(false);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 258 — Two reward moments that used to pass silently (gamification)
+Two genuine rewards happened with **no feedback**: you'd *earn a streak-freeze* at a 7-day milestone (set silently in
+`touchStreak`) and *beat your best test score* with nothing to mark it. Surfaced both as celebratory toasts, matching the
+existing daily-goal / record-streak moments:
+- **❄️ "Streak freeze earned!"** — fires at boot when a 7-day milestone actually grants a freeze (new `freezeEarned()`
+  signal, set only when the count rises *below the cap of 3*, so it never lies when you're already maxed).
+- **🎯 "New best test score!"** — fires from the test result when your percentage strictly beats every prior test
+  (≥5-question tests only; first-ever test stays quiet). Computed from the existing `tests` history — **no new state**.
+No save-shape change (`freezeEarned` is a runtime signal; `freezes`/`tests` already existed).
+Verified: gate ALL GREEN; **node tests** — `touchStreak` taking streak 6→7 grants a freeze and signals `freezeEarned`
+(true once, then consumed; and *not* signalled when already at the 3-freeze cap); the best-test firing logic passes all 6
+cases (first-test silent, beat→fires, tie/worse/short/prior-only-short→silent); **in-browser** the boot freeze toast shows
+"❄️ Streak freeze earned! … (you have 1)" on a 6→7 streak; all-routes smoke **errs=0/kErr=0 (12 routes)**.
+SW cache `atlas-v198` → `atlas-v199`.
+
 ## iter 257 — Deepen the inline glossary for the two thinnest topics (understandability)
 The glossary powers inline hover/tap tooltips on the first occurrence of each term in lecture prose, so coverage shapes
 how much a reader can decode without leaving the page. **Algorithms and reinforcement learning were the two thinnest (11

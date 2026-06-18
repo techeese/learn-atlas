@@ -181,7 +181,7 @@
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
 
   // ---- streak ----------------------------------------------------------
-  let _freezeJustUsed = false, _streakJustUp = false, _streakRecord = false;
+  let _freezeJustUsed = false, _streakJustUp = false, _streakRecord = false, _freezeEarned = false;
   function touchStreak() {
     const t = todayStr();
     if (!state.activeDays || typeof state.activeDays !== "object") state.activeDays = {};
@@ -195,8 +195,8 @@
     if (state.streak < 1) state.streak = 1;
     if (state.streak > num(state.maxStreak)) { state.maxStreak = state.streak; if (state.streak >= 3) _streakRecord = true; }   // new personal-best streak (past the trivial 1-2)
     state.lastActive = t;
-    // earn a freeze at each 7-day milestone (cap 3)
-    if (diff === 1 && state.streak % 7 === 0) state.freezes = Math.min(3, num(state.freezes) + 1);
+    // earn a freeze at each 7-day milestone (cap 3) — signal it so the UI can celebrate the reward
+    if (diff === 1 && state.streak % 7 === 0 && num(state.freezes) < 3) { state.freezes = num(state.freezes) + 1; _freezeEarned = true; }
     if (state.streak >= 3) unlock("streak3");
     if (state.streak >= 7) unlock("streak7");
     if (state.streak >= 30) unlock("streak30");
@@ -207,6 +207,7 @@
   function freezeJustUsed() { const v = _freezeJustUsed; _freezeJustUsed = false; return v; }
   function streakJustUp() { const v = _streakJustUp; _streakJustUp = false; return v; }
   function streakRecord() { const v = _streakRecord; _streakRecord = false; return v; }   // current streak just set a new all-time high
+  function freezeEarned() { const v = _freezeEarned; _freezeEarned = false; return v; }   // just earned a streak-freeze at a 7-day milestone
   // lifetime personal bests, computed from existing history (+ the tracked maxStreak)
   function personalBests() {
     const act = state.activity || {};
@@ -595,7 +596,7 @@
     completeLesson, isLessonDone, recordQuiz, recordTest, revealHomework,
     gradeCard, cardDue, cardState, projectInterval, reviewForecast,
     bumpMastery, effectiveMastery, masteryLevel, weakSpots, fadingConcepts, topicMastery, markKnown,
-    getNote, setNote, setGoal, setNewPerSession, todayXP, goalJustReached, exportData, importData, freezeJustUsed, streakJustUp, streakRecord, personalBests, setLastLesson,
+    getNote, setNote, setGoal, setNewPerSession, todayXP, goalJustReached, exportData, importData, freezeJustUsed, streakJustUp, streakRecord, freezeEarned, personalBests, setLastLesson,
     toggleBookmark, isBookmarked, bookmarkIds,
     recordMiss, clearMiss, missedKeys, missedCount,
     recordQuickCheck, recordVizOpen, recordCodeSolved,
