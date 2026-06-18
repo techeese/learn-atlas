@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 408 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
+Continuing the depth runway: a **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 151 → **154**; 6 lessons
+now carry two), each a different sub-concept from the existing one:
+- **dl-transformer-architecture** (had: "mix then think") → **why stack identical blocks**: depth is repeated *refinement* of one
+  residual stream — early blocks do syntax, late blocks semantics; same operation, more rounds (and why the residual is essential).
+- **la-svd** (had: "rotate-stretch-rotate") → **Eckart–Young**: truncating to the top `k` singular values gives the provably best
+  rank-`k` approximation, error `Σ_{i>k} σᵢ²` — the engine of PCA, compression, and LoRA.
+- **c-gradient-descent-convergence** (had: "why GD zigzags / condition number") → **momentum smooths the zigzag**: `v←βv+∇f`
+  cancels the oscillating component and accumulates the consistent one, improving the rate's `κ`-dependence toward `√κ`.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + duplicate-summary guard.
+(Noted a harmless regex artifact: a `<summary>([^<]*)` scan reports 0 dd's when a summary contains inline `<em>` — coverage is intact
+at 148/148; the dedup check uses a tag-tolerant match.)
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** deep-dives (nDD=2) — la-svd KaTeX 26 with `\sum`/`\sigma`/`\gt`
+— **kErr=0, rawDollar=0**; smoke (2 dd's × 3 lessons + 8 pages) **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v347` → `atlas-v348`.
+
 ## iter 407 — Second deep-dives on three of the hardest lessons (content / depth — owner's #1)
 Varying from the examples streak back to the owner's #1 directive (depth): added a **distinct second "Deeper dive"** to three
 flagship lessons (deep-dives 148 → **151**; these lessons now carry two), each a different hard sub-concept from the existing one:
