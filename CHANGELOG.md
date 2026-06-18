@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 413 — Three more worked examples across algo/calc/LA (examples)
+A **3rd worked example** on three flagship lessons across algo/calc/LA (examples 403 → **406**, all ⌘K-searchable):
+- **a-mst-union-find** — **the cut property**: the cheapest edge crossing any cut is in some MST (exchange argument) — the single
+  theorem behind both Prim and Kruskal.
+- **c-improper-integrals** — **a vertical-asymptote singularity**: `∫₀¹ x^(−1/2) dx = 2` converges despite blowing up at 0; the
+  finite-endpoint p-test mirrors the tail one — converges iff `p<1`.
+- **la-diagonalization** — **defective matrices**: `[[2,1],[0,2]]` has eigenvalue 2 (alg mult 2) but only a 1-D eigenspace, so it's
+  *not* diagonalizable — geometric < algebraic multiplicity breaks `PD P⁻¹`.
+Every value node-verified (∫=2; defective alg2/geom1; cut min edge); injected byte-stably with the full guard set.
+Verified: gate ALL GREEN (**406 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (145 / 64 / 58 spans) and **kErr=0,
+rawDollar=0**; smoke + 8 pages **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v352` → `atlas-v353`.
+
 ## iter 412 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
 A **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 157 → **160**; 12 lessons now carry two):
 - **l-rlhf-and-preference-optimization** (had: "DPO drops the reward model") → **why RLHF needs a KL leash**: optimizing a *learned*
