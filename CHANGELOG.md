@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 416 — Three more second deep-dives on the hardest lessons (content / depth — owner's #1)
+A **distinct second "Deeper dive"** on three more flagship lessons (deep-dives 163 → **166**; 18 lessons now carry two):
+- **a-binary-search** (had: "the invariant & its bugs") → **binary search on the answer**: it needs only a *monotone predicate*, not a
+  sorted array — `√x`, first-bad-version, and feasibility problems all bisect the parameter (`O(log range)` checks).
+- **dl-pooling-and-cnn-architectures** (had: "pooling buys invariance") → **convolution is weight sharing**: one `3×3` kernel = `9`
+  weights at any image size vs a dense layer's `~10⁶`, encoding locality + translation equivariance as architecture.
+- **ps-conditional-independence-bayes** (had: "natural frequencies") → **what naive Bayes assumes**: conditional independence
+  factorizes the likelihood (`P(c|x) ∝ P(c)∏P(xᵢ|c)`); usually false, yet classifies well because only the argmax matters.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + duplicate-summary guard (chose the
+naive-Bayes angle so it stays distinct from the lesson's count-based 1st dd).
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3
++ 8 pages) **errs=0/kErr=0, bad=none**. No save-shape change. SW cache `atlas-v355` → `atlas-v356`.
+
 ## iter 415 — Three more worked examples across DL/PS/RL (examples)
 A **3rd worked example** on three flagship lessons across DL/PS/RL (examples 406 → **409**, all ⌘K-searchable):
 - **dl-gans** — **the GAN equilibrium**: optimal `D*=p_data/(p_data+p_g)`; when `p_g=p_data`, `D=0.5` everywhere and `V=−log4≈−1.386` —
