@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 369 — Four more deeper-dives on foundational lessons (content / understandability)
+4 "Deeper dive" expandables on foundational lessons across algo/LA/calc/DL (deep-dives 125 → **129**):
+- **a-trees-heaps** — **heap property vs BST property**: `left<node<right` buys searchability (`O(log n)` *if balanced*); a heap's
+  parent-dominates-children buys only `O(1)` top-element access (priority queue) — different invariants, different jobs.
+- **la-dot-product-norms** — **the dot product measures alignment**: `a·b = |a||b|cos θ` — sign gives direction, magnitude gives
+  projection; normalized, it's cosine similarity. The bridge between algebra and geometry.
+- **c-computing-limits** — **indeterminate forms are questions**: `x/x→1`, `x²/x→0`, `x/x²→∞` are all "0/0" — the form doesn't
+  determine the answer; what matters is the *rate* each part approaches its limit.
+- **dl-ml-recap-and-the-learning-problem** — **learning minimizes an unseen expected loss**: you optimize empirical loss as a
+  proxy for true risk; overfitting is the gap, and every ML technique keeps the proxy honest.
+Authored with `String.raw` LaTeX (`\lt` for the angle/order signs); injected byte-stably with round-trip +
+even-`$`/no-`**`/tag-balance + unsupported-env guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 4 / 9 / 12 / 0 spans — the learning-problem one is
+intentionally prose; the `&lt;` BST ordering renders clean) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12
+routes)**. No save-shape change. SW cache `atlas-v308` → `atlas-v309`.
+
 ## iter 368 — Transformer-block schematic — 81st widget (visualizations)
 `l-transformer-block` had no widget — and the transformer block is *the* architecture in modern ML. Added the **81st Lab widget
 `llm-transformer-block`**, embedded there: a labeled schematic of the **residual stream** rising from token+positional
