@@ -1632,6 +1632,51 @@
   });
 
   /* ========================================================
+     73. Greedy activity selection (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-greedy', topic: 'algorithms', title: 'Greedy activity selection', blurb: 'Choosing the most non-overlapping activities: sort by finish time and greedily take each one that starts after the last pick finishes. Step through it and watch the count grow — the earliest-finishing-compatible rule is provably optimal, beating tempting long intervals.' },
+  function (root) {
+    const W = 540, H = 320, padL = 14, padR = 14, padT = 18, padB = 24, T0 = 0, T1 = 10;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const ACTS = [{ s: 0, f: 2, n: 'A' }, { s: 5, f: 9, n: 'B' }, { s: 3, f: 5, n: 'C' }, { s: 6, f: 8, n: 'D' }, { s: 1, f: 9, n: 'E' }];
+    const order = ACTS.slice().sort((a, b) => a.f - b.f);
+    let step = 0;
+    function compute() {
+      let last = -Infinity, count = 0; const status = {};
+      for (let i = 0; i < step; i++) { const a = order[i]; if (a.s >= last) { status[a.n] = 'pick'; last = a.f; count++; } else status[a.n] = 'skip'; }
+      return { status, last, count };
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = t => padL + (t - T0) / (T1 - T0) * (W - padL - padR);
+      const { status, last, count } = compute();
+      const rowH = (H - padT - padB) / order.length;
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(padL, H - padB); ctx.lineTo(W - padR, H - padB); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '9px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center';
+      for (let t = T0; t <= T1; t += 1) ctx.fillText(t, X(t), H - padB + 12);
+      if (last > -Infinity) { ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(X(last), padT); ctx.lineTo(X(last), H - padB); ctx.stroke(); ctx.setLineDash([]); }
+      order.forEach((a, i) => {
+        const y = padT + i * rowH + 3, h = rowH - 8, st = status[a.n];
+        let col = p.line, alpha = 0.5;
+        if (st === 'pick') { col = p.sage; alpha = 1; } else if (st === 'skip') { col = p.rust; alpha = 0.55; }
+        ctx.globalAlpha = alpha; ctx.fillStyle = col; ctx.fillRect(X(a.s), y, X(a.f) - X(a.s), h); ctx.globalAlpha = 1;
+        ctx.fillStyle = (st === 'pick') ? p.bg : p.ink; ctx.font = '11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText(a.n + ' [' + a.s + ',' + a.f + ']', X(a.s) + 5, y + h / 2);
+      });
+      ctx.textBaseline = 'alphabetic';
+      info.innerHTML = 'Sorted by finish time, take each activity that starts at or after the last pick’s finish. Considered <b>' + step + '/' + order.length + '</b>; selected <b style="color:' + p.sage + '">' + count + '</b> (sage), skipped (rust) where the start falls before the gold line (the last finish). The earliest-finish rule is optimal — it beats the tempting long interval E[1,9], which alone would block everything else.';
+    }
+    button(ctl, 'Step', () => { if (step < order.length) { step++; draw(); } });
+    button(ctl, 'Run', () => { step = order.length; draw(); });
+    button(ctl, 'Reset', () => { step = 0; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', "Greedy activity-selection visualizer: five activities as bars on a timeline, considered in finish-time order; each is selected (sage) if it starts at or after the previous pick's finish, otherwise skipped (rust). The greedy rule selects three non-overlapping activities.");
+    draw();
+  });
+
+  /* ========================================================
      23. Normal-distribution explorer (μ/σ + empirical rule / interval probability)
      ======================================================== */
   register({ id: 'ps-normal-explorer', topic: 'probability-statistics', title: 'Normal Distribution Explorer', blurb: 'Slide μ and σ to move and stretch the bell, then read off probabilities — the 68–95–99.7 rule, or any interval P(a ≤ X ≤ b).' },

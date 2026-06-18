@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 340 — Step-back: full kErr+route sweep (clean) + greedy activity-selection viz — 73rd widget (visualizations)
+**Round-number step-back (iter 340).** Health sweep (the kErr audit the 329/330 landmine made routine):
+- **All 148 lessons** — revealing every example, opening every deep-dive → **errs=0, kErr=0, 0 bad**.
+- **All 90 non-lesson routes** (courses, Lab + 73 widgets, every utility page) → **errs=0, kErr=0, bad=none**. **238 routes green.**
+**Reflection (331–339):** content/dd ×3 (deep-dives crossed **100**), examples ×2, code ×2, viz, + a discoverability amplify
+(examples searchable) — healthy rotation; all verified and pushed; the 330 gate-hardening held (zero kErr escapes). Most-neglected
+compass area was **animations/viz interactivity** (last fresh viz mechanic a while back), so the paired ship is an interactive
+algo viz.
+**The ship.** `a-greedy` had no widget — added the **73rd Lab widget `algo-greedy`** (greedy activity selection), embedded
+there: five activities as bars on a timeline, **Step** through them in finish-time order — each is selected (sage) if it starts
+at/after the last pick's finish (the gold line), else skipped (rust). The greedy earliest-finish rule selects the maximum **3**
+non-overlapping activities, visibly rejecting the tempting long interval `E[1,9]` that alone would block everything. Plain-unicode
+note (no `$`). app.js `viz-complete` fallback 72 → 73.
+Verified: gate ALL GREEN (**73 widgets**, embed resolves); **node** prototype confirmed the selection (A,C,D = 3); **via
+`--dump-dom`** Step→1, Run→3 selected, `rawDollar=0`, `errs=0`, the lesson embed hydrates; both step-back sweeps clean;
+embed-route smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v279` → `atlas-v280`.
+
 ## iter 339 — Four more deeper-dives — past 100 (content / understandability)
 4 "Deeper dive" expandables across DL/RL/algo/PS take the codex past a milestone (deep-dives 97 → **101**):
 - **dl-activation-functions** — **without nonlinearity, depth is an illusion**: stacked linear layers collapse to one affine
