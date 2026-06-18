@@ -1836,10 +1836,24 @@
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Notebook</div>
       <div class="page-head reveal"><div class="eyebrow">Your notebook</div><h2>My <em>Notes</em></h2>
-      <p>Every lesson you've annotated, gathered in one place — your own words are the best revision notes.${notes.length ? ` <strong>${notes.length}</strong> note${notes.length === 1 ? "" : "s"} across ${new Set(notes.map(n => n.node.course.id)).size} subject${new Set(notes.map(n => n.node.course.id)).size === 1 ? "" : "s"}.` : ""}</p></div>
+      <p>Every lesson you've annotated, gathered in one place — your own words are the best revision notes.${notes.length ? ` <strong>${notes.length}</strong> note${notes.length === 1 ? "" : "s"} across ${new Set(notes.map(n => n.node.course.id)).size} subject${new Set(notes.map(n => n.node.course.id)).size === 1 ? "" : "s"}.` : ""}</p>
+      ${notes.length ? `<button class="btn ghost" id="notes-export" style="margin-top:4px">⬇ Export all as Markdown</button>` : ""}</div>
       ${list}
     </div>`;
     bindGo();
+    const expBtn = document.getElementById("notes-export");
+    if (expBtn) expBtn.addEventListener("click", () => {
+      // group notes by course (notes are already in curriculum order) → a clean, portable Markdown revision deck
+      const byCourse = [];
+      notes.forEach(n => { let g = byCourse.find(x => x.id === n.node.course.id); if (!g) { g = { id: n.node.course.id, title: n.node.course.title, items: [] }; byCourse.push(g); } g.items.push(n); });
+      const d = new Date(), pad = x => String(x).padStart(2, "0"), stamp = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+      let md = "# Atlas — My Notes\n\n*" + notes.length + " note" + (notes.length === 1 ? "" : "s") + " across " + byCourse.length + " subject" + (byCourse.length === 1 ? "" : "s") + " · exported " + stamp + "*\n";
+      byCourse.forEach(g => { md += "\n## " + g.title + "\n"; g.items.forEach(n => { md += "\n### " + n.node.lesson.title + "\n\n" + String(n.text).trim() + "\n"; }); });
+      const blob = new Blob([md], { type: "text/markdown" });
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "atlas-notes-" + stamp + ".md"; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      toast("⬇", "Notes exported", notes.length + " note" + (notes.length === 1 ? "" : "s") + " saved as Markdown.");
+    });
     typeset();
   }
 

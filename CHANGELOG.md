@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 246 — Notes export to Markdown (new functionality)
+Rotating off viz (which had run 231/236/242/245) to a fresh, learner-facing pillar. The Notebook gathers every
+"My notes" entry, but they were **trapped in localStorage** — no way to back them up or take them elsewhere. Added a
+one-tap **"⬇ Export all as Markdown"** button on `#/notes` (shown only when notes exist): it builds a clean `.md`
+document — a `# Atlas — My Notes` title + a "*N notes across M subjects · exported YYYY-MM-DD*" line, then notes grouped
+by subject in **curriculum order**, each under its lesson `###` heading — and downloads it as `atlas-notes-<date>.md`
+(reusing the existing Blob/`createObjectURL` download path, with `revokeObjectURL` cleanup + a confirmation toast).
+Your own words become a portable revision deck. No new state, no data change (app.js only).
+Verified: gate ALL GREEN; in-browser, clicking Export with 3 seeded notes produced the **exact expected Markdown**
+(intercepted the Blob) — title, `*3 notes across 3 subjects · exported 2026-06-18*`, the three subjects in curriculum
+order (Linear Algebra → Algorithms → Probability & Statistics) with the right lesson headings and note bodies — and the
+filename `atlas-notes-2026-06-18.md`, `errs=0`; the **empty-state guard holds** (no button when there are no notes);
+all-routes smoke **errs=0/kErr=0 (12 routes)**. SW cache `atlas-v187` → `atlas-v188`.
+
 ## iter 245 — Dijkstra's shortest-path visualizer — the 54th widget (visualizations)
 The graph-traversal widget only covers *unweighted* BFS/DFS; **weighted shortest paths** — a hard, fundamental idea —
 had no visual. Added the **54th Lab widget `algo-dijkstra`** in `a-shortest-paths-topo` (after the Dijkstra worked

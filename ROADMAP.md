@@ -177,6 +177,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 246: **Notes export to Markdown** (new functionality — rotating off 4 recent viz). Notebook notes were trapped in
+   localStorage; added "⬇ Export all as Markdown" on #/notes (shown only when notes exist): builds a clean .md (title +
+   summary, grouped by subject in curriculum order, each note under its lesson ### heading), downloads as
+   atlas-notes-<date>.md via the existing Blob path + revokeObjectURL + toast. No new state, app.js only. Verified: gate
+   GREEN; clicking Export with 3 seeded notes produced the exact expected Markdown (Blob intercepted) + correct filename,
+   errs=0; empty-state guard holds (no button w/o notes); smoke errs=0/kErr=0 (12 routes). SW →v188.
    ✅ iter 245: **Dijkstra's shortest-path visualizer — 54th widget** (visualizations). Graph-traversal viz only covers unweighted
    BFS/DFS; weighted shortest paths had none. New `algo-dijkstra` in a-shortest-paths-topo (after the worked example):
    6-node weighted graph from A, step/play/skip/reset settle the closest unsettled node (gold) and relax its edges
