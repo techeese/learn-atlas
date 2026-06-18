@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 315 — Three more code exercises across the 4-count topics (new functionality / active learning)
+With code exercises evenly spread (most topics at 4), added **3 more gate-verified JavaScript exercises** across LA/RL/PS
+(lessons-with-code 36 → **39**; the gate now runs **34**), each a flagship one-liner of a concept:
+- **la-eigenvalues-eigenvectors** — **2×2 eigenvalues** from trace & determinant (roots of `λ² − tr·λ + det`): `[[2,1],[1,2]]`
+  → `3 1`.
+- **rl-td-learning** — one **TD(0) update** `V(s) ← V(s) + α[r + γV(s′) − V(s)]`: V=5, r=1, γ=0.9, V′=10, α=0.1 → `5.50`
+  (TD error +5, scaled by α).
+- **ps-point-estimation** — **sample standard deviation** dividing by `n−1` (Bessel): `[2,4,6,8]` → `2.58` — ties to that
+  lesson's deeper-dive on why it's `n−1`.
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` guards + the `**`-free guard from
+the iter-309 landmine.
+Verified: gate ALL GREEN (**34 code-exercises verified**); **via `--dump-dom`** the la-eigenvalues widget runs → `3 1`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v255` → `atlas-v256`.
+
 ## iter 314 — In-app "reduce motion" toggle (accessibility)
 Every animation already respected the OS `prefers-reduced-motion` setting, but a user who wants calmer motion had **no in-app
 control** — they'd have to change a system-wide OS preference. Added a **"Reduce motion" toggle in Settings** (a11y best

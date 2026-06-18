@@ -177,6 +177,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 315: **3 more code exercises across the 4-count topics** (active learning). +3 JS (lessons-with-code 36→39, gate runs 34)
+   across LA/RL/PS: la-eigenvalues-eigenvectors (2×2 eigenvalues from trace+det → 3 1), rl-td-learning (TD(0) update → 5.50),
+   ps-point-estimation (sample SD with n−1 → 2.58). Node-verified; byte-stable inject w/ guards (incl. **-free). Verified: gate
+   GREEN (34 verified); dump-dom la-eigenvalues runs → "3 1" "✓ matches"; smoke errs=0/kErr=0 (12). SW →v256.
    ✅ iter 314: **In-app "reduce motion" toggle** (a11y). Animations respected OS prefers-reduced-motion but had no in-app control.
    Added a Settings toggle → data-reduce-motion="on" on <html>, which makes reducedMotion() true (gates all JS animations) +
    triggers a CSS guard mirroring the OS-pref block; persisted + re-applied on boot, aria-pressed. Verified: gate GREEN; dump-dom
