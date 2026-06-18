@@ -177,6 +177,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 283: **4 more deeper-dives on flagship hard lessons** (content). +4 (53→57) across algo/LLM/PS/DL: a-string-algorithms
+   (KMP failure-function, O(nm)→O(n+m)), l-hallucination (fluency optimizes plausible not true), ps-point-estimation
+   (n−1 Bessel's correction), dl-diffusion-models (learn to denoise). String.raw LaTeX; byte-stable inject w/ guards.
+   Verified: gate GREEN; dump-dom each renders (katex 5/0/12/0, kErr=0, rawDollar=0; content re-read for integrity);
+   smoke errs=0/kErr=0 (12). SW →v224.
    ✅ iter 282: **Law of Large Numbers visualizer — 61st widget** (visualizations). ps-law-of-large-numbers had a dd but no viz. New
    `ps-lln`: sample a die/coin, running average plotted converging to μ (3.5) inside a shrinking ±2σ/√n band; Play (rAF) +
    "+100" (sync, testable) + Reset + Fair-die/Coin. Distinct from CLT viz (distribution vs convergence). Plain-unicode note.

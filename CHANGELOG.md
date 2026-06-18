@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 283 — Four more deeper-dives on flagship hard lessons (content / understandability)
+Continuing the owner's depth directive, added **4 "Deeper dive" expandables** on flagship hard lessons that lacked one,
+across four topics (deep-dives 53 → **57**):
+- **a-string-algorithms** — KMP never re-reads the text: a failure function on the pattern lets it skip ahead on a
+  mismatch, turning the naive $O(nm)$ into $O(n+m)$.
+- **l-hallucination-and-evaluation** — hallucination is what fluency optimizes for: the next-token objective rewards
+  *plausible*, never *true*, and there's no built-in "I don't know."
+- **ps-point-estimation** — why sample variance divides by $n-1$: deviations from the sample mean run small (it
+  minimizes them), so Bessel's correction restores an unbiased estimator ($\mathbb{E}[s^2]=\sigma^2$).
+- **dl-diffusion-models** — a diffusion model just learns to denoise: a fixed forward corruption, a learned one-step
+  reverse; generation = denoise repeatedly from pure noise.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each dive renders with its summary, KaTeX typesets
+(5 / 0 / 12 / 0 spans — hallucination + diffusion are intentionally prose) and **kErr=0, rawDollar=0** on all four (content
+re-read to confirm integrity); all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache
+`atlas-v223` → `atlas-v224`.
+
 ## iter 282 — Law of Large Numbers visualizer — 61st widget (visualizations)
 `ps-law-of-large-numbers` had a deeper-dive but **no widget**, and the LLN is one of the most fundamental — and most
 mis-felt — ideas in probability. Added the **61st Lab widget `ps-lln`**, embedded in that lesson: sample **a fair die**
