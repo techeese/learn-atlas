@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 346 — Three more code exercises across computational lessons (new functionality / active learning)
+Added **3 gate-verified JavaScript exercises** on flagship computational lessons across LA/calc/PS (lessons-with-code
+54 → **57**; the gate now runs **52**):
+- **la-low-rank-pca** — **PCA explained variance**: top-k eigenvalues over total — `[5,3,1,1]`, k=2 → `0.80` (2 of 4 components
+  keep 80% of the variance).
+- **c-gradient-directional** — **directional derivative** `∇f·û`: in the gradient's own direction `[3,4]` → `5.00` = `|∇f|`,
+  the steepest-ascent rate.
+- **ps-sampling-distributions** — **standard error of the mean** `σ/√n`: σ=20, n=100 → `2.00` (the √n law — 4× data to halve it).
+Every output node-verified; injected byte-stably with round-trip + no-existing-`data-code` + `**`-free guards.
+Verified: gate ALL GREEN (**52 code-exercises verified**); **via `--dump-dom`** the PCA widget runs → `0.80`,
+"✓ Output matches expected"; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape change. SW cache `atlas-v285` → `atlas-v286`.
+
 ## iter 345 — Three more worked examples on flagship hard lessons (examples)
 A **3rd worked example** on three flagship lessons across LA/calc/RL (examples 331 → **334**, all ⌘K-searchable):
 - **la-four-subspaces-rank** — **the four subspaces fit together by the numbers**: a `3×5` rank-2 matrix → col/row dim `2`,
