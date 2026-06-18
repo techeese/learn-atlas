@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 313 — Four more deeper-dives on flagship hard lessons (content / understandability)
+Continuing the depth directive — 4 "Deeper dive" expandables across LLM/DL/algo/PS (deep-dives 73 → **77**):
+- **l-optimization-and-stability** — why LLM training needs **warmup** (early gradients are huge/noisy), **AdamW's decoupled
+  decay** (decay shouldn't be scaled by the adaptive step), and **gradient clipping** (one bad batch can't blow up) — it's
+  about *stability*, not just speed.
+- **dl-pooling-and-cnn-architectures** — pooling buys **translation invariance** (a feature anywhere in the window survives)
+  *and* a **growing receptive field**: convolution detects *what*, pooling forgets *exactly where*.
+- **a-approximation-randomized** — when "exact and fast" is impossible for NP-hard problems, keep a **guarantee**:
+  provably-near-optimal (a `c`-approximation) or probably-correct (randomized).
+- **ps-sample-spaces-events** — probability is **set theory with a measure**: sample space `Ω`, events as subsets, three
+  axioms; "or/and/not" are union/intersection/complement, and inclusion-exclusion is just no-double-counting.
+Authored with `String.raw` LaTeX; injected byte-stably with round-trip + even-`$`/no-`**`/tag-balance pre-guards.
+Verified: gate ALL GREEN; per-lesson **via `--dump-dom`** each renders (KaTeX 0 / 0 / 2 / 7 spans — the LLM-opt & pooling
+dives are intentionally prose) with **kErr=0, rawDollar=0**; all-routes smoke **errs=0/kErr=0 (12 routes)**. No save-shape
+change. SW cache `atlas-v253` → `atlas-v254`.
+
 ## iter 312 — Conditional-expectation visualizer — 67th widget (visualizations)
 `ps-conditional-expectation` had a deeper-dive but no widget, and E[Y|X] is the bridge from probability to ML (regression
 *is* conditional expectation). Added the **67th Lab widget `ps-conditional-expectation`**, embedded there: a scatter of Y
