@@ -1,6 +1,34 @@
 /* Atlas — cross-topic prerequisite edges (consumed by app.js learningPath/directPrereqs).
    Same-topic ordering is implicit; this connects the 6 topics in the Knowledge Map & paths. */
 window.PREREQS = {
+  "ml-knn": [
+    "la-dot-product-norms"
+  ],
+  "ml-decision-trees": [
+    "a-trees-heaps"
+  ],
+  "ml-linear-regression": [
+    "la-projection-least-squares",
+    "c-gradient-directional"
+  ],
+  "ml-logistic-regression": [
+    "dl-loss-functions"
+  ],
+  "ml-regularization": [
+    "la-dot-product-norms"
+  ],
+  "ml-svm": [
+    "la-dot-product-norms"
+  ],
+  "ml-naive-bayes": [
+    "ps-conditional-independence-bayes"
+  ],
+  "ml-kmeans": [
+    "la-dot-product-norms"
+  ],
+  "ml-model-selection": [
+    "ps-point-estimation"
+  ],
   "dl-the-artificial-neuron-and-mlp": [
     "la-matrix-multiplication",
     "la-dot-product-norms"

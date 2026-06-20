@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 528 — Wire the Machine Learning topic into the prerequisite graph (workflow / functionality)
+The 10 new ML lessons were authored with **no prerequisites**, so they floated disconnected — no "prerequisites build up to this" banner, no learning
+path, isolated Knowledge-Map nodes. Added **9 cross-topic prerequisite edges** to `data/PREREQS` linking each ML lesson back to the foundation it builds
+on: kNN/k-Means/SVM/Regularization → `la-dot-product-norms` (distance & L1/L2 norms), Decision Trees → `a-trees-heaps`, Linear Regression →
+`la-projection-least-squares` + `c-gradient-directional`, Logistic Regression → `dl-loss-functions`, Naive Bayes → `ps-conditional-independence-bayes`,
+Model Selection → `ps-point-estimation` (bias-variance). Ensembles connects implicitly via Decision Trees (same-course ordering is implicit in
+`learningPath`). Now the whole topic is woven into the cross-topic graph.
+Verified: gate ALL GREEN (no dangling prereq ids); **headless** — `ml-svm` now shows a **"🧭 50 prerequisites build up to this concept"** banner (the
+transitive closure back through the LA/Calc foundations), the learning-path route (`#/path/...`) renders nodes, the Knowledge Map renders, **kErr=0, errs=0, bad=none**. SW cache `atlas-v467` → `atlas-v468`.
+
 ## iter 527 — Three more third deep-dives on ML lessons (content / depth)
 Continuing to bring the Machine Learning topic to the codex's depth (now **6 of 10 ML lessons at 3 dd**). Added a **third "Deeper dive"** to three more:
 - **ml-knn** → **weighted votes & the right metric**: distance-weighted voting (`1/d`, `e^{−d²}`) smooths the dependence on k; the metric is a modeling
