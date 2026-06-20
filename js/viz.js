@@ -5124,4 +5124,56 @@
     genData(); draw();
   });
 
+
+  /* ========================================================
+     93. Linear regression: gradient descent fits the line (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-linreg-viz', topic: 'machine-learning', title: 'Linear regression: gradient descent fits the line', blurb: 'Watch a model train. Each step nudges the slope and intercept downhill on the mean-squared-error surface, so the line rotates into the best fit and the MSE falls. Crank the learning rate too high and it diverges — the same knife-edge as every gradient-descent trainer.' },
+  function (root) {
+    const W = 540, H = 380, padL = 12, padR = 12, padT = 12, padB = 12, RANGE = 8;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let seed = 77;
+    function rng() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function gauss() { let u = 0, v = 0; while (u === 0) u = rng(); while (v === 0) v = rng(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+    let lr = 0.02, w = 0, b = 0, iter = 0, pts = [];
+    function genData() { seed = 77; pts = []; for (let i = 0; i < 12; i++) { const x = 0.3 + i * 0.5; pts.push({ x: x, y: 1.1 * x + 0.8 + gauss() * 0.6 }); } }
+    function mse() { let s = 0; pts.forEach(p => { const e = w * p.x + b - p.y; s += e * e; }); return s / pts.length; }
+    function gdStep() {
+      let dw = 0, db = 0; const n = pts.length;
+      pts.forEach(p => { const e = w * p.x + b - p.y; dw += 2 * e * p.x / n; db += 2 * e / n; });
+      w -= lr * dw; b -= lr * db; iter++;
+    }
+    function reset() { w = 0; b = 0; iter = 0; draw(); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = x => padL + x / RANGE * (W - padL - padR), Y = y => (H - padB) - y / RANGE * (H - padT - padB);
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.moveTo(X(0), padT); ctx.lineTo(X(0), H - padB); ctx.stroke();
+      // residual segments (faint)
+      ctx.strokeStyle = p.rust; ctx.globalAlpha = 0.4; ctx.lineWidth = 1;
+      pts.forEach(pt => { const yh = w * pt.x + b; ctx.beginPath(); ctx.moveTo(X(pt.x), Y(pt.y)); ctx.lineTo(X(pt.x), Y(yh)); ctx.stroke(); });
+      ctx.globalAlpha = 1;
+      // the fitted line
+      ctx.strokeStyle = p.sage; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(X(0), Y(b)); ctx.lineTo(X(RANGE), Y(w * RANGE + b)); ctx.stroke();
+      // data points
+      pts.forEach(pt => { ctx.fillStyle = p.gold; ctx.strokeStyle = p.ink; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X(pt.x), Y(pt.y), 5, 0, 7); ctx.fill(); ctx.stroke(); });
+      const J = mse(), diverging = !isFinite(J) || J > 50;
+      info.innerHTML = 'step <b>' + iter + '</b> &middot; line: ŷ = <b>' + (isFinite(w) ? w.toFixed(2) : '∞') + '</b> x + <b>' + (isFinite(b) ? b.toFixed(2) : '∞') + '</b> &middot; MSE = <b style="color:' + (diverging ? p.rust : p.gold) + '">' + (isFinite(J) ? J.toFixed(3) : '∞') + '</b>' + (diverging ? ' &mdash; <b style="color:' + p.rust + '">diverging! lower the learning rate</b>' : '') + '<br>Each step moves the slope and intercept opposite the gradient of the MSE, shrinking the red residuals. True line is roughly ŷ = 1.1x + 0.8; from a flat start it should converge there (try Run).';
+    }
+    slider(ctl, { label: 'learning rate', min: 0.005, max: 0.09, step: 0.005, value: lr, fmt: v => v.toFixed(3), onInput: v => { lr = v; } });
+    button(ctl, 'Step', function () { for (let i = 0; i < 3; i++) gdStep(); draw(); });
+    let auto = null;
+    const runBtn = button(ctl, '▶ Run', function () {
+      if (auto) { auto.stop(); auto = null; runBtn.innerHTML = '▶ Run'; return; }
+      runBtn.innerHTML = '⏸ Pause'; let last = 0;
+      auto = loop(function (t) { if (t - last > 55) { last = t; for (let i = 0; i < 4; i++) gdStep(); draw(); if (iter > 600 || !isFinite(mse())) { if (auto) { auto.stop(); auto = null; } runBtn.innerHTML = '▶ Run'; } } });
+    });
+    button(ctl, '⏮ reset', function () { reset(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Linear-regression gradient-descent visualizer: a scatter of points with a fitted line and vertical red residual segments. Each step updates the slope and intercept opposite the gradient of the mean squared error, so from a flat start the line rotates into the best fit and the MSE falls. A learning-rate slider controls step size; too large and the fit diverges. Run animates the training; Reset returns to a flat line.');
+    genData(); draw();
+  });
+
 })();

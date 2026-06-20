@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 538 — Interactive gradient-descent linear-regression viz (visualizations)
+The **93rd widget, `ml-linreg-viz` "Linear regression: gradient descent fits the line."** Unlike the existing ML viz (which show *trained* models — kNN
+boundary, tree boundary, k-Means convergence), this shows **training itself**: from a flat line, each step moves slope & intercept opposite the MSE
+gradient, the red residuals shrink, the line rotates into the best fit, and the live **MSE falls**. A **learning-rate slider** demonstrates the
+knife-edge — too high and it **diverges** (the universal gradient-descent lesson). Step / Run / Reset; deterministic seeded data. Registered in `js/viz.js`,
+embedded in the Linear Regression lesson at the least-squares section.
+Verified: gate ALL GREEN (now **93 widgets**); **headless** — Lab canvas hydrates; stepping drives **MSE 22.4 → 0.30** (converges to ≈ŷ=1.1x+0.8, matching
+a node sim); cranking the LR to 0.09 triggers the **"diverging!"** state; lesson inline canvas hydrates; **kErr=0, errs=0**; screenshot shows the best-fit
+line through the data. SW cache `atlas-v477` → `atlas-v478`.
+
 ## iter 537 — Three more original-topic third deep-dives (content / depth)
 Continued the cross-topic depth pass — three more high-value third deep-dives (calc/algo/PS):
 - **c-intro-differential-equations** → **Euler's method**: most ODEs have no closed form, so you *step* through the slope field
