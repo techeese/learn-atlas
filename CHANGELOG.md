@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 484 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 311 → **314**; these three now carry three):
+- **dl-the-artificial-neuron-and-mlp** (had: neuron=logistic/UAT · width-vs-depth) → **without nonlinearity, depth collapses**: stacked linear
+  layers `W₃W₂W₁x=(W₃W₂W₁)x` are *one* matrix; the activation is the hinge that keeps depth from folding into a single linear map.
+- **la-determinants** (had: det=0↔singular · signed volume) → **how you actually compute it**: cofactor/Leibniz is `n!` (20! ≈ 2.4e18,
+  hopeless); real software uses LU/row-reduction — `det = (−1)^swaps · ∏ pivots` in `O(n³)`.
+- **rl-mdp-formalism** (had: Markov property · γ) → **when Markov fails (POMDPs)**: if the agent sees an observation, not the full state, acting
+  on it isn't Markov — rebuild Markov-ness with memory (a belief state, or an RNN/transformer hidden state). Why RL agents need memory.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set. Node-verified `20!≈2.43e18`.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v423` → `atlas-v424`.
+
 ## iter 483 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 308 → **311**; these three now carry three):
 - **dl-transformer-architecture** (had: mix-then-think · why-stack) → **why transformers replaced RNNs**: dropping recurrence makes the whole

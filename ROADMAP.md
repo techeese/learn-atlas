@@ -188,6 +188,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 484: **3 more THIRD deep-dives on the hardest concepts** (content/depth). +3 dd (311→314; 18 lessons now at 3 dd):
+   dl-the-artificial-neuron-and-mlp (no nonlinearity → depth collapses), la-determinants (computing det: cofactor n! vs LU O(n³)),
+   rl-mdp-formalism (POMDPs / when Markov fails). Append-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v424.
    ✅ iter 483: **3 more THIRD deep-dives on the hardest concepts** (content/depth). +3 dd (308→311; 15 lessons now at 3 dd):
    dl-transformer-architecture (parallelism replaced RNNs), c-gradient-descent-convergence (convergence rate / preconditioning),
    ps-conditional-independence-bayes (odds form / likelihood ratio). Append-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v423.
