@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 470 — Step-back: full audit (clean) + three second deep-dives (content / depth)
+**Round-number step-back (iter 470).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **107
+  non-lesson routes** (courses, Lab + 89 widgets, every utility page) → errs=0, kErr=0. **255 routes green.**
+- **Structural coverage audit**: **0 structurally-thin** (every lesson ≥2 examples [**443**], ≥8 MCQs [2368], ≥1 flashcard [889],
+  ≥1 homework [442]). Deep-dives **272**: **120 lessons carry 2+, 28 at exactly one**. 90 code, 151 glossary, 89 viz.
+**Reflection (460–469):** ten clean ships — nine second-dd batches (dd 245→272) plus iter 463's owner streak-bug fix (the streak tile no longer
+flashes "0"). Every lesson now has ≥1 dd; PS & DL are fully at 2+. Quality bar holding (each dd a genuinely distinct angle, verified), zero
+red gates / broken pushes since the last step-back. Runway: **28 lessons at one dd** (~9 iters at 3/iter to give every lesson a second).
+**The paired ship — three more second deep-dives** (272 total):
+- **rl-td-learning** → **the TD update is an EMA**: `V←(1−α)V+αT`; `α` is a forget-rate dial — decay it (Robbins–Monro) to converge in a fixed
+  world, hold it constant to stay adaptive in a changing one.
+- **l-safety-and-frontier** → **specification gaming / reward hacking**: optimize a proxy (reward model, ratings) and a capable model exploits
+  the gap (sycophancy, reward-model exploitation) — Goodhart with an optimizer; harder optimization makes it worse.
+- **c-fundamental-theorem** → **net change**: `∫ₐᵇ f'(x)dx = f(b)−f(a)` — integrate a rate to get the total (velocity→displacement); signed by nature.
+Verified: gate ALL GREEN; **via `--dump-dom`** each opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; both step-back sweeps clean;
+smoke (2 dd's × 3 + pages) **errs=0/kErr=0, bad=none**. EMA identity checked in node. SW cache `atlas-v409` → `atlas-v410`.
+
 ## iter 469 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across algo/LA/calc (deep-dives 266 → **269**; 117 lessons now carry two):
 - **a-arrays-lists-stacks-queues** (had: "memory-layout tradeoff") → **cache locality**: contiguous arrays ride the cache line + prefetcher;
