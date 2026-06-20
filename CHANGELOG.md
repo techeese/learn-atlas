@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 451 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/DL/LLM (deep-dives 215 → **218**; 66 lessons now carry two):
+- **c-partial-derivatives** (had: "freezes all but one axis") → **mixed partials commute** (Clairaut): `∂²f/∂x∂y = ∂²f/∂y∂x` (for `x²y`,
+  both `=2x`) — which is *why* the Hessian is symmetric (→ spectral theorem → the well-behaved curvature optimization relies on).
+- **dl-diffusion-models** (had: "just learns to denoise") → **why many small steps beat one big jump**: reversing a huge noise step is
+  multimodal/intractable; small steps keep each reverse step near-Gaussian and learnable (cost: slow sampling → DDIM/distillation).
+- **l-rag-and-tools** (had: "separates knowledge from reasoning") → **RAG vs finetuning**: RAG changes *what the model sees* (external,
+  updatable, citable knowledge); finetuning changes *how it behaves* (format/style/skills) — complementary, picked by which your problem is.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v390` → `atlas-v391`.
+
 ## iter 450 — Step-back: full audit (clean) + three second deep-dives (content / depth)
 **Round-number step-back (iter 450).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **107
