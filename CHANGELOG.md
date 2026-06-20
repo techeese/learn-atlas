@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 494 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 341 → **344**; these three now carry three):
+- **rl-monte-carlo** (had: MC vs TD · first/every-visit) → **exploring starts & GLIE**: MC control only converges if every state-action is
+  sampled infinitely often — exploring starts, or an ε-soft policy with ε decaying to 0 (GLIE); greedy MC can lock onto a bad policy.
+- **la-dot-product-norms** (had: alignment · Cauchy–Schwarz) → **L1/L2/L∞ — length isn't unique**: `‖·‖₁` (diamond), `‖·‖₂` (circle), `‖·‖∞`
+  (square) measure size differently; L1's corners are why lasso → sparsity, a modeling choice baked into the geometry of "distance."
+- **a-trees-heaps** (had: heap vs BST invariants · why balance matters) → **rotations & the balanced-tree family**: an `O(1)` rotation cuts
+  height while preserving order; AVL / red-black / B-trees are just different policies for when to rotate, all guaranteeing `O(log n)`.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v433` → `atlas-v434`.
+
 ## iter 493 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 338 → **341**; these three now carry three):
 - **dl-activation-functions** (had: no-nonlinearity-illusion · dying ReLU) → **the modern activation zoo**: sigmoid (saturates) → ReLU (dies) →
