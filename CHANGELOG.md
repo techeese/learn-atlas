@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 488 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 323 → **326**; these three now carry three):
+- **c-convexity** (had: local=global · recognize convex) → **why deep learning is non-convex (and works anyway)**: neural losses lose the convex
+  guarantees, but high-D landscapes are mostly escapable saddles + roughly-equivalent minima, so SGD finds a good-enough bottom.
+- **la-span-independence** (had: independence/span · dimension) → **testing independence is a rank computation**: row-reduce; independent iff a
+  pivot in every column iff `rank(A)=#vectors` iff `Ax=0` only trivially — rank counts the independent subset.
+- **a-hash-tables** (had: keys→addresses · collisions/load-factor) → **open addressing vs chaining**: store collisions *outside* the array
+  (chaining: robust, pointer-chasing) vs *inside* it (open addressing: cache-fast, keep <~70% full) — why Swiss tables use open addressing.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v427` → `atlas-v428`.
+
 ## iter 487 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 320 → **323**; these three now carry three):
 - **dl-pooling-and-cnn-architectures** (had: pooling · weight-sharing) → **residual connections & the depth wall**: plain deep nets *degrade*
