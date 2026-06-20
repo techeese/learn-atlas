@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 537 — Three more original-topic third deep-dives (content / depth)
+Continued the cross-topic depth pass — three more high-value third deep-dives (calc/algo/PS):
+- **c-intro-differential-equations** → **Euler's method**: most ODEs have no closed form, so you *step* through the slope field
+  (`y_{n+1}=y_n+h f(x_n,y_n)`); error ~`h²`, Runge–Kutta as the accurate default — the foundation of simulation and the neural-ODE view.
+- **a-mst-union-find** → **what MSTs are good for**: network design, single-linkage clustering (delete the `k−1` priciest edges), and a 2-approximation
+  for metric TSP — all resting on the cut & cycle properties.
+- **ps-p-values** → **the replication crisis**: how a 0.05 cutoff + publication bias + p-hacking produced non-reproducible findings, and the fixes
+  (effect sizes + CIs, pre-registration, replication, Bayesian methods).
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (Euler display math renders). SW cache `atlas-v476` → `atlas-v477`.
+
 ## iter 536 — Three more ML code exercises (new functionality / code)
 Rounded out the Machine Learning topic's hands-on coverage (3/10 lessons had a runnable exercise → now 6/10) with three more gate-verified JS snippets:
 - **ml-logistic-regression** → linear score → sigmoid → threshold → `0.50 1`.
