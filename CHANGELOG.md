@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 499 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 356 → **359**; these three now carry three):
+- **c-derivatives-special-functions** (had: eˣ self-derivative · trig cycle) → **the inverse-function derivative rule**: `g'=1/f'(g)` (a reflection
+  across `y=x` reciprocates slopes) generates `d/dx ln x = 1/x`, `arcsin' = 1/√(1−x²)`, `arctan' = 1/(1+x²)` — derived, not memorized.
+- **l-decoding-strategies** (had: temp/top-k/top-p · greedy/beam) → **constrained decoding**: mask illegal next-tokens to `−∞` each step so the
+  output is grammar-/JSON-valid *by construction* — the backbone of reliable JSON mode and tool-calling.
+- **a-asymptotic-analysis** (had: drops constants · O/Θ/Ω) → **when Big-O lies**: it's the limit as `n→∞`, so constants decide the winner at real
+  sizes (`100n` loses to `2n²` only past `n=50`) — why hybrids (Timsort/introsort) switch algorithms small, and "galactic" algorithms go unused.
+Authored with `String.raw` LaTeX (`\lt`); injected via the append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v438` → `atlas-v439`.
+
 ## iter 498 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 353 → **356**; these three now carry three):
 - **ps-expectation-variance** (had: expectation adds · variance squares) → **the indicator method**: linearity holds even for dependent vars,
