@@ -188,6 +188,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 440: **STEP-BACK: full audit (clean) + Copy button on code exercises** (UI/UX — owner's steer). Sweeps: 148 lessons errs=0/kErr=0/0 bad;
+   106 routes errs=0/kErr=0 (254 green). Coverage: 0 thin (440 examples, 191 dd [106 at 1 dd], 90 code, 151 glossary). Reflection (431–439):
+   examples↔2nd-dd rotation + backprop deep-focus + glossary clickability; navigation audited & already mature. Ship: ⎘ Copy button on every
+   code exercise + Playground (clipboard w/ execCommand fallback). Verified: gate GREEN; both sweeps clean; dump-dom button present on
+   playground+lesson, errs=0; screenshot eyeballed. SW →v380. UI/UX is now a first-class lane alongside examples + 2nd-dd.
    ✅ iter 439: **Glossary terms clickable → their lesson** (UI/UX — OWNER REQUEST: "can't click into a glossary concept"). Each card now
    links to the lesson that teaches the term (title match > content match > course page); gold "Open the lesson →" cue + hover lift.
    Verified: gate GREEN; dump-dom 151 terms/150 clickable, click → lesson rendered, errs=0/kErr=0; screenshot eyeballed. SW →v379.

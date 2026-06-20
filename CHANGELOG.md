@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 440 — Step-back: full audit (clean) + Copy button on code exercises (UI/UX — owner's steer)
+**Round-number step-back (iter 440).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **106
+  non-lesson routes** (courses, Lab + 88 widgets, every utility page) → errs=0, kErr=0. **254 routes green.**
+- **Structural coverage audit**: **0 structurally-thin** lessons — every one has ≥2 examples (**440**; dist 5×2, 142×3, 1×4), ≥8 MCQs
+  (2368), ≥1 flashcard (889), ≥1 homework (442). Plus **191 deep-dives** (106 lessons at one dd, 42 at two), 90 code lessons, 151 glossary.
+**Reflection (431–439):** clean examples↔second-dd rotation, plus two owner steers delivered mid-stream — the **backprop deep-focus**
+(426–429: viz + by-hand example + runnable code + matrix-form dd) and **glossary clickability** (439) — and a new standing steer to
+**weight UI/UX polish** (recorded in memory). The example at-2 pool is nearly exhausted (5 LLM lessons); content is saturated, so UI/UX
+joins as a first-class lane. Audited navigation along the way and found it already mature (module dots, lecture prev/next, post-quiz
+next, clickable Library refs, focus-revealed glossary tooltips that work on mobile tap) — no gaps there.
+**The paired ship — a Copy button on every code exercise + the Playground** (UI/UX): the toolbar had lang/examples/Run/status but no
+way to grab the code. Added **⎘ Copy** (uses `navigator.clipboard`, falls back to `execCommand`, relabels "✓ Copied"; failure shows a
+manual-copy hint) — useful for taking code (e.g. the backprop exercise) elsewhere. Touches every `data-code` block via `Playground.mount`.
+Verified: gate ALL GREEN; both step-back sweeps clean; **via `--dump-dom`** the button renders on the Playground and on a code-exercise
+lesson (`dl-backpropagation`), click throws no error (errs=0); screenshot eyeballed (clean toolbar placement). SW cache `atlas-v379` → `atlas-v380`.
+
 ## iter 439 — Glossary terms are now clickable → the lesson that teaches them (UI/UX — owner's request)
 **Owner asked: "we can't click into a concept of the glossary?"** Correct — the glossary cards were static text (term · topic · def) with
 no way to go deeper. Fixed: every glossary card is now a clickable link to the **lesson that teaches the term**.

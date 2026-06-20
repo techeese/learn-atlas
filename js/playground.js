@@ -52,6 +52,7 @@
         <select class="pg-lang" aria-label="Language">${["python", "javascript"].map(l => `<option value="${l}" ${l === lang0 ? "selected" : ""}>${l === "python" ? "🐍 Python" : "🟨 JavaScript"}</option>`).join("")}</select>
         <select class="pg-ex" aria-label="Example snippets"></select>
         <button class="viz-btn primary pg-run">▶ Run</button>
+        <button class="viz-btn pg-copy" title="Copy the code">⎘ Copy</button>
         <span class="pg-status" aria-live="polite"></span>
       </div>
       <textarea class="pg-code" spellcheck="false" aria-label="Code editor"></textarea>
@@ -71,6 +72,15 @@
     ta.addEventListener("keydown", e => { if (e.key === "Tab") { e.preventDefault(); const s = ta.selectionStart; ta.value = ta.value.slice(0, s) + "    " + ta.value.slice(ta.selectionEnd); ta.selectionStart = ta.selectionEnd = s + 4; } });
 
     root.querySelector(".pg-run").addEventListener("click", () => run());
+    const copyBtn = root.querySelector(".pg-copy");
+    if (copyBtn) copyBtn.addEventListener("click", async () => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(ta.value);
+        else { ta.select(); document.execCommand("copy"); ta.setSelectionRange(0, 0); ta.blur(); }
+        const old = copyBtn.innerHTML; copyBtn.innerHTML = "✓ Copied"; copyBtn.classList.add("primary");
+        setTimeout(() => { copyBtn.innerHTML = old; copyBtn.classList.remove("primary"); }, 1400);
+      } catch (e) { status.textContent = "copy failed — select and copy manually"; }
+    });
     async function run() {
       out.className = "pg-out"; out.textContent = "";
       if (langSel.value === "javascript") { runJS(); return; }
