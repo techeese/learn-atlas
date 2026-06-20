@@ -2,6 +2,22 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 560 — Step-back: full 8-topic audit (clean) + three more third dives (content / depth)
+**Round-number step-back.** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **158 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **133 non-lesson routes** (incl. 8
+  cheatsheets, 8 placements, all 96 viz labs) → errs=0, kErr=0. **291 routes green.**
+- **Coverage + depth audit**: **0 structurally-thin**; dd distribution **2-dd: 25 → 22 · 3-dd: 133 → 136 · 4+dd: 0** (449 total, every lesson ≥2). 8 topics ·
+  158 lessons · 2448 MCQs · 939 cards · 473 examples · 96 viz · 105 code · 168 glossary. Remaining 2-dd: calc 7→6, RL 7→6, LLM 4→3, PS 3, LA 2, algo 2 (DL & ML at 0).
+**Reflection (iters 550→560):** extended hands-on **code to all 8 topics** (added calc, LA, PS, DL); advanced cross-topic depth (**2-dd 37→22**) with distinct
+third dives bridging math→ML (QR, convexity, log-derivative trick, RLHF/DPO, Taylor, Jacobian, moments…); reached **ML example-parity** (all 10 lessons at 3
+examples); and added the **bagging viz** completing the bias–variance trilogy (7 ML interactives). One red gate caught + fixed (the `toFixed` summation-order
+landmine, now recorded). Lanes rotated cleanly (code/content/examples/viz); SW cache hit a round **v500**.
+**The paired ship — three more third dives** (RL/LLM/calc):
+- **rl-what-is-rl** → **the credit-assignment problem**: which delayed-reward-earning past action gets the credit — the core reason RL is harder than supervised learning.
+- **l-scaling-laws** → **compute-optimal vs inference-optimal**: why you "overtrain" a smaller model (LLaMA) when you'll serve it at scale.
+- **c-computing-limits** → **the squeeze theorem**: trap an oscillating limit between two that pinch together (`x²sin(1/x)→0`; the foundation under `sin x/x→1`).
+Verified: gate ALL GREEN; both step-back sweeps clean; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v499` → `atlas-v500`.
+
 ## iter 559 — Three more calculus third dives: Taylor · no-elementary-antiderivative · gradient/Jacobian (content / depth)
 Three more calculus third deep-dives (the biggest remaining 2-dd bucket), each bridging to ML:
 - **c-linearization-lhopital** → **Taylor series**: linearization is just the first two terms; keep matching derivatives for a polynomial that hugs the curve —
