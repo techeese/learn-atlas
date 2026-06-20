@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 466 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/DL (deep-dives 257 → **260**; 108 lessons now carry two):
+- **c-gradient-directional** (had: "gradient points uphill / ⊥ contours") → **the directional derivative `∇f·û`**: one vector packs every
+  slope; `‖∇f‖cosθ` makes uphill (θ=0), descent (180°) and along-contour (90°) the three special angles of one dot product.
+- **a-correctness-invariants** (had: "invariant = induction") → **invariants vs variants**: an invariant gives *partial* correctness
+  ("right *if* it stops"); a separate **loop variant** (bounded, strictly decreasing) proves termination — total correctness needs both.
+- **dl-pretraining-and-finetuning-paradigm** (had: "pretrain once, adapt many") → **self-supervision**: predicting a hidden part of the
+  data (next/masked token) makes its own labels, turning the unlabeled web into a supervised objective — the engine behind scale.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v405` → `atlas-v406`.
+
 ## iter 465 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across DL/RL/calc (deep-dives 254 → **257**; 105 lessons now carry two):
 - **dl-initialization-and-vanishing-gradients** (had: "compound interest") → **variance-preserving init**: keep `Var(z)=Var(x)` ⟹ `σ²_w=1/n`;
