@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 542 — Three more original-topic third deep-dives (content / depth)
+Three more high-value third deep-dives (LA/algo/PS), pulling the 2-dd count down further:
+- **la-vectors-operations** → **in ML almost everything is a vector**: data points, embeddings ("king − man + woman ≈ queen"), even functions live in
+  `ℝᵈ`, so the whole toolkit (distance, projection, eigendecomposition) applies — why linear algebra underpins ML.
+- **a-correctness-invariants** → **invariants beyond loops**: data-structure invariants (BST ordering, heap property), representation/class invariants, and
+  assertions as executable invariants — the unifying lens for specifying, verifying, and debugging.
+- **ps-conditional-expectation** → **the tower property**: `E[E[Y|X]] = E[Y]` (condition on something convenient, average back), plus the law of total
+  variance behind bias-variance and ANOVA.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (tower-property display math + the BST `&lt;` invariant render). SW cache `atlas-v481` → `atlas-v482`.
+
 ## iter 541 — Interactive logistic-regression viz (visualizations)
 The **94th widget, `ml-logreg-viz` "Logistic regression: learning a decision boundary."** It trains a classifier by gradient descent on cross-entropy and
 shades the plane by the predicted **probability** — a smooth sigmoid confidence ramp (sage↔violet) that no other widget shows (kNN/tree show *hard*
