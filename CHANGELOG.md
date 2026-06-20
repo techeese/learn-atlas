@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 529 — Three more third deep-dives on ML lessons (content / depth)
+Nearly finished the Machine Learning topic's depth pass — **9 of 10 ML lessons now at 3 dd** (only Regularization remains, queued for the iter-530
+step-back). Added a **third "Deeper dive"** to three more:
+- **ml-linear-regression** → **multicollinearity**: correlated features make `XᵀX` ill-conditioned, so coefficients balloon and flip sign and "holding
+  others fixed" stops meaning anything — predictions survive but *interpretation* collapses; detect with VIF, fix with ridge.
+- **ml-naive-bayes** → **compute in log space**: multiplying hundreds of sub-1 probabilities underflows to 0, so real NB sums logs
+  (`log P(y) + Σ log P(xⱼ|y)`) — numerically stable, argmax unchanged (the near-universal practice for probabilistic models).
+- **ml-model-selection** → **learning vs validation curves**: the learning curve answers "more data or a better model?" (converged-low → better model;
+  big closing gap → more data); the validation curve answers "more or less complexity?" (pick the validation peak) — diagnosis, not guesswork.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v468` → `atlas-v469`.
+
 ## iter 528 — Wire the Machine Learning topic into the prerequisite graph (workflow / functionality)
 The 10 new ML lessons were authored with **no prerequisites**, so they floated disconnected — no "prerequisites build up to this" banner, no learning
 path, isolated Knowledge-Map nodes. Added **9 cross-topic prerequisite edges** to `data/PREREQS` linking each ML lesson back to the foundation it builds

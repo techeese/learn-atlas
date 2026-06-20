@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 529: **3 more 3rd deep-dives on ML lessons** (content/depth). ml-linear-regression (multicollinearity), ml-naive-bayes (log-space compute),
+   ml-model-selection (learning vs validation curves). **9 of 10 ML lessons now at 3 dd** (only regularization left → iter-530 paired ship). Verified:
+   gate GREEN; dump-dom each nDD=3, kErr=0/rawD=0/errs=0. SW →v469.
    ✅ iter 528: **Wire ML topic into the prerequisite graph** (workflow/functionality; anti-monotony off content). Added 9 cross-topic PREREQS edges
    (ML lessons → la-dot-product-norms / a-trees-heaps / la-projection-least-squares+c-gradient-directional / dl-loss-functions /
    ps-conditional-independence-bayes / ps-point-estimation). Now prereq banner + learning path + Knowledge-Map edges work for ML. Verified: gate GREEN
