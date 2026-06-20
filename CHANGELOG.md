@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 457 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across algo/PS/LA (deep-dives 233 → **236**; 84 lessons now carry two):
+- **a-linear-sorts-selection** (had: "beat n log n by not comparing") → **quickselect**: partition like quicksort but recurse into *one*
+  side → `O(n)` average to find the kth element; selection is strictly easier than sorting.
+- **ps-random-variables-distributions** (had: "an RV is a function") → **PMF/PDF/CDF**: discrete mass vs continuous density (where
+  `P(X=x)=0` and probability is area under `f`); the CDF unifies both. Density isn't probability (can exceed 1).
+- **la-matrix-derivative-identities** (had: "chain rule bookkept by shapes") → **numerator vs denominator layout**: the transpose that
+  differs between sources; ML uses denominator/gradient layout so `∂(loss)/∂W` matches `W` — why backprop carries `Wᵀ`.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v396` → `atlas-v397`.
+
 ## iter 456 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across PS/algo/calc (deep-dives 230 → **233**; 81 lessons now carry two):
 - **ps-point-estimation** (had: "why n−1") → **bias vs consistency + MLE**: unbiased ≠ consistent; MLE (`argmax ∏ p(xᵢ|θ)`) is often biased
