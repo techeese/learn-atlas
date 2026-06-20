@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 461 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LA/PS/algo (deep-dives 245 → **248**; 96 lessons now carry two):
+- **la-vectors-operations** (had: "arrows and lists") → **linear combinations are the one operation**: scale + add is the atom — span,
+  independence, basis, rank, and even `Ax` (a combination of columns) are all questions about linear combinations.
+- **ps-p-values** (had: "what a p-value is NOT") → **p-hacking & multiple comparisons**: 20 tests at α=0.05 → ~1 false positive (P≥1 ≈ 64%);
+  fixes are Bonferroni (`α/m`), FDR, and pre-registration. Always ask "significant out of *how many*?"
+- **a-algorithms-for-ml** (had: "optimization wrapped in linear algebra") → **vectorization**: batched matmuls (BLAS/GPU) beat Python
+  loops 10–100× for identical math — why ML code is array ops, not loops, and why the matmul-shaped GPU reshaped the field.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v400` → `atlas-v401`.
+
 ## iter 460 — Step-back: full audit (clean) + three second deep-dives (content / depth)
 **Round-number step-back (iter 460).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **107
