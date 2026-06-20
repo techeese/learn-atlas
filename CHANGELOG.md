@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 557 — Three more third deep-dives: log-derivative trick · RLHF/DPO · moments (content / depth)
+Three more high-value third deep-dives (RL/LLM/PS), each the mechanism the lesson's first two dives set up:
+- **rl-policy-gradient-theorem** → **the log-derivative trick**: `∇θ E[f] = E[f ∇θ log πθ]` — how you differentiate through sampling (act, weight the score by
+  the return); the identity REINFORCE is built on.
+- **l-finetuning-and-instruction-tuning** → **RLHF & DPO**: align to *preferences* (ranking is easier than authoring) — RLHF trains a reward model + PPO with a
+  KL leash; DPO reaches the same optimum directly from the comparisons.
+- **ps-random-variables-distributions** → **expectation & variance**: the first two moments — `E[X]` (always linear) and `Var(X)=E[X²]−E[X]²` (scales by a²) —
+  which fully determine a Gaussian.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (log-derivative display math + Var/E moments render). SW cache `atlas-v496` → `atlas-v497`.
+
 ## iter 556 — Hands-on code across LA · PS · DL (new functionality / code)
 Extended runnable exercises to three more topics, each in a previously code-free lesson and matching its content exactly:
 - **la-vectors-operations** → **linear combination** `2u + 3v` → `8 4 7` (the one operation all of linear algebra is built from).
