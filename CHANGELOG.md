@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 496 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 347 → **350**; these three now carry three):
+- **l-what-is-a-language-model** (had: next-token machine · autoregressive) → **why next-token prediction is (almost) everything**: predicting
+  well *requires* grammar, facts, logic, translation, reasoning — one objective induces general skill; prediction ≈ compression ≈ understanding.
+- **ps-point-estimation** (had: n−1 Bessel · bias/consistency/MLE) → **MSE = bias² + variance**: total error splits into jitter (variance) +
+  systematic offset (bias²); so a biased estimator (shrinkage/ridge) can beat the unbiased one by trading bias for less variance.
+- **dl-ml-recap-and-the-learning-problem** (had: a loss you can't see · ERM) → **no free lunch**: averaged over all problems every learner ties,
+  so generalization needs an *inductive bias* that matches the data's structure (CNN locality, transformer context) — choosing a model is choosing a bias.
+Authored with `String.raw` LaTeX (`\underbrace` for the decomposition); injected via the append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v435` → `atlas-v436`.
+
 ## iter 495 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 344 → **347**; these three now carry three):
 - **dl-autoencoders-vae** (had: can't-differentiate-sample · plain-AE-can't-generate) → **the generative trilemma**: quality, diversity, speed
