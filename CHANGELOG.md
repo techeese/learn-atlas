@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 427 — Backprop by hand: a full numeric trace (examples — owner's backprop focus)
+Backprop follow-up #1 (owner's deep-focus). Added a worked example on `dl-backpropagation` that mirrors the new Lab viz exactly, so
+the learner can check pencil-and-paper against the animation (examples 424 → **425**):
+- **"A full forward-and-backward pass by hand (matches the Lab viz)"** — the 2-layer chain `z₁=w₁x → a₁=ReLU(z₁) → ŷ=w₂a₁ → L=(ŷ−y)²`
+  with `x=2, w₁=0.5, w₂=3, y=1`, chosen so every value is a clean integer: forward `z₁=1, a₁=1, ŷ=3, L=4`; backward `∂L/∂ŷ=4`,
+  `∂L/∂w₂=4`, `∂L/∂a₁=12`, `∂L/∂z₁=12` (`ReLU′(1)=1`), `∂L/∂w₁=24`, `∂L/∂x=6`. Each gradient is shown as *upstream × local derivative*,
+  and the activation step makes the "dead ReLU gates the gradient" point concrete. Ends by telling the reader to set the viz to ReLU
+  with these inputs and watch `∂L/∂w₁=24` appear.
+Every value node-verified; injected byte-stably with the round-trip guard.
+Verified: gate ALL GREEN (**425 examples**); **via `--dump-dom`** the example reveals with KaTeX (50 spans), **kErr=0, rawDollar=0**, and
+its signature numbers render. SW cache `atlas-v366` → `atlas-v367`. *(Next backprop steps: matrix/Jacobian-form deep-dive; a code
+exercise implementing the 2-layer backward pass.)*
+
 ## iter 426 — Step-through backpropagation visualization (visualizations — owner's request)
 **Owner asked to go deep on backpropagation** (examples, visualizations). Audited existing coverage first: backprop is taught across
 `dl-backpropagation` (2 dd + the single-weight `dl-backprop` viz), `c-chain-rule`, `la-matrix-calculus-backprop`,
