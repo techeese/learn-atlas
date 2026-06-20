@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 561: **Every lesson now shows a "Builds on / Leads to" trail** (UI/UX). lessonConnections used only the explicit prereq graph → 104/158 lessons
+   showed NO connections; now also includes in-course neighbours (prev=builds, next=leads) merged with cross-topic edges. Verified: gate GREEN; headless orphan
+   re-audit 104→0, spot checks correct (first→leads only, last→builds only, ml-knn keeps cross-topic), errs=0. SW →v501.
    ✅ iter 560: **STEP-BACK: full 8-topic audit (clean) + 3 more 3rd dives** (content/depth). Sweeps: 158 lessons errs=0/kErr=0/0 bad; 133 routes (incl. 8
    cheatsheets, 8 placements, 96 labs) errs=0/kErr=0 (291 green). Coverage: 0 thin; dd dist 2dd:22 / 3dd:136 / 4+:0 (449). Reflection 550→560: code now all 8
    topics, depth 2dd 37→22, ML example-parity, bagging viz (7 ML interactives). Ship: rl-what-is-rl (credit assignment), l-scaling-laws (inference-optimal),

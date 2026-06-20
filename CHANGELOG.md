@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 561 — Every lesson now shows a "Builds on / Leads to" trail (UI/UX · understandability)
+**Found a major navigation gap:** the lesson "Builds on / Leads to" connections panel used only the explicit/cross-topic prereq graph (35 keys), so **104 of 158
+lessons (66%) showed no connections at all** — including every foundational lesson (limits, asymptotic analysis, sample spaces…). Yet `learningPath` already
+treats the *implicit in-course ordering* as prerequisites. Made `lessonConnections` consistent: it now also includes each lesson's immediate in-course
+neighbours — the previous lesson under **Builds on**, the next under **Leads to** — merged and de-duped with the richer cross-topic edges (which still list
+first). A linear curriculum genuinely builds lesson-on-lesson, so this is principled, not a hack.
+Verified: gate ALL GREEN; **headless** — orphan re-audit **104 → 0** (every lesson now has a trail); spot checks: la-span-independence (was orphan) → Builds on +
+Leads to; first lessons (la-vectors-operations, a-asymptotic-analysis) → Leads to only; last lesson (ps-t-tests) → Builds on only; ml-knn still surfaces its
+cross-topic prereq + the in-course neighbour; **errs=0**. SW cache `atlas-v500` → `atlas-v501`.
+
 ## iter 560 — Step-back: full 8-topic audit (clean) + three more third dives (content / depth)
 **Round-number step-back.** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **158 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **133 non-lesson routes** (incl. 8

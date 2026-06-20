@@ -900,11 +900,22 @@
   }
 
   // "Builds on" (direct prereqs) + "Leads to" (lessons depending on this one)
+  // Includes the immediate in-course neighbours (the curriculum is ordered, so each lesson builds on the
+  // previous and leads to the next) merged with the explicit/cross-topic prereq graph — so every lesson shows
+  // a connections trail, not just the ~third that carry an explicit edge. Cross-topic edges list first.
   function lessonConnections(lid) {
     const idx = index();
-    const builds = directPrereqs(lid).map(id => idx[id]).filter(Boolean);
-    const leads = [];
-    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (l.id !== lid && directPrereqs(l.id).indexOf(lid) >= 0) leads.push(idx[l.id]); })));
+    const node = idx[lid]; if (!node) return "";
+    const flat = []; node.course.modules.forEach(m => m.lessons.forEach(l => flat.push(l.id)));
+    const pos = flat.indexOf(lid);
+    const prevId = pos > 0 ? flat[pos - 1] : null;
+    const nextId = (pos >= 0 && pos < flat.length - 1) ? flat[pos + 1] : null;
+    const buildIds = [...new Set([...directPrereqs(lid), ...(prevId ? [prevId] : [])])];
+    const builds = buildIds.map(id => idx[id]).filter(Boolean);
+    const leadSet = [];
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (l.id !== lid && directPrereqs(l.id).indexOf(lid) >= 0 && leadSet.indexOf(l.id) < 0) leadSet.push(l.id); })));
+    if (nextId && leadSet.indexOf(nextId) < 0) leadSet.push(nextId);
+    const leads = leadSet.map(id => idx[id]).filter(Boolean);
     if (!builds.length && !leads.length) return "";
     const chip = n => `<a class="conn-chip" href="#/lesson/${n.course.id}/${n.lesson.id}" data-route style="--c:${n.course.color}"><span class="cc-dot" style="background:${n.course.color}"></span>${esc(n.lesson.title)}</a>`;
     return `<div class="connections reveal">
