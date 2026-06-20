@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 550 — Step-back: full 8-topic audit (clean) + three central calculus third dives (content / depth)
+**Round-number step-back.** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **158 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **132 non-lesson routes** (incl. 8
+  cheatsheets, 8 placements, all 95 viz labs) → errs=0, kErr=0. **290 routes green.**
+- **Coverage + depth audit**: **0 structurally-thin**; dd distribution **2-dd: 40 → 37 · 3-dd: 118 → 121 · 4+dd: 0** (434 total, every lesson ≥2). 8 topics ·
+  158 lessons · 2448 MCQs · 939 cards · 466 examples · 95 viz · 99 code · 168 glossary. Remaining 2-dd by topic: calc 14→11, RL 9, LLM 6, PS 5, LA 3, algo 3 (DL & ML fully at ≥3).
+**Reflection (iters 540→550):** handled the owner's **streak-display bug** promptly mid-stream (first-paint "0" flash + singular grammar) and **completed the
+whole-header first-paint fix** (level/XP pre-hydration); advanced cross-topic depth (2-dd 52→37) with distinct third dives across LA/algo/PS/RL/DL/LLM/calc;
+and rounded out the ML pillar (now **6 interactives** incl. linreg/logreg training + bias–variance, **9 code exercises**, 3 examples on key lessons). Lanes
+rotated cleanly (viz/content/examples/code/bugfix/UX); zero red gates across the span.
+**The paired ship — three central calculus third dives**, each bridging to ML/optimization:
+- **c-definite-integral-riemann** → **the Fundamental Theorem of Calculus**: `∫ₐᵇ f = F(b)−F(a)` turns an infinite sum into a subtraction; accumulation and
+  rate of change are inverses.
+- **c-optimization** → **Lagrange multipliers**: optimize on the constraint where `∇f = λ∇g`; the engine behind SVM margins and ridge regularization (`λ` = the price of the constraint).
+- **c-gradient-directional** → **the gradient is the engine of optimization**: `θ ← θ − η∇L` is steepest descent (Cauchy–Schwarz), how essentially every ML model is trained.
+Verified: gate ALL GREEN; both step-back sweeps clean; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (FTC / `∇f=λ∇g` / `θ←θ−η∇L` display math renders). SW cache `atlas-v489` → `atlas-v490`.
+
 ## iter 549 — Interactive bias–variance viz (visualizations)
 The **95th widget, `ml-bias-variance-viz` "Bias–variance: fitting polynomials of growing degree."** Drag the polynomial degree (1–10) and watch the
 least-squares fit to noisy data: at low degree it **underfits** (high error everywhere), at high degree it **wiggles through every point** — training error
