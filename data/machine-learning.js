@@ -720,6 +720,152 @@
           ]
         }
       ]
+    },
+    {
+      "id": "ml-kernel-prob",
+      "title": "Kernel & Probabilistic Methods",
+      "lessons": [
+        {
+          "id": "ml-svm",
+          "title": "Support Vector Machines: The Widest Street",
+          "minutes": 18,
+          "content": "<h3>1. The hook: which separating line is best?</h3>\n<p>Two classes, linearly separable — there are <em>infinitely many</em> lines that split them. Which should you pick? A <strong>support vector machine (SVM)</strong> gives a principled answer: choose the line that sits in the <em>middle of the widest possible street</em> between the classes. Maximizing that gap — the <strong>margin</strong> — is not arbitrary aesthetics; it is a direct bet on better generalization, and it made SVMs the dominant classifier of the decade before deep learning.</p>\n\n<h3>2. The maximum-margin idea</h3>\n<p>The <strong>margin</strong> is the distance from the decision boundary to the nearest training point of either class. An SVM finds the hyperplane that <em>maximizes</em> this margin — pushing the boundary as far from both classes as possible. Intuitively, a boundary crammed up against the data is fragile (a small wiggle flips a point); a boundary centered in a wide empty corridor is robust. The SVM picks the most robust one.</p>\n\n<h3>3. Support vectors: only the borderline points matter</h3>\n<p>Here is the striking part: the optimal boundary depends <em>only</em> on the handful of points sitting right on the edge of the street — the <strong>support vectors</strong>. Every point comfortably on the correct side could be deleted without changing the answer. The model is <em>sparse in the data</em>: it is defined by a few critical examples, not the whole set. That is why \"support\" — those vectors hold the boundary up.</p>\n\n<h3>4. The optimization (the gist)</h3>\n<p>If the boundary is $w^\\top x + b = 0$, the margin width works out to $2/\\lVert w\\rVert$. So maximizing the margin means <em>minimizing</em> $\\lVert w\\rVert$ subject to classifying every point correctly with room to spare: $y_i(w^\\top x_i + b) \\ge 1$ for all $i$. This is a <strong>convex quadratic program</strong> — one global optimum, solvable reliably. The constraints that end up \"tight\" (equal to 1) are exactly the support vectors.</p>\n\n<h3>5. Soft margin: real data overlaps</h3>\n<p>Few real datasets are perfectly separable, so the <strong>soft-margin</strong> SVM allows some points to violate the margin, paying a penalty. A hyperparameter $C$ tunes the trade-off: <em>large $C$</em> punishes violations harshly → a narrow margin that fits the training data tightly (risking overfit); <em>small $C$</em> tolerates more violations → a wider, smoother margin (more bias, often better generalization). $C$ is the SVM's regularization knob, chosen by cross-validation.</p>\n\n<h3>6. The kernel trick: curved boundaries for free</h3>\n<p>A straight line can't separate classes shaped like rings or spirals. The <strong>kernel trick</strong> handles this elegantly: implicitly map the data into a much higher-dimensional space where it <em>is</em> linearly separable, draw the flat boundary there, and it bends back into a curve in the original space. The magic is that the SVM only ever needs <em>dot products</em> between points, and a <strong>kernel function</strong> $k(x, z)$ computes the dot product in the high-dim space <em>directly</em> — without ever building those huge feature vectors. Popular kernels: <em>polynomial</em> and the <em>RBF (Gaussian)</em> kernel $k(x,z) = e^{-\\gamma \\lVert x - z\\rVert^2}$.</p>\n\n<h3>7. Still linear, just elsewhere</h3>\n<p>An SVM with a kernel is still a <em>linear</em> classifier — in the (implicit) feature space. The RBF kernel corresponds to an effectively infinite-dimensional space, which is why it can carve almost any boundary. Its width $\\gamma$ is a second hyperparameter: large $\\gamma$ makes each point's influence local (wiggly boundary, can overfit), small $\\gamma$ makes it broad (smoother). You tune $C$ and $\\gamma$ together by cross-validation. And because kernels and margins are built on distances, you must <strong>standardize features</strong> first.</p>\n\n<h3>8. The big picture</h3>\n<p>An SVM finds the maximum-margin boundary, defined by a few support vectors, via a convex quadratic program; the soft margin ($C$) handles overlap, and the kernel trick buys nonlinear boundaries without explicit high-dim features. Strengths: excellent in high dimensions, flexible via kernels, strong generalization from the margin. Weaknesses: scaling to very large datasets is costly, the $C$/$\\gamma$ tuning matters a lot, and the kernelized model is hard to interpret. Before deep learning, SVMs were the go-to for hard classification problems — and they remain superb on small-to-medium, high-dimensional data.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the kernel trick — nonlinearity for (almost) free</summary>\n<p>The kernel trick is one of the most elegant ideas in machine learning: get the power of an enormous feature space while never paying to compute it.</p>\n<p><b>The setup.</b> Suppose you map inputs through some feature transform $\\phi$ (e.g. all products of pairs of features) into a high-dimensional space, then run a linear method there. Done naively, $\\phi(x)$ could have millions of components — expensive or impossible to store. <b>The trick:</b> many algorithms (SVM, ridge regression, PCA) only ever use the data through <em>inner products</em> $\\phi(x)^\\top \\phi(z)$. A <em>kernel</em> $k(x,z)$ is a function that returns exactly that inner product <em>without</em> constructing $\\phi$. So you swap every dot product for a kernel evaluation and operate in the huge space implicitly.</p>\n<p><b>How far it goes.</b> The RBF kernel $e^{-\\gamma\\lVert x-z\\rVert^2}$ corresponds to an <em>infinite-dimensional</em> feature space — yet each evaluation is a cheap exponential of a distance. Any method expressible purely in dot products can be \"kernelized\" this way (kernel PCA, kernel ridge regression, Gaussian processes). The only requirement is that $k$ be a valid (positive semidefinite) kernel — Mercer's condition.</p>\n<p>The \"aha\": the kernel trick decouples <em>model expressiveness</em> from <em>computational cost</em>. You get nonlinear, even infinite-dimensional, decision boundaries at the price of a simple function evaluation per pair of points — by never leaving the world of dot products.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why maximize the margin? (the generalization story)</summary>\n<p>Maximizing the margin is not just intuitive robustness — it is a principled form of <em>complexity control</em>.</p>\n<p><b>Margin as regularization.</b> Recall the SVM minimizes $\\lVert w\\rVert$ (equivalently maximizes the margin $2/\\lVert w\\rVert$). Minimizing the weight norm is exactly the L2 regularization you met with ridge — so a large margin <em>is</em> a small-weight, low-complexity solution. Among all boundaries that separate the data, the widest-margin one is the \"simplest,\" and simpler hypotheses generalize better. This is the heart of <em>structural risk minimization</em>: the wider the margin, the tighter the theoretical bound on test error (a VC-dimension argument), independent of the input dimension.</p>\n<p><b>Sparsity in examples.</b> Because only support vectors determine the boundary, the solution is sparse in the <em>data</em> — most points are irrelevant. This both compresses the model (store only the support vectors) and connects to the bound: fewer support vectors generally means better expected generalization.</p>\n<p>The \"aha\": the margin is a built-in regularizer. Maximizing it minimizes the weight norm (low complexity) and yields a solution resting on a few support vectors, which is why SVMs generalize so well even in very high dimensions where other methods overfit.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "Among all hyperplanes that separate two classes, which does an SVM choose?",
+              "choices": [
+                "The one passing through the most points",
+                "A random valid separator",
+                "The one that maximizes the margin (distance to the nearest points)",
+                "The one closest to the origin"
+              ],
+              "answer": 2,
+              "explain": "An SVM picks the maximum-margin hyperplane — centered in the widest gap between the classes — for robustness and better generalization."
+            },
+            {
+              "q": "What are the 'support vectors' of an SVM?",
+              "choices": [
+                "The training points closest to the boundary, which alone determine it",
+                "All the training points equally",
+                "The feature columns of the data matrix",
+                "The eigenvectors of the kernel matrix"
+              ],
+              "answer": 0,
+              "explain": "Only the borderline points (support vectors) define the optimal boundary; points comfortably on the correct side can be removed without changing it — the solution is sparse in the data."
+            },
+            {
+              "q": "The soft-margin hyperparameter $C$ controls",
+              "choices": [
+                "the number of features used",
+                "the learning rate of gradient descent",
+                "the dimension of the kernel space",
+                "the trade-off between a wide margin and tolerating misclassifications"
+              ],
+              "answer": 3,
+              "explain": "Large C punishes margin violations (narrow margin, tight fit, risk of overfit); small C tolerates violations (wider margin, more bias). It's the SVM's regularization knob."
+            },
+            {
+              "q": "What does the kernel trick let an SVM do?",
+              "choices": [
+                "Train without any labels",
+                "Compute dot products in a high-dimensional feature space without explicitly forming the features",
+                "Guarantee a linear boundary in the original space",
+                "Avoid choosing any hyperparameters"
+              ],
+              "answer": 1,
+              "explain": "A kernel returns the inner product in an implicit high-dim space directly, so the SVM gets nonlinear boundaries without ever building the huge feature vectors."
+            },
+            {
+              "q": "The RBF (Gaussian) kernel corresponds to a feature space that is",
+              "choices": [
+                "one-dimensional",
+                "the same as the input space",
+                "effectively infinite-dimensional",
+                "empty"
+              ],
+              "answer": 2,
+              "explain": "The RBF kernel implicitly maps to an infinite-dimensional space, which is why it can represent almost any decision boundary; yet each evaluation is just an exponential of a distance."
+            },
+            {
+              "q": "Why does maximizing the margin improve generalization?",
+              "choices": [
+                "A wider margin is a lower-complexity (small-weight) solution — built-in regularization",
+                "It increases the number of support vectors",
+                "It memorizes the training set",
+                "It removes the need for labels"
+              ],
+              "answer": 0,
+              "explain": "Maximizing the margin minimizes the weight norm (like L2 regularization) — the simplest separator — and structural risk minimization ties wider margins to tighter test-error bounds."
+            },
+            {
+              "q": "Why must features be standardized before training an SVM (especially with RBF)?",
+              "choices": [
+                "SVMs can't handle decimals",
+                "To make the labels balanced",
+                "SVMs require integer features",
+                "Kernels and margins are distance-based, so unscaled large-range features dominate"
+              ],
+              "answer": 3,
+              "explain": "Margins and kernels (RBF especially) depend on distances; without scaling, a large-range feature swamps the others — the same scaling lesson as kNN."
+            },
+            {
+              "q": "An SVM's decision boundary in the original input space is",
+              "choices": [
+                "always a single point",
+                "linear with a linear kernel and nonlinear with a nonlinear kernel (though linear in feature space)",
+                "always nonlinear",
+                "undefined without labels"
+              ],
+              "answer": 1,
+              "explain": "A linear-kernel SVM gives a hyperplane; a kernelized SVM is linear in the implicit feature space, which appears as a curved boundary in the original space."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "What does a support vector machine optimize?",
+              "back": "The maximum-margin separating hyperplane: minimize ‖w‖ (maximize margin 2/‖w‖) subject to yᵢ(wᵀxᵢ+b) ≥ 1 — a convex quadratic program. The boundary sits in the widest 'street' between the classes."
+            },
+            {
+              "front": "What are support vectors?",
+              "back": "The training points on the margin's edge that alone determine the boundary; all other points are irrelevant (could be deleted). The solution is sparse in the data — defined by a few critical examples."
+            },
+            {
+              "front": "What does the soft-margin C control?",
+              "back": "The trade-off between margin width and misclassification tolerance. Large C = narrow margin, tight fit (overfit risk); small C = wider margin, more violations allowed (more bias). It's the SVM regularizer; tune by CV."
+            },
+            {
+              "front": "What is the kernel trick?",
+              "back": "Compute the dot product in a high-dimensional feature space directly via a kernel k(x,z)=φ(x)·φ(z), without ever building φ. Enables nonlinear boundaries cheaply. RBF kernel e^(−γ‖x−z‖²) = infinite-dim space. Tune C and γ."
+            },
+            {
+              "front": "Why does the SVM margin help generalization?",
+              "back": "Maximizing the margin = minimizing ‖w‖ = L2 regularization (lowest-complexity separator). Structural risk minimization links wider margins to tighter test-error bounds, even in high dimensions. Only support vectors matter (sparse, compressible)."
+            }
+          ],
+          "homework": [
+            {
+              "q": "An SVM is trained and you discover that of 1000 training points, only 12 are support vectors. (a) What does this tell you about the model, and (b) what happens to the boundary if you delete a non-support-vector point versus a support vector?",
+              "solution": "(a) The model is very sparse in the data: the entire decision boundary is determined by just those 12 borderline points, so it can be stored and applied using only them — and a small number of support vectors generally signals a well-separated problem and good expected generalization. (b) Deleting a NON-support-vector (a point comfortably on the correct side, outside the margin) changes nothing — retraining gives the identical boundary, because such points don't enter the solution. Deleting a SUPPORT vector can move the boundary, since the margin was resting on it; the SVM would re-solve and find a new maximum-margin hyperplane supported by different points."
+            },
+            {
+              "q": "Explain the effect of increasing the soft-margin C from very small to very large, in terms of bias, variance, and overfitting. When would you prefer a small C?",
+              "solution": "Small C: violations are cheap, so the SVM prioritizes a WIDE margin even if several points fall inside it or are misclassified — this is a simpler, smoother boundary with higher bias and lower variance (more regularized). Large C: violations are heavily penalized, so the SVM contorts the boundary to classify (almost) every training point correctly — a narrow margin, low bias, high variance, prone to overfitting noise. You'd prefer a small C when the data is noisy or overlapping, or when you have limited data and want a robust, generalizing boundary rather than one that chases every training point. The right C is found by cross-validation."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Why a wider margin generalizes better",
+              "scenario": "Two separable clusters. Boundary A passes 0.1 units from the nearest points of each class; boundary B passes 1.0 units from them. Both classify the training set perfectly. Which is the SVM's choice and why is it safer on new data?",
+              "solution": "The SVM chooses B — the larger margin (1.0 vs 0.1). Both are perfect on training data, so training accuracy can't distinguish them, but B is more robust: a new point, or noise, that shifts a sample by up to ~1 unit still lands on the correct side of B, whereas a shift of just 0.1 could flip it across A. Formally, the wider margin corresponds to a smaller ‖w‖ (lower complexity / stronger regularization), which gives a tighter generalization bound. The empty 'street' around B is the safety buffer A lacks."
+            },
+            {
+              "title": "When a straight line fails — go to a kernel",
+              "scenario": "Class 1 is a tight blob at the origin; class 0 forms a ring around it. No straight line separates them. How does an SVM solve this without abandoning its linear machinery?",
+              "solution": "Use a nonlinear kernel (e.g. RBF, or a polynomial/feature map like (x₁, x₂, x₁²+x₂²)). Adding the radius feature x₁²+x₂² lifts the data into a higher dimension where the inner blob (small radius) and the outer ring (large radius) become linearly separable by a flat threshold on that new axis. The SVM draws its usual maximum-margin hyperplane in that lifted space; projected back to the original 2D plane, the boundary is a circle separating blob from ring. The kernel trick does this implicitly — computing the needed dot products via k(x,z) without ever forming the lifted features."
+            }
+          ]
+        }
+      ]
     }
   ]
 }

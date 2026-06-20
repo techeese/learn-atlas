@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 519 — Machine Learning topic: Support Vector Machines (new module 3) (content / new topic build-out)
+Continuing the 8th topic. Started **module 3 "Kernel & Probabilistic Methods"** with **Support Vector Machines: The Widest Street** (course now 3
+modules / **6 lessons**). 8-section lecture (maximum-margin idea · support vectors / sparse-in-data · the convex QP `min ‖w‖ s.t. yᵢ(wᵀxᵢ+b)≥1` · soft
+margin & `C` · the kernel trick · RBF `e^{−γ‖x−z‖²}` & still-linear-in-feature-space · scaling) + **2 deep-dives** (the kernel trick — nonlinearity for
+free, RBF = infinite-dim, Mercer; why maximize the margin — margin = L2 regularization, structural risk minimization, sparsity in support vectors) +
+**8 MCQs** (de-skewed 2/2/2/2) + **5 flashcards** + **2 homework** + **2 worked examples** (why a wider margin generalizes; ring-vs-blob → kernel).
+SVMs/kernels appear nowhere in the other topics → zero duplication.
+Verified: `node gate.js` → **8 topics · 154 lessons · ALL GREEN**; **headless** — course page lists 6 lessons, SVM opens with **nDD=2**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v458` → `atlas-v459`.
+**Queued next:** Naive Bayes (finish module 3), then k-Means & clustering, Ensembles, Model Selection/CV.
+
 ## iter 518 — Machine Learning topic: Regularization (finishes module 2) (content / new topic build-out)
 Continuing the 8th topic. Added **Regularization: Ridge, Lasso & Taming the Weights**, completing module 2 "Linear Models" (course now 2 modules /
 **5 lessons**). 8-section lecture (penalize complexity `Loss + λΩ(w)` · ridge/L2 with closed form `(XᵀX+λI)⁻¹Xᵀy` + collinearity cure · lasso/L1
