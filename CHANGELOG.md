@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 522 — Machine Learning topic: Ensembles (new module 5) (content / new topic build-out)
+Continuing the 8th topic. Started **module 5 "Ensembles"** with **Ensembles: Bagging, Boosting & Random Forests** (course now 5 modules / **9
+lessons**). 8-section lecture (wisdom-of-crowds · why combining helps · bagging/bootstrap · random forests & feature decorrelation · boosting/AdaBoost ·
+gradient boosting XGBoost/LightGBM · bagging-vs-boosting · tabular state-of-the-art) + **2 deep-dives** (why averaging cuts variance — the `σ²/n` vs
+`ρσ²+(1−ρ)σ²/n` math and why decorrelation is everything; boosting turns weak learners strong — the weak-learning theorem + gradient descent in
+function space) + **8 MCQs** (de-skewed 2/2/2/2) + **5 flashcards** + **2 homework** + **2 worked examples** (majority vote of 3 independent 70% models →
+78%; choosing bagging vs boosting by the base learner). Ensembles appear nowhere else → zero duplication; the Decision Trees lesson forward-links here.
+Verified: `node gate.js` → **8 topics · 157 lessons · ALL GREEN**; **headless** — lesson opens with **nDD=2**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v461` → `atlas-v462`.
+**Queued next:** module 6 — Model Selection & Cross-Validation (likely the capstone of the topic).
+
 ## iter 521 — Machine Learning topic: k-Means (new module 4 "Unsupervised Learning") (content / new topic build-out)
 Continuing the 8th topic — its **first unsupervised lesson**. Started **module 4 "Unsupervised Learning"** with **k-Means: Finding Groups Without
 Labels** (course now 4 modules / **8 lessons**). 8-section lecture (the unsupervised setup · Lloyd's assign/update algorithm · the inertia objective

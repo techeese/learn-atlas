@@ -1152,6 +1152,152 @@
           ]
         }
       ]
+    },
+    {
+      "id": "ml-ensembles",
+      "title": "Ensembles",
+      "lessons": [
+        {
+          "id": "ml-ensembles",
+          "title": "Ensembles: Bagging, Boosting & Random Forests",
+          "minutes": 18,
+          "content": "<h3>1. The hook: the wisdom of crowds</h3>\n<p>Ask one expert and you get one biased opinion; poll a diverse crowd and the average is often startlingly accurate. <strong>Ensemble methods</strong> apply this to machine learning: instead of betting on a single model, train <em>many</em> and combine their predictions. The result routinely beats any individual member — and on <em>tabular</em> data, ensembles of decision trees (random forests and gradient boosting) are still the reigning champions, frequently outperforming deep neural networks.</p>\n\n<h3>2. Why combining helps</h3>\n<p>A single flexible model (like a deep decision tree) is often <em>high variance</em> — it swings wildly with small data changes. If you average many such models whose errors are <em>not perfectly correlated</em>, the errors partly cancel while the signal reinforces, so the combined prediction is more stable and accurate. The two great families exploit this differently: <strong>bagging</strong> attacks variance, <strong>boosting</strong> attacks bias.</p>\n\n<h3>3. Bagging (bootstrap aggregating)</h3>\n<p><strong>Bagging</strong> trains each model on a different <em>bootstrap sample</em> — a random resample of the training data drawn <em>with replacement</em> — then averages their outputs (or takes a majority vote). Because each model sees a slightly different dataset, they make different errors, and averaging cancels much of the variance. Bagging shines on high-variance, low-bias base learners: full-grown decision trees are the classic choice. (Bonus: the ~37% of points left out of each bootstrap give a free \"out-of-bag\" validation estimate.)</p>\n\n<h3>4. Random forests</h3>\n<p>A <strong>random forest</strong> is bagging on decision trees with one extra twist: at <em>each split</em>, the tree may only consider a <em>random subset of the features</em>. Why cripple each tree? Because if one feature is very strong, plain bagged trees would all split on it first and end up <em>correlated</em> — and averaging correlated models barely helps. Forcing feature randomness <strong>decorrelates</strong> the trees, so averaging cuts variance much further. The random forest is the practical default: accurate, robust, little tuning, and it reports feature importance for free.</p>\n\n<h3>5. Boosting</h3>\n<p><strong>Boosting</strong> takes the opposite tack: train models <em>sequentially</em>, each one focused on the mistakes of the ones before. <em>AdaBoost</em> re-weights the training points after each round, up-weighting those still misclassified so the next model concentrates on them; the final prediction is a weighted vote. Boosting combines many <em>weak</em> learners (often shallow trees, \"stumps\") into a strong one, and it mainly reduces <strong>bias</strong> — turning underfitting models into an accurate committee.</p>\n\n<h3>6. Gradient boosting</h3>\n<p>The modern powerhouse is <strong>gradient boosting</strong>: each new tree is fit to the <em>residual errors</em> (more precisely, the negative gradient of the loss) of the ensemble so far, then added with a small <em>learning rate</em>. Step by step the ensemble descends the loss. Implementations like <strong>XGBoost</strong> and <strong>LightGBM</strong> are the go-to winners of tabular-data competitions. The price of boosting's accuracy is care: too many trees or too large a learning rate overfits, so you regularize with shallow trees, a small learning rate, subsampling, and early stopping.</p>\n\n<h3>7. Bagging vs boosting</h3>\n<p>A clean contrast. <em>Bagging</em>: parallel (trees independent), each a strong learner, reduces <em>variance</em>, hard to overfit, easy to tune. <em>Boosting</em>: sequential (each depends on the last), each a weak learner, reduces <em>bias</em>, can be more accurate but easier to overfit and needs tuning. Random forests vs gradient-boosted trees is the everyday embodiment of this trade-off.</p>\n\n<h3>8. The big picture</h3>\n<p>Ensembles combine many models so their errors cancel: bagging/random forests average independent high-variance trees to cut variance; boosting/gradient boosting builds trees sequentially to cut bias. Together — especially gradient-boosted trees — they are the state of the art for structured/tabular data. The meta-lesson: a crowd of diverse, imperfect models, combined well, beats a single perfect-seeming one.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why averaging reduces variance (and why decorrelation is everything)</summary>\n<p>Bagging's power is a one-line piece of probability — and that same line explains exactly why random forests add feature randomness.</p>\n<p><b>Independent case.</b> Average $n$ models whose predictions each have variance $\\sigma^2$ and are <em>uncorrelated</em>. The variance of their average is $\\sigma^2 / n$ — it shrinks toward zero as you add models. (The bias is unchanged: averaging unbiased-but-noisy models keeps the bias, kills the variance. That's why you bag <em>low-bias, high-variance</em> learners like full trees.)</p>\n<p><b>Correlated case — the catch.</b> Real bagged models aren't independent: trained on overlapping data, they're correlated by some $\\rho$. Then the variance of the average is $\\rho\\,\\sigma^2 + \\frac{1-\\rho}{n}\\,\\sigma^2$. As $n \\to \\infty$ the second term vanishes but the first, $\\rho\\,\\sigma^2$, <em>remains</em> — a floor set by the correlation. So no matter how many trees you add, correlation caps the benefit.</p>\n<p><b>Why random forests exist.</b> That formula is the entire rationale: to push variance lower you must shrink $\\rho$. Random feature selection at each split forces the trees to differ, lowering $\\rho$ and thus the floor — buying variance reduction that plain bagging can't. Random forests are, literally, bagging engineered to minimize $\\rho$.</p>\n<p>The \"aha\": averaging cuts variance as $\\sigma^2/n$ only when models are independent; correlation leaves an irreducible $\\rho\\sigma^2$ floor. Decorrelating the ensemble (random forests' feature subsampling) is therefore not a tweak — it's the whole game.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: boosting turns weak learners into a strong one</summary>\n<p>Boosting rests on a surprising theoretical result and a beautiful reframing as optimization.</p>\n<p><b>The weak-learning theorem.</b> A <em>weak learner</em> only needs to do <em>slightly</em> better than random guessing. Schapire and Freund proved that such weak learners can be <em>combined</em> (boosted) into a learner of <em>arbitrarily high</em> accuracy. AdaBoost realizes this: each round re-weights the data toward the currently-misclassified points, forcing the next weak learner to fix what the committee gets wrong, and weights each learner's vote by how well it did. Errors get hunted down one round at a time.</p>\n<p><b>Gradient boosting as gradient descent in function space.</b> The modern view generalizes this to any differentiable loss. Treat the ensemble's prediction as the thing being optimized: at each step compute the <em>negative gradient</em> of the loss with respect to the current predictions (for squared error this is just the residuals), and fit a new tree to <em>that</em>. Adding the tree (scaled by a learning rate) is one step of gradient descent — but in the space of <em>functions</em>, not parameters. Boosting is literally gradient descent where each \"step\" is a small tree.</p>\n<p><b>The catch.</b> Because boosting keeps reducing training error, it can drive bias to zero and start fitting noise. The regularizers — shallow trees, a small learning rate (shrinkage), row/column subsampling, and early stopping on a validation set — are what keep it honest.</p>\n<p>The \"aha\": boosting is not just \"more trees.\" It's a theorem (weak ⇒ strong) made practical as gradient descent in function space, sequentially fitting each tree to the current errors. That's why gradient-boosted trees are so accurate — and why they need disciplined regularization to avoid overfitting.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "What is the core idea of ensemble methods?",
+              "choices": [
+                "Train a single very deep model",
+                "Combine many models so the result beats any individual one",
+                "Remove all but the best feature",
+                "Use only the most accurate single model"
+              ],
+              "answer": 1,
+              "explain": "Ensembles aggregate many models (averaging or voting); if their errors aren't perfectly correlated, the combination is more accurate and stable than any one."
+            },
+            {
+              "q": "Bagging (bootstrap aggregating) reduces error mainly by",
+              "choices": [
+                "reducing bias by fitting residuals",
+                "adding more features",
+                "pruning the trees",
+                "reducing variance — averaging models trained on bootstrap resamples"
+              ],
+              "answer": 3,
+              "explain": "Each model trains on a different resample, so they make different errors; averaging cancels variance. Bagging is ideal for high-variance learners like full trees."
+            },
+            {
+              "q": "A random forest improves on plain bagged trees by",
+              "choices": [
+                "also choosing a random subset of features at each split, which decorrelates the trees",
+                "using a single very deep tree",
+                "boosting the misclassified points",
+                "removing the bootstrap sampling"
+              ],
+              "answer": 0,
+              "explain": "If one feature is dominant, bagged trees all split on it and stay correlated. Random feature subsets decorrelate the trees, so averaging cuts variance much more."
+            },
+            {
+              "q": "How does boosting differ from bagging?",
+              "choices": [
+                "It trains all models in parallel on the full data",
+                "It only works for regression",
+                "It trains models sequentially, each correcting the previous ones' mistakes (reducing bias)",
+                "It never overfits"
+              ],
+              "answer": 2,
+              "explain": "Boosting is sequential: each learner focuses on the errors so far, combining weak learners into a strong one and mainly reducing bias (vs bagging's variance reduction)."
+            },
+            {
+              "q": "In gradient boosting, each new tree is fit to",
+              "choices": [
+                "a fresh bootstrap sample",
+                "the residual errors / negative gradient of the loss so far",
+                "a random subset of classes",
+                "the original labels, ignoring previous trees"
+              ],
+              "answer": 1,
+              "explain": "Gradient boosting fits each tree to the negative gradient of the loss (the residuals for squared error), then adds it with a small learning rate — gradient descent in function space."
+            },
+            {
+              "q": "Why does averaging many models reduce variance?",
+              "choices": [
+                "It increases the bias to compensate",
+                "It removes the need for training data",
+                "Averaging always eliminates error entirely",
+                "Uncorrelated errors partly cancel, so the variance of the average falls with the number of models"
+              ],
+              "answer": 3,
+              "explain": "For n uncorrelated models of variance σ², the average has variance σ²/n. (Correlation ρ leaves a floor ρσ², which is why random forests decorrelate.)"
+            },
+            {
+              "q": "On typical structured/tabular datasets, which often performs best?",
+              "choices": [
+                "Gradient-boosted trees and random forests (often beating deep nets)",
+                "A single k-nearest-neighbor model",
+                "Plain linear regression",
+                "An unregularized deep neural network"
+              ],
+              "answer": 0,
+              "explain": "Tree ensembles, especially gradient boosting (XGBoost/LightGBM), are the state of the art on tabular data and frequently outperform deep learning there."
+            },
+            {
+              "q": "A risk of boosting compared to bagging is that it",
+              "choices": [
+                "cannot use decision trees",
+                "ignores the loss function",
+                "can overfit, so it needs regularization (small learning rate, shallow trees, early stopping)",
+                "reduces variance but never bias"
+              ],
+              "answer": 2,
+              "explain": "Boosting keeps cutting training error and can start fitting noise; shrinkage, shallow trees, subsampling, and early stopping keep it from overfitting."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Bagging vs boosting in one line",
+              "back": "Bagging: train models in parallel on bootstrap resamples and average → reduces VARIANCE (use on high-variance learners like full trees). Boosting: train sequentially, each fixing the last's errors → reduces BIAS (combine weak learners into a strong one)."
+            },
+            {
+              "front": "What is a random forest and why the feature randomness?",
+              "back": "Bagged decision trees + a random feature subset considered at each split. The feature randomness decorrelates the trees (otherwise a dominant feature makes them similar), so averaging reduces variance far more. Robust default, gives feature importance."
+            },
+            {
+              "front": "What is gradient boosting?",
+              "back": "Build trees sequentially, each fit to the negative gradient of the loss (residuals) of the ensemble so far, added with a small learning rate — gradient descent in function space. XGBoost/LightGBM dominate tabular ML. Regularize to avoid overfitting."
+            },
+            {
+              "front": "Why does averaging reduce variance, and the catch?",
+              "back": "n uncorrelated models of variance σ² average to variance σ²/n. But correlated models (correlation ρ) give ρσ² + (1−ρ)σ²/n → an irreducible floor ρσ². So decorrelation (random forests) is essential. Averaging doesn't reduce bias."
+            },
+            {
+              "front": "Why are ensembles so strong, and where?",
+              "back": "A crowd of diverse, imperfect models whose errors cancel beats any single one. Tree ensembles (random forests, gradient-boosted trees) are state of the art on tabular/structured data, often beating deep nets there."
+            }
+          ],
+          "homework": [
+            {
+              "q": "You have a single decision tree that gets 100% training accuracy but only 70% test accuracy (high variance). Would bagging or boosting be the more natural fix, and why? What does the other one target instead?",
+              "solution": "Bagging is the natural fix. The symptom — perfect training accuracy but much lower test accuracy — is classic high variance/overfitting, and bagging (and especially random forests) directly reduces variance by averaging many trees trained on different bootstrap samples, smoothing out the overfitting of any single tree, without increasing bias much. Boosting instead targets BIAS: it combines weak/underfitting learners (e.g. shallow stumps) into a strong one, so it's the remedy when your base model is too simple (underfitting), not when a flexible model is overfitting. (Boosting can be applied to trees too, but you'd use shallow ones and careful regularization, since boosting can itself overfit.)"
+            },
+            {
+              "q": "Explain, using the variance-of-an-average idea, why a random forest can outperform plain bagged trees even with the same number of trees.",
+              "solution": "Averaging n models with per-model variance σ² and pairwise correlation ρ gives ensemble variance ρσ² + (1−ρ)σ²/n. With many trees the second term shrinks, so the floor is ρσ² — set entirely by how correlated the trees are. Plain bagged trees are quite correlated (if one feature is strongly predictive, every tree splits on it early and they look alike), so ρ is high and the variance floor stays high — adding trees helps little past a point. A random forest forces each split to consider only a random subset of features, which makes the trees genuinely different (lower ρ), pushing the ρσ² floor down. Same number of trees, but lower correlation → lower ensemble variance → better generalization. Decorrelation is the mechanism."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Why averaging uncorrelated models helps (numbers)",
+              "scenario": "Three independent classifiers each have 70% accuracy (30% error) on a binary task, making independent errors. Using majority vote, is the ensemble better or worse than 70%?",
+              "solution": "The ensemble is wrong only when at least 2 of the 3 err. With independent 0.3 error rates: P(all 3 wrong)=0.3³=0.027; P(exactly 2 wrong)=3·0.3²·0.7=0.189. So P(majority wrong)=0.027+0.189=0.216, i.e. ~78.4% accuracy — up from 70%. Three mediocre, independent voters beat any one of them, because for the majority to fail, multiple independent errors must coincide, which is unlikely. (The gain depends on independence — if the three always erred together, the vote would stay at 70%, which is exactly why decorrelation matters.)"
+            },
+            {
+              "title": "Picking bagging vs boosting by the base learner",
+              "scenario": "Base learner A is a full, deep decision tree (low bias, high variance). Base learner B is a depth-1 stump (high bias, low variance). Which ensemble method suits each?",
+              "solution": "Use BAGGING (or a random forest) for A, the deep tree: it's already low-bias but high-variance, and bagging averages away the variance — full trees are the canonical random-forest base learner. Use BOOSTING for B, the stump: a single stump badly underfits (high bias), but boosting chains many stumps, each correcting the last, to drive the bias down into a strong learner — shallow trees are the canonical gradient-boosting base learner. The rule: bag low-bias/high-variance models to cut variance; boost high-bias/weak models to cut bias."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
