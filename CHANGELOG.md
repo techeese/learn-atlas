@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 521 — Machine Learning topic: k-Means (new module 4 "Unsupervised Learning") (content / new topic build-out)
+Continuing the 8th topic — its **first unsupervised lesson**. Started **module 4 "Unsupervised Learning"** with **k-Means: Finding Groups Without
+Labels** (course now 4 modules / **8 lessons**). 8-section lecture (the unsupervised setup · Lloyd's assign/update algorithm · the inertia objective
+`J=ΣΣ‖x−μ‖²` · choosing k via elbow/silhouette · k-means++ & restarts · spherical/scale assumptions & limits · the clustering family DBSCAN/hierarchical/
+GMM) + **2 deep-dives** (k-means is coordinate descent → converges but only locally, NP-hard globally; k-means vs GMM — hard vs soft assignment, k-means
+as the zero-variance limit of EM) + **8 MCQs** (de-skewed 2/2/2/2) + **5 flashcards** + **2 homework** + **2 worked examples** (one k-means iteration by
+hand; reading an elbow plot). Clustering appears nowhere in the other topics → zero duplication.
+Verified: `node gate.js` → **8 topics · 156 lessons · ALL GREEN**; **headless** — course page lists 8 lessons, k-Means opens with **nDD=2**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v460` → `atlas-v461`.
+**Queued next:** module 5 — Ensembles (bagging/boosting/random forests); module 6 — Model Selection & Cross-Validation.
+
 ## iter 520 — Step-back: full 8-topic audit (clean) + Naive Bayes (finishes module 3) (content / new topic build-out)
 **Round-number step-back**, now spanning all 8 topics. Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **154 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **109 non-lesson routes**

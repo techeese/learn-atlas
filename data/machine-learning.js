@@ -1006,6 +1006,152 @@
           ]
         }
       ]
+    },
+    {
+      "id": "ml-unsupervised",
+      "title": "Unsupervised Learning",
+      "lessons": [
+        {
+          "id": "ml-kmeans",
+          "title": "k-Means: Finding Groups Without Labels",
+          "minutes": 17,
+          "content": "<h3>1. The hook: structure with no answer key</h3>\n<p>Everything so far had labels — a target to predict. <strong>Unsupervised learning</strong> drops the labels and asks a harder, more open question: <em>what structure is hiding in this data?</em> The most famous answer is <strong>clustering</strong> — grouping similar points together — and its workhorse is <strong>k-means</strong>. Feed it customer data and it finds market segments; feed it pixels and it compresses an image; feed it documents and it groups topics. No supervision, just geometry.</p>\n\n<h3>2. The algorithm (Lloyd's)</h3>\n<p>You choose $k$, the number of clusters. Then k-means repeats two steps until nothing changes:</p>\n<ul>\n<li><strong>Assign</strong>: put each point in the cluster whose <em>centroid</em> (center) is nearest.</li>\n<li><strong>Update</strong>: move each centroid to the <em>mean</em> of the points now assigned to it.</li>\n</ul>\n<p>Start with $k$ centroids (often random points), assign, update, assign, update… The centroids drift toward dense regions and the assignments stabilize, usually within a few iterations. That alternation is the whole algorithm.</p>\n\n<h3>3. What it's optimizing</h3>\n<p>k-means isn't wandering aimlessly — it minimizes the <strong>within-cluster sum of squares</strong> (also called inertia): $$J = \\sum_{c=1}^{k}\\sum_{x \\in C_c} \\lVert x - \\mu_c\\rVert^2,$$ the total squared distance from each point to its cluster's centroid $\\mu_c$. Tight, compact clusters mean small $J$. Each assign step and each update step can only <em>decrease</em> $J$, which is why the algorithm steadily converges.</p>\n\n<h3>4. Choosing k</h3>\n<p>$k$ is yours to pick, and there's no label to tell you the right number. Two common guides: the <strong>elbow method</strong> — plot inertia $J$ against $k$ and look for the \"elbow\" where adding clusters stops helping much; and the <strong>silhouette score</strong> — measure how well each point fits its cluster versus the next-nearest, and pick the $k$ that scores highest. Domain knowledge (\"we expect about 4 segments\") often beats both.</p>\n\n<h3>5. Initialization matters</h3>\n<p>k-means only finds a <em>local</em> optimum, and a bad random start can land it in a poor one (e.g. two centroids stuck in the same true cluster). Two standard fixes: run it several times from different random seeds and keep the lowest-inertia result; and use <strong>k-means++</strong>, a smarter initialization that spreads the initial centroids far apart, which reliably gives better, faster solutions. Both are defaults in practice.</p>\n\n<h3>6. Where k-means struggles</h3>\n<p>k-means bakes in assumptions: it favors <em>roughly spherical, similar-sized</em> clusters, because it judges everything by distance to a center. Give it long thin or ring-shaped clusters and it carves them wrongly. It's also <strong>scale-sensitive</strong> — distances dominate, so you must <em>standardize features</em> first (the same lesson as kNN and SVM). And you must commit to $k$ up front. For non-convex shapes or unknown cluster counts, reach for <em>DBSCAN</em> (density-based) or <em>spectral clustering</em>; for soft, probabilistic memberships, a <em>Gaussian Mixture Model</em>.</p>\n\n<h3>7. The clustering family</h3>\n<p>k-means is one of several approaches: <em>hierarchical clustering</em> builds a tree of nested groups (no need to fix $k$ in advance); <em>DBSCAN</em> grows clusters from dense regions and labels sparse points as noise (handles arbitrary shapes); <em>GMM</em> models each cluster as a Gaussian and assigns soft probabilities via the EM algorithm. Each trades off assumptions, shape flexibility, and the need to specify $k$.</p>\n\n<h3>8. The big picture</h3>\n<p>k-means alternates \"assign to nearest centroid\" and \"recenter on the mean,\" minimizing within-cluster variance; pick $k$ with the elbow/silhouette, initialize with k-means++, and standardize first. It's the canonical clustering algorithm — fast, simple, and everywhere (customer segmentation, image compression via vector quantization, feature learning) — and the gateway to the broader world of unsupervised learning.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: k-means is coordinate descent (so it converges — but not globally)</summary>\n<p>Why does k-means always stop, yet sometimes give a bad answer? Because it is <b>coordinate descent</b> on the inertia objective $J$.</p>\n<p><b>Two alternating minimizations.</b> Think of $J$ as a function of two sets of variables: the assignments and the centroids. The <em>assign</em> step fixes the centroids and chooses the assignments that minimize $J$ (each point to its nearest center — optimal). The <em>update</em> step fixes the assignments and chooses the centroids that minimize $J$ (each centroid at its cluster's mean — optimal, since the mean minimizes squared distance). Each step minimizes $J$ over one coordinate block, so $J$ <em>never increases</em>; being bounded below by zero and taking finitely many possible assignments, the algorithm must converge in finite steps.</p>\n<p><b>But only to a local minimum.</b> Coordinate descent finds a point where neither step alone can improve — a <em>local</em> optimum — not necessarily the global one. (Globally minimizing $J$ is NP-hard.) A poor initialization can trap it; that's exactly why k-means++ and multiple restarts exist — they give the descent a better starting point so it lands in a deeper basin.</p>\n<p>The \"aha\": k-means is guaranteed to converge because each step is an exact minimization of inertia over one block of variables (monotone, bounded, finite) — but for the same reason it only reaches a local optimum, so initialization is not a detail, it's the difference between a good and a bad clustering.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: k-means vs GMM (hard vs soft assignments)</summary>\n<p>k-means makes a <em>hard</em> call — each point belongs to exactly one cluster. A <strong>Gaussian Mixture Model (GMM)</strong> is the <em>soft</em>, probabilistic generalization, and seeing the link illuminates both.</p>\n<p><b>Soft assignments via EM.</b> A GMM models the data as a mixture of $k$ Gaussian blobs, each with its own mean, <em>covariance</em>, and weight. It's fit by the <b>EM algorithm</b>, which alternates just like k-means: the <em>E-step</em> computes each point's <em>probability</em> of belonging to each cluster (soft assignment), and the <em>M-step</em> updates each Gaussian's parameters weighted by those probabilities. A point near two clusters can be \"60% A, 40% B\" instead of being forced into one.</p>\n<p><b>k-means is GMM's stiff limit.</b> Take a GMM, force every cluster to be a sphere of equal, vanishing variance, and the soft probabilities collapse to hard 0/1 assignments — you recover k-means exactly. So k-means is GMM with spherical equal-variance clusters and hard assignment; GMM relaxes both, letting clusters be elliptical, differently sized, and overlapping with graded membership.</p>\n<p>The \"aha\": k-means and GMM are the same alternating idea (Lloyd's is a special case of EM). Use k-means for fast, simple, roughly-spherical clusters; reach for a GMM when clusters have different shapes/sizes or when you want calibrated, soft membership probabilities rather than a hard verdict.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "k-Means clustering is what kind of learning?",
+              "choices": [
+                "Reinforcement learning",
+                "Supervised regression",
+                "Unsupervised — it finds groups in data with no labels",
+                "Semi-supervised ranking"
+              ],
+              "answer": 2,
+              "explain": "Clustering is unsupervised: there are no target labels; k-means discovers structure (groups) from the feature geometry alone."
+            },
+            {
+              "q": "Each iteration of k-means alternates between",
+              "choices": [
+                "assigning each point to its nearest centroid, then moving each centroid to its cluster's mean",
+                "splitting the data on the best feature",
+                "computing gradients and updating weights",
+                "adding one cluster at a time"
+              ],
+              "answer": 0,
+              "explain": "Lloyd's algorithm: the assign step (nearest centroid) and the update step (centroid = mean of assigned points), repeated until assignments stop changing."
+            },
+            {
+              "q": "What objective does k-means minimize?",
+              "choices": [
+                "The margin between clusters",
+                "The within-cluster sum of squared distances (inertia)",
+                "The cross-entropy of the labels",
+                "The number of clusters"
+              ],
+              "answer": 1,
+              "explain": "k-means minimizes inertia J = Σ Σ ‖x − μ_c‖² — total squared distance of points to their centroids. Both steps monotonically decrease it."
+            },
+            {
+              "q": "Why are k-means++ or multiple random restarts used?",
+              "choices": [
+                "To increase the number of clusters automatically",
+                "To avoid standardizing the features",
+                "To turn k-means into a supervised method",
+                "Because k-means converges only to a local optimum, so initialization affects the result"
+              ],
+              "answer": 3,
+              "explain": "k-means is coordinate descent → a local optimum. A bad start gives a poor clustering; k-means++ spreads initial centroids and restarts keep the best."
+            },
+            {
+              "q": "The 'elbow method' is a heuristic for choosing",
+              "choices": [
+                "the learning rate",
+                "the distance metric",
+                "k, the number of clusters",
+                "the random seed"
+              ],
+              "answer": 2,
+              "explain": "Plot inertia vs k and look for the 'elbow' where extra clusters stop reducing inertia much — a guide to a sensible number of clusters."
+            },
+            {
+              "q": "A key limitation of k-means is that it assumes clusters are",
+              "choices": [
+                "roughly spherical and similar in size (it struggles with non-convex shapes)",
+                "always exactly two in number",
+                "linearly separable by a hyperplane",
+                "labeled in advance"
+              ],
+              "answer": 0,
+              "explain": "Judging by distance to a center, k-means favors spherical, similar-size clusters and mis-cuts elongated or ring-shaped ones (use DBSCAN/spectral there)."
+            },
+            {
+              "q": "Why should you standardize features before running k-means?",
+              "choices": [
+                "k-means requires positive values",
+                "It is distance-based, so a large-range feature would dominate the clustering",
+                "To reduce the number of clusters",
+                "To make it supervised"
+              ],
+              "answer": 1,
+              "explain": "Like kNN and SVMs, k-means uses distances; without scaling, a large-range feature dominates and the clusters reflect that feature alone."
+            },
+            {
+              "q": "How does a Gaussian Mixture Model (GMM) differ from k-means?",
+              "choices": [
+                "It requires labels",
+                "It cannot be used for clustering",
+                "It is always faster",
+                "It makes soft, probabilistic cluster assignments (via EM) rather than hard ones"
+              ],
+              "answer": 3,
+              "explain": "GMM (fit by EM) gives each point a probability of membership in each Gaussian cluster; k-means is the hard-assignment, spherical-equal-variance special case."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "What are the two steps of the k-means algorithm?",
+              "back": "Assign: put each point in the cluster of its nearest centroid. Update: move each centroid to the mean of its assigned points. Repeat until assignments stop changing (Lloyd's algorithm)."
+            },
+            {
+              "front": "What does k-means minimize, and why does it converge?",
+              "back": "Inertia J = Σ_c Σ_{x∈C_c} ‖x−μ_c‖² (within-cluster sum of squares). It's coordinate descent — both steps minimize J over one block, so J never increases → converges (to a local optimum)."
+            },
+            {
+              "front": "How do you choose k, and why does initialization matter?",
+              "back": "Choose k via the elbow method (inertia vs k) or silhouette score (or domain knowledge). k-means only finds a local optimum, so use k-means++ initialization and/or multiple restarts (keep lowest inertia)."
+            },
+            {
+              "front": "Key limitations of k-means",
+              "back": "Assumes roughly spherical, similar-size clusters (fails on non-convex/ring shapes → DBSCAN/spectral); scale-sensitive (standardize first); must fix k in advance; only a local optimum."
+            },
+            {
+              "front": "k-means vs GMM (hard vs soft)",
+              "back": "k-means = hard assignment, spherical equal-variance clusters. GMM = soft probabilistic assignment via EM, with per-cluster mean/covariance/weight. k-means is the zero-variance, hard-assignment limit of a GMM; EM generalizes Lloyd's."
+            }
+          ],
+          "homework": [
+            {
+              "q": "On a 1-D dataset {1, 2, 3, 10, 11, 12} you run k-means with k=2, starting with centroids at 2 and 11. Carry out one assign step and one update step, and state whether it has converged.",
+              "solution": "Assign step (nearest of {2, 11}): points 1,2,3 are closer to 2 (distances to 2: 1,0,1; to 11: 10,9,8); points 10,11,12 are closer to 11 (distances to 11: 1,0,1; to 2: 8,9,10). Clusters: {1,2,3} and {10,11,12}. Update step (centroid = mean): mean(1,2,3)=2; mean(10,11,12)=11. The centroids are still 2 and 11 — unchanged — so a re-assign would give the same clusters. It has CONVERGED in one iteration (inertia J = (1+0+1)+(1+0+1) = 4). The clean separation and good initialization made it immediate."
+            },
+            {
+              "q": "A colleague clusters customers on (age in years, annual income in dollars) with k-means and finds the clusters split almost entirely by income, ignoring age. Explain why, and how to fix it.",
+              "solution": "k-means uses Euclidean distance, which sums squared differences across features. Income spans a huge numeric range (tens of thousands) while age spans tens, so income differences dominate the distance almost completely — two customers' 'closeness' is decided by income alone, and age barely registers. The clusters therefore split on income. Fix: standardize each feature first (subtract mean, divide by standard deviation) so age and income contribute on equal footing; then re-run k-means. This is the same scaling requirement as kNN and SVMs — any distance-based method needs comparable feature scales."
+            }
+          ],
+          "examples": [
+            {
+              "title": "One full k-means iteration in 2-D",
+              "scenario": "Points A(1,1), B(1,2), C(8,8), D(9,8). Initial centroids μ1=(0,0), μ2=(10,10), k=2. Do one assign + update step.",
+              "solution": "Assign (nearest centroid): A,B are far closer to μ1=(0,0) than μ2=(10,10) (e.g. A: dist to μ1 ≈ 1.41, to μ2 ≈ 12.7); C,D are closer to μ2. Clusters: {A,B} and {C,D}. Update (mean): μ1 = mean of A(1,1),B(1,2) = (1, 1.5); μ2 = mean of C(8,8),D(9,8) = (8.5, 8). The centroids jumped from the corners to the centers of the two natural groups. A second iteration would re-assign the same way and leave the centroids put — converged, with two tight clusters."
+            },
+            {
+              "title": "Reading an elbow plot",
+              "scenario": "You run k-means for k = 1..6 and get inertia values 1000, 300, 120, 95, 80, 70. How many clusters does the elbow method suggest?",
+              "solution": "Look at how much each extra cluster reduces inertia: k1→2 drops 700, k2→3 drops 180, k3→4 drops 25, k4→5 drops 15, k5→6 drops 10. The big gains stop after k=3 (the 700 and 180 drops), and from k=3 onward the curve flattens (25, 15, 10 — diminishing returns). The 'elbow' is at k=3, so the elbow method suggests 3 clusters: beyond that you're mostly fitting noise, not real structure. (Confirm with a silhouette score if the elbow is ambiguous.)"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

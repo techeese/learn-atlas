@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 521: **ML topic — k-Means (new module 4 "Unsupervised Learning")** (content/new-topic build-out; first unsupervised lesson). Lloyd's
+   algorithm, inertia, elbow/silhouette, k-means++, limits; 2 dd (coordinate descent/local optimum; k-means vs GMM hard/soft). 8 mcq (2/2/2/2), 5
+   cards, 2 hw, 2 ex. Course now 4 modules/8 lessons. Verified: gate 8 topics/156 lessons ALL GREEN; headless course page 8, nDD=2, kErr=0/rawD=0/errs=0. SW →v461.
    ✅ iter 520: **STEP-BACK: full 8-topic audit (clean) + Naive Bayes (finishes module 3)** (content/new-topic build-out). Sweeps: 154 lessons
    errs=0/kErr=0/0 bad; 109 routes errs=0/kErr=0 (263 green). Coverage: 0 thin; dd dist 2-dd:67 / 3-dd:87 / 4+:0 (395 total, every lesson >=2).
    Reflection: 510→520 launched + built the 8th topic (ML) to 7 lessons/3 modules. Ship: Naive Bayes (Bayes rule, independence, counting, Laplace;
