@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 462 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/LLM/DL (deep-dives 248 → **251**; 99 lessons now carry two):
+- **c-computing-limits** (had: "indeterminate forms are questions") → **the resolution toolkit**: factor-and-cancel
+  (`(x²−1)/(x−1)→2`), rationalize, divide by the dominant power, and squeeze — the standard ways to extract a real limit.
+- **l-what-is-a-language-model** (had: "next-token machine") → **autoregressive generation**: sample → append → repeat realizes
+  `P(seq)=∏P(xₜ|x_{<t})`; sequential (slow decode, KV-cache) and error-compounding (why decoding matters).
+- **dl-transfer-learning** (had: "why features transfer") → **the feature hierarchy**: early layers general, late layers specific →
+  freeze early / fine-tune late; how deep you unfreeze tracks task similarity and data size.
+Authored with `String.raw` LaTeX (`x_{\lt t}` to respect the `<`-in-math rule); injected via the append-second-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v401` → `atlas-v402`.
+
 ## iter 461 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LA/PS/algo (deep-dives 245 → **248**; 96 lessons now carry two):
 - **la-vectors-operations** (had: "arrows and lists") → **linear combinations are the one operation**: scale + add is the atom — span,
