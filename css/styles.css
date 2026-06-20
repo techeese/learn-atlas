@@ -1236,6 +1236,10 @@ kbd { font-family: var(--font-mono); background: var(--panel-2); border: 1px sol
 .gloss-term { font-family: var(--font-disp); font-size: 17px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
 .gloss-topic { font-family: var(--font-body); font-size: 10.5px; letter-spacing: .5px; text-transform: uppercase; border: 1px solid; border-radius: 20px; padding: 2px 8px; }
 .gloss-def { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
+a.gloss-item { text-decoration: none; color: inherit; display: block; cursor: pointer; transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease; }
+a.gloss-item:hover, a.gloss-item:focus-visible { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.28); outline: none; }
+.gloss-go { margin-top: 10px; font-size: 12.5px; font-weight: 600; color: var(--gold); font-family: var(--font-body); opacity: .85; }
+a.gloss-item:hover .gloss-go, a.gloss-item:focus-visible .gloss-go { opacity: 1; }
 
 /* ============================================================
    Cheatsheet

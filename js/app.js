@@ -1875,6 +1875,18 @@
     const g = window.GLOSSARY || [];
     const topicName = id => id === "general" ? "General" : (findCourse(id) || {}).title || id;
     const topicColor = id => id === "general" ? "var(--gold)" : (findCourse(id) || {}).color || "var(--gold)";
+    // make each term clickable: jump to the lesson that teaches it (title match preferred, else content), else its course page
+    function targetFor(e) {
+      const course = findCourse(e.topic); if (!course) return null;   // "general" terms have no course → not clickable
+      const tl = e.term.toLowerCase(); let byTitle = null, byContent = null;
+      course.modules.forEach(m => m.lessons.forEach(l => {
+        if (!byTitle && (l.title || "").toLowerCase().includes(tl)) byTitle = l.id;
+        if (!byContent && (l.content || "").toLowerCase().includes(tl)) byContent = l.id;
+      }));
+      const lid = byTitle || byContent;
+      return lid ? { href: "#/lesson/" + e.topic + "/" + lid, label: "Open the lesson →" }
+                 : { href: "#/course/" + e.topic, label: "Explore " + topicName(e.topic) + " →" };
+    }
     const present = new Set(g.map(e => e.topic));
     const chipTopics = C().map(c => c.id).filter(id => present.has(id)).concat(present.has("general") ? ["general"] : []);
     let topicF = "all";
@@ -1882,18 +1894,19 @@
       q = (q || "").trim().toLowerCase();
       const items = g.filter(e => (topicF === "all" || e.topic === topicF) && (!q || e.term.toLowerCase().includes(q) || e.def.toLowerCase().includes(q) || topicName(e.topic).toLowerCase().includes(q)))
         .slice().sort((a, b) => a.term.localeCompare(b.term));
-      document.getElementById("gloss-list").innerHTML = items.length ? items.map(e => `
-        <div class="gloss-item">
-          <div class="gloss-term">${esc(e.term)} <span class="gloss-topic" style="color:${topicColor(e.topic)};border-color:${topicColor(e.topic)}">${esc(topicName(e.topic))}</span></div>
-          <div class="gloss-def">${e.def}</div>
-        </div>`).join("") : emptyState("🔍", "No terms match “" + esc(q) + "”.");
+      document.getElementById("gloss-list").innerHTML = items.length ? items.map(e => {
+        const t = targetFor(e);
+        const inner = `<div class="gloss-term">${esc(e.term)} <span class="gloss-topic" style="color:${topicColor(e.topic)};border-color:${topicColor(e.topic)}">${esc(topicName(e.topic))}</span></div>
+          <div class="gloss-def">${e.def}</div>` + (t ? `<div class="gloss-go">${esc(t.label)}</div>` : "");
+        return t ? `<a class="gloss-item gloss-link" href="${t.href}">${inner}</a>` : `<div class="gloss-item">${inner}</div>`;
+      }).join("") : emptyState("🔍", "No terms match “" + esc(q) + "”.");
       typeset();
     }
     app.innerHTML = `
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Glossary</div>
       <div class="page-head reveal"><div class="eyebrow">${g.length} key terms</div><h2>The <em>Glossary</em></h2>
-      <p>Fast, plain-language definitions of the core concepts across all seven subjects. Search, filter by topic, or skim to refresh.</p></div>
+      <p>Fast, plain-language definitions of the core concepts across all seven subjects. Search, filter by topic, or skim to refresh — and <b>click any term to open the lesson that teaches it</b>.</p></div>
       <input class="gloss-search" id="gloss-search" placeholder="Search terms…" aria-label="Search glossary">
       <div class="lab-topics" role="group" aria-label="Filter glossary by topic">
         <button class="lab-tbtn active" data-t="all" aria-pressed="true">All topics</button>

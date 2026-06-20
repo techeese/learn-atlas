@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 439 — Glossary terms are now clickable → the lesson that teaches them (UI/UX — owner's request)
+**Owner asked: "we can't click into a concept of the glossary?"** Correct — the glossary cards were static text (term · topic · def) with
+no way to go deeper. Fixed: every glossary card is now a clickable link to the **lesson that teaches the term**.
+- `targetFor(e)` resolves each term to a lesson within its topic — preferring a **title match**, then a content match, falling back to the
+  **course page** if neither hits. The lone "general" term (no course) stays non-clickable.
+- Cards with a target render as `<a class="gloss-item gloss-link" href="#/lesson/…">` (native hash-routing, so they keep working as the
+  list re-renders on search/filter) with a gold **"Open the lesson →"** / **"Explore [Topic] →"** cue; new CSS gives a hover lift + gold border.
+- Intro updated: "click any term to open the lesson that teaches it."
+Verified: gate ALL GREEN; **via `--dump-dom`** the glossary shows 151 terms, **150 clickable** (1 general term correctly inert), the cue +
+intro render, and clicking a card **navigated to its lesson** (`#/lesson/deep-learning/dl-activation-functions`, lessonRendered=true),
+errs=0, kErr=0; screenshot eyeballed (clean cards, on-brand). SW cache `atlas-v378` → `atlas-v379`. Also removed stray gitignored scratch
+files (`__*.html`) left at the repo root by earlier interrupted iterations.
+
 ## iter 438 — Three more worked examples; RL at-2 pool cleared (examples)
 A **3rd worked example** on three lessons (examples 437 → **440**); this empties the reinforcement-learning course's 2-example backlog
 (only LLM lessons now remain at 2):
