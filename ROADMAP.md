@@ -182,6 +182,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 539: **3 more original-topic 3rd deep-dives** (content/depth). dl-overfitting (double descent), la-diagonalization (eigenvalues → long-run
+   dynamics/PageRank/Markov), ps-sample-spaces-events (continuous spaces & measure theory). Verified: gate GREEN; dump-dom each nDD=3, kErr=0/rawD=0/errs=0. SW →v479.
    ✅ iter 538: **Interactive gradient-descent linear-regression viz** (visualizations). 93rd widget ml-linreg-viz: shows TRAINING (not a trained model) —
    line rotates into best fit as MSE falls; LR slider shows convergence vs divergence. Embedded in Linear Regression lesson + Lab. Verified: gate GREEN
    (93 widgets); headless MSE 22.4→0.30 converges, lr=0.09 diverges, kErr=0/errs=0; screenshot. SW →v478.

@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 539 — Three more original-topic third deep-dives (content / depth)
+Three more high-value third deep-dives (DL/LA/PS):
+- **dl-overfitting-and-regularization** → **double descent**: past the interpolation threshold test error *falls again*, so hugely overparameterized
+  models that perfectly fit the data still generalize — the modern update to the bias-variance U (gradient descent's implicit bias toward simple solutions).
+- **la-diagonalization** → **eigenvalues govern long-run behavior**: repeated multiplication is dominated by the top eigenvalue, so the dominant eigenpair
+  sets stationary distributions (Markov chains, PageRank), growth rates, and stability (`|λ|>1` blows up, `|λ|<1` decays; the power method).
+- **ps-sample-spaces-events** → **continuous spaces & measure theory**: for a uniform real, points have probability 0 and *intervals* carry probability;
+  not every set is measurable, so events form a σ-algebra and `P` is a measure — Kolmogorov's axioms on the `(Ω, ℱ, P)` triple.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v478` → `atlas-v479`.
+
 ## iter 538 — Interactive gradient-descent linear-regression viz (visualizations)
 The **93rd widget, `ml-linreg-viz` "Linear regression: gradient descent fits the line."** Unlike the existing ML viz (which show *trained* models — kNN
 boundary, tree boundary, k-Means convergence), this shows **training itself**: from a flat line, each step moves slope & intercept opposite the MSE
