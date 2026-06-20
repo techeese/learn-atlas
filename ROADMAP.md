@@ -188,8 +188,12 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
-   📌 BACKPROP TRIAD COMPLETE: viz (426) + by-hand example (427) + runnable code (428), all the same x=2,w₁=0.5,w₂=3,y=1 network.
-   📌 REMAINING (owner's focus): (b) deep-dive on the matrix/Jacobian form (∂L/∂W=δaᵀ, batched backprop) — do next.
+   ✅ iter 429: **Backprop in matrix form — ∂L/∂W = δaᵀ** (content/depth; owner's backprop focus). 3rd dd on dl-backpropagation (→179
+   total): layer z=Wa+b → ∂L/∂W=δaᵀ, ∂L/∂a=Wᵀδ, batching ΔAᵀ = two matmuls/layer. Verified: gate GREEN; dump-dom nDD=3, katex 48,
+   kErr=0, rawDollar=0. SW →v369.
+   📌 BACKPROP DEEP-FOCUS DELIVERED (owner 2026-06-20): 2 viz + 4 examples + runnable code + 3 deep-dives on dl-backpropagation, all on
+   the same x=2,w₁=0.5,w₂=3,y=1 network so viz/by-hand/code/matrix corroborate. Owner can now learn backprop end-to-end. Await further
+   steer; meanwhile resume the examples↔2nd-dd rotation (LLM/RL/DL still have at-2 example lessons; 120 lessons still at 1 dd).
    ✅ iter 425: **3 more worked examples; algo at-2 pool cleared** (examples). +3 (421→424): a-amortized-analysis (binary counter),
    a-union-find-range (inverse Ackermann α(n)), rl-value-approximation (the deadly triad). Node-verified; round-trip-guarded inject.
    Verified: gate GREEN (424 examples); dump-dom katex 56/38/66, kErr=0, new examples rawDollar=0; smoke rawD7 = pre-existing

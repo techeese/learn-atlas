@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 429 — Backprop in matrix form: ∂L/∂W = δaᵀ (content / depth — owner's backprop focus)
+Backprop follow-up #3 (owner's deep-focus), completing the depth arc. Added a **third** deep-dive to `dl-backpropagation` (it now
+carries 3; total deep-dives → **179**) — distinct from its existing two ("why backprop goes backward", "product of Jacobians"):
+- **"the matrix form — backprop is two matmuls per layer"**: for a layer `z=Wa+b`, given the upstream error `δ=∂L/∂z`, the gradients
+  are `∂L/∂W = δaᵀ` (outer product, same shape as `W`), `∂L/∂b = δ`, `∂L/∂a = Wᵀδ`. Shows how the *shapes force the formulas*
+  (`∂L/∂W_ij = δᵢaⱼ`), why forward uses `W` and backward uses `Wᵀ`, and how **batching** becomes one matmul `∂L/∂W = ΔAᵀ` — so each
+  layer's backward pass is two matmuls (`WᵀΔ`, `ΔAᵀ`), the same order as the forward pass. Numerically consistent with the
+  `la-matrix-calculus-backprop` example (`Wᵀδ=[2,3]`).
+Authored with `String.raw` LaTeX (a `$$…$$` display block); injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** the lesson opens **all 3** dd's (nDD=3, 48 KaTeX spans) with **kErr=0, rawDollar=0**. SW
+cache `atlas-v368` → `atlas-v369`. *(Backprop focus now spans: 2 viz + 4 examples + code exercise + 3 deep-dives across
+dl-backpropagation, plus c-chain-rule and la-matrix-calculus-backprop.)*
+
 ## iter 428 — Backprop you can run: a 2-layer backward-pass code exercise (new functionality — owner's backprop focus)
 Backprop follow-up #2 (owner's deep-focus). Added a runnable JavaScript code exercise to `dl-backpropagation`, right after the new
 Lab viz, implementing the **exact same network** as the viz and the by-hand example — so all three corroborate:
