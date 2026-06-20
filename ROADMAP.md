@@ -188,6 +188,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 432: **3 more worked examples across DL/RL/LLM** (examples). +3 (428→431): dl-initialization (can't init to zero / symmetry),
+   rl-practical-rl (potential-based reward shaping F=γΦ(s′)−Φ(s)), l-finetuning-and-instruction-tuning (instruction tuning elicits, LIMA
+   ~1000). Round-trip-guarded. Verified: gate GREEN (431); dump-dom katex 74/75/62, kErr=0, rawDollar=0, ampOk=true; smoke bad=none. SW →v372.
    ✅ iter 431: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (179→182; 32 lessons have 2):
    dl-overfitting-and-regularization (L1 vs L2 sparsity), ps-expectation-variance (why variance squares / std), rl-mdp-formalism
    (the discount factor γ & effective horizon 1/(1−γ)). Append-second-dd inject w/ full guards. Verified: gate GREEN; dump-dom each

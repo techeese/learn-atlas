@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 432 — Three more worked examples across DL/RL/LLM (examples)
+A **3rd worked example** on three flagship lessons (examples 428 → **431**):
+- **dl-initialization-and-vanishing-gradients** — **why you can't init weights to zero**: identical weights get identical gradients
+  (`∂L/∂w₁=∂L/∂w₂`) and stay identical forever — the *symmetry problem*; init must both break symmetry (randomness) and set scale (Xavier/He).
+- **rl-practical-rl** — **policy-invariant reward shaping**: only the potential-based form `F=γΦ(s′)−Φ(s)` leaves the optimal policy
+  unchanged (the terms telescope), so you can speed learning with hints without corrupting the objective.
+- **l-finetuning-and-instruction-tuning** — **instruction tuning elicits, doesn't teach**: ~1,000 curated examples (LIMA) suffice
+  because SFT unlocks latent ability and the chat *format*, not new knowledge — pretraining learns, SFT aligns.
+Injected byte-stably with the round-trip guard; the `&amp;` in a citation renders correctly (no double-encoding).
+Verified: gate ALL GREEN (**431 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (74 / 75 / 62 spans), **kErr=0, rawDollar=0,
+ampOk=true**; smoke + pages **errs=0/kErr=0, bad=none**. SW cache `atlas-v371` → `atlas-v372`.
+
 ## iter 431 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across DL/PS/RL (deep-dives 179 → **182**; 32 lessons now carry two):
 - **dl-overfitting-and-regularization** (had: "a vote for simpler explanations") → **L1 vs L2**: L2's gradient `2λwᵢ` shrinks smoothly
