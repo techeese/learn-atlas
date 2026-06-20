@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 569 — Three more third dives: numerical quadrature · policy improvement · data quality (content / depth)
+Three more third deep-dives (calc/RL/LLM):
+- **c-integration-techniques** → **numerical quadrature**: when no antiderivative exists (the common case), approximate the area — trapezoid, Simpson's
+  (`∫≈h/3(f₀+4f₁+2f₂+…)`, error ~h⁴), Gaussian quadrature.
+- **rl-policies-values** → **the policy improvement theorem**: act greedily on an honest value and the new policy is provably no worse (`V^{π'}≥V^π`) — the
+  ratchet behind policy iteration and most of RL.
+- **l-pretraining-objective-data** → **data quality beats raw scale**: dedup + filtering + the *mix* (code/math punch above their weight; Phi-style
+  textbook-quality data) often matter more than token count.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (Simpson display sum / `V^{π'}≥V^π` render). SW cache `atlas-v508` → `atlas-v509`.
+
 ## iter 568 — Glossary: +13 calculus terms (the most under-represented topic) (content / reference)
 Calculus had only **17 glossary terms across its 29 lessons** — the thinnest coverage relative to size. Added **13 core, lesson-covered terms** (17 → 30):
 Antiderivative, L'Hôpital's rule, Linear approximation, Newton's method, Differential equation, Implicit differentiation, Extreme Value Theorem,
