@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 435 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across DL/algo/RL (deep-dives 185 → **188**; 38 lessons now carry two):
+- **dl-activation-functions** (had: "without nonlinearity depth is an illusion") → **the dying ReLU**: the *derivative* shape decides
+  trainability — sigmoid/tanh saturate (`σ′→0`), ReLU dies for `z<0` (0 output, 0 gradient); Leaky/GELU keep gradient flowing.
+- **a-hash-tables** (had: "O(1) by turning keys into addresses") → **collisions & load factor**: `O(1)` is *expected/amortized* —
+  chains grow with `α=n/m`, so tables double at `α≈0.75`; a bad hash/adversary forces `O(n)`.
+- **rl-dqn** (had: "two tricks fix the two failure modes") → **maximization bias & Double DQN**: `max` over noisy Q's overestimates;
+  Double DQN selects with the online net, evaluates with the target net, decorrelating the lucky overestimate.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v374` → `atlas-v375`.
+
 ## iter 434 — Three more worked examples across DL/RL/LLM (examples)
 A **3rd worked example** on three flagship lessons (examples 431 → **434**):
 - **dl-transfer-learning** — **why finetune with a small LR**: a large LR overwrites the pretrained features (catastrophic forgetting),
