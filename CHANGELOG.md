@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 544 — Code exercises for the last three ML lessons (new functionality / code)
+Brought the Machine Learning topic to **9/10 lessons with a runnable exercise** by adding the three that lacked one — each gate-verified:
+- **ml-naive-bayes** → compute the spam posterior (prior × likelihood, normalized) → `0.769`.
+- **ml-svm** → classify two points by `sign(w·x+b)` and compute the margin `2/‖w‖` → `1 -1 2`.
+- **ml-model-selection** → precision/recall/F1 from confusion-matrix counts → `0.90 0.60 0.72`.
+Embedded as editable `data-code` playgrounds; written without `**`/`<` for the render-guard.
+Verified: `node gate.js` **runs all three** → **95 code-exercises verified** (was 92), ALL GREEN; **headless** — each playground hydrates, Run yields the
+matching output (all OK), errs=0. SW cache `atlas-v483` → `atlas-v484`.
+
 ## iter 543 — A third worked example for three ML lessons (examples)
 The ML lessons carried only **2 worked examples** each (vs 3 across the original topics). Added a third to three of them — concrete, exact, fully-worked:
 - **ml-svm** → **the margin & support vectors by hand**: two opposite-class points, canonical scaling `yᵢ(wᵀxᵢ+b)=1` → `w=(1,0), b=0`, margin `2/‖w‖=2`, both points are support vectors.
