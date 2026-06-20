@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 474 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/RL/LA (deep-dives 281 → **284**; 132 lessons now carry two):
+- **c-differentiation-rules** (had: "linearity + product/chain") → **logarithmic differentiation**: take `ln` first to turn products→sums and
+  exponents→factors; cracks a variable base *and* exponent (`y=xˣ → y'=xˣ(ln x+1)`, =1 at x=1).
+- **rl-practical-rl** (had: "why RL is hard") → **seeds, variance, reproducibility**: RL is shockingly seed-sensitive (a run can soar or
+  fail), so report mean ± CI over many seeds — "it worked once" measures luck, not the algorithm.
+- **la-matrix-calculus-backprop** (had: "chain rule as matmul") → **vector-Jacobian products**: autodiff propagates `vᵀJ` (vector→vector)
+  without ever materializing the `m×n` Jacobian — why the backward pass costs ≈ one forward pass.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v413` → `atlas-v414`.
+
 ## iter 473 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LLM/algo/calc (deep-dives 278 → **281**; 129 lessons now carry two):
 - **l-multihead-and-causal-masking** (had: "÷√dₖ") → **how the causal mask works**: add `−∞` above the diagonal *before* softmax (so future
