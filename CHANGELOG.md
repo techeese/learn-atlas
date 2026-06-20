@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 556 — Hands-on code across LA · PS · DL (new functionality / code)
+Extended runnable exercises to three more topics, each in a previously code-free lesson and matching its content exactly:
+- **la-vectors-operations** → **linear combination** `2u + 3v` → `8 4 7` (the one operation all of linear algebra is built from).
+- **ps-poisson** → **Poisson PMF** `λ^k e^{−λ}/k!` for λ=2, k=3 → `0.180`.
+- **dl-learning-rate-schedules-and-tuning** → **step-decay schedule**: halve the LR each epoch, read it off after three → `0.0125`.
+Loops written with `>=` (no `<`, per the code-render landmine).
+Verified: `node gate.js` **runs all three** → **101 code-exercises verified** (was 98), ALL GREEN; **headless** — each playground hydrates, Run yields the matching
+output (all OK), errs=0. SW cache `atlas-v495` → `atlas-v496`.
+
 ## iter 555 — Interactive bagging viz: averaging tames variance (visualizations)
 The **96th widget, `ml-bagging-viz` "Bagging: averaging tames variance."** Each model is a high-degree fit on a different **bootstrap resample** of the data,
 so individually they overfit wildly (the thin rust spaghetti). Drag up the number of models and their **average** (the bold gold curve) collapses onto the

@@ -182,6 +182,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 556: **Hands-on code across LA/PS/DL** (new functionality/code). la-vectors-operations (linear combination→8 4 7), ps-poisson (Poisson PMF→0.180),
+   dl-learning-rate-schedules (step-decay→0.0125). Verified: gate RUNS them → 101 code-exercises, ALL GREEN; headless each Runs OK, errs=0. SW →v496.
    ✅ iter 555: **Interactive bagging viz** (visualizations). 96th widget ml-bagging-viz: bootstrap-resampled overfit models (rust spaghetti) whose average
    (gold) collapses onto the truth as count grows — the sequel to bias-variance, fills Ensembles lesson viz gap; ML now 7 interactives. Verified: gate GREEN
    (96 widgets); headless ensemble err M=1:2.50→M=24:0.32, kErr=0/errs=0; screenshot. SW →v495.
