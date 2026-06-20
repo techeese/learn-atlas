@@ -159,6 +159,19 @@
     else { const pool = undone.length ? undone : all; id = pool[Math.floor(rng() * pool.length)]; advanced = !!undone.length; }
     return { node: index()[id], advanced, ready: ready.indexOf(id) >= 0 };
   }
+  // Deeper dive of the day — surfaces one of the hundreds of deep-dives, rotating daily, deep-linked to open straight to it.
+  function dailyDeepDive() {
+    const all = [];
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
+      (String(l.content || "").match(/<summary>[\s\S]*?<\/summary>/g) || []).forEach((s, i) => all.push({ lid: l.id, k: i + 1, summary: s }));
+    })));
+    if (!all.length) return null;
+    const rng = mulberry(dayNumber() + 101);   // offset apart from dailyConcept so the two daily picks don't correlate
+    const pick = all[Math.floor(rng() * all.length)];
+    const title = pick.summary.replace(/<\/?summary>/g, "").replace(/<[^>]+>/g, "").replace(/\$[^$]*\$/g, "").replace(/^Deeper dive:\s*/i, "").replace(/\s+/g, " ").trim();
+    const node = index()[pick.lid];
+    return node ? { node, k: pick.k, title } : null;
+  }
 
   // ---------- toast ----------
   let toastWrap;
@@ -568,6 +581,20 @@
           <span class="btn primary" style="pointer-events:none">Study now →</span>
         </div>
       </div>` : "";
+    const ddd = dailyDeepDive();
+    const dddHtml = ddd ? `
+      <div class="cotd reveal" style="--c:${ddd.node.course.color}" data-go="#/lesson/${ddd.node.course.id}/${ddd.node.lesson.id}/dd${ddd.k}">
+        <div class="cotd-side">
+          <div class="cotd-ico" style="color:${ddd.node.course.color};border-color:${ddd.node.course.color}">🧩</div>
+          <div class="cotd-tag">Deeper dive of the day</div>
+        </div>
+        <div class="cotd-body">
+          <div class="cotd-course">${esc(ddd.node.course.title)} · ${esc(ddd.node.lesson.title)}</div>
+          <h3>${esc(ddd.title)}</h3>
+          <p>A bite-size deeper look to stretch your understanding — opens straight to the dive.</p>
+          <span class="btn primary" style="pointer-events:none">Read the dive →</span>
+        </div>
+      </div>` : "";
     const cards = C().map(c => {
       const p = Store.courseProgress(c.id);
       const lc = flatLessons(c).length;
@@ -654,6 +681,7 @@
       ${fcHtml}
       ${contHtml}
       ${cdHtml}
+      ${dddHtml}
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px" class="reveal">
         <a class="btn primary" href="#/session" data-route>🎯 Start Daily Mix</a>

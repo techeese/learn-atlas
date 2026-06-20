@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 507: **"Deeper dive of the day" dashboard card** (new functionality/gamification; anti-monotony off depth). dailyDeepDive() rotates a
+   daily pick from all 371 dives, deep-linked (/dd<k>) to open straight to it; mirrors .cotd styling. Verified: gate GREEN; headless card renders,
+   click → …/a-algorithms-for-ml/dd2 opens only that dive (states 01), errs=0; dashboard screenshot eyeballed. SW →v447.
    ✅ iter 506: **3 more THIRD deep-dives on the hardest concepts** (content/depth; alternating with 505). +3 dd (368→371; 75 at 3 dd):
    la-low-rank-pca (what PCA can't do), dl-transfer-learning (negative transfer / domain shift), l-hallucination-and-evaluation (how to reduce it:
    RAG/abstain/verify). Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v446.

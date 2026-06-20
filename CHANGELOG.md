@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 507 — "Deeper dive of the day" on the dashboard (new functionality / gamification)
+Switched off depth (anti-monotony) to put the 371-deep-dive library to work pulling learners back. The dashboard now carries a **Deeper dive of
+the day** card beneath Concept of the Day — a rotating daily pick (`dailyDeepDive()`, seeded by `dayNumber()+101` so it doesn't correlate with the
+concept pick) drawn from *all* deep-dives across the codex. It shows the dive's title + its lesson, and clicking it uses the iter-505 deep-link
+(`#/lesson/c/l/dd<k>`) to land on the lesson with that exact dive already open. Mirrors the `.cotd` card styling; the `data-go` handler gives it
+keyboard/role a11y for free.
+Verified: gate ALL GREEN; **headless** — card renders ("Deeper dive of the day"), `data-go="#/lesson/algorithms/a-algorithms-for-ml/dd2"`, title
+"vectorization — why loops are slow"; clicking navigates there and opens *only* the 2nd dive (open-states `01`), `errs=0`; dashboard screenshot
+eyeballed (card sits cleanly below Concept of the Day, on-aesthetic). SW cache `atlas-v446` → `atlas-v447`.
+
 ## iter 506 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 Back to depth (alternating with 505's functionality). A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 368 → **371**):
 - **la-low-rank-pca** (had: PCA=SVD · Eckart–Young) → **what PCA can't do**: it's linear (curved data → kernel PCA/autoencoders/UMAP) and keeps
