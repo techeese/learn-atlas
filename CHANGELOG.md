@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 486 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 317 → **320**; these three now carry three):
+- **a-dynamic-programming** (had: DP=remembering · top-down vs bottom-up) → **the two conditions DP requires**: *optimal substructure*
+  (subsolutions compose → correct) **and** *overlapping subproblems* (they recur → worthwhile); only the second → divide-and-conquer.
+- **dl-embeddings-and-tokenization** (had: symbols→geometry · tokenization fumbles) → **contextual vs static embeddings**: word2vec/GloVe give
+  one fixed vector per word; transformers recompute a token's vector from its sentence (so "bank" differs by context) — resolving polysemy.
+- **l-self-attention** (had: dictionary lookup · Q/K/V projections) → **attention is learned content-based routing**: conv/RNN hard-code *where*
+  info flows (fixed/local); attention computes all-to-all connectivity from token content each pass (global, dynamic — at `O(n²)`).
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v425` → `atlas-v426`.
+
 ## iter 485 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 314 → **317**; these three now carry three):
 - **dl-rnn-lstm-gru** (had: LSTM memory · transformers replaced RNNs) → **backpropagation through time**: training = backprop on the
