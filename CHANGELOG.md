@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 442 — Three more worked examples (LLM); UI/UX audited as mature (examples)
+Intended a UI/UX iteration per the owner's steer, but audited first and found the obvious wins **already in place**: lesson keyboard
+nav (`[`/`]`), ⌘K search *inside lessons*, reading-progress bar + back-to-top, clickable glossary (439) & Library refs, the Copy button
+(440), and a "?" shortcuts overlay. Rather than manufacture low-value UI churn, continued the content north star with **examples**
+(varies from 441's dd; draws down the LLM pool). A **3rd worked example** on three LLM lessons (examples 440 → **443**):
+- **l-positional-encoding** — **RoPE**: rotating q,k by `mθᵢ` makes the score `⟨R_m q, R_n k⟩ = ⟨q, R_{n−m}k⟩` depend only on the
+  *relative* offset `n−m` — why rotary encodings generalize to longer contexts.
+- **l-prompting-and-in-context-learning** — **prompt brittleness**: the model conditions on the *literal* tokens, so phrasing/order/format
+  are all knobs — prompting steers a distribution, it doesn't issue a command.
+- **l-safety-and-frontier** — **why prompt injection is stubborn**: instructions and data share one token stream with no privilege
+  separation, so untrusted content can always try to act like instructions — defense is depth + least privilege, not one filter.
+Injected byte-stably with the round-trip guard; caught & stripped a stray zero-width space before commit.
+Verified: gate ALL GREEN (**443 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (79 / 33 / 17 spans), **kErr=0, rawDollar=0**;
+smoke + pages **errs=0/kErr=0, bad=none**. SW cache `atlas-v381` → `atlas-v382`.
+
 ## iter 441 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LA/PS/LLM (deep-dives 191 → **194**; 44 lessons now carry two):
 - **la-basis-dimension** (had: "a basis is a coordinate system you choose") → **change of basis**: same arrow, new coordinates —
