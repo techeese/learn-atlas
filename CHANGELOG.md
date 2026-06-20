@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 441 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LA/PS/LLM (deep-dives 191 → **194**; 44 lessons now carry two):
+- **la-basis-dimension** (had: "a basis is a coordinate system you choose") → **change of basis**: same arrow, new coordinates —
+  `x = P[c]_B`, `[c]_B = P⁻¹x` (`[3,1]_B → (4,2)` and back); the engine behind eigendecomposition/PCA picking the *special* basis.
+- **ps-bernoulli-binomial** (had: "where the formula comes from") → **mean `np`, variance `np(1−p)`**, maximized at `p=½` (a fair coin
+  is the most unpredictable; `n=10` → var 2.5 at 0.5 vs 0.9 at 0.1/0.9) — why proportions near 50% need the largest sample.
+- **l-embeddings-and-prediction-head** (had: "the head is a similarity search") → **weight tying**: input embedding `E` and output
+  head `Eᵀ` are the same map run both ways; sharing it halves a huge `V×d` (~51M at 50k×1024), regularizes, and improves perplexity.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v380` → `atlas-v381`.
+
 ## iter 440 — Step-back: full audit (clean) + Copy button on code exercises (UI/UX — owner's steer)
 **Round-number step-back (iter 440).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **106

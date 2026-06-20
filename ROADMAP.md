@@ -188,6 +188,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 441: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (191→194; 44 lessons have 2):
+   la-basis-dimension (change of basis P/P⁻¹), ps-bernoulli-binomial (mean np, var np(1−p), max at p=½), l-embeddings-and-prediction-head
+   (weight tying E/Eᵀ). Append-second-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=2, kErr=0, rawDollar=0; smoke bad=none. SW →v381.
    ✅ iter 440: **STEP-BACK: full audit (clean) + Copy button on code exercises** (UI/UX — owner's steer). Sweeps: 148 lessons errs=0/kErr=0/0 bad;
    106 routes errs=0/kErr=0 (254 green). Coverage: 0 thin (440 examples, 191 dd [106 at 1 dd], 90 code, 151 glossary). Reflection (431–439):
    examples↔2nd-dd rotation + backprop deep-focus + glossary clickability; navigation audited & already mature. Ship: ⎘ Copy button on every
