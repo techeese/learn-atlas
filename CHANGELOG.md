@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 552 — Three more third deep-dives: PPO · quantization · covariance matrix (content / depth)
+Three more high-value third deep-dives (RL/LLM/PS), each the modern/foundational mechanism the lesson's first two dives set up:
+- **rl-actor-critic** → **PPO**: clip the probability ratio `r(θ)` to `[1−ε, 1+ε]` so updates stay proximal — a cheap trust region that lets you reuse a batch
+  and is the RL step behind RLHF for aligned LLMs.
+- **l-inference-efficiency** → **quantization**: run a 16-bit model in 8- or 4-bit integers (a 70B model: ~140 GB → ~35 GB), shrinking memory and speeding
+  memory-bound inference; GPTQ/AWQ keep quality via per-channel scales + outlier handling.
+- **ps-joint-distributions** → **the covariance matrix**: `Cov(X,Y)=E[(X−μₓ)(Y−μ_Y)]`, stacked into a `d×d` `Σ` capturing all second-order structure —
+  diagonalizing it *is* PCA, and it defines the multivariate Gaussian.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (PPO ratio / `Σ` / covariance math renders). SW cache `atlas-v491` → `atlas-v492`.
+
 ## iter 551 — Calculus gets hands-on: three numerical-methods code exercises (new functionality / code)
 Calculus had almost no runnable exercises (it's a math topic), yet numerical methods are perfect hands-on code. Added three, each reinforcing the lesson's idea:
 - **c-differentiation-rules** → **finite-difference derivative**: estimate `f'(3)` for `f=x²` from the difference quotient → `6.001` (the limit the rules shortcut).
