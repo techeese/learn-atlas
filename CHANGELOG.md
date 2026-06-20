@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 465 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across DL/RL/calc (deep-dives 254 → **257**; 105 lessons now carry two):
+- **dl-initialization-and-vanishing-gradients** (had: "compound interest") → **variance-preserving init**: keep `Var(z)=Var(x)` ⟹ `σ²_w=1/n`;
+  Xavier `1/√n` (tanh) and He `√(2/n)` (ReLU) are the unique scales that defuse the blowup at step 0.
+- **rl-model-based** (had: "a model lets you plan") → **Dyna**: each real step does direct RL *and* model learning, then the model
+  manufactures `k` imagined transitions for extra updates — model-free + model-based at once, multiplying sample efficiency.
+- **c-antiderivatives** (had: "why the +C") → **substitution, the reverse chain rule**: `∫f(g(x))g'(x)dx=∫f(u)du`; e.g. `∫2x cos(x²)dx
+  → sin(x²)+C` — spot the inner function whose derivative is present and absorb it.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v404` → `atlas-v405`.
+
 ## iter 464 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/LLM (deep-dives 251 → **254**; 102 lessons now carry two):
 - **c-implicit-related-rates** (had: "chain rule wearing a clock") → **implicit differentiation**: differentiate `x²+y²=25` treating `y=y(x)`
