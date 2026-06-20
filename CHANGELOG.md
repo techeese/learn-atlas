@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 428 — Backprop you can run: a 2-layer backward-pass code exercise (new functionality — owner's backprop focus)
+Backprop follow-up #2 (owner's deep-focus). Added a runnable JavaScript code exercise to `dl-backpropagation`, right after the new
+Lab viz, implementing the **exact same network** as the viz and the by-hand example — so all three corroborate:
+- forward pass with cached values (`z1, a1=ReLU, yhat, L`), then the backward pass written out as *upstream gradient × one local
+  derivative*, right to left, ending `console.log(dw1, dw2)` → **`24 4`** for `x=2, w₁=0.5, w₂=3, y=1`.
+- the learner can edit the inputs and re-run to watch the gradients change; the ReLU-derivative line (`z1 > 0 ? 1 : 0`) makes the
+  gradient-gating explicit in code.
+The gate **actually runs** every JS code-exercise and asserts its `console.log` output equals `data-expected`, so this is verified to
+produce `24 4` exactly (code-exercises verified: → **86**). Stored with the `>` HTML-escaped (`&gt;`) per the innerHTML landmine.
+Verified: gate ALL GREEN (ran the code, output matched); **via `--dump-dom`** the lesson renders it — `errs=0, kErr=0`, the code element
+hydrates, the `>` **decodes** correctly (no literal `&gt;`), and clicking **Run** in-browser produced `24 4`. SW cache `atlas-v367` →
+`atlas-v368`. *(Backprop triad now complete: viz + by-hand example + runnable code. Next: the matrix/Jacobian-form deep-dive.)*
+
 ## iter 427 — Backprop by hand: a full numeric trace (examples — owner's backprop focus)
 Backprop follow-up #1 (owner's deep-focus). Added a worked example on `dl-backpropagation` that mirrors the new Lab viz exactly, so
 the learner can check pencil-and-paper against the animation (examples 424 → **425**):

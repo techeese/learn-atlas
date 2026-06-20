@@ -185,8 +185,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 427: **Backprop by hand — full numeric trace** (examples; owner's backprop focus). +1 (424→425): dl-backpropagation example
    "A full forward-and-backward pass by hand (matches the Lab viz)" — ReLU chain x=2,w₁=0.5,w₂=3,y=1 → clean integers (∂L/∂w₁=24,
    ∂L/∂w₂=4); mirrors the viz so learner can check by hand. Node-verified; gate GREEN (425); dump-dom katex 50, kErr=0, rawDollar=0. SW →v367.
-   📌 BACKPROP FOLLOW-UPS REMAINING (owner's focus): (b) deep-dive on the matrix/Jacobian form (∂L/∂W=δaᵀ, batched backprop);
-   (c) a code exercise implementing a 2-layer backward pass and asserting the gradients.
+   ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
+   dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
+   Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   📌 BACKPROP TRIAD COMPLETE: viz (426) + by-hand example (427) + runnable code (428), all the same x=2,w₁=0.5,w₂=3,y=1 network.
+   📌 REMAINING (owner's focus): (b) deep-dive on the matrix/Jacobian form (∂L/∂W=δaᵀ, batched backprop) — do next.
    ✅ iter 425: **3 more worked examples; algo at-2 pool cleared** (examples). +3 (421→424): a-amortized-analysis (binary counter),
    a-union-find-range (inverse Ackermann α(n)), rl-value-approximation (the deadly triad). Node-verified; round-trip-guarded inject.
    Verified: gate GREEN (424 examples); dump-dom katex 56/38/66, kErr=0, new examples rawDollar=0; smoke rawD7 = pre-existing
