@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 444 — Three more second deep-dives — the 200th (content / depth — owner's #1)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/DL/RL, crossing **200 deep-dives** (197 → **200**; 50
+lessons now carry two):
+- **c-optimization** (had: "∇f=0 is necessary, not sufficient") → **the closed-interval method**: on `[a,b]` the extremum can be at an
+  *endpoint* (where `f′≠0`) — e.g. `f(x)=x` on `[0,1]` has no interior critical point; complete optimization checks the boundary too.
+- **dl-embeddings-and-tokenization** (had: "symbols into geometry") → **why tokenization fumbles spelling/digits**: the model sees
+  *subword* tokens, never raw letters — hence "how many r's in strawberry?", brittle arithmetic, and number-splitting quirks.
+- **rl-monte-carlo** (had: "MC vs TD") → **first-visit vs every-visit MC**: average returns after the first vs every visit (both converge),
+  but MC needs the *full* return so it updates only at episode end — can't handle continuing tasks (the limitation TD removes).
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN (**200 deep-dives**); **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**;
+smoke (2 dd's × 3 + pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v383` → `atlas-v384`.
+
 ## iter 443 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LA/algo/PS (deep-dives 194 → **197**; 47 lessons now carry two):
 - **la-dot-product-norms** (had: "measures alignment") → **Cauchy–Schwarz**: `|a·b| ≤ ‖a‖‖b‖`, so `cosθ = a·b/(‖a‖‖b‖) ∈ [−1,1]` — the
