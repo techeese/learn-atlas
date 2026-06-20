@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 455 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across RL/DL/calc (deep-dives 227 → **230**; 78 lessons now carry two):
+- **rl-what-is-rl** (had: "evaluation, not instruction") → **the reward hypothesis**: every goal can be framed as maximizing expected
+  *cumulative scalar* reward — scalar makes futures comparable, cumulative makes the agent far-sighted; the catch is reward design.
+- **dl-learning-rate-schedules-and-tuning** (had: "why warmup then decay") → **the linear scaling rule**: bigger batch → less gradient
+  noise (`1/√B`) → scale LR ∝ batch size (Goyal et al.); the coupling behind large-batch distributed training (and why warmup matters there).
+- **c-area-volume** (had: "slice, approximate, integrate") → **disks vs shells**: washer `∫π(R²−r²)dx` (slice ⊥ axis) vs shell `∫2πx·h dx`
+  (slice ∥ axis) — same volume, pick the easier integral (shells avoid solving for x in terms of y).
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v394` → `atlas-v395`.
+
 ## iter 454 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LLM/PS/LA (deep-dives 224 → **227**; 75 lessons now carry two):
 - **l-tokenization-bpe** (had: "BPE is greedy compression") → **the vocabulary-size tradeoff**: bigger vocab = shorter sequences (cheaper
