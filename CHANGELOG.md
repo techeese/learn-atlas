@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 446 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across algo/calc/LLM (deep-dives 203 → **206**; 56 lessons now carry two):
+- **a-comparison-sorts** (had: "quicksort vs mergesort") → **the Ω(n log n) lower bound**: a decision tree must separate all `n!` orderings,
+  so height `≥ log₂(n!) = Θ(n log n)` — `n log n` is a *theorem*, and counting/radix sorts only beat it by not comparing.
+- **c-linearization-lhopital** (had: "why L'Hôpital works") → **linearization**: `f(x)≈f(a)+f′(a)(x−a)` (e.g. `√4.1≈2.025`) — the local
+  model behind Newton's method, error propagation, `sinθ≈θ`, and every gradient-descent step.
+- **l-pretraining-objective-data** (had: "scaling laws") → **why next-token prediction learns everything**: predicting text *forces*
+  grammar/facts/arithmetic/reasoning (each lowers the loss) — a self-supervised, massively-multitask objective with free labels.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v385` → `atlas-v386`.
+
 ## iter 445 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across PS/LA/DL (deep-dives 200 → **203**; 53 lessons now carry two):
 - **ps-covariance-correlation** (had: "covariance with units divided out") → **correlation only sees lines (and isn't causation)**:
