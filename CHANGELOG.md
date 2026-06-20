@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 513 — Three more THIRD deep-dives (content / depth — non-content lanes verified saturated)
+This turn I checked the non-content lanes for a genuine gap and found none: the **89-widget viz catalog is saturated** (a CI-coverage viz already
+exists) **and already richly aria-labeled** (56 descriptive canvas labels), perf was done last iter, mobile is clean, and the top-tier lessons already
+carry 3 examples each. With non-content exhausted, I continued the owner's #1 directive (depth) — a **third "Deeper dive"** on three concepts with
+clean, non-overlapping angles (deep-dives 380 → **383**):
+- **c-lagrange-multipliers** (had: KKT/slackness · ∇f∥∇g) → **λ is the shadow price**: the multiplier equals `df*/dc` — the sensitivity of the optimum
+  to the constraint (how much one more unit of budget/resource is worth); an inactive constraint has `λ=0`.
+- **a-arrays-lists-stacks-queues** (had: array-vs-list memory · cache locality) → **stacks/queues are a discipline, not a structure**: LIFO vs FIFO is an
+  access *order* (any storage); swap it and DFS⇄BFS, and the call stack literally *is* a stack.
+- **ps-bernoulli-binomial** (had: formula origin · mean np/var) → **the binomial becomes a bell**: a sum of Bernoullis, so by the CLT
+  `Binomial(n,p)≈𝒩(np,np(1−p))` (de Moivre–Laplace) — why proportions get normal CIs; use the `±½` continuity correction for moderate n.
+Authored with `String.raw` LaTeX (display `$$…$$` for the shadow-price & normal-approx formulas); injected via the append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0** (display math too); smoke
+(3 dd's × 3 + pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v452` → `atlas-v453`.
+
 ## iter 512 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 Back to depth (alternating with 511's perf). A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 377 → **380**):
 - **dl-initialization-and-vanishing-gradients** (had: compound-interest · Xavier/He) → **gradient clipping**: init/norm fix the *average* scale, but rare

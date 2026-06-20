@@ -182,6 +182,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 513: **3 more THIRD deep-dives** (content/depth — non-content lanes verified saturated: viz catalog full+aria-labeled, perf done, mobile
+   clean, top-tier examples full). +3 dd (380→383; 84 at 3 dd): c-lagrange-multipliers (λ = shadow price), a-arrays-lists-stacks-queues (LIFO/FIFO
+   discipline → DFS/BFS/call-stack), ps-bernoulli-binomial (normal approximation / de Moivre–Laplace). Verified: gate GREEN; dump-dom each nDD=3,
+   kErr=0, rawDollar=0; smoke bad=none. SW →v453.
    ✅ iter 512: **3 more THIRD deep-dives on the hardest concepts** (content/depth; alternating with 511). +3 dd (377→380; 81 at 3 dd):
    dl-initialization-and-vanishing-gradients (gradient clipping), l-peft-lora (PEFT family: QLoRA/prefix tuning), a-amortized-analysis (three proof
    methods). Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v452.
