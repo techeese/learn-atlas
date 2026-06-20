@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 463 — Fix: the streak tile no longer flashes "0" on the dashboard/stats (owner bug · gamification)
+**Owner report:** the "N-day streak" display was rendering incorrectly. Investigated the whole streak path with seeded saves in headless Chrome:
+- **store logic verified correct** across 8 day-scenarios (fresh → 1, same-day → unchanged, returns → +1, freeze-saves a missed day,
+  reset after a gap, missing-field migration, 6→7 milestone) — every case produces the right streak;
+- **header counter + flame tier** (5/12/47/365 → lit/hot/blazing/inferno) and the consistency-strip + today's-goal text all show the
+  correct value **at rest** (dump: hdr=47, tile=47, "🔥 47-day streak", "streak 47 days").
+**The real defect:** the dashboard ("Day streak") and Progress-page ("Day streak") tiles ran the **count-up animation**, so on landing the
+streak briefly flashed **"0" and climbed** — for a *streak* that misreads as "your streak reset," and it momentarily disagreed with the
+header (which shows the true value instantly). A streak is a *status*, not a cumulative score.
+**Fix:** exempt the streak tiles from count-up via a `data-nocount` marker that both count-up loops skip, so they show their true value
+immediately, matching the header. (Also fixed the dashboard loop's stray `forEach(countUp)` that passed the array index as the delay.)
+Verified: gate ALL GREEN; seeded headless dump **at 80 ms (mid-animation)** → streak tile = **23** = header (no 0-flash) while the accuracy
+tile still counts 0%→80%; settled dump consistent; all-routes smoke (10 routes incl. dashboard/stats/math lesson) **errs=0/kErr=0/bad=none**;
+screenshot confirms header "🔥 23" matches the "23 DAY STREAK" tile. SW cache `atlas-v402` → `atlas-v403`.
+
 ## iter 462 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across calc/LLM/DL (deep-dives 248 → **251**; 99 lessons now carry two):
 - **c-computing-limits** (had: "indeterminate forms are questions") → **the resolution toolkit**: factor-and-cancel

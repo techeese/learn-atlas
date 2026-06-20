@@ -638,7 +638,7 @@
         <div class="stat reveal" style="--c:var(--gold)"><div class="v">${st.lessonsDone}/${st.totalLessons}</div><div class="k">Lessons done</div></div>
         <div class="stat reveal" style="--c:var(--sage)"><div class="v">${st.accuracy}%</div><div class="k">Quiz accuracy</div></div>
         <div class="stat reveal" style="--c:var(--rust)"><div class="v">${st.reviewDue}</div><div class="k">Cards due</div></div>
-        <div class="stat reveal" style="--c:var(--violet)"><div class="v">${st.streak}</div><div class="k">Day streak</div></div>
+        <div class="stat reveal" style="--c:var(--violet)"><div class="v" data-nocount>${st.streak}</div><div class="k">Day streak</div></div>
       </div>
 
       <div class="today-strip reveal">
@@ -674,7 +674,7 @@
       <div class="grid">${cards}</div>
     </div>`;
     bindGo();
-    document.querySelectorAll(".stat-strip .v").forEach(countUp);   // count-up the hero stats on landing
+    document.querySelectorAll(".stat-strip .v:not([data-nocount])").forEach(el => countUp(el));   // count-up the hero stats on landing (the streak is a status, not a score — it shows its true value at once, matching the header, instead of flashing 0)
     sweepGoalRing(goalPct);                                          // animate the daily-goal ring fill 0 → goalPct
     sweepForecast();                                                 // sweep the review-forecast bars up 0 → height
     sweepStrip();                                                    // pop the 14-day consistency cells in left-to-right
@@ -2285,7 +2285,7 @@
     // lifetime activity — surfaces the engagement state the loop tracks (mistakes deck, perfect quizzes, notes, etc.)
     const R = Store.raw;
     const achGot = Store.ACHIEVEMENTS.filter(a => R.achievements[a.id]).length, achTot = Store.ACHIEVEMENTS.length;
-    const tile = (label, val, color, go) => `<div class="act-tile${go ? " act-link" : ""}"${go ? ` data-go="${go}"` : ""}><div class="act-num" style="color:${color}">${val}</div><div class="act-lbl">${label}</div></div>`;
+    const tile = (label, val, color, go, nocount) => `<div class="act-tile${go ? " act-link" : ""}"${go ? ` data-go="${go}"` : ""}><div class="act-num"${nocount ? " data-nocount" : ""} style="color:${color}">${val}</div><div class="act-lbl">${label}</div></div>`;
     const actGrid = [
       tile("Questions answered", R.mcq.total, "var(--gold)"),
       tile("Correct answers", R.mcq.correct, "var(--sage)"),
@@ -2298,7 +2298,7 @@
       tile("Notes written", Object.keys(R.notes || {}).length, "var(--sage)", Object.keys(R.notes || {}).length ? "#/notes" : ""),
       tile("Bookmarks", Store.bookmarkIds().length, "var(--gold)"),
       tile("Achievements", achGot + "/" + achTot, "var(--gold)", "#/achievements"),
-      tile("Day streak", R.streak, "var(--rust)")
+      tile("Day streak", R.streak, "var(--rust)", "", true)   // streak shows its true value at once (no 0-flash count-up) — it's a status, not a score
     ].join("");
 
     // recent test performance — the tests array stores scores; surface them as a trend (improvement = motivation)
@@ -2398,7 +2398,7 @@
     if (rmBtn) rmBtn.addEventListener("click", () => { const on = toggleReduceMotion(); rmBtn.setAttribute("aria-pressed", on); rmBtn.innerHTML = on ? "🌿 Reduced motion: on" : "✦ Reduce motion"; toast(on ? "🌿" : "✦", "Reduced motion " + (on ? "on" : "off"), on ? "Animations and transitions are now minimized." : "Animations restored."); });
     document.getElementById("heatmap").appendChild(buildHeatmap());
     // "look how far I've come" — cascade-count the progress numbers on load (earned moment; no-op under reduced-motion)
-    app.querySelectorAll(".stat-strip .v, .act-num, .dist-num").forEach((el, i) => countUp(el, Math.min(i * 32, 430)));
+    app.querySelectorAll(".stat-strip .v:not([data-nocount]), .act-num:not([data-nocount]), .dist-num").forEach((el, i) => countUp(el, Math.min(i * 32, 430)));   // the streak tile is data-nocount: a status shows at once, never flashing 0
     sweepBars(app);                                            // animate the recent-test score bars filling in
     document.getElementById("goal-save").addEventListener("click", () => { Store.setGoal(parseInt(document.getElementById("goal-input").value, 10)); toast("🎯", "Goal updated", "Daily target set to " + Store.raw.goalXp + " XP"); });
     document.getElementById("newcap-save").addEventListener("click", () => { Store.setNewPerSession(parseInt(document.getElementById("newcap-input").value, 10)); document.getElementById("newcap-input").value = Store.raw.newPerSession; toast("🃏", "Review pace updated", "Up to " + Store.raw.newPerSession + " new cards per session"); });

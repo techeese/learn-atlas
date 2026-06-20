@@ -188,6 +188,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 463: **FIX (owner bug): streak tile no longer flashes "0"** (gamification). Streak value verified correct everywhere at rest
+   (8 node scenarios + header/flame/strip dumps); the defect was the dashboard + Progress "Day streak" tiles running the count-up animation,
+   flashing 0→N (a status misread as a score, briefly disagreeing with the header). Fix: data-nocount marker skips the streak in both
+   count-up loops → shows true value at once. Verified: gate GREEN; 80ms dump streak=23=header (no 0-flash); smoke 10 routes errs=0/kErr=0;
+   screenshot header "🔥23" == "23 DAY STREAK" tile. SW →v403.
    ✅ iter 462: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (248→251; 99 lessons have 2):
    c-computing-limits (indeterminate-form toolkit), l-what-is-a-language-model (autoregressive generation), dl-transfer-learning (feature
    hierarchy / freezing). Append-second-dd inject w/ full guards (x_{\lt t}). Verified: gate GREEN; dump-dom each nDD=2, kErr=0, rawDollar=0; smoke bad=none. SW →v402.
