@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 511: **Memoize the ⌘K search index** (performance; anti-monotony off content). Index (incl. regex over all 377 dives) was rebuilt every
+   palette open though it's pure over static data → now built once & cached (_searchIdx). Verified: gate GREEN; headless repeated cached queries return
+   correct results incl. dd hits, errs=0; mobile 390px dashboard+lesson eyeballed clean (no fix needed). SW →v451.
    ✅ iter 510: **STEP-BACK: full audit (clean) + 3 more third deep-dives** (content/depth). Sweeps: 148 lessons errs=0/kErr=0/0 bad; 109 routes
    errs=0/kErr=0 (257 green). Coverage: 0 thin; dd dist 2-dd:70 / 3-dd:78 / 4+:0 (377 total, every lesson >=2). Reflection: 500→510 built the full
    deep-dive ecosystem (badge/search/deep-link/daily-card/tracker+achievements) alternating with 3rd-dd batches, zero red gates. Ship:

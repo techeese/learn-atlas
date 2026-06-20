@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 511 — Memoize the ⌘K search index (performance)
+Switched off content (anti-monotony). The command palette rebuilt its full ~1,400-item index — including a regex sweep over *all 377 deep-dives'*
+content — on **every** open, even though the index is pure over static course/example/viz/glossary/reference data. Now it's built **once and cached**
+(`_searchIdx`), so opening ⌘K (especially repeatedly, and on slower/mobile devices) no longer redoes that work. Also verified — *no change needed* —
+the recent dashboard/lesson UI (Deeper-dive-of-the-day card, "N deeper dives" badge) renders cleanly at true **390px** mobile.
+Verified: gate ALL GREEN; **headless** — palette opens and repeated queries over the cached index return correct results, including deep-dive hits
+("residual stream"→*the residual stream*, "eckart"→*the SVD is the best low-rank…*, "lesson"→50), `errs=0`; mobile 390px dashboard + lesson
+screenshots eyeballed clean (tabs grid, both "of the day" cards, "3 deep dives" badge all legible). SW cache `atlas-v450` → `atlas-v451`.
+
 ## iter 510 — Step-back: full audit (clean) + three more third deep-dives (content / depth)
 **Round-number step-back.** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **109 non-lesson routes**

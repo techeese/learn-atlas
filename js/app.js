@@ -2544,7 +2544,9 @@
   }
 
   // ---------- command palette (⌘K) ----------
+  let _searchIdx = null;   // built once and cached — the index is pure over static course/viz/glossary/reference data, but the ⌘K palette used to rebuild it (incl. a regex over all 377 deep-dives' content) on every open
   function searchIndex() {
+    if (_searchIdx) return _searchIdx;
     const out = [];
     C().forEach(c => {
       out.push({ t: c.title, sub: "Topic", hash: "#/course/" + c.id, icon: c.icon });
@@ -2563,7 +2565,7 @@
     [["Dashboard", "#/", "⌂"], ["Daily Mix", "#/session", "🎯"], ["Daily Review", "#/review", "⚡"], ["Spawn a Test", "#/test", "📝"], ["Knowledge Map", "#/map", "🗺️"], ["Code Playground", "#/playground", "💻"], ["Glossary", "#/glossary", "📔"], ["Library", "#/library", "📚"], ["My Notes", "#/notes", "📓"], ["Progress", "#/stats", "📊"], ["Achievements", "#/achievements", "🏆"]].forEach(([t, h, i]) => out.push({ t, sub: "Page", hash: h, icon: i }));
     (window.GLOSSARY || []).forEach(e => out.push({ t: e.term, sub: "Glossary", hash: "#/glossary/" + encodeURIComponent(e.term), icon: "📔" }));
     Object.keys(window.REFERENCES || {}).forEach(k => (window.REFERENCES[k] || []).forEach(r => out.push({ t: r.title, sub: "Reference · " + r.by, hash: r.url, ext: true, icon: "🔖" })));
-    return out;
+    return (_searchIdx = out);
   }
   // action commands (verbs that DO something rather than navigate) — make ⌘K a true command palette
   function commandActions() {
