@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 471 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LLM/RL/calc (deep-dives 272 → **275**; 123 lessons now carry two):
+- **l-inference-efficiency** (had: "KV-cache → linear") → **speculative decoding**: a small draft model proposes `k` tokens, the big model
+  verifies them in one parallel pass and accepts the longest agreeing prefix — same output distribution, several tokens per big-model call.
+- **rl-connections-frontiers** (had: "RL trains aligned LLMs") → **self-play**: pointing the opponent at a copy of itself yields an automatic
+  right-at-the-edge curriculum (AlphaZero) — a closed bootstrap loop from random to superhuman with zero human data.
+- **c-definite-integral-riemann** (had: "a limit of rectangles") → **the integral is signed area**: regions below the axis subtract
+  (`∫₋₁¹ x dx = 0`); true area needs `∫|f|` — the signed accumulator is what makes it right for net change, averages, and work.
+Authored with `String.raw` LaTeX (`\lt` for the comparison); injected via the append-second-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v410` → `atlas-v411`.
+
 ## iter 470 — Step-back: full audit (clean) + three second deep-dives (content / depth)
 **Round-number step-back (iter 470).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **107
