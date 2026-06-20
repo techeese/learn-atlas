@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 533 — Glossary: 17 Machine Learning terms (content / reference)
+The 8th topic introduced a lot of vocabulary but the site-wide glossary had **zero** ML terms. Added **17** (`topic: machine-learning`), so they're
+now in the Glossary page, ⌘K search, and inline tooltips: k-Nearest Neighbors, Decision tree, Gini impurity, Linear regression, Logistic regression,
+Ridge & Lasso, Support Vector Machine, Kernel trick, Naive Bayes, k-Means, Bias-variance tradeoff, Ensemble learning, Random forest, Gradient boosting,
+Cross-validation, Precision & recall, ROC curve / AUC — concise definitions with light KaTeX. (Avoided duplicating existing general terms like
+Regularization / Overfitting.) Glossary grew **151 → 168**.
+Verified: gate ALL GREEN; **headless** — the Glossary route renders with **kErr=0** (definition math typesets), ML terms present, and ⌘K search for
+"support vector" returns the **Glossary** entry; errs=0. SW cache `atlas-v472` → `atlas-v473`. *(Insertion note: the array's last entry lacked a trailing
+comma — re-inserted comma-bridged.)*
+
 ## iter 532 — Runnable code exercises for the Machine Learning topic (new functionality / code)
 The 10 ML lessons had **zero code exercises** while the rest of the codex has 90. Added three runnable, gate-verified JS exercises that implement the
 algorithms by hand:

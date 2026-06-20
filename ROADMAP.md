@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 533: **Glossary — 17 ML terms** (content/reference; glossary had 0 ML terms). kNN, decision tree, Gini, linear/logistic regression, ridge&lasso,
+   SVM, kernel trick, naive bayes, k-means, bias-variance, ensemble, random forest, gradient boosting, cross-validation, precision&recall, ROC/AUC.
+   Glossary 151→168. Verified: gate GREEN; headless glossary kErr=0, ⌘K finds "support vector" (Glossary), errs=0. SW →v473.
    ✅ iter 532: **Runnable code exercises for the ML topic** (new functionality/code; ML had 0, codex has 90). 3 gate-verified JS exercises: ml-knn
    (1-D kNN classify→B), ml-kmeans (one Lloyd step→2 11), ml-decision-trees (Gini→0.375). Verified: gate RUNS them → 89 code-exercises (was 86), ALL
    GREEN; headless each playground Runs to matching output, errs=0. SW →v472.
