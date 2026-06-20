@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 564 — Hands-on code for RL · LLM · algorithms (new functionality / code)
+Extended runnable exercises to three more topics, each in a previously code-free lesson and matching its content:
+- **rl-eligibility-traces** → **discounted return** `G=Σγᵗrₜ` (Horner from the last reward) → `3.349`.
+- **l-what-is-a-language-model** → **softmax + greedy decode**: logits → next-token distribution → argmax token & prob → `0 0.665`.
+- **a-amortized-analysis** → **doubling-array total cost**: copies form a geometric series, so n appends cost `31` total → amortized `1.94` ≈ O(1).
+Loops written with `>=` (no `<`, per the render landmine).
+Verified: `node gate.js` **runs all three** → **104 code-exercises verified** (was 101), ALL GREEN; **headless** — each playground hydrates, Run yields the matching
+output (all OK), errs=0. SW cache `atlas-v503` → `atlas-v504`.
+**Tooling fix:** scoped the code-injector's render-guard to the *inserted block* only — scanning whole `l.content` false-positived on pre-existing causal-mask
+math (`x_{<t}`) that the runtime escaper already handles, and had left a partial write (caught + reverted before commit).
+
 ## iter 563 — Three more third dives: matmul bottleneck · autodiff modes · TD-vs-MC (content / depth)
 Three more third deep-dives (algo/LA/RL), clearing the small algo & LA 2-dd buckets:
 - **a-algorithms-for-ml** → **matrix multiplication is the bottleneck**: ML compute is overwhelmingly matmul (`O(n³)`), which is why the field lives by BLAS/GPUs/TPUs.
