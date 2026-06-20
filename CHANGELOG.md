@@ -2,6 +2,21 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 479 — Pivot: THIRD deep-dives on the hardest, most-central concepts (content / depth)
+With the two-per-lesson runway all but complete (only `ps-conditional-expectation` left, reserved for iter 480), pivoting to the next depth
+layer the owner's directive explicitly calls for — **a third "Deeper dive" on the very hardest, most-central concepts** (deep-dives 296 →
+**299**; these three lessons now carry **three**). (Checked first: the 89-widget viz catalog is saturated — CLT, bias-variance,
+precision-recall, Bayes, KL all exist — so a new viz would be churn; a third dd on a flagship concept adds real understanding.)
+- **la-eigenvalues-eigenvectors** (had: long-run behavior · stretch-vs-rotate) → **the characteristic polynomial**: eigenvalues are the roots
+  of `det(A−λI)=0` — a degree-`n` polynomial → `n` eigenvalues (over ℂ), with `Σλ=tr(A)`, `Πλ=det A` (checked on `[[2,1],[1,2]]`→3,1).
+- **dl-attention-mechanism** (had: soft dictionary lookup · Q/K/V origin) → **attention is O(n²)**: the `n×n` `QK^T` matrix is the curse;
+  FlashAttention keeps it exact but IO-aware (`O(n)` memory), sparse/linear attention approximate it — the long-context battleground.
+- **c-derivative-definition** (had: secant→tangent · differentiable⟹continuous) → **the derivative is the best linear approximation**:
+  `f(x)≈f(a)+f'(a)(x−a)`; "differentiable = locally looks linear" — the view that scales to gradients, Jacobians, Newton, and Taylor.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v418` → `atlas-v419`.
+
 ## iter 478 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LA/algo/RL (deep-dives 293 → **296**; 144 lessons now carry two —
 **only `ps-conditional-expectation` remains at one, reserved to complete the runway at the iter-480 step-back**):

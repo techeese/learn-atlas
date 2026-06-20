@@ -188,6 +188,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 479: **PIVOT — THIRD deep-dives on the hardest concepts** (content/depth). 2-per-lesson runway all but done (only ps-conditional
+   left for iter 480), so started a 3rd dd on flagship hard concepts (+3 dd, 296→299). Checked viz catalog first — saturated (89), no gap.
+   la-eigenvalues-eigenvectors (characteristic polynomial), dl-attention-mechanism (O(n²) / FlashAttention), c-derivative-definition (best
+   linear approximation). These 3 now carry 3 dd. Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v419.
    ✅ iter 478: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (293→296; 144 lessons have 2; only
    ps-conditional-expectation left at 1, saved for iter-480 step-back to complete the runway): la-four-subspaces-rank (SVD gives all four
    subspace bases), a-amortized-analysis (why double not +constant), rl-policy-gradient-theorem (why PG over value methods).
