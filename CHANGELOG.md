@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 554 — Three more third deep-dives: QR · binary-search variants · convexity (content / depth)
+Three more high-value third deep-dives (LA/algo/calc), shrinking the smaller 2-dd buckets:
+- **la-orthonormal-gram-schmidt** → **QR & least squares**: `A=QR` turns the ill-conditioned normal equations into a stable triangular solve `Rx=Qᵀb` — how
+  software actually fits regressions (and the QR eigenvalue algorithm).
+- **a-binary-search** → **lower_bound / upper_bound**: the variants that find a *boundary* (insertion point, count duplicates in `O(log n)`) — what `std::lower_bound` / `bisect` really do.
+- **c-extrema-curve-sketching** → **convexity**: `f''≥0` (a bowl) guarantees a single global minimum and no traps, so `f'=0` *is* the answer — the line between
+  models that train effortlessly (regression, SVM) and those that don't (deep nets).
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (`A=QR` / `Rx=Qᵀb` / `f''≥0` / `\ge x` math renders). SW cache `atlas-v493` → `atlas-v494`.
+
 ## iter 553 — A third worked example for three more ML lessons (examples)
 Brought three more ML lessons to 3 worked examples, each a concept not yet exemplified there:
 - **ml-linear-regression** → **R²**: `1 − SSᵣₑₛ/SS_tot = 0.9375` — the fraction of variance explained, and how to read its scale (1 perfect, 0 = mean, can go negative).
