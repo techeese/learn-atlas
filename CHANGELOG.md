@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 456 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across PS/algo/calc (deep-dives 230 → **233**; 81 lessons now carry two):
+- **ps-point-estimation** (had: "why n−1") → **bias vs consistency + MLE**: unbiased ≠ consistent; MLE (`argmax ∏ p(xᵢ|θ)`) is often biased
+  for small n yet consistent & efficient — the workhorse behind regression and neural-net training (cross-entropy = neg log-likelihood).
+- **a-string-algorithms** (had: "KMP never re-reads") → **Rabin-Karp's rolling hash**: compare *hashes* (O(1) rolling update, verify on a
+  hit) — beats naive O(nm), and its edge is multi-pattern / 2D search where KMP's automaton doesn't generalize.
+- **c-intro-differential-equations** (had: "a slope field to thread") → **separable equations**: `dy/dt=ky` → `y=y₀e^{kt}` by separating
+  variables — the exponential model under growth/decay/interest/RC, and why `eˣ` is the natural base.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v395` → `atlas-v396`.
+
 ## iter 455 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across RL/DL/calc (deep-dives 227 → **230**; 78 lessons now carry two):
 - **rl-what-is-rl** (had: "evaluation, not instruction") → **the reward hypothesis**: every goal can be framed as maximizing expected
