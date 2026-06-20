@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 426 — Step-through backpropagation visualization (visualizations — owner's request)
+**Owner asked to go deep on backpropagation** (examples, visualizations). Audited existing coverage first: backprop is taught across
+`dl-backpropagation` (2 dd + the single-weight `dl-backprop` viz), `c-chain-rule`, `la-matrix-calculus-backprop`,
+`dl-the-artificial-neuron-and-mlp`, etc. The gap: the existing viz has **one** weight and **no activation** — too shallow to *see* the
+chain rule compose. So I built a new flagship widget.
+- **New viz `dl-backprop-graph`** (viz 87 → **88**) — "Backprop step-by-step (with an activation)". A real 2-layer chain
+  `x →·w₁→ z₁ →σ→ a₁ →·w₂→ ŷ → (ŷ−y)² → L` drawn as a computational graph. **◀ Prev / Next ▶ / Reset** walk the **forward pass**
+  (each node value lights up gold), then the **backward pass** node-by-node (each gradient in rust). Every backward step narrates the
+  chain rule as *upstream × local derivative* — including the activation step `∂L/∂z₁ = ∂L/∂a₁ · σ′(z₁)`, the factor beginners miss.
+  A **σ ↔ ReLU toggle** shows how the activation's slope changes the flow (σ′≤0.25 shrinks → vanishing gradients; ReLU′∈{0,1} gates →
+  dead units). Sliders for `x, w₁, w₂, y` make every number hand-checkable.
+- Embedded in `dl-backpropagation` before the deep-dives with a lead-in; bumped the `viz-complete` achievement target to 88.
+Verified: gate ALL GREEN; **headless** lab route renders (errs=0, canvas present), stepping advances 0→"Forward 4"→"Backward 4 — done"
+(step 8/8), ReLU toggle + Reset work; **lesson route** hydrates both backprop canvases (vizInLesson=2), deep-dives open, kErr=0;
+screenshot eyeballed (clean graph layout). SW cache `atlas-v365` → `atlas-v366`. *(More backprop depth — examples + a worked
+matrix-form walkthrough — queued for follow-up iterations.)*
+
 ## iter 425 — Three more worked examples; algo at-2 pool cleared (examples)
 A **3rd worked example** on three lessons (examples 421 → **424**); this empties the algorithms course's 2-example backlog:
 - **a-amortized-analysis** — **the binary counter**: `n` increments cost `<2n` bit-flips total (potential `Φ`=#1-bits → amortized 2),

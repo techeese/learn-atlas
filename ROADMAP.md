@@ -177,6 +177,13 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ARC NEXT TOPICS (one module per content iteration, interleave with compass): Deep Learning, Reinforcement Learning, LLMs, Prob & Stats.
    ✅ iter 161: MCQ arc → Deep Learning·Foundations 12→16 (+12, bank →2,056). 4th TOPIC OPENED. DL 1/7 modules. Adversarial
    agent ALL PASS; positions shuffled; render "of 16" errs=0; SW cache →v104.
+   ✅ iter 426: **Step-through backprop visualization** (visualizations — OWNER REQUEST: go deep on backprop). New viz `dl-backprop-graph`
+   (87→88): a 2-layer chain x→·w₁→z₁→σ→a₁→·w₂→ŷ→(ŷ−y)²→L with Prev/Next/Reset stepping the forward then backward pass node-by-node,
+   each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
+   viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
+   2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   📌 BACKPROP FOLLOW-UPS (owner's focus): (a) worked example "backprop through a 2-layer net by hand" on dl-backpropagation;
+   (b) a deep-dive on the matrix/Jacobian form (batched backprop); (c) a code exercise implementing a 2-layer backward pass.
    ✅ iter 425: **3 more worked examples; algo at-2 pool cleared** (examples). +3 (421→424): a-amortized-analysis (binary counter),
    a-union-find-range (inverse Ackermann α(n)), rl-value-approximation (the deadly triad). Node-verified; round-trip-guarded inject.
    Verified: gate GREEN (424 examples); dump-dom katex 56/38/66, kErr=0, new examples rawDollar=0; smoke rawD7 = pre-existing

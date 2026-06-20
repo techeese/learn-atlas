@@ -1105,6 +1105,91 @@
   });
 
   /* ========================================================
+     20b. Backprop step-by-step through a 2-weight chain (with activation)
+     ======================================================== */
+  register({ id: 'dl-backprop-graph', topic: 'deep-learning', title: 'Backprop step-by-step (with an activation)', blurb: 'Walk the chain rule through a tiny 2-layer network x→·w₁→z₁→σ→a₁→·w₂→ŷ→(ŷ−y)²→L. Step the forward pass, then the backward pass node-by-node — each gradient is the upstream gradient times one local derivative, and the activation contributes σ′(z₁). Toggle ReLU to see why its derivative (0 or 1) gates the gradient.' },
+  function (root) {
+    const W = 640, H = 410, BW = 96, BH = 56;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const ctl2 = controls(root);
+    const info = note(root);
+    const DISP = "Fraunces, Georgia, serif", MONO = "JetBrains Mono, monospace";
+    let x = 1.5, w1 = 1.0, w2 = 1.5, y = 1.0, useRelu = false, step = 0;
+    const MAXSTEP = 8;
+    slider(ctl, { label: 'x', min: -3, max: 3, step: 0.5, value: x, fmt: v => v.toFixed(1), onInput: v => { x = v; draw(); } });
+    slider(ctl, { label: 'w₁', min: -3, max: 3, step: 0.5, value: w1, fmt: v => v.toFixed(1), onInput: v => { w1 = v; draw(); } });
+    slider(ctl, { label: 'w₂', min: -3, max: 3, step: 0.5, value: w2, fmt: v => v.toFixed(1), onInput: v => { w2 = v; draw(); } });
+    slider(ctl, { label: 'y (target)', min: -3, max: 3, step: 0.5, value: y, fmt: v => v.toFixed(1), onInput: v => { y = v; draw(); } });
+    button(ctl2, '◀ Prev', () => { step = Math.max(0, step - 1); draw(); });
+    button(ctl2, 'Next ▶', () => { step = Math.min(MAXSTEP, step + 1); draw(); });
+    button(ctl2, '↺ Reset', () => { step = 0; draw(); });
+    const actBtn = button(ctl2, 'σ sigmoid', () => { useRelu = !useRelu; actBtn.innerHTML = useRelu ? 'ReLU' : 'σ sigmoid'; draw(); });
+    function act(z) { return useRelu ? Math.max(0, z) : 1 / (1 + Math.exp(-z)); }
+    function dact(z, a) { return useRelu ? (z > 0 ? 1 : 0) : a * (1 - a); }
+    const N = {
+      x: { cx: 60, cy: 210 }, w1: { cx: 196, cy: 76 }, z1: { cx: 196, cy: 210 },
+      a1: { cx: 330, cy: 210 }, w2: { cx: 464, cy: 76 }, yh: { cx: 464, cy: 210 },
+      y: { cx: 540, cy: 340 }, L: { cx: 586, cy: 210 }
+    };
+    function rr(X, Y, w2_, h2, r) { ctx.beginPath(); ctx.moveTo(X + r, Y); ctx.arcTo(X + w2_, Y, X + w2_, Y + h2, r); ctx.arcTo(X + w2_, Y + h2, X, Y + h2, r); ctx.arcTo(X, Y + h2, X, Y, r); ctx.arcTo(X, Y, X + w2_, Y, r); ctx.closePath(); }
+    function box(p, n, title, val, grad, ring) {
+      const X = n.cx - BW / 2, Y = n.cy - BH / 2;
+      ctx.fillStyle = p.panel; ctx.strokeStyle = ring || p.line; ctx.lineWidth = ring ? 2.6 : 1.4; rr(X, Y, BW, BH, 9); ctx.fill(); ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.fillStyle = p.ink; ctx.font = '600 11.5px ' + DISP; ctx.fillText(title, n.cx, Y + 15);
+      if (val !== null) { ctx.fillStyle = p.gold; ctx.font = '12px ' + MONO; ctx.fillText(val, n.cx, Y + 32); }
+      if (grad !== null) { ctx.fillStyle = p.rust; ctx.font = '10.5px ' + MONO; ctx.fillText(grad, n.cx, Y + 48); }
+    }
+    function edge(p, a, b, label, hot) {
+      const x1 = a.cx + BW / 2 - 4, y1 = a.cy, x2 = b.cx - BW / 2 + 4, y2 = b.cy;
+      arrow(ctx, x1, y1, x2, y2, hot ? p.rust : p.mute, hot ? 2.4 : 1.6);
+      if (label) { ctx.fillStyle = hot ? p.rust : p.soft; ctx.font = '9.5px ' + MONO; ctx.textAlign = 'center'; ctx.fillText(label, (x1 + x2) / 2, (y1 + y2) / 2 - 6); }
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // forward values
+      const z1 = w1 * x, a1 = act(z1), yh = w2 * a1, L = (yh - y) * (yh - y);
+      // backward grads
+      const gYh = 2 * (yh - y), gW2 = gYh * a1, gA1 = gYh * w2, gZ1 = gA1 * dact(z1, a1), gW1 = gZ1 * x, gX = gZ1 * w1;
+      const f = n => v => step >= n ? v : null; // value shown once forward step n reached
+      const ring = (fwdN, bwdN) => (step === fwdN ? p.gold : (step === bwdN ? p.rust : null));
+      // edges (local derivatives); hot when the corresponding backward step is active
+      edge(p, N.x, N.z1, '∂z₁/∂x=w₁', step === 8);
+      edge(p, N.w1, N.z1, '∂z₁/∂w₁=x', step === 8);
+      edge(p, N.z1, N.a1, '∂a₁/∂z₁=' + (step >= 7 ? dact(z1, a1).toFixed(2) : "σ′"), step === 7);
+      edge(p, N.a1, N.yh, '∂ŷ/∂a₁=w₂', step === 6);
+      edge(p, N.w2, N.yh, '∂ŷ/∂w₂=a₁', step === 6);
+      edge(p, N.yh, N.L, '∂L/∂ŷ=2(ŷ−y)', step === 5);
+      edge(p, N.y, N.L, '∂L/∂y=−2(ŷ−y)', false);
+      // nodes: value gated by forward step, grad gated by backward step
+      box(p, N.x, 'x (input)', '= ' + x.toFixed(2), step >= 8 ? '∂L/∂x=' + gX.toFixed(3) : null, ring(-1, 8));
+      box(p, N.w1, 'w₁', '= ' + w1.toFixed(2), step >= 8 ? '∂L/∂w₁=' + gW1.toFixed(3) : null, ring(-1, 8));
+      box(p, N.z1, '× : z₁=w₁·x', f(1)('= ' + z1.toFixed(2)), step >= 7 ? '∂L/∂z₁=' + gZ1.toFixed(3) : null, ring(1, 7));
+      box(p, N.a1, (useRelu ? 'ReLU' : 'σ') + ' : a₁', f(2)('= ' + a1.toFixed(3)), step >= 6 ? '∂L/∂a₁=' + gA1.toFixed(3) : null, ring(2, 6));
+      box(p, N.w2, 'w₂', '= ' + w2.toFixed(2), step >= 6 ? '∂L/∂w₂=' + gW2.toFixed(3) : null, ring(-1, 6));
+      box(p, N.yh, '× : ŷ=w₂·a₁', f(3)('= ' + yh.toFixed(3)), step >= 5 ? '∂L/∂ŷ=' + gYh.toFixed(3) : null, ring(3, 5));
+      box(p, N.y, 'y (target)', '= ' + y.toFixed(2), null, null);
+      box(p, N.L, '( )² : L', f(4)('= ' + L.toFixed(3)), step >= 5 ? '∂L/∂L=1' : null, ring(4, 5));
+      // narration
+      ctx.textAlign = 'left';
+      const steps = [
+        `<b>Step 0 — ready.</b> Inputs <b style="color:${p.gold}">x=${x.toFixed(2)}, w₁=${w1.toFixed(2)}, w₂=${w2.toFixed(2)}, y=${y.toFixed(2)}</b> are set. Press <b>Next ▶</b> to run the forward pass.`,
+        `<b style="color:${p.gold}">Forward 1.</b> Multiply: z₁ = w₁·x = ${w1.toFixed(2)}·${x.toFixed(2)} = <b>${z1.toFixed(2)}</b>.`,
+        `<b style="color:${p.gold}">Forward 2.</b> Activation: a₁ = ${useRelu ? 'ReLU' : 'σ'}(z₁) = <b>${a1.toFixed(3)}</b>${useRelu ? ' = max(0, z₁)' : ' = 1/(1+e^−z₁)'}.`,
+        `<b style="color:${p.gold}">Forward 3.</b> Multiply: ŷ = w₂·a₁ = ${w2.toFixed(2)}·${a1.toFixed(3)} = <b>${yh.toFixed(3)}</b>.`,
+        `<b style="color:${p.gold}">Forward 4 — loss.</b> L = (ŷ−y)² = (${yh.toFixed(3)}−${y.toFixed(2)})² = <b>${L.toFixed(3)}</b>. Forward pass done — now go backward.`,
+        `<b style="color:${p.rust}">Backward 1.</b> Seed ∂L/∂L=1, then ∂L/∂ŷ = 2(ŷ−y) = <b>${gYh.toFixed(3)}</b>. This is the gradient that will flow back through the graph.`,
+        `<b style="color:${p.rust}">Backward 2.</b> Split at the ×: ∂L/∂w₂ = ∂L/∂ŷ·a₁ = ${gYh.toFixed(3)}·${a1.toFixed(3)} = <b>${gW2.toFixed(3)}</b>, and ∂L/∂a₁ = ∂L/∂ŷ·w₂ = <b>${gA1.toFixed(3)}</b> (upstream × local).`,
+        `<b style="color:${p.rust}">Backward 3 — through the activation.</b> ∂L/∂z₁ = ∂L/∂a₁·${useRelu ? 'ReLU′' : 'σ′'}(z₁) = ${gA1.toFixed(3)}·${dact(z1, a1).toFixed(2)} = <b>${gZ1.toFixed(3)}</b>. The activation's slope ${useRelu ? '(0 or 1) <b>gates</b>' : '(≤0.25) <b>shrinks</b>'} the gradient — ${useRelu ? 'a dead ReLU passes nothing' : 'this is where vanishing gradients begin'}.`,
+        `<b style="color:${p.rust}">Backward 4 — done.</b> ∂L/∂w₁ = ∂L/∂z₁·x = <b>${gW1.toFixed(3)}</b> and ∂L/∂x = ∂L/∂z₁·w₁ = <b>${gX.toFixed(3)}</b>. Every weight now has its gradient — one backward sweep, ~one forward pass of cost.`
+      ];
+      info.innerHTML = steps[step] + `<br><span style="color:${p.mute}">step ${step}/${MAXSTEP} · <span style="color:${p.gold}">gold = forward value</span> · <span style="color:${p.rust}">rust = gradient ∂L/∂·</span></span>`;
+    }
+    draw();
+  });
+
+  /* ========================================================
      21. Decoding — temperature + nucleus (top-p) sampling
      ======================================================== */
   register({ id: 'llm-decoding', topic: 'llm', title: 'Decoding: Temperature & Top-p', blurb: 'Reshape a next-token distribution with temperature, then watch the nucleus (top-p) keep only the head of the distribution.' },
