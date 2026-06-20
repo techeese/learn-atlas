@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 459 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across PS/calc/LLM (deep-dives 239 → **242**; 90 lessons now carry two):
+- **ps-errors-and-power** (had: "the two ways a test can be wrong") → **statistical power (1−β)**: the probability of detecting a real
+  effect; rises with `n`, effect size, and `α`, falls with variance — underpowered studies miss effects (and inflate the winner's curse).
+- **c-derivatives-special-functions** (had: "eˣ is its own derivative") → **the trig-derivative 4-cycle**: `sin→cos→−sin→−cos→sin`, so
+  `d⁴/dx⁴ sin = sin` — the real-axis shadow of `e^{iθ}` spinning (Euler), each derivative a 90° rotation.
+- **l-transformer-block** (had: "mix-then-think + residuals") → **pre-LN vs post-LN**: normalizing the sublayer *input* keeps the residual
+  a clean identity highway, so gradients stay stable across depth — why modern (pre-LN) transformers train deep without warmup.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v398` → `atlas-v399`.
+
 ## iter 458 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across DL/DL/RL (deep-dives 236 → **239**; 87 lessons now carry two):
 - **dl-dropout-and-normalization** (had: "BatchNorm two stories") → **dropout as an implicit ensemble**: random unit-deletion trains `2ⁿ`
