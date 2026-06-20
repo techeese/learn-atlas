@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 549 — Interactive bias–variance viz (visualizations)
+The **95th widget, `ml-bias-variance-viz` "Bias–variance: fitting polynomials of growing degree."** Drag the polynomial degree (1–10) and watch the
+least-squares fit to noisy data: at low degree it **underfits** (high error everywhere), at high degree it **wiggles through every point** — training error
+toward zero while error on unseen data climbs back up. Live train/test readouts + a verdict (underfitting / good fit / overfitting). It visualizes the single
+most important model-selection idea — the bias–variance trade-off — and ties straight to the regularization, overfitting, and double-descent deep-dives.
+Embedded in the Model Selection lesson at the "Diagnosing bias and variance" section; the ML topic now has **6 interactives**.
+Verified: gate ALL GREEN (now **95 widgets**); **headless** — degree sweep gives **deg1 underfitting (0.038/0.039) → deg3 good fit (0.009/0.006) → deg10
+overfitting (train 0.001 / test 0.123)**, the textbook U; lab + lesson canvases hydrate, **kErr=0, errs=0**; screenshot shows the degree-10 overfit
+oscillation through every point. SW cache `atlas-v488` → `atlas-v489`.
+
 ## iter 548 — Three more original-topic third deep-dives (content / depth)
 Three more high-value third deep-dives (RL/DL/algo), each covering the *mechanics/solution* that the lesson's first two dives set up:
 - **rl-value-approximation** → **how DQN tames the deadly triad**: it uses all three dangerous ingredients (nonlinear approx + bootstrapping + off-policy),

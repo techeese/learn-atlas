@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 549: **Interactive bias–variance viz** (visualizations). 95th widget ml-bias-variance-viz: drag polynomial degree, watch underfit→sweet-spot→
+   overfit with live train/test error + verdict. Embedded in Model Selection lesson "Diagnosing bias and variance"; ML now has 6 interactives. Verified:
+   gate GREEN (95 widgets); headless deg1 underfit/deg3 good/deg10 overfit (test U 0.039→0.006→0.123), kErr=0/errs=0; screenshot. SW →v489.
    ✅ iter 548: **3 more original-topic 3rd deep-dives** (content/depth). rl-value-approximation (how DQN tames the deadly triad: replay + target net),
    dl-pretraining (parameter-efficient fine-tuning: LoRA/adapters), a-recurrences-master-theorem (solving non-MT recurrences: recursion tree/substitution/
    Akra–Bazzi). Verified: gate GREEN; dump-dom each nDD=3, kErr=0/rawD=0/errs=0. SW →v488.

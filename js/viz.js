@@ -5228,4 +5228,57 @@
     genData(); draw();
   });
 
+
+  /* ========================================================
+     95. Bias-variance: polynomials of growing degree (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-bias-variance-viz', topic: 'machine-learning', title: 'Bias–variance: fitting polynomials of growing degree', blurb: 'Drag the degree. A low-degree polynomial underfits (high error everywhere); a very high degree wiggles through every noisy point, driving training error toward zero while the error on unseen data climbs back up. The sweet spot in between is the bias–variance trade-off — the heart of model selection.' },
+  function (root) {
+    const W = 540, H = 380, padL = 12, padR = 12, padT = 14, padB = 14;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let seed = 99;
+    function rng() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function gauss() { let u = 0, v = 0; while (u === 0) u = rng(); while (v === 0) v = rng(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+    const truef = x => 0.6 * Math.sin(2.5 * x) + 0.15 * x;
+    let pts = [], degree = 1;
+    function genData() { seed = 99; pts = []; const N = 11; for (let i = 0; i < N; i++) { const x = -1 + 2 * i / (N - 1); pts.push({ x: x, y: truef(x) + gauss() * 0.12 }); } }
+    function polyfit(deg) {
+      const n = deg + 1, lambda = 1e-7;
+      const X = pts.map(p => { const r = []; for (let j = 0; j < n; j++) r.push(Math.pow(p.x, j)); return r; });
+      const A = [], b = [];
+      for (let i = 0; i < n; i++) { A.push(new Array(n).fill(0)); b.push(0); }
+      for (let i = 0; i < n; i++) { for (let j = 0; j < n; j++) { let s = 0; for (let k = 0; k < pts.length; k++) s += X[k][i] * X[k][j]; A[i][j] = s + (i === j ? lambda : 0); } let s2 = 0; for (let k = 0; k < pts.length; k++) s2 += X[k][i] * pts[k].y; b[i] = s2; }
+      for (let col = 0; col < n; col++) { let piv = col; for (let r = col + 1; r < n; r++) if (Math.abs(A[r][col]) > Math.abs(A[piv][col])) piv = r; const ta = A[col]; A[col] = A[piv]; A[piv] = ta; const tb = b[col]; b[col] = b[piv]; b[piv] = tb; for (let r = 0; r < n; r++) { if (r === col) continue; const f = A[r][col] / A[col][col]; for (let j = col; j < n; j++) A[r][j] -= f * A[col][j]; b[r] -= f * b[col]; } }
+      const w = []; for (let i = 0; i < n; i++) w.push(b[i] / A[i][i]); return w;
+    }
+    const evalP = (w, x) => w.reduce((s, cf, j) => s + cf * Math.pow(x, j), 0);
+    function errs(w) { let tr = 0; pts.forEach(p => { const e = evalP(w, p.x) - p.y; tr += e * e; }); tr /= pts.length; let te = 0, M = 120; for (let i = 0; i < M; i++) { const x = -1 + 2 * i / (M - 1); const e = evalP(w, x) - truef(x); te += e * e; } te /= M; return { train: tr, test: te }; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const XR = 1.15, YR = 1.15;
+      const X = x => padL + (x + XR) / (2 * XR) * (W - padL - padR), Y = y => (H / 2) - y / YR * (H / 2 - padT);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke();
+      // true function (faint)
+      ctx.strokeStyle = p.sage; ctx.globalAlpha = 0.5; ctx.lineWidth = 2; ctx.setLineDash([5, 4]); ctx.beginPath();
+      for (let i = 0; i <= 160; i++) { const x = -1 + 2 * i / 160; const px = X(x), py = Y(truef(x)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      const w = polyfit(degree);
+      // fitted polynomial (clipped to plot area)
+      ctx.save(); ctx.beginPath(); ctx.rect(padL, padT, W - padL - padR, H - padT - padB); ctx.clip();
+      ctx.strokeStyle = p.violet; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i <= 240; i++) { const x = -1.05 + 2.1 * i / 240; const px = X(x), py = Y(evalP(w, x)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.restore();
+      // training points
+      pts.forEach(pt => { ctx.fillStyle = p.gold; ctx.strokeStyle = p.ink; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X(pt.x), Y(pt.y), 5, 0, 7); ctx.fill(); ctx.stroke(); });
+      const e = errs(w);
+      const verdict = e.train > 0.02 ? ['underfitting — too simple (high bias)', p.gold] : (e.test > e.train * 2.2 ? ['overfitting — chasing the noise (high variance)', p.rust] : ['good fit — near the sweet spot', p.sage]);
+      info.innerHTML = 'degree <b>' + degree + '</b> &middot; training error <b style="color:' + p.gold + '">' + e.train.toFixed(4) + '</b> &middot; error on unseen data <b style="color:' + p.rust + '">' + e.test.toFixed(4) + '</b><br><b style="color:' + verdict[1] + '">' + verdict[0] + '</b>. The dashed line is the true signal, gold dots are noisy training data, the violet curve is the degree-' + degree + ' fit. Push the degree up: training error keeps falling, but the error on unseen data turns back up as the curve wiggles to hit every point.';
+    }
+    slider(ctl, { label: 'polynomial degree', min: 1, max: 10, step: 1, value: degree, fmt: v => String(v), onInput: v => { degree = v; draw(); } });
+    button(ctl, '⏮ reset', function () { degree = 1; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Bias-variance visualizer: noisy training points sampled from a smooth true curve, fitted by a polynomial whose degree you set with a slider. At low degree the fit underfits (high bias); at high degree it wiggles through every point, driving training error toward zero while the error on unseen data climbs (high variance). Live training-error and unseen-data-error readouts and a verdict (underfitting / good fit / overfitting) update with the degree.');
+    genData(); draw();
+  });
+
 })();
