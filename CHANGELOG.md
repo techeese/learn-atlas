@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 464 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/LLM (deep-dives 251 → **254**; 102 lessons now carry two):
+- **c-implicit-related-rates** (had: "chain rule wearing a clock") → **implicit differentiation**: differentiate `x²+y²=25` treating `y=y(x)`
+  → `2x+2y·y'=0` → `y'=−x/y` (slope `−¾` at (3,4)) — same technique as related rates, differentiating in `x` instead of `t`.
+- **a-network-flow** (had: "max-flow = min-cut") → **residual graphs & augmenting paths**: Ford–Fulkerson pushes flow along augmenting
+  paths; reverse **back-edges** let it undo bad early choices — the one idea that keeps greedy from a dead end (and proves min-cut).
+- **l-peft-lora** (had: "a tiny low-rank patch") → **LoRA merges away**: `W′=W+BA` folds in at deploy → *zero* inference overhead
+  (unlike adapters), and each patch is a swappable few-MB file — wins at both training and inference.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v403` → `atlas-v404`.
+
 ## iter 463 — Fix: the streak tile no longer flashes "0" on the dashboard/stats (owner bug · gamification)
 **Owner report:** the "N-day streak" display was rendering incorrectly. Investigated the whole streak path with seeded saves in headless Chrome:
 - **store logic verified correct** across 8 day-scenarios (fresh → 1, same-day → unchanged, returns → +1, freeze-saves a missed day,
