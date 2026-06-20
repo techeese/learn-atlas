@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 476 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/LLM/RL (deep-dives 287 → **290**; 138 lessons now carry two):
+- **c-integration-techniques** (had: "rules in reverse") → **partial fractions**: split a rational function into simple pieces
+  (`1/((x−1)(x+1)) = ½/(x−1) − ½/(x+1)`) that integrate to logs/arctans — why integrating rationals is fully mechanical.
+- **l-optimization-and-stability** (had: "warmup + decoupled decay") → **mixed precision & loss scaling**: 16-bit halves memory/doubles
+  throughput; fp16 underflows tiny gradients → scale the loss by `S` before backprop, unscale after; bf16's wide exponent avoids it.
+- **rl-actor-critic** (had: "REINFORCE + baseline") → **A2C/A3C**: on-policy can't reuse a replay buffer, so decorrelate *in space* — run `N`
+  parallel environments for diverse fresh experience (A3C async, A2C synchronous).
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v415` → `atlas-v416`.
+
 ## iter 475 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/RL (deep-dives 284 → **287**; 135 lessons now carry two):
 - **c-lagrange-multipliers** (had: "KKT / slackness") → **∇f ∥ ∇g at the optimum**: the level set of `f` is *tangent* to the constraint
