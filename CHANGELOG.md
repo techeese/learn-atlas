@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 508 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+Back to depth (alternating with 507). A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 371 → **374**):
+- **la-gradients-jacobians** (had: Jacobian=generalized derivative · chain rule=Jacobian mult) → **forward vs reverse mode**: the *order* you multiply
+  the chain of Jacobians sets the cost — reverse mode (backprop) wins for a scalar loss over millions of params (`m≪n`); flip the shape and forward wins.
+- **a-union-find-range** (had: union-find near-O(1) · Fenwick low-bit) → **the segment tree**: Fenwick needs subtraction (sums only); a segment tree
+  combines *any associative op* (min/max/gcd) and supports range updates via lazy propagation, all in `O(log n)`.
+- **rl-policy-iteration** (had: two-step dance · policy-improvement theorem) → **generalized policy iteration**: you can truncate evaluation (one sweep =
+  value iteration) and still converge; evaluation & improvement chasing each other is the single pattern behind value iteration, Q-learning, SARSA, actor-critic.
+Authored with `String.raw` LaTeX (`\ll`); injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v447` → `atlas-v448`.
+
 ## iter 507 — "Deeper dive of the day" on the dashboard (new functionality / gamification)
 Switched off depth (anti-monotony) to put the 371-deep-dive library to work pulling learners back. The dashboard now carries a **Deeper dive of
 the day** card beneath Concept of the Day — a rotating daily pick (`dailyDeepDive()`, seeded by `dayNumber()+101` so it doesn't correlate with the
