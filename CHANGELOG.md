@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 548 — Three more original-topic third deep-dives (content / depth)
+Three more high-value third deep-dives (RL/DL/algo), each covering the *mechanics/solution* that the lesson's first two dives set up:
+- **rl-value-approximation** → **how DQN tames the deadly triad**: it uses all three dangerous ingredients (nonlinear approx + bootstrapping + off-policy),
+  stabilized by **experience replay** (decorrelate + reuse) and a **target network** (freeze the bootstrap target).
+- **dl-pretraining-and-finetuning-paradigm** → **parameter-efficient fine-tuning**: freeze the base, train a tiny add-on — **LoRA** (low-rank `ΔW=BA`),
+  adapters, soft prompts — for ~0.1–1% of the parameters, one base serving many tasks.
+- **a-recurrences-master-theorem** → **solving the recurrences the Master Theorem can't**: the recursion-tree method (sum the levels), substitution
+  (guess + induct), and Akra–Bazzi for unequal subproblem sizes.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (recurrence math incl. `k \lt n` renders). SW cache `atlas-v487` → `atlas-v488`.
+
 ## iter 547 — Complete the header first-paint fix: level ring + XP bar (UI/UX)
 Follow-up to the streak FOUC fix (iter 546): the **same first-paint flash** hit the rest of the header. `index.html` hardcodes the level ring (`Level 1`),
 name (`Novice`), XP bar (`0%`) and XP text (`0 XP`), and the data/app scripts are `defer`red — so a returning level-8 user briefly saw **"Novice · Level 1 ·
