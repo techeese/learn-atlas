@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 431 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across DL/PS/RL (deep-dives 179 → **182**; 32 lessons now carry two):
+- **dl-overfitting-and-regularization** (had: "a vote for simpler explanations") → **L1 vs L2**: L2's gradient `2λwᵢ` shrinks smoothly
+  (dense), L1's constant `λ·sign(wᵢ)` drives weights *exactly* to 0 (sparse); the L1 diamond's axis-corners are why lasso selects features.
+- **ps-expectation-variance** (had: "expectation always adds; variance is pickier") → **why variance squares**: sign-cancellation,
+  differentiability, and additivity for independents (`Var(X+Y)=Var(X)+Var(Y)`) — at the cost of squared units, which `σ=√Var` undoes.
+- **rl-mdp-formalism** (had: "the Markov property") → **the discount factor γ**: makes the infinite return converge (`Σγᵏ=1/(1−γ)`),
+  encodes preference-for-sooner, and sets an effective horizon `≈1/(1−γ)` (γ=0.99 → ~100 steps).
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v370` → `atlas-v371`.
+
 ## iter 430 — Three more worked examples across DL/RL/LLM (examples)
 Resuming the examples↔deep-dives rotation after the backprop deep-focus. A **3rd worked example** on three flagship lessons
 (examples 425 → **428**):
