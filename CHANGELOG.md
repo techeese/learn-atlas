@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 469 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across algo/LA/calc (deep-dives 266 → **269**; 117 lessons now carry two):
+- **a-arrays-lists-stacks-queues** (had: "memory-layout tradeoff") → **cache locality**: contiguous arrays ride the cache line + prefetcher;
+  pointer-chasing lists pay ~100× cache misses — why an `O(n)` array scan beats an `O(1)`-per-op list (`std::vector` ≫ `std::list`).
+- **la-orthonormal-gram-schmidt** (had: "orthonormal is golden") → **Gram-Schmidt is numerically fragile**: classical GS loses orthogonality
+  in floating point; modified GS helps, but real QR uses Householder reflections — stability, not just `O(·)`, decides what ships.
+- **c-improper-integrals** (had: "a limit in disguise") → **convergence tests**: the p-integral `∫₁^∞ x^{-p}` converges iff `p>1`; the
+  comparison test bounds an ugly integrand by a p-integral to settle "finite or not" without evaluating.
+Authored with `String.raw` LaTeX (`\lt`/`\gt` for the sign comparisons); injected via the append-second-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v408` → `atlas-v409`.
+
 ## iter 468 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LA/DL/calc (deep-dives 263 → **266**; 114 lessons now carry two):
 - **la-diagonalization** (had: "powers go trivial") → **the spectral theorem**: symmetric `A=A^T` always diagonalizes as `A=QΛQᵀ` (orthogonal
