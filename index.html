@@ -137,5 +137,35 @@
       });
     }
   </script>
+
+  <!-- Privacy-friendly analytics (GoatCounter): cookieless, no consent banner needed.
+       SETUP: register a free site at https://www.goatcounter.com/ then replace ATLAS_GC_CODE
+       below with your site code (the "<code>" in https://<code>.goatcounter.com). Until then this
+       is a no-op. SPA-aware: each hash route (#/lesson/...) is counted as its own pageview, and
+       localhost/file:// are excluded so dev clicks never pollute the stats. -->
+  <script>
+    (function () {
+      var GC_CODE = "ATLAS_GC_CODE"; // <-- replace with your goatcounter site code to enable
+      var host = location.hostname;
+      var isLocal = host === "localhost" || host === "127.0.0.1" || host === "" || location.protocol === "file:";
+      if (GC_CODE === "ATLAS_GC_CODE" || isLocal) return; // not configured, or running locally → skip
+
+      // count the full SPA path (pathname + hash) so each lesson/route is a distinct page
+      window.goatcounter = { path: function () { return location.pathname + (location.hash || ""); } };
+
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "//gc.zgo.at/count.js";
+      s.setAttribute("data-goatcounter", "https://" + GC_CODE + ".goatcounter.com/count");
+      document.head.appendChild(s);
+
+      // GoatCounter auto-counts the first load; we count every subsequent hash navigation.
+      window.addEventListener("hashchange", function () {
+        if (window.goatcounter && window.goatcounter.count) {
+          window.goatcounter.count({ path: location.pathname + (location.hash || "") });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

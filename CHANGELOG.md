@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 433 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LA/LLM/algo (deep-dives 182 → **185**; 35 lessons now carry two):
+- **la-matrix-multiplication** (had: "is function composition") → **the cost of multiplying**: `mnp` mults per product, and
+  associativity is free but cost isn't — `(AB)C`=7,500 vs `A(BC)`=75,000 flops (10×) for the same result; the matrix-chain/contraction-order problem.
+- **l-decoding-strategies** (had: "three knobs on one trade-off") → **why not greedy/beam**: maximizing likelihood gives bland, repetitive
+  text (the likelihood trap) — "best text" ≠ "most likely text", so open-ended generation samples; beam is for closed tasks (translation/code).
+- **a-trees-heaps** (had: "heap vs BST invariants") → **why a BST must stay balanced**: `O(log n)` is really the height; sorted inserts
+  collapse a plain BST into an `O(n)` linked list, so AVL/red-black rotations keep height `~log n` for a worst-case guarantee.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v372` → `atlas-v373`.
+
 ## iter 432 — Three more worked examples across DL/RL/LLM (examples)
 A **3rd worked example** on three flagship lessons (examples 428 → **431**):
 - **dl-initialization-and-vanishing-gradients** — **why you can't init weights to zero**: identical weights get identical gradients
