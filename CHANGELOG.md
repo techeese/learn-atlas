@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 447 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across PS/DL/algo (deep-dives 206 → **209**; 59 lessons now carry two):
+- **ps-law-of-large-numbers** (had: "LLN vs CLT") → **the gambler's fallacy**: independent trials have no memory — the average
+  converges by *dilution* (later data swamps early flukes), not compensation; weak (in probability) vs strong (almost sure) LLN.
+- **dl-gans** (had: "a two-player game") → **mode collapse**: fooling D per-sample ≠ covering the distribution, so the generator can
+  perfect a narrow slice; minibatch discrimination / Wasserstein / feature matching push back toward diversity.
+- **a-graph-representations-traversal** (had: "queue vs stack") → **adjacency list vs matrix**: matrix `O(V²)` space / `O(1)` lookup vs
+  list `O(V+E)` / `O(deg)` — density decides (sparse → list, the default; dense or edge-query-heavy → matrix).
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v386` → `atlas-v387`.
+
 ## iter 446 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across algo/calc/LLM (deep-dives 203 → **206**; 56 lessons now carry two):
 - **a-comparison-sorts** (had: "quicksort vs mergesort") → **the Ω(n log n) lower bound**: a decision tree must separate all `n!` orderings,
