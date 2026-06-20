@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 536 — Three more ML code exercises (new functionality / code)
+Rounded out the Machine Learning topic's hands-on coverage (3/10 lessons had a runnable exercise → now 6/10) with three more gate-verified JS snippets:
+- **ml-logistic-regression** → linear score → sigmoid → threshold → `0.50 1`.
+- **ml-linear-regression** → mean squared error of `y=2x+1` over three points (the least-squares loss) → `1.00`.
+- **ml-ensembles** → majority vote of five classifiers (the simplest ensemble) → `1`.
+Each is an editable `data-code` playground; all written without `**`/`<` (kept the render-guard happy).
+Verified: `node gate.js` **runs all three** → **92 code-exercises verified** (was 89), ALL GREEN; **headless** — each lesson's playground hydrates and
+clicking **Run** yields the matching output (`0.50 1` / `1.00` / `1`, all OK), errs=0. SW cache `atlas-v475` → `atlas-v476`.
+
 ## iter 535 — Third deep-dives on three original-topic lessons (content / depth)
 With the ML topic fully integrated, **diversified back to the original seven topics** — three genuinely-valuable third deep-dives (calc/PS/DL) on lessons
 that were still at 2 dd:
