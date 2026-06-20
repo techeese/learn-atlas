@@ -182,6 +182,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 553: **3rd worked example for 3 more ML lessons** (examples). ml-linear-regression (R²→0.9375), ml-logistic-regression (log-loss asymmetry),
+   ml-regularization (standardize before regularizing). Verified: gate GREEN (examples→469); headless each ex3, all reveal, kErr=0/rawD=0/errs=0. SW →v493.
    ✅ iter 552: **3 more 3rd deep-dives: PPO · quantization · covariance matrix** (content/depth). rl-actor-critic (PPO clipped objective→RLHF),
    l-inference-efficiency (quantization 8/4-bit), ps-joint-distributions (covariance matrix→PCA/Gaussian). Verified: gate GREEN; dump-dom each nDD=3,
    kErr=0/rawD=0/errs=0. SW →v492. (2dd remaining ~34.)

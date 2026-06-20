@@ -436,6 +436,11 @@
               "title": "Fitting a parabola with 'linear' regression",
               "scenario": "Your data clearly curves like a U, so a straight line underfits badly. How can linear regression fit it without changing the algorithm?",
               "solution": "Add a transformed feature. Instead of fitting ŷ = w₁x + b, create a second feature x² and fit ŷ = w₁x + w₂x² + b. This is still ordinary least squares — you've just added a column to the design matrix — but the fitted curve is now a parabola in x. The model is linear in the parameters (w₁, w₂, b), so the same closed-form/gradient solver applies, yet it captures the U-shape. (Caution: keep adding powers and you'll eventually overfit, wiggling through every point.)"
+            },
+            {
+              "title": "R²: how much variance the model explains",
+              "scenario": "A model predicts house prices. The actual values are $y=[3,5,7]$ and the predictions are $\\hat y=[2.5,5,7.5]$ (in hundreds of thousands). The mean is $\\bar y=5$. Compute $R^2$, the fraction of variance the model explains.",
+              "solution": "$R^2$ compares the model's squared error to the error of just predicting the mean. Residual sum of squares: $SS_{\\text{res}}=\\sum(y-\\hat y)^2=(0.5)^2+0^2+(-0.5)^2=0.5$. Total sum of squares: $SS_{\\text{tot}}=\\sum(y-\\bar y)^2=(-2)^2+0^2+(2)^2=8$. Then $R^2=1-\\frac{SS_{\\text{res}}}{SS_{\\text{tot}}}=1-\\frac{0.5}{8}=0.9375$ — the model explains about 94% of the variance in prices. Reading the scale: $R^2=1$ is a perfect fit, $R^2=0$ is no better than always guessing the mean, and $R^2$ can even go <em>negative</em> for a model worse than the mean. It is the standard one-number summary of regression fit."
             }
           ]
         },
@@ -576,6 +581,11 @@
               "title": "Why a straight line on 0/1 labels misbehaves",
               "scenario": "You fit ordinary linear regression to binary labels (0 = healthy, 1 = sick) against a dosage feature, then add one patient with a very high dosage. What goes wrong that logistic regression avoids?",
               "solution": "Two problems. First, the fitted line is unbounded, so for high or low dosages it predicts values above 1 or below 0 — impossible as probabilities, with no sensible way to read them. Second, the single high-dosage point exerts strong leverage on the least-squares line, tilting it and shifting the implied 0.5 crossing (the decision threshold), so a far-away correct case degrades the boundary. Logistic regression avoids both: the sigmoid keeps outputs in (0,1), and points far on the correct side of the boundary contribute almost nothing to the cross-entropy gradient, so the boundary is stable."
+            },
+            {
+              "title": "Log-loss rewards calibrated confidence",
+              "scenario": "An email truly is spam (label $y=1$). Model A predicts $p=0.9$ (confident and correct); Model B predicts $p=0.1$ (confident and wrong). The cross-entropy loss for one example is $-[\\,y\\log p+(1-y)\\log(1-p)\\,]$. Compute each, and see why we train on this instead of accuracy.",
+              "solution": "With $y=1$ the loss simplifies to $-\\log p$. Model A: $-\\log(0.9)\\approx 0.105$ — a tiny penalty for being confident and right. Model B: $-\\log(0.1)\\approx 2.303$ — a large penalty for being confident and wrong. The asymmetry is the whole point: log-loss barely charges a confident-correct prediction but punishes a confident-wrong one heavily, and it diverges to $+\\infty$ as $p\\to 0$ for a true positive. That gradient pushes the model toward <em>well-calibrated probabilities</em>, not merely correct labels — which is why classifiers are trained on cross-entropy rather than directly on accuracy (which is flat and non-differentiable)."
             }
           ]
         },
@@ -716,6 +726,11 @@
               "title": "Lasso zeros a weak feature; ridge only shrinks it",
               "scenario": "A feature has a small least-squares weight of 0.3 and is mostly noise. Qualitatively, what does lasso do to it versus ridge as regularization increases?",
               "solution": "Lasso: as λ rises past a threshold, the soft-thresholding of L1 pushes this small weight to EXACTLY 0 — the feature drops out of the model entirely, which is desirable if it's just noise (automatic feature selection). Ridge: it shrinks the 0.3 toward zero (say to 0.2, then 0.1, ...) but never sets it to exactly 0, so the noisy feature stays in the model with a small nonzero weight. This is the practical difference: lasso yields a sparse model that discards weak features; ridge yields a dense model that merely damps them."
+            },
+            {
+              "title": "Why you standardize features before regularizing",
+              "scenario": "A ridge penalty $\\lambda\\sum_j w_j^2$ shrinks the weights. Feature A is a price (range about 10000) and feature B is an age (range about 10). For each to have a comparable effect on the output, A needs a tiny weight and B a large one. What does the penalty do to them, and what is the fix?",
+              "solution": "The penalty $\\lambda\\sum_j w_j^2$ treats every weight equally — but a weight's size reflects its feature's <em>scale</em>. A's weight (maybe 0.001) contributes almost nothing to $\\sum_j w_j^2$, while B's (maybe 5) dominates it. So ridge heavily penalizes B and barely touches A purely because of their units, not their importance — a silent bias. The fix: <strong>standardize</strong> each feature to mean 0 and variance 1 (a z-score) before fitting, so the weights are on a common footing and the penalty is fair. This is exactly why scikit-learn pipelines place a StandardScaler before any regularized model, and why the intercept is usually left unpenalized. The aha: regularization is scale-sensitive — always standardize first, or the penalty quietly favors large-scale features."
             }
           ]
         }

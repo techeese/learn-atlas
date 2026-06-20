@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 553 — A third worked example for three more ML lessons (examples)
+Brought three more ML lessons to 3 worked examples, each a concept not yet exemplified there:
+- **ml-linear-regression** → **R²**: `1 − SSᵣₑₛ/SS_tot = 0.9375` — the fraction of variance explained, and how to read its scale (1 perfect, 0 = mean, can go negative).
+- **ml-logistic-regression** → **log-loss asymmetry**: `−log(0.9)≈0.105` (confident-right) vs `−log(0.1)≈2.303` (confident-wrong) — why cross-entropy trains
+  calibrated probabilities, not just labels.
+- **ml-regularization** → **standardize before regularizing**: the ridge penalty `λΣwⱼ²` is scale-sensitive, so a StandardScaler must come first or it silently favors large-scale features.
+Appended via the byte-stable path with the full render-guard; distinct from each lesson's existing two examples.
+Verified: gate ALL GREEN (examples 466 → 469); **headless** — each Examples tab now shows **3**, all reveal with **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v492` → `atlas-v493`.
+
 ## iter 552 — Three more third deep-dives: PPO · quantization · covariance matrix (content / depth)
 Three more high-value third deep-dives (RL/LLM/PS), each the modern/foundational mechanism the lesson's first two dives set up:
 - **rl-actor-critic** → **PPO**: clip the probability ratio `r(θ)` to `[1−ε, 1+ε]` so updates stay proximal — a cheap trust region that lets you reuse a batch
