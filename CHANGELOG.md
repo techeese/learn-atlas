@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 438 — Three more worked examples; RL at-2 pool cleared (examples)
+A **3rd worked example** on three lessons (examples 437 → **440**); this empties the reinforcement-learning course's 2-example backlog
+(only LLM lessons now remain at 2):
+- **rl-connections-frontiers** — **TD error = dopamine**: the reward-prediction error `δ=r+γV(s′)−V(s)` matches dopamine-neuron firing
+  (Schultz) — the burst shifts from reward to predicting cue; RL became a computational theory of biological reward learning.
+- **l-multihead-and-causal-masking** — **what multiple heads buy**: one head averages one relationship; splitting `d` into `h` heads
+  (`512→8×64`) attends to `h` patterns in parallel subspaces for the same `d×d` cost — heads, not width, are the unit of attention capacity.
+- **l-optimization-and-stability** — **why Adam, not SGD**: Adam's per-parameter step `m/(√v+ε)` adapts to a transformer's wildly
+  different gradient scales; AdamW adds decoupled weight decay — per-coordinate adaptation is why it trains stably out of the box.
+Injected byte-stably with the round-trip guard.
+Verified: gate ALL GREEN (**440 examples**); **via `--dump-dom`** all 3 reveal with KaTeX (61 / 85 / 72 spans), **kErr=0, rawDollar=0**;
+smoke + pages **errs=0/kErr=0, bad=none**. SW cache `atlas-v377` → `atlas-v378`.
+
 ## iter 437 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across algo/DL/PS (deep-dives 188 → **191**; 41 lessons now carry two):
 - **a-shortest-paths-topo** (had: "why Dijkstra needs non-negative edges") → **Bellman-Ford**: relax every edge `V−1` times (`O(VE)`)

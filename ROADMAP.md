@@ -188,6 +188,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 438: **3 more worked examples; RL at-2 pool cleared** (examples). +3 (437→440): rl-connections-frontiers (TD error=dopamine),
+   l-multihead-and-causal-masking (what heads buy), l-optimization-and-stability (why Adam not SGD). Only LLM lessons remain at 2 examples.
+   Verified: gate GREEN (440); dump-dom katex 61/85/72, kErr=0, rawDollar=0; smoke bad=none. SW →v378.
    ✅ iter 437: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (188→191; 41 lessons have 2):
    a-shortest-paths-topo (Bellman-Ford / negative edges), dl-the-artificial-neuron-and-mlp (UAT width-vs-depth catch), ps-poisson
    (binomial limit + mean=variance=λ). Append-second-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=2, kErr=0,
