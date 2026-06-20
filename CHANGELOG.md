@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 497 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 350 → **353**; these three now carry three):
+- **a-divide-and-conquer** (had: balanced splits · Master Theorem) → **a paradigm that parallelizes for free**: split-solve-combine powers FFT,
+  Strassen, closest-pair; independent subproblems map onto cores (MapReduce), turning sequential `O(n log n)` into `O(log²n)` wall-clock.
+- **ps-covariance-correlation** (had: corr=normalized cov · corr-sees-lines) → **the covariance matrix** `Σ`: diagonal = variances, off-diagonal =
+  covariances; symmetric PSD — the object PCA eigendecomposes, that parameterizes the multivariate Gaussian, and Mahalanobis distance uses.
+- **la-matrices-as-transformations** (had: columns land · what-makes-linear) → **non-square matrices change dimension**: wide = projection (loses
+  info), tall = embedding (into a subspace); rank `r` bounds the reach — why a neural layer can compress 784→128.
+Authored with `String.raw` LaTeX (`\lt`/`\gt`); injected via the append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v436` → `atlas-v437`.
+
 ## iter 496 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 347 → **350**; these three now carry three):
 - **l-what-is-a-language-model** (had: next-token machine · autoregressive) → **why next-token prediction is (almost) everything**: predicting
