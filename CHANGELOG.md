@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 485 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 314 → **317**; these three now carry three):
+- **dl-rnn-lstm-gru** (had: LSTM memory · transformers replaced RNNs) → **backpropagation through time**: training = backprop on the
+  time-unrolled, weight-shared net; depth-in-time (`T` steps) is why gradients vanish — hence truncated BPTT (`k` steps back).
+- **rl-sarsa-qlearning** (had: on/off-policy · bootstrapping) → **maximization bias & Double Q-learning**: `max` over noisy `Q` overestimates
+  (`E[max Q̂] ≥ max E[Q̂]`); use two value functions — one selects, the other evaluates — to cancel the bias (→ Double DQN).
+- **l-embeddings-and-prediction-head** (had: similarity search · weight tying) → **the logit lens**: the head is a similarity search, so you
+  can apply the unembedding to *intermediate* layers and watch the prediction crystallize across depth — a mechanistic-interpretability tool.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v424` → `atlas-v425`.
+
 ## iter 484 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 311 → **314**; these three now carry three):
 - **dl-the-artificial-neuron-and-mlp** (had: neuron=logistic/UAT · width-vs-depth) → **without nonlinearity, depth collapses**: stacked linear
