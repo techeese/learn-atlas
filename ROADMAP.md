@@ -188,6 +188,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 498: **3 more THIRD deep-dives on the hardest concepts** (content/depth). +3 dd (353→356; 60 lessons now at 3 dd):
+   ps-expectation-variance (indicator method), l-multihead-and-causal-masking (MQA/GQA KV-cache), c-area-volume (arc length & surface area).
+   Append-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v438.
    ✅ iter 497: **3 more THIRD deep-dives on the hardest concepts** (content/depth). +3 dd (350→353; 57 lessons now at 3 dd):
    a-divide-and-conquer (paradigm + parallelism), ps-covariance-correlation (the covariance matrix), la-matrices-as-transformations
    (non-square = dimension change). Append-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v437.

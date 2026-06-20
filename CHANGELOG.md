@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 498 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 353 → **356**; these three now carry three):
+- **ps-expectation-variance** (had: expectation adds · variance squares) → **the indicator method**: linearity holds even for dependent vars,
+  so write a count as `Σ 1ᵢ` and sum probabilities — e.g. expected hat-matches = `Σ 1/n = 1` for any `n`, no joint distribution needed.
+- **l-multihead-and-causal-masking** (had: ÷√dₖ · causal mask) → **MQA/GQA**: the per-head KV cache is the inference memory hog; share K/V
+  across heads (MQA) or groups (GQA) to shrink it ~head-fold — the standard trick (LLaMA-2/3, Mistral) for fast long-context serving.
+- **c-area-volume** (had: slice-approximate-integrate · disks vs shells) → **arc length & surface area**: same slicing, new integrand — sum
+  hypotenuses `∫√(1+(dy/dx)²)dx` for length, sweep them around for surface area; the integral isn't just "area under a curve."
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v437` → `atlas-v438`.
+
 ## iter 497 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 350 → **353**; these three now carry three):
 - **a-divide-and-conquer** (had: balanced splits · Master Theorem) → **a paradigm that parallelizes for free**: split-solve-combine powers FFT,
