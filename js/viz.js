@@ -4942,4 +4942,68 @@
     draw();                                                    // synchronous first paint
   });
 
+
+  /* ========================================================
+     90. k-Means clustering in action (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-kmeans-viz', topic: 'machine-learning', title: 'k-Means clustering in action', blurb: 'Watch Lloyd’s algorithm run: assign each point to the nearest centroid, then move each centroid to its cluster’s mean, repeating until the assignment stops changing. Step or Run, and watch the inertia fall to a (local) minimum.' },
+  function (root) {
+    const W = 540, H = 380, padL = 14, padR = 14, padT = 14, padB = 14;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let seed = 12345;
+    function rng() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function gauss() { let u = 0, v = 0; while (u === 0) u = rng(); while (v === 0) v = rng(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+    function clamp(v) { return Math.max(0.3, Math.min(9.7, v)); }
+    let K = 3, pts = [], cents = [], assign = [], phase = 'assign', iter = 0, converged = false, dataSeed = 1;
+    const COLS = () => { const p = P(); return [p.gold, p.sage, p.violet, p.rust]; };
+    function genData() {
+      seed = 1000 + dataSeed * 7; pts = [];
+      const blobs = [[2.6, 7.2], [7.4, 7.6], [5.0, 2.6]];
+      blobs.forEach(b => { for (let i = 0; i < 22; i++) pts.push({ x: clamp(b[0] + gauss() * 0.9), y: clamp(b[1] + gauss() * 0.9) }); });
+    }
+    function initCentroids() {
+      seed = 7777 + dataSeed * 13 + K * 101;
+      cents = []; const used = {};
+      while (cents.length < K) { const i = Math.floor(rng() * pts.length); if (used[i]) continue; used[i] = 1; cents.push({ x: pts[i].x, y: pts[i].y }); }
+      assign = pts.map(() => -1); phase = 'assign'; iter = 0; converged = false;
+    }
+    function reset() { initCentroids(); draw(); }
+    function newData() { dataSeed++; genData(); initCentroids(); draw(); }
+    function inertia() { let s = 0; pts.forEach((pt, i) => { if (assign[i] >= 0) { const cc = cents[assign[i]]; s += (pt.x - cc.x) * (pt.x - cc.x) + (pt.y - cc.y) * (pt.y - cc.y); } }); return s; }
+    function doAssign() { pts.forEach((pt, i) => { let best = 0, bd = Infinity; for (let k = 0; k < K; k++) { const dx = pt.x - cents[k].x, dy = pt.y - cents[k].y, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = k; } } assign[i] = best; }); }
+    function doUpdate() { let moved = 0; for (let k = 0; k < K; k++) { let sx = 0, sy = 0, n = 0; pts.forEach((pt, i) => { if (assign[i] === k) { sx += pt.x; sy += pt.y; n++; } }); if (n > 0) { const nx = sx / n, ny = sy / n; moved += Math.abs(nx - cents[k].x) + Math.abs(ny - cents[k].y); cents[k] = { x: nx, y: ny }; } } return moved; }
+    function step() {
+      if (converged) return;
+      if (phase === 'assign') { doAssign(); phase = 'update'; }
+      else { const moved = doUpdate(); iter++; phase = 'assign'; if (moved < 0.001) converged = true; }
+      draw();
+    }
+    function draw() {
+      const p = P(), cols = COLS(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = x => padL + x / 10 * (W - padL - padR), Y = y => (H - padB) - y / 10 * (H - padT - padB);
+      pts.forEach((pt, i) => { const a = assign[i]; ctx.fillStyle = a >= 0 ? cols[a] : p.mute; ctx.globalAlpha = a >= 0 ? 0.85 : 0.6; ctx.beginPath(); ctx.arc(X(pt.x), Y(pt.y), 4, 0, 7); ctx.fill(); });
+      ctx.globalAlpha = 1;
+      cents.forEach((ce, k) => { ctx.fillStyle = cols[k]; ctx.strokeStyle = p.ink; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(X(ce.x), Y(ce.y), 9, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = p.bg; ctx.font = 'bold 11px ' + cssVar('--font-mono', 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('✦', X(ce.x), Y(ce.y)); });
+      ctx.textBaseline = 'alphabetic';
+      const J = inertia();
+      const next = converged ? '' : (phase === 'assign' ? 'next: assign points to the nearest centroid' : 'next: move each centroid to its cluster mean');
+      info.innerHTML = 'k = <b>' + K + '</b> &middot; iteration <b>' + iter + '</b> &middot; inertia (within-cluster SSE) = <b style="color:' + p.gold + '">' + J.toFixed(2) + '</b>' + (converged ? ' &middot; <b style="color:' + p.sage + '">converged</b>' : '') + '<br>' + (converged ? 'Assignments stopped changing &mdash; a local optimum. Reset for new centroids (different start may give a different result), or New points.' : next + '. The ✦ markers are centroids; each point is colored by its current cluster.');
+    }
+    slider(ctl, { label: 'k', min: 2, max: 4, step: 1, value: K, onInput: v => { K = v; initCentroids(); draw(); } });
+    button(ctl, 'Step', step);
+    let auto = null;
+    const runBtn = button(ctl, '▶ Run', function () {
+      if (auto) { auto.stop(); auto = null; runBtn.innerHTML = '▶ Run'; return; }
+      runBtn.innerHTML = '⏸ Pause'; let last = 0;
+      auto = loop(function (t) { if (t - last > 650) { last = t; if (converged) { if (auto) { auto.stop(); auto = null; } runBtn.innerHTML = '▶ Run'; } else step(); } });
+    });
+    button(ctl, '⏮ reset', function () { reset(); });
+    button(ctl, '🎲 new points', function () { newData(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'k-Means clustering visualizer: a 2-D scatter of points in three blobs with k centroids drawn as star markers. Stepping alternates two phases - assign each point to its nearest centroid (points recolor) and move each centroid to the mean of its assigned points (centroids jump) - and the within-cluster inertia falls each step until the assignment stops changing (convergence to a local optimum). A slider sets k; Run animates; Reset re-seeds centroids; New points regenerates the data.');
+    genData(); initCentroids(); draw();
+  });
+
 })();

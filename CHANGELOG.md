@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 524 — Interactive k-Means clustering viz (visualizations)
+Switched lanes off content (anti-monotony, ~10 content iters) to give the new Machine Learning topic its **first interactive** — the 90th widget,
+**`ml-kmeans-viz` "k-Means clustering in action."** It animates Lloyd's algorithm: stepping alternates *assign* (points recolor to their nearest
+centroid ✦) and *update* (each centroid jumps to its cluster mean), with a live **inertia** (within-cluster SSE) readout that falls each step until the
+assignment stops changing (convergence). Controls: a `k` slider (2–4), Step, Run/Pause (auto), Reset (re-seed centroids → shows different local optima),
+and New points. Deterministic seeded blobs for reproducibility. Registered in `js/viz.js` and embedded in the k-Means lesson (`<div data-viz>`), so it
+appears both inline and in the Visualization Lab; rich `aria-label` for screen readers.
+Verified: gate ALL GREEN (now **90 widgets**); **headless** — Lab route hydrates the canvas, Step advances **iteration 0 → 4 → converged** with inertia
+105.07 (matches ~66 points × 2·σ²), lesson inline canvas hydrates, **kErr=0, errs=0**; screenshot shows three clean colored clusters with centroids,
+on-aesthetic. (The `viz-complete` achievement target auto-tracks the catalog length, so it updated to 90 automatically.) SW cache `atlas-v463` → `atlas-v464`.
+
 ## iter 523 — Machine Learning topic: Model Selection & Cross-Validation — the capstone (content / new topic build-out)
 The **capstone** of the 8th topic. Added **Model Selection & Cross-Validation** as module 6 "Model Selection & Evaluation" — the Machine Learning topic
 now stands at **6 modules / 10 lessons**, a complete classical-ML curriculum. 8-section lecture (the train/validation/test split · k-fold CV ·
