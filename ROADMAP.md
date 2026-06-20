@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 559: **3 more calculus 3rd dives: Taylor · no-elementary-antiderivative · gradient/Jacobian** (content/depth). c-linearization-lhopital (Taylor
+   series), c-antiderivatives (Liouville/erf/numerical), c-partial-derivatives (gradient & Jacobian→backprop). Verified: gate GREEN; dump-dom each nDD=3,
+   kErr=0/rawD=0/errs=0. SW →v499. (2dd ~25.)
    ✅ iter 558: **ML example-parity — every ML lesson now has 3 examples** (examples). ml-knn (distance-weighted vote), ml-decision-trees (Gini vs entropy),
    ml-kmeans (WCSS objective), ml-ensembles (AdaBoost weight α). Verified: gate GREEN (examples→473, all 10 ML at 3); headless each ex3, kErr=0/rawD=0/errs=0. SW →v498.
    ✅ iter 557: **3 more 3rd deep-dives: log-derivative trick · RLHF/DPO · moments** (content/depth). rl-policy-gradient-theorem (log-derivative/score

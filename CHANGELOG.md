@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 559 — Three more calculus third dives: Taylor · no-elementary-antiderivative · gradient/Jacobian (content / depth)
+Three more calculus third deep-dives (the biggest remaining 2-dd bucket), each bridging to ML:
+- **c-linearization-lhopital** → **Taylor series**: linearization is just the first two terms; keep matching derivatives for a polynomial that hugs the curve —
+  how computers evaluate `sin/eˣ/log`, and where the Hessian / second-order optimization come from.
+- **c-antiderivatives** → **most functions have no elementary antiderivative**: even `∫e^{−x²}dx` doesn't (Liouville's theorem) — hence `erf`, numerical
+  integration (Simpson/quadrature), and series.
+- **c-partial-derivatives** → **from partials to the gradient & Jacobian**: stacked partials become the gradient (optimizers' direction) and the Jacobian
+  (`J_{g∘f}=J_g J_f` — exactly backprop).
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (Taylor display series / Gaussian integral / Jacobian math renders). SW cache `atlas-v498` → `atlas-v499`.
+
 ## iter 558 — ML example-parity: every ML lesson now has 3 worked examples (examples)
 Added a third worked example to the four remaining 2-example ML lessons, each a concept not yet exemplified there — **every ML lesson now has 3**:
 - **ml-knn** → **distance-weighted kNN flips the vote**: weights `1/d` give B (0.90 vs 1.00) even though A had more neighbors.
