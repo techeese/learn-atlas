@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 481 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+Continuing the new lane — a **third "Deeper dive"** on three more flagship hard concepts (deep-dives 302 → **305**; these three now carry three):
+- **la-svd** (had: rotate-stretch-rotate · Eckart–Young) → **every matrix has an SVD → the pseudoinverse**: unlike eigendecomposition it
+  needs no square/diagonalizable matrix (existence inherited from `AᵀA`'s spectral theorem); `A⁺=VΣ⁺Uᵀ` solves least squares for any shape.
+- **l-rlhf-and-preference-optimization** (had: DPO · KL leash) → **the three-stage pipeline**: SFT (imitate ideal answers) → reward model
+  (scale pairwise preference into a number, Bradley–Terry) → PPO (optimize against the RM with a KL leash). Each stage fixes the prior's gap.
+- **dl-dropout-and-normalization** (had: BatchNorm stories · dropout-ensemble) → **LayerNorm vs BatchNorm**: BN normalizes a feature across the
+  *batch* (wobbles at small batch, train/test trap); LN normalizes an example across its *features* (batch-independent) — why transformers use LN.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v420` → `atlas-v421`.
+
 ## iter 480 — Step-back: full audit (clean) + the two-per-lesson runway COMPLETE (content / depth)
 **Round-number step-back (iter 480).** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **107
