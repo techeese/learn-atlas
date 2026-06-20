@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 467 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LLM/RL/algo (deep-dives 260 → **263**; 111 lessons now carry two):
+- **l-hallucination-and-evaluation** (had: "fluency optimizes for hallucination") → **how to evaluate an LLM**: perplexity, benchmarks,
+  LLM-as-judge, human eval — and why it's hard (contamination, Goodhart's law, fluency fooling metrics); triangulate, trust no single score.
+- **rl-offline** (had: "fights distribution shift") → **the fix is conservatism**: policy constraint (stay near the behavior policy) or value
+  penalty (CQL pushes down OOD `Q`) — be pessimistic about unseen actions you can't try.
+- **a-recurrences-master-theorem** (had: "read off the recursion tree, 3 cases") → **when it doesn't apply**: non-polynomial `f`, unequal
+  splits, subtract-and-conquer all break the form — fall back to the recursion tree (or Akra–Bazzi / substitution).
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v406` → `atlas-v407`.
+
 ## iter 466 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/DL (deep-dives 257 → **260**; 108 lessons now carry two):
 - **c-gradient-directional** (had: "gradient points uphill / ⊥ contours") → **the directional derivative `∇f·û`**: one vector packs every
