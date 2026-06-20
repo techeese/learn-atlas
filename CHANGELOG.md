@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 562 — Enrich the cross-topic prerequisite graph (+14 edges) (workflow / understandability)
+With iter 561 making the prereq graph visible on every lesson, enriched the graph itself (was 50 edges over 35 keys → **64 over 48**) with genuinely
+illuminating cross-disciplinary links — surfacing in "Builds on / Leads to", the Knowledge Map, and learning paths. Highlights:
+- **rl-policies-values → ps-conditional-expectation** (a value *is* an expected return); **rl-mdp-formalism → ps-random-variables-distributions**;
+  **rl-monte-carlo → ps-law-of-large-numbers**; **rl-exploration → ps-confidence-intervals** (UCB).
+- **l-what-is-a-language-model / l-decoding-strategies → ps-random-variables-distributions** (an LM is a distribution over sequences; decoding samples it);
+  **l-pretraining-objective-data → dl-loss-functions** (cross-entropy).
+- **dl-rnn-lstm-gru → c-chain-rule** (BPTT); **dl-overfitting → ps-expectation-variance**; **dl-diffusion / dl-autoencoders-vae → ps-normal-distribution**.
+- **ps-normal-distribution → c-improper-integrals** (the Gaussian normalization integral); **ps-expectation-variance → c-definite-integral-riemann**;
+  **a-algorithms-for-ml → la-matrix-multiplication**.
+Verified: gate ALL GREEN (every prereq id resolves); **headless** — the new edges appear as cross-topic Builds-on chips and as reverse Leads-to dependents,
+the Knowledge Map still renders, **errs=0**. SW cache `atlas-v501` → `atlas-v502`.
+
 ## iter 561 — Every lesson now shows a "Builds on / Leads to" trail (UI/UX · understandability)
 **Found a major navigation gap:** the lesson "Builds on / Leads to" connections panel used only the explicit/cross-topic prereq graph (35 keys), so **104 of 158
 lessons (66%) showed no connections at all** — including every foundational lesson (limits, asymptotic analysis, sample spaces…). Yet `learningPath` already

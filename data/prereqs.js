@@ -1,5 +1,5 @@
 /* Atlas — cross-topic prerequisite edges (consumed by app.js learningPath/directPrereqs).
-   Same-topic ordering is implicit; this connects the 6 topics in the Knowledge Map & paths. */
+   Same-topic ordering is implicit; this connects the topics in the Knowledge Map & paths. */
 window.PREREQS = {
   "ml-knn": [
     "la-dot-product-norms"
@@ -66,7 +66,8 @@ window.PREREQS = {
     "la-matrix-multiplication"
   ],
   "rl-monte-carlo": [
-    "c-improper-integrals"
+    "c-improper-integrals",
+    "ps-law-of-large-numbers"
   ],
   "rl-value-approximation": [
     "dl-gradient-descent-and-optimizers",
@@ -120,5 +121,44 @@ window.PREREQS = {
   ],
   "l-rag-and-tools": [
     "a-hash-tables"
+  ],
+  "rl-policies-values": [
+    "ps-conditional-expectation"
+  ],
+  "rl-mdp-formalism": [
+    "ps-random-variables-distributions"
+  ],
+  "rl-exploration": [
+    "ps-confidence-intervals"
+  ],
+  "l-what-is-a-language-model": [
+    "ps-random-variables-distributions"
+  ],
+  "l-decoding-strategies": [
+    "ps-random-variables-distributions"
+  ],
+  "l-pretraining-objective-data": [
+    "dl-loss-functions"
+  ],
+  "dl-rnn-lstm-gru": [
+    "c-chain-rule"
+  ],
+  "dl-overfitting-and-regularization": [
+    "ps-expectation-variance"
+  ],
+  "dl-diffusion-models": [
+    "ps-normal-distribution"
+  ],
+  "dl-autoencoders-vae": [
+    "ps-normal-distribution"
+  ],
+  "ps-normal-distribution": [
+    "c-improper-integrals"
+  ],
+  "ps-expectation-variance": [
+    "c-definite-integral-riemann"
+  ],
+  "a-algorithms-for-ml": [
+    "la-matrix-multiplication"
   ]
 };

@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 562: **Enrich cross-topic prereq graph (+14 edges)** (workflow/understandability). 50→64 edges, 35→48 keys: rl→ps (value=expected return, MC=LLN,
+   UCB), llm→ps/dl (LM=distribution, decoding samples, cross-entropy), dl→c/ps (BPTT chain rule, bias-variance, Gaussian noise), ps→calc (Gaussian integral,
+   continuous expectation). Verified: gate GREEN (all ids resolve); headless edges show as cross-topic Builds-on + reverse Leads-to, map renders, errs=0. SW →v502.
    ✅ iter 561: **Every lesson now shows a "Builds on / Leads to" trail** (UI/UX). lessonConnections used only the explicit prereq graph → 104/158 lessons
    showed NO connections; now also includes in-course neighbours (prev=builds, next=leads) merged with cross-topic edges. Verified: gate GREEN; headless orphan
    re-audit 104→0, spot checks correct (first→leads only, last→builds only, ml-knn keeps cross-topic), errs=0. SW →v501.
