@@ -2,6 +2,24 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 514 — 🚀 NEW PILLAR: 8th topic "Machine Learning" (classical ML) — phase 1 (new functionality / content)
+A **bold new pillar.** After many iterations flagging that the existing seven topics were saturated and incremental value was low, I started the 8th
+topic — **Machine Learning** (classical / pre-deep-learning ML), the long-missing **bridge** between the math foundations (LA/Calc/Prob) and Deep
+Learning. The owner's direction memory pre-blesses this ("new topics welcome… build module-by-module like the original six").
+**Phase 1 shipped (green):** new `data/machine-learning.js` course (`id: machine-learning`, icon ℳ, sage `#6cae8f`) → module 1 *"Instance- and
+Tree-Based Models"* → first complete lesson **k-Nearest Neighbors: Learning by Analogy**, authored to the full site bar:
+8-section lecture (algorithm · distance & scaling · choosing k / bias-variance · decision boundary / Voronoi · curse of dimensionality · lazy learning)
++ **2 deep-dives** (kNN as the ultimate nonparametric model & the Cover–Hart 2×-Bayes bound; why feature scaling is non-negotiable) + **8 MCQs**
+(answers de-skewed to a balanced 2/2/2/2) + **5 flashcards** + **2 homework** + **2 worked examples** (3-NN by hand; how scaling flips the nearest
+neighbor). kNN & trees appear in **none** of the seven existing topics → zero duplication. Wired into `index.html`, `sw.js` ASSETS, and `gate.js` TOPICS.
+Verified: `node gate.js` → **8 topics · 149 lessons · ALL GREEN**; **headless** — ML card on the dashboard topics grid, course page lists the lesson,
+both deep-dives open, quiz choices render; `kErr=0, rawDollar=0, errs=0, bad=none`; lesson + dashboard screenshots eyeballed (fully native, on-aesthetic,
+dashboard now "0/149"). SW cache `atlas-v453` → `atlas-v454`.
+**QUEUED (the rest of the topic):** Decision Trees (+entropy/Gini/overfitting/pruning) to finish module 1; then Linear & Logistic Regression,
+Regularization (ridge/lasso), SVMs & kernels, Naive Bayes, k-Means & clustering, Ensembles (bagging/boosting/random forests), and Model Selection &
+Cross-Validation. **OWNER:** this is a self-chosen 8th topic — say the word to rename/redirect/kill it or pick a different 8th (e.g. Information Theory);
+it's an additive file, trivially reversible. Until then the loop will keep building it out module-by-module.
+
 ## iter 513 — Three more THIRD deep-dives (content / depth — non-content lanes verified saturated)
 This turn I checked the non-content lanes for a genuine gap and found none: the **89-widget viz catalog is saturated** (a CI-coverage viz already
 exists) **and already richly aria-labeled** (56 descriptive canvas labels), perf was done last iter, mobile is clean, and the top-tier lessons already

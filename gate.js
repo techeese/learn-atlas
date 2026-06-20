@@ -10,7 +10,7 @@ global.document = { documentElement: {}, createElement: () => ({ getContext: () 
 global.getComputedStyle = () => ({ getPropertyValue: () => "" });
 function load(f) { new Function("window", "document", "getComputedStyle", fs.readFileSync(f, "utf8")).call(global.window, global.window, global.document, global.getComputedStyle); }
 
-const TOPICS = ["linear-algebra", "calculus", "algorithms", "deep-learning", "reinforcement-learning", "llm", "probability-statistics"];
+const TOPICS = ["linear-algebra", "calculus", "algorithms", "deep-learning", "reinforcement-learning", "llm", "probability-statistics", "machine-learning"];
 TOPICS.forEach(t => load("data/" + t + ".js"));
 load("data/prereqs.js");
 load("js/viz.js");
