@@ -578,6 +578,146 @@
               "solution": "Two problems. First, the fitted line is unbounded, so for high or low dosages it predicts values above 1 or below 0 — impossible as probabilities, with no sensible way to read them. Second, the single high-dosage point exerts strong leverage on the least-squares line, tilting it and shifting the implied 0.5 crossing (the decision threshold), so a far-away correct case degrades the boundary. Logistic regression avoids both: the sigmoid keeps outputs in (0,1), and points far on the correct side of the boundary contribute almost nothing to the cross-entropy gradient, so the boundary is stable."
             }
           ]
+        },
+        {
+          "id": "ml-regularization",
+          "title": "Regularization: Ridge, Lasso & Taming the Weights",
+          "minutes": 18,
+          "content": "<h3>1. The hook: when fitting the data too well goes wrong</h3>\n<p>Give a linear model many features — especially correlated or noisy ones — and least squares will happily grow huge, see-sawing weights that fit the training data perfectly and generalize terribly. The cure is <strong>regularization</strong>: add a penalty that discourages large weights, nudging the model toward simpler explanations. It is the single most important idea for making linear (and most other) models actually work in practice, and it is a textbook bias-variance trade — accept a little bias to slash variance.</p>\n\n<h3>2. The idea: penalize complexity</h3>\n<p>Instead of minimizing just the fit error, minimize <em>fit error plus a penalty on the weights</em>: $$\\text{minimize}\\quad \\text{Loss}(w) + \\lambda\\, \\Omega(w),$$ where $\\Omega(w)$ measures how \"big\" the weights are and $\\lambda \\ge 0$ sets how much we care. With $\\lambda = 0$ you recover ordinary least squares; crank $\\lambda$ up and the model is forced to keep weights small, trading training accuracy for stability. The two classic choices of $\\Omega$ give ridge and lasso.</p>\n\n<h3>3. Ridge regression (L2)</h3>\n<p><strong>Ridge</strong> penalizes the <em>sum of squared</em> weights, $\\Omega(w) = \\sum_j w_j^2$. It keeps a clean closed form — the normal equations gain a $\\lambda I$ term: $$w = (X^\\top X + \\lambda I)^{-1} X^\\top y.$$ That added $\\lambda I$ also makes the matrix invertible even when $X^\\top X$ is singular (e.g. more features than samples, or collinear features), curing the instability that plagues plain least squares. Ridge <em>shrinks</em> all weights smoothly toward zero but rarely sets any exactly to zero — every feature stays in the model, just with a smaller voice.</p>\n\n<h3>4. Lasso (L1)</h3>\n<p><strong>Lasso</strong> penalizes the <em>sum of absolute</em> weights, $\\Omega(w) = \\sum_j |w_j|$. Its signature behavior: it drives many weights <em>exactly to zero</em>, performing automatic <strong>feature selection</strong> and yielding a sparse, interpretable model that uses only a handful of features. The absolute value has a corner at zero (it is not differentiable there), so there is no closed form; lasso is solved by coordinate descent or subgradient methods.</p>\n\n<h3>5. Why L1 zeros weights and L2 doesn't</h3>\n<p>Picture the penalty as a budget: \"keep $\\Omega(w)$ within some size.\" For L2 that budget is a round ball; for L1 it is a diamond with sharp <em>corners poking out along the axes</em>. The best-fit solution expands until it touches that region, and a diamond is most often first touched <em>at a corner</em> — where some coordinates are exactly zero. The round L2 ball has no corners, so its contact point almost never zeroes a coordinate. That geometric difference is the whole reason lasso gives sparsity and ridge gives smooth shrinkage.</p>\n\n<h3>6. The knob: choosing λ</h3>\n<p>$\\lambda$ is a hyperparameter, not learned from the training loss (which would just pick $\\lambda=0$). You choose it by <strong>cross-validation</strong>: try a range of $\\lambda$ values, measure validation error for each, keep the best. Plotting each weight against $\\lambda$ gives the <em>regularization path</em> — as $\\lambda$ grows from $0$, ridge weights glide toward zero while lasso weights snap to zero one by one. Small $\\lambda$ underregularizes (overfits); large $\\lambda$ overregularizes (underfits); the sweet spot is in between.</p>\n\n<h3>7. Elastic Net and a scaling caveat</h3>\n<p><strong>Elastic Net</strong> combines both penalties, $\\lambda_1\\sum_j |w_j| + \\lambda_2 \\sum_j w_j^2$, getting lasso's sparsity <em>and</em> ridge's stability with correlated features. One practical must: <strong>standardize your features first</strong>. The penalty sums over weights, so if features live on different scales the penalty hits them unequally and the results are arbitrary — exactly the scaling lesson from kNN, now for the regularizer.</p>\n\n<h3>8. The big picture</h3>\n<p>Regularization adds a \"keep it simple\" penalty to the loss: ridge (L2) shrinks all weights and stabilizes ill-conditioned problems; lasso (L1) zeros weights for feature selection; elastic net blends them; $\\lambda$ is tuned by cross-validation. The idea radiates far beyond linear models — <em>weight decay</em> in deep learning is exactly L2 regularization, and the underlying principle (prefer simpler hypotheses) is the inductive bias that makes generalization possible.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: regularization is a prior (the Bayesian view)</summary>\n<p>Adding a weight penalty is not an arbitrary hack — it is, exactly, doing Bayesian estimation with a <em>prior belief</em> that weights are small.</p>\n<p><b>MAP estimation.</b> Maximum-likelihood fitting maximizes $P(\\text{data} \\mid w)$. If you instead have a prior $P(w)$ and maximize the posterior $P(w \\mid \\text{data}) \\propto P(\\text{data} \\mid w)\\,P(w)$ — the <em>maximum a posteriori</em> (MAP) estimate — taking logs turns the product into a sum: log-likelihood plus log-prior. The log-prior <em>is</em> the regularization penalty.</p>\n<p><b>Which prior gives which penalty.</b> A <em>Gaussian</em> prior on the weights, $w_j \\sim \\mathcal{N}(0, \\tau^2)$, has a log-density proportional to $-\\sum_j w_j^2$ — that is <b>ridge / L2</b>. A <em>Laplace</em> (double-exponential) prior, peaked at zero with heavy tails, has log-density proportional to $-\\sum_j |w_j|$ — that is <b>lasso / L1</b>, and the sharp peak at zero is why it favors exact zeros. The strength $\\lambda$ is set by how tight the prior is (larger $\\lambda$ = stronger belief that weights are near zero).</p>\n<p>The \"aha\": ridge and lasso are MAP estimation under Gaussian and Laplace priors. Regularization is just prior knowledge — \"weights should be small/sparse\" — written into the objective, which is why it reduces variance and why the <em>shape</em> of the prior (round vs peaked) determines shrinkage vs sparsity.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: ridge vs lasso — which should you reach for?</summary>\n<p>Both shrink, but they suit different situations, and knowing which to grab saves a lot of guessing.</p>\n<p><b>Reach for lasso when</b> you believe only a <em>few</em> features truly matter and you want the model to find and keep them — lasso's exact zeros give you a sparse, interpretable subset (built-in feature selection). The catch: among a group of <em>highly correlated</em> features, lasso tends to arbitrarily pick one and zero the rest, which can be unstable.</p>\n<p><b>Reach for ridge when</b> you expect <em>many</em> features to each contribute a little, or when features are correlated. Ridge keeps them all and spreads the weight across correlated features rather than picking a winner, giving steadier coefficients. It also has the closed form and always-invertible matrix, so it is computationally easy.</p>\n<p><b>Can't decide? Elastic Net.</b> It mixes the two — lasso's selection with ridge's grouping of correlated features — at the cost of a second hyperparameter to tune.</p>\n<p>The \"aha\": match the penalty to your belief about the weights. Sparse truth (few relevant features) → lasso; dense truth (many small effects, correlations) → ridge; unsure or correlated-and-sparse → elastic net. They are all the same \"shrink the weights\" idea, differing in the <em>shape</em> of the shrinkage.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "What problem does regularization primarily address?",
+              "choices": [
+                "Slow training speed",
+                "Missing data values",
+                "Data that is not yet standardized",
+                "Overfitting — large, unstable weights that fit noise"
+              ],
+              "answer": 3,
+              "explain": "Regularization penalizes large weights to curb overfitting, trading a little bias for much lower variance and more stable coefficients."
+            },
+            {
+              "q": "Ridge regression adds which penalty to the loss?",
+              "choices": [
+                "The number of nonzero weights",
+                "$\\lambda$ times the sum of squared weights (L2)",
+                "$\\lambda$ times the sum of absolute weights",
+                "The maximum weight value"
+              ],
+              "answer": 1,
+              "explain": "Ridge uses the L2 penalty $\\lambda \\sum_j w_j^2$, giving the closed form $(X^\\top X + \\lambda I)^{-1}X^\\top y$ and smooth shrinkage."
+            },
+            {
+              "q": "Lasso (L1 penalty) is notable because it",
+              "choices": [
+                "always gives a higher R-squared than ridge",
+                "cannot be used with more than one feature",
+                "drives some weights exactly to zero, performing feature selection",
+                "has a simpler closed form than ridge"
+              ],
+              "answer": 2,
+              "explain": "The L1 penalty produces exact zeros, yielding a sparse model that automatically selects a subset of features. It has no closed form (corner at 0)."
+            },
+            {
+              "q": "As the regularization strength $\\lambda \\to \\infty$, the weights",
+              "choices": [
+                "shrink toward zero, making the model simpler and more biased",
+                "grow without bound",
+                "stay exactly at the least-squares values",
+                "become random"
+              ],
+              "answer": 0,
+              "explain": "Larger $\\lambda$ weights the penalty more, forcing weights toward zero; at the extreme the model predicts (near) a constant — maximal bias, minimal variance."
+            },
+            {
+              "q": "How is the regularization strength $\\lambda$ chosen?",
+              "choices": [
+                "By minimizing the training loss directly",
+                "It is fixed at 1 by convention",
+                "It is learned by gradient descent with the weights",
+                "By cross-validation — try several values, keep the best validation score"
+              ],
+              "answer": 3,
+              "explain": "$\\lambda$ can't be picked from training loss (that selects $\\lambda=0$). Cross-validation finds the value with the best held-out performance."
+            },
+            {
+              "q": "Why does L1 (lasso) produce exactly-zero weights while L2 (ridge) does not?",
+              "choices": [
+                "L1 is computed with integers only",
+                "The L1 constraint region is a diamond whose corners lie on the axes, so the optimum often lands at a zero coordinate",
+                "L1 ignores the fit error",
+                "L2 cannot represent zero"
+              ],
+              "answer": 1,
+              "explain": "The diamond-shaped L1 region has corners on the axes (some coordinates zero); the round L2 ball has no corners, so it shrinks smoothly without zeroing."
+            },
+            {
+              "q": "In Bayesian terms, regularization corresponds to",
+              "choices": [
+                "placing a prior on the weights (ridge = Gaussian, lasso = Laplace), i.e. MAP estimation",
+                "ignoring the likelihood entirely",
+                "using more training data",
+                "removing the bias term"
+              ],
+              "answer": 0,
+              "explain": "Penalized loss = negative log-posterior: the penalty is the log-prior. Gaussian prior → L2/ridge; Laplace prior → L1/lasso. It's MAP estimation."
+            },
+            {
+              "q": "Why must you standardize features before regularizing?",
+              "choices": [
+                "Regularization only works on positive numbers",
+                "Standardizing removes the need for a bias term",
+                "The penalty sums over weights, so unscaled features get penalized unequally and arbitrarily",
+                "It makes the closed form exact"
+              ],
+              "answer": 2,
+              "explain": "Because the penalty depends on weight magnitudes, features on different scales are penalized inconsistently; standardizing puts them on equal footing."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "What is regularization and why use it?",
+              "back": "Add a penalty on weight size to the loss: minimize Loss(w) + λ·Ω(w). It curbs overfitting by shrinking weights (bias-variance trade) and stabilizes ill-conditioned/correlated problems."
+            },
+            {
+              "front": "Ridge (L2) vs Lasso (L1)",
+              "back": "Ridge: penalty λΣwⱼ², closed form (XᵀX+λI)⁻¹Xᵀy, shrinks all weights smoothly (none exactly zero), fixes collinearity. Lasso: penalty λΣ|wⱼ|, drives weights exactly to zero (feature selection), no closed form."
+            },
+            {
+              "front": "Why does L1 give sparsity but L2 doesn't?",
+              "back": "The L1 constraint region is a diamond with corners on the axes, so the best fit usually first touches it at a corner (zero coordinates). The L2 ball is round (no corners), so it shrinks smoothly without zeroing."
+            },
+            {
+              "front": "How is λ chosen, and what are the extremes?",
+              "back": "By cross-validation (pick the λ with best validation error). λ=0 → ordinary least squares (overfits); λ→∞ → all weights→0 (underfits). The 'regularization path' plots weights vs λ."
+            },
+            {
+              "front": "Regularization as a Bayesian prior",
+              "back": "Penalized loss = MAP estimation: penalty = −log prior on the weights. Gaussian prior → ridge (L2); Laplace prior (peaked at 0) → lasso (L1). λ = prior strength. Weight decay in DL is L2."
+            }
+          ],
+          "homework": [
+            {
+              "q": "You fit ordinary least squares with 50 features on 40 training samples and get wild, huge coefficients and terrible test error. Explain what went wrong and how ridge regression fixes it (mention the matrix).",
+              "solution": "With more features than samples (50 > 40), XᵀX is singular (not full rank), so the normal-equations inverse doesn't exist or is numerically unstable — least squares is underdetermined and can fit the 40 points exactly with arbitrary, huge, see-sawing weights that don't generalize (overfitting). Ridge adds λI to get (XᵀX + λI)⁻¹Xᵀy: the +λI makes the matrix invertible (full rank) even when XᵀX isn't, and the L2 penalty shrinks the coefficients to sensible sizes. Tune λ by cross-validation. (Lasso would also help and additionally zero out irrelevant features.)"
+            },
+            {
+              "q": "A model has two nearly identical (highly correlated) features that are both predictive. Describe how lasso vs ridge would treat them, and which you'd prefer if you want stable coefficients.",
+              "solution": "Lasso tends to pick ONE of the correlated pair and drive the other's weight to exactly zero — and which one it keeps can flip with small data changes, so the coefficients are unstable and the 'selection' is somewhat arbitrary. Ridge keeps BOTH and splits the weight between them (roughly halving each), giving smoother, more stable coefficients across resamples. If you want stable coefficients with correlated predictors, prefer ridge (or elastic net, which groups correlated features while still allowing some sparsity). If you specifically want a sparse model and don't mind which of the pair is kept, lasso is fine."
+            }
+          ],
+          "examples": [
+            {
+              "title": "How ridge shrinks a coefficient as λ grows",
+              "scenario": "In a one-feature ridge problem the closed-form weight is w = (Σ xᵢyᵢ)/(Σ xᵢ² + λ). Suppose Σ xᵢyᵢ = 20 and Σ xᵢ² = 10. Compute w for λ = 0, 10, and 90.",
+              "solution": "λ=0: w = 20/(10+0) = 2.0 (the ordinary least-squares weight). λ=10: w = 20/(10+10) = 20/20 = 1.0 (halved). λ=90: w = 20/(10+90) = 20/100 = 0.2 (shrunk toward zero). As λ grows, the denominator grows, so the weight smoothly shrinks toward 0 but never reaches it exactly — the hallmark of ridge/L2 shrinkage."
+            },
+            {
+              "title": "Lasso zeros a weak feature; ridge only shrinks it",
+              "scenario": "A feature has a small least-squares weight of 0.3 and is mostly noise. Qualitatively, what does lasso do to it versus ridge as regularization increases?",
+              "solution": "Lasso: as λ rises past a threshold, the soft-thresholding of L1 pushes this small weight to EXACTLY 0 — the feature drops out of the model entirely, which is desirable if it's just noise (automatic feature selection). Ridge: it shrinks the 0.3 toward zero (say to 0.2, then 0.1, ...) but never sets it to exactly 0, so the noisy feature stays in the model with a small nonzero weight. This is the practical difference: lasso yields a sparse model that discards weak features; ridge yields a dense model that merely damps them."
+            }
+          ]
         }
       ]
     }

@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 518 — Machine Learning topic: Regularization (finishes module 2) (content / new topic build-out)
+Continuing the 8th topic. Added **Regularization: Ridge, Lasso & Taming the Weights**, completing module 2 "Linear Models" (course now 2 modules /
+**5 lessons**). 8-section lecture (penalize complexity `Loss + λΩ(w)` · ridge/L2 with closed form `(XᵀX+λI)⁻¹Xᵀy` + collinearity cure · lasso/L1
+sparsity & feature selection · the diamond-vs-ball geometry of why L1 zeros weights · choosing λ by CV / the regularization path · Elastic Net + the
+scaling caveat · weight decay = L2) + **2 deep-dives** (regularization as a Bayesian prior — ridge=Gaussian, lasso=Laplace, i.e. MAP; ridge vs lasso —
+which to reach for) + **8 MCQs** (de-skewed 2/2/2/2) + **5 flashcards** + **2 homework** + **2 worked examples** (ridge shrinking a coefficient as λ
+grows; lasso zeroing a weak feature vs ridge only damping it). Classical framing (closed form, coefficient paths, MAP) distinct from dl-overfitting.
+Verified: `node gate.js` → **8 topics · 153 lessons · ALL GREEN**; **headless** — lesson opens with **nDD=2**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v457` → `atlas-v458`.
+**Queued next:** module 3 — SVMs/kernels, then Naive Bayes; module 4 — k-Means & clustering; module 5 — Ensembles (bagging/boosting/RF); module 6 — Model Selection & Cross-Validation.
+
 ## iter 517 — Machine Learning topic: Logistic Regression (content / new topic build-out)
 Continuing the 8th topic. Added **Logistic Regression: From Scores to Probabilities** to module 2 "Linear Models" (course now 2 modules / 4 lessons).
 8-section lecture (linear score + sigmoid `σ(z)=1/(1+e⁻ᶻ)` → probability · why not linear regression · cross-entropy/log-loss training · the *linear*
