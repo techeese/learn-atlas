@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 482 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 305 → **308**; these three now carry three):
+- **la-matrix-multiplication** (had: composition · cost/order) → **four ways to see AB**: dot-products, column-combinations, row-combinations,
+  and the **sum of outer products** `Σ aₖbₖᵀ` — the last is the gateway to the SVD (`Σσᵢuᵢvᵢᵀ`), low-rank, and fast matmul.
+- **c-multivariable-optimization** (had: Hessian classifies · 2D test) → **in high-D, saddles dominate**: a min needs *all* `n` eigenvalues
+  positive (≈`2⁻ⁿ` chance) — so big loss landscapes are seas of saddles; optimization is escaping saddles, not dodging local minima (SGD noise helps).
+- **dl-convolution-operation** (had: weight-sharing · stride/padding) → **the receptive field grows with depth**: stacked `3×3` convs see
+  `5×5`, `7×7`, … (`1+L(k−1)`) — depth, not kernel size, lets a CNN climb from edges to objects.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard. Node-verified `1+L(k−1)` and `2⁻ⁿ`.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v421` → `atlas-v422`.
+
 ## iter 481 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 Continuing the new lane — a **third "Deeper dive"** on three more flagship hard concepts (deep-dives 302 → **305**; these three now carry three):
 - **la-svd** (had: rotate-stretch-rotate · Eckart–Young) → **every matrix has an SVD → the pseudoinverse**: unlike eigendecomposition it
