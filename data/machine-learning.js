@@ -864,6 +864,146 @@
               "solution": "Use a nonlinear kernel (e.g. RBF, or a polynomial/feature map like (x₁, x₂, x₁²+x₂²)). Adding the radius feature x₁²+x₂² lifts the data into a higher dimension where the inner blob (small radius) and the outer ring (large radius) become linearly separable by a flat threshold on that new axis. The SVM draws its usual maximum-margin hyperplane in that lifted space; projected back to the original 2D plane, the boundary is a circle separating blob from ring. The kernel trick does this implicitly — computing the needed dot products via k(x,z) without ever forming the lifted features."
             }
           ]
+        },
+        {
+          "id": "ml-naive-bayes",
+          "title": "Naive Bayes: Counting Your Way to a Classifier",
+          "minutes": 16,
+          "content": "<h3>1. The hook: Bayes' rule plus one bold shortcut</h3>\n<p><strong>Naive Bayes</strong> is the fastest useful classifier you will meet: it learns by <em>counting</em>, predicts by multiplying a few probabilities, and — despite resting on an assumption that is almost always false — routinely beats far fancier models on text. It is the classic spam filter and a baseline every practitioner should know. The whole method is Bayes' rule applied to classification, plus one simplifying \"naive\" leap.</p>\n\n<h3>2. Bayes' rule for classification</h3>\n<p>We want the most probable class given the features: $P(y \\mid x)$. Bayes' rule flips it into things we can estimate: $$P(y \\mid x) \\propto P(x \\mid y)\\, P(y),$$ the <em>likelihood</em> of the features under each class times the class's <em>prior</em>. We predict the class with the largest posterior (the MAP decision); the denominator $P(x)$ is the same for every class, so we can ignore it and just compare the products.</p>\n\n<h3>3. The \"naive\" assumption</h3>\n<p>The hard part is $P(x \\mid y)$ — the joint distribution of <em>all</em> features given the class, which needs impossibly much data to estimate. Naive Bayes makes a sweeping simplification: <strong>assume the features are conditionally independent given the class</strong>. Then the joint factorizes into a product of one-feature terms: $$P(x \\mid y) = \\prod_{j} P(x_j \\mid y).$$ Each $P(x_j \\mid y)$ is a simple one-dimensional distribution you can estimate easily. This is \"naive\" because features usually <em>aren't</em> independent — yet it makes the model trivially trainable.</p>\n\n<h3>4. Training is just counting</h3>\n<p>With that factorization, training requires <em>no iterative optimization at all</em> — you estimate every probability by counting frequencies in the data: $P(y)$ is the fraction of examples in class $y$; $P(x_j \\mid y)$ is how often feature $j$ takes its value among class-$y$ examples. One pass over the data and you are done. That is why Naive Bayes trains in a blink and scales to huge, high-dimensional datasets like text.</p>\n\n<h3>5. Flavors for different features</h3>\n<p>The per-feature distribution $P(x_j \\mid y)$ depends on the data type: <strong>Multinomial NB</strong> for counts (word frequencies — the text-classification default), <strong>Bernoulli NB</strong> for binary present/absent features, and <strong>Gaussian NB</strong> for continuous features (model each feature per class with a normal distribution, estimating its mean and variance).</p>\n\n<h3>6. The zero-probability trap and Laplace smoothing</h3>\n<p>One danger: if a feature value never appeared with a class in training, its estimated $P(x_j \\mid y) = 0$, and because we <em>multiply</em>, that single zero annihilates the entire product — one unseen word vetoes the whole prediction. The fix is <strong>Laplace (add-one) smoothing</strong>: pretend you saw every value one extra time, so no probability is ever exactly zero. A small, essential patch.</p>\n\n<h3>7. Why a wrong assumption works</h3>\n<p>Features in real data are correlated, so the independence assumption is false and the probabilities Naive Bayes reports are poorly calibrated (often overconfident). Yet it classifies surprisingly well, because <em>classification only needs the right winner</em> — the class with the largest product — not accurate probabilities. The errors from double-counting correlated evidence frequently push all classes' scores in the same direction, leaving the argmax intact. Combined with its speed and low data appetite, this makes it a tough baseline on text and high-dimensional problems.</p>\n\n<h3>8. The big picture</h3>\n<p>Naive Bayes = Bayes' rule + conditional-independence factorization, trained by counting, predicted by multiplying (with Laplace smoothing to dodge zeros). It is the <em>generative</em> cousin of logistic regression — it models how the data is generated, $P(x \\mid y)P(y)$, rather than the boundary directly. Fast, simple, data-thrifty, and a strong baseline, especially for text: when starting a classification problem, fit a Naive Bayes first to see what \"easy\" looks like.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why a \"wrong\" assumption still classifies well</summary>\n<p>Conditional independence is almost always false — in spam, \"viagra\" and \"pills\" co-occur, so treating them as independent <em>double-counts</em> the same evidence. So why does Naive Bayes work?</p>\n<p><b>Classification needs the argmax, not the probabilities.</b> The decision is $\\arg\\max_y P(y)\\prod_j P(x_j \\mid y)$. Double-counting correlated features makes the winning class's score <em>too</em> extreme (overconfident) — the reported probabilities are badly calibrated, often pinned near 0 or 1. But to get the <em>label</em> right you only need the correct class to have the largest score, and the inflation typically preserves the ordering. Naive Bayes can be a poor probability estimator and an excellent classifier at the same time.</p>\n<p><b>The bias-variance angle.</b> The independence assumption is a strong <em>bias</em>, but it slashes <em>variance</em>: instead of estimating one gigantic joint distribution (needing exponential data), you estimate many tiny one-feature distributions (needing little data). On small or high-dimensional datasets that trade pays off — a biased-but-stable model beats an unbiased-but-data-starved one.</p>\n<p>The \"aha\": don't judge Naive Bayes by its calibration. Its independence assumption wrecks the probabilities but usually spares the decision boundary's argmax, and the massive variance reduction is exactly why a \"naive\" model wins when data is scarce or dimensions are many.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: generative vs discriminative (Naive Bayes vs logistic regression)</summary>\n<p>Naive Bayes and logistic regression form a famous pair — the same linear decision rule reached from opposite directions.</p>\n<p><b>Two routes to a classifier.</b> A <em>generative</em> model (Naive Bayes) learns how each class <em>generates</em> data — it estimates $P(x \\mid y)$ and $P(y)$, then uses Bayes' rule to get $P(y \\mid x)$. A <em>discriminative</em> model (logistic regression) skips the data-generation story and learns the boundary $P(y \\mid x)$ <em>directly</em>. Remarkably, Gaussian Naive Bayes and logistic regression produce the <em>same form</em> of (linear) decision boundary — they just fit its parameters differently.</p>\n<p><b>The classic trade-off (Ng &amp; Jordan).</b> The generative Naive Bayes converges to its best with <em>far less data</em> and trains instantly, but it has a <em>higher asymptotic error</em> because its independence assumption is wrong. The discriminative logistic regression needs <em>more data</em> and iterative optimization, but with enough of it reaches a <em>lower</em> error, since it makes no generative assumption. So Naive Bayes often wins on small datasets; logistic regression overtakes it as data grows.</p>\n<p>The \"aha\": generative vs discriminative is a fundamental axis. Model the joint $P(x,y)$ (generative: Naive Bayes — data-thrifty, fast, can also generate or detect novelty) or model $P(y \\mid x)$ directly (discriminative: logistic regression — lower error given enough data). The same split separates many model families across machine learning.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "How does Naive Bayes decide a class for an input?",
+              "choices": [
+                "By finding the nearest training point",
+                "By choosing the class with the highest posterior $P(y \\mid x)$ via Bayes' rule",
+                "By maximizing the margin",
+                "By averaging all class labels"
+              ],
+              "answer": 1,
+              "explain": "Naive Bayes picks the MAP class: argmax over y of P(y)·P(x|y), which by Bayes' rule is proportional to the posterior P(y|x)."
+            },
+            {
+              "q": "The 'naive' assumption in Naive Bayes is that",
+              "choices": [
+                "all classes are equally likely",
+                "the data is normally distributed",
+                "there are only two classes",
+                "the features are conditionally independent given the class"
+              ],
+              "answer": 3,
+              "explain": "It assumes P(x|y) factorizes into ∏ⱼ P(xⱼ|y) — features independent given the class — which makes the likelihood trivial to estimate."
+            },
+            {
+              "q": "Training a Naive Bayes classifier mainly involves",
+              "choices": [
+                "counting frequencies to estimate P(class) and P(featureⱼ|class) — no iterative optimization",
+                "gradient descent on a cross-entropy loss",
+                "solving a quadratic program",
+                "building a tree by recursive splitting"
+              ],
+              "answer": 0,
+              "explain": "Thanks to the factorization, you just estimate each probability by counting in one pass over the data — no optimization loop."
+            },
+            {
+              "q": "What problem does Laplace (add-one) smoothing solve?",
+              "choices": [
+                "Features on different scales",
+                "Too many classes",
+                "A feature value unseen with a class gives probability 0, which zeros the whole product",
+                "Overfitting from too many trees"
+              ],
+              "answer": 2,
+              "explain": "Because the class score is a product, a single zero estimate annihilates it. Add-one smoothing ensures no probability is exactly zero."
+            },
+            {
+              "q": "Which Naive Bayes variant is the default for word-count text features?",
+              "choices": [
+                "Gaussian Naive Bayes",
+                "Multinomial Naive Bayes",
+                "Bernoulli Naive Bayes",
+                "Kernel Naive Bayes"
+              ],
+              "answer": 1,
+              "explain": "Multinomial NB models count data (e.g. word frequencies) and is the standard choice for text classification; Bernoulli for binary, Gaussian for continuous."
+            },
+            {
+              "q": "Why does Naive Bayes often classify well even though its independence assumption is false?",
+              "choices": [
+                "It secretly models all correlations",
+                "It uses gradient descent to correct itself",
+                "The assumption is actually usually true",
+                "Classification needs only the correct argmax, not calibrated probabilities"
+              ],
+              "answer": 3,
+              "explain": "Double-counting correlated features miscalibrates the probabilities but usually preserves which class scores highest — and the label only depends on that argmax."
+            },
+            {
+              "q": "How do Naive Bayes and logistic regression relate?",
+              "choices": [
+                "Naive Bayes is generative (models P(x|y)P(y)); logistic regression is discriminative (models P(y|x) directly)",
+                "They are identical algorithms",
+                "Both are unsupervised",
+                "Logistic regression is a special kind of decision tree"
+              ],
+              "answer": 0,
+              "explain": "Naive Bayes models how data is generated then applies Bayes' rule; logistic regression learns the boundary P(y|x) directly. They're the classic generative/discriminative pair."
+            },
+            {
+              "q": "A key practical strength of Naive Bayes is that it",
+              "choices": [
+                "always achieves the lowest possible error",
+                "produces perfectly calibrated probabilities",
+                "is fast, data-thrifty, and works well in high dimensions like text/spam",
+                "requires no training data"
+              ],
+              "answer": 2,
+              "explain": "One counting pass makes it extremely fast and effective with little data and many features (text), which is why it's a strong baseline despite poor calibration."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "What is the Naive Bayes decision rule?",
+              "back": "Pick the class maximizing P(y)·∏ⱼ P(xⱼ|y) — the MAP class, since by Bayes' rule P(y|x) ∝ P(x|y)P(y) and the denominator P(x) is constant across classes."
+            },
+            {
+              "front": "What is the 'naive' assumption and why does it help?",
+              "back": "Features are conditionally independent given the class, so P(x|y)=∏ⱼP(xⱼ|y). It's usually false, but turns an impossible joint estimate into easy one-feature counts — huge variance reduction, instant training."
+            },
+            {
+              "front": "How is Naive Bayes trained, and the variants?",
+              "back": "By counting frequencies (no optimization): P(y) and each P(xⱼ|y) in one pass. Variants: Multinomial (counts/text), Bernoulli (binary), Gaussian (continuous, fit mean/variance per class)."
+            },
+            {
+              "front": "What is Laplace smoothing and why is it needed?",
+              "back": "Add-one smoothing: pretend each value was seen one extra time so no P(xⱼ|y) is exactly 0. Needed because the score is a product — one zero (an unseen value) would annihilate the whole prediction."
+            },
+            {
+              "front": "Naive Bayes vs logistic regression (generative vs discriminative)",
+              "back": "NB is generative — models P(x|y)P(y) then applies Bayes. Logistic regression is discriminative — models P(y|x) directly. NB needs less data and trains instantly (higher asymptotic error); logistic regression wins with enough data (lower error)."
+            }
+          ],
+          "homework": [
+            {
+              "q": "A spam filter has P(spam)=0.4, P(ham)=0.6. For the word 'free': P('free'|spam)=0.5, P('free'|ham)=0.1. Ignoring all other words, classify an email containing 'free' by comparing the (unnormalized) class scores, then give the actual posterior probability of spam.",
+              "solution": "Unnormalized scores (P(class)·P('free'|class)): spam = 0.4·0.5 = 0.20; ham = 0.6·0.1 = 0.06. Since 0.20 > 0.06, classify as SPAM. To get the posterior, normalize: P(spam|'free') = 0.20/(0.20+0.06) = 0.20/0.26 ≈ 0.769, and P(ham|'free') ≈ 0.231. So the email is spam with about 77% probability. (Note we never needed P('free') itself — it cancels in the normalization.)"
+            },
+            {
+              "q": "In the same filter, a new email contains the word 'blockchain', which never appeared in any spam training email, so P('blockchain'|spam) was estimated as 0. Explain what goes wrong and how Laplace smoothing fixes it.",
+              "solution": "Because Naive Bayes multiplies the per-word probabilities, a single P('blockchain'|spam)=0 makes the entire spam score 0 — no matter how spammy every other word is, the email can never be classified spam. One unseen word vetoes the prediction, which is brittle and almost certainly wrong. Laplace (add-one) smoothing fixes it by adding 1 to every count (and adding the vocabulary size to the denominator), so an unseen word gets a small nonzero probability instead of 0. The product is then dominated by the informative words rather than nuked by one zero. Smoothing is essential whenever the feature space is large enough that test data will contain values unseen in training."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Classifying a document by Naive Bayes",
+              "scenario": "Two classes, Sports and Tech, equally likely (P=0.5 each). Word likelihoods — P('game'|Sports)=0.4, P('game'|Tech)=0.1; P('chip'|Sports)=0.05, P('chip'|Tech)=0.3. A document contains 'game' and 'chip' (once each). Which class?",
+              "solution": "Assuming conditional independence, multiply: Sports score = P(Sports)·P('game'|S)·P('chip'|S) = 0.5·0.4·0.05 = 0.010. Tech score = 0.5·0.1·0.3 = 0.015. Tech (0.015) > Sports (0.010), so classify as TECH. The strong 'chip'|Tech signal (0.3 vs 0.05) outweighs the 'game'|Sports signal (0.4 vs 0.1). Normalizing: P(Tech|doc) = 0.015/0.025 = 0.6, P(Sports|doc) = 0.4."
+            },
+            {
+              "title": "Why independence can miscalibrate but still classify right",
+              "scenario": "Spam contains the near-synonyms 'cheap' and 'discount' that almost always co-occur. Naive Bayes treats them as independent. What does this do to the probabilities, and to the final label?",
+              "solution": "Because the two words carry essentially the SAME evidence but are multiplied as if independent, Naive Bayes double-counts it — the spam score is pushed far higher than warranted, so the reported P(spam) is overconfident (e.g. 0.999 when the true confidence should be lower). The probabilities are miscalibrated. But the label is usually still correct: spam was already the higher-scoring class, and the double-counting only inflates that lead, leaving the argmax (spam) unchanged. This is exactly why Naive Bayes is a poor probability estimator yet a good classifier — the decision depends only on which class wins, not on the exact probability."
+            }
+          ]
         }
       ]
     }

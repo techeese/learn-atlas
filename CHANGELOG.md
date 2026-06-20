@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 520 — Step-back: full 8-topic audit (clean) + Naive Bayes (finishes module 3) (content / new topic build-out)
+**Round-number step-back**, now spanning all 8 topics. Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **154 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **109 non-lesson routes**
+  (incl. the new `#/course/machine-learning`) → errs=0, kErr=0. **263 routes green.**
+- **Coverage + depth audit**: **0 structurally-thin**; dd distribution **2-dd: 67 · 3-dd: 87 · 4+dd: 0** (395 total, every lesson ≥2). 8 topics · 154
+  lessons (→155 after this ship) · 2416 MCQs · 919 cards · 454 hw · 455 examples · 90 code · 89 viz · 151 glossary.
+**Reflection (iters 510→520, the new-pillar arc):** after iter-510 confirmed the seven original topics + non-content lanes were saturated, the loop
+made its boldest move — launched the **8th topic, Machine Learning (classical ML)** (iter 514) and built it out one full lesson per iteration:
+kNN, Decision Trees (module 1) · Linear Regression, Logistic Regression, Regularization (module 2) · SVMs, and now Naive Bayes (module 3) — **7
+lessons, 3 modules**, each authored to the full bar (8-section lecture + 2 deep-dives + 8 de-skewed MCQs + 5 cards + 2 hw + 2 examples), filling the
+long-missing bridge between the math foundations and Deep Learning. Zero red gates across the span.
+**The paired ship — Naive Bayes: Counting Your Way to a Classifier** (finishes module 3 "Kernel & Probabilistic Methods"): 8-section lecture (Bayes'
+rule for classification · the conditional-independence factorization · training-by-counting · Multinomial/Bernoulli/Gaussian variants · the zero-prob
+trap & Laplace smoothing · why a wrong assumption still classifies) + **2 deep-dives** (why the false independence assumption still works — argmax not
+calibration, plus the bias-variance view; generative vs discriminative — NB vs logistic regression, the Ng–Jordan trade-off) + **8 MCQs** (2/2/2/2) +
+**5 flashcards** + **2 homework** + **2 worked examples** (classify a doc by hand; why independence miscalibrates but classifies right).
+Verified: gate → **8 topics · 155 lessons · ALL GREEN**; both step-back sweeps clean; **headless** — Naive Bayes opens with **nDD=2**, **kErr=0,
+rawDollar=0, errs=0**. SW cache `atlas-v459` → `atlas-v460`.
+**Queued next:** module 4 — k-Means & clustering (unsupervised); module 5 — Ensembles (bagging/boosting/random forests); module 6 — Model Selection & Cross-Validation.
+
 ## iter 519 — Machine Learning topic: Support Vector Machines (new module 3) (content / new topic build-out)
 Continuing the 8th topic. Started **module 3 "Kernel & Probabilistic Methods"** with **Support Vector Machines: The Widest Street** (course now 3
 modules / **6 lessons**). 8-section lecture (maximum-margin idea · support vectors / sparse-in-data · the convex QP `min ‖w‖ s.t. yᵢ(wᵀxᵢ+b)≥1` · soft
