@@ -2,6 +2,26 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 480 — Step-back: full audit (clean) + the two-per-lesson runway COMPLETE (content / depth)
+**Round-number step-back (iter 480).** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened) → errs=0, kErr=0, 0 bad; all **107
+  non-lesson routes** → errs=0, kErr=0. **255 routes green.**
+- **Structural coverage audit**: **0 structurally-thin** (every lesson ≥2 examples [**443**], ≥8 MCQs [2368], ≥1 flashcard [889], ≥1 hw [442]).
+**🎯 MILESTONE — the second-deep-dive runway is COMPLETE.** With this iteration's paired ship, **every one of all 148 lessons now carries ≥2
+deep-dives** (dd distribution before: 1 lesson at one dd; after: **0 lessons under two**). Deep-dives **299 → 302**; 90 code, 151 glossary, 89 viz.
+**Reflection (470–479):** ten clean ships — finishing the 2-dd runway across calc/algo/LA/LLM/RL/PS, then (iter 479) pivoting to a *third*
+deep-dive on the hardest concepts once the runway was all but done. Quality bar held (each dd a genuinely distinct angle, math node-verified),
+zero red gates / broken pushes. **New lane going forward: third deep-dives on the ~15 hardest, most-central concepts** (4 lessons at 3 dd so far).
+**The paired ship — three deep-dives** (302 total):
+- **ps-conditional-expectation** → **the orthogonality principle** (completes the runway): `E[X|Y]` is the *projection* of `X` onto functions
+  of `Y`; the residual is uncorrelated with *every* `h(Y)` — the foundation of least squares, Kalman filtering, Gauss–Markov.
+- **dl-loss-functions** (→ 3rd dd) → **label smoothing & focal loss**: soften one-hot targets (`1−ε`) to curb overconfidence; reweight by
+  `(1−p_t)^γ` to focus on hard examples — practical reshapings of cross-entropy.
+- **dl-gradient-descent-and-optimizers** (→ 3rd dd) → **why not second-order**: Newton's `−H⁻¹∇f` is ideal but the `n×n` Hessian
+  (`10¹⁸` entries at 1B params) can't be stored/inverted — so we use first-order + cheap diagonal curvature (Adam).
+Verified: gate ALL GREEN; **via `--dump-dom`** ps-conditional nDD=2, the two DL lessons nDD=3, all **kErr=0, rawDollar=0**; both step-back
+sweeps clean; smoke **errs=0/kErr=0, bad=none**. SW cache `atlas-v419` → `atlas-v420`.
+
 ## iter 479 — Pivot: THIRD deep-dives on the hardest, most-central concepts (content / depth)
 With the two-per-lesson runway all but complete (only `ps-conditional-expectation` left, reserved for iter 480), pivoting to the next depth
 layer the owner's directive explicitly calls for — **a third "Deeper dive" on the very hardest, most-central concepts** (deep-dives 296 →

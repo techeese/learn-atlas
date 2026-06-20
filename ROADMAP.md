@@ -188,6 +188,11 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 480: **STEP-BACK + 2-PER-LESSON RUNWAY COMPLETE** (content/depth). Sweeps: 148 lessons errs=0/kErr=0/0 bad; 107 routes
+   errs=0/kErr=0 (255 green). Coverage: 0 thin; dd dist now 0 lessons under two dd (302 dd total; 6 lessons at 3 dd). MILESTONE: every one
+   of all 148 lessons carries >=2 deep-dives. Ship: ps-conditional-expectation (orthogonality principle — completes runway), dl-loss-functions
+   (label smoothing/focal, 3rd dd), dl-gradient-descent-and-optimizers (why not second-order, 3rd dd). SW →v420. NEXT LANE: 3rd dd's on the
+   hardest concepts. Verified: gate GREEN; dump-dom nDD ok, kErr=0, rawDollar=0; smoke bad=none.
    ✅ iter 479: **PIVOT — THIRD deep-dives on the hardest concepts** (content/depth). 2-per-lesson runway all but done (only ps-conditional
    left for iter 480), so started a 3rd dd on flagship hard concepts (+3 dd, 296→299). Checked viz catalog first — saturated (89), no gap.
    la-eigenvalues-eigenvectors (characteristic polynomial), dl-attention-mechanism (O(n²) / FlashAttention), c-derivative-definition (best
