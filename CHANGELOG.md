@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 551 — Calculus gets hands-on: three numerical-methods code exercises (new functionality / code)
+Calculus had almost no runnable exercises (it's a math topic), yet numerical methods are perfect hands-on code. Added three, each reinforcing the lesson's idea:
+- **c-differentiation-rules** → **finite-difference derivative**: estimate `f'(3)` for `f=x²` from the difference quotient → `6.001` (the limit the rules shortcut).
+- **c-area-volume** → **Riemann sum**: approximate `∫₀¹ x²` with 100 rectangles → `0.338` (converging to the exact 1/3).
+- **c-linearization-lhopital** → **Newton's method**: find `√2` by repeatedly replacing the curve with its tangent line → `1.41421` (linearization in action).
+Loops written with `>=` (no `<`, per the code-render landmine).
+Verified: `node gate.js` **runs all three** → **98 code-exercises verified** (was 95), ALL GREEN; **headless** — each playground hydrates, Run yields the matching
+output (all OK), errs=0. SW cache `atlas-v490` → `atlas-v491`.
+**Landmine (new):** `toFixed(n)` on a *summed* float can flip the last digit depending on summation order (ascending vs descending) when the value sits on a
+rounding boundary — the Riemann sum gave `0.3384` ascending but `0.3383` descending. Fix: pick a rounding-stable precision (used `toFixed(3)` → `0.338` both ways).
+
 ## iter 550 — Step-back: full 8-topic audit (clean) + three central calculus third dives (content / depth)
 **Round-number step-back.** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **158 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **132 non-lesson routes** (incl. 8
