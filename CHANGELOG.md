@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 525 — Third deep-dives on the hardest ML lessons (content / depth)
+Brought the new Machine Learning topic toward the depth of the rest of the codex (most lessons elsewhere carry 3 dd). Added a **third "Deeper dive"** to
+three of its hardest lessons:
+- **ml-svm** → **the SVM is hinge loss + L2**: the soft-margin primal equals `Σ max(0, 1−yᵢ(wᵀxᵢ+b)) + λ‖w‖²` — the same loss-plus-penalty template as
+  ridge (squared loss) and logistic regression (log loss); the hinge gives margin + support-vector sparsity, and the dual (dot-products only) gives kernels.
+- **ml-decision-trees** → **why trees thrive on messy real-world data**: scale-invariance (order-only splits), native mixed/categorical + missing-value
+  handling, and automatic feature interactions — the practical reasons tree ensembles dominate tabular ML.
+- **ml-logistic-regression** → **calibration**: cross-entropy is a proper scoring rule, so LR's probabilities are trustworthy out of the box; SVMs/NB/
+  boosted trees are miscalibrated and need Platt scaling / isotonic regression.
+Injected via the byte-stable append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three lessons open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (SVM display math clean). SW cache `atlas-v464` → `atlas-v465`.
+
 ## iter 524 — Interactive k-Means clustering viz (visualizations)
 Switched lanes off content (anti-monotony, ~10 content iters) to give the new Machine Learning topic its **first interactive** — the 90th widget,
 **`ml-kmeans-viz` "k-Means clustering in action."** It animates Lloyd's algorithm: stepping alternates *assign* (points recolor to their nearest

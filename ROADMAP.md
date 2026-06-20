@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 525: **3rd deep-dives on the hardest ML lessons** (content/depth; anti-monotony off viz). ml-svm (hinge loss + L2 / dual), ml-decision-trees
+   (why trees thrive on messy data), ml-logistic-regression (calibration / proper scoring). 3 ML lessons now at 3 dd. Verified: gate GREEN; dump-dom each
+   nDD=3, kErr=0/rawD=0/errs=0. SW →v465.
    ✅ iter 524: **Interactive k-Means clustering viz** (visualizations; anti-monotony off content). 90th widget ml-kmeans-viz: animates Lloyd's
    assign/update with live inertia, k slider, Run/Step/Reset/New-points; embedded in the k-Means lesson + Lab. Verified: gate GREEN (90 widgets);
    headless Lab canvas hydrates, Step iter 0→4→converged (inertia 105.07), lesson inline canvas hydrates, kErr=0/errs=0; screenshot = 3 clean clusters. SW →v464.
