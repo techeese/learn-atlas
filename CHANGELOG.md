@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 452 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LA/PS/RL (deep-dives 218 → **221**; 69 lessons now carry two):
+- **la-matrices-as-transformations** (had: "columns are where the basis lands") → **what makes a transformation linear**: `T(au+bv)=aT(u)+bT(v)`
+  (grid stays straight/parallel, origin fixed) — which is *why* basis images determine `T` everywhere, so a finite matrix encodes an infinite-space map.
+- **ps-joint-distributions** (had: "independent ≠ uncorrelated") → **marginalization**: sum out a variable (`P(X)=Σ_y P(X,Y)`) to get a
+  marginal; slice + renormalize to condition — both derived from the joint (you can't go back from marginals alone).
+- **rl-eligibility-traces** (had: "TD(λ) dials TD↔MC") → **the eligibility trace**: a per-state fading memory `e(s)` (decays by `γλ`); one
+  TD error updates *all* recent states `V(s)+=αδe(s)` — the backward view that implements TD(λ) online.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v391` → `atlas-v392`.
+
 ## iter 451 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across calc/DL/LLM (deep-dives 215 → **218**; 66 lessons now carry two):
 - **c-partial-derivatives** (had: "freezes all but one axis") → **mixed partials commute** (Clairaut): `∂²f/∂x∂y = ∂²f/∂y∂x` (for `x²y`,
