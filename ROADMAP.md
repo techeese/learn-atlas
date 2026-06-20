@@ -188,6 +188,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 504: **3 more THIRD deep-dives on the hardest concepts** (content/depth; alternating with 503's search). +3 dd (365→368; 72 at 3 dd):
+   la-projection-least-squares (don't solve the normal equations — QR/SVD), rl-trpo-ppo (GAE), a-network-flow (flow in disguise / reductions).
+   Verified: gate GREEN; dump-dom each nDD=3, kErr=0, rawDollar=0; smoke bad=none. SW →v444.
    ✅ iter 503: **⌘K palette now searches all 365 deep-dives** (workflow/search; anti-monotony off depth). Each dd `<summary>` is indexed as a 🧩
    result jumping to its lesson (math/tags stripped, "Deeper dive:" prefix dropped). Verified: gate GREEN; headless palette queries "residual
    stream"/"Eckart"/"bootstrap" each return a Deeper-dive hit, errs=0; 9-route smoke clean. SW →v443.

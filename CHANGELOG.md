@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 504 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+Back to depth (alternating with 503's search). A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 365 → **368**):
+- **la-projection-least-squares** (had: LS=orthogonal projection · normal equations/pseudoinverse) → **don't actually solve the normal
+  equations**: forming `AᵀA` squares the condition number (`κ(AᵀA)=κ(A)²`), so libraries use QR (`Rx̂=Qᵀb`) or SVD on `A` directly — right math, wrong computation.
+- **rl-trpo-ppo** (had: PPO clip · TRPO trust region) → **GAE**: PPO needs an advantage `Â`; GAE exponentially blends multi-step TD residuals
+  (`Â = Σ(γλ)ˡδ`) with a `λ` bias-variance dial (same as TD(λ)) — the smooth advantages that actually make the clip converge.
+- **a-network-flow** (had: max-flow=min-cut · residual graphs) → **flow in disguise**: matching, image segmentation, project selection,
+  disjoint paths, baseball elimination all *reduce* to max-flow/min-cut — local capacities + global optimum = the flow signature.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v443` → `atlas-v444`.
+
 ## iter 503 — Command palette (⌘K) now searches all 365 deep-dives (workflow / search)
 Switched lanes off depth (anti-monotony) to a search/discoverability win that *surfaces* it. The ⌘K palette indexed lessons, examples, viz,
 glossary, and references — but **not the 365 deep-dives**, a large body of content otherwise reachable only by scrolling (the footer even claimed
