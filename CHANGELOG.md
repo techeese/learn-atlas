@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 448 — New viz: why L1 gives sparsity (the geometry) (visualizations)
+Broke a 5-iteration second-dd streak with a new visualization (the catalog gap I found: bias–variance is covered by `dl-overfitting` +
+`ps-estimator`, but the **L1-sparsity geometry** was not). Pairs with the L1-vs-L2 dd from iter 431.
+- **New viz `dl-regularization-geometry`** (viz 88 → **89**) — "Why L1 gives sparsity (the geometry)". Weight-space picture: gold loss
+  contours around the unconstrained optimum `w*`, the constraint region at the origin (L1 diamond or L2 circle), and the regularized
+  **solution = projection of `w*` onto the region**. Sliders for `w₁*, w₂*, t` + an **L1↔L2 toggle**. With L1 the contour snaps to a
+  **corner** (a weight becomes exactly 0 → the note flags "Sparse!"); with L2 (a circle, no corners) both weights only shrink. Drag
+  `w*` toward an axis to trigger sparsity. Projection math (exact L1/L2 projection) node-verified before building.
+- Embedded in `dl-overfitting-and-regularization`; bumped the `viz-complete` achievement target to 89.
+Verified: gate ALL GREEN; **headless** lab route renders (errs=0, canvas), default L1 `w*=(3,1),t=2` → solution `(2.00, 0.00)` flagged
+"Sparse!", L1↔L2 toggle flips the note correctly; screenshot eyeballed (clean weight-space geometry). SW cache `atlas-v387` → `atlas-v388`.
+
 ## iter 447 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across PS/DL/algo (deep-dives 206 → **209**; 59 lessons now carry two):
 - **ps-law-of-large-numbers** (had: "LLN vs CLT") → **the gambler's fallacy**: independent trials have no memory — the average

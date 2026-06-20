@@ -1190,6 +1190,66 @@
   });
 
   /* ========================================================
+     20c. Regularization geometry — why L1 gives sparsity
+     ======================================================== */
+  register({ id: 'dl-regularization-geometry', topic: 'deep-learning', title: 'Why L1 gives sparsity (the geometry)', blurb: 'The regularized solution is where the loss contours first touch the constraint region. L2 is a circle (touch is generic, off the axes); L1 is a diamond whose corners sit on the axes, so the touch often lands on a corner — setting a weight to exactly 0. Drag the unconstrained optimum and watch L1 snap a coordinate to zero while L2 only shrinks it.' },
+  function (root) {
+    const W = 460, H = 460;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root); const ctl2 = controls(root);
+    const info = note(root);
+    const MONO = "JetBrains Mono, monospace", DISP = "Fraunces, Georgia, serif";
+    let wx = 3, wy = 1, t = 2, useL1 = true;
+    const RANGE = 4.2, cx = W / 2, cy = H / 2, s = (W / 2 - 30) / RANGE;
+    const PX = (x) => cx + x * s, PY = (y) => cy - y * s;
+    slider(ctl, { label: 'w₁* (unconstrained)', min: -4, max: 4, step: 0.1, value: wx, fmt: v => v.toFixed(1), onInput: v => { wx = v; draw(); } });
+    slider(ctl, { label: 'w₂* (unconstrained)', min: -4, max: 4, step: 0.1, value: wy, fmt: v => v.toFixed(1), onInput: v => { wy = v; draw(); } });
+    slider(ctl, { label: 'budget t', min: 0.5, max: 4, step: 0.1, value: t, fmt: v => v.toFixed(1), onInput: v => { t = v; draw(); } });
+    const tog = button(ctl2, 'L1 (lasso)', () => { useL1 = !useL1; tog.innerHTML = useL1 ? 'L1 (lasso)' : 'L2 (ridge)'; draw(); });
+    function projL2(x, y, R) { const n = Math.hypot(x, y); if (n <= R) return [x, y]; const k = R / n; return [x * k, y * k]; }
+    function projL1(x, y, T) {
+      const a = Math.abs(x), b = Math.abs(y); if (a + b <= T) return [x, y];
+      const hi = Math.max(a, b), lo = Math.min(a, b), tau2 = (a + b - T) / 2; let rh, rl, tau;
+      if (tau2 <= lo) { tau = tau2; rh = hi - tau; rl = lo - tau; } else { tau = hi - T; rh = T; rl = 0; }
+      const aBig = a >= b, ra = aBig ? rh : rl, rb = aBig ? rl : rh; return [Math.sign(x) * ra, Math.sign(y) * rb];
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // grid + axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1;
+      for (let g = -4; g <= 4; g++) { ctx.globalAlpha = g === 0 ? 1 : 0.35; ctx.beginPath(); ctx.moveTo(PX(g), PY(-RANGE)); ctx.lineTo(PX(g), PY(RANGE)); ctx.stroke(); ctx.beginPath(); ctx.moveTo(PX(-RANGE), PY(g)); ctx.lineTo(PX(RANGE), PY(g)); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + MONO; ctx.textAlign = 'left'; ctx.fillText('w₁', PX(RANGE) - 22, PY(0) - 6); ctx.fillText('w₂', PX(0) + 6, PY(RANGE) + 14);
+      const sol = useL1 ? projL1(wx, wy, t) : projL2(wx, wy, t);
+      // loss contours: circles centred at w*, the smallest passing through the solution
+      const rSol = Math.hypot(wx - sol[0], wy - sol[1]);
+      ctx.strokeStyle = p.gold; ctx.globalAlpha = 0.5;
+      [rSol, rSol + 0.7, rSol + 1.5].forEach((r, k) => { if (r <= 0) return; ctx.globalAlpha = k === 0 ? 0.85 : 0.3; ctx.lineWidth = k === 0 ? 2 : 1; ctx.beginPath(); ctx.arc(PX(wx), PY(wy), r * s, 0, 7); ctx.stroke(); });
+      ctx.globalAlpha = 1;
+      // constraint region at the origin
+      ctx.fillStyle = p.sage; ctx.strokeStyle = p.sage; ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.14; ctx.beginPath();
+      if (useL1) { ctx.moveTo(PX(t), PY(0)); ctx.lineTo(PX(0), PY(t)); ctx.lineTo(PX(-t), PY(0)); ctx.lineTo(PX(0), PY(-t)); ctx.closePath(); }
+      else { ctx.arc(PX(0), PY(0), t * s, 0, 7); }
+      ctx.fill(); ctx.globalAlpha = 1; ctx.stroke();
+      // w* (gold) and solution (rust) + connector
+      ctx.strokeStyle = p.mute; ctx.setLineDash([4, 3]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(PX(wx), PY(wy)); ctx.lineTo(PX(sol[0]), PY(sol[1])); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(PX(wx), PY(wy), 5, 0, 7); ctx.fill();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + MONO; ctx.textAlign = 'left'; ctx.fillText('w*', PX(wx) + 8, PY(wy) - 6);
+      ctx.fillStyle = p.rust; ctx.beginPath(); ctx.arc(PX(sol[0]), PY(sol[1]), 6, 0, 7); ctx.fill();
+      const sparse = Math.abs(sol[0]) < 1e-4 || Math.abs(sol[1]) < 1e-4;
+      const inside = (Math.abs(wx) + Math.abs(wy) <= t && useL1) || (Math.hypot(wx, wy) <= t && !useL1);
+      ctx.textAlign = 'left';
+      info.innerHTML = `<b style="color:${p.sage}">${useL1 ? 'L1 / lasso' : 'L2 / ridge'}</b> · solution <b style="color:${p.rust}">(${sol[0].toFixed(2)}, ${sol[1].toFixed(2)})</b>. ` +
+        (inside ? `w* is inside the budget — no shrinkage needed.` :
+          (sparse ? `<b style="color:${p.rust}">Sparse!</b> the contour touched a <b>corner</b> of the diamond, so a weight is exactly <b>0</b> — L1 performs feature selection.` :
+            (useL1 ? `touched an edge (both weights nonzero) — drag w* more toward an axis to snap to a corner.` :
+              `the circle has no corners, so both weights shrink but neither hits 0 — L2 never zeros a weight.`)));
+    }
+    draw();
+  });
+
+  /* ========================================================
      21. Decoding — temperature + nucleus (top-p) sampling
      ======================================================== */
   register({ id: 'llm-decoding', topic: 'llm', title: 'Decoding: Temperature & Top-p', blurb: 'Reshape a next-token distribution with temperature, then watch the nucleus (top-p) keep only the head of the distribution.' },
