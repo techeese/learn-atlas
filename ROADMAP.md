@@ -182,6 +182,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 540: **STEP-BACK: full 8-topic audit (clean) + 3 more 3rd deep-dives** (content/depth). Sweeps: 158 lessons errs=0/kErr=0/0 bad; 121 routes
+   (incl. 8 cheatsheets) errs=0/kErr=0 (279 green). Coverage: 0 thin; dd dist 2dd:52 / 3dd:109 / 4+:0 (422 total). Reflection: 530→540 finished ML
+   integration across every surface + resumed cross-topic depth (2dd 67→52) + 4th ML viz. Ship: c-continuity (why continuity matters), l-positional-encoding
+   (RoPE), a-linear-sorts-selection (Ω(n log n) lower bound). Verified: gate GREEN; dump-dom nDD=3, kErr=0/rawD=0/errs=0. SW →v480.
    ✅ iter 539: **3 more original-topic 3rd deep-dives** (content/depth). dl-overfitting (double descent), la-diagonalization (eigenvalues → long-run
    dynamics/PageRank/Markov), ps-sample-spaces-events (continuous spaces & measure theory). Verified: gate GREEN; dump-dom each nDD=3, kErr=0/rawD=0/errs=0. SW →v479.
    ✅ iter 538: **Interactive gradient-descent linear-regression viz** (visualizations). 93rd widget ml-linreg-viz: shows TRAINING (not a trained model) —

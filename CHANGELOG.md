@@ -2,6 +2,25 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 540 — Step-back: full 8-topic audit (clean) + three more third deep-dives (content / depth)
+**Round-number step-back.** Two health audits, both clean:
+- **Runtime kErr+route sweep**: all **158 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **121 non-lesson routes** (incl.
+  all 8 cheatsheets) → errs=0, kErr=0. **279 routes green.**
+- **Coverage + depth audit**: **0 structurally-thin**; dd distribution **2-dd: 52 · 3-dd: 106 → 109 · 4+dd: 0** (422 total, every lesson ≥2). 8 topics ·
+  158 lessons · 2448 MCQs · 939 cards · 463 examples · 93 viz · 96 code · 168 glossary.
+**Reflection (iters 530→540, post-pillar):** after the ML topic was complete, the loop (a) finished integrating it across *every* surface — decision-tree
+viz, 6 code exercises, glossary (17 terms), Library references, prereq graph (and confirmed cheatsheets/placement/achievements auto-include it) — and
+(b) **resumed cross-topic depth**, pulling the remaining 2-dd lessons down from 67 → 52 with genuinely-distinct third dives across calc/LA/algo/PS/DL/LLM,
+plus a 4th ML interactive (gradient-descent line-fitting). Lanes rotated cleanly (viz/code/reference/content); zero red gates.
+**The paired ship — three more third deep-dives** (calc/LLM/algo):
+- **c-continuity** → **why continuity matters**: the EVT guarantees an optimum exists, differentiability makes gradient descent work, smoothness is why we
+  design differentiable surrogate losses.
+- **l-positional-encoding** → **RoPE**: modern LLMs *rotate* queries/keys so their dot product depends on relative offset `m−n` — relative position for
+  free, with better length extrapolation.
+- **a-linear-sorts-selection** → **the Ω(n log n) lower bound**: a comparison sort is a decision tree needing `n!` leaves, so height ≥ `log₂(n!) ≈ n log n`
+  — an information limit only non-comparison sorts escape.
+Verified: gate ALL GREEN; both step-back sweeps clean; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v479` → `atlas-v480`.
+
 ## iter 539 — Three more original-topic third deep-dives (content / depth)
 Three more high-value third deep-dives (DL/LA/PS):
 - **dl-overfitting-and-regularization** → **double descent**: past the interpolation threshold test error *falls again*, so hugely overparameterized
