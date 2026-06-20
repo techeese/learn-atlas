@@ -2,6 +2,19 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 535 — Third deep-dives on three original-topic lessons (content / depth)
+With the ML topic fully integrated, **diversified back to the original seven topics** — three genuinely-valuable third deep-dives (calc/PS/DL) on lessons
+that were still at 2 dd:
+- **c-improper-integrals** → **where they actually show up**: density normalization (`∫e^{−x²}=√π`), expectations & tails, the Gamma function
+  (`Γ(s)=∫₀^∞ x^{s−1}e^{−x}dx` extending the factorial), and the Laplace/Fourier transforms — the native language of continuous probability & ML.
+- **ps-t-tests** → **paired vs unpaired & Welch's**: match the test to the design — paired for matched measurements (more power), unpaired for independent
+  groups, and prefer Welch's when variances may differ; nonparametric alternatives for non-normal data.
+- **dl-practical-training-and-debugging** → **reading the loss curves**: the standard failure signatures — flat-and-high = underfit, val-turning-up =
+  overfit, NaN/spikes = LR/gradients, flat-then-drop = warmup — turning blind tuning into diagnosis.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0** (Gamma/transform display math + the loss-curve
+`<ul>` all render). SW cache `atlas-v474` → `atlas-v475`.
+
 ## iter 534 — ML Library references + achievement audit (content / reference)
 First audited the achievement system for stale 7-topic assumptions (broken-wins check): the topic-completion achievements — `all-topics`, `atlas-complete`,
 `well-rounded`, `module-master`, `topic-clear` — are all **dynamic** over `window.COURSES`, so the 8th topic correctly made them require ML too; nothing
