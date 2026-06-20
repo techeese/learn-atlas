@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 515: **ML topic — Decision Trees lesson (finishes module 1)** (content/new-topic build-out). 2nd lesson: anatomy, greedy recursive
+   splitting, Gini & entropy/info-gain, overfitting & pruning, → ensembles; 2 dd (greedy/NP-hard; Gini vs entropy), 8 mcq (2/2/2/2), 5 cards, 2 hw,
+   2 ex. Verified: gate 8 topics/150 lessons ALL GREEN; headless course page 2 lessons, lesson nDD=2, kErr=0/rawD=0/errs=0. SW →v455.
    ✅ iter 514: **🚀 NEW 8th TOPIC "Machine Learning" (classical ML) — phase 1** (new functionality/content). Bold new pillar bridging math→deep
    learning. Shipped data/machine-learning.js (icon ℳ) → module "Instance- and Tree-Based Models" → full kNN lesson (8-section content, 2 dd, 8 mcq
    de-skewed 2/2/2/2, 5 cards, 2 hw, 2 ex). Wired index.html + sw.js + gate.js TOPICS. Verified: gate 8 topics/149 lessons ALL GREEN; headless ML

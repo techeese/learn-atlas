@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 515 — Machine Learning topic: Decision Trees lesson (finishes module 1) (content / new topic build-out)
+Continuing the 8th topic. Added the second lesson, **Decision Trees: Learning by Asking Questions**, completing module 1 *"Instance- and Tree-Based
+Models"* (now 2 lessons). Authored to the full bar: 8-section lecture (anatomy · greedy recursive splitting · Gini & entropy/information gain · a split
+by the numbers · overfitting · pruning & limits · strengths/weakness → ensembles) + **2 deep-dives** (why trees are greedy & optimal-tree NP-hardness;
+Gini vs entropy — do they differ?) + **8 MCQs** (de-skewed 2/2/2/2) + **5 flashcards** + **2 homework** + **2 worked examples** (choosing a split by
+information gain; depth-limit vs fully-grown overfitting). Appended via the byte-stable round-trip path; the lesson naturally forward-links to the
+queued Ensembles lessons. Decision trees appear nowhere in the seven original topics → zero duplication.
+Verified: `node gate.js` → **8 topics · 150 lessons · ALL GREEN**; **headless** — course page now lists 2 lessons, the Decision Trees lesson opens with
+**nDD=2**, **kErr=0, rawDollar=0, errs=0** (Gini/entropy/info-gain display math renders clean). SW cache `atlas-v454` → `atlas-v455`.
+**Queued next:** Linear & Logistic Regression, Regularization, SVMs/kernels, Naive Bayes, k-Means, Ensembles, Model Selection/CV (each a new module).
+
 ## iter 514 — 🚀 NEW PILLAR: 8th topic "Machine Learning" (classical ML) — phase 1 (new functionality / content)
 A **bold new pillar.** After many iterations flagging that the existing seven topics were saturated and incremental value was low, I started the 8th
 topic — **Machine Learning** (classical / pre-deep-learning ML), the long-missing **bridge** between the math foundations (LA/Calc/Prob) and Deep
