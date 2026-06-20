@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 475 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/RL (deep-dives 284 → **287**; 135 lessons now carry two):
+- **c-lagrange-multipliers** (had: "KKT / slackness") → **∇f ∥ ∇g at the optimum**: the level set of `f` is *tangent* to the constraint
+  (`∇f=λ∇g`) — if the gradients weren't parallel you could slide along the constraint to improve `f`. Optimality *is* tangency.
+- **a-mst-union-find** (had: "Kruskal + cut property") → **Prim vs Kruskal**: grow one tree (Prim, heap, `O(E log V)`) vs merge a forest
+  (Kruskal, sort + union-find, `O(E log E)`) — same cut-property guarantee, different "which cut"; dense vs sparse.
+- **rl-value-approximation** (had: "the deadly triad") → **features make linear VFA powerful**: `v̂=wᵀx(s)`; tile coding (offset grids)
+  gives local generalization — "linear" is in the weights, and deep RL just *learns* the features instead.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v414` → `atlas-v415`.
+
 ## iter 474 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across calc/RL/LA (deep-dives 281 → **284**; 132 lessons now carry two):
 - **c-differentiation-rules** (had: "linearity + product/chain") → **logarithmic differentiation**: take `ln` first to turn products→sums and
