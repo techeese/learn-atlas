@@ -2,6 +2,20 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 478 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LA/algo/RL (deep-dives 293 → **296**; 144 lessons now carry two —
+**only `ps-conditional-expectation` remains at one, reserved to complete the runway at the iter-480 step-back**):
+- **la-four-subspaces-rank** (had: "jigsaw") → **the SVD gives orthonormal bases for all four subspaces**: `A=UΣVᵀ` — first `r` cols of `V`
+  = row space, rest = null space; first `r` cols of `U` = column space, rest = left null space; `A` maps row→column space (scale by σ).
+- **a-amortized-analysis** (had: "doubling → O(1)") → **why double, not +constant**: doubling makes total copies a geometric series (`<2n` →
+  `O(1)` amortized); a constant increment makes it arithmetic (`~n²/2c` → `O(n)`). The growth *factor* is the trick.
+- **rl-policy-gradient-theorem** (had: "training by trial") → **why PG over value methods**: continuous/huge action spaces (no `argmax_a Q`),
+  stochastic policies (partial obs / games), and smooth updates — the niches value methods can't fill.
+Authored with `String.raw` LaTeX (`\lt`/`\gt`); injected via the append-second-dd path with the full guard set. Verified in node:
+doubling total `=2047<2048`, additive `=33280` (quadratic).
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v417` → `atlas-v418`.
+
 ## iter 477 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LA/LLM/calc (deep-dives 290 → **293**; 141 lessons now carry two):
 - **la-low-rank-pca** (had: "PCA = SVD") → **Eckart–Young**: the top-`k` SVD `A_k` is the *provably best* rank-`k` approximation (error

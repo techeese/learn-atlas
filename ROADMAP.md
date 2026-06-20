@@ -188,6 +188,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 478: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (293→296; 144 lessons have 2; only
+   ps-conditional-expectation left at 1, saved for iter-480 step-back to complete the runway): la-four-subspaces-rank (SVD gives all four
+   subspace bases), a-amortized-analysis (why double not +constant), rl-policy-gradient-theorem (why PG over value methods).
+   Append-second-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=2, kErr=0, rawDollar=0; smoke bad=none. SW →v418.
    ✅ iter 477: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (290→293; 141 lessons have 2):
    la-low-rank-pca (Eckart-Young best rank-k), l-positional-encoding (absolute vs relative / length extrapolation), c-extrema-curve-sketching
    (Fermat's theorem). Append-second-dd inject w/ full guards. Verified: gate GREEN; dump-dom each nDD=2, kErr=0, rawDollar=0; smoke bad=none. SW →v417.
