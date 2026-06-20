@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 468 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LA/DL/calc (deep-dives 263 → **266**; 114 lessons now carry two):
+- **la-diagonalization** (had: "powers go trivial") → **the spectral theorem**: symmetric `A=A^T` always diagonalizes as `A=QΛQᵀ` (orthogonal
+  `Q`, real eigenvalues, orthonormal eigenvectors) — the guarantee behind PCA axes, Gram matrices, and the Hessian test.
+- **dl-autoencoders-vae** (had: "can't differentiate a sample") → **why a plain AE can't generate**: its latent space has gaps; the VAE's
+  **KL term** packs codes toward `N(0,I)`, making a smooth sample-able space — the one ingredient that makes it generative.
+- **c-chain-rule** (had: "the engine of backprop") → **the multivariable chain rule = sum over paths**: `dz/dt = ∂z/∂x·dx/dt + ∂z/∂y·dy/dt` —
+  multiply along a path, *add* across paths — which is exactly why backprop sums gradients at a fan-out node.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v407` → `atlas-v408`.
+
 ## iter 467 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LLM/RL/algo (deep-dives 260 → **263**; 111 lessons now carry two):
 - **l-hallucination-and-evaluation** (had: "fluency optimizes for hallucination") → **how to evaluate an LLM**: perplexity, benchmarks,
