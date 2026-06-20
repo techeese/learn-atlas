@@ -182,6 +182,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 545: **3 more original-topic 3rd deep-dives** (content/depth). ps-law-of-large-numbers (Monte Carlo), a-backtracking-branch-bound (constraint
+   propagation), la-four-subspaces-rank (real data is low-rank). Verified: gate GREEN; dump-dom each nDD=3, kErr=0/rawD=0/errs=0. SW →v485.
    ✅ iter 544: **Code exercises for the last 3 ML lessons** (new functionality/code; ML now 9/10 with code). ml-naive-bayes (posterior→0.769), ml-svm
    (sign(w·x+b)+margin→1 -1 2), ml-model-selection (precision/recall/F1→0.90 0.60 0.72). Verified: gate RUNS them → 95 code-exercises (was 92), ALL GREEN;
    headless each Runs to matching output, errs=0. SW →v484.

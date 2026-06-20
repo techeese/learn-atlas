@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 545 — Three more original-topic third deep-dives (content / depth)
+Three more high-value third deep-dives (PS/algo/LA):
+- **ps-law-of-large-numbers** → **Monte Carlo**: the LLN as a compute engine — estimate any hard expectation/integral by sampling and averaging, with a
+  dimension-independent `1/√N` error (simulation, finance, RL value estimation, MCMC).
+- **a-backtracking-branch-bound** → **constraint propagation**: a third way to prune — deduce away impossible options before branching (Sudoku, forward
+  checking, AC-3, SAT solvers).
+- **la-four-subspaces-rank** → **real data is approximately low-rank**: fast-decaying singular values are why SVD/PCA, compression, denoising, recommenders,
+  and LoRA all work.
+Injected via the byte-stable append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v484` → `atlas-v485`.
+
 ## iter 544 — Code exercises for the last three ML lessons (new functionality / code)
 Brought the Machine Learning topic to **9/10 lessons with a runnable exercise** by adding the three that lacked one — each gate-verified:
 - **ml-naive-bayes** → compute the spam posterior (prior × likelihood, normalized) → `0.769`.
