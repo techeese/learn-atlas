@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 492 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 335 → **338**; these three now carry three):
+- **la-inverse-and-systems** (had: never invert · when Ax=b solvable) → **LU decomposition**: factor `A=LU` once (`O(n³)`), then each new `b`
+  solves by forward/back substitution (`O(n²)`) — faster and stabler than the inverse; the real workhorse for repeated solves.
+- **l-rag-and-tools** (had: knowledge vs reasoning · RAG vs finetuning) → **retrieval is k-NN in embedding space**: embed query + chunks, find
+  nearest vectors → a vector DB with ANN indexes (HNSW); chunking (size/overlap) often matters more than the model.
+- **rl-value-iteration** (had: contraction · VI vs PI) → **the curse of dimensionality**: a sweep touches *every* state (`O(|S|²|A|)`), and
+  `kᵈ` states explode — why RL moved from tabular DP to sampling (MC/TD) + function approximation (deep RL).
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v431` → `atlas-v432`.
+
 ## iter 491 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 332 → **335**; these three now carry three):
 - **dl-diffusion-models** (had: learns to denoise · many small steps) → **forward/reverse & score matching**: a fixed noising chain + a learned
