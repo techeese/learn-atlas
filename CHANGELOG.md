@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 495 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 344 → **347**; these three now carry three):
+- **dl-autoencoders-vae** (had: can't-differentiate-sample · plain-AE-can't-generate) → **the generative trilemma**: quality, diversity, speed
+  — pick two. VAE (coverage+fast, blurry), GAN (sharp+fast, mode-collapse), diffusion (sharp+diverse, slow).
+- **a-graph-representations-traversal** (had: queue-vs-stack · list-vs-matrix) → **what BFS/DFS unlock**: BFS's ring order → unweighted shortest
+  paths/bipartite; DFS's finish order → topological sort, cycle detection, connected & strongly-connected components.
+- **rl-imitation** (had: BC drift · DAgger) → **inverse RL**: recover the *reward* (the intent) from demos, then optimize it — a compact,
+  transferable description that generalizes past the demonstrated states where action-cloning fails.
+Authored with `String.raw` LaTeX; injected via the append-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v434` → `atlas-v435`.
+
 ## iter 494 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 341 → **344**; these three now carry three):
 - **rl-monte-carlo** (had: MC vs TD · first/every-visit) → **exploring starts & GLIE**: MC control only converges if every state-action is
