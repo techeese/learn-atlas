@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 555 — Interactive bagging viz: averaging tames variance (visualizations)
+The **96th widget, `ml-bagging-viz` "Bagging: averaging tames variance."** Each model is a high-degree fit on a different **bootstrap resample** of the data,
+so individually they overfit wildly (the thin rust spaghetti). Drag up the number of models and their **average** (the bold gold curve) collapses onto the
+true signal — the same idea as a random forest: many high-variance learners, averaged, become one low-variance predictor. It's the natural sequel to the
+bias–variance viz (which showed the overfitting *problem*; this shows bagging's *solution*) and fills the Ensembles lesson's missing viz. Embedded in the
+Ensembles lesson at the Bagging section; the ML topic now has **7 interactives**.
+Verified: gate ALL GREEN (now **96 widgets**); **headless** — the ensemble error collapses **M=1: 2.50 → M=24: 0.32** (≈8×, matching a node sim); lab + lesson
+canvases hydrate, **kErr=0, errs=0**; screenshot shows the wild individual fits with the smooth average tracking the true curve. SW cache `atlas-v494` → `atlas-v495`.
+
 ## iter 554 — Three more third deep-dives: QR · binary-search variants · convexity (content / depth)
 Three more high-value third deep-dives (LA/algo/calc), shrinking the smaller 2-dd buckets:
 - **la-orthonormal-gram-schmidt** → **QR & least squares**: `A=QR` turns the ill-conditioned normal equations into a stable triangular solve `Rx=Qᵀb` — how

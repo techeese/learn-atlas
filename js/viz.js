@@ -5281,4 +5281,65 @@
     genData(); draw();
   });
 
+
+  /* ========================================================
+     96. Bagging: averaging tames variance (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-bagging-viz', topic: 'machine-learning', title: 'Bagging: averaging tames variance', blurb: 'Each model is a high-degree fit on a different bootstrap resample of the data — individually they overfit wildly (the thin spaghetti). Drag up the number of models and watch their average (the bold curve) collapse onto the true signal. Same idea as a random forest: many high-variance learners, averaged, become one low-variance predictor.' },
+  function (root) {
+    const W = 540, H = 380, padL = 12, padR = 12, padT = 14, padB = 14, DEG = 8, MAXM = 24;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let seed = 2024;
+    function rng() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+    function gauss() { let u = 0, v = 0; while (u === 0) u = rng(); while (v === 0) v = rng(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+    const truef = x => 0.6 * Math.sin(2.5 * x) + 0.15 * x;
+    const N = 11;
+    let base = [], models = [], M = 1;
+    function polyfit(pts, deg, lambda) {
+      const n = deg + 1;
+      const X = pts.map(p => { const r = []; for (let j = 0; j < n; j++) r.push(Math.pow(p.x, j)); return r; });
+      const A = [], b = [];
+      for (let i = 0; i < n; i++) { A.push(new Array(n).fill(0)); b.push(0); }
+      for (let i = 0; i < n; i++) { for (let j = 0; j < n; j++) { let s = 0; for (let k = 0; k < pts.length; k++) s += X[k][i] * X[k][j]; A[i][j] = s + (i === j ? lambda : 0); } let s2 = 0; for (let k = 0; k < pts.length; k++) s2 += X[k][i] * pts[k].y; b[i] = s2; }
+      for (let col = 0; col < n; col++) { let piv = col; for (let r = col + 1; r < n; r++) if (Math.abs(A[r][col]) > Math.abs(A[piv][col])) piv = r; const ta = A[col]; A[col] = A[piv]; A[piv] = ta; const tb = b[col]; b[col] = b[piv]; b[piv] = tb; for (let r = 0; r < n; r++) { if (r === col) continue; const f = A[r][col] / A[col][col]; for (let j = col; j < n; j++) A[r][j] -= f * A[col][j]; b[r] -= f * b[col]; } }
+      const w = []; for (let i = 0; i < n; i++) w.push(b[i] / A[i][i]); return w;
+    }
+    const evalP = (w, x) => w.reduce((s, cf, j) => s + cf * Math.pow(x, j), 0);
+    function build() {
+      seed = 2024; base = []; for (let i = 0; i < N; i++) { const x = -1 + 2 * i / (N - 1); base.push({ x: x, y: truef(x) + gauss() * 0.13 }); }
+      models = []; for (let m = 0; m < MAXM; m++) { const s = []; for (let i = 0; i < N; i++) s.push(base[Math.floor(rng() * N)]); models.push(polyfit(s, DEG, 1e-6)); }
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const XR = 1.15, YR = 1.35;
+      const X = x => padL + (x + XR) / (2 * XR) * (W - padL - padR), Y = y => (H / 2) - y / YR * (H / 2 - padT);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke();
+      ctx.save(); ctx.beginPath(); ctx.rect(padL, padT, W - padL - padR, H - padT - padB); ctx.clip();
+      // individual models (thin spaghetti)
+      ctx.strokeStyle = p.rust; ctx.globalAlpha = Math.max(0.1, 0.5 / Math.sqrt(M)); ctx.lineWidth = 1;
+      for (let m = 0; m < M; m++) { ctx.beginPath(); for (let i = 0; i <= 160; i++) { const x = -1.05 + 2.1 * i / 160; const px = X(x), py = Y(evalP(models[m], x)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); }
+      ctx.globalAlpha = 1;
+      // true function (dashed)
+      ctx.strokeStyle = p.sage; ctx.globalAlpha = 0.55; ctx.lineWidth = 2; ctx.setLineDash([5, 4]); ctx.beginPath();
+      for (let i = 0; i <= 160; i++) { const x = -1 + 2 * i / 160; const px = X(x), py = Y(truef(x)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      // ensemble average (bold)
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 3; ctx.beginPath();
+      for (let i = 0; i <= 200; i++) { const x = -1.05 + 2.1 * i / 200; let s = 0; for (let m = 0; m < M; m++) s += evalP(models[m], x); const px = X(x), py = Y(s / M); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke();
+      ctx.restore();
+      base.forEach(pt => { ctx.fillStyle = p.ink2 || p.line; ctx.strokeStyle = p.ink; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(X(pt.x), Y(pt.y), 3.5, 0, 7); ctx.fillStyle = p.violet; ctx.fill(); ctx.stroke(); });
+      // errors vs true
+      const G = 100; let single = 0, ens = 0;
+      for (let i = 0; i <= G; i++) { const x = -1 + 2 * i / G; const t = truef(x); let avg = 0, sm = 0; for (let m = 0; m < M; m++) { const v = evalP(models[m], x); sm += (v - t) * (v - t); avg += v; } single += sm / M; const ed = avg / M - t; ens += ed * ed; }
+      single /= (G + 1); ens /= (G + 1);
+      info.innerHTML = 'models in the ensemble: <b>' + M + '</b> &middot; avg single-model error: <b style="color:' + p.rust + '">' + single.toFixed(2) + '</b> &middot; ensemble (averaged) error: <b style="color:' + p.gold + '">' + ens.toFixed(2) + '</b><br>Thin rust curves are individual degree-' + DEG + ' fits, each on a different bootstrap resample — wild on their own. The bold gold curve is their average; the dashed line is the true signal. Add models and the average collapses onto the truth even though no single model is good — that is bagging.';
+    }
+    slider(ctl, { label: 'number of models', min: 1, max: MAXM, step: 1, value: M, fmt: v => String(v), onInput: v => { M = v; draw(); } });
+    button(ctl, '⏮ reset', function () { M = 1; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Bagging visualizer: many high-degree polynomial fits, each trained on a different bootstrap resample of the same noisy data, are drawn as thin curves that overfit wildly. A slider sets how many are averaged; their mean (a bold curve) collapses onto the true signal as the count grows, with the ensemble error dropping far below the average single-model error — the variance reduction behind bagging and random forests.');
+    build(); draw();
+  });
+
 })();
