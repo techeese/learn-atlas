@@ -913,7 +913,8 @@
   function lessonExtras(lesson) {
     const ct = lesson.content || "", items = [];
     if (/data-viz/.test(ct)) items.push(["🎛️", "interactive", "[data-viz]"]);
-    if (/class="deep-dive"/.test(ct)) items.push(["🧩", "deeper dive", "details.deep-dive"]);
+    const ddCount = (ct.match(/class="deep-dive"/g) || []).length;   // lessons now carry 2–3 dives — advertise how many, and open them all on click
+    if (ddCount) items.push(["🧩", ddCount + " deeper dive" + (ddCount === 1 ? "" : "s"), "details.deep-dive"]);
     if (/data-code/.test(ct)) items.push(["💻", "code exercise", "[data-code]"]);
     if (!items.length) return "";
     return `<div class="lesson-extras reveal"><span class="lx-label">In this lesson</span>${items.map(([ic, t, sel]) => `<button class="lx-badge" data-sel='${sel}'><span aria-hidden="true">${ic}</span> ${t}</button>`).join("")}</div>`;
@@ -938,6 +939,12 @@
       ${lessonConnections(lesson.id)}`;
     const pl = document.getElementById("print-lesson"); if (pl) pl.addEventListener("click", () => window.print());
     body.querySelectorAll(".lx-badge").forEach(b => b.addEventListener("click", () => {
+      if (b.dataset.sel === "details.deep-dive") {   // open ALL deep-dives at once (each toggle fires → Deep Thinker), then jump to the first
+        const dds = body.querySelectorAll("details.deep-dive");
+        dds.forEach(d => { d.open = true; });
+        if (dds[0]) dds[0].scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "center" });
+        return;
+      }
       const el = body.querySelector(b.dataset.sel); if (!el) return;
       if (el.tagName === "DETAILS") el.open = true;   // open the deep-dive (also fires its toggle → Deep Thinker)
       el.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "center" });

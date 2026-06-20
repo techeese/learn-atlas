@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 501 — "In this lesson" deeper-dives badge now counts and opens all (UI/UX)
+**Pivot off the depth lane** (≈40 iters of content/depth → anti-monotony) to a UI/UX fix that *surfaces* the depth just built. After the depth arc,
+every lesson carries 2–3 collapsed deep-dives — but the "In this lesson" strip's badge still read a generic "deeper dive" and a click opened only the
+**first** one, leaving the rest hidden. Now the badge **advertises the count** ("🧩 3 deeper dives", pluralized) and **one click opens *all* of them**
+(then scrolls to the first), making the substantial depth discoverable and one-tap accessible. Each programmatic open still fires its `toggle` →
+the Deep Thinker achievement.
+Verified: gate ALL GREEN; **headless** — on `la-svd` the badge reads "🧩 3 deeper dives" and a click opens all three (`openBefore=0 → openAfter=3`),
+`kErr=0/errs=0`; all-routes smoke (14 routes incl. lessons) **errs=0/kErr=0/bad=none**; screenshot confirms a clean lesson render. SW cache `atlas-v440` → `atlas-v441`.
+
 ## iter 500 — 🎉 Milestone step-back: full audit (clean) + three more third deep-dives (content / depth)
 **Iteration 500 — round-number/milestone step-back.** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **148 lessons** (every example revealed, every deep-dive opened — incl. all 63 lessons at 3 dd) → errs=0,
