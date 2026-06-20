@@ -188,6 +188,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 428: **Runnable 2-layer backward-pass code exercise** (new functionality; owner's backprop focus). Added JS code-exercise to
    dl-backpropagation (after the viz): same network, console.log(dw1,dw2)→"24 4"; gate RUNS it & asserts output (86 code-exercises verified).
    Verified: gate GREEN; dump-dom errs=0/kErr=0, code hydrates, &gt; decodes to >, in-browser Run → "24 4". SW →v368.
+   ✅ iter 443: **3 more second deep-dives on the hardest lessons** (content/depth). +3 dd (194→197; 47 lessons have 2):
+   la-dot-product-norms (Cauchy–Schwarz → cosine ∈ [−1,1]), a-np-completeness (P vs NP: verify vs find), ps-uniform-exponential
+   (exponential ⇄ Poisson process). Append-second-dd inject w/ full guards (+zero-width check). Verified: gate GREEN; dump-dom each
+   nDD=2, kErr=0, rawDollar=0; smoke bad=none. SW →v383.
    ✅ iter 442: **3 more worked examples (LLM); UI/UX audited as mature** (examples). +3 (440→443): l-positional-encoding (RoPE / relative
    position), l-prompting-and-in-context-learning (prompt brittleness), l-safety-and-frontier (prompt injection / shared channel). UI/UX
    audit: keyboard nav, ⌘K content search, reading progress, clickable glossary/library, copy button all already present — no churn made.

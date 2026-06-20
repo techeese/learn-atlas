@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 443 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across LA/algo/PS (deep-dives 194 → **197**; 47 lessons now carry two):
+- **la-dot-product-norms** (had: "measures alignment") → **Cauchy–Schwarz**: `|a·b| ≤ ‖a‖‖b‖`, so `cosθ = a·b/(‖a‖‖b‖) ∈ [−1,1]` — the
+  bound that makes cosine similarity a trustworthy, magnitude-free score (the engine of embedding/retrieval search).
+- **a-np-completeness** (had: "they stand or fall together") → **P vs NP**: NP = easy to *verify*, P = easy to *find*; the open question
+  is whether verifying-easy implies finding-easy — and NP-complete problems are where it concentrates.
+- **ps-uniform-exponential** (had: "the exponential forgets") → **exponential ⇄ Poisson**: in a Poisson process at rate `λ`, counts per
+  interval are Poisson and the *gaps* are Exponential(λ) (mean `1/λ`) — two faces of one process.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set (now incl. a zero-width-char check) + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v382` → `atlas-v383`.
+
 ## iter 442 — Three more worked examples (LLM); UI/UX audited as mature (examples)
 Intended a UI/UX iteration per the owner's steer, but audited first and found the obvious wins **already in place**: lesson keyboard
 nav (`[`/`]`), ⌘K search *inside lessons*, reading-progress bar + back-to-top, clickable glossary (439) & Library refs, the Copy button
