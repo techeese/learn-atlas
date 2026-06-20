@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 489 — Three more THIRD deep-dives on the hardest concepts (content / depth)
+A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 326 → **329**; these three now carry three):
+- **la-symmetric-spectral** (had: stretch-perp-axes · ML full of symmetric) → **positive definiteness**: all eigenvalues `>0` ⟺ `xᵀAx>0` ⟺
+  a bowl with one minimum — the test behind covariance (PSD), the Hessian min/saddle check, valid kernels, and Cholesky `A=LLᵀ`.
+- **a-shortest-paths-topo** (had: Dijkstra non-negative · Bellman-Ford) → **A\***: prioritize by `f=g+h` with an *admissible* heuristic `h`
+  (never overestimates) → aim the search at the goal while staying optimal; `h=0` is Dijkstra.
+- **rl-exploration** (had: must explore · UCB) → **Thompson sampling**: keep a posterior per arm, sample one draw from each, play the highest —
+  uncertainty (wide posterior) auto-drives exploration; no bonus to tune.
+Authored with `String.raw` LaTeX (`\gt`/`\ge`/`\le`); injected via the append-dd path with the full guard set.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **all three** dd's (**nDD=3**) with **kErr=0, rawDollar=0**; smoke (3 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v428` → `atlas-v429`.
+
 ## iter 488 — Three more THIRD deep-dives on the hardest concepts (content / depth)
 A **third "Deeper dive"** on three more flagship hard concepts (deep-dives 323 → **326**; these three now carry three):
 - **c-convexity** (had: local=global · recognize convex) → **why deep learning is non-convex (and works anyway)**: neural losses lose the convex
