@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 453 — Three more second deep-dives on the hardest lessons (content / depth)
+A **distinct second "Deeper dive"** on three more flagship lessons across calc/algo/DL (deep-dives 221 → **224**; 72 lessons now carry two):
+- **c-derivative-definition** (had: "secant → tangent in the limit") → **differentiable ⟹ continuous (not the reverse)**: `|x|` is
+  continuous but has a corner at 0 (slope `−1`/`+1`); ReLU is the ML case (kink → subgradient) — smoothness is a ladder.
+- **a-backtracking-branch-bound** (had: "DFS that gives up early") → **branch & bound**: keep the best-so-far `B`, prune any subtree whose
+  optimistic *bound* can't beat `B` — optimality pruning (vs backtracking's feasibility pruning) is what tames NP-hard optimization.
+- **dl-practical-training-and-debugging** (had: "the order to debug") → **overfit a single batch first**: can't → it's a *bug* (graph/loss/labels);
+  can → plumbing works, so tune generalization/optimization. The fastest test that separates broken code from needs-tuning.
+Authored with `String.raw` LaTeX; injected via the append-second-dd path with the full guard set + dup-summary guard.
+Verified: gate ALL GREEN; **via `--dump-dom`** each lesson opens **both** dd's (nDD=2) with **kErr=0, rawDollar=0**; smoke (2 dd's × 3 +
+pages) **errs=0/kErr=0, bad=none**. SW cache `atlas-v392` → `atlas-v393`.
+
 ## iter 452 — Three more second deep-dives on the hardest lessons (content / depth)
 A **distinct second "Deeper dive"** on three more flagship lessons across LA/PS/RL (deep-dives 218 → **221**; 69 lessons now carry two):
 - **la-matrices-as-transformations** (had: "columns are where the basis lands") → **what makes a transformation linear**: `T(au+bv)=aT(u)+bT(v)`
