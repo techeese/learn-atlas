@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 626 — Exponential / memorylessness viz (visualizations)
+Continuing to fill Probability's viz gaps. The `ps-uniform-exponential` lesson had no viz for its hardest idea — memorylessness. Built the **105th widget,
+`ps-exponential-viz` "Exponential waiting & memorylessness"**: the gold survival curve `P(X>x)=e^(−λx)`, plus an "already waited *s*" slider that draws the renormalized
+remaining-wait curve in violet — an **exact copy** of the original, making "no aging" visible. Markers confirm `P(wait 1 more | waited s) = e^(−λ) = P(wait>1 from scratch)`,
+and the readout gives the mean wait `1/λ`. Embedded before §3 ("Memorylessness — the defining property").
+Verified: gate ALL GREEN (now **105 widgets**); **headless** — Lab + lesson canvases hydrate; at λ=0.5, s=4 the conditional and from-scratch probabilities are **both 0.607**
+(memoryless confirmed) and mean = 2.00; kErr=0, errs=0; screenshot shows the gold survival curve and the identical violet remaining-wait copy. SW cache `atlas-v566` → `atlas-v567`.
+
 ## iter 625 — Poisson distribution viz + Binomial⇄Poisson cross-embed (visualizations)
 Rotating off the long MCQ runway back to visualizations. The Probability lesson `ps-poisson` had **no embedded viz** for a core distribution. Built the **104th widget,
 `ps-poisson-viz` "The Poisson distribution: shape, mean, and variance"**: a live PMF bar chart of `P(X=k)=e^(−λ)λ^k/k!` with a λ slider, the mean line at `k=λ`, a violet

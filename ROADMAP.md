@@ -194,10 +194,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 623: **batch 16 — ml-ensembles 8→16**. ✅ iter 624: **batch 17 — ml-model-selection 8→16; MCQ RUNWAY COMPLETE + step-back**.
    ✅ **MCQ runway DONE (iters 608–624):** all 165 lessons now at 16 MCQs (2,640 total; +136 hand-verified across ML+IT), every topic 16-16, global answer
    distribution exactly 25/25/25/25%, full 165-lesson sweep errs=0. Codex fully uniform across all 9 topics (lessons·3dd·3ex·3hw·6 cards·16 MCQ·viz·glossary·prereqs·refs).
-   ✅ iter 625: **Poisson viz + Binomial⇄Poisson cross-embed** (visualizations). 104th widget ps-poisson-viz (PMF, mean=var=λ, ±√λ band); also embedded the existing
-   Binomial⇄Poisson explorer in ps-poisson §4. Verified: gate GREEN (104 widgets), headless mean=var=5.00, both canvases hydrate, kErr=0/errs=0, screenshot. SW →v566.
-   NEXT: continue broad-compass polish (a few PS lessons still lack viz: sample-spaces, random-variables, expectation-variance, uniform-exponential, sampling-distributions);
-   big levers are a 10th topic or the staged lazy-load-data perf project (owner steer).
+   ✅ iter 625: **Poisson viz** (104th). ✅ iter 626: **Exponential/memorylessness viz** (105th, ps-exponential-viz: survival curve + identical remaining-wait copy;
+   headless memoryless 0.607=0.607, mean=1/λ; SW →v567).
+   NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
+   lazy-load-data perf project (owner steer). Vary lanes (don't do viz every iter).
    One lesson/iter, hand-verify every answer key, de-skew new 8 to 2/2/2/2.
    One lesson/iter, hand-verify every answer key (gate can't catch a wrong key), de-skew new 8 to 2/2/2/2.
    ✅ iter 606: **Naive Bayes spam viz — 103rd widget; ML viz COMPLETE** (visualizations). ml-nb-viz: spam filter as evidence on a log-odds line — each word shifts

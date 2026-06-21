@@ -5788,4 +5788,47 @@
     draw();
   });
 
+
+  /* ========================================================
+     105. The exponential distribution & memorylessness (Probability & Statistics)
+     ======================================================== */
+  register({ id: 'ps-exponential-viz', topic: 'probability-statistics', title: 'Exponential waiting & memorylessness', blurb: 'The survival curve P(X>x)=e^(−λx) for a random wait at rate λ. Slide how long you have ALREADY waited (s): the curve for the remaining wait (renormalized to start at s) is an identical copy of the original — having waited s tells you nothing. P(X>s+t | X>s)=e^(−λt)=P(X>t). The exponential is the only continuous distribution with this "no aging" memoryless property; its mean wait is 1/λ.' },
+  function (root) {
+    const W = 540, H = 340, padL = 46, padR = 18, padT = 18, padB = 40, XMAX = 10;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let lam = 0.6, s = 3;
+    const X = x => padL + x / XMAX * (W - padL - padR), Y = p => (H - padB) - p * (H - padT - padB);
+    function draw() {
+      const pp = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pp.bg; ctx.fillRect(0, 0, W, H);
+      // axes
+      ctx.strokeStyle = pp.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(XMAX), Y(0)); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(0), Y(1.02)); ctx.stroke();
+      ctx.fillStyle = pp.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      ctx.fillText('1', X(0) - 5, Y(1) + 4); ctx.fillText('0', X(0) - 5, Y(0) + 4);
+      ctx.textAlign = 'center'; ctx.fillText('time waited x', W / 2, H - 6);
+      // original survival S(x)=e^{-lam x}
+      ctx.strokeStyle = pp.gold; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i <= 240; i++) { const x = i / 240 * XMAX, y = Math.exp(-lam * x); i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); } ctx.stroke();
+      // elapsed marker at s
+      ctx.strokeStyle = pp.mute; ctx.setLineDash([3, 4]); ctx.beginPath(); ctx.moveTo(X(s), Y(0)); ctx.lineTo(X(s), Y(1.0)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = pp.mute; ctx.fillText('waited s=' + s.toFixed(1), X(s), Y(1.0) - 4);
+      // conditional remaining-wait curve from s, renormalized to 1 at s: C(x)=e^{-lam(x-s)}
+      ctx.strokeStyle = pp.violet; ctx.lineWidth = 2.5; ctx.setLineDash([6, 4]); ctx.beginPath();
+      for (let i = 0; i <= 240; i++) { const x = s + i / 240 * (XMAX - s); if (x > XMAX) break; const y = Math.exp(-lam * (x - s)); i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); } ctx.stroke(); ctx.setLineDash([]);
+      // marker: remaining t=1 -> conditional prob e^{-lam}
+      const t = 1, cond = Math.exp(-lam * t);
+      ctx.fillStyle = pp.violet; ctx.beginPath(); ctx.arc(X(s + t), Y(cond), 5, 0, 7); ctx.fill();
+      ctx.fillStyle = pp.sage; ctx.beginPath(); ctx.arc(X(t), Y(cond), 5, 0, 7); ctx.fill();
+      ctx.textAlign = 'left'; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace');
+      info.innerHTML = 'rate λ = <b>' + lam.toFixed(2) + '</b> &middot; mean wait = 1/λ = <b style="color:' + pp.gold + '">' + (1 / lam).toFixed(2) + '</b> &middot; already waited s = <b>' + s.toFixed(1) + '</b>.<br>' +
+        'P(wait 1 more | waited ' + s.toFixed(1) + ') = <b style="color:' + pp.violet + '">' + cond.toFixed(3) + '</b> = P(wait &gt; 1 from scratch) = <b style="color:' + pp.sage + '">' + cond.toFixed(3) + '</b>. The violet (remaining-wait) curve is an exact copy of the gold one — <b>memoryless: no aging</b>.';
+    }
+    slider(ctl, { label: 'rate λ', min: 0.2, max: 2, step: 0.05, value: lam, fmt: v => v.toFixed(2), onInput: v => { lam = v; draw(); } });
+    slider(ctl, { label: 'already waited s', min: 0, max: 6, step: 0.5, value: s, fmt: v => v.toFixed(1), onInput: v => { s = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Exponential-distribution memorylessness visualizer: the gold survival curve P(X>x)=e^(-lambda x) decays from 1. A dashed marker shows how long you have already waited (s); the violet dashed curve is the distribution of the REMAINING wait, renormalized to start at s. It is an identical copy of the original — the probability of waiting one more unit equals the probability of waiting more than one unit from scratch, both e^(-lambda). The exponential is the unique continuous memoryless distribution, mean 1/lambda.');
+    draw();
+  });
+
 })();
