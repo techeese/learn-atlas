@@ -6204,4 +6204,55 @@
     draw();
   });
 
+
+  /* ========================================================
+     113. P / NP / NP-complete containment (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-pnp', topic: 'algorithms', title: 'P, NP, NP-complete: the map of difficulty', blurb: 'P is what we can SOLVE quickly; NP is what we can VERIFY quickly. Every P problem is in NP (P ⊆ NP). The NP-complete problems (SAT, TSP, clique…) are the hardest in NP — solve one in polynomial time and you solve them all. The open question: does P = NP? Toggle the two worlds — the believed P ≠ NP (NP-complete sits outside P) versus the collapse P = NP (everything tractable, and cryptography breaks).' },
+  function (root) {
+    const W = 540, H = 320;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let equal = 0; // 0 = P != NP, 1 = P = NP
+    function lbl(t, x, y, col, sz) { ctx.fillStyle = col; ctx.font = (sz || 13) + 'px ' + (cssVar('--font-disp') || 'serif'); ctx.textAlign = 'center'; ctx.fillText(t, x, y); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const cx = W / 2, cy = 158;
+      if (!equal) {
+        // NP-hard backdrop (extends beyond NP)
+        ctx.fillStyle = p.violet; ctx.globalAlpha = 0.10; ctx.beginPath(); ctx.ellipse(cx + 86, cy, 150, 132, 0, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = p.violet; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.ellipse(cx + 86, cy, 150, 132, 0, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+        lbl('NP-hard', cx + 188, cy - 96, p.violet, 12);
+        // NP ellipse
+        ctx.fillStyle = p.panel; ctx.globalAlpha = 0.6; ctx.beginPath(); ctx.ellipse(cx, cy, 196, 116, 0, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(cx, cy, 196, 116, 0, 0, 7); ctx.stroke();
+        lbl('NP  (verify fast)', cx - 96, cy - 92, p.gold, 13);
+        // P circle (left, inside NP)
+        ctx.fillStyle = p.sage; ctx.globalAlpha = 0.28; ctx.beginPath(); ctx.arc(cx - 86, cy, 74, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = p.sage; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx - 86, cy, 74, 0, 7); ctx.stroke();
+        lbl('P', cx - 86, cy - 30, p.sage, 18); lbl('solve fast', cx - 86, cy - 12, p.mute, 10);
+        lbl('sorting,', cx - 86, cy + 16, p.ink, 11); lbl('shortest path', cx - 86, cy + 32, p.ink, 11);
+        // NP-complete region (right, inside NP, touching NP boundary, disjoint from P)
+        ctx.fillStyle = p.rust; ctx.globalAlpha = 0.30; ctx.beginPath(); ctx.ellipse(cx + 96, cy, 78, 96, 0, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = p.rust; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(cx + 96, cy, 78, 96, 0, 0, 7); ctx.stroke();
+        lbl('NP-complete', cx + 96, cy - 28, p.rust, 12);
+        lbl('SAT, TSP,', cx + 96, cy + 4, p.ink, 11); lbl('clique', cx + 96, cy + 20, p.ink, 11);
+        info.innerHTML = '<b>World 1: P ≠ NP</b> (what almost everyone believes). P sits strictly inside NP; the <b style="color:' + p.rust + '">NP-complete</b> problems live in NP but outside P — no known polynomial algorithm. NP-hard (dashed) is "at least as hard as NP-complete", reaching beyond NP.';
+      } else {
+        ctx.fillStyle = p.sage; ctx.globalAlpha = 0.26; ctx.beginPath(); ctx.arc(cx, cy, 138, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, 138, 0, 7); ctx.stroke();
+        lbl('P = NP = NP-complete', cx, cy - 12, p.gold, 15);
+        lbl('everything verifiable is also solvable — fast', cx, cy + 14, p.ink, 12);
+        lbl('SAT, TSP, sorting … all polynomial', cx, cy + 36, p.mute, 11);
+        info.innerHTML = '<b>World 2: P = NP</b> (the collapse). If even one NP-complete problem had a polynomial algorithm, reductions would give one to <i>every</i> NP problem — the classes merge. Almost certainly false, and if true, most modern cryptography would break.';
+      }
+    }
+    button(ctl, 'P ≠ NP (believed)', () => { equal = 0; draw(); });
+    button(ctl, 'P = NP (collapse)', () => { equal = 1; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Complexity-class containment diagram. In the believed world P does not equal NP: a small set P (solve quickly, e.g. sorting and shortest path) sits strictly inside a larger set NP (verify quickly); the NP-complete problems (SAT, TSP, clique) lie inside NP but outside P, and NP-hard extends beyond NP. A toggle shows the alternative world P = NP, where all three classes collapse into one and every quickly-verifiable problem is also quickly solvable.');
+    draw();
+  });
+
 })();

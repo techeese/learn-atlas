@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 649 — NEW viz: P / NP / NP-complete map → Algorithms viz COMPLETE (visualizations)
+Built the **113th widget, `algo-pnp` "P, NP, NP-complete: the map of difficulty"** for `a-np-completeness` (the last no-viz Algorithms lesson). The canonical complexity-class
+containment diagram with a two-world toggle: **P ≠ NP** (P strictly inside NP; NP-complete inside NP but outside P; NP-hard reaching beyond, dashed) versus the **P = NP** collapse (all
+classes merge, cryptography breaks). Concrete examples anchor each region (sorting/shortest-path in P; SAT/TSP/clique NP-complete). Embedded under "4. NP-completeness and NP-hardness".
+**Algorithms is now 23/23 — fully viz-covered.**
+Verified: gate ALL GREEN (now **113 widgets**); **headless** — Lab + lesson canvases hydrate; the toggle switches between "World 1: P ≠ NP" and "World 2: P = NP"; kErr=0, errs=0;
+screenshot shows the nested P⊂NP regions, NP-complete, and the dashed NP-hard. SW cache `atlas-v588` → `atlas-v589`.
+
 ## iter 648 — NEW viz: Max-flow = Min-cut (visualizations)
 Built the **112th widget, `algo-maxflow` "Max-flow = min-cut"** for `a-network-flow` (which had no viz) — the most substantial build yet: a live **Ford–Fulkerson / Edmonds-Karp**
 solver on a small S→A→B→T network, drawing each edge's flow/capacity (saturated edges gold), computing the **minimum cut** from residual-graph reachability and shading the S-side
