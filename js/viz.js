@@ -6538,11 +6538,19 @@
       node(G.Z, 'Z', cond ? p.gold : p.panel, cond ? p.bg : p.ink);
       const col = assoc ? (kind === 'chain' ? p.sage : p.rust) : p.mute;
       info.innerHTML = '<b>' + kind.toUpperCase() + '</b> &middot; Z ' + (cond ? '<b style="color:' + p.gold + '">conditioned</b>' : 'free') + ' &middot; X and Y are <b style="color:' + col + '">' + (assoc ? 'ASSOCIATED' : 'INDEPENDENT') + '</b>. ' + msg;
+      syncBtns();
     }
-    button(ctl, 'Fork (confounder)', () => { kind = 'fork'; draw(); });
-    button(ctl, 'Chain (mediator)', () => { kind = 'chain'; draw(); });
-    button(ctl, 'Collider', () => { kind = 'collider'; draw(); });
-    button(ctl, 'Toggle condition on Z', () => { cond = !cond; draw(); });
+    const bFork = button(ctl, 'Fork (confounder)', () => { kind = 'fork'; draw(); });
+    const bChain = button(ctl, 'Chain (mediator)', () => { kind = 'chain'; draw(); });
+    const bColl = button(ctl, 'Collider', () => { kind = 'collider'; draw(); });
+    const bCond = button(ctl, 'Condition on Z', () => { cond = !cond; draw(); });
+    function syncBtns() {
+      const km = { fork: bFork, chain: bChain, collider: bColl };
+      [bFork, bChain, bColl].forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      km[kind].classList.add('active'); km[kind].setAttribute('aria-pressed', 'true');
+      bCond.classList.toggle('active', cond); bCond.setAttribute('aria-pressed', cond ? 'true' : 'false');
+      bCond.textContent = cond ? 'Conditioning on Z ✓' : 'Condition on Z';
+    }
     c.setAttribute('role', 'img');
     c.setAttribute('aria-label', 'Causal-graph visualizer with three selectable structures over variables X, Y, Z. Fork: Z points to both X and Y (a confounder) — X and Y are associated until you condition on Z, which blocks the path. Chain: X to Z to Y (Z a mediator) — associated until conditioning on Z blocks the causal path. Collider: X and Y both point into Z — X and Y are independent until conditioning on Z opens a spurious association. A toggle conditions on Z (drawn as a gold box) and the readout reports whether X and Y are associated or independent.');
     draw();

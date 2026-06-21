@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 690 — Audit (clean) + causal-dag viz: active-state buttons (accessibility / UI-UX)
+Step-back audit found the site healthy: achievement unlock logic is **dynamic** (`window.COURSES.every(...)`, not hardcoded to a stale topic count — the `>=6` guard is a harmless lower bound); the
+hero/meta copy correctly lists all 9 subjects (the grep "eight" hits were `h·eight·t`); and the new causal lesson + `causal-dag` viz pass the mobile gate (canvas scales to 426px at the 500px
+floor, no horizontal overflow). No bug found.
+**Ship (UI/UX + a11y):** the keystone `causal-dag` viz gave no indication of which structure was selected. Added a **`.viz-btn.active`** style and wired the Fork/Chain/Collider buttons to show the
+active structure (gold, exclusive) and the Condition-on-Z toggle to reflect its on/off state (label "Conditioning on Z ✓" + highlight), each with **`aria-pressed`** for screen readers.
+Verified: viz.js parses; gate ALL GREEN (119 widgets); **headless** — fork active by default, clicking Collider activates it and deactivates fork, condition toggle reflects state, `aria-pressed` correct; errs=0; screenshot confirms render. SW cache `atlas-v627` → `atlas-v628` (css + viz are cached assets).
+
 ## iter 689 — Step-back sweep (clean) + 12 causal glossary terms (step-back / reference)
 Round-number step-back after the causal arc. **Full 172-lesson regression sweep**: errs=0, no KaTeX errors, bad=none; the Knowledge Map renders (798 nodes) and the new "Causal Inference" module
 shows on the PS course page — the 3-lesson arc + module reorg introduced **zero regressions**.

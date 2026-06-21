@@ -801,6 +801,8 @@ body::after {
 }
 .viz-btn:hover { border-color: var(--gold-deep); color: var(--ink); transform: translateY(-1px); }
 .viz-btn.primary { background: var(--gold); color: #2a1c08; border: none; font-weight: 600; }
+.viz-btn.active { background: var(--gold); color: #2a1c08; border-color: transparent; font-weight: 600; }
+.viz-btn.active:hover { transform: none; color: #2a1c08; }
 .viz-note { text-align: center; font-size: 13px; color: var(--ink-soft); margin-top: 8px; line-height: 1.5; }
 
 /* Byte-Pair Encoding widget (llm-bpe) — DOM, not canvas */
