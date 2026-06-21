@@ -6798,4 +6798,55 @@
     draw();
   });
 
+
+  /* ========================================================
+     125. Curse of dimensionality: distance concentration (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-curse-dimensionality', topic: 'machine-learning', title: 'Curse of dimensionality: distances concentrate', blurb: 'Sample random points and look at all their pairwise distances. In low dimensions the distances are spread out — some pairs near, some far. Crank up the dimension and the histogram collapses into a narrow spike: every pair becomes almost equally distant, so the nearest/farthest ratio climbs toward 1 and "nearest neighbor" loses its meaning. This is why k-NN, clustering, and density estimation degrade in high dimensions — and why we reduce dimensions first.' },
+  function (root) {
+    const W = 540, H = 320, padL = 40, padR = 16, padT = 20, padB = 36;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let dim = 2; const N = 40;
+    function prng(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function dists(d) {
+      const r = prng(12345), P = [];
+      for (let i = 0; i < N; i++) { const p = []; for (let k = 0; k < d; k++) p.push(r()); P.push(p); }
+      const D = [];
+      for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) { let s = 0; for (let k = 0; k < d; k++) { const e = P[i][k] - P[j][k]; s += e * e; } D.push(Math.sqrt(s)); }
+      return D;
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const D = dists(dim), mn = Math.min(...D), mx = Math.max(...D);
+      const mean = D.reduce((a, b) => a + b, 0) / D.length;
+      const sd = Math.sqrt(D.reduce((a, b) => a + (b - mean) * (b - mean), 0) / D.length);
+      // histogram over [0, mx]
+      const BINS = 32, hi = new Array(BINS).fill(0);
+      D.forEach(v => { let b = Math.floor(v / mx * BINS); if (b >= BINS) b = BINS - 1; if (b < 0) b = 0; hi[b]++; });
+      const hmax = Math.max(...hi), Yb = H - padB, plotW = W - padL - padR, bw = plotW / BINS;
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Yb); ctx.lineTo(W - padR, Yb); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('0', padL, Yb + 14); ctx.fillText(mx.toFixed(1), W - padR, Yb + 14); ctx.fillText('pairwise distance', W / 2, H - 4);
+      // bars
+      for (let b = 0; b < BINS; b++) {
+        const h = hi[b] / hmax * (Yb - padT);
+        ctx.fillStyle = p.violet; ctx.globalAlpha = 0.85; ctx.fillRect(padL + b * bw, Yb - h, bw - 1, h); ctx.globalAlpha = 1;
+      }
+      // mean line
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]); ctx.lineWidth = 1.4; const mx2 = padL + mean / mx * plotW;
+      ctx.beginPath(); ctx.moveTo(mx2, padT); ctx.lineTo(mx2, Yb); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.textAlign = 'left'; ctx.fillText('mean', mx2 + 4, padT + 8);
+      const cv = sd / mean, ratio = mn / mx;
+      info.innerHTML = 'dimension d = <b>' + dim + '</b> &middot; relative spread (std/mean) = <b style="color:' + p.violet + '">' + cv.toFixed(3) + '</b> &middot; nearest/farthest = <b style="color:' + p.gold + '">' + ratio.toFixed(3) + '</b>. ' +
+        (dim >= 20 ? 'Concentrated: the histogram is a narrow spike and every pair is nearly equidistant — "nearest neighbor" is meaningless here.' : 'Low-d: distances are spread out, so near vs far is still informative.');
+    }
+    slider(ctl, { label: 'dimension d', min: 1, max: 50, step: 1, value: dim, fmt: v => String(v), onInput: v => { dim = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Curse-of-dimensionality visualizer: a histogram of all pairwise distances among 40 random points, with a dimension slider. At low dimension the distances are widely spread; as the dimension increases the histogram concentrates into a narrow spike far from zero, the relative spread (standard deviation over mean) shrinks toward zero, and the nearest-over-farthest distance ratio climbs toward 1 — so points become nearly equidistant and nearest-neighbor methods break down.');
+    draw();
+  });
+
 })();

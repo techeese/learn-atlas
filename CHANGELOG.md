@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 724 — NEW viz: the curse of dimensionality (distance concentration) (visualizations)
+Made iter-723's deep-dive visual. Built the **125th widget, `ml-curse-dimensionality` "Curse of dimensionality: distances concentrate"**: a histogram of all pairwise distances among 40 random points,
+with a dimension slider. As d grows the histogram collapses into a narrow spike far from zero — the relative spread (std/mean) shrinks and the nearest/farthest ratio climbs toward 1, so points become
+nearly equidistant. Embedded at §1 of `ml-dimensionality-reduction` (which now has 2 viz). Deterministic (seeded PRNG, no Math.random).
+Verified: metrics re-derived in Node (d=2→CV 0.48/ratio 0.02; d=50→CV 0.08/ratio 0.61); gate ALL GREEN (now **125 widgets**); **headless** — Lab + lesson hydrate, concentration confirmed (CV down, ratio up with d); kErr=0, errs=0; screenshot shows the narrow high-d spike. SW cache `atlas-v660` → `atlas-v661`.
+
 ## iter 723 — Hard-concept: why distances concentrate in high dimensions (content / understandability)
 A fresh-eyes visual review (Library page) found it polished, and confirmed Library references are comprehensive per topic — no gaps. Then filled a genuine *conceptual* gap: the DR lesson stated the curse
 of dimensionality (distances become uninformative) but never explained the startling *why*. Added a 4th deep-dive to `ml-dimensionality-reduction` — "why distances concentrate in high dimensions":
