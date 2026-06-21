@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 641 — Algorithms viz coverage: cross-embed widgets into 5 no-viz lessons (visualizations / curation)
+Continued viz curation for Algorithms (was 14/23) with strong matches at the right heading: **`algo-kruskal`** → `a-union-find-range` at "Union-Find" (Kruskal's MST *is* union-find in
+action); **`algo-recursion-tree`** → `a-backtracking-branch-bound` at "depth-first search with feasibility pruning" (backtracking explores a pruned recursion tree); **`algo-hashing`** →
+`a-amortized-analysis` at "The aggregate method" (load-factor resizing = the classic amortized example); **`algo-sorting`** → `a-correctness-invariants` at "correctness of insertion sort"
+(its worked example — the sorted-prefix loop invariant); **`algo-kmeans`** → `a-approximation-randomized` at "Randomized algorithms" (random-init heuristic). algos **14/23 → 19/23**.
+Verified: gate ALL GREEN; **headless** — all five lessons hydrate their embedded canvas (kErr=0 each), errs=0. SW cache `atlas-v581` → `atlas-v582`.
+
 ## iter 640 — Step-back regression sweep (clean) + DL viz coverage → 21/22 (visualizations / curation + step-back)
 Round-number step-back. **Full 165-lesson regression sweep** (after iters 625–639 added 4 new viz, ~21 cross-embeds, glossary/prereq/a11y/mobile edits): **errs=0, no KaTeX errors in any
 lesson, bad=none** — the whole arc introduced zero regressions. **Loop health:** site measurably better (viz coverage now PS 20/20, ML 10/10, LA 18/19, DL 21/22, LLM 15/19, RL
