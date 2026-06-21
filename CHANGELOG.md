@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 680 — Causation lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `ps-causation-confounding` to the 16-MCQ standard (the iter-672 gate parity-warning had flagged it at 8/16). Added **8 new MCQs**, distinct from the first eight: the ice-cream/drowning
+confounder, `do(X)` vs observing, **colliders** (conditioning induces spurious association), controlling for a **mediator** (blocks the effect), **instrumental variables**, **selection bias**,
+the cause of Simpson's paradox (unevenly-distributed confounder), and the unmeasured-confounder limitation of observational adjustment. Keys asserted; balanced → **4/4/4/4**. The lesson is now at full parity.
+Verified: data parses; gate ALL GREEN with **no parity warning** (lesson now at standard); **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v617` → `atlas-v618`.
+
 ## iter 679 — NEW lesson: Correlation, Causation & Confounding (content)
 Filled a genuine curriculum gap — the site taught correlation thoroughly but never **causation**. Added a full lesson **`ps-causation-confounding` "Correlation, Causation & Confounding"**
 to PS Module 3 (Joint Distributions & Dependence): 8 sections (correlation≠causation · confounders · spurious correlation · **Simpson's paradox** · randomized experiments · backdoor

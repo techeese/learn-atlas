@@ -3049,6 +3049,94 @@
               ],
               "answer": 3,
               "explain": "Non-causal shortcuts break when the spurious correlation no longer holds."
+            },
+            {
+              "q": "Ice-cream sales correlate with drownings. The most likely explanation is:",
+              "choices": [
+                "A confounder — hot weather drives both",
+                "Ice cream causes drowning",
+                "Drowning causes ice-cream sales",
+                "Pure coincidence with no cause"
+              ],
+              "answer": 0,
+              "explain": "Summer heat raises both; condition on temperature and the link vanishes."
+            },
+            {
+              "q": "$P(Y\\mid\\text{do}(X{=}x))$ differs from $P(Y\\mid X{=}x)$ because:",
+              "choices": [
+                "They are always equal",
+                "do() intervenes to set X (cutting confounding); conditioning merely observes",
+                "do() observes and conditioning intervenes",
+                "do() requires a larger sample"
+              ],
+              "answer": 1,
+              "explain": "The do-operator deletes the arrows into X (graph surgery); observation can carry confounding."
+            },
+            {
+              "q": "A collider is a variable that:",
+              "choices": [
+                "Lies on the causal path from X to Y",
+                "Is a common cause of X and Y",
+                "Is a common effect of X and Y — conditioning on it induces a spurious association",
+                "Has no relation to X or Y"
+              ],
+              "answer": 2,
+              "explain": "Both arrows point INTO a collider; conditioning on it opens a non-causal path (a source of selection bias)."
+            },
+            {
+              "q": "Controlling for a mediator (a variable on the causal path from X to Y):",
+              "choices": [
+                "Has no effect on the estimate",
+                "Always removes confounding",
+                "Is required for causal inference",
+                "Blocks part of the very effect you want to measure"
+              ],
+              "answer": 3,
+              "explain": "A mediator transmits the effect; adjusting for it removes that portion of the causal effect — unlike adjusting for a confounder."
+            },
+            {
+              "q": "An instrumental variable lets you estimate a causal effect when confounders are unmeasured, by being a variable that:",
+              "choices": [
+                "Affects X but has no direct path to Y (and no shared confounder with Y)",
+                "Is caused by both X and Y",
+                "Equals the outcome Y",
+                "Is perfectly correlated with the confounder"
+              ],
+              "answer": 0,
+              "explain": "Variation in X driven by the instrument is \"as good as random\", identifying the effect."
+            },
+            {
+              "q": "Selection bias typically arises from:",
+              "choices": [
+                "Randomly sampling the population",
+                "Conditioning on a collider — e.g. studying only hospital-admitted patients",
+                "Increasing the sample size",
+                "Adjusting for a confounder"
+              ],
+              "answer": 1,
+              "explain": "A non-random sample (admission) conditions on a collider, creating associations absent in the full population."
+            },
+            {
+              "q": "Simpson's paradox is fundamentally caused by:",
+              "choices": [
+                "A perfectly randomized experiment",
+                "Too small a sample",
+                "A confounder unevenly distributed across the groups being compared",
+                "Zero correlation"
+              ],
+              "answer": 2,
+              "explain": "When the lurking variable is unbalanced across groups, the pooled trend can reverse the subgroup trends."
+            },
+            {
+              "q": "The key limitation of adjusting for confounders in observational data is that it:",
+              "choices": [
+                "Works only for binary treatments",
+                "Requires randomization",
+                "Always over-corrects",
+                "Only handles confounders you can measure — unmeasured ones leave bias"
+              ],
+              "answer": 3,
+              "explain": "Backdoor adjustment blocks measured confounding paths; unobserved confounders remain the Achilles heel of observational studies."
             }
           ],
           "flashcards": [
