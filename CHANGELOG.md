@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 665 — Bayesian module: decision code exercise — all 4 Bayesian lessons now have hands-on code (examples / understandability)
+Final Bayesian code exercise, in `ps-bayesian-decisions`: an **expected-loss decision** (P(helps)=0.7, ship-harm cost 10, withhold-good cost 3 → E[ship]=3.0 vs E[withhold]=2.1 →
+**withhold**), showing that asymmetric costs can outweigh "probably helps". **All four Module-6 lessons now carry a runnable, gate-verified code exercise.** Site code-exercises **122 → 123**.
+SELF-CORRECTION caught by the gate: my first draft used three template-literal `${…}` (an ODD number of `$`), which flipped the lesson's KaTeX `$`-parity check and failed the gate — the gate
+counts `$` inside `data-code` blocks too. Fixed by computing the decision into a variable so the code has an even `$` count. **Landmine: author code exercises with an EVEN number of `$`
+(template literals), or escape them, until gate is taught to skip `data-code` in its `$`-parity lint.**
+Verified: data parses; gate ALL GREEN (123 code-exercises verified); **headless** — lesson renders the code runner, ps-ci-coverage viz still hydrates, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v604` → `atlas-v605`.
+
 ## iter 664 — Bayesian module: Gamma–Poisson code exercise (examples / understandability)
 Third Bayesian code exercise, in `ps-conjugate-priors`: a **Gamma–Poisson** conjugate update (prior Gamma(2,1) + 10 events / 5 intervals → posterior Gamma(12,6), mean rate 2.00 = MLE),
 showing conjugate updating as pure parameter arithmetic. Site code-exercises **121 → 122**.

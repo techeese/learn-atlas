@@ -232,7 +232,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 660: **NEW viz ps-beta-update** (114th — Beta prior×likelihood→posterior, lgamma-based; embedded in ps-bayesian-inference §3). gate GREEN, headless mean 0.643→0.682 + both canvases, SW →v600.
    ✅ **BAYESIAN ARC COMPLETE** (iters 652–660): PS Module 6 = 4 full lessons at 16 MCQ + dedicated Beta-update viz. PS is a 6-module/24-lesson course; site 169 lessons, 114 viz.
    ✅ iter 661: **glossary +10 Bayesian terms**. Glossary 230.
-   ✅ iters 662–664: code in ps-bayesian-inference (Beta–Binomial), ps-computational-bayes (Monte Carlo), ps-conjugate-priors (Gamma–Poisson). Code-exercises 122. Last queued: ps-bayesian-decisions (Laplace predictive) → all 4 Bayesian lessons have hands-on code.
+   ✅ iters 662–665: code exercises in ALL 4 Bayesian lessons (Beta–Binomial, Monte Carlo, Gamma–Poisson, expected-loss decision). Code-exercises 123. **Module 6 now at FULL feature parity: 4 lessons × {16 MCQ, 6 cards, 3 ex, 3 hw, viz, code} + glossary.**
+   LANDMINE (iter 665): gate counts `$` in `data-code` blocks toward the KaTeX `$`-parity lint, so code exercises must have an EVEN number of `$` (template literals) or they fail gate. OPTIONAL gate improvement: strip `data-code` blocks before the `$`-parity check.
+   ★ Bayesian arc fully done. Next genuine value needs OWNER STEER (new 10th topic / lazy-load perf) or is incremental polish.
    ★ Next genuine value again needs OWNER STEER: a brand-new 10th topic, or the lazy-load-data perf refactor. Solo backlog otherwise = polish/curation, not core gaps. (Bayesian module is now fully integrated: lessons + 16 MCQ + viz + glossary.)
    ★ Bigger levers still benefit from OWNER STEER: a brand-new 10th topic, or the lazy-load-data perf refactor. But Module 6 is genuine high-value autonomous work to pursue meanwhile.
    ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor.
