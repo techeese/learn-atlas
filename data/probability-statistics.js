@@ -2955,494 +2955,6 @@
               "solution": "<strong>Restrict to the column $Y = 0$.</strong> The relevant cells are $P(X=0, Y=0) = 0.1$ and $P(X=1, Y=0) = 0.3$; their sum is the marginal $P(Y=0) = 0.4$.\n<strong>Normalize to a conditional distribution.</strong> $P(X=0 \\mid Y=0) = \\tfrac{0.1}{0.4} = 0.25$ and $P(X=1 \\mid Y=0) = \\tfrac{0.3}{0.4} = 0.75$. They sum to 1 — conditioning rescales a slice of the joint into its own distribution.\n<strong>Take the expectation.</strong> $\\mathbb{E}[X \\mid Y=0] = 0(0.25) + 1(0.75) = 0.75$. Knowing $Y=0$ nudges the best guess of $X$ from its marginal mean $\\mathbb{E}[X] = 0.7$ up to $0.75$ — that shift is exactly the information $Y$ carries about $X$.\n<strong>The aha.</strong> A conditional expectation is \"slice, renormalize, average\": fix the conditioning event, turn that slice of the joint into a probability distribution, and take its mean. $\\mathbb{E}[X \\mid Y]$ is itself a random variable (a function of $Y$), and averaging it back over $Y$ recovers $\\mathbb{E}[X]$ — the tower property."
             }
           ]
-        },
-        {
-          "id": "ps-causation-confounding",
-          "title": "Correlation, Causation & Confounding",
-          "minutes": 16,
-          "content": "<h3>1. The slogan that bites: correlation ≠ causation</h3>\n<p>That $X$ and $Y$ move together does <em>not</em> mean $X$ causes $Y$. A correlation can arise four ways: $X$ causes $Y$, $Y$ causes $X$ (reverse causation), a third variable causes both (confounding), or pure chance in a small sample. Mistaking association for causation is the single most common analytical error — and the costliest in ML, medicine, and policy.</p>\n<h3>2. Confounders: the lurking common cause</h3>\n<p>A <b>confounder</b> $Z$ is a variable that influences both $X$ and $Y$, manufacturing a correlation between them that is not causal. Ice-cream sales correlate with drownings — but the confounder is summer heat, which drives both. Control for the season and the ice-cream–drowning link vanishes. The whole game of causal inference is separating real effects from confounded ones.</p>\n<div data-viz=\"causal-dag\"></div>\n<h3>3. Spurious correlation in the data</h3>\n<div data-viz=\"ps-covariance-scatter\"></div>\n<p>A strong sample correlation is necessary but never sufficient for causation. Two unrelated quantities can correlate by chance (especially with few points or many variables tested), and confounded quantities correlate strongly yet manipulating one does nothing to the other.</p>\n<h3>4. Simpson's paradox: a trend that reverses</h3>\n<p>The starkest confounding trap: an association can hold in <em>every</em> subgroup yet reverse in the aggregate. In the classic kidney-stone study, treatment A beats B for small stones <em>and</em> for large stones, but B beats A overall — because A was given to the harder (large-stone) cases. The confounder (stone size) is unevenly distributed across treatments. Run it:</p>\n<div data-code=\"javascript\" data-expected=\"small: A 93%  B 87%\nlarge: A 73%  B 69%\nALL:   A 78%  B 83%\">// Simpson's paradox: recovery rates for two kidney-stone treatments\nconst A = { smallOk: 81,  smallN: 87,  largeOk: 192, largeN: 263 };\nconst B = { smallOk: 234, smallN: 270, largeOk: 55,  largeN: 80  };\nconst pct = (o, n) => Math.round(100 * o / n) + \"%\";\nconsole.log(\"small: A \" + pct(A.smallOk, A.smallN) + \"  B \" + pct(B.smallOk, B.smallN));\nconsole.log(\"large: A \" + pct(A.largeOk, A.largeN) + \"  B \" + pct(B.largeOk, B.largeN));\nconsole.log(\"ALL:   A \" + pct(A.smallOk + A.largeOk, A.smallN + A.largeN) + \"  B \" + pct(B.smallOk + B.largeOk, B.smallN + B.largeN));\n// A wins BOTH subgroups but loses overall -- never trust an aggregate without checking confounders.</div>\n<h3>5. The gold standard: randomized experiments</h3>\n<p>Randomly assigning the treatment ($A$/$B$ coin-flip per subject) <b>breaks confounding</b>: because assignment is independent of everything else, confounders are balanced across groups in expectation, so a difference in outcomes can only be the treatment's effect. This is why randomized controlled trials (and online A/B tests) are the gold standard — randomization severs the arrows from confounders into the treatment.</p>\n<h3>6. Adjusting in observational data</h3>\n<p>When you cannot randomize, you estimate the causal effect by <b>controlling for confounders</b>: compare like with like (same stone size, same age, …) and combine the within-group effects. This is the \"backdoor adjustment\" — block every confounding path between $X$ and $Y$. It only works for confounders you can <em>measure</em>; unmeasured ones leave residual bias, the Achilles heel of observational studies.</p>\n<h3>7. Reverse causation and selection bias</h3>\n<p>Two more traps. <b>Reverse causation</b>: \"people who exercise are healthier\" — but maybe being healthy lets people exercise. <b>Selection bias</b>: studying only hospital patients can create correlations absent in the general population (conditioning on being admitted). Both produce real correlations with no direct causal link from $X$ to $Y$.</p>\n<h3>8. Why this matters for machine learning</h3>\n<p>ML models learn <em>correlations</em>, so they happily latch onto <b>spurious features</b> — a watermark that predicts the label, a scanner ID that predicts disease. These work in-distribution and collapse under shift, because they are not causal. Causal thinking explains distribution-shift failures, motivates robust and fair models, and underlies treatment-effect estimation, off-policy evaluation, and modern causal ML.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the do-operator</summary>\n<p>Pearl's notation separates seeing from doing. $P(Y\\mid X{=}x)$ is <em>observing</em> $X=x$ (and may carry confounding); $P(Y\\mid \\text{do}(X{=}x))$ is <em>intervening</em> to set $X=x$, which deletes the arrows into $X$ (graph surgery). Causal effects are statements about $\\text{do}(\\cdot)$. Randomization physically performs the do; backdoor adjustment computes it from observational data when the confounders are measured.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: don't control for everything (colliders)</summary>\n<p>Adjusting is not always good. A <b>collider</b> is a common <em>effect</em> of $X$ and $Y$ (both arrows point into it); conditioning on a collider <em>creates</em> a spurious association where none existed (this is how selection bias arises). And controlling for a <b>mediator</b> on the causal path blocks the very effect you want. Adjust for confounders — not colliders or mediators — which is why you need the causal graph, not just the data.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: instrumental variables</summary>\n<p>When confounders are unmeasured and randomization is impossible, an <b>instrument</b> $Z$ can rescue you: it affects $X$, has no direct path to $Y$, and shares no confounder with $Y$. Then variation in $X$ driven by $Z$ is \"as good as random\", letting you recover the causal effect (e.g. using distance-to-college as an instrument for years of schooling when estimating its effect on wages).</p>\n</details>\n",
-          "mcq": [
-            {
-              "q": "A strong correlation between $X$ and $Y$ implies:",
-              "choices": [
-                "Not necessarily that $X$ causes $Y$ — it may be confounding, reverse causation, or chance",
-                "That $X$ definitely causes $Y$",
-                "That $Y$ definitely causes $X$",
-                "That there is no relationship"
-              ],
-              "answer": 0,
-              "explain": "Correlation has four possible sources; only one is \"$X$ causes $Y$\"."
-            },
-            {
-              "q": "A confounder is a variable that:",
-              "choices": [
-                "Is caused by both $X$ and $Y$",
-                "Causes both $X$ and $Y$, creating a non-causal association",
-                "Has no relation to $X$ or $Y$",
-                "Is the outcome of interest"
-              ],
-              "answer": 1,
-              "explain": "A common cause of $X$ and $Y$ manufactures a correlation that is not causal."
-            },
-            {
-              "q": "Simpson's paradox occurs when:",
-              "choices": [
-                "A sample is too large",
-                "Two variables are independent",
-                "An association reverses between the subgroups and the aggregate",
-                "The correlation is exactly zero"
-              ],
-              "answer": 2,
-              "explain": "Uneven confounder distribution can flip the aggregate trend versus every subgroup."
-            },
-            {
-              "q": "The gold standard for establishing causation is:",
-              "choices": [
-                "A more complex model",
-                "A larger observational sample",
-                "A higher correlation coefficient",
-                "A randomized controlled experiment"
-              ],
-              "answer": 3,
-              "explain": "Randomization balances confounders, so outcome differences are causal."
-            },
-            {
-              "q": "Randomization establishes causation because it:",
-              "choices": [
-                "Makes the treatment independent of all confounders",
-                "Increases the sample size",
-                "Removes measurement error",
-                "Guarantees a large effect"
-              ],
-              "answer": 0,
-              "explain": "Independence of treatment and confounders makes the groups comparable."
-            },
-            {
-              "q": "In observational data, you estimate a causal effect by:",
-              "choices": [
-                "Ignoring all other variables",
-                "Controlling for the measured confounders (backdoor adjustment)",
-                "Maximizing the correlation",
-                "Choosing the largest subgroup"
-              ],
-              "answer": 1,
-              "explain": "Adjusting for confounders blocks non-causal paths — but only those you can measure."
-            },
-            {
-              "q": "\"People who exercise are healthier\" might reflect reverse causation, meaning:",
-              "choices": [
-                "Health and exercise are unrelated",
-                "Exercise always causes health",
-                "Being healthy enables exercising, rather than exercise causing health",
-                "The sample was randomized"
-              ],
-              "answer": 2,
-              "explain": "The causal arrow may run $Y\\to X$ instead of $X\\to Y$."
-            },
-            {
-              "q": "A spurious (non-causal) feature an ML model relies on will typically:",
-              "choices": [
-                "Be a causal driver of the label",
-                "Always generalize perfectly",
-                "Improve robustness",
-                "Work in-distribution but fail under distribution shift"
-              ],
-              "answer": 3,
-              "explain": "Non-causal shortcuts break when the spurious correlation no longer holds."
-            },
-            {
-              "q": "Ice-cream sales correlate with drownings. The most likely explanation is:",
-              "choices": [
-                "A confounder — hot weather drives both",
-                "Ice cream causes drowning",
-                "Drowning causes ice-cream sales",
-                "Pure coincidence with no cause"
-              ],
-              "answer": 0,
-              "explain": "Summer heat raises both; condition on temperature and the link vanishes."
-            },
-            {
-              "q": "$P(Y\\mid\\text{do}(X{=}x))$ differs from $P(Y\\mid X{=}x)$ because:",
-              "choices": [
-                "They are always equal",
-                "do() intervenes to set X (cutting confounding); conditioning merely observes",
-                "do() observes and conditioning intervenes",
-                "do() requires a larger sample"
-              ],
-              "answer": 1,
-              "explain": "The do-operator deletes the arrows into X (graph surgery); observation can carry confounding."
-            },
-            {
-              "q": "A collider is a variable that:",
-              "choices": [
-                "Lies on the causal path from X to Y",
-                "Is a common cause of X and Y",
-                "Is a common effect of X and Y — conditioning on it induces a spurious association",
-                "Has no relation to X or Y"
-              ],
-              "answer": 2,
-              "explain": "Both arrows point INTO a collider; conditioning on it opens a non-causal path (a source of selection bias)."
-            },
-            {
-              "q": "Controlling for a mediator (a variable on the causal path from X to Y):",
-              "choices": [
-                "Has no effect on the estimate",
-                "Always removes confounding",
-                "Is required for causal inference",
-                "Blocks part of the very effect you want to measure"
-              ],
-              "answer": 3,
-              "explain": "A mediator transmits the effect; adjusting for it removes that portion of the causal effect — unlike adjusting for a confounder."
-            },
-            {
-              "q": "An instrumental variable lets you estimate a causal effect when confounders are unmeasured, by being a variable that:",
-              "choices": [
-                "Affects X but has no direct path to Y (and no shared confounder with Y)",
-                "Is caused by both X and Y",
-                "Equals the outcome Y",
-                "Is perfectly correlated with the confounder"
-              ],
-              "answer": 0,
-              "explain": "Variation in X driven by the instrument is \"as good as random\", identifying the effect."
-            },
-            {
-              "q": "Selection bias typically arises from:",
-              "choices": [
-                "Randomly sampling the population",
-                "Conditioning on a collider — e.g. studying only hospital-admitted patients",
-                "Increasing the sample size",
-                "Adjusting for a confounder"
-              ],
-              "answer": 1,
-              "explain": "A non-random sample (admission) conditions on a collider, creating associations absent in the full population."
-            },
-            {
-              "q": "Simpson's paradox is fundamentally caused by:",
-              "choices": [
-                "A perfectly randomized experiment",
-                "Too small a sample",
-                "A confounder unevenly distributed across the groups being compared",
-                "Zero correlation"
-              ],
-              "answer": 2,
-              "explain": "When the lurking variable is unbalanced across groups, the pooled trend can reverse the subgroup trends."
-            },
-            {
-              "q": "The key limitation of adjusting for confounders in observational data is that it:",
-              "choices": [
-                "Works only for binary treatments",
-                "Requires randomization",
-                "Always over-corrects",
-                "Only handles confounders you can measure — unmeasured ones leave bias"
-              ],
-              "answer": 3,
-              "explain": "Backdoor adjustment blocks measured confounding paths; unobserved confounders remain the Achilles heel of observational studies."
-            }
-          ],
-          "flashcards": [
-            {
-              "front": "The four sources of a correlation",
-              "back": "$X\\to Y$, $Y\\to X$ (reverse), a confounder causing both, or chance — only the first is \"$X$ causes $Y$\"."
-            },
-            {
-              "front": "What is a confounder?",
-              "back": "A variable that influences both $X$ and $Y$, creating a non-causal association between them (e.g. summer heat behind ice-cream sales and drownings)."
-            },
-            {
-              "front": "Simpson's paradox",
-              "back": "An association present in every subgroup can reverse in the aggregate when a confounder is unevenly distributed across groups."
-            },
-            {
-              "front": "Why do randomized experiments establish causation?",
-              "back": "Random assignment makes treatment independent of all confounders, balancing them across groups — so any outcome difference is the treatment's effect."
-            },
-            {
-              "front": "Backdoor adjustment",
-              "back": "Estimate a causal effect from observational data by controlling for (conditioning on) the measured confounders, blocking non-causal paths."
-            },
-            {
-              "front": "do-operator: $P(Y\\mid \\text{do}(X))$ vs $P(Y\\mid X)$",
-              "back": "$\\text{do}(X)$ is intervening to set $X$ (effect of acting); $P(Y\\mid X)$ is merely observing $X$ (may include confounding)."
-            }
-          ],
-          "homework": [
-            {
-              "prompt": "Sales of sunglasses correlate with ice-cream sales. Give three non-causal explanations for the correlation.",
-              "hint": "Think confounder, reverse, chance.",
-              "solution": "(1) Confounding: hot, sunny weather drives both. (2) Reverse-ish/common-driver framing: the same \"going outside\" behavior causes both. (3) Chance: in a small sample the two could line up coincidentally. None means sunglasses cause ice-cream cravings."
-            },
-            {
-              "prompt": "A drug shows a 70% recovery rate in men and 60% in women, but a competitor shows 80% in men and 65% in women. Which drug looks better per-subgroup, and what would let the competitor still win overall?",
-              "hint": "Simpson's paradox via uneven group sizes.",
-              "solution": "The competitor is better in BOTH subgroups (80%>70%, 65%>60%). It could still \"lose\" overall only if the first drug were given disproportionately to the easier group — i.e. an uneven confounder distribution. (Here the competitor wins both, so an honest aggregate must also favor it once you weight subgroups equally.) The lesson: always check subgroup vs aggregate."
-            },
-            {
-              "prompt": "Explain in two sentences why a randomized controlled trial identifies a causal effect that an observational study cannot.",
-              "hint": "What does randomization do to confounders?",
-              "solution": "Randomizing the treatment makes it statistically independent of every confounder (measured or not), so the treatment and control groups are comparable and any outcome gap is caused by the treatment. An observational study cannot guarantee this — unmeasured confounders may differ between who did and did not receive the treatment."
-            }
-          ],
-          "examples": [
-            {
-              "title": "Ice cream and drowning",
-              "body": "Monthly ice-cream sales correlate strongly (r≈0.9) with drownings. Should we ban ice cream?",
-              "solution": "No — the confounder is summer heat: it raises both ice-cream sales and swimming (hence drownings). Condition on temperature/season and the correlation disappears. Banning ice cream would do nothing to drownings."
-            },
-            {
-              "title": "The kidney-stone reversal",
-              "body": "Treatment A beats B on small stones (93% vs 87%) and large stones (73% vs 69%), yet B beats A overall (83% vs 78%). How?",
-              "solution": "Stone size confounds the comparison: A was used far more on large (harder) stones, dragging its overall rate down. Within each size A is better; the aggregate is misleading. Compare within subgroups (or randomize) — never trust the pooled number alone."
-            },
-            {
-              "title": "A spurious feature in ML",
-              "body": "A pneumonia model is highly accurate — but partly keys on which hospital's scanner took the X-ray. Why is that dangerous?",
-              "solution": "Scanner ID correlates with severity only because sicker patients were imaged at certain hospitals — it is a confounded, non-causal shortcut. Deploy the model at a new hospital and accuracy collapses. Robust models must rely on causal signal (the lung pathology), not the spurious correlate."
-            }
-          ]
-        },
-        {
-          "id": "ps-causal-graphs",
-          "title": "Causal Graphs & the Backdoor Criterion",
-          "minutes": 17,
-          "content": "<h3>1. The hook: draw your assumptions as a graph</h3>\n<p>A <b>causal DAG</b> (directed acyclic graph) makes your causal assumptions explicit: each node is a variable, each arrow $X\\to Y$ asserts \"$X$ is a direct cause of $Y$\". Once the graph is drawn, simple path rules tell you exactly which variables to adjust for to read a causal effect off observational data — turning a vague worry about confounding into a precise, checkable procedure.</p>\n<h3>2. Nodes, edges, and paths</h3>\n<p>A <b>path</b> is any sequence of connected edges between two nodes, ignoring arrow direction. A <b>causal path</b> follows the arrows from $X$ to $Y$ (it carries the effect we want). A <b>backdoor path</b> starts with an arrow <em>into</em> $X$ — it is non-causal but still transmits association (this is confounding). The goal: keep causal paths open, block every backdoor path.</p>\n<h3>3. The three building blocks</h3>\n<div data-viz=\"causal-dag\"></div>\n<p>Every path is built from three junctions. A <b>chain</b> $X\\to Z\\to Y$ ($Z$ a mediator) and a <b>fork</b> $X\\leftarrow Z\\to Y$ ($Z$ a confounder) both transmit association — and both are <em>blocked</em> by conditioning on $Z$. A <b>collider</b> $X\\to Z\\leftarrow Y$ is the opposite: it blocks association by default, and conditioning on $Z$ (or a descendant) <em>opens</em> it, creating spurious correlation.</p>\n<h3>4. d-separation: when does information flow?</h3>\n<p>$X$ and $Y$ are <b>d-separated</b> by a set $Z$ — implying $X \\perp Y \\mid Z$ — when every path between them is blocked. A path is blocked if it contains a chain or fork whose middle node is in $Z$, <em>or</em> a collider whose node (and all its descendants) is <em>not</em> in $Z$. d-separation is the graphical test for conditional independence.</p>\n<h3>5. The backdoor criterion</h3>\n<p>To identify the causal effect of $X$ on $Y$, find an adjustment set $Z$ that (1) <b>blocks every backdoor path</b> from $X$ to $Y$, and (2) contains <b>no descendant of $X$</b>. Such a $Z$ \"satisfies the backdoor criterion\" — controlling for it removes all confounding while leaving the causal path intact. The graph, not the data, tells you which $Z$ qualifies.</p>\n<h3>6. The adjustment formula</h3>\n<p>Given a valid backdoor set $Z$, the interventional distribution is the confounder-weighted average $$P(Y\\mid \\text{do}(X{=}x)) = \\sum_z P(Y\\mid X{=}x,\\, Z{=}z)\\,P(Z{=}z).$$ Compare that to the naive $P(Y\\mid X{=}x)$, which mixes in confounding. The code below contrasts them on a severity-confounded drug trial:</p>\n<div data-code=\"javascript\" data-expected=\"adjusted ATE = 0.10\">// Effect of treatment X on recovery Y, confounded by severity Z\nconst pz = { 0: 0.6, 1: 0.4 };                 // 60% mild (z=0), 40% severe (z=1)\nconst pY = { \"1,0\": 0.9, \"0,0\": 0.8,           // P(recover | treated/untreated, mild)\n             \"1,1\": 0.6, \"0,1\": 0.5 };         // P(recover | treated/untreated, severe)\n// Backdoor adjustment: average the within-severity effect over P(z)\nlet ate = 0;\nfor (const z of [0, 1]) ate += (pY[\"1,\" + z] - pY[\"0,\" + z]) * pz[z];\nconsole.log(\"adjusted ATE = \" + ate.toFixed(2));\n// Within EACH severity the drug adds 0.10 -- the honest causal effect, free of the\n// severity confounding that a naive treated-minus-untreated comparison would carry.</div>\n<h3>7. When you cannot adjust</h3>\n<p>Sometimes no measured set blocks the backdoors (an unobserved confounder). Two escapes: the <b>front-door criterion</b> exploits a fully-observed mediator to route around unmeasured confounding, and an <b>instrumental variable</b> uses a source of \"as-good-as-random\" variation in $X$. Both recover causal effects when plain adjustment cannot.</p>\n<h3>8. Why this matters for ML and experimentation</h3>\n<p>DAGs explain <em>why</em> randomized A/B tests work (randomizing $X$ deletes all arrows into it, erasing every backdoor), which features are safe to condition on, and when a model will break under distribution shift (it leaned on a backdoor, not a causal, path). The same graphs underlie causal ML, fairness analysis, and treatment-effect estimation.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: d-separation, precisely</summary>\n<p>A path is <b>blocked</b> by a set $Z$ if it contains either (i) a chain $a\\to b\\to c$ or fork $a\\leftarrow b\\to c$ with the middle node $b\\in Z$, or (ii) a collider $a\\to b\\leftarrow c$ with $b\\notin Z$ <em>and</em> no descendant of $b$ in $Z$. If every path from $X$ to $Y$ is blocked, they are d-separated given $Z$, which implies $X\\perp Y\\mid Z$ in every distribution compatible with the graph.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the front-door criterion</summary>\n<p>Suppose $X\\to M\\to Y$ with an <em>unmeasured</em> confounder between $X$ and $Y$, but $M$ fully mediates the effect and is itself unconfounded with $Y$ given $X$. Then you can identify the effect in two adjusted steps — $X$ on $M$, then $M$ on $Y$ — and chain them. The front-door formula recovers $P(Y\\mid\\text{do}(X))$ even though no backdoor set exists.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why not control for everything?</summary>\n<p>\"Adjust for every covariate\" is wrong. Conditioning on a <b>mediator</b> removes part of the causal effect; conditioning on a <b>collider</b> (or its descendant) opens a spurious path; and conditioning on a pre-treatment collider can even create \"M-bias\" between two otherwise-independent confounders. The DAG is what distinguishes a helpful control from a harmful one — data alone cannot.</p>\n</details>",
-          "mcq": [
-            {
-              "q": "An arrow $X\\to Y$ in a causal DAG means:",
-              "choices": [
-                "$X$ is a direct cause of $Y$",
-                "$X$ and $Y$ are correlated",
-                "$Y$ causes $X$",
-                "$X$ and $Y$ are independent"
-              ],
-              "answer": 0,
-              "explain": "Edges encode direct causation, not mere association."
-            },
-            {
-              "q": "A backdoor path from $X$ to $Y$ is:",
-              "choices": [
-                "The direct causal path $X\\to Y$",
-                "A non-causal path that starts with an arrow into $X$",
-                "Any path of length one",
-                "A path that cannot transmit association"
-              ],
-              "answer": 1,
-              "explain": "Backdoor paths begin with an arrow into X and carry confounding."
-            },
-            {
-              "q": "The backdoor criterion requires an adjustment set $Z$ that:",
-              "choices": [
-                "Includes at least one collider",
-                "Contains every variable in the graph",
-                "Blocks all backdoor paths and contains no descendant of $X$",
-                "Is always empty"
-              ],
-              "answer": 2,
-              "explain": "Block backdoors, exclude descendants of X (mediators/effects)."
-            },
-            {
-              "q": "A chain or fork path is blocked when you:",
-              "choices": [
-                "Remove the outcome",
-                "Condition on a collider",
-                "Leave all nodes unconditioned",
-                "Condition on its middle (non-collider) node"
-              ],
-              "answer": 3,
-              "explain": "Conditioning on the mediator/confounder middle node blocks the path."
-            },
-            {
-              "q": "A path through a collider is:",
-              "choices": [
-                "Blocked by default, but opened by conditioning on the collider",
-                "Always open",
-                "Opened by leaving the collider unconditioned",
-                "Unaffected by conditioning"
-              ],
-              "answer": 0,
-              "explain": "Colliders block until you condition on them (or a descendant)."
-            },
-            {
-              "q": "To estimate the causal effect of $X$ on $Y$ you should adjust for:",
-              "choices": [
-                "Every available variable",
-                "Confounders (backdoor variables), not mediators or colliders",
-                "Only colliders",
-                "Only mediators"
-              ],
-              "answer": 1,
-              "explain": "Adjust for confounders; controlling mediators/colliders introduces bias."
-            },
-            {
-              "q": "Conditioning on a mediator on the $X\\to Y$ path:",
-              "choices": [
-                "Has no effect on the estimate",
-                "Removes confounding with no downside",
-                "Blocks part of the causal effect, underestimating it",
-                "Is required by the backdoor criterion"
-              ],
-              "answer": 2,
-              "explain": "A mediator transmits the effect; adjusting for it removes that portion."
-            },
-            {
-              "q": "In $P(Y\\mid\\text{do}(X{=}x))=\\sum_z P(Y\\mid X{=}x,Z{=}z)P(Z{=}z)$, the sum is over:",
-              "choices": [
-                "All nodes in the graph",
-                "The values of the outcome $Y$",
-                "The values of the treatment $X$",
-                "The values of the adjustment set $Z$"
-              ],
-              "answer": 3,
-              "explain": "Adjustment re-weights strata of the backdoor set Z by P(z)."
-            },
-            {
-              "q": "The \"acyclic\" in DAG means the graph has:",
-              "choices": [
-                "No directed cycles — you cannot follow arrows back to where you started",
-                "No more than one edge",
-                "Only undirected edges",
-                "Exactly one collider"
-              ],
-              "answer": 0,
-              "explain": "Causal DAGs forbid directed cycles, so causation has a consistent direction."
-            },
-            {
-              "q": "Randomly assigning $X$ changes its DAG by:",
-              "choices": [
-                "Adding arrows into $X$",
-                "Deleting every arrow into $X$, so no backdoor paths remain",
-                "Removing the outcome $Y$",
-                "Creating a collider at $X$"
-              ],
-              "answer": 1,
-              "explain": "Randomization makes X independent of its causes — graph surgery on X."
-            },
-            {
-              "q": "The front-door criterion identifies an effect by using:",
-              "choices": [
-                "An additional confounder",
-                "A larger sample size",
-                "A fully-observed mediator to bypass unmeasured confounding",
-                "A collider as a control"
-              ],
-              "answer": 2,
-              "explain": "A measured mediator lets you route around unobserved X-Y confounding."
-            },
-            {
-              "q": "$X$ and $Y$ are d-separated by $Z$ when:",
-              "choices": [
-                "They share a collider",
-                "At least one path is open",
-                "$Z$ is empty",
-                "Every path between them is blocked given $Z$"
-              ],
-              "answer": 3,
-              "explain": "d-separation requires ALL paths blocked, implying conditional independence."
-            },
-            {
-              "q": "A descendant of $X$ must be excluded from the adjustment set because:",
-              "choices": [
-                "It is affected by $X$, so conditioning on it can distort the causal effect",
-                "It always blocks backdoor paths",
-                "It is never measured",
-                "It is the treatment itself"
-              ],
-              "answer": 0,
-              "explain": "Descendants of X (mediators/effects) bias the estimate if adjusted for."
-            },
-            {
-              "q": "A fork $X\\leftarrow Z\\to Y$ produces:",
-              "choices": [
-                "A direct causal effect of $X$ on $Y$",
-                "A non-causal (confounding) association between $X$ and $Y$",
-                "Independence that conditioning destroys",
-                "A blocked path by default"
-              ],
-              "answer": 1,
-              "explain": "A common cause Z confounds X and Y until you condition on Z."
-            },
-            {
-              "q": "The naive $P(Y\\mid X)$ can differ from $P(Y\\mid\\text{do}(X))$ because:",
-              "choices": [
-                "do() requires more data",
-                "They are identical by definition",
-                "Observing $X$ carries confounding; intervening removes it",
-                "Conditioning deletes arrows into $X$"
-              ],
-              "answer": 2,
-              "explain": "Only do() severs the backdoor paths; plain conditioning leaves them."
-            },
-            {
-              "q": "An instrumental variable is one that:",
-              "choices": [
-                "Is a descendant of $Y$",
-                "Is a common effect of $X$ and $Y$",
-                "Equals the confounder",
-                "Affects $X$ but has no direct path to $Y$ (and no shared confounder)"
-              ],
-              "answer": 3,
-              "explain": "An instrument injects as-good-as-random variation into X."
-            }
-          ],
-          "flashcards": [
-            {
-              "front": "What does an edge $X\\to Y$ in a causal DAG assert?",
-              "back": "That $X$ is a <b>direct cause</b> of $Y$ (relative to the other variables in the graph)."
-            },
-            {
-              "front": "What is a backdoor path?",
-              "back": "A non-causal path from $X$ to $Y$ that starts with an arrow <em>into</em> $X$; it transmits confounding association."
-            },
-            {
-              "front": "The backdoor criterion",
-              "back": "Adjust for a set $Z$ that blocks all backdoor paths from $X$ to $Y$ and contains no descendant of $X$."
-            },
-            {
-              "front": "When is a path blocked (d-separation)?",
-              "back": "If a chain/fork has its middle node in $Z$, or a collider has its node (and all descendants) NOT in $Z$."
-            },
-            {
-              "front": "The backdoor adjustment formula",
-              "back": "$P(Y\\mid\\text{do}(X{=}x))=\\sum_z P(Y\\mid X{=}x,Z{=}z)\\,P(Z{=}z)$ for a valid backdoor set $Z$."
-            },
-            {
-              "front": "Why does randomizing $X$ identify the effect?",
-              "back": "It deletes every arrow into $X$, so there are no backdoor paths left to block."
-            }
-          ],
-          "homework": [
-            {
-              "prompt": "In a fork $X\\leftarrow Z\\to Y$ (with $X\\to Y$ also present), what is the adjustment set needed to estimate the effect of $X$ on $Y$, and why?",
-              "hint": "Block the backdoor through Z.",
-              "solution": "Adjust for $\\{Z\\}$. The backdoor path $X\\leftarrow Z\\to Y$ is a fork through $Z$; conditioning on $Z$ blocks it, leaving only the causal path $X\\to Y$. $Z$ is not a descendant of $X$, so it satisfies the backdoor criterion."
-            },
-            {
-              "prompt": "Explain why conditioning on a collider biases a causal estimate.",
-              "hint": "What does conditioning on a collider do to the path?",
-              "solution": "A collider $X\\to Z\\leftarrow Y$ blocks its path by default, so $X$ and $Y$ are unassociated through it. Conditioning on $Z$ (e.g. by selecting on it) opens the path, inducing a spurious, non-causal association between $X$ and $Y$ — the estimate now reflects selection/collider bias, not the true effect."
-            },
-            {
-              "prompt": "State the two conditions of the backdoor criterion for an adjustment set $Z$.",
-              "hint": "Blocking + a restriction on descendants.",
-              "solution": "(1) $Z$ blocks every backdoor path from $X$ to $Y$ (paths into $X$). (2) $Z$ contains no descendant of $X$. Then $P(Y\\mid\\text{do}(X))=\\sum_z P(Y\\mid X,z)P(z)$."
-            }
-          ],
-          "examples": [
-            {
-              "title": "Choosing the adjustment set",
-              "body": "Genotype $Z$ affects both smoking $X$ and lung cancer $Y$; smoking also causes cancer. To estimate smoking's effect, what do you adjust for?",
-              "solution": "Adjust for $Z$ (the genotype). It opens a backdoor fork $X\\leftarrow Z\\to Y$; conditioning on $Z$ blocks that confounding path while leaving the causal $X\\to Y$ intact. If $Z$ were unmeasured you would need an instrument or front-door route instead."
-            },
-            {
-              "title": "A collider you must not control for",
-              "body": "Talent $X$ and looks $Y$ are independent in the population, but both help you become a celebrity $Z$. Among celebrities, talent and looks are negatively correlated. Why?",
-              "solution": "$Z$ is a collider ($X\\to Z\\leftarrow Y$). Studying only celebrities conditions on $Z$, opening the collider path and inducing a spurious negative association — if a celebrity isn't talented, they're probably good-looking (and vice versa). Controlling for \"is a celebrity\" would manufacture a correlation that isn't causal."
-            },
-            {
-              "title": "Reading an effect off the formula",
-              "body": "With confounder $Z$, you have $P(Y{=}1\\mid X{=}1,Z)$ and $P(Z)$. How do you get the causal effect?",
-              "solution": "Use backdoor adjustment: $P(Y{=}1\\mid\\text{do}(X{=}1))=\\sum_z P(Y{=}1\\mid X{=}1,z)P(z)$, and similarly for $X{=}0$; subtract for the average treatment effect. This re-weights each stratum by its population share $P(z)$ rather than by how treatment happened to be distributed — exactly what the code example computes."
-            }
-          ]
         }
       ]
     },
@@ -6386,6 +5898,499 @@
               "title": "Reading the ELBO",
               "body": "Why does maximizing the ELBO improve the approximation $q$?",
               "solution": "Because $\\mathcal L=\\log p(D)-\\mathrm{KL}(q\\,\\|\\,p(\\theta\\mid D))$ and $\\log p(D)$ is constant in $\\phi$. Pushing $\\mathcal L$ up can only push $\\mathrm{KL}(q\\,\\|\\,\\text{posterior})$ down, so $q$ moves closer to the true posterior."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Causal Inference",
+      "lessons": [
+        {
+          "id": "ps-causation-confounding",
+          "title": "Correlation, Causation & Confounding",
+          "minutes": 16,
+          "content": "<h3>1. The slogan that bites: correlation ≠ causation</h3>\n<p>That $X$ and $Y$ move together does <em>not</em> mean $X$ causes $Y$. A correlation can arise four ways: $X$ causes $Y$, $Y$ causes $X$ (reverse causation), a third variable causes both (confounding), or pure chance in a small sample. Mistaking association for causation is the single most common analytical error — and the costliest in ML, medicine, and policy.</p>\n<h3>2. Confounders: the lurking common cause</h3>\n<p>A <b>confounder</b> $Z$ is a variable that influences both $X$ and $Y$, manufacturing a correlation between them that is not causal. Ice-cream sales correlate with drownings — but the confounder is summer heat, which drives both. Control for the season and the ice-cream–drowning link vanishes. The whole game of causal inference is separating real effects from confounded ones.</p>\n<div data-viz=\"causal-dag\"></div>\n<h3>3. Spurious correlation in the data</h3>\n<div data-viz=\"ps-covariance-scatter\"></div>\n<p>A strong sample correlation is necessary but never sufficient for causation. Two unrelated quantities can correlate by chance (especially with few points or many variables tested), and confounded quantities correlate strongly yet manipulating one does nothing to the other.</p>\n<h3>4. Simpson's paradox: a trend that reverses</h3>\n<p>The starkest confounding trap: an association can hold in <em>every</em> subgroup yet reverse in the aggregate. In the classic kidney-stone study, treatment A beats B for small stones <em>and</em> for large stones, but B beats A overall — because A was given to the harder (large-stone) cases. The confounder (stone size) is unevenly distributed across treatments. Run it:</p>\n<div data-code=\"javascript\" data-expected=\"small: A 93%  B 87%\nlarge: A 73%  B 69%\nALL:   A 78%  B 83%\">// Simpson's paradox: recovery rates for two kidney-stone treatments\nconst A = { smallOk: 81,  smallN: 87,  largeOk: 192, largeN: 263 };\nconst B = { smallOk: 234, smallN: 270, largeOk: 55,  largeN: 80  };\nconst pct = (o, n) => Math.round(100 * o / n) + \"%\";\nconsole.log(\"small: A \" + pct(A.smallOk, A.smallN) + \"  B \" + pct(B.smallOk, B.smallN));\nconsole.log(\"large: A \" + pct(A.largeOk, A.largeN) + \"  B \" + pct(B.largeOk, B.largeN));\nconsole.log(\"ALL:   A \" + pct(A.smallOk + A.largeOk, A.smallN + A.largeN) + \"  B \" + pct(B.smallOk + B.largeOk, B.smallN + B.largeN));\n// A wins BOTH subgroups but loses overall -- never trust an aggregate without checking confounders.</div>\n<h3>5. The gold standard: randomized experiments</h3>\n<p>Randomly assigning the treatment ($A$/$B$ coin-flip per subject) <b>breaks confounding</b>: because assignment is independent of everything else, confounders are balanced across groups in expectation, so a difference in outcomes can only be the treatment's effect. This is why randomized controlled trials (and online A/B tests) are the gold standard — randomization severs the arrows from confounders into the treatment.</p>\n<h3>6. Adjusting in observational data</h3>\n<p>When you cannot randomize, you estimate the causal effect by <b>controlling for confounders</b>: compare like with like (same stone size, same age, …) and combine the within-group effects. This is the \"backdoor adjustment\" — block every confounding path between $X$ and $Y$. It only works for confounders you can <em>measure</em>; unmeasured ones leave residual bias, the Achilles heel of observational studies.</p>\n<h3>7. Reverse causation and selection bias</h3>\n<p>Two more traps. <b>Reverse causation</b>: \"people who exercise are healthier\" — but maybe being healthy lets people exercise. <b>Selection bias</b>: studying only hospital patients can create correlations absent in the general population (conditioning on being admitted). Both produce real correlations with no direct causal link from $X$ to $Y$.</p>\n<h3>8. Why this matters for machine learning</h3>\n<p>ML models learn <em>correlations</em>, so they happily latch onto <b>spurious features</b> — a watermark that predicts the label, a scanner ID that predicts disease. These work in-distribution and collapse under shift, because they are not causal. Causal thinking explains distribution-shift failures, motivates robust and fair models, and underlies treatment-effect estimation, off-policy evaluation, and modern causal ML.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the do-operator</summary>\n<p>Pearl's notation separates seeing from doing. $P(Y\\mid X{=}x)$ is <em>observing</em> $X=x$ (and may carry confounding); $P(Y\\mid \\text{do}(X{=}x))$ is <em>intervening</em> to set $X=x$, which deletes the arrows into $X$ (graph surgery). Causal effects are statements about $\\text{do}(\\cdot)$. Randomization physically performs the do; backdoor adjustment computes it from observational data when the confounders are measured.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: don't control for everything (colliders)</summary>\n<p>Adjusting is not always good. A <b>collider</b> is a common <em>effect</em> of $X$ and $Y$ (both arrows point into it); conditioning on a collider <em>creates</em> a spurious association where none existed (this is how selection bias arises). And controlling for a <b>mediator</b> on the causal path blocks the very effect you want. Adjust for confounders — not colliders or mediators — which is why you need the causal graph, not just the data.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: instrumental variables</summary>\n<p>When confounders are unmeasured and randomization is impossible, an <b>instrument</b> $Z$ can rescue you: it affects $X$, has no direct path to $Y$, and shares no confounder with $Y$. Then variation in $X$ driven by $Z$ is \"as good as random\", letting you recover the causal effect (e.g. using distance-to-college as an instrument for years of schooling when estimating its effect on wages).</p>\n</details>\n",
+          "mcq": [
+            {
+              "q": "A strong correlation between $X$ and $Y$ implies:",
+              "choices": [
+                "Not necessarily that $X$ causes $Y$ — it may be confounding, reverse causation, or chance",
+                "That $X$ definitely causes $Y$",
+                "That $Y$ definitely causes $X$",
+                "That there is no relationship"
+              ],
+              "answer": 0,
+              "explain": "Correlation has four possible sources; only one is \"$X$ causes $Y$\"."
+            },
+            {
+              "q": "A confounder is a variable that:",
+              "choices": [
+                "Is caused by both $X$ and $Y$",
+                "Causes both $X$ and $Y$, creating a non-causal association",
+                "Has no relation to $X$ or $Y$",
+                "Is the outcome of interest"
+              ],
+              "answer": 1,
+              "explain": "A common cause of $X$ and $Y$ manufactures a correlation that is not causal."
+            },
+            {
+              "q": "Simpson's paradox occurs when:",
+              "choices": [
+                "A sample is too large",
+                "Two variables are independent",
+                "An association reverses between the subgroups and the aggregate",
+                "The correlation is exactly zero"
+              ],
+              "answer": 2,
+              "explain": "Uneven confounder distribution can flip the aggregate trend versus every subgroup."
+            },
+            {
+              "q": "The gold standard for establishing causation is:",
+              "choices": [
+                "A more complex model",
+                "A larger observational sample",
+                "A higher correlation coefficient",
+                "A randomized controlled experiment"
+              ],
+              "answer": 3,
+              "explain": "Randomization balances confounders, so outcome differences are causal."
+            },
+            {
+              "q": "Randomization establishes causation because it:",
+              "choices": [
+                "Makes the treatment independent of all confounders",
+                "Increases the sample size",
+                "Removes measurement error",
+                "Guarantees a large effect"
+              ],
+              "answer": 0,
+              "explain": "Independence of treatment and confounders makes the groups comparable."
+            },
+            {
+              "q": "In observational data, you estimate a causal effect by:",
+              "choices": [
+                "Ignoring all other variables",
+                "Controlling for the measured confounders (backdoor adjustment)",
+                "Maximizing the correlation",
+                "Choosing the largest subgroup"
+              ],
+              "answer": 1,
+              "explain": "Adjusting for confounders blocks non-causal paths — but only those you can measure."
+            },
+            {
+              "q": "\"People who exercise are healthier\" might reflect reverse causation, meaning:",
+              "choices": [
+                "Health and exercise are unrelated",
+                "Exercise always causes health",
+                "Being healthy enables exercising, rather than exercise causing health",
+                "The sample was randomized"
+              ],
+              "answer": 2,
+              "explain": "The causal arrow may run $Y\\to X$ instead of $X\\to Y$."
+            },
+            {
+              "q": "A spurious (non-causal) feature an ML model relies on will typically:",
+              "choices": [
+                "Be a causal driver of the label",
+                "Always generalize perfectly",
+                "Improve robustness",
+                "Work in-distribution but fail under distribution shift"
+              ],
+              "answer": 3,
+              "explain": "Non-causal shortcuts break when the spurious correlation no longer holds."
+            },
+            {
+              "q": "Ice-cream sales correlate with drownings. The most likely explanation is:",
+              "choices": [
+                "A confounder — hot weather drives both",
+                "Ice cream causes drowning",
+                "Drowning causes ice-cream sales",
+                "Pure coincidence with no cause"
+              ],
+              "answer": 0,
+              "explain": "Summer heat raises both; condition on temperature and the link vanishes."
+            },
+            {
+              "q": "$P(Y\\mid\\text{do}(X{=}x))$ differs from $P(Y\\mid X{=}x)$ because:",
+              "choices": [
+                "They are always equal",
+                "do() intervenes to set X (cutting confounding); conditioning merely observes",
+                "do() observes and conditioning intervenes",
+                "do() requires a larger sample"
+              ],
+              "answer": 1,
+              "explain": "The do-operator deletes the arrows into X (graph surgery); observation can carry confounding."
+            },
+            {
+              "q": "A collider is a variable that:",
+              "choices": [
+                "Lies on the causal path from X to Y",
+                "Is a common cause of X and Y",
+                "Is a common effect of X and Y — conditioning on it induces a spurious association",
+                "Has no relation to X or Y"
+              ],
+              "answer": 2,
+              "explain": "Both arrows point INTO a collider; conditioning on it opens a non-causal path (a source of selection bias)."
+            },
+            {
+              "q": "Controlling for a mediator (a variable on the causal path from X to Y):",
+              "choices": [
+                "Has no effect on the estimate",
+                "Always removes confounding",
+                "Is required for causal inference",
+                "Blocks part of the very effect you want to measure"
+              ],
+              "answer": 3,
+              "explain": "A mediator transmits the effect; adjusting for it removes that portion of the causal effect — unlike adjusting for a confounder."
+            },
+            {
+              "q": "An instrumental variable lets you estimate a causal effect when confounders are unmeasured, by being a variable that:",
+              "choices": [
+                "Affects X but has no direct path to Y (and no shared confounder with Y)",
+                "Is caused by both X and Y",
+                "Equals the outcome Y",
+                "Is perfectly correlated with the confounder"
+              ],
+              "answer": 0,
+              "explain": "Variation in X driven by the instrument is \"as good as random\", identifying the effect."
+            },
+            {
+              "q": "Selection bias typically arises from:",
+              "choices": [
+                "Randomly sampling the population",
+                "Conditioning on a collider — e.g. studying only hospital-admitted patients",
+                "Increasing the sample size",
+                "Adjusting for a confounder"
+              ],
+              "answer": 1,
+              "explain": "A non-random sample (admission) conditions on a collider, creating associations absent in the full population."
+            },
+            {
+              "q": "Simpson's paradox is fundamentally caused by:",
+              "choices": [
+                "A perfectly randomized experiment",
+                "Too small a sample",
+                "A confounder unevenly distributed across the groups being compared",
+                "Zero correlation"
+              ],
+              "answer": 2,
+              "explain": "When the lurking variable is unbalanced across groups, the pooled trend can reverse the subgroup trends."
+            },
+            {
+              "q": "The key limitation of adjusting for confounders in observational data is that it:",
+              "choices": [
+                "Works only for binary treatments",
+                "Requires randomization",
+                "Always over-corrects",
+                "Only handles confounders you can measure — unmeasured ones leave bias"
+              ],
+              "answer": 3,
+              "explain": "Backdoor adjustment blocks measured confounding paths; unobserved confounders remain the Achilles heel of observational studies."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "The four sources of a correlation",
+              "back": "$X\\to Y$, $Y\\to X$ (reverse), a confounder causing both, or chance — only the first is \"$X$ causes $Y$\"."
+            },
+            {
+              "front": "What is a confounder?",
+              "back": "A variable that influences both $X$ and $Y$, creating a non-causal association between them (e.g. summer heat behind ice-cream sales and drownings)."
+            },
+            {
+              "front": "Simpson's paradox",
+              "back": "An association present in every subgroup can reverse in the aggregate when a confounder is unevenly distributed across groups."
+            },
+            {
+              "front": "Why do randomized experiments establish causation?",
+              "back": "Random assignment makes treatment independent of all confounders, balancing them across groups — so any outcome difference is the treatment's effect."
+            },
+            {
+              "front": "Backdoor adjustment",
+              "back": "Estimate a causal effect from observational data by controlling for (conditioning on) the measured confounders, blocking non-causal paths."
+            },
+            {
+              "front": "do-operator: $P(Y\\mid \\text{do}(X))$ vs $P(Y\\mid X)$",
+              "back": "$\\text{do}(X)$ is intervening to set $X$ (effect of acting); $P(Y\\mid X)$ is merely observing $X$ (may include confounding)."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "Sales of sunglasses correlate with ice-cream sales. Give three non-causal explanations for the correlation.",
+              "hint": "Think confounder, reverse, chance.",
+              "solution": "(1) Confounding: hot, sunny weather drives both. (2) Reverse-ish/common-driver framing: the same \"going outside\" behavior causes both. (3) Chance: in a small sample the two could line up coincidentally. None means sunglasses cause ice-cream cravings."
+            },
+            {
+              "prompt": "A drug shows a 70% recovery rate in men and 60% in women, but a competitor shows 80% in men and 65% in women. Which drug looks better per-subgroup, and what would let the competitor still win overall?",
+              "hint": "Simpson's paradox via uneven group sizes.",
+              "solution": "The competitor is better in BOTH subgroups (80%>70%, 65%>60%). It could still \"lose\" overall only if the first drug were given disproportionately to the easier group — i.e. an uneven confounder distribution. (Here the competitor wins both, so an honest aggregate must also favor it once you weight subgroups equally.) The lesson: always check subgroup vs aggregate."
+            },
+            {
+              "prompt": "Explain in two sentences why a randomized controlled trial identifies a causal effect that an observational study cannot.",
+              "hint": "What does randomization do to confounders?",
+              "solution": "Randomizing the treatment makes it statistically independent of every confounder (measured or not), so the treatment and control groups are comparable and any outcome gap is caused by the treatment. An observational study cannot guarantee this — unmeasured confounders may differ between who did and did not receive the treatment."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Ice cream and drowning",
+              "body": "Monthly ice-cream sales correlate strongly (r≈0.9) with drownings. Should we ban ice cream?",
+              "solution": "No — the confounder is summer heat: it raises both ice-cream sales and swimming (hence drownings). Condition on temperature/season and the correlation disappears. Banning ice cream would do nothing to drownings."
+            },
+            {
+              "title": "The kidney-stone reversal",
+              "body": "Treatment A beats B on small stones (93% vs 87%) and large stones (73% vs 69%), yet B beats A overall (83% vs 78%). How?",
+              "solution": "Stone size confounds the comparison: A was used far more on large (harder) stones, dragging its overall rate down. Within each size A is better; the aggregate is misleading. Compare within subgroups (or randomize) — never trust the pooled number alone."
+            },
+            {
+              "title": "A spurious feature in ML",
+              "body": "A pneumonia model is highly accurate — but partly keys on which hospital's scanner took the X-ray. Why is that dangerous?",
+              "solution": "Scanner ID correlates with severity only because sicker patients were imaged at certain hospitals — it is a confounded, non-causal shortcut. Deploy the model at a new hospital and accuracy collapses. Robust models must rely on causal signal (the lung pathology), not the spurious correlate."
+            }
+          ]
+        },
+        {
+          "id": "ps-causal-graphs",
+          "title": "Causal Graphs & the Backdoor Criterion",
+          "minutes": 17,
+          "content": "<h3>1. The hook: draw your assumptions as a graph</h3>\n<p>A <b>causal DAG</b> (directed acyclic graph) makes your causal assumptions explicit: each node is a variable, each arrow $X\\to Y$ asserts \"$X$ is a direct cause of $Y$\". Once the graph is drawn, simple path rules tell you exactly which variables to adjust for to read a causal effect off observational data — turning a vague worry about confounding into a precise, checkable procedure.</p>\n<h3>2. Nodes, edges, and paths</h3>\n<p>A <b>path</b> is any sequence of connected edges between two nodes, ignoring arrow direction. A <b>causal path</b> follows the arrows from $X$ to $Y$ (it carries the effect we want). A <b>backdoor path</b> starts with an arrow <em>into</em> $X$ — it is non-causal but still transmits association (this is confounding). The goal: keep causal paths open, block every backdoor path.</p>\n<h3>3. The three building blocks</h3>\n<div data-viz=\"causal-dag\"></div>\n<p>Every path is built from three junctions. A <b>chain</b> $X\\to Z\\to Y$ ($Z$ a mediator) and a <b>fork</b> $X\\leftarrow Z\\to Y$ ($Z$ a confounder) both transmit association — and both are <em>blocked</em> by conditioning on $Z$. A <b>collider</b> $X\\to Z\\leftarrow Y$ is the opposite: it blocks association by default, and conditioning on $Z$ (or a descendant) <em>opens</em> it, creating spurious correlation.</p>\n<h3>4. d-separation: when does information flow?</h3>\n<p>$X$ and $Y$ are <b>d-separated</b> by a set $Z$ — implying $X \\perp Y \\mid Z$ — when every path between them is blocked. A path is blocked if it contains a chain or fork whose middle node is in $Z$, <em>or</em> a collider whose node (and all its descendants) is <em>not</em> in $Z$. d-separation is the graphical test for conditional independence.</p>\n<h3>5. The backdoor criterion</h3>\n<p>To identify the causal effect of $X$ on $Y$, find an adjustment set $Z$ that (1) <b>blocks every backdoor path</b> from $X$ to $Y$, and (2) contains <b>no descendant of $X$</b>. Such a $Z$ \"satisfies the backdoor criterion\" — controlling for it removes all confounding while leaving the causal path intact. The graph, not the data, tells you which $Z$ qualifies.</p>\n<h3>6. The adjustment formula</h3>\n<p>Given a valid backdoor set $Z$, the interventional distribution is the confounder-weighted average $$P(Y\\mid \\text{do}(X{=}x)) = \\sum_z P(Y\\mid X{=}x,\\, Z{=}z)\\,P(Z{=}z).$$ Compare that to the naive $P(Y\\mid X{=}x)$, which mixes in confounding. The code below contrasts them on a severity-confounded drug trial:</p>\n<div data-code=\"javascript\" data-expected=\"adjusted ATE = 0.10\">// Effect of treatment X on recovery Y, confounded by severity Z\nconst pz = { 0: 0.6, 1: 0.4 };                 // 60% mild (z=0), 40% severe (z=1)\nconst pY = { \"1,0\": 0.9, \"0,0\": 0.8,           // P(recover | treated/untreated, mild)\n             \"1,1\": 0.6, \"0,1\": 0.5 };         // P(recover | treated/untreated, severe)\n// Backdoor adjustment: average the within-severity effect over P(z)\nlet ate = 0;\nfor (const z of [0, 1]) ate += (pY[\"1,\" + z] - pY[\"0,\" + z]) * pz[z];\nconsole.log(\"adjusted ATE = \" + ate.toFixed(2));\n// Within EACH severity the drug adds 0.10 -- the honest causal effect, free of the\n// severity confounding that a naive treated-minus-untreated comparison would carry.</div>\n<h3>7. When you cannot adjust</h3>\n<p>Sometimes no measured set blocks the backdoors (an unobserved confounder). Two escapes: the <b>front-door criterion</b> exploits a fully-observed mediator to route around unmeasured confounding, and an <b>instrumental variable</b> uses a source of \"as-good-as-random\" variation in $X$. Both recover causal effects when plain adjustment cannot.</p>\n<h3>8. Why this matters for ML and experimentation</h3>\n<p>DAGs explain <em>why</em> randomized A/B tests work (randomizing $X$ deletes all arrows into it, erasing every backdoor), which features are safe to condition on, and when a model will break under distribution shift (it leaned on a backdoor, not a causal, path). The same graphs underlie causal ML, fairness analysis, and treatment-effect estimation.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: d-separation, precisely</summary>\n<p>A path is <b>blocked</b> by a set $Z$ if it contains either (i) a chain $a\\to b\\to c$ or fork $a\\leftarrow b\\to c$ with the middle node $b\\in Z$, or (ii) a collider $a\\to b\\leftarrow c$ with $b\\notin Z$ <em>and</em> no descendant of $b$ in $Z$. If every path from $X$ to $Y$ is blocked, they are d-separated given $Z$, which implies $X\\perp Y\\mid Z$ in every distribution compatible with the graph.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the front-door criterion</summary>\n<p>Suppose $X\\to M\\to Y$ with an <em>unmeasured</em> confounder between $X$ and $Y$, but $M$ fully mediates the effect and is itself unconfounded with $Y$ given $X$. Then you can identify the effect in two adjusted steps — $X$ on $M$, then $M$ on $Y$ — and chain them. The front-door formula recovers $P(Y\\mid\\text{do}(X))$ even though no backdoor set exists.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why not control for everything?</summary>\n<p>\"Adjust for every covariate\" is wrong. Conditioning on a <b>mediator</b> removes part of the causal effect; conditioning on a <b>collider</b> (or its descendant) opens a spurious path; and conditioning on a pre-treatment collider can even create \"M-bias\" between two otherwise-independent confounders. The DAG is what distinguishes a helpful control from a harmful one — data alone cannot.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "An arrow $X\\to Y$ in a causal DAG means:",
+              "choices": [
+                "$X$ is a direct cause of $Y$",
+                "$X$ and $Y$ are correlated",
+                "$Y$ causes $X$",
+                "$X$ and $Y$ are independent"
+              ],
+              "answer": 0,
+              "explain": "Edges encode direct causation, not mere association."
+            },
+            {
+              "q": "A backdoor path from $X$ to $Y$ is:",
+              "choices": [
+                "The direct causal path $X\\to Y$",
+                "A non-causal path that starts with an arrow into $X$",
+                "Any path of length one",
+                "A path that cannot transmit association"
+              ],
+              "answer": 1,
+              "explain": "Backdoor paths begin with an arrow into X and carry confounding."
+            },
+            {
+              "q": "The backdoor criterion requires an adjustment set $Z$ that:",
+              "choices": [
+                "Includes at least one collider",
+                "Contains every variable in the graph",
+                "Blocks all backdoor paths and contains no descendant of $X$",
+                "Is always empty"
+              ],
+              "answer": 2,
+              "explain": "Block backdoors, exclude descendants of X (mediators/effects)."
+            },
+            {
+              "q": "A chain or fork path is blocked when you:",
+              "choices": [
+                "Remove the outcome",
+                "Condition on a collider",
+                "Leave all nodes unconditioned",
+                "Condition on its middle (non-collider) node"
+              ],
+              "answer": 3,
+              "explain": "Conditioning on the mediator/confounder middle node blocks the path."
+            },
+            {
+              "q": "A path through a collider is:",
+              "choices": [
+                "Blocked by default, but opened by conditioning on the collider",
+                "Always open",
+                "Opened by leaving the collider unconditioned",
+                "Unaffected by conditioning"
+              ],
+              "answer": 0,
+              "explain": "Colliders block until you condition on them (or a descendant)."
+            },
+            {
+              "q": "To estimate the causal effect of $X$ on $Y$ you should adjust for:",
+              "choices": [
+                "Every available variable",
+                "Confounders (backdoor variables), not mediators or colliders",
+                "Only colliders",
+                "Only mediators"
+              ],
+              "answer": 1,
+              "explain": "Adjust for confounders; controlling mediators/colliders introduces bias."
+            },
+            {
+              "q": "Conditioning on a mediator on the $X\\to Y$ path:",
+              "choices": [
+                "Has no effect on the estimate",
+                "Removes confounding with no downside",
+                "Blocks part of the causal effect, underestimating it",
+                "Is required by the backdoor criterion"
+              ],
+              "answer": 2,
+              "explain": "A mediator transmits the effect; adjusting for it removes that portion."
+            },
+            {
+              "q": "In $P(Y\\mid\\text{do}(X{=}x))=\\sum_z P(Y\\mid X{=}x,Z{=}z)P(Z{=}z)$, the sum is over:",
+              "choices": [
+                "All nodes in the graph",
+                "The values of the outcome $Y$",
+                "The values of the treatment $X$",
+                "The values of the adjustment set $Z$"
+              ],
+              "answer": 3,
+              "explain": "Adjustment re-weights strata of the backdoor set Z by P(z)."
+            },
+            {
+              "q": "The \"acyclic\" in DAG means the graph has:",
+              "choices": [
+                "No directed cycles — you cannot follow arrows back to where you started",
+                "No more than one edge",
+                "Only undirected edges",
+                "Exactly one collider"
+              ],
+              "answer": 0,
+              "explain": "Causal DAGs forbid directed cycles, so causation has a consistent direction."
+            },
+            {
+              "q": "Randomly assigning $X$ changes its DAG by:",
+              "choices": [
+                "Adding arrows into $X$",
+                "Deleting every arrow into $X$, so no backdoor paths remain",
+                "Removing the outcome $Y$",
+                "Creating a collider at $X$"
+              ],
+              "answer": 1,
+              "explain": "Randomization makes X independent of its causes — graph surgery on X."
+            },
+            {
+              "q": "The front-door criterion identifies an effect by using:",
+              "choices": [
+                "An additional confounder",
+                "A larger sample size",
+                "A fully-observed mediator to bypass unmeasured confounding",
+                "A collider as a control"
+              ],
+              "answer": 2,
+              "explain": "A measured mediator lets you route around unobserved X-Y confounding."
+            },
+            {
+              "q": "$X$ and $Y$ are d-separated by $Z$ when:",
+              "choices": [
+                "They share a collider",
+                "At least one path is open",
+                "$Z$ is empty",
+                "Every path between them is blocked given $Z$"
+              ],
+              "answer": 3,
+              "explain": "d-separation requires ALL paths blocked, implying conditional independence."
+            },
+            {
+              "q": "A descendant of $X$ must be excluded from the adjustment set because:",
+              "choices": [
+                "It is affected by $X$, so conditioning on it can distort the causal effect",
+                "It always blocks backdoor paths",
+                "It is never measured",
+                "It is the treatment itself"
+              ],
+              "answer": 0,
+              "explain": "Descendants of X (mediators/effects) bias the estimate if adjusted for."
+            },
+            {
+              "q": "A fork $X\\leftarrow Z\\to Y$ produces:",
+              "choices": [
+                "A direct causal effect of $X$ on $Y$",
+                "A non-causal (confounding) association between $X$ and $Y$",
+                "Independence that conditioning destroys",
+                "A blocked path by default"
+              ],
+              "answer": 1,
+              "explain": "A common cause Z confounds X and Y until you condition on Z."
+            },
+            {
+              "q": "The naive $P(Y\\mid X)$ can differ from $P(Y\\mid\\text{do}(X))$ because:",
+              "choices": [
+                "do() requires more data",
+                "They are identical by definition",
+                "Observing $X$ carries confounding; intervening removes it",
+                "Conditioning deletes arrows into $X$"
+              ],
+              "answer": 2,
+              "explain": "Only do() severs the backdoor paths; plain conditioning leaves them."
+            },
+            {
+              "q": "An instrumental variable is one that:",
+              "choices": [
+                "Is a descendant of $Y$",
+                "Is a common effect of $X$ and $Y$",
+                "Equals the confounder",
+                "Affects $X$ but has no direct path to $Y$ (and no shared confounder)"
+              ],
+              "answer": 3,
+              "explain": "An instrument injects as-good-as-random variation into X."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "What does an edge $X\\to Y$ in a causal DAG assert?",
+              "back": "That $X$ is a <b>direct cause</b> of $Y$ (relative to the other variables in the graph)."
+            },
+            {
+              "front": "What is a backdoor path?",
+              "back": "A non-causal path from $X$ to $Y$ that starts with an arrow <em>into</em> $X$; it transmits confounding association."
+            },
+            {
+              "front": "The backdoor criterion",
+              "back": "Adjust for a set $Z$ that blocks all backdoor paths from $X$ to $Y$ and contains no descendant of $X$."
+            },
+            {
+              "front": "When is a path blocked (d-separation)?",
+              "back": "If a chain/fork has its middle node in $Z$, or a collider has its node (and all descendants) NOT in $Z$."
+            },
+            {
+              "front": "The backdoor adjustment formula",
+              "back": "$P(Y\\mid\\text{do}(X{=}x))=\\sum_z P(Y\\mid X{=}x,Z{=}z)\\,P(Z{=}z)$ for a valid backdoor set $Z$."
+            },
+            {
+              "front": "Why does randomizing $X$ identify the effect?",
+              "back": "It deletes every arrow into $X$, so there are no backdoor paths left to block."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "In a fork $X\\leftarrow Z\\to Y$ (with $X\\to Y$ also present), what is the adjustment set needed to estimate the effect of $X$ on $Y$, and why?",
+              "hint": "Block the backdoor through Z.",
+              "solution": "Adjust for $\\{Z\\}$. The backdoor path $X\\leftarrow Z\\to Y$ is a fork through $Z$; conditioning on $Z$ blocks it, leaving only the causal path $X\\to Y$. $Z$ is not a descendant of $X$, so it satisfies the backdoor criterion."
+            },
+            {
+              "prompt": "Explain why conditioning on a collider biases a causal estimate.",
+              "hint": "What does conditioning on a collider do to the path?",
+              "solution": "A collider $X\\to Z\\leftarrow Y$ blocks its path by default, so $X$ and $Y$ are unassociated through it. Conditioning on $Z$ (e.g. by selecting on it) opens the path, inducing a spurious, non-causal association between $X$ and $Y$ — the estimate now reflects selection/collider bias, not the true effect."
+            },
+            {
+              "prompt": "State the two conditions of the backdoor criterion for an adjustment set $Z$.",
+              "hint": "Blocking + a restriction on descendants.",
+              "solution": "(1) $Z$ blocks every backdoor path from $X$ to $Y$ (paths into $X$). (2) $Z$ contains no descendant of $X$. Then $P(Y\\mid\\text{do}(X))=\\sum_z P(Y\\mid X,z)P(z)$."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Choosing the adjustment set",
+              "body": "Genotype $Z$ affects both smoking $X$ and lung cancer $Y$; smoking also causes cancer. To estimate smoking's effect, what do you adjust for?",
+              "solution": "Adjust for $Z$ (the genotype). It opens a backdoor fork $X\\leftarrow Z\\to Y$; conditioning on $Z$ blocks that confounding path while leaving the causal $X\\to Y$ intact. If $Z$ were unmeasured you would need an instrument or front-door route instead."
+            },
+            {
+              "title": "A collider you must not control for",
+              "body": "Talent $X$ and looks $Y$ are independent in the population, but both help you become a celebrity $Z$. Among celebrities, talent and looks are negatively correlated. Why?",
+              "solution": "$Z$ is a collider ($X\\to Z\\leftarrow Y$). Studying only celebrities conditions on $Z$, opening the collider path and inducing a spurious negative association — if a celebrity isn't talented, they're probably good-looking (and vice versa). Controlling for \"is a celebrity\" would manufacture a correlation that isn't causal."
+            },
+            {
+              "title": "Reading an effect off the formula",
+              "body": "With confounder $Z$, you have $P(Y{=}1\\mid X{=}1,Z)$ and $P(Z)$. How do you get the causal effect?",
+              "solution": "Use backdoor adjustment: $P(Y{=}1\\mid\\text{do}(X{=}1))=\\sum_z P(Y{=}1\\mid X{=}1,z)P(z)$, and similarly for $X{=}0$; subtract for the average treatment effect. This re-weights each stratum by its population share $P(z)$ rather than by how treatment happened to be distributed — exactly what the code example computes."
             }
           ]
         }

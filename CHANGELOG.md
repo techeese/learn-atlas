@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 686 — Curriculum structure: dedicated "Causal Inference" module in PS (workflow / understandability)
+The two causal lessons were filed under M3 "Joint Distributions & Dependence", which is really about covariance/correlation/joint distributions — a poor home. Moved `ps-causation-confounding`
+and `ps-causal-graphs` into a new **PS Module 7 "Causal Inference"** (M3 returns to its 3 dependence lessons). Lesson IDs are unchanged, so routing/progress/prereqs are unaffected; this is pure
+navigation/curriculum hygiene that also gives the causal thread a proper home to grow into. PS now **7 modules**.
+Verified: round-trip guard held; gate ALL GREEN; **headless** — the PS course page lists the new "Causal Inference" module, `ps-causal-graphs` still routes (with its `causal-dag` viz), kErr=0, errs=0. SW cache `atlas-v623` → `atlas-v624`.
+
 ## iter 685 — Causal-graphs lesson MCQ top-up 8 → 16 (content / assessment)
 Brought `ps-causal-graphs` to the 16-MCQ standard (the gate parity-warning had flagged it at 8/16). Added **8 new MCQs**, distinct from the first eight: DAG acyclicity, how randomization deletes
 arrows into X, the front-door criterion, the d-separation definition, why descendants of X are excluded from the adjustment set, fork = confounding, naive `P(Y|X)` vs `P(Y|do(X))`, and the
