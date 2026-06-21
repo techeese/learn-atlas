@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 629 — FIX: streak pill clipped off the right edge on mobile (owner bug report · mobile)
+**Owner-reported bug:** the N-day streak display wasn't rendering correctly. Root cause was **mobile-only**: the header streak pill (`🔥 N day streak`) carries
+`margin-left:auto`, which pins it to the far right of the topbar. On the ≤900px layout the topbar wraps, but the auto-margin made the pill **overflow past the right viewport
+edge instead of wrapping** — at 390px the "day streak" label was clipped. (The streak *logic* was correct throughout — number, flame tiers, tick-up, and all dashboard/stats
+readouts verified fine on desktop.) Fix, scoped to the `≤900px` media query only: drop the pill's `margin-left:auto` and give `.level-badge` `margin-right:auto` instead, so the
+pill flows after the badge and wraps cleanly, always fully on-screen. Desktop layout (which keeps the auto-margin) is untouched.
+Verified with seeded saves in headless Chrome: desktop header at streak=12/42/365 renders `🔥 N day streak` correctly (high-zoom screenshot) with correct flame tiers; a
+new-day tick-up 12→13 propagates to header + dashboard + stats; **at true 390px (iframe wrapper) the pill is now fully visible, no clipping** (before/after screenshots);
+gate ALL GREEN; all-routes smoke errs=0. SW cache `atlas-v569` → `atlas-v570`.
+
 ## iter 628 — Screen-reader labels on graded quiz choices (accessibility)
 When a quiz answer locks, the correct choice turns green and a wrong pick turns red — but that's **visual only**, so a screen-reader user who answers wrong isn't told *which*
 option was correct. Added programmatic, **`sr-only`** status text appended to the locked choices: the correct option reads "(correct answer)" and the picked-wrong option

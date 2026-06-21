@@ -722,6 +722,11 @@ body::after {
   .topbar-search { font-size: 18px; }
   .topbar { padding: 12px 18px; gap: 12px; flex-wrap: wrap; }
   .xp-wrap { order: 5; max-width: 100%; flex-basis: 100%; }
+  /* the streak pill must never clip off the right edge on narrow screens: drop the auto-margin
+     (which pinned it to the right and let it overflow) so it flows after the level badge and
+     wraps cleanly when there isn't room. level-badge takes the free space to keep things tidy. */
+  .level-badge { margin-right: auto; }
+  .streak { margin-left: 0; }
   .view { padding: 24px 18px 80px; }
   .stat-strip { grid-template-columns: repeat(2,1fr); }
   .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 55; }
