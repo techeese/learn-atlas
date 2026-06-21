@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 705 — Library: references for the Causal & Optimization arcs (reference)
+The two newest arcs had no Library resources. Added 4 real, free/high-quality references: **The Book of Why** (Pearl) and **Causal Inference: The Mixtape** (Cunningham) to Probability & Statistics; and
+**Convex Optimization** (Boyd & Vandenberghe — the free standard text on duality/KKT) and **Convex Optimization EE364A** (Boyd's Stanford course) to Calculus. PS refs **8 → 10**, calc refs **5 → 7**.
+Verified: references.js parses; gate ALL GREEN; **headless** — all 4 render on the Library page (4/4), kErr=0, errs=0. SW cache `atlas-v642` → `atlas-v643`.
+
 ## iter 704 — Knowledge Map: connect RL planning to dynamic programming (content structure)
 Audited all 106 prereq-less lessons: LA/calc/algos (65) are intentionally unwired foundations; the real gap was in applied topics. **Value iteration and policy iteration literally *are* dynamic
 programming** (both lessons call the Bellman update "the bedrock under all of dynamic programming"), yet neither linked to `a-dynamic-programming`. Added **`rl-value-iteration → a-dynamic-programming`**

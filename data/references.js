@@ -15,7 +15,9 @@ window.REFERENCES = {
     { title: "18.01 Single Variable Calculus", by: "MIT OCW", kind: "course", url: "https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/", note: "Full lectures, problem sets, exams." },
     { title: "Paul's Online Math Notes", by: "Paul Dawkins", kind: "reference", url: "https://tutorial.math.lamar.edu/", note: "Crystal-clear notes & worked examples for every topic." },
     { title: "Calculus", by: "Gilbert Strang (MIT)", kind: "book", url: "https://ocw.mit.edu/resources/res-18-001-calculus-online-textbook-spring-2005/", note: "Free, readable, application-driven textbook." },
-    { title: "Khan Academy: Calculus", by: "Khan Academy", kind: "course", url: "https://www.khanacademy.org/math/calculus-1", note: "Bite-sized practice with instant feedback." }
+    { title: "Khan Academy: Calculus", by: "Khan Academy", kind: "course", url: "https://www.khanacademy.org/math/calculus-1", note: "Bite-sized practice with instant feedback." },
+    { title: "Convex Optimization", by: "Boyd & Vandenberghe", kind: "book", url: "https://web.stanford.edu/~boyd/cvxbook/", note: "The free standard text on convex optimization, duality, and KKT — the math behind constrained ML." },
+    { title: "Convex Optimization (EE364A)", by: "Stephen Boyd · Stanford", kind: "course", url: "https://web.stanford.edu/class/ee364a/", note: "Boyd's full lecture course with slides and videos — gradient methods, duality, and applications." }
   ],
   "algorithms": [
     { title: "Introduction to Algorithms (CLRS)", by: "Cormen, Leiserson, Rivest, Stein", kind: "book", url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/", note: "The definitive reference." },
@@ -52,7 +54,9 @@ window.REFERENCES = {
     { title: "An Introduction to Statistical Learning", by: "James, Witten, Hastie & Tibshirani", kind: "book", url: "https://www.statlearning.com/", note: "Free textbook bridging statistics and machine learning — the gentle ISL." },
     { title: "Statistical Rethinking", by: "Richard McElreath", kind: "course", url: "https://xcelab.net/rm/statistical-rethinking/", note: "The most loved Bayesian course — builds the whole subject from priors and posteriors with free lectures." },
     { title: "Bayesian Methods for Hackers", by: "Cameron Davidson-Pilon", kind: "interactive", url: "https://dataorigami.net/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/", note: "Free, code-first Bayesian inference in notebooks (PyMC) — learn MCMC by running it." },
-    { title: "Bayes' theorem, the geometry of changing beliefs", by: "3Blue1Brown", kind: "video", url: "https://www.youtube.com/watch?v=HZGCoVF3YvM", note: "A visual derivation that makes prior × likelihood → posterior click." }
+    { title: "Bayes' theorem, the geometry of changing beliefs", by: "3Blue1Brown", kind: "video", url: "https://www.youtube.com/watch?v=HZGCoVF3YvM", note: "A visual derivation that makes prior × likelihood → posterior click." },
+    { title: "The Book of Why", by: "Judea Pearl & Dana Mackenzie", kind: "book", url: "http://bayes.cs.ucla.edu/WHY/", note: "The accessible introduction to causal inference — confounders, colliders, and the do-operator, from the field's founder." },
+    { title: "Causal Inference: The Mixtape", by: "Scott Cunningham", kind: "book", url: "https://mixtape.scunning.com/", note: "Free online book on estimating causal effects — RCTs, matching, IV, and difference-in-differences, with code." }
   ],
   "machine-learning": [
     { title: "An Introduction to Statistical Learning (ISL)", by: "James, Witten, Hastie & Tibshirani", kind: "book", url: "https://www.statlearning.com/", note: "The best first ML book — intuitive, with free PDF, R and Python labs. Start here." },
