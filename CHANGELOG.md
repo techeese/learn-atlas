@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 697 — Glossary: 10 optimization & duality terms (reference)
+Completed the duality lesson's glossary integration (its vocabulary powers the inline hover-tooltips site-wide). Added **10 terms**: Lagrangian, Dual function, Weak duality, Strong duality, Duality
+gap, KKT conditions, Complementary slackness, Slater's condition, Shadow price, and Convex set. Glossary **243 → 253**. (The render guard caught a raw `&` in the KKT def before it could ship — reworded.)
+Verified: glossary parses; gate ALL GREEN; **headless** — all 10 render on `#/glossary` (10/10), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v634` → `atlas-v635`.
+
 ## iter 696 — Knowledge Map: connect the SVM to its mathematical basis (content structure)
 Integrated iter-693's duality lesson into the cross-topic prerequisite graph. The Support Vector Machine is *solved via* Lagrangian duality (the dual derivation is what enables the kernel trick),
 so added **`ml-svm → c-duality-kkt`** to `data/prereqs.js` (alongside its existing `la-dot-product-norms`). This wires the calculus optimization backbone to its headline ML application in the

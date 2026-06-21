@@ -257,5 +257,15 @@ window.GLOSSARY = [
   { term: "Average treatment effect (ATE)", topic: "probability-statistics", def: "$\\mathbb E[Y(1)-Y(0)]$, the mean causal effect of treatment across the population; estimable by a randomized experiment's difference in mean outcomes." },
   { term: "Difference-in-differences", topic: "probability-statistics", def: "An observational estimator equal to (treated group's change) minus (control group's change); valid under the parallel-trends assumption." },
   { term: "Causal DAG", topic: "probability-statistics", def: "A directed acyclic graph whose edges $X\\to Y$ assert direct causation; its path structure dictates which variables to adjust for to identify an effect." },
-  { term: "Simpson's paradox", topic: "probability-statistics", def: "An association present within every subgroup can reverse in the aggregate when a confounder is unevenly distributed across the groups." }
+  { term: "Simpson's paradox", topic: "probability-statistics", def: "An association present within every subgroup can reverse in the aggregate when a confounder is unevenly distributed across the groups." },
+  { term: "Lagrangian", topic: "calculus", def: "$L(x,\\lambda,\\nu)=f(x)+\\sum_i\\lambda_i g_i(x)+\\sum_j\\nu_j h_j(x)$ — folds constraints into the objective via multipliers ($\\lambda_i\\ge 0$ for inequalities). Its stationary points characterize constrained optima." },
+  { term: "Dual function", topic: "calculus", def: "$g(\\lambda,\\nu)=\\inf_x L(x,\\lambda,\\nu)$ — the Lagrangian minimized over $x$. Always concave (an infimum of affine functions) and a lower bound on the primal optimum." },
+  { term: "Weak duality", topic: "calculus", def: "$d^\\star\\le p^\\star$: the dual optimum never exceeds the primal optimum, for <em>any</em> problem. Their difference is the duality gap." },
+  { term: "Strong duality", topic: "calculus", def: "$d^\\star=p^\\star$ (zero duality gap). Holds for convex problems under Slater's condition, so solving the dual solves the primal." },
+  { term: "Duality gap", topic: "calculus", def: "$p^\\star-d^\\star\\ge 0$, the shortfall between the primal and dual optima. It is zero exactly when strong duality holds." },
+  { term: "KKT conditions", topic: "calculus", def: "Karush–Kuhn–Tucker: stationarity ($\\nabla_x L=0$), primal and dual feasibility ($\\lambda\\ge 0$), and complementary slackness — necessary and sufficient for optimality in convex problems with strong duality." },
+  { term: "Complementary slackness", topic: "calculus", def: "$\\lambda_i^\\star\\, g_i(x^\\star)=0$: each inequality constraint is either active ($g_i=0$) or has a zero multiplier. It identifies an SVM's support vectors." },
+  { term: "Slater's condition", topic: "calculus", def: "A constraint qualification: a strictly feasible point exists (some $x$ with every $g_i(x)\\lt 0$). It guarantees strong duality for convex problems." },
+  { term: "Shadow price", topic: "calculus", def: "The optimal multiplier $\\lambda_i^\\star$ read as sensitivity — how much the optimum would improve per unit relaxation of constraint $i$." },
+  { term: "Convex set", topic: "calculus", def: "A set that contains the entire line segment between any two of its points. Convex optimization minimizes a convex function over a convex set, where every local optimum is global." }
 ];
