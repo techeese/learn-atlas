@@ -6393,6 +6393,162 @@
               "solution": "Use backdoor adjustment: $P(Y{=}1\\mid\\text{do}(X{=}1))=\\sum_z P(Y{=}1\\mid X{=}1,z)P(z)$, and similarly for $X{=}0$; subtract for the average treatment effect. This re-weights each stratum by its population share $P(z)$ rather than by how treatment happened to be distributed — exactly what the code example computes."
             }
           ]
+        },
+        {
+          "id": "ps-causal-estimation",
+          "title": "Estimating Causal Effects: Experiments & Observational Methods",
+          "minutes": 17,
+          "content": "<h3>1. The hook: from \"what's the effect?\" to a number</h3>\n<p>Knowing a DAG tells you <em>which</em> variables to adjust for; this lesson turns that into an actual estimate. The target is usually the <b>average treatment effect</b> $\\text{ATE}=\\mathbb E[Y(1)-Y(0)]$ — the average difference between the outcome if everyone were treated versus untreated. The trouble: we never see both potential outcomes for the same unit, so every method below is a clever way to fill in the missing half.</p>\n<h3>2. The randomized experiment (and the A/B test)</h3>\n<div data-viz=\"ps-ci-coverage\"></div>\n<p>Randomization makes treatment independent of every confounder, so the effect is just the <b>difference in mean outcomes</b>: $\\widehat{\\text{ATE}}=\\bar Y_{\\text{treat}}-\\bar Y_{\\text{control}}$. An online <b>A/B test</b> is exactly this experiment, and you report the difference with a confidence interval (above). The width shrinks like $1/\\sqrt{n}$, which is what sample-size/power planning is about.</p>\n<h3>3. When you cannot randomize</h3>\n<p>Often you only have observational data. Then you lean on the backdoor criterion and an <em>estimation</em> method that adjusts for the measured confounders $Z$. The three workhorses are propensity scores, instrumental variables, and difference-in-differences — each making a different assumption to stand in for randomization.</p>\n<h3>4. Propensity scores</h3>\n<p>The <b>propensity score</b> is the probability of treatment given covariates, $e(Z)=P(X{=}1\\mid Z)$. Remarkably, matching or weighting units so the treated and untreated have the same distribution of $e(Z)$ balances <em>all</em> the covariates in $Z$ at once — collapsing a high-dimensional adjustment into one number. Inverse-propensity weighting reweights each unit by $1/e(Z)$ (treated) or $1/(1-e(Z))$ (control) to mimic a randomized sample.</p>\n<h3>5. Instrumental variables</h3>\n<p>When confounders are unmeasured, an <b>instrument</b> $Z$ (affects $X$, no direct path to $Y$) identifies the effect through the <b>Wald estimator</b> $\\hat\\beta=\\dfrac{\\operatorname{Cov}(Z,Y)}{\\operatorname{Cov}(Z,X)}$ — the effect of $Z$ on $Y$ divided by its effect on $X$. Intuitively, $Z$ nudges $X$ in an as-good-as-random way, and we scale the resulting change in $Y$ by how much $X$ actually moved.</p>\n<h3>6. Difference-in-differences</h3>\n<p>With before/after data on a treated and an untreated group, <b>difference-in-differences</b> (DiD) subtracts the control group's change (the background trend) from the treated group's change. It assumes <b>parallel trends</b>: absent treatment, both groups would have moved together. Run it:</p>\n<div data-code=\"javascript\" data-expected=\"DiD estimate = 0.15\">// Difference-in-differences: did a policy raise the outcome rate?\nconst treat   = { before: 0.30, after: 0.50 };   // group that got the policy\nconst control = { before: 0.30, after: 0.35 };   // comparison group that did not\nconst did = (treat.after - treat.before) - (control.after - control.before);\nconsole.log(\"DiD estimate = \" + did.toFixed(2));\n// The control's +0.05 is the background trend; subtracting it leaves the policy's +0.15.</div>\n<h3>7. Pitfalls that fake an effect</h3>\n<p>Estimation has its own traps. <b>Peeking</b> — repeatedly checking an A/B test and stopping when it looks significant — inflates the false-positive rate far above the nominal level. <b>Novelty and seasonality</b> can masquerade as a lift. And every observational method shares one Achilles heel: <b>unmeasured confounding</b>, which no amount of clever weighting can remove.</p>\n<h3>8. Putting it together</h3>\n<p>The ladder of credibility: a randomized experiment when you can run one; otherwise propensity methods (if you measured the confounders), an instrument (if you have one), or difference-in-differences (if parallel trends hold). State your assumption, estimate the effect with an interval, and stress-test it — a causal number is only as good as the assumption that licenses it.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the potential-outcomes framework</summary>\n<p>Each unit has two <b>potential outcomes</b>: $Y(1)$ if treated and $Y(0)$ if not. The individual effect is $Y(1)-Y(0)$, but we only ever observe one of them — the <em>fundamental problem of causal inference</em>. So we target the average $\\text{ATE}=\\mathbb E[Y(1)-Y(0)]$, which randomization makes estimable because treated and control groups are exchangeable: $\\mathbb E[Y(1)]=\\mathbb E[Y\\mid X{=}1]$ and likewise for control.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: deriving the Wald estimator</summary>\n<p>Write $Y=\\beta X + U$ with the confounder $U$ correlated with $X$. An instrument $Z$ satisfies $\\operatorname{Cov}(Z,U)=0$, so $\\operatorname{Cov}(Z,Y)=\\beta\\operatorname{Cov}(Z,X)$, giving $\\hat\\beta=\\operatorname{Cov}(Z,Y)/\\operatorname{Cov}(Z,X)$. With a binary instrument this is the ratio of differences $\\frac{\\mathbb E[Y\\mid Z{=}1]-\\mathbb E[Y\\mid Z{=}0]}{\\mathbb E[X\\mid Z{=}1]-\\mathbb E[X\\mid Z{=}0]}$, and it estimates a <b>local</b> effect (LATE) for the units the instrument actually moves.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why peeking breaks p-values</summary>\n<p>A fixed-horizon p-value is calibrated to be checked <em>once</em>, at the planned sample size. Each interim look is another chance to cross the threshold by noise, so repeated peeking can push the true type-I error from 5% toward 20–30%. Fixes: fix $n$ in advance, apply alpha-spending, or use <b>always-valid</b> sequential tests (e.g. mixture SPRT) whose guarantees hold at every peek.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "In a randomized experiment, the simplest estimator of the average treatment effect is:",
+              "choices": [
+                "The difference in mean outcomes between the treated and control groups",
+                "The correlation between treatment and outcome",
+                "The ratio of group sizes",
+                "The variance of the outcome"
+              ],
+              "answer": 0,
+              "explain": "Randomization makes the mean difference an unbiased ATE estimate."
+            },
+            {
+              "q": "An online A/B test is fundamentally:",
+              "choices": [
+                "An observational study",
+                "A randomized controlled experiment",
+                "A propensity-score analysis",
+                "An instrumental-variable design"
+              ],
+              "answer": 1,
+              "explain": "Users are randomized to variants — it is an RCT."
+            },
+            {
+              "q": "The propensity score $e(Z)$ is:",
+              "choices": [
+                "The correlation of $X$ and $Y$",
+                "The probability of the outcome, $P(Y{=}1)$",
+                "The probability of treatment given covariates, $P(X{=}1\\mid Z)$",
+                "The treatment effect itself"
+              ],
+              "answer": 2,
+              "explain": "Balancing on e(Z) balances all covariates in Z."
+            },
+            {
+              "q": "The instrumental-variable (Wald) estimator equals:",
+              "choices": [
+                "$\\operatorname{Var}(Y)/\\operatorname{Var}(X)$",
+                "$\\operatorname{Cov}(X,Y)/\\operatorname{Var}(X)$",
+                "$\\operatorname{Cov}(Z,Y)\\cdot\\operatorname{Cov}(Z,X)$",
+                "$\\operatorname{Cov}(Z,Y)/\\operatorname{Cov}(Z,X)$"
+              ],
+              "answer": 3,
+              "explain": "Effect of the instrument on Y divided by its effect on X."
+            },
+            {
+              "q": "Difference-in-differences relies on the assumption of:",
+              "choices": [
+                "Parallel trends between the treated and control groups",
+                "Equal group sizes",
+                "A valid instrument",
+                "A randomized treatment"
+              ],
+              "answer": 0,
+              "explain": "Absent treatment, both groups would change by the same amount."
+            },
+            {
+              "q": "Repeatedly \"peeking\" at an A/B test and stopping when significant:",
+              "choices": [
+                "Reduces the false-positive rate",
+                "Inflates the false-positive (type-I error) rate",
+                "Has no effect on error rates",
+                "Increases statistical power for free"
+              ],
+              "answer": 1,
+              "explain": "Each look is another chance to cross the threshold by noise."
+            },
+            {
+              "q": "Propensity-score matching removes bias only from:",
+              "choices": [
+                "Colliders",
+                "Unmeasured confounders",
+                "Measured confounders included in $Z$",
+                "Random noise"
+              ],
+              "answer": 2,
+              "explain": "Like all adjustment, it cannot touch unmeasured confounders."
+            },
+            {
+              "q": "The chief threat to any observational causal estimate is:",
+              "choices": [
+                "A confidence interval that is too narrow",
+                "Too large a sample",
+                "A randomized treatment",
+                "Unmeasured confounding"
+              ],
+              "answer": 3,
+              "explain": "An unobserved common cause biases the estimate irreducibly."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "The RCT estimator of the average treatment effect",
+              "back": "The difference in mean outcomes, $\\bar Y_{\\text{treat}}-\\bar Y_{\\text{control}}$ — valid because randomization balances confounders."
+            },
+            {
+              "front": "Propensity score $e(Z)$",
+              "back": "$e(Z)=P(X{=}1\\mid Z)$. Matching or weighting on it balances all covariates in $Z$ at once."
+            },
+            {
+              "front": "Instrumental-variable (Wald) estimator",
+              "back": "$\\hat\\beta=\\operatorname{Cov}(Z,Y)/\\operatorname{Cov}(Z,X)$ — effect of the instrument on $Y$ divided by its effect on $X$."
+            },
+            {
+              "front": "Difference-in-differences",
+              "back": "$(\\text{treat after}-\\text{before})-(\\text{control after}-\\text{before})$; assumes <b>parallel trends</b>."
+            },
+            {
+              "front": "Why is \"peeking\" at an A/B test dangerous?",
+              "back": "Repeated interim looks inflate the type-I (false-positive) rate; use a fixed sample size or always-valid sequential tests."
+            },
+            {
+              "front": "Shared limitation of all observational methods",
+              "back": "They only adjust for <em>measured</em> confounders; unmeasured confounding leaves residual bias."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "A treated group's outcome rises from 0.40 to 0.70; a comparable control group rises from 0.40 to 0.55 over the same period. Compute the difference-in-differences estimate.",
+              "hint": "Treated change minus control change.",
+              "solution": "Treated change $=0.70-0.40=0.30$; control change $=0.55-0.40=0.15$. DiD $=0.30-0.15=0.15$. The control's $+0.15$ is the background trend; the policy's effect is $+0.15$."
+            },
+            {
+              "prompt": "Why does a randomized experiment give a more credible effect than propensity-score matching on the same data?",
+              "hint": "Measured vs unmeasured confounders.",
+              "solution": "Randomization balances <em>all</em> confounders, measured or not, by construction. Propensity matching balances only the covariates you put in $Z$; any unmeasured confounder remains and biases the estimate. The RCT removes the assumption that you measured everything that matters."
+            },
+            {
+              "prompt": "State the parallel-trends assumption behind difference-in-differences, and give one way it can fail.",
+              "hint": "What must the control group represent?",
+              "solution": "Parallel trends: absent the treatment, the treated and control groups' outcomes would have changed by the same amount, so the control's change estimates the treated group's counterfactual trend. It fails if something else hit only one group at the same time (e.g. a regional shock), or if the groups were already diverging before treatment."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Reading an A/B test",
+              "body": "Variant B converts at 5.2% vs A at 4.8% over 20,000 users each; the 95% CI for the lift is [0.1%, 0.7%]. What do you conclude?",
+              "solution": "The estimated lift is $+0.4$ percentage points, and the CI excludes 0, so B beats A at the 5% level. Report the interval, not just the point — and only because the test ran to its planned sample size (no peeking) is the 5% guarantee intact."
+            },
+            {
+              "title": "A difference-in-differences evaluation",
+              "body": "A city raises its minimum wage; employment in that city goes 0.30→0.50 while a similar control city goes 0.30→0.35. Estimate the policy effect.",
+              "solution": "DiD $=(0.50-0.30)-(0.35-0.30)=0.20-0.05=0.15$. Subtracting the control's background $+0.05$ trend isolates the policy's $+0.15$ — valid only if the two cities would otherwise have moved in parallel."
+            },
+            {
+              "title": "An instrument for schooling",
+              "body": "To estimate schooling's effect on wages (confounded by ability), you use distance-to-college as an instrument. How does the Wald estimator work?",
+              "solution": "Distance affects years of schooling but plausibly not wages directly. The Wald estimate is $\\operatorname{Cov}(\\text{distance},\\text{wage})/\\operatorname{Cov}(\\text{distance},\\text{schooling})$ — the wage change induced per unit of schooling change driven by distance. It estimates a local effect for those whose schooling actually responds to distance."
+            }
+          ]
         }
       ]
     }

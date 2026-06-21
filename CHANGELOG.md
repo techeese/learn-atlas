@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 687 — NEW lesson: Estimating Causal Effects (content)
+Third lesson of the Causal Inference module. Added `ps-causal-estimation` "Estimating Causal Effects: Experiments & Observational Methods": 8 sections (ATE & potential outcomes · the RCT/A-B
+test estimator + embedded `ps-ci-coverage` · propensity scores · instrumental variables / Wald estimator · **difference-in-differences** · peeking & other pitfalls · the credibility ladder), a
+runnable **DiD code exercise** (policy eval → DiD = 0.15), **3 deep-dives** (potential-outcomes framework · deriving the Wald estimator · why peeking breaks p-values), **6 flashcards, 3 examples,
+3 homework, 8 MCQs** (2/2/2/2, keys asserted). Site **172 lessons**; the Causal Inference module is now **3 lessons** (confounding → graphs/backdoor → estimation).
+Verified: DiD output re-derived in Node; gate ALL GREEN (ran the code; parity warning flags 8/16 MCQ — top-up queued); **headless** — 35 KaTeX/0 errors/rawDollar=0, ps-ci-coverage hydrates,
+3 deep-dives + code runner present, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v624` → `atlas-v625`.
+
 ## iter 686 — Curriculum structure: dedicated "Causal Inference" module in PS (workflow / understandability)
 The two causal lessons were filed under M3 "Joint Distributions & Dependence", which is really about covariance/correlation/joint distributions — a poor home. Moved `ps-causation-confounding`
 and `ps-causal-graphs` into a new **PS Module 7 "Causal Inference"** (M3 returns to its 3 dependence lessons). Lesson IDs are unchanged, so routing/progress/prereqs are unaffected; this is pure
