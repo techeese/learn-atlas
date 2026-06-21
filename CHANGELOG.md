@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 715 — Glossary: MoE & state-space terms (reference)
+Completed the MoE/SSM vocabulary in the glossary (it powers the inline hover-tooltips site-wide). Added **5 terms**: Mixture of Experts (MoE), Top-k routing, Conditional computation, State-space model
+(SSM), and Load balancing (MoE). Glossary **258 → 263**.
+Verified: glossary parses; gate ALL GREEN; **headless** — all 5 render on `#/glossary` (5/5), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v651` → `atlas-v652`.
+
 ## iter 714 — Frontier deep-dive: state-space models (Mamba) (content / understandability)
 Audited the LLM topic for current gaps: RAG, LoRA/PEFT, quantization, chain-of-thought all already have lessons — the one absent modern paradigm was **state-space models / Mamba** (the main
 non-attention sequence model), with zero coverage. Since it's frontier (vs MoE's mainstream), added it proportionately as a 4th deep-dive to `l-self-attention` (where attention's `O(n²)` cost is
