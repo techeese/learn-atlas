@@ -1,0 +1,44 @@
+name: Build & deploy (SEO prerender)
+
+# Runs on every push to main — including the content loop's commits — so the prerendered,
+# crawlable per-lesson pages + sitemap can never go stale relative to the content. The build
+# only happens here in CI; local dev stays zero-build (just open index.html).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push supersedes an in-flight build.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      # The URL the prerendered pages canonicalize/link to. Kept self-consistent with the
+      # current github.io project page. ► When the custom domain goes live, change this to
+      # https://atlascodex.io (and the CNAME file gets added separately).
+      SITE_URL: https://techeese.github.io/learn-atlas
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Prerender lesson pages + sitemap + robots
+        run: node prerender.js
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deploy
+        uses: actions/deploy-pages@v4

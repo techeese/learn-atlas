@@ -132,11 +132,13 @@
           ],
           "homework": [
             {
-              "q": "You build a kNN classifier on (age, annual income) without scaling and find it performs no better than guessing the majority class. Explain what likely went wrong and how to fix it.",
+              "prompt": "You build a kNN classifier on (age, annual income) without scaling and find it performs no better than guessing the majority class. Explain what likely went wrong and how to fix it.",
+              "hint": "Compare the numeric ranges of the two features — which one dominates a Euclidean distance, and what preprocessing puts them on equal footing?",
               "solution": "Income has a vastly larger numeric range than age, so Euclidean distance is dominated by income differences and age is effectively ignored — neighbors are chosen almost entirely by income. Standardize both features (subtract mean, divide by standard deviation) or min-max normalize them so each contributes comparably, then refit. Distance-based methods require scaled features."
             },
             {
-              "q": "For a fixed dataset, describe what happens to the training error and the test (generalization) behavior of kNN as k goes from 1 to n. Why is k=1 not the best choice despite its zero training error?",
+              "prompt": "For a fixed dataset, describe what happens to the training error and the test (generalization) behavior of kNN as k goes from 1 to n. Why is k=1 not the best choice despite its zero training error?",
+              "hint": "Think bias–variance: k=1 fits every point (including noise), large k oversmooths. What does that do to overfitting versus underfitting?",
               "solution": "At k=1 the training error is 0 (each point is its own nearest neighbor) but the model overfits noise — high variance, jagged boundary, poor test accuracy. As k grows, the boundary smooths: variance drops and bias rises. At k=n every prediction is the global majority class (maximally biased). The best test accuracy is at an intermediate k found by cross-validation; k=1's zero training error is a classic overfitting trap, not a sign of a good model."
             },
             {
@@ -282,11 +284,13 @@
           ],
           "homework": [
             {
-              "q": "A node has 8 samples: 6 of class A and 2 of class B. Compute its Gini impurity and its entropy (in bits). Then a split sends all 6 A's left (pure) and both B's right (pure) — what is the information gain (impurity drop) for both measures?",
+              "prompt": "A node has 8 samples: 6 of class A and 2 of class B. Compute its Gini impurity and its entropy (in bits). Then a split sends all 6 A's left (pure) and both B's right (pure) — what is the information gain (impurity drop) for both measures?",
+              "hint": "Gini = 1 − Σ pᵢ²; entropy = −Σ pᵢ log₂ pᵢ. Information gain = parent impurity minus the weighted average of the children's impurities (here both children are pure, so 0).",
               "solution": "Proportions p_A=6/8=0.75, p_B=0.25. Gini = 1 − (0.75² + 0.25²) = 1 − (0.5625 + 0.0625) = 0.375. Entropy = −(0.75·log2 0.75 + 0.25·log2 0.25) = −(0.75·(−0.415) + 0.25·(−2)) = 0.311 + 0.5 = 0.811 bits. Both children are pure (impurity 0), so the weighted child impurity is 0 for both measures. Information gain = parent − 0 = 0.375 (Gini) and 0.811 bits (entropy). A perfect split drives impurity to zero, so the gain equals the parent's impurity."
             },
             {
-              "q": "Explain why a decision tree achieving 100% accuracy on its training set is usually a warning sign rather than a success, and name two ways to address it.",
+              "prompt": "Explain why a decision tree achieving 100% accuracy on its training set is usually a warning sign rather than a success, and name two ways to address it.",
+              "hint": "Zero training error usually means the tree memorized the data — think overfitting, and how pruning, a depth limit, or an ensemble helps.",
               "solution": "100% training accuracy almost always means the tree grew deep enough to isolate individual points into pure leaves — it has memorized the training data including its noise, so it will generalize poorly (high variance, classic overfitting). The training score is not evidence of a good model; the test/validation score is. Fix it by restraining capacity: pre-pruning (cap max depth, require a minimum number of samples per leaf or to split, or a minimum impurity decrease) and/or post-pruning (grow fully, then cost-complexity-prune back branches that don't help a validation set). Ensembling (random forests) also reduces the variance."
             },
             {
@@ -438,11 +442,13 @@
           ],
           "homework": [
             {
-              "q": "A simple linear model predicts house price (in thousands of dollars) as ŷ = 50 + 0.10·(size in sq ft) − 5·(age in years). Interpret each coefficient, and predict the price of a 2000 sq ft, 10-year-old house.",
+              "prompt": "A simple linear model predicts house price (in thousands of dollars) as ŷ = 50 + 0.10·(size in sq ft) − 5·(age in years). Interpret each coefficient, and predict the price of a 2000 sq ft, 10-year-old house.",
+              "hint": "Each coefficient is the change in the prediction per one-unit change in that feature, holding the others fixed. Plug the numbers into the equation for the price.",
               "solution": "Prices are in thousands of dollars. Intercept 50: a hypothetical 0 sq ft, 0-year house has the baseline 50 (i.e. 50k; not physically meaningful, just the anchor). Size coefficient 0.10: each additional square foot adds 0.10 to the prediction, i.e. 100 dollars, holding age fixed. Age coefficient −5: each additional year of age lowers the prediction by 5, i.e. 5,000 dollars, holding size fixed. Prediction: 50 + 0.10·2000 − 5·10 = 50 + 200 − 50 = 200, i.e. 200,000 dollars."
             },
             {
-              "q": "A colleague brags that adding 20 more features raised their model's R² from 0.72 to 0.95 on the training set, calling it a big improvement. Why should you be skeptical, and what would convince you?",
+              "prompt": "A colleague brags that adding 20 more features raised their model's R² from 0.72 to 0.95 on the training set, calling it a big improvement. Why should you be skeptical, and what would convince you?",
+              "hint": "On the training set R² only ever rises as you add features. What would a held-out (validation) check or adjusted R² reveal about real improvement?",
               "solution": "Training R² never decreases when you add features — even pure-noise features can only increase it, because the model has more freedom to fit the training points (including their noise). So a jump from 0.72 to 0.95 on training data is expected and not evidence of a better model; it may well be overfitting. What would convince you is improvement on held-out/test data (or cross-validated R²): if test R² also rose, the extra features carry real signal; if test R² fell or barely moved while training R² soared, it's overfitting. Adjusted R² or a validation curve would also help."
             },
             {
@@ -588,11 +594,13 @@
           ],
           "homework": [
             {
-              "q": "A logistic spam classifier outputs the score z = w·x + b = −1.5 for an email. Compute the predicted probability of spam, and state the predicted class at a 0.5 threshold. Then say what z and the probability would be for a borderline email exactly on the decision boundary.",
+              "prompt": "A logistic spam classifier outputs the score z = w·x + b = −1.5 for an email. Compute the predicted probability of spam, and state the predicted class at a 0.5 threshold. Then say what z and the probability would be for a borderline email exactly on the decision boundary.",
+              "hint": "Apply the sigmoid 1/(1 + e^(−z)). On the decision boundary the probability is exactly 0.5 — which value of z gives that?",
               "solution": "Probability = σ(−1.5) = 1/(1 + e^(1.5)) = 1/(1 + 4.4817) ≈ 1/5.4817 ≈ 0.182. Since 0.182 < 0.5, predict NOT spam (negative class). On the decision boundary the score is z = 0, giving σ(0) = 1/(1+1) = 0.5 exactly — the point of maximum uncertainty, where the classifier is indifferent between the two classes."
             },
             {
-              "q": "In a logistic model for loan default, the coefficient on 'number of prior late payments' is 0.69. Interpret this on the odds scale, and explain why the effect on the probability is not constant per unit even though the effect on log-odds is.",
+              "prompt": "In a logistic model for loan default, the coefficient on 'number of prior late payments' is 0.69. Interpret this on the odds scale, and explain why the effect on the probability is not constant per unit even though the effect on log-odds is.",
+              "hint": "Exponentiate the coefficient: e^0.69 ≈ 2 is the odds multiplier. The sigmoid is non-linear, so the same log-odds step moves the probability by different amounts depending on where you start.",
               "solution": "On the log-odds scale the effect is constant: each additional late payment adds 0.69 to the log-odds of default. On the odds scale, e^(0.69) ≈ 2, so each late payment multiplies the odds of default by about 2 (doubles them), holding other features fixed. The effect on the PROBABILITY is not constant because the sigmoid is nonlinear: doubling the odds moves the probability a lot in the middle (e.g. 0.5 → 0.67) but very little near the extremes (0.99 → 0.995). Equal additive steps in log-odds (or equal multiplicative steps in odds) produce unequal changes in probability — the S-curve flattens at both ends."
             },
             {
@@ -738,11 +746,13 @@
           ],
           "homework": [
             {
-              "q": "You fit ordinary least squares with 50 features on 40 training samples and get wild, huge coefficients and terrible test error. Explain what went wrong and how ridge regression fixes it (mention the matrix).",
+              "prompt": "You fit ordinary least squares with 50 features on 40 training samples and get wild, huge coefficients and terrible test error. Explain what went wrong and how ridge regression fixes it (mention the matrix).",
+              "hint": "With more features than samples, XᵀX is singular (not invertible). How does ridge's +λI term make it invertible and shrink the coefficients?",
               "solution": "With more features than samples (50 > 40), XᵀX is singular (not full rank), so the normal-equations inverse doesn't exist or is numerically unstable — least squares is underdetermined and can fit the 40 points exactly with arbitrary, huge, see-sawing weights that don't generalize (overfitting). Ridge adds λI to get (XᵀX + λI)⁻¹Xᵀy: the +λI makes the matrix invertible (full rank) even when XᵀX isn't, and the L2 penalty shrinks the coefficients to sensible sizes. Tune λ by cross-validation. (Lasso would also help and additionally zero out irrelevant features.)"
             },
             {
-              "q": "A model has two nearly identical (highly correlated) features that are both predictive. Describe how lasso vs ridge would treat them, and which you'd prefer if you want stable coefficients.",
+              "prompt": "A model has two nearly identical (highly correlated) features that are both predictive. Describe how lasso vs ridge would treat them, and which you'd prefer if you want stable coefficients.",
+              "hint": "Lasso (L1) tends to keep one feature and zero the other; ridge (L2) splits the weight between them. Which gives more stable coefficients when features are correlated?",
               "solution": "Lasso tends to pick ONE of the correlated pair and drive the other's weight to exactly zero — and which one it keeps can flip with small data changes, so the coefficients are unstable and the 'selection' is somewhat arbitrary. Ridge keeps BOTH and splits the weight between them (roughly halving each), giving smoother, more stable coefficients across resamples. If you want stable coefficients with correlated predictors, prefer ridge (or elastic net, which groups correlated features while still allowing some sparsity). If you specifically want a sparse model and don't mind which of the pair is kept, lasso is fine."
             },
             {
@@ -894,11 +904,13 @@
           ],
           "homework": [
             {
-              "q": "An SVM is trained and you discover that of 1000 training points, only 12 are support vectors. (a) What does this tell you about the model, and (b) what happens to the boundary if you delete a non-support-vector point versus a support vector?",
+              "prompt": "An SVM is trained and you discover that of 1000 training points, only 12 are support vectors. (a) What does this tell you about the model, and (b) what happens to the boundary if you delete a non-support-vector point versus a support vector?",
+              "hint": "The boundary depends only on the support vectors. What does having very few of them imply, and what changes when you delete a support vector versus a non-support vector?",
               "solution": "(a) The model is very sparse in the data: the entire decision boundary is determined by just those 12 borderline points, so it can be stored and applied using only them — and a small number of support vectors generally signals a well-separated problem and good expected generalization. (b) Deleting a NON-support-vector (a point comfortably on the correct side, outside the margin) changes nothing — retraining gives the identical boundary, because such points don't enter the solution. Deleting a SUPPORT vector can move the boundary, since the margin was resting on it; the SVM would re-solve and find a new maximum-margin hyperplane supported by different points."
             },
             {
-              "q": "Explain the effect of increasing the soft-margin C from very small to very large, in terms of bias, variance, and overfitting. When would you prefer a small C?",
+              "prompt": "Explain the effect of increasing the soft-margin C from very small to very large, in terms of bias, variance, and overfitting. When would you prefer a small C?",
+              "hint": "C sets the penalty for margin violations: large C is a near-hard margin (low bias, high variance), small C a wider, more tolerant one. Which helps when the data is noisy?",
               "solution": "Small C: violations are cheap, so the SVM prioritizes a WIDE margin even if several points fall inside it or are misclassified — this is a simpler, smoother boundary with higher bias and lower variance (more regularized). Large C: violations are heavily penalized, so the SVM contorts the boundary to classify (almost) every training point correctly — a narrow margin, low bias, high variance, prone to overfitting noise. You'd prefer a small C when the data is noisy or overlapping, or when you have limited data and want a robust, generalizing boundary rather than one that chases every training point. The right C is found by cross-validation."
             },
             {
@@ -1044,11 +1056,13 @@
           ],
           "homework": [
             {
-              "q": "A spam filter has P(spam)=0.4, P(ham)=0.6. For the word 'free': P('free'|spam)=0.5, P('free'|ham)=0.1. Ignoring all other words, classify an email containing 'free' by comparing the (unnormalized) class scores, then give the actual posterior probability of spam.",
+              "prompt": "A spam filter has P(spam)=0.4, P(ham)=0.6. For the word 'free': P('free'|spam)=0.5, P('free'|ham)=0.1. Ignoring all other words, classify an email containing 'free' by comparing the (unnormalized) class scores, then give the actual posterior probability of spam.",
+              "hint": "Score each class as P(class) × P('free' | class), compare the two, then normalize by dividing by their sum to get the posterior.",
               "solution": "Unnormalized scores (P(class)·P('free'|class)): spam = 0.4·0.5 = 0.20; ham = 0.6·0.1 = 0.06. Since 0.20 > 0.06, classify as SPAM. To get the posterior, normalize: P(spam|'free') = 0.20/(0.20+0.06) = 0.20/0.26 ≈ 0.769, and P(ham|'free') ≈ 0.231. So the email is spam with about 77% probability. (Note we never needed P('free') itself — it cancels in the normalization.)"
             },
             {
-              "q": "In the same filter, a new email contains the word 'blockchain', which never appeared in any spam training email, so P('blockchain'|spam) was estimated as 0. Explain what goes wrong and how Laplace smoothing fixes it.",
+              "prompt": "In the same filter, a new email contains the word 'blockchain', which never appeared in any spam training email, so P('blockchain'|spam) was estimated as 0. Explain what goes wrong and how Laplace smoothing fixes it.",
+              "hint": "A single zero likelihood makes the whole product zero. How does adding a small pseudo-count (Laplace/add-one smoothing) avoid that?",
               "solution": "Because Naive Bayes multiplies the per-word probabilities, a single P('blockchain'|spam)=0 makes the entire spam score 0 — no matter how spammy every other word is, the email can never be classified spam. One unseen word vetoes the prediction, which is brittle and almost certainly wrong. Laplace (add-one) smoothing fixes it by adding 1 to every count (and adding the vocabulary size to the denominator), so an unseen word gets a small nonzero probability instead of 0. The product is then dominated by the informative words rather than nuked by one zero. Smoothing is essential whenever the feature space is large enough that test data will contain values unseen in training."
             },
             {
@@ -1200,11 +1214,13 @@
           ],
           "homework": [
             {
-              "q": "On a 1-D dataset {1, 2, 3, 10, 11, 12} you run k-means with k=2, starting with centroids at 2 and 11. Carry out one assign step and one update step, and state whether it has converged.",
+              "prompt": "On a 1-D dataset {1, 2, 3, 10, 11, 12} you run k-means with k=2, starting with centroids at 2 and 11. Carry out one assign step and one update step, and state whether it has converged.",
+              "hint": "Assign each point to its nearer centroid (2 or 11), then move each centroid to the mean of its assigned points. It has converged when the assignments stop changing.",
               "solution": "Assign step (nearest of {2, 11}): points 1,2,3 are closer to 2 (distances to 2: 1,0,1; to 11: 10,9,8); points 10,11,12 are closer to 11 (distances to 11: 1,0,1; to 2: 8,9,10). Clusters: {1,2,3} and {10,11,12}. Update step (centroid = mean): mean(1,2,3)=2; mean(10,11,12)=11. The centroids are still 2 and 11 — unchanged — so a re-assign would give the same clusters. It has CONVERGED in one iteration (inertia J = (1+0+1)+(1+0+1) = 4). The clean separation and good initialization made it immediate."
             },
             {
-              "q": "A colleague clusters customers on (age in years, annual income in dollars) with k-means and finds the clusters split almost entirely by income, ignoring age. Explain why, and how to fix it.",
+              "prompt": "A colleague clusters customers on (age in years, annual income in dollars) with k-means and finds the clusters split almost entirely by income, ignoring age. Explain why, and how to fix it.",
+              "hint": "Income has a far larger numeric range than age, so it dominates the Euclidean distance. What scaling puts the two features on equal footing?",
               "solution": "k-means uses Euclidean distance, which sums squared differences across features. Income spans a huge numeric range (tens of thousands) while age spans tens, so income differences dominate the distance almost completely — two customers' 'closeness' is decided by income alone, and age barely registers. The clusters therefore split on income. Fix: standardize each feature first (subtract mean, divide by standard deviation) so age and income contribute on equal footing; then re-run k-means. This is the same scaling requirement as kNN and SVMs — any distance-based method needs comparable feature scales."
             },
             {
@@ -1356,11 +1372,13 @@
           ],
           "homework": [
             {
-              "q": "You have a single decision tree that gets 100% training accuracy but only 70% test accuracy (high variance). Would bagging or boosting be the more natural fix, and why? What does the other one target instead?",
+              "prompt": "You have a single decision tree that gets 100% training accuracy but only 70% test accuracy (high variance). Would bagging or boosting be the more natural fix, and why? What does the other one target instead?",
+              "hint": "Bagging reduces variance (averaging independent high-variance models); boosting reduces bias (sequentially correcting a weak learner). Which matches a high-variance tree?",
               "solution": "Bagging is the natural fix. The symptom — perfect training accuracy but much lower test accuracy — is classic high variance/overfitting, and bagging (and especially random forests) directly reduces variance by averaging many trees trained on different bootstrap samples, smoothing out the overfitting of any single tree, without increasing bias much. Boosting instead targets BIAS: it combines weak/underfitting learners (e.g. shallow stumps) into a strong one, so it's the remedy when your base model is too simple (underfitting), not when a flexible model is overfitting. (Boosting can be applied to trees too, but you'd use shallow ones and careful regularization, since boosting can itself overfit.)"
             },
             {
-              "q": "Explain, using the variance-of-an-average idea, why a random forest can outperform plain bagged trees even with the same number of trees.",
+              "prompt": "Explain, using the variance-of-an-average idea, why a random forest can outperform plain bagged trees even with the same number of trees.",
+              "hint": "Averaging n models divides variance — but fully only if they are independent. How does random feature selection decorrelate the trees beyond plain bagging?",
               "solution": "Averaging n models with per-model variance σ² and pairwise correlation ρ gives ensemble variance ρσ² + (1−ρ)σ²/n. With many trees the second term shrinks, so the floor is ρσ² — set entirely by how correlated the trees are. Plain bagged trees are quite correlated (if one feature is strongly predictive, every tree splits on it early and they look alike), so ρ is high and the variance floor stays high — adding trees helps little past a point. A random forest forces each split to consider only a random subset of features, which makes the trees genuinely different (lower ρ), pushing the ρσ² floor down. Same number of trees, but lower correlation → lower ensemble variance → better generalization. Decorrelation is the mechanism."
             },
             {
@@ -1512,11 +1530,13 @@
           ],
           "homework": [
             {
-              "q": "A teammate reports 'I tried 200 hyperparameter settings and the best one got 96% on the test set — let's ship it.' Identify the methodological error and describe the correct procedure.",
+              "prompt": "A teammate reports 'I tried 200 hyperparameter settings and the best one got 96% on the test set — let's ship it.' Identify the methodological error and describe the correct procedure.",
+              "hint": "Choosing among 200 settings by their test score leaks the test set, so 96% is optimistic. Where should hyperparameters be picked, and what stays untouched until the end?",
               "solution": "The error: they used the TEST set to choose among 200 settings, so the 96% is not an unbiased estimate — by trying many configurations and keeping the best test score, they optimized against that specific test set and overfit it (some of the 96% is luck on those particular points). The reported number overstates real performance. Correct procedure: tune hyperparameters using cross-validation (or a separate validation set) on the training data only — pick the setting with the best CV score. Then evaluate that single chosen model ONCE on the held-out test set to get an honest estimate. If the tuning is extensive, use nested cross-validation (inner loop tunes, outer loop estimates) so the data used to choose is never the data used to judge. The test set is a single-use measuring device."
             },
             {
-              "q": "You build a fraud detector on data that is 0.5% fraud, and it achieves 99.5% accuracy. Explain why this number is uninformative and which metrics you'd report instead, with the reasoning about error costs.",
+              "prompt": "You build a fraud detector on data that is 0.5% fraud, and it achieves 99.5% accuracy. Explain why this number is uninformative and which metrics you'd report instead, with the reasoning about error costs.",
+              "hint": "With 0.5% positives, always predicting 'not fraud' already scores 99.5%. Think precision, recall, F1 — and the cost of a missed fraud versus a false alarm.",
               "solution": "With only 0.5% fraud, a trivial model that labels EVERY transaction 'legit' already scores 99.5% accuracy while catching zero fraud — so 99.5% tells you nothing about whether fraud is detected. Accuracy is dominated by the overwhelming majority class. Report instead: recall (of actual fraud, how much is caught — missing fraud is costly), precision (of flagged transactions, how many are truly fraud — false alarms annoy customers and cost investigation time), the confusion matrix (to see the actual counts), and ROC-AUC or, better on heavy imbalance, the precision-recall curve / average precision. On error costs: a missed fraud (false negative) is usually far more expensive than a false alarm (false positive), so you'd typically favor higher recall, lowering the decision threshold and accepting some precision loss — then quantify the trade-off with the PR curve and pick the operating point that matches the business cost ratio."
             },
             {

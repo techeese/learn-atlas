@@ -1291,7 +1291,7 @@
     body.innerHTML = `<div class="hw reveal">` + hw.map((h, i) => `
       <div class="hw-item">
         <div class="hw-num">PROBLEM ${i + 1}</div>
-        <div class="hw-prompt">${h.prompt}</div>
+        <div class="hw-prompt">${h.prompt || h.q || ""}</div>
         <div class="hw-reveal">
           ${h.hint ? `<button class="btn ghost" data-hint="${i}">💡 Hint</button>` : ""}
           <button class="btn" data-sol="${i}">Show solution</button>

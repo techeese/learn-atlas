@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 599 — Fix ML homework rendering "undefined" + add 20 missing hints (bug / content)
+**Real bug found & fixed.** The Machine Learning topic's original homework used the key `q` for the prompt, but the homework renderer reads `h.prompt` — so the
+**first two problems of all 10 ML lessons (20 in total) displayed the literal word "undefined"** to the learner instead of the question. (Later iter-573 additions used
+`prompt`, which is why it wasn't uniform.) Fixed three ways:
+1. **Renderer made defensive** — `h.prompt || h.q` so a key mismatch can never render "undefined" again.
+2. **Data normalized** — the 20 `q`-keyed problems renamed to `prompt`, and since they also lacked the progressive-disclosure **💡 Hint** that every other topic's
+   homework has, authored **20 targeted hints** (one per problem — pointing at the method, not the answer) in ML's plain-text style.
+3. **Gate hardened** — `node gate.js` now errors if any homework is missing a prompt, so this can't silently recur.
+Verified: `new Function` on app.js/gate.js/machine-learning.js clean; gate ALL GREEN; **0 homework missing a prompt or hint** (was 20 missing hints); **headless** on
+`ml-knn` Homework — all 3 prompts render real text (**undefined count = 0**, was 2), all 3 now have a Hint button, the hint reveals, **kErr=0, errs=0**. SW cache `atlas-v538` → `atlas-v539`.
+
 ## iter 598 — Gate now verifies Python code-exercises too (tooling / correctness)
 `node gate.js` ran and checked every **JavaScript** code-exercise against its `data-expected`, but the **5 Python exercises** (run by Pyodide in the browser) were
 skipped — so a wrong expected string there would silently show the learner "✗ Doesn't match" on correct code, undetected. The gate now collects python exercises
