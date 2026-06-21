@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 628 — Screen-reader labels on graded quiz choices (accessibility)
+When a quiz answer locks, the correct choice turns green and a wrong pick turns red — but that's **visual only**, so a screen-reader user who answers wrong isn't told *which*
+option was correct. Added programmatic, **`sr-only`** status text appended to the locked choices: the correct option reads "(correct answer)" and the picked-wrong option
+reads "(your answer, incorrect)". Applied in all three MCQ surfaces — the lecture **Quick Check**, the **spawned test**, and the **mistakes/mastery drill** — so the
+green/red cue is conveyed non-visually everywhere. (The "Correct ✓ / Not quite" verdict was already announced via an `aria-live` slot; this adds the per-choice detail.)
+Visually unchanged (`.sr-only` is clipped to 1px). Content audit this iteration also confirmed **0 examples missing a worked solution and 0 homework missing a hint** site-wide.
+Verified: `new Function` on app.js clean; gate ALL GREEN; **headless** — after a wrong answer the correct choice carries "(correct answer)" and the picked one "(your answer,
+incorrect)", both inside `.sr-only` spans (visually hidden); kErr=0, errs=0. SW cache `atlas-v568` → `atlas-v569`.
+
 ## iter 627 — Glossary: the common distributions + eval metrics that were missing (reference)
 A real gap: of the standard probability distributions, only "Normal distribution" was in the glossary. Added the **10 missing high-frequency terms**: **Poisson, Exponential,
 Uniform, Binomial, Geometric, Bernoulli distributions**, **Memorylessness**, **Confusion matrix**, **F1 score**, and **Convexity** — each a concise, formula-bearing

@@ -198,6 +198,7 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    headless memoryless 0.607=0.607, mean=1/λ; SW →v567).
    ✅ iter 627: **Glossary +10 missing common distributions + eval metrics** (reference). Poisson/Exponential/Uniform/Binomial/Geometric/Bernoulli distributions,
    Memorylessness, Confusion matrix, F1 score, Convexity. Glossary 204→214; distribution terms auto-link to their viz via the iter-595 bridge. Verified gate GREEN, headless 5/5 render, kErr=0. SW →v568.
+   ✅ iter 628: **screen-reader labels on graded quiz choices** (accessibility) — sr-only "(correct answer)"/"(your answer, incorrect)" in all 3 MCQ surfaces. Verified gate GREEN, headless both labels, SW →v569.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
    lazy-load-data perf project (owner steer). Keep varying lanes.
    One lesson/iter, hand-verify every answer key, de-skew new 8 to 2/2/2/2.

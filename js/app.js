@@ -1091,7 +1091,7 @@
       host.querySelectorAll(".choice").forEach(btn => btn.addEventListener("click", () => {
         if (locked) return; locked = true;
         const ci = parseInt(btn.dataset.ci, 10), ans = q.answer;
-        host.querySelectorAll(".choice").forEach((b, bi) => { b.classList.add("locked"); if (bi === ans) b.classList.add("correct"); else if (bi === ci) b.classList.add("wrong"); });
+        host.querySelectorAll(".choice").forEach((b, bi) => { b.classList.add("locked"); if (bi === ans) { b.classList.add("correct"); b.insertAdjacentHTML("beforeend", '<span class="sr-only"> (correct answer)</span>'); } else if (bi === ci) { b.classList.add("wrong"); b.insertAdjacentHTML("beforeend", '<span class="sr-only"> (your answer, incorrect)</span>'); } });
         if (ci === ans) right++;
         host.querySelector(".qc-explain-slot").innerHTML = `<div class="explain"><div class="et">${ci === ans ? "Correct ✓" : "Not quite"}</div>${q.explain || ""}</div>`;
         const nb = document.createElement("button");
@@ -1148,8 +1148,8 @@
       const right = q.answer;
       body.querySelectorAll(".choice").forEach((btn, bi) => {
         btn.classList.add("locked");
-        if (bi === right) btn.classList.add("correct");
-        else if (bi === ci) btn.classList.add("wrong");
+        if (bi === right) { btn.classList.add("correct"); btn.insertAdjacentHTML("beforeend", '<span class="sr-only"> (correct answer)</span>'); }
+        else if (bi === ci) { btn.classList.add("wrong"); btn.insertAdjacentHTML("beforeend", '<span class="sr-only"> (your answer, incorrect)</span>'); }
       });
       if (ci === right) { correct++; Store.clearMiss(lesson.id, i); }
       else { Store.recordMiss(lesson.id, i); if (!missedIdx.includes(i)) missedIdx.push(i); }
@@ -1695,7 +1695,7 @@
         if (!seenKeys.has(key)) { seenKeys.add(key); if (ok) firstTryRight++; }
         Store.bumpMastery(it.lessonId, { correct: ok });
         if (it.qIdx != null) { if (ok) Store.clearMiss(it.lessonId, it.qIdx); else Store.recordMiss(it.lessonId, it.qIdx); }
-        app.querySelectorAll(".choice").forEach((bb, bi) => { bb.classList.add("locked"); if (bi === right) bb.classList.add("correct"); else if (bi === ci) bb.classList.add("wrong"); });
+        app.querySelectorAll(".choice").forEach((bb, bi) => { bb.classList.add("locked"); if (bi === right) { bb.classList.add("correct"); bb.insertAdjacentHTML("beforeend", '<span class="sr-only"> (correct answer)</span>'); } else if (bi === ci) { bb.classList.add("wrong"); bb.insertAdjacentHTML("beforeend", '<span class="sr-only"> (your answer, incorrect)</span>'); } });
         if (ok) { remaining.delete(key); queue.shift(); }
         else { const item = queue.shift(); queue.push(item); } // back of the line
         document.getElementById("md-explain").innerHTML = `<div class="explain"><div class="et">${ok ? "Correct ✓ — mastered" : "Not yet — you'll see this again"}</div>${q.explain || ""}${!ok ? `<div style="margin-top:6px;color:var(--ink-mute)">${esc(it.lessonTitle)} · <a href="#/lesson/${it.courseId}/${it.lessonId}" data-route style="color:var(--gold)">review the lesson →</a></div>` : ""}</div>`;
