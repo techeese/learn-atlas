@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 613 — MCQ top-up runway, batch 6: it-differential-entropy 8 → 16 (content / assessment)
+Sixth batch. Added **8 new MCQs to `it-differential-entropy`** (now 16), distinct from the existing eight: numeric Gaussian `σ=1 → 2.05` bits, Uniform[0,0.5] `→ −1` bit
+and Uniform[0,2] `→ 1` bit, exponential as the fixed-mean max-entropy distribution, uniform as the bounded-interval max-entropy, `h` depends on `σ` not `μ`, why a density
+can exceed 1 (the mechanism for negativity), and the max-entropy principle as least-presumptuous. In-script key assertion confirmed each correct choice; balanced → **4/4/4/4**.
+Verified: data parses; gate ALL GREEN; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v553` → `atlas-v554`. Runway: **6 of 17**
+— IT has just one lesson left (the `information-in-ml` capstone), then the 10 ML lessons.
+
 ## iter 612 — MCQ top-up runway, batch 5: it-channel-capacity 8 → 16 (content / assessment)
 Fifth batch. Added **8 new MCQs to `it-channel-capacity`** (now 16), distinct from the existing eight: numeric `C(0.11)=0.5` and `C(0.2)=0.28` bits/use, capacity's units
 (bits per channel use), BSC symmetry `C(p)=C(1−p)`, the `R>C ⇒ impossible` converse, LDPC/turbo codes near the limit, the separation condition `H<C`, and that the

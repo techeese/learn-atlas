@@ -350,6 +350,94 @@
               ],
               "answer": 3,
               "explain": "An entropy bonus keeps the policy as stochastic as possible while earning return — the idea behind soft actor-critic."
+            },
+            {
+              "q": "The differential entropy of a standard Gaussian ($\\sigma=1$), using $h=\\tfrac12\\log_2(2\\pi e\\,\\sigma^2)$, is about:",
+              "choices": [
+                "$\\approx 2.05$ bits",
+                "$0$",
+                "$1$ bit",
+                "$\\approx 2\\pi e$ bits"
+              ],
+              "answer": 0,
+              "explain": "$\\tfrac12\\log_2(2\\pi e)\\approx\\tfrac12\\log_2(17.08)\\approx 2.05$ bits."
+            },
+            {
+              "q": "The differential entropy of a uniform distribution on $[0,\\,0.5]$ is:",
+              "choices": [
+                "$1$ bit",
+                "$-1$ bit (negative)",
+                "$0.5$ bit",
+                "$0$"
+              ],
+              "answer": 1,
+              "explain": "$h=\\log_2 0.5=-1$ bit. The density $1/0.5=2$ exceeds 1, so $h$ goes negative — impossible for discrete entropy."
+            },
+            {
+              "q": "The differential entropy of a uniform distribution on $[0,\\,2]$ is:",
+              "choices": [
+                "$0$",
+                "$2$ bits",
+                "$1$ bit",
+                "$-1$ bit"
+              ],
+              "answer": 2,
+              "explain": "$h=\\log_2 2=1$ bit; widening the support raises differential entropy by the log of the width."
+            },
+            {
+              "q": "Among all distributions on $[0,\\infty)$ with a fixed mean, the maximum-entropy one is:",
+              "choices": [
+                "The Poisson",
+                "The Gaussian",
+                "The uniform",
+                "The exponential distribution"
+              ],
+              "answer": 3,
+              "explain": "Fixing only the mean on the positive reals gives the exponential as the least-presumptuous (max-entropy) choice."
+            },
+            {
+              "q": "Among distributions on a bounded interval with no other constraint, the maximum-entropy one is:",
+              "choices": [
+                "The uniform distribution",
+                "The Gaussian",
+                "The exponential",
+                "A point mass"
+              ],
+              "answer": 0,
+              "explain": "With no constraints beyond the support, spreading probability evenly maximizes entropy — the uniform distribution."
+            },
+            {
+              "q": "The differential entropy of a Gaussian $\\mathcal{N}(\\mu,\\sigma^2)$ depends on:",
+              "choices": [
+                "$\\mu$ only",
+                "$\\sigma$ only — it is independent of the mean $\\mu$",
+                "Both $\\mu$ and $\\sigma$ equally",
+                "Neither"
+              ],
+              "answer": 1,
+              "explain": "$h=\\tfrac12\\log_2(2\\pi e\\,\\sigma^2)$ has no $\\mu$: shifting a distribution leaves its entropy unchanged; only its spread matters."
+            },
+            {
+              "q": "Differential entropy can be negative because a probability density $f(x)$ can:",
+              "choices": [
+                "Sum to more than 1",
+                "Be negative",
+                "Exceed 1 (it is a density, not a probability)",
+                "Never be defined"
+              ],
+              "answer": 2,
+              "explain": "Where $f(x)\\gt 1$, the term $-\\log f(x)$ is negative; a concentrated density makes the whole integral negative."
+            },
+            {
+              "q": "The maximum-entropy principle selects, among distributions matching the constraints, the one that:",
+              "choices": [
+                "Ignores the constraints",
+                "Minimizes the entropy",
+                "Is always Gaussian",
+                "Assumes the least beyond those constraints (highest entropy)"
+              ],
+              "answer": 3,
+              "explain": "Maximizing entropy subject to what you know adds no unwarranted structure — the least-presumptuous distribution consistent with the constraints."
             }
           ],
           "flashcards": [

@@ -189,8 +189,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 609: **MCQ top-up batch 2 — it-cross-entropy-kl 8→16** (content/assessment). 8 new distinct MCQs, numbers verified, in-script key assertion, combined 4/4/4/4,
    headless "Question 1 of 16" kErr=0/errs=0. SW →v550.
    ✅ iter 610: **MCQ batch 3 — it-mutual-information 8→16**. ✅ iter 611: **batch 4 — it-source-coding 8→16** (numeric + concept, 4/4/4/4, headless 16, kErr=0/errs=0, SW →v552).
-   ✅ iter 612: **batch 5 — it-channel-capacity 8→16** (numeric C(0.11)/C(0.2), 4/4/4/4, headless 16, kErr=0/errs=0, SW →v553).
-   ⏳ MCQ runway (5 of 17 done): remaining at 8 MCQs — IT: differential-entropy, information-in-ml; ML: all 10.
+   ✅ iter 612: **batch 5 — it-channel-capacity 8→16**. ✅ iter 613: **batch 6 — it-differential-entropy 8→16** (numeric 2.05/−1/1, 4/4/4/4, headless 16, kErr=0/errs=0, SW →v554).
+   ⏳ MCQ runway (6 of 17 done): remaining at 8 MCQs — IT: information-in-ml (capstone); ML: all 10.
    One lesson/iter, hand-verify every answer key (gate can't catch a wrong key), de-skew new 8 to 2/2/2/2.
    ✅ iter 606: **Naive Bayes spam viz — 103rd widget; ML viz COMPLETE** (visualizations). ml-nb-viz: spam filter as evidence on a log-odds line — each word shifts
    odds by its likelihood ratio (multiply = add shifts under naive independence); toggle words, live P(spam) verdict. Embedded in ml-naive-bayes. All 10 ML lessons now
