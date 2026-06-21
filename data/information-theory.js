@@ -133,17 +133,17 @@
           "examples": [
             {
               "title": "Entropy of a fair vs. a biased coin",
-              "scenario": "Compute the entropy (in bits) of a fair coin, and of a coin that lands heads with probability 0.9.",
+              "body": "Compute the entropy (in bits) of a fair coin, and of a coin that lands heads with probability 0.9.",
               "solution": "Fair coin: $H=-(0.5\\log_2 0.5 + 0.5\\log_2 0.5) = -(0.5(-1)+0.5(-1)) = \\mathbf{1}$ bit. Biased coin: $H=-(0.9\\log_2 0.9 + 0.1\\log_2 0.1)=-(0.9(-0.152)+0.1(-3.322))\\approx \\mathbf{0.47}$ bits. The bias makes the coin far more predictable, so each flip carries less than half the information of a fair flip."
             },
             {
               "title": "A fair six-sided die",
-              "scenario": "How many bits of entropy does a fair six-sided die have, and what does that number mean?",
+              "body": "How many bits of entropy does a fair six-sided die have, and what does that number mean?",
               "solution": "Uniform over 6 outcomes: $H=\\log_2 6 \\approx \\mathbf{2.585}$ bits. It means you need about 2.585 yes/no questions on average to pin down the roll — and that a long sequence of rolls cannot be compressed below ~2.585 bits per roll. (Three bits would suffice but waste a little, since $\\log_2 6 < 3$.)"
             },
             {
               "title": "Surprise of a rare event",
-              "scenario": "A model assigns probability 0.001 to the word that actually appears next. How many bits of surprise (self-information) is that?",
+              "body": "A model assigns probability 0.001 to the word that actually appears next. How many bits of surprise (self-information) is that?",
               "solution": "$I=-\\log_2(0.001)=\\log_2(1000)\\approx \\mathbf{9.97}$ bits — a big surprise. Cross-entropy loss is exactly the <em>average</em> of this quantity over the real tokens, so a model that keeps getting blindsided by the truth has high loss. Confident-and-correct ($p\\to 1$) costs near 0 bits; confident-and-wrong ($p\\to 0$) costs a fortune."
             }
           ],
@@ -285,17 +285,17 @@
           "examples": [
             {
               "title": "Uniform differential entropy — and a negative value",
-              "scenario": "Compute the differential entropy of a uniform distribution on $[0,2]$ and on $[0,0.5]$.",
+              "body": "Compute the differential entropy of a uniform distribution on $[0,2]$ and on $[0,0.5]$.",
               "solution": "For Uniform$[0,a]$, the density is $1/a$, so $h=-\\int_0^a \\tfrac1a\\log_2\\tfrac1a\\,dx=\\log_2 a$. On $[0,2]$: $h=\\log_2 2=\\mathbf{1}$ bit. On $[0,0.5]$: $h=\\log_2 0.5=\\mathbf{-1}$ bit — <em>negative</em>, because the density $1/0.5=2$ exceeds 1, something discrete entropy can never do. Concentrating the distribution drives differential entropy down, past zero."
             },
             {
               "title": "Gaussian entropy grows with spread",
-              "scenario": "Using $h=\\tfrac12\\log_2(2\\pi e\\,\\sigma^2)$, compute the differential entropy of a Gaussian with $\\sigma=1$ and with $\\sigma=2$.",
+              "body": "Using $h=\\tfrac12\\log_2(2\\pi e\\,\\sigma^2)$, compute the differential entropy of a Gaussian with $\\sigma=1$ and with $\\sigma=2$.",
               "solution": "With $\\sigma=1$: $h=\\tfrac12\\log_2(2\\pi e)\\approx\\tfrac12\\log_2(17.08)\\approx\\mathbf{2.05}$ bits. With $\\sigma=2$: $\\sigma^2=4$, so $h=\\tfrac12\\log_2(2\\pi e\\cdot 4)=2.05+\\tfrac12\\log_2 4=2.05+1=\\mathbf{3.05}$ bits. Each doubling of $\\sigma$ adds exactly 1 bit — entropy tracks the log of the spread."
             },
             {
               "title": "Why the Gaussian is the default noise model",
-              "scenario": "You must choose a continuous distribution for a quantity where you only know its variance. What does the maximum-entropy principle recommend, and why?",
+              "body": "You must choose a continuous distribution for a quantity where you only know its variance. What does the maximum-entropy principle recommend, and why?",
               "solution": "It recommends the <b>Gaussian</b>. Among all densities with the given variance, the Gaussian uniquely maximizes differential entropy, so it adds the fewest extra assumptions beyond the one fact you have (the variance). Any other choice secretly encodes more structure than you actually know. This — together with the central limit theorem — is why Gaussian noise and Gaussian priors are the principled defaults across statistics and ML."
             }
           ],
@@ -443,17 +443,17 @@
           "examples": [
             {
               "title": "Cross-entropy: confident-right vs confident-wrong",
-              "scenario": "The true class is class 1 (a one-hot label). The model predicts probability $q=0.9$ for it in one case and $q=0.1$ in another. Compute the cross-entropy (log-loss) in bits for each.",
+              "body": "The true class is class 1 (a one-hot label). The model predicts probability $q=0.9$ for it in one case and $q=0.1$ in another. Compute the cross-entropy (log-loss) in bits for each.",
               "solution": "For a one-hot label, $H(p,q)=-\\log_2 q(\\text{true})$. Confident-right: $-\\log_2 0.9 \\approx \\mathbf{0.15}$ bits — a tiny penalty. Confident-wrong: $-\\log_2 0.1 \\approx \\mathbf{3.32}$ bits — over 20x larger. The asymmetry is the point: cross-entropy barely charges good calibration but punishes confident mistakes harshly (and goes to $\\infty$ as $q(\\text{true})\\to 0$)."
             },
             {
               "title": "KL divergence is asymmetric",
-              "scenario": "Let $p=[0.5,0.5]$ and $q=[0.1,0.9]$. Compute $D_{\\mathrm{KL}}(p\\|q)$ and $D_{\\mathrm{KL}}(q\\|p)$ and confirm they differ.",
+              "body": "Let $p=[0.5,0.5]$ and $q=[0.1,0.9]$. Compute $D_{\\mathrm{KL}}(p\\|q)$ and $D_{\\mathrm{KL}}(q\\|p)$ and confirm they differ.",
               "solution": "$D_{\\mathrm{KL}}(p\\|q)=0.5\\log_2\\tfrac{0.5}{0.1}+0.5\\log_2\\tfrac{0.5}{0.9}=0.5(2.32)+0.5(-0.85)\\approx \\mathbf{0.74}$ bits. $D_{\\mathrm{KL}}(q\\|p)=0.1\\log_2\\tfrac{0.1}{0.5}+0.9\\log_2\\tfrac{0.9}{0.5}=0.1(-2.32)+0.9(0.85)\\approx \\mathbf{0.53}$ bits. They are different ($0.74\\neq 0.53$) — KL is not symmetric, so the direction you minimize matters."
             },
             {
               "title": "Cross-entropy = entropy + KL",
-              "scenario": "For $p=[0.5,0.5]$ and $q=[0.25,0.75]$, compute $H(p)$, $H(p,q)$, and $D_{\\mathrm{KL}}(p\\|q)$, and verify the decomposition.",
+              "body": "For $p=[0.5,0.5]$ and $q=[0.25,0.75]$, compute $H(p)$, $H(p,q)$, and $D_{\\mathrm{KL}}(p\\|q)$, and verify the decomposition.",
               "solution": "$H(p)=1$ bit (fair coin). $H(p,q)=-(0.5\\log_2 0.25 + 0.5\\log_2 0.75)=-(0.5(-2)+0.5(-0.415))=\\mathbf{1.208}$ bits. $D_{\\mathrm{KL}}(p\\|q)=0.5\\log_2\\tfrac{0.5}{0.25}+0.5\\log_2\\tfrac{0.5}{0.75}=0.5(1)+0.5(-0.585)=\\mathbf{0.208}$ bits. Check: $H(p)+D_{\\mathrm{KL}}=1+0.208=1.208=H(p,q)$. ✓"
             }
           ],
@@ -601,17 +601,17 @@
           "examples": [
             {
               "title": "Independent variables share no information",
-              "scenario": "Two fair coins are flipped independently, giving joint distribution $p(x,y)=0.25$ for all four pairs. Compute $I(X;Y)$.",
+              "body": "Two fair coins are flipped independently, giving joint distribution $p(x,y)=0.25$ for all four pairs. Compute $I(X;Y)$.",
               "solution": "With independence, $p(x,y)=p(x)p(y)=0.5\\times 0.5=0.25$ for every pair, so each log-ratio is $\\log\\frac{0.25}{0.25}=\\log 1=0$. Thus $I(X;Y)=\\mathbf{0}$ bits — independent variables share no information, exactly as mutual information should report. (Equivalently $H(X\\mid Y)=H(X)=1$, so nothing is removed.)"
             },
             {
               "title": "Mutual information as uncertainty removed",
-              "scenario": "$X,Y$ have the correlated joint $[[0.4,0.1],[0.1,0.4]]$, so $H(X)=1$ bit. Given the data, $H(X\\mid Y)\\approx 0.72$ bits. What is $I(X;Y)$, and what does it mean?",
+              "body": "$X,Y$ have the correlated joint $[[0.4,0.1],[0.1,0.4]]$, so $H(X)=1$ bit. Given the data, $H(X\\mid Y)\\approx 0.72$ bits. What is $I(X;Y)$, and what does it mean?",
               "solution": "$I(X;Y)=H(X)-H(X\\mid Y)=1-0.72=\\mathbf{0.28}$ bits. Meaning: before seeing $Y$ you have 1 bit of uncertainty about $X$; after seeing $Y$ you have 0.72 bits left, so $Y$ removed 0.28 bits. That matches the direct sum $\\sum p\\log\\frac{p}{p_x p_y}$ — the two formulas always agree."
             },
             {
               "title": "A feature that determines the label",
-              "scenario": "A label $Y$ has entropy $H(Y)=1$ bit. Feature $A$ perfectly determines $Y$ (knowing $A$ leaves no doubt); feature $B$ is independent of $Y$. What is the information gain of each?",
+              "body": "A label $Y$ has entropy $H(Y)=1$ bit. Feature $A$ perfectly determines $Y$ (knowing $A$ leaves no doubt); feature $B$ is independent of $Y$. What is the information gain of each?",
               "solution": "Feature $A$: $H(Y\\mid A)=0$, so $\\mathrm{IG}=I(Y;A)=1-0=\\mathbf{1}$ bit — the maximum; a decision tree would split on it first. Feature $B$: $H(Y\\mid B)=H(Y)=1$, so $\\mathrm{IG}=I(Y;B)=\\mathbf{0}$ — useless for predicting $Y$. Information gain ranks features by exactly this shared information."
             }
           ],
@@ -759,17 +759,17 @@
           "examples": [
             {
               "title": "Build a Huffman code by hand",
-              "scenario": "Symbols A,B,C,D with probabilities $0.5, 0.25, 0.125, 0.125$. Build the Huffman code and give each codeword length.",
+              "body": "Symbols A,B,C,D with probabilities $0.5, 0.25, 0.125, 0.125$. Build the Huffman code and give each codeword length.",
               "solution": "Merge the two least-likely: C+D = 0.25. Now {A:0.5, B:0.25, (CD):0.25}; merge B+CD = 0.5. Now {A:0.5, (BCD):0.5}; merge to the root. Reading the tree, A is one branch from the root (length <b>1</b>), B is two (length <b>2</b>), and C, D are three each (length <b>3</b>). Expected length $=0.5(1)+0.25(2)+0.125(3)+0.125(3)=\\mathbf{1.75}$ bits — and the entropy is also 1.75, so this dyadic code is perfectly efficient."
             },
             {
               "title": "Huffman beats fixed-length, and stays within a bit of entropy",
-              "scenario": "Three symbols with probabilities $0.4, 0.35, 0.25$. Compare a fixed-length code, the entropy, and a Huffman code.",
+              "body": "Three symbols with probabilities $0.4, 0.35, 0.25$. Compare a fixed-length code, the entropy, and a Huffman code.",
               "solution": "Fixed-length needs $\\lceil\\log_2 3\\rceil = 2$ bits per symbol. Entropy: $H=-(0.4\\log_2 0.4 + 0.35\\log_2 0.35 + 0.25\\log_2 0.25)\\approx \\mathbf{1.56}$ bits. Huffman (merge the two smallest, $0.35+0.25=0.6$, then with $0.4$) gives lengths $1,2,2$, so expected length $=0.4(1)+0.35(2)+0.25(2)=\\mathbf{1.60}$ bits. Huffman ($1.60$) beats fixed-length ($2$) and sits just above the entropy floor ($1.56$) — the promised 'within 1 bit.'"
             },
             {
               "title": "Compression as cross-entropy",
-              "scenario": "Your model predicts symbol probabilities $q$, but the true distribution is $p$. What average code length do you pay, and when is it minimized?",
+              "body": "Your model predicts symbol probabilities $q$, but the true distribution is $p$. What average code length do you pay, and when is it minimized?",
               "solution": "Coding with the model's lengths $-\\log_2 q(x)$ gives expected length $\\sum_x p(x)\\,(-\\log_2 q(x)) = H(p,q)$ — the <em>cross-entropy</em>. It is minimized when $q=p$, where it drops to the entropy $H(p)$. The gap $H(p,q)-H(p)=D_{\\mathrm{KL}}(p\\|q)$ is the wasted bits from an imperfect model. So training a model to minimize cross-entropy is training the best possible compressor for the data."
             }
           ],
@@ -917,17 +917,17 @@
           "examples": [
             {
               "title": "Capacity across noise levels",
-              "scenario": "Compute the BSC capacity for flip probabilities $p=0$, $p=0.1$, and $p=0.5$, and interpret each.",
+              "body": "Compute the BSC capacity for flip probabilities $p=0$, $p=0.1$, and $p=0.5$, and interpret each.",
               "solution": "$C=1-H(p)$. At $p=0$: $C=1-0=\\mathbf{1}$ bit/use — perfect channel. At $p=0.1$: $H(0.1)\\approx 0.47$, so $C\\approx\\mathbf{0.53}$ bits/use — noise roughly halves the rate. At $p=0.5$: $H(0.5)=1$, so $C=\\mathbf{0}$ — output independent of input, nothing gets through. Capacity falls smoothly from 1 to 0 as the channel goes from perfect to useless, bottoming out at the maximally-confusing $p=0.5$."
             },
             {
               "title": "A repetition code reduces errors",
-              "scenario": "Over a BSC with flip probability $p=0.1$, you send each bit three times and decode by majority vote. What is the resulting bit-error probability?",
+              "body": "Over a BSC with flip probability $p=0.1$, you send each bit three times and decode by majority vote. What is the resulting bit-error probability?",
               "solution": "A majority-of-3 vote is wrong only if 2 or 3 of the copies flip: $P=\\binom{3}{2}p^2(1-p)+p^3 = 3(0.1)^2(0.9)+(0.1)^3 = 0.027+0.001=\\mathbf{0.028}$. The error drops from 10% to ~2.8% — but at a cost: the rate fell to $1/3$ bit per use, far below the capacity $0.53$. Good codes achieve similar reliability much closer to capacity."
             },
             {
               "title": "Can this source go through this channel?",
-              "scenario": "A source has entropy $H=0.6$ bits/symbol. You must send it over a BSC with $p=0.1$ (capacity $\\approx 0.53$ bits/use), one symbol per use. Is reliable transmission possible?",
+              "body": "A source has entropy $H=0.6$ bits/symbol. You must send it over a BSC with $p=0.1$ (capacity $\\approx 0.53$ bits/use), one symbol per use. Is reliable transmission possible?",
               "solution": "By the separation theorem, reliable transmission needs $H \\lt  C$. Here $H=0.6$ but $C\\approx 0.53$, so $H\\gt C$ — it is <b>not</b> possible at one channel use per symbol. You would need a higher-capacity channel (less noise), more channel uses per source symbol, or some loss. If instead $H=0.4 \\lt  0.53$, it would be achievable: compress to ~0.4 bits, then channel-code below 0.53."
             }
           ],
@@ -1075,17 +1075,17 @@
           "examples": [
             {
               "title": "Cross-entropy loss is negative log-likelihood",
-              "scenario": "A 3-class classifier predicts $q=[0.7,0.2,0.1]$; the true class is class 1 (one-hot). What is the cross-entropy loss (in nats), and how does it relate to likelihood?",
+              "body": "A 3-class classifier predicts $q=[0.7,0.2,0.1]$; the true class is class 1 (one-hot). What is the cross-entropy loss (in nats), and how does it relate to likelihood?",
               "solution": "For a one-hot label, $H(p,q)=-\\ln q(\\text{true})=-\\ln 0.7\\approx \\mathbf{0.357}$ nats. This is exactly the negative log-likelihood of the observed label under the model. Averaging it over the dataset is what training minimizes — so 'minimize cross-entropy' and 'maximize likelihood' are the same instruction, and a confident-correct prediction ($q\\to 1$) drives the loss to 0."
             },
             {
               "title": "The VAE KL term pulls toward the prior",
-              "scenario": "Compute the VAE KL term $\\tfrac12(\\mu^2+\\sigma^2-1-\\ln\\sigma^2)$ for a latent unit with $(\\mu,\\sigma)=(0,1)$ and for $(\\mu,\\sigma)=(2,1)$.",
+              "body": "Compute the VAE KL term $\\tfrac12(\\mu^2+\\sigma^2-1-\\ln\\sigma^2)$ for a latent unit with $(\\mu,\\sigma)=(0,1)$ and for $(\\mu,\\sigma)=(2,1)$.",
               "solution": "At $(0,1)$: $\\tfrac12(0+1-1-\\ln 1)=\\tfrac12(0)=\\mathbf{0}$ — the posterior already <em>is</em> the standard-normal prior, so no penalty. At $(2,1)$: $\\tfrac12(4+1-1-0)=\\tfrac12(4)=\\mathbf{2}$ nats — sitting two units off-center costs 2 nats. The KL term is the price of straying from the prior; the reconstruction term must justify paying it."
             },
             {
               "title": "From cross-entropy to perplexity",
-              "scenario": "A language model achieves a cross-entropy of 3 bits per token on held-out text. What is its perplexity, and what does it mean?",
+              "body": "A language model achieves a cross-entropy of 3 bits per token on held-out text. What is its perplexity, and what does it mean?",
               "solution": "Perplexity $=2^{H}=2^{3}=\\mathbf{8}$. It means the model is, on average, as uncertain about the next token as if it were guessing uniformly among 8 equally-likely options. Halve nothing else but improve the model so cross-entropy drops to 2 bits, and perplexity falls to $2^2=4$ — and the text would compress to ~2 bits/token instead of 3. Lower cross-entropy is simultaneously better prediction, lower perplexity, and better compression."
             }
           ],

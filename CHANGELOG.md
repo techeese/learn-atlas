@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 601 — Normalize the example schema site-wide (data hygiene / footgun removal)
+Follow-through on iter 600's bug: examples existed in two shapes — `{title, body, solution}` (most) and `{title, scenario, solution}` (the ML, IT, and 2 LLM
+examples). iter 600 made the *renderer* tolerant (`body || scenario`) and added a gate guard, which fixed the symptom. This iter removes the **root-cause footgun**:
+normalized all **53 `scenario` examples → `body`** (30 ML + 21 IT + 2 LLM), so the data layer now has a **single uniform example schema** across all 496 examples. The
+renderer keeps its defensive fallback as a safety net, and the gate still guards body/scenario presence — but no future author or tool can be tripped by the dual key
+again. (A pre-flight audit this iteration also confirmed the rest of the codebase is uniform: MCQ/flashcard schemas single-shape, 0 lessons missing minutes/title/id/content,
+73 cross-topic prereq edges, and `prerender.js` only emits lecture content so the SEO pages were never affected by the example bug.)
+Verified: `new Function` on all 3 edited data files clean; **gate ALL GREEN**; example key-sets collapsed to a single `{body, solution, title}` (was two); **headless** —
+l-scaling-laws, l-rlhf, ml-svm, it-mutual-information all render 3 non-empty example bodies (empty=0), kErr=0, errs=0. SW cache `atlas-v540` → `atlas-v542` (two data edits).
+
 ## iter 600 — Milestone step-back: full audit + fix 53 blank example bodies (bug / content)
 **Iteration 600.** Two full health sweeps + a coverage audit, paired with a real bug fix the audit surfaced.
 - **Sweeps**: all **165 lessons** (examples + homework tabs opened, dds expanded) → errs=0, kErr=0, 0 bad, **0 "undefined" homework**; all **140 non-lesson routes**

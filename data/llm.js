@@ -2459,7 +2459,7 @@
             },
             {
               "title": "The Chinchilla 20:1 rule of thumb",
-              "scenario": "Chinchilla found that for compute-optimal training the data should scale in proportion to the model — about <em>20 tokens per parameter</em>. For a 7-billion-parameter model, how many training tokens is that, and why do production models like LLaMA use far more?",
+              "body": "Chinchilla found that for compute-optimal training the data should scale in proportion to the model — about <em>20 tokens per parameter</em>. For a 7-billion-parameter model, how many training tokens is that, and why do production models like LLaMA use far more?",
               "solution": "Compute-optimal tokens $D \\approx 20\\,N = 20 \\times 7\\text{B} = 140\\text{B}$ tokens; a 70B model would want about 1.4T. This rule rebalanced the field: GPT-3 (175B parameters) saw only ~300B tokens, so by Chinchilla's rule it was badly <em>under</em>-trained — a smaller model on more data would have beaten it at the same compute. The twist: production models (LLaMA and successors) deliberately go <em>past</em> 20:1, training a 7B model on 1 to 2 trillion tokens, far more than compute-optimal — because once you <em>serve</em> a model to millions, a smaller-but-overtrained model is cheaper on every query. Compute-optimal minimizes <em>training</em> cost; deployment minimizes <em>training plus serving</em>, which favors smaller, longer-trained models."
             }
           ]
@@ -2953,7 +2953,7 @@
             },
             {
               "title": "The KL leash: why reward alone gets hacked",
-              "scenario": "RLHF does not maximize the reward model alone — it maximizes <em>reward minus a KL penalty</em> from the reference policy: $r-\\beta\\,\\mathrm{KL}$. Two candidate responses: an on-distribution one with reward 5 and KL 0.5, and a reward-hacked one with reward 8 but KL 6. Which wins, and how does $\\beta$ decide?",
+              "body": "RLHF does not maximize the reward model alone — it maximizes <em>reward minus a KL penalty</em> from the reference policy: $r-\\beta\\,\\mathrm{KL}$. Two candidate responses: an on-distribution one with reward 5 and KL 0.5, and a reward-hacked one with reward 8 but KL 6. Which wins, and how does $\\beta$ decide?",
               "solution": "Compute the penalized objective $r-\\beta\\,\\mathrm{KL}$ for each. With a weak leash $\\beta=0.3$: on-distribution $=5-0.3(0.5)=4.85$; hacked $=8-0.3(6)=6.2$ — the <em>hack wins</em>, so the policy drifts toward gaming the reward model (degenerate or off-distribution text the reward model overrates). With a firmer $\\beta=1$: on-distribution $=5-0.5=4.5$; hacked $=8-6=2.0$ — now the on-distribution response wins and the hack is suppressed. The KL term is the leash: too loose and RLHF reward-hacks; too tight and the model barely moves from the reference. Tuning $\\beta$ (or using DPO, which bakes this tradeoff into its loss) is central to making preference optimization behave."
             }
           ]

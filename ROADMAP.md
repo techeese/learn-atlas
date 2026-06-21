@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 601: **Normalize example schema site-wide** (data hygiene). Root-cause follow-through on iter 600: normalized all 53 `scenario` examples → `body` (30 ML +
+   21 IT + 2 LLM), so all 496 examples share one schema {title, body, solution}; renderer fallback + gate guard remain as safety nets. Verified: gate GREEN; key-sets
+   collapsed to one; headless examples render (empty=0), errs=0. SW →v542.
    ✅ iter 600: **MILESTONE step-back: full audit + fix 53 blank example bodies** (bug/content). Sweeps: 165 lessons + 140 routes all green (errs=0/kErr=0/0 bad);
    every lesson 3 dd, 0 under-parity. Bug: examples use two schemas (body vs scenario); renderer ignored `scenario` → all 53 ML+IT examples rendered blank. Fixed
    renderer (body||scenario||prompt) + gate now guards example bodies. Verified: gate GREEN; headless example bodies render (empty 3→0), errs=0. SW →v540.

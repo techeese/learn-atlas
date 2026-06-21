@@ -150,17 +150,17 @@
           "examples": [
             {
               "title": "Classifying a point by 3-NN, step by step",
-              "scenario": "Training points (feature x, label): (1, A), (2, A), (5, B), (6, B), (7, B). Classify a query at x = 4 using 3-NN with absolute-value (1-D Euclidean) distance.",
+              "body": "Training points (feature x, label): (1, A), (2, A), (5, B), (6, B), (7, B). Classify a query at x = 4 using 3-NN with absolute-value (1-D Euclidean) distance.",
               "solution": "Distances from 4: |4-1|=3, |4-2|=2, |4-5|=1, |4-6|=2, |4-7|=3. The three smallest are 1 (point 5, B), 2 (point 2, A), 2 (point 6, B) — neighbors {B, A, B}. Majority vote → B. Note the query sat between the clusters, and the nearest single point (x=5, B) plus one more B outvoted the lone A."
             },
             {
               "title": "How scaling flips the nearest neighbor",
-              "scenario": "Two training points: P = (age 30, income 40000, class 'declines') and Q = (age 50, income 41000, class 'accepts'). Query R = (age 31, income 41000). Which neighbor is closer, unscaled vs. standardized?",
+              "body": "Two training points: P = (age 30, income 40000, class 'declines') and Q = (age 50, income 41000, class 'accepts'). Query R = (age 31, income 41000). Which neighbor is closer, unscaled vs. standardized?",
               "solution": "Unscaled Euclidean: to P = sqrt(1^2 + 1000^2) ≈ 1000.0; to Q = sqrt(19^2 + 0^2) = 19. So R is 'nearest' to Q — decided entirely by income. But R is 1 year from P in age and 19 years from Q. After standardizing (so age and income have comparable spread), the 1-year age gap to P outweighs the tiny income gap, and R becomes nearest to P instead. Same data, opposite neighbor — scaling changed the answer."
             },
             {
               "title": "Distance-weighted kNN can flip the vote",
-              "scenario": "A query's 3 nearest neighbors are: class A at distances 2 and 2.5, and class B at distance 1. Plain majority vote among the 3 says A (2 votes to 1). Does <em>distance-weighted</em> kNN agree?",
+              "body": "A query's 3 nearest neighbors are: class A at distances 2 and 2.5, and class B at distance 1. Plain majority vote among the 3 says A (2 votes to 1). Does <em>distance-weighted</em> kNN agree?",
               "solution": "Distance weighting gives each neighbor a vote of $1/d$, so closer neighbors count more. Class A's weight is $\\tfrac{1}{2}+\\tfrac{1}{2.5}=0.5+0.4=0.9$; class B's is $\\tfrac{1}{1}=1.0$. Weighted vote: B wins, $1.0 > 0.9$ — even though A had more <em>neighbors</em>, B's single neighbor is so close it dominates. Distance weighting makes kNN smoother and less sensitive to the exact choice of $k$ (a far-away $k$-th neighbor barely matters), which is why it is often preferred to plain majority vote."
             }
           ]
@@ -302,17 +302,17 @@
           "examples": [
             {
               "title": "Choosing the better split by information gain",
-              "scenario": "A parent node has 10 samples (5 positive, 5 negative), Gini = 0.5. Split X yields children (4 pos / 0 neg) and (1 pos / 5 neg). Split Y yields (3 pos / 2 neg) and (2 pos / 3 neg). Which split does a Gini-based tree pick?",
+              "body": "A parent node has 10 samples (5 positive, 5 negative), Gini = 0.5. Split X yields children (4 pos / 0 neg) and (1 pos / 5 neg). Split Y yields (3 pos / 2 neg) and (2 pos / 3 neg). Which split does a Gini-based tree pick?",
               "solution": "Split X: left (4/0) is pure, G=0; right (1/5) has G = 1 − ((1/6)² + (5/6)²) = 1 − (0.028 + 0.694) = 0.278. Weighted = 0.4·0 + 0.6·0.278 = 0.167, gain = 0.5 − 0.167 = 0.333. Split Y: left (3/2) G = 1 − (0.6² + 0.4²) = 0.48; right (2/3) G = 0.48. Weighted = 0.5·0.48 + 0.5·0.48 = 0.48, gain = 0.5 − 0.48 = 0.02. Split X's gain (0.333) hugely beats Y's (0.02), so the tree picks X — it isolates a pure group, exactly what impurity reduction rewards."
             },
             {
               "title": "Depth limit vs a fully grown tree",
-              "scenario": "On a noisy 2-feature dataset, a depth-unlimited tree scores 100% train / 71% test; a depth-3 tree scores 88% train / 84% test. Which model is better, and what does the gap tell you?",
+              "body": "On a noisy 2-feature dataset, a depth-unlimited tree scores 100% train / 71% test; a depth-3 tree scores 88% train / 84% test. Which model is better, and what does the gap tell you?",
               "solution": "The depth-3 tree is better: what matters is test performance (84% vs 71%), and it generalizes far better despite lower training accuracy. The unlimited tree's perfect train score with a 29-point train-test gap is textbook overfitting — it carved pure leaves around noisy points. The shallow tree's small 4-point gap shows it captured the real signal without memorizing noise. The lesson: maximize validation/test accuracy, not training accuracy, and use depth limits or pruning to control the train-test gap."
             },
             {
               "title": "Gini vs entropy on the same node",
-              "scenario": "A node holds 7 positive and 3 negative examples (so $p=0.7$). Compute its impurity two ways — Gini and entropy — and check whether the choice changes anything.",
+              "body": "A node holds 7 positive and 3 negative examples (so $p=0.7$). Compute its impurity two ways — Gini and entropy — and check whether the choice changes anything.",
               "solution": "<b>Gini impurity</b> $=1-\\sum p_i^2 = 1-(0.7^2+0.3^2)=1-(0.49+0.09)=0.42$. <b>Entropy</b> $=-\\sum p_i\\log_2 p_i = -(0.7\\log_2 0.7 + 0.3\\log_2 0.3)\\approx 0.88$ bits. Both are positive (the node is impure) and both hit $0$ only for a pure node ($p=1$ or $p=0$) and peak at the 50/50 split. They differ in scale and curvature but rank splits almost identically, so trees give nearly the same structure either way — Gini is the common default mainly because it skips the logarithm and is a touch faster."
             }
           ]
@@ -460,17 +460,17 @@
           "examples": [
             {
               "title": "Predictions, residuals, and MSE by hand",
-              "scenario": "Model ŷ = 2x + 1. Data points (x, y): (1, 4), (2, 4), (3, 8). Compute the predictions, residuals, and the MSE.",
+              "body": "Model ŷ = 2x + 1. Data points (x, y): (1, 4), (2, 4), (3, 8). Compute the predictions, residuals, and the MSE.",
               "solution": "Predictions: at x=1, ŷ=3; x=2, ŷ=5; x=3, ŷ=7. Residuals (y − ŷ): 4−3 = +1; 4−5 = −1; 8−7 = +1. Squared residuals: 1, 1, 1. MSE = (1+1+1)/3 = 1.0. The line is slightly off each point by 1 unit; least-squares training would adjust the slope and intercept to reduce this total squared miss (here the fit is already quite good and balanced, since the residuals sum to +1, near zero)."
             },
             {
               "title": "Fitting a parabola with 'linear' regression",
-              "scenario": "Your data clearly curves like a U, so a straight line underfits badly. How can linear regression fit it without changing the algorithm?",
+              "body": "Your data clearly curves like a U, so a straight line underfits badly. How can linear regression fit it without changing the algorithm?",
               "solution": "Add a transformed feature. Instead of fitting ŷ = w₁x + b, create a second feature x² and fit ŷ = w₁x + w₂x² + b. This is still ordinary least squares — you've just added a column to the design matrix — but the fitted curve is now a parabola in x. The model is linear in the parameters (w₁, w₂, b), so the same closed-form/gradient solver applies, yet it captures the U-shape. (Caution: keep adding powers and you'll eventually overfit, wiggling through every point.)"
             },
             {
               "title": "R²: how much variance the model explains",
-              "scenario": "A model predicts house prices. The actual values are $y=[3,5,7]$ and the predictions are $\\hat y=[2.5,5,7.5]$ (in hundreds of thousands). The mean is $\\bar y=5$. Compute $R^2$, the fraction of variance the model explains.",
+              "body": "A model predicts house prices. The actual values are $y=[3,5,7]$ and the predictions are $\\hat y=[2.5,5,7.5]$ (in hundreds of thousands). The mean is $\\bar y=5$. Compute $R^2$, the fraction of variance the model explains.",
               "solution": "$R^2$ compares the model's squared error to the error of just predicting the mean. Residual sum of squares: $SS_{\\text{res}}=\\sum(y-\\hat y)^2=(0.5)^2+0^2+(-0.5)^2=0.5$. Total sum of squares: $SS_{\\text{tot}}=\\sum(y-\\bar y)^2=(-2)^2+0^2+(2)^2=8$. Then $R^2=1-\\frac{SS_{\\text{res}}}{SS_{\\text{tot}}}=1-\\frac{0.5}{8}=0.9375$ — the model explains about 94% of the variance in prices. Reading the scale: $R^2=1$ is a perfect fit, $R^2=0$ is no better than always guessing the mean, and $R^2$ can even go <em>negative</em> for a model worse than the mean. It is the standard one-number summary of regression fit."
             }
           ]
@@ -612,17 +612,17 @@
           "examples": [
             {
               "title": "Score to probability to class, by hand",
-              "scenario": "A logistic model has weights w = (2, −1) and bias b = −1. For input x = (1, 1), compute z, the probability, and the predicted class (threshold 0.5).",
+              "body": "A logistic model has weights w = (2, −1) and bias b = −1. For input x = (1, 1), compute z, the probability, and the predicted class (threshold 0.5).",
               "solution": "z = w·x + b = 2·1 + (−1)·1 + (−1) = 2 − 1 − 1 = 0. Then σ(0) = 1/(1 + e^0) = 1/2 = 0.5. The probability is exactly 0.5 — the input sits on the decision boundary. With a 'predict 1 if p ≥ 0.5' rule it is classified as the positive class (1), but it is maximally uncertain; any tiny change to a feature would tip it decisively one way or the other."
             },
             {
               "title": "Why a straight line on 0/1 labels misbehaves",
-              "scenario": "You fit ordinary linear regression to binary labels (0 = healthy, 1 = sick) against a dosage feature, then add one patient with a very high dosage. What goes wrong that logistic regression avoids?",
+              "body": "You fit ordinary linear regression to binary labels (0 = healthy, 1 = sick) against a dosage feature, then add one patient with a very high dosage. What goes wrong that logistic regression avoids?",
               "solution": "Two problems. First, the fitted line is unbounded, so for high or low dosages it predicts values above 1 or below 0 — impossible as probabilities, with no sensible way to read them. Second, the single high-dosage point exerts strong leverage on the least-squares line, tilting it and shifting the implied 0.5 crossing (the decision threshold), so a far-away correct case degrades the boundary. Logistic regression avoids both: the sigmoid keeps outputs in (0,1), and points far on the correct side of the boundary contribute almost nothing to the cross-entropy gradient, so the boundary is stable."
             },
             {
               "title": "Log-loss rewards calibrated confidence",
-              "scenario": "An email truly is spam (label $y=1$). Model A predicts $p=0.9$ (confident and correct); Model B predicts $p=0.1$ (confident and wrong). The cross-entropy loss for one example is $-[\\,y\\log p+(1-y)\\log(1-p)\\,]$. Compute each, and see why we train on this instead of accuracy.",
+              "body": "An email truly is spam (label $y=1$). Model A predicts $p=0.9$ (confident and correct); Model B predicts $p=0.1$ (confident and wrong). The cross-entropy loss for one example is $-[\\,y\\log p+(1-y)\\log(1-p)\\,]$. Compute each, and see why we train on this instead of accuracy.",
               "solution": "With $y=1$ the loss simplifies to $-\\log p$. Model A: $-\\log(0.9)\\approx 0.105$ — a tiny penalty for being confident and right. Model B: $-\\log(0.1)\\approx 2.303$ — a large penalty for being confident and wrong. The asymmetry is the whole point: log-loss barely charges a confident-correct prediction but punishes a confident-wrong one heavily, and it diverges to $+\\infty$ as $p\\to 0$ for a true positive. That gradient pushes the model toward <em>well-calibrated probabilities</em>, not merely correct labels — which is why classifiers are trained on cross-entropy rather than directly on accuracy (which is flat and non-differentiable)."
             }
           ]
@@ -764,17 +764,17 @@
           "examples": [
             {
               "title": "How ridge shrinks a coefficient as λ grows",
-              "scenario": "In a one-feature ridge problem the closed-form weight is w = (Σ xᵢyᵢ)/(Σ xᵢ² + λ). Suppose Σ xᵢyᵢ = 20 and Σ xᵢ² = 10. Compute w for λ = 0, 10, and 90.",
+              "body": "In a one-feature ridge problem the closed-form weight is w = (Σ xᵢyᵢ)/(Σ xᵢ² + λ). Suppose Σ xᵢyᵢ = 20 and Σ xᵢ² = 10. Compute w for λ = 0, 10, and 90.",
               "solution": "λ=0: w = 20/(10+0) = 2.0 (the ordinary least-squares weight). λ=10: w = 20/(10+10) = 20/20 = 1.0 (halved). λ=90: w = 20/(10+90) = 20/100 = 0.2 (shrunk toward zero). As λ grows, the denominator grows, so the weight smoothly shrinks toward 0 but never reaches it exactly — the hallmark of ridge/L2 shrinkage."
             },
             {
               "title": "Lasso zeros a weak feature; ridge only shrinks it",
-              "scenario": "A feature has a small least-squares weight of 0.3 and is mostly noise. Qualitatively, what does lasso do to it versus ridge as regularization increases?",
+              "body": "A feature has a small least-squares weight of 0.3 and is mostly noise. Qualitatively, what does lasso do to it versus ridge as regularization increases?",
               "solution": "Lasso: as λ rises past a threshold, the soft-thresholding of L1 pushes this small weight to EXACTLY 0 — the feature drops out of the model entirely, which is desirable if it's just noise (automatic feature selection). Ridge: it shrinks the 0.3 toward zero (say to 0.2, then 0.1, ...) but never sets it to exactly 0, so the noisy feature stays in the model with a small nonzero weight. This is the practical difference: lasso yields a sparse model that discards weak features; ridge yields a dense model that merely damps them."
             },
             {
               "title": "Why you standardize features before regularizing",
-              "scenario": "A ridge penalty $\\lambda\\sum_j w_j^2$ shrinks the weights. Feature A is a price (range about 10000) and feature B is an age (range about 10). For each to have a comparable effect on the output, A needs a tiny weight and B a large one. What does the penalty do to them, and what is the fix?",
+              "body": "A ridge penalty $\\lambda\\sum_j w_j^2$ shrinks the weights. Feature A is a price (range about 10000) and feature B is an age (range about 10). For each to have a comparable effect on the output, A needs a tiny weight and B a large one. What does the penalty do to them, and what is the fix?",
               "solution": "The penalty $\\lambda\\sum_j w_j^2$ treats every weight equally — but a weight's size reflects its feature's <em>scale</em>. A's weight (maybe 0.001) contributes almost nothing to $\\sum_j w_j^2$, while B's (maybe 5) dominates it. So ridge heavily penalizes B and barely touches A purely because of their units, not their importance — a silent bias. The fix: <strong>standardize</strong> each feature to mean 0 and variance 1 (a z-score) before fitting, so the weights are on a common footing and the penalty is fair. This is exactly why scikit-learn pipelines place a StandardScaler before any regularized model, and why the intercept is usually left unpenalized. The aha: regularization is scale-sensitive — always standardize first, or the penalty quietly favors large-scale features."
             }
           ]
@@ -922,17 +922,17 @@
           "examples": [
             {
               "title": "Why a wider margin generalizes better",
-              "scenario": "Two separable clusters. Boundary A passes 0.1 units from the nearest points of each class; boundary B passes 1.0 units from them. Both classify the training set perfectly. Which is the SVM's choice and why is it safer on new data?",
+              "body": "Two separable clusters. Boundary A passes 0.1 units from the nearest points of each class; boundary B passes 1.0 units from them. Both classify the training set perfectly. Which is the SVM's choice and why is it safer on new data?",
               "solution": "The SVM chooses B — the larger margin (1.0 vs 0.1). Both are perfect on training data, so training accuracy can't distinguish them, but B is more robust: a new point, or noise, that shifts a sample by up to ~1 unit still lands on the correct side of B, whereas a shift of just 0.1 could flip it across A. Formally, the wider margin corresponds to a smaller ‖w‖ (lower complexity / stronger regularization), which gives a tighter generalization bound. The empty 'street' around B is the safety buffer A lacks."
             },
             {
               "title": "When a straight line fails — go to a kernel",
-              "scenario": "Class 1 is a tight blob at the origin; class 0 forms a ring around it. No straight line separates them. How does an SVM solve this without abandoning its linear machinery?",
+              "body": "Class 1 is a tight blob at the origin; class 0 forms a ring around it. No straight line separates them. How does an SVM solve this without abandoning its linear machinery?",
               "solution": "Use a nonlinear kernel (e.g. RBF, or a polynomial/feature map like (x₁, x₂, x₁²+x₂²)). Adding the radius feature x₁²+x₂² lifts the data into a higher dimension where the inner blob (small radius) and the outer ring (large radius) become linearly separable by a flat threshold on that new axis. The SVM draws its usual maximum-margin hyperplane in that lifted space; projected back to the original 2D plane, the boundary is a circle separating blob from ring. The kernel trick does this implicitly — computing the needed dot products via k(x,z) without ever forming the lifted features."
             },
             {
               "title": "The margin and the support vectors, by hand",
-              "scenario": "Two points, opposite classes: a positive example at $x_+=(1,0)$ and a negative at $x_-=(-1,0)$. The obvious maximum-margin boundary is the vertical line $x=0$. Find the weight vector $w$, bias $b$, the margin width, and the support vectors.",
+              "body": "Two points, opposite classes: a positive example at $x_+=(1,0)$ and a negative at $x_-=(-1,0)$. The obvious maximum-margin boundary is the vertical line $x=0$. Find the weight vector $w$, bias $b$, the margin width, and the support vectors.",
               "solution": "Use the SVM's canonical scaling, $y_i(w^\\top x_i+b)=1$ for the closest points. For $x_+$ (label $+1$): $w_1(1)+b=1$. For $x_-$ (label $-1$): $-(w_1(-1)+b)=1$, i.e. $w_1-b=1$... combine the two: $w_1+b=1$ and $w_1-b=1$ give $b=0$ and $w_1=1$, so $w=(1,0)$, $b=0$ — the line $x=0$, as expected. Margin width $=2/\\lVert w\\rVert = 2/1 = 2$ (the empty 'street' spans from $x=-1$ to $x=1$). Both points lie exactly on the margin ($y_i(w^\\top x_i+b)=1$), so both are support vectors — deleting either would change the boundary. Maximizing the margin is the same as minimizing $\\lVert w\\rVert$, which is why the canonical scaling pins the closest points to $\\pm1$."
             }
           ]
@@ -1074,17 +1074,17 @@
           "examples": [
             {
               "title": "Classifying a document by Naive Bayes",
-              "scenario": "Two classes, Sports and Tech, equally likely (P=0.5 each). Word likelihoods — P('game'|Sports)=0.4, P('game'|Tech)=0.1; P('chip'|Sports)=0.05, P('chip'|Tech)=0.3. A document contains 'game' and 'chip' (once each). Which class?",
+              "body": "Two classes, Sports and Tech, equally likely (P=0.5 each). Word likelihoods — P('game'|Sports)=0.4, P('game'|Tech)=0.1; P('chip'|Sports)=0.05, P('chip'|Tech)=0.3. A document contains 'game' and 'chip' (once each). Which class?",
               "solution": "Assuming conditional independence, multiply: Sports score = P(Sports)·P('game'|S)·P('chip'|S) = 0.5·0.4·0.05 = 0.010. Tech score = 0.5·0.1·0.3 = 0.015. Tech (0.015) > Sports (0.010), so classify as TECH. The strong 'chip'|Tech signal (0.3 vs 0.05) outweighs the 'game'|Sports signal (0.4 vs 0.1). Normalizing: P(Tech|doc) = 0.015/0.025 = 0.6, P(Sports|doc) = 0.4."
             },
             {
               "title": "Why independence can miscalibrate but still classify right",
-              "scenario": "Spam contains the near-synonyms 'cheap' and 'discount' that almost always co-occur. Naive Bayes treats them as independent. What does this do to the probabilities, and to the final label?",
+              "body": "Spam contains the near-synonyms 'cheap' and 'discount' that almost always co-occur. Naive Bayes treats them as independent. What does this do to the probabilities, and to the final label?",
               "solution": "Because the two words carry essentially the SAME evidence but are multiplied as if independent, Naive Bayes double-counts it — the spam score is pushed far higher than warranted, so the reported P(spam) is overconfident (e.g. 0.999 when the true confidence should be lower). The probabilities are miscalibrated. But the label is usually still correct: spam was already the higher-scoring class, and the double-counting only inflates that lead, leaving the argmax (spam) unchanged. This is exactly why Naive Bayes is a poor probability estimator yet a good classifier — the decision depends only on which class wins, not on the exact probability."
             },
             {
               "title": "Laplace smoothing rescues a zero",
-              "scenario": "A spam filter has vocabulary {free, meeting, blockchain}. In the spam training text, 'blockchain' appeared 0 times, out of $N=10$ total spam word-tokens. A new email contains 'blockchain'. What is $P(\\text{blockchain}\\mid\\text{spam})$ with and without add-one smoothing, and why does it matter?",
+              "body": "A spam filter has vocabulary {free, meeting, blockchain}. In the spam training text, 'blockchain' appeared 0 times, out of $N=10$ total spam word-tokens. A new email contains 'blockchain'. What is $P(\\text{blockchain}\\mid\\text{spam})$ with and without add-one smoothing, and why does it matter?",
               "solution": "Without smoothing: $P(\\text{blockchain}\\mid\\text{spam}) = 0/10 = 0$. Because Naive Bayes multiplies the per-word probabilities, this single $0$ makes the entire spam score $0$ — no matter how spammy every other word is, the email can never be classified spam. With add-one (Laplace) smoothing you add 1 to each count and the vocabulary size $V=3$ to the denominator: $P = (0+1)/(10+3) = 1/13 \\approx 0.077$. Now the unseen word contributes a small nonzero factor instead of annihilating the product, and the informative words decide the verdict. Smoothing is essential whenever test data can contain values unseen in training."
             }
           ]
@@ -1232,17 +1232,17 @@
           "examples": [
             {
               "title": "One full k-means iteration in 2-D",
-              "scenario": "Points A(1,1), B(1,2), C(8,8), D(9,8). Initial centroids μ1=(0,0), μ2=(10,10), k=2. Do one assign + update step.",
+              "body": "Points A(1,1), B(1,2), C(8,8), D(9,8). Initial centroids μ1=(0,0), μ2=(10,10), k=2. Do one assign + update step.",
               "solution": "Assign (nearest centroid): A,B are far closer to μ1=(0,0) than μ2=(10,10) (e.g. A: dist to μ1 ≈ 1.41, to μ2 ≈ 12.7); C,D are closer to μ2. Clusters: {A,B} and {C,D}. Update (mean): μ1 = mean of A(1,1),B(1,2) = (1, 1.5); μ2 = mean of C(8,8),D(9,8) = (8.5, 8). The centroids jumped from the corners to the centers of the two natural groups. A second iteration would re-assign the same way and leave the centroids put — converged, with two tight clusters."
             },
             {
               "title": "Reading an elbow plot",
-              "scenario": "You run k-means for k = 1..6 and get inertia values 1000, 300, 120, 95, 80, 70. How many clusters does the elbow method suggest?",
+              "body": "You run k-means for k = 1..6 and get inertia values 1000, 300, 120, 95, 80, 70. How many clusters does the elbow method suggest?",
               "solution": "Look at how much each extra cluster reduces inertia: k1→2 drops 700, k2→3 drops 180, k3→4 drops 25, k4→5 drops 15, k5→6 drops 10. The big gains stop after k=3 (the 700 and 180 drops), and from k=3 onward the curve flattens (25, 15, 10 — diminishing returns). The 'elbow' is at k=3, so the elbow method suggests 3 clusters: beyond that you're mostly fitting noise, not real structure. (Confirm with a silhouette score if the elbow is ambiguous.)"
             },
             {
               "title": "Computing the WCSS that k-means minimizes",
-              "scenario": "k-means minimizes the within-cluster sum of squares (WCSS): $\\sum_i \\lVert x_i - c_{(i)}\\rVert^2$, the total squared distance from each point to its cluster's center. For clusters A=$\\{(0,0),(2,0)\\}$ and B=$\\{(5,0),(7,0)\\}$, compute it.",
+              "body": "k-means minimizes the within-cluster sum of squares (WCSS): $\\sum_i \\lVert x_i - c_{(i)}\\rVert^2$, the total squared distance from each point to its cluster's center. For clusters A=$\\{(0,0),(2,0)\\}$ and B=$\\{(5,0),(7,0)\\}$, compute it.",
               "solution": "First the centroids (the mean of each cluster): $c_A=(1,0)$ and $c_B=(6,0)$. Cluster A's squared distances: $(0-1)^2+(2-1)^2 = 1+1 = 2$. Cluster B's: $(5-6)^2+(7-6)^2 = 1+1 = 2$. Total WCSS $= 2+2 = 4$. This single number is k-means' objective — every assign-then-recenter step provably lowers it (or leaves it unchanged), which is why the algorithm converges. It is also what the elbow plot tracks against $k$: WCSS always drops as $k$ grows, so you look for the bend where extra clusters stop helping, not the minimum."
             }
           ]
@@ -1390,17 +1390,17 @@
           "examples": [
             {
               "title": "Why averaging uncorrelated models helps (numbers)",
-              "scenario": "Three independent classifiers each have 70% accuracy (30% error) on a binary task, making independent errors. Using majority vote, is the ensemble better or worse than 70%?",
+              "body": "Three independent classifiers each have 70% accuracy (30% error) on a binary task, making independent errors. Using majority vote, is the ensemble better or worse than 70%?",
               "solution": "The ensemble is wrong only when at least 2 of the 3 err. With independent 0.3 error rates: P(all 3 wrong)=0.3³=0.027; P(exactly 2 wrong)=3·0.3²·0.7=0.189. So P(majority wrong)=0.027+0.189=0.216, i.e. ~78.4% accuracy — up from 70%. Three mediocre, independent voters beat any one of them, because for the majority to fail, multiple independent errors must coincide, which is unlikely. (The gain depends on independence — if the three always erred together, the vote would stay at 70%, which is exactly why decorrelation matters.)"
             },
             {
               "title": "Picking bagging vs boosting by the base learner",
-              "scenario": "Base learner A is a full, deep decision tree (low bias, high variance). Base learner B is a depth-1 stump (high bias, low variance). Which ensemble method suits each?",
+              "body": "Base learner A is a full, deep decision tree (low bias, high variance). Base learner B is a depth-1 stump (high bias, low variance). Which ensemble method suits each?",
               "solution": "Use BAGGING (or a random forest) for A, the deep tree: it's already low-bias but high-variance, and bagging averages away the variance — full trees are the canonical random-forest base learner. Use BOOSTING for B, the stump: a single stump badly underfits (high bias), but boosting chains many stumps, each correcting the last, to drive the bias down into a strong learner — shallow trees are the canonical gradient-boosting base learner. The rule: bag low-bias/high-variance models to cut variance; boost high-bias/weak models to cut bias."
             },
             {
               "title": "AdaBoost: how a weak learner earns its weight",
-              "scenario": "In boosting, each weak learner gets a say proportional to how good it is. AdaBoost gives a learner with weighted error $\\epsilon$ the weight $\\alpha=\\tfrac{1}{2}\\ln\\frac{1-\\epsilon}{\\epsilon}$. Compute $\\alpha$ for a stump with $\\epsilon=0.3$, and read off what happens at $\\epsilon=0.5$ and beyond.",
+              "body": "In boosting, each weak learner gets a say proportional to how good it is. AdaBoost gives a learner with weighted error $\\epsilon$ the weight $\\alpha=\\tfrac{1}{2}\\ln\\frac{1-\\epsilon}{\\epsilon}$. Compute $\\alpha$ for a stump with $\\epsilon=0.3$, and read off what happens at $\\epsilon=0.5$ and beyond.",
               "solution": "For $\\epsilon=0.3$: $\\alpha=\\tfrac{1}{2}\\ln\\frac{0.7}{0.3}=\\tfrac{1}{2}\\ln(2.33)\\approx\\tfrac{1}{2}(0.847)=0.42$ — a positive, moderate vote. The formula encodes the right behavior: a learner barely better than chance ($\\epsilon\\to 0.5$) gets $\\alpha\\to 0$ (almost no say); a near-perfect learner ($\\epsilon\\to 0$) gets $\\alpha\\to\\infty$ (a huge say); and a learner <em>worse</em> than chance ($\\epsilon>0.5$) gets a <em>negative</em> weight — AdaBoost simply flips its predictions and uses it anyway. Boosting then reweights the data to focus the next learner on the examples this one got wrong."
             }
           ]
@@ -1548,17 +1548,17 @@
           "examples": [
             {
               "title": "Why 99% accuracy can mean zero usefulness",
-              "scenario": "1000 emails, 10 are phishing (1%). Model M always predicts 'safe'. Compute its accuracy, precision, and recall for the phishing class.",
+              "body": "1000 emails, 10 are phishing (1%). Model M always predicts 'safe'. Compute its accuracy, precision, and recall for the phishing class.",
               "solution": "Confusion counts: M never flags phishing, so true positives = 0, false positives = 0, false negatives = 10 (all phishing missed), true negatives = 990. Accuracy = (TP+TN)/total = (0+990)/1000 = 99.0% — impressively high. Recall = TP/(TP+FN) = 0/10 = 0% — it catches none of the phishing. Precision = TP/(TP+FP) = 0/0 — undefined (it never makes a positive prediction). So a 99% accurate model is completely useless for the actual task. This is the base-rate trap: report recall/precision (and the confusion matrix), not accuracy, on imbalanced problems."
             },
             {
               "title": "A subtle data-leakage bug",
-              "scenario": "You standardize all features using the mean and standard deviation of the FULL dataset, then do 5-fold cross-validation and get a great score — but production performance is worse. What leaked, and what's the fix?",
+              "body": "You standardize all features using the mean and standard deviation of the FULL dataset, then do 5-fold cross-validation and get a great score — but production performance is worse. What leaked, and what's the fix?",
               "solution": "The scaler was fit on the whole dataset BEFORE the CV split, so the mean/std it used were computed partly from the validation fold. Each training fold therefore 'saw' summary statistics of its validation data — a leak that makes CV scores optimistically biased and not reproducible in production (where future data isn't available to compute statistics). Fix: move standardization INSIDE the cross-validation loop — fit the scaler on each training fold only, then apply it to that fold's validation data. In practice, wrap preprocessing and the model in a single pipeline and cross-validate the whole pipeline, so every data-driven step is fit only on training data. The same rule applies to feature selection, imputation, and any step that learns from the data."
             },
             {
               "title": "Precision, recall, and F1 from a confusion matrix",
-              "scenario": "A spam classifier on 100 emails yields: 18 spam correctly flagged (TP), 2 legit emails wrongly flagged (FP), 12 spam missed (FN), and 68 legit correctly passed (TN). Compute accuracy, precision, recall, and F1 — and say what the headline number hides.",
+              "body": "A spam classifier on 100 emails yields: 18 spam correctly flagged (TP), 2 legit emails wrongly flagged (FP), 12 spam missed (FN), and 68 legit correctly passed (TN). Compute accuracy, precision, recall, and F1 — and say what the headline number hides.",
               "solution": "Accuracy $=(TP+TN)/100=(18+68)/100=86\\%$. Precision $=TP/(TP+FP)=18/20=0.90$ (when it flags spam, it is right 90% of the time). Recall $=TP/(TP+FN)=18/30=0.60$ (it catches only 60% of actual spam). F1 $=2PR/(P+R)=2(0.9)(0.6)/(0.9+0.6)=1.08/1.5=0.72$. The 86% accuracy looks healthy, but recall exposes the real story: 40% of spam slips through. On imbalanced or cost-sensitive problems, report precision/recall/F1 (and pick the threshold for the error you care about), not accuracy alone."
             }
           ]
