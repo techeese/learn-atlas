@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 602: **Glossary: 12 missing fundamentals** (reference). Added the most basic day-one vocabulary that was absent — Supervised/Unsupervised learning, Feature,
+   Label, Hyperparameter, Underfitting, One-hot encoding, Bootstrap, Tensor, Sigmoid, Transfer learning, Tokenization. Glossary 192→204. Verified: gate GREEN; lean
+   headless (dump-dom) 6/6 render, kErr=0/errs=0. SW →v543.
    ✅ iter 601: **Normalize example schema site-wide** (data hygiene). Root-cause follow-through on iter 600: normalized all 53 `scenario` examples → `body` (30 ML +
    21 IT + 2 LLM), so all 496 examples share one schema {title, body, solution}; renderer fallback + gate guard remain as safety nets. Verified: gate GREEN; key-sets
    collapsed to one; headless examples render (empty=0), errs=0. SW →v542.

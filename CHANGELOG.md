@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 602 — Glossary: the 12 most-fundamental terms that were missing (reference)
+The glossary had 192 terms but — by oversight — was missing some of the most *basic* vocabulary a learner meets on day one, so hovering them inline gave nothing.
+Added the 12 genuinely-absent fundamentals (dup-checked against existing forms): **Supervised / Unsupervised learning, Feature, Label, Hyperparameter, Underfitting,
+One-hot encoding, Bootstrap, Tensor, Sigmoid, Transfer learning, Tokenization** — each a concise definition (sigmoid with its `σ(z)=1/(1+e⁻ᶻ)` formula), filed under
+its home topic. These are high-traffic terms (good for inline tooltips, ⌘K, and the prerendered SEO pages), and they round out the beginner-facing vocabulary that the
+advanced terms already assumed. Glossary **192 → 204**.
+Verified: `new Function` on glossary.js clean; gate ALL GREEN; **headless** (lean — data-only, `--dump-dom`, no screenshot) — the Glossary page renders all sampled new
+terms (6/6), **kErr=0, errs=0**. SW cache `atlas-v542` → `atlas-v543`.
+
 ## iter 601 — Normalize the example schema site-wide (data hygiene / footgun removal)
 Follow-through on iter 600's bug: examples existed in two shapes — `{title, body, solution}` (most) and `{title, scenario, solution}` (the ML, IT, and 2 LLM
 examples). iter 600 made the *renderer* tolerant (`body || scenario`) and added a gate guard, which fixed the symptom. This iter removes the **root-cause footgun**:
