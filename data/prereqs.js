@@ -154,7 +154,9 @@ window.PREREQS = {
     "ps-normal-distribution"
   ],
   "dl-autoencoders-vae": [
-    "ps-normal-distribution"
+    "ps-normal-distribution",
+    "it-cross-entropy-kl",
+    "it-differential-entropy"
   ],
   "ps-normal-distribution": [
     "c-improper-integrals"
@@ -167,5 +169,9 @@ window.PREREQS = {
   ],
   "it-entropy": [
     "ps-random-variables-distributions"
+  ],
+  "it-differential-entropy": [
+    "ps-random-variables-distributions",
+    "c-definite-integral-riemann"
   ]
 };

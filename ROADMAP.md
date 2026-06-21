@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 597: **Connect newest IT lessons into the knowledge graph** (understandability/connections). +4 cross-topic prereq edges: it-differential-entropy →
+   ps-random-variables-distributions + c-definite-integral-riemann; dl-autoencoders-vae → it-cross-entropy-kl + it-differential-entropy (VAE loss = reconstruction +
+   KL). Was disconnected in the map. Verified: gate GREEN; headless connections both directions, map renders, errs=0. Prereq keys 49→50. SW →v538.
    ✅ iter 596: **Library reading list for Information Theory** (reference/content). Added 6 canonical refs (Shannon 1948, MacKay, Cover & Thomas, colah's Visual
    Information Theory, 3b1b Hamming codes, MIT 6.441) — IT was the only topic without a Library shelf; now all 9 are covered. Verified: gate GREEN; headless Library
    renders the IT section, refs 43→49, errs=0. SW →v537.

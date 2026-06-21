@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 597 — Connect the newest IT lessons into the knowledge graph (understandability / connections)
+The two most-recent Information Theory lessons (Differential Entropy, and the Info-in-ML capstone) had **zero cross-topic prerequisite edges**, leaving them
+islanded in the Knowledge Map and "Builds on / Leads to" panels. Added 4 pedagogically-real edges: **Differential Entropy** now builds on `ps-random-variables-distributions`
+(continuous densities) and `c-definite-integral-riemann` (it's defined by an integral); and the **VAE** (`dl-autoencoders-vae`) now builds on `it-cross-entropy-kl`
+and `it-differential-entropy` — surfacing that the VAE's loss *is* reconstruction + a KL divergence whose Gaussian closed form comes straight from differential
+entropy. This wires the new continuous-information material into the DL/probability/calculus neighborhood it actually depends on.
+Verified: `new Function` on prereqs.js clean; gate ALL GREEN (all 4 ids resolve); **headless** — Differential Entropy shows Builds-on `ps-random-variables` + Leads-to
+the VAE; the VAE shows both IT lessons under Builds-on; the Knowledge Map renders; **errs=0**. Prereq keys **49 → 50**. SW cache `atlas-v537` → `atlas-v538`.
+
 ## iter 596 — Library reading list for Information Theory (reference / content)
 The 9th topic was built lesson-by-lesson but never got a **Library** entry — every other topic (and "general") had a curated further-reading list; Information Theory
 had none. Added **6 canonical references**: Shannon's founding 1948 paper, MacKay's *Information Theory, Inference, and Learning Algorithms* (the ML-flavored free
