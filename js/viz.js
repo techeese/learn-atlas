@@ -5528,4 +5528,55 @@
     draw();
   });
 
+
+  /* ========================================================
+     100. Huffman coding: the optimal prefix code tree (Information Theory)
+     ======================================================== */
+  register({ id: 'it-source-coding-viz', topic: 'information-theory', title: 'Huffman coding: building the optimal prefix code', blurb: 'Huffman builds the optimal prefix code by repeatedly merging the two least-likely symbols into a binary tree. Each leaf is a symbol; reading the path from the root (left = 0, right = 1) gives its codeword. Frequent symbols sit near the root and get short codes. Compare distributions: the expected code length L equals the entropy H exactly for dyadic probabilities, and stays within 1 bit otherwise — never below, since entropy is the floor.' },
+  function (root) {
+    const W = 560, H = 384, padT = 30, padB = 60, padX = 40;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const PRESETS = {
+      Dyadic: [['A', 0.5], ['B', 0.25], ['C', 0.125], ['D', 0.125]],
+      Skewed: [['A', 0.6], ['B', 0.2], ['C', 0.12], ['D', 0.08]],
+      Uniform: [['A', 0.25], ['B', 0.25], ['C', 0.25], ['D', 0.25]]
+    };
+    let cur = 'Dyadic';
+    const log2 = x => Math.log(x) / Math.log(2);
+    function build(syms) {
+      let nodes = syms.map(s => ({ p: s[1], sym: s[0] }));
+      while (nodes.length > 1) { nodes.sort((a, b) => a.p - b.p); const a = nodes.shift(), b = nodes.shift(); nodes.push({ p: a.p + b.p, left: a, right: b }); }
+      return nodes[0];
+    }
+    function draw() {
+      const pp = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pp.bg; ctx.fillRect(0, 0, W, H);
+      const syms = PRESETS[cur], tree = build(syms), leaves = [];
+      (function walk(n, code, d) { if (n.sym !== undefined) { n.code = code; n.depth = d; leaves.push(n); return; } walk(n.left, code + '0', d + 1); walk(n.right, code + '1', d + 1); })(tree, '', 0);
+      const maxD = Math.max(1, ...leaves.map(l => l.depth)), nL = leaves.length;
+      const levelH = (H - padT - padB) / maxD, slotW = (W - 2 * padX) / nL;
+      let li = 0;
+      (function layout(n, d) { n.y = padT + d * levelH; if (n.sym !== undefined) { n.x = padX + (li + 0.5) * slotW; li++; return n.x; } const lx = layout(n.left, d + 1), rx = layout(n.right, d + 1); n.x = (lx + rx) / 2; return n.x; })(tree, 0);
+      // edges + bit labels
+      (function edges(n) { if (n.sym !== undefined) return;[['left', '0'], ['right', '1']].forEach(function (kb) { const ch = n[kb[0]], bit = kb[1]; ctx.strokeStyle = pp.line; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(ch.x, ch.y); ctx.stroke(); ctx.fillStyle = bit === '0' ? pp.sage : pp.gold; ctx.font = 'bold 12px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.fillText(bit, (n.x + ch.x) / 2 + (bit === '0' ? -9 : 9), (n.y + ch.y) / 2 - 1); edges(ch); }); })(tree);
+      // nodes
+      (function nodes(n) {
+        if (n.sym !== undefined) {
+          const bw = 50, bh = 36, x0 = n.x - bw / 2;
+          ctx.fillStyle = pp.panel; ctx.strokeStyle = pp.violet; ctx.lineWidth = 1.5; ctx.fillRect(x0, n.y, bw, bh); ctx.strokeRect(x0, n.y, bw, bh);
+          ctx.textAlign = 'center'; ctx.fillStyle = pp.ink; ctx.font = 'bold 13px ' + (cssVar('--font-disp') || 'serif'); ctx.fillText(n.sym + '  ' + n.p.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''), n.x, n.y + 15);
+          ctx.fillStyle = pp.gold; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText(n.code, n.x, n.y + 29);
+        } else { ctx.fillStyle = pp.gold; ctx.strokeStyle = pp.bg; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(n.x, n.y, 5, 0, 7); ctx.fill(); ctx.stroke(); nodes(n.left); nodes(n.right); }
+      })(tree);
+      const L = leaves.reduce((a, l) => a + l.p * l.depth, 0);
+      const Hh = syms.reduce((a, s) => a - (s[1] > 0 ? s[1] * log2(s[1]) : 0), 0);
+      info.innerHTML = 'Expected length L = <b style="color:' + pp.gold + '">' + L.toFixed(2) + '</b> bits/symbol &middot; entropy H = <b>' + Hh.toFixed(2) + '</b> bits &middot; efficiency ' + Math.round(Hh / L * 100) + '%.<br>' + (Math.abs(L - Hh) < 0.005 ? 'Dyadic probabilities — Huffman hits the entropy floor exactly (L = H).' : 'Huffman is optimal among prefix codes and within 1 bit of entropy (L is never below H).');
+    }
+    Object.keys(PRESETS).forEach(function (k) { button(ctl, k, function () { cur = k; draw(); }); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Huffman coding tree visualizer. For a chosen distribution over four symbols, the optimal prefix-code tree is drawn: internal nodes are gold dots, leaves are boxes showing each symbol, its probability, and its codeword. Edges are labelled 0 (left, sage) and 1 (right, gold), so a leaf\'s codeword is the path from the root. Frequent symbols get shorter codes. The readout gives the expected code length L and entropy H: equal for dyadic probabilities, otherwise L is within 1 bit of H and never below it.');
+    draw();
+  });
+
 })();

@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 592: **Huffman-coding tree viz — the 100th widget** (visualizations). it-source-coding-viz draws the Huffman tree (gold nodes, 0/1 sage/gold edges, leaf
+   boxes with symbol·prob·code) for Dyadic/Uniform/Skewed presets, showing L=H for dyadic and L≥H otherwise. Embedded in it-source-coding (last IT lesson without a
+   viz). IT now has 4 native viz. Verified: gate GREEN (100 widgets); headless Dyadic 1.75/1.75, Uniform 2.00/2.00, Skewed 1.60/1.57, kErr=0/errs=0; screenshot. SW →v533.
    ✅ iter 591: **Estimated time per topic on dashboard & course pages** (UI/UX). Topic cards show "⏱ ≈ 5h 26m · N lessons"; course eyebrow appends "≈ 6h 34m".
    Shared fmtTime() formatter; summed from lesson minutes. Verified: gate GREEN; headless 9 cards render the line, course eyebrow shows time, errs=0; screenshots. SW →v532.
    ✅ iter 590: **STEP-BACK: full 9-topic audit (clean) + BSC capacity viz** (visualizations). Sweeps: 165 lessons errs=0/kErr=0/0 bad; 138 routes errs=0/kErr=0

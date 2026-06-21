@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 592 — Huffman-coding tree viz — the 100th widget (visualizations)
+The Source Coding lesson was the last IT lesson without a visualization; now it has the most visual algorithm in the topic. **`it-source-coding-viz` "Huffman
+coding: building the optimal prefix code"** draws the Huffman tree for a chosen distribution: internal nodes as gold dots, leaves as boxes showing each symbol, its
+probability, and its codeword, with edges labelled 0 (left, sage) / 1 (right, gold) so a leaf's code is its root-path. Three preset distributions (Dyadic, Uniform,
+Skewed) show the key lesson — expected length **L equals entropy H exactly for dyadic** probabilities and stays within 1 bit otherwise, **never below the entropy floor**.
+This is the **100th visualization** in the catalog, and completes the Information Theory pillar's visual coverage (it now has four native viz: entropy, mutual-info
+Venn, channel capacity, Huffman).
+Verified: gate ALL GREEN (now **100 widgets**); **headless** — Lab + lesson canvases hydrate; readouts give **Dyadic L=H=1.75**, **Uniform L=H=2.00**, **Skewed L=1.60 ≥
+H=1.57** (L never below H); **kErr=0, errs=0**; screenshot confirms the tree (gold nodes, 0/1 edges, leaf code boxes) renders correctly. SW cache `atlas-v532` → `atlas-v533`.
+
 ## iter 591 — Estimated time per topic on the dashboard & course pages (UI/UX)
 Self-paced learners deciding what to start want "how long is this course?" — the topic cards showed progress and mastery but no time signal. Added an **estimated
 total reading time** (summed from each lesson's `minutes`) in two places: the dashboard **topic cards** now show `⏱ ≈ 5h 26m · 19 lessons`, and the **course-page
