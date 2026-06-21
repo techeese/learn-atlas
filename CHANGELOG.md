@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 594 — Glossary catches up with the new IT lessons (reference)
+The Information Theory lessons added at iters 583/589 introduced several first-class terms that never made it into the glossary — so they had no definition, no inline
+tooltip, no ⌘K hit, and no glossary-page entry. Added the three that were missing: **Differential entropy** and **Information bottleneck** (information-theory) and
+**Soft actor-critic** (reinforcement-learning), each a KaTeX-rendered definition consistent with the lessons that teach them. Now every key concept the IT pillar
+introduces is discoverable site-wide (tooltips, search, glossary).
+Verified: `new Function` on glossary.js clean; gate ALL GREEN; **headless** — the glossary page renders all three new terms with math intact, **kErr=0, errs=0**.
+Glossary **189 → 192**. SW cache `atlas-v534` → `atlas-v535`.
+
 ## iter 593 — Halve first-visit download: shell-only SW precache (performance)
 The service worker's `install` precached **all 21 assets — including ~6.4MB of per-topic lesson data plus viz.js (468KB)** — via `addAll(ASSETS)`. But the fetch
 handler already caches every same-origin GET on first load, so first-time visitors were downloading those ~7MB **twice** (once for the page's `<script defer>` loads,

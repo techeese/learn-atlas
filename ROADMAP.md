@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 594: **Glossary catches up with the new IT lessons** (reference). Added 3 missing terms — Differential entropy, Information bottleneck (information-theory),
+   Soft actor-critic (reinforcement-learning) — so they're discoverable via tooltips/search/glossary. Verified: gate GREEN; headless glossary renders all 3, kErr=0/errs=0.
+   Glossary 189→192. SW →v535.
    ✅ iter 593: **Halve first-visit download — shell-only SW precache** (performance). install now precaches only the ~330KB app shell (CORE), not the ~6.4MB data
    + viz.js; the fetch handler caches those lazily on first load (offline still works), removing a ~7MB double-download on first visit. Verified: sw.js valid, CORE
    files exist, runtime caching preserved, gate GREEN, route smoke errs=0. SW →v534.
