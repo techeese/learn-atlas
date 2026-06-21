@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 668 — Bayesian module: deep-dives (parity fix) — ps-bayesian-inference (content / understandability)
+Found and started fixing a parity gap I'd created: the 4 Bayesian lessons had **0 deeper-dive sections** while every other lesson on the site has 3 (the `<details class="deep-dive">`
+expandables that also feed the "Deeper dive of the day"). Added 3 to `ps-bayesian-inference`: **flat/weak/improper priors**, **the likelihood principle** (and how frequentist p-values can
+depend on the stopping rule), and **why we work in log-space** (MAP as regularized MLE). Each an advanced, self-contained supplement matching the site's deep-dive style.
+Verified: data parses; gate ALL GREEN (render + tag-balance pass); **headless** — 3 `details.deep-dive` with 3 summaries render and, when expanded, their math renders (kErr=0, rawDollar=0);
+both viz still hydrate; errs=0. SW cache `atlas-v606` → `atlas-v607`. (Queued: deep-dives for the other 3 Bayesian lessons.)
+
 ## iter 667 — Connect the Bayesian module into the prereq graph (understandability / content structure)
 Final integration dimension for Module 6: the 4 Bayesian lessons weren't in the cross-topic prerequisite graph. Added 2 genuinely-accurate upstream edges — **`ps-bayesian-inference` →
 `c-definite-integral-riemann`** (the evidence `p(D)=∫p(D|θ)p(θ)dθ` and the predictive are definite integrals over θ) and **`ps-computational-bayes` → `c-definite-integral-riemann`** (the
