@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 638 — Linear Algebra viz coverage: cross-embed widgets into 5 no-viz lessons (visualizations / curation)
+Continued viz curation for Linear Algebra (was 10/19), pairing each no-viz lesson with its canonical existing visual at the right heading: **`la-vector-add`** → `la-span-independence`
+at "Span: the Set of All Reachable Points" (span = all linear combinations); **`la-linear-transform`** → `la-matrix-multiplication` at "Composition" (matrix product = composing maps);
+**`la-determinant`** → `la-inverse-and-systems` at "The Matrix Inverse" (invertible ⟺ det ≠ 0); **`la-svd`** → `la-four-subspaces-rank` at "Rank: The Number That Ties It All Together"
+(the SVD reveals rank & the four subspaces); **`la-eigen`** → `la-symmetric-spectral` at "The Spectral Theorem" (eigendecomposition of symmetric matrices). LA viz coverage **10/19 → 15/19**
+(the 4 remaining are matrix-calculus/backprop lessons with no fitting existing widget — candidates for a future new build).
+Verified: gate ALL GREEN; **headless** — all five lessons hydrate their embedded canvas (kErr=0 each), errs=0. SW cache `atlas-v578` → `atlas-v579`.
+
 ## iter 637 — LLM viz coverage: cross-embed widgets into 5 no-viz lessons (visualizations / curation)
 Resumed viz-coverage curation (after two prereq-graph iterations) for LLM (was 10/19). Cross-embedded existing widgets at the heading where each concept lands — including a
 **cross-topic** link: **`llm-decoding`** → `l-what-is-a-language-model` at "Autoregressive models" (a LM emits a next-token distribution); **`llm-cross-entropy`** →
