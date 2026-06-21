@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 664 — Bayesian module: Gamma–Poisson code exercise (examples / understandability)
+Third Bayesian code exercise, in `ps-conjugate-priors`: a **Gamma–Poisson** conjugate update (prior Gamma(2,1) + 10 events / 5 intervals → posterior Gamma(12,6), mean rate 2.00 = MLE),
+showing conjugate updating as pure parameter arithmetic. Site code-exercises **121 → 122**.
+Verified: data parses; gate ALL GREEN and ran the exercise (122 total); **headless** — lesson renders the code runner, ps-normal-explorer viz still hydrates, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v603` → `atlas-v604`. (Last queued: ps-bayesian-decisions code.)
+
 ## iter 663 — Bayesian module: Monte Carlo code exercise (examples / understandability)
 Second Bayesian code exercise, in `ps-computational-bayes`: a deterministic **Monte Carlo** summary from a fixed sample array — posterior mean ≈ 0.560 and `P(θ>0.6) ≈ 0.40` (a
 probability as a fraction of samples), reinforcing the lesson's "sample, don't integrate" theme. Deterministic on purpose (no `Math.random`) so the gate can execute and check it. Site
