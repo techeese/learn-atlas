@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 673 — NEW viz: differential entropy can go negative (visualizations)
+Filled a no-viz Information-Theory lesson. Built the **115th widget, `it-differential-entropy-viz`** for `it-differential-entropy`: a zero-mean Gaussian with a σ slider, showing
+`h(X)=½log₂(2πeσ²)` bits — it grows with spread and, crucially, **goes negative** once the density concentrates (σ below ≈0.242), the curve turning rust to signal it. This makes vivid the
+key distinction from discrete entropy (which is always ≥0). Embedded under §3 "The twist: it can be negative". IT viz coverage **5/7 → 6/7**.
+Verified: math re-derived in Node (σ=1 → 2.05 bits, σ=0.1 → −1.27 bits, zero at σ≈0.242); gate ALL GREEN (now **115 widgets**); **headless** — Lab + lesson hydrate, h is 2.05 at σ=1 and
+**negative** at σ=0.1, kErr=0, errs=0; screenshot shows the sharp rust Gaussian at small σ. SW cache `atlas-v610` → `atlas-v611`.
+
 ## iter 672 — Step-back regression sweep (clean) + gate content-parity warnings (step-back / tooling)
 Round-number step-back after the 20-iteration Bayesian arc. **Full 169-lesson regression sweep**: errs=0, no KaTeX errors, bad=none — the whole arc (4 new lessons, a new viz + cross-embeds,
 10 glossary terms, 4 code exercises, 12 deep-dives, prereq edges) introduced **zero regressions**. Confirmed every lesson is at the site standard (≥16 MCQ / 6 cards / 3 examples / 3

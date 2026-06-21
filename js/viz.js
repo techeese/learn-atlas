@@ -6310,4 +6310,42 @@
     draw();
   });
 
+
+  /* ========================================================
+     115. Differential entropy of a Gaussian (Information Theory)
+     ======================================================== */
+  register({ id: 'it-differential-entropy-viz', topic: 'information-theory', title: 'Differential entropy can go negative', blurb: 'For a continuous variable, entropy becomes h(X)=−∫f(x)log f(x)dx. For a Gaussian it is h=½log₂(2πeσ²) bits — it grows with the spread σ, and (unlike discrete entropy, which is always ≥0) it goes NEGATIVE once the distribution is concentrated enough (σ below ≈0.242). Slide σ and watch the curve sharpen and the entropy cross zero.' },
+  function (root) {
+    const W = 540, H = 320, padL = 40, padR = 16, padT = 16, padB = 34;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let sigma = 1;
+    const XMAX = 6;
+    const X = x => padL + (x + XMAX) / (2 * XMAX) * (W - padL - padR);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const pdf = x => Math.exp(-x * x / (2 * sigma * sigma)) / (sigma * Math.sqrt(2 * Math.PI));
+      const peak = pdf(0), ymax = Math.max(peak, 0.5), Yb = H - padB;
+      const Y = v => Yb - (v / ymax) * (H - padT - padB);
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Yb); ctx.lineTo(W - padR, Yb); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      [-4, -2, 0, 2, 4].forEach(t => ctx.fillText(t, X(t), Yb + 14));
+      ctx.fillText('x', W / 2, H - 4);
+      // pdf curve (color shifts toward rust when entropy is negative)
+      const h = 0.5 * Math.log2(2 * Math.PI * Math.E * sigma * sigma);
+      const col = h < 0 ? p.rust : p.sage;
+      ctx.strokeStyle = col; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i <= 300; i++) { const x = -XMAX + i / 300 * 2 * XMAX, y = pdf(x); i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); } ctx.stroke();
+      ctx.globalAlpha = 0.12; ctx.fillStyle = col; ctx.lineTo(X(XMAX), Yb); ctx.lineTo(X(-XMAX), Yb); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+      info.innerHTML = 'σ = <b>' + sigma.toFixed(2) + '</b> &middot; differential entropy h(X) = ½·log₂(2πeσ²) = <b style="color:' + col + '">' + h.toFixed(2) + ' bits</b>. ' +
+        (h < 0 ? 'Negative! The density is concentrated (and exceeds 1), so h dips below 0 — impossible for discrete entropy.' : 'As σ grows the distribution spreads and h rises; it crosses 0 at σ ≈ 0.242.');
+    }
+    slider(ctl, { label: 'spread σ', min: 0.1, max: 3, step: 0.01, value: sigma, fmt: v => v.toFixed(2), onInput: v => { sigma = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Differential-entropy visualizer: a zero-mean Gaussian density whose spread sigma is set by a slider. The readout shows h(X) = one-half log base 2 of (2 pi e sigma squared) in bits; as sigma shrinks the curve sharpens and the differential entropy decreases, turning negative below sigma about 0.242 (the curve turns rust) — something discrete entropy can never do.');
+    draw();
+  });
+
 })();
