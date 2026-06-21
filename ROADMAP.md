@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 586: **Two new achievement tiers for the grown site** (gamification). 🛠️ Code Virtuoso (solve 30 code exercises) + 🗺️ Cartographer (open 50 viz) —
+   data-driven, reuse existing counters, in "Exploration & Practice". Fills ladder gaps (code 10→30, viz 15→50→98). Achievements 60→62. Verified: gate GREEN;
+   headless seeded save unlocks both + they render in-category, errs=0. SW →v527.
    ✅ iter 585: **Interactive mutual-information Venn viz** (visualizations). 98th widget it-mutual-info-viz: two entropy circles whose overlap = I(X;Y); dependence
    slider (independent I=0 → coincident I=1); shows I, H(X|Y), H(X,Y). Distinct from entropy/CE/KL viz. Embedded in it-mutual-information (IT now has 2 own viz).
    Verified: gate GREEN (98 widgets); headless I=0.00/1.00/0.19, kErr=0/errs=0; screenshot. SW →v526.

@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 586 — Two new achievement tiers for the grown site (gamification)
+The codex has grown to 9 topics · 117 code exercises · 98 visualizations, but the progression ladder still topped out at the old sizes — leaving long stretches
+with nothing to chase. Added two **data-driven** mid/long-haul tiers (no new state; they reuse existing counters):
+- **🛠️ Code Virtuoso** — solve **30** lesson code exercises (the old top tier, Code Adept, was just 10; 117 now exist).
+- **🗺️ Cartographer** — open **50** different visualizations (fills the big gap between Viz Voyager at 15 and Full Spectrum at all 98).
+Both land in the "Exploration & Practice" category on the Achievements page (no orphans) and unlock through the existing `recordCodeSolved` / `recordVizOpen`
+paths. Also refreshed the stale endgame-capstone code comment (148 lessons → the complete 9-topic site).
+Verified: `new Function` on store.js + app.js clean; gate ALL GREEN; **headless** with a seeded save (30 solves + 50 viz, then one more of each) — both unlock
+(`code-master`, `viz-50` written to the save) and both render on the Achievements page in their category, **errs=0**. Achievements **60 → 62**. SW cache `atlas-v526` → `atlas-v527`.
+
 ## iter 585 — Interactive mutual-information Venn viz (visualizations)
 The **98th widget, `it-mutual-info-viz` "Mutual information: the overlap of two uncertainties."** Two circles — the entropies `H(X)` and `H(Y)` (each 1 bit) —
 whose **overlap is the mutual information `I(X;Y)`**. Drag a dependence slider: independent variables slide apart (tangent, `I=0`); as they grow dependent the

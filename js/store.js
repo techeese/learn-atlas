@@ -80,7 +80,9 @@
     { id: "viz-complete",icon: "🔬", name: "Full Spectrum",     desc: "Open every visualization in the Lab." },
     { id: "code-solver", icon: "🧪", name: "It Runs!",          desc: "Solve a lesson code exercise — output matches." },
     { id: "code-adept",  icon: "⌨️", name: "Code Adept",        desc: "Solve 10 lesson code exercises." },
-    // ── endgame capstones (matched to the complete site: 148 lessons, 2,368 MCQs, all topics) ──
+    { id: "code-master", icon: "🛠️", name: "Code Virtuoso",     desc: "Solve 30 lesson code exercises." },
+    { id: "viz-50",      icon: "🗺️", name: "Cartographer",      desc: "Open 50 different visualizations." },
+    // ── endgame capstones (matched to the complete 9-topic site: 164 lessons, 117 code exercises, 98 visualizations, all topics) ──
     { id: "summit",      icon: "🗻", name: "Summit",            desc: "Reach 80% mastery on 100 concepts." },
     { id: "streak-365",  icon: "🎇", name: "Year of Fire",      desc: "Reach a 365-day streak." },
     { id: "mcq-5000",    icon: "🌠", name: "Living Legend",     desc: "Answer 5,000 quiz questions correctly." },
@@ -263,6 +265,7 @@
     if (id) { if (!state.vizSeen || typeof state.vizSeen !== "object") state.vizSeen = {}; state.vizSeen[id] = true; }
     unlock("visualizer");
     if (Object.keys(state.vizSeen || {}).length >= 15) unlock("viz-voyager");
+    if (Object.keys(state.vizSeen || {}).length >= 50) unlock("viz-50");
     const vizTotal = (window.VIZ_CATALOG || []).length;   // "Full Spectrum": opened every widget in the Lab
     if (vizTotal && Object.keys(state.vizSeen || {}).length >= vizTotal) unlock("viz-complete");
     save();
@@ -286,6 +289,7 @@
     const count = Object.keys(state.solvedCode).length;
     unlock("code-solver");
     if (count >= 10) unlock("code-adept");
+    if (count >= 30) unlock("code-master");
     save();
     return { first: first, count: count };
   }

@@ -2272,7 +2272,7 @@
     { label: "Flashcards & Recall", ids: ["cards25", "century", "cards-500", "recaller", "total-recall"] },
     { label: "Mastery", ids: ["mastered-one", "deep-diver", "loremaster", "savant", "summit", "well-rounded"] },
     { label: "Levels & XP", ids: ["scholar", "polymath", "erudite", "sage", "luminary"] },
-    { label: "Exploration & Practice", ids: ["curious", "visualizer", "viz-voyager", "viz-complete", "pathfinder", "coder", "code-solver", "code-adept", "curator", "annotator", "deep-thinker", "deep-reader", "deep-voyager", "deep-work", "homework-hero"] }
+    { label: "Exploration & Practice", ids: ["curious", "visualizer", "viz-voyager", "viz-50", "viz-complete", "pathfinder", "coder", "code-solver", "code-adept", "code-master", "curator", "annotator", "deep-thinker", "deep-reader", "deep-voyager", "deep-work", "homework-hero"] }
   ];
   function viewAchievements() {
     const have = Store.raw.achievements;
