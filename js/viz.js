@@ -5687,4 +5687,65 @@
     draw();
   });
 
+
+  /* ========================================================
+     103. Naive Bayes: how words tip the spam odds (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-nb-viz', topic: 'machine-learning', title: 'Naive Bayes: how words tip the spam odds', blurb: 'A spam filter as evidence on a log-odds line. Start at the prior, then each word present in the email shifts the odds by its likelihood ratio P(word|spam)/P(word|ham) — spammy words push right, hammy words push left. Because Naive Bayes treats words as independent, multiplying the ratios is just ADDING their shifts; the email is spam if the total lands past the midpoint (P = 0.5). Toggle words and watch the verdict move.' },
+  function (root) {
+    const W = 540, H = 360, padL = 40, padR = 24, yAx = 250;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const WORDS = [
+      { w: 'free', ps: 0.5, ph: 0.1 }, { w: 'winner', ps: 0.3, ph: 0.02 }, { w: 'money', ps: 0.4, ph: 0.1 },
+      { w: 'click', ps: 0.35, ph: 0.08 }, { w: 'meeting', ps: 0.05, ph: 0.4 }, { w: 'project', ps: 0.03, ph: 0.3 }
+    ];
+    const on = { free: true, winner: true };          // initial email
+    const L0 = Math.log(0.4 / 0.6), LMAX = 6;
+    const X = L => padL + (L + LMAX) / (2 * LMAX) * (W - padL - padR);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      let L = L0; WORDS.forEach(d => { if (on[d.w]) L += Math.log(d.ps / d.ph); });
+      L = Math.max(-LMAX, Math.min(LMAX, L));
+      const Pspam = 1 / (1 + Math.exp(-L));
+      // axis
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(-LMAX), yAx); ctx.lineTo(X(LMAX), yAx); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('← ham', X(-LMAX) + 26, yAx + 22); ctx.fillText('spam →', X(LMAX) - 28, yAx + 22);
+      // decision threshold at L=0
+      ctx.strokeStyle = p.mute; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(X(0), yAx - 70); ctx.lineTo(X(0), yAx + 8); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.mute; ctx.fillText('decision (P=0.5)', X(0), yAx - 78);
+      // waterfall of shifts from prior -> posterior
+      let run = L0, y = yAx - 58;
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(X(L0), yAx, 5, 0, 7); ctx.fill();
+      ctx.textAlign = 'center'; ctx.fillStyle = p.mute; ctx.fillText('prior', X(L0), yAx + 22 - 0);
+      WORDS.forEach(d => {
+        if (!on[d.w]) return; const sh = Math.log(d.ps / d.ph); const a = run, b = run + sh; run = b;
+        const col = sh >= 0 ? p.rust : p.sage; ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(X(a), y); ctx.lineTo(X(b), y); ctx.stroke();
+        const ax = Math.atan2(0, X(b) - X(a)); const dir = X(b) >= X(a) ? 1 : -1;
+        ctx.beginPath(); ctx.moveTo(X(b), y); ctx.lineTo(X(b) - dir * 6, y - 4); ctx.lineTo(X(b) - dir * 6, y + 4); ctx.closePath(); ctx.fill();
+        ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('"' + d.w + '" ×' + (d.ps / d.ph).toFixed(1), (X(a) + X(b)) / 2, y - 7);
+        y -= 0; // keep on one band; spread vertically:
+        y = y; 
+      });
+      // posterior marker
+      const col = Pspam >= 0.5 ? p.rust : p.sage;
+      ctx.fillStyle = col; ctx.strokeStyle = p.bg; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(L), yAx, 8, 0, 7); ctx.fill(); ctx.stroke();
+      // big readout
+      ctx.fillStyle = col; ctx.font = 'bold 34px ' + (cssVar('--font-disp') || 'serif'); ctx.textAlign = 'center';
+      ctx.fillText('P(spam) = ' + Math.round(Pspam * 100) + '%', W / 2, 60);
+      ctx.font = '14px ' + (cssVar('--font-body') || 'sans-serif'); ctx.fillStyle = col;
+      ctx.fillText(Pspam >= 0.5 ? 'classified: SPAM' : 'classified: HAM', W / 2, 86);
+      const present = WORDS.filter(d => on[d.w]).map(d => d.w);
+      info.innerHTML = 'Email contains: <b>' + (present.length ? present.join(', ') : '(no listed words)') + '</b>. Prior P(spam)=0.40. ' +
+        'Each word multiplies the spam-odds by its likelihood ratio — equivalently, adds its shift on the log-odds line. Naive Bayes assumes words are independent, so the shifts simply sum; cross the midpoint and it is spam.';
+    }
+    WORDS.forEach(d => button(ctl, d.w + ' ' + (d.ps >= d.ph ? '↑' : '↓'), function () { on[d.w] = !on[d.w]; draw(); }));
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Naive Bayes spam-filter visualizer. A horizontal log-odds axis runs from ham (left) to spam (right) with a dashed decision threshold at the midpoint (probability 0.5). A gold marker shows the prior; each word present in the email adds a coloured arrow shifting the odds by its likelihood ratio P(word|spam)/P(word|ham) — rust arrows push toward spam, sage toward ham. The posterior marker and a large P(spam) percentage show the verdict; toggle word buttons to see it move. Because words are assumed independent, the shifts simply add.');
+    draw();
+  });
+
 })();

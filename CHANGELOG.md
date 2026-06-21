@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 606 — Naive Bayes spam viz — the 103rd widget; ML viz now complete (visualizations)
+The last ML lesson without a visualization gets one — and it makes the "naive" trick click. **`ml-nb-viz` "Naive Bayes: how words tip the spam odds"** draws a spam
+filter as evidence on a **log-odds line**: start at the prior, then each word present in the email shifts the odds by its likelihood ratio `P(word|spam)/P(word|ham)` —
+spammy words (rust arrows) push right, hammy words (sage) push left — and because Naive Bayes treats words as independent, multiplying the ratios is just **adding** the
+shifts. Cross the midpoint (P=0.5) and it's spam. Toggle six words and watch a big live `P(spam)` verdict move. Embedded before ml-naive-bayes' "naive assumption"
+section. **This completes Machine Learning's visualization coverage — all 10 lessons now have a viz.**
+Verified: gate ALL GREEN (now **103 widgets**); **headless** — Lab + lesson canvases hydrate, toggling flips the email from {free, winner} to {meeting, project}; the
+default spam email reads **P(spam)=98%** (matches `free+winner` math), kErr=0, errs=0; screenshot confirms the verdict, log-odds line, and per-word arrows. SW cache `atlas-v546` → `atlas-v547`.
+
 ## iter 605 — Balance MCQ answer positions site-wide (content quality / test integrity)
 An audit found the correct-answer **position** was badly skewed across the 2,504 MCQs: **A 26% · B 42% · C 22% · D 10%** — answer B was right 42% of the time and D
 only 10%, so a test-savvy learner could beat the odds by "guessing B," and 32 lessons had >50% of answers at a single position. Fixed it the safe way: for each MCQ,

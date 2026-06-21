@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 606: **Naive Bayes spam viz — 103rd widget; ML viz COMPLETE** (visualizations). ml-nb-viz: spam filter as evidence on a log-odds line — each word shifts
+   odds by its likelihood ratio (multiply = add shifts under naive independence); toggle words, live P(spam) verdict. Embedded in ml-naive-bayes. All 10 ML lessons now
+   have a viz. Verified: gate GREEN (103 widgets); headless default reads P(spam)=98%, toggles work, kErr=0/errs=0; screenshot. SW →v547.
    ✅ iter 605: **Balance MCQ answer positions site-wide** (content quality / test integrity). Correct-answer position was skewed A26/B42/C22/D10 (B exploitable,
    32 lessons >50% one pos). Reordered choices (correct text unchanged, answer index updated) on 1,843 MCQs; locked 53 whose explanation names a position; per-move
    correctness assertion. Now exactly 25/25/25/25, 0 skewed lessons. Verified: gate GREEN; headless quiz marks the data-answer correct, kErr=0/errs=0. SW →v546.
