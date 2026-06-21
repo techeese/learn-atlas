@@ -6485,6 +6485,94 @@
               ],
               "answer": 3,
               "explain": "Split f (smooth) + h (non-smooth): grad step then prox step."
+            },
+            {
+              "q": "Projection onto a box $[a,b]$ (per coordinate) is computed by:",
+              "choices": [
+                "Clipping each coordinate to the range $[a,b]$",
+                "Normalizing the vector to unit length",
+                "Sorting the coordinates",
+                "Setting every coordinate to $a$"
+              ],
+              "answer": 0,
+              "explain": "Box projection clamps each entry into [a,b]."
+            },
+            {
+              "q": "Projection onto the nonnegative orthant ($x\\ge 0$) is:",
+              "choices": [
+                "$|x|$",
+                "$\\max(x,0)$ coordinate-wise",
+                "$-x$",
+                "$x/\\lVert x\\rVert$"
+              ],
+              "answer": 1,
+              "explain": "Clip negatives to zero."
+            },
+            {
+              "q": "Proximal gradient descent (ISTA) on a convex problem converges at the rate:",
+              "choices": [
+                "$O(1/\\sqrt{k})$",
+                "$O(1/k^2)$ always",
+                "$O(1/k)$, the same as smooth gradient descent",
+                "It does not converge"
+              ],
+              "answer": 2,
+              "explain": "ISTA matches smooth GD; FISTA accelerates to O(1/k^2)."
+            },
+            {
+              "q": "The proximal operator of the $\\ell_2$ (ridge) penalty $\\tfrac{\\lambda}{2}x^2$ is:",
+              "choices": [
+                "$y$ unchanged",
+                "$\\mathrm{sign}(y)\\max(|y|-\\lambda,0)$",
+                "$\\max(y,0)$",
+                "$y/(1+\\lambda)$ — it shrinks but never zeroes"
+              ],
+              "answer": 3,
+              "explain": "Ridge prox scales y down; it never produces exact zeros."
+            },
+            {
+              "q": "In proximal gradient descent for $f+h$, the proximal step is applied to:",
+              "choices": [
+                "The non-smooth part $h$, after a gradient step on the smooth part $f$",
+                "The smooth part $f$",
+                "Both parts simultaneously",
+                "Neither part"
+              ],
+              "answer": 0,
+              "explain": "Gradient on f, prox on h."
+            },
+            {
+              "q": "The set of subgradients of $|x|$ at $x=0$ is:",
+              "choices": [
+                "Just $\\{0\\}$",
+                "The interval $[-1,1]$",
+                "The single value $1$",
+                "Empty"
+              ],
+              "answer": 1,
+              "explain": "Any slope in [-1,1] stays below |x| at the kink."
+            },
+            {
+              "q": "FISTA improves on ISTA by adding:",
+              "choices": [
+                "Random restarts",
+                "A second gradient evaluation per step",
+                "A momentum-like extrapolation (Nesterov acceleration) → $O(1/k^2)$",
+                "A larger regularization term"
+              ],
+              "answer": 2,
+              "explain": "Accelerated proximal gradient via extrapolation."
+            },
+            {
+              "q": "Beyond zeroing small coefficients, soft-thresholding also:",
+              "choices": [
+                "Makes all coefficients equal",
+                "Doubles the surviving coefficients",
+                "Leaves surviving coefficients unchanged",
+                "Shrinks the surviving coefficients toward zero by $\\lambda$"
+              ],
+              "answer": 3,
+              "explain": "Survivors are shifted toward 0 by lambda (a bias lasso introduces)."
             }
           ],
           "flashcards": [

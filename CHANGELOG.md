@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 699 — Proximal lesson MCQ top-up 8 → 16 → Optimization backbone COMPLETE (content / assessment)
+Brought `c-proximal-projected` to the 16-MCQ standard. Added **8 new MCQs**: box projection (clip), nonnegative-orthant projection (max(x,0)), ISTA's O(1/k) rate, the ridge (ℓ₂) prox y/(1+λ),
+which part the prox step acts on, the subgradient set of |x| at 0 ([−1,1]), FISTA acceleration, and soft-thresholding's shrink-by-λ. Balanced → **4/4/4/4**. The lesson is now at full parity, and the
+whole **Optimization backbone is complete at parity**: convexity → GD-convergence → Lagrange → duality/KKT → projected/proximal. All **174 lessons at standard**.
+Verified: data parses; gate ALL GREEN with **no parity warning**; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v636` → `atlas-v637`.
+
 ## iter 698 — NEW lesson: Projected & Proximal Gradient (content)
 Completed the optimization arc's natural span (unconstrained GD → constrained → non-smooth). Added `c-proximal-projected` "Projected & Proximal Gradient: Constraints and Sparsity" to calculus M7:
 8 sections (projected GD + the projection operator · computable projections: box/ball/simplex · subgradients · the proximal operator · proximal gradient / ISTA · **soft-thresholding = the ℓ₁ prox** ·
