@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 674 — NEW viz: value-function approximation via tile coding (visualizations)
+Filled the highest-value no-viz RL lesson. Built the **116th widget, `rl-value-approx` "Value approximation: trading resolution for generalization"** for `rl-value-approximation` — the
+tabular→deep-RL bridge: a true value function `V*(s)` (gold) approximated by a **tile-coding staircase** (violet), with a slider for the number of tiles. Few tiles → coarse/high-bias but
+broad generalization; many tiles → close fit but more values to learn — the resolution/generalization trade made concrete. Solver-free (state aggregation), embedded under "Feature
+Construction". RL viz coverage **14/20 → 15/20**.
+Verified: gate ALL GREEN (now **116 widgets**); **headless** — Lab + lesson hydrate; mean abs error falls from **0.169** (3 tiles) to **0.021** (20 tiles); kErr=0, errs=0; screenshot
+shows V* and the staircase. SW cache `atlas-v611` → `atlas-v612`.
+
 ## iter 673 — NEW viz: differential entropy can go negative (visualizations)
 Filled a no-viz Information-Theory lesson. Built the **115th widget, `it-differential-entropy-viz`** for `it-differential-entropy`: a zero-mean Gaussian with a σ slider, showing
 `h(X)=½log₂(2πeσ²)` bits — it grows with spread and, crucially, **goes negative** once the density concentrates (σ below ≈0.242), the curve turning rust to signal it. This makes vivid the

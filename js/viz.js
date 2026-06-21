@@ -6348,4 +6348,47 @@
     draw();
   });
 
+
+  /* ========================================================
+     116. Value function approximation: tile coding (Reinforcement Learning)
+     ======================================================== */
+  register({ id: 'rl-value-approx', topic: 'reinforcement-learning', title: 'Value approximation: trading resolution for generalization', blurb: 'A table needs one entry per state — hopeless when states are continuous. The simplest fix is state aggregation (tile coding): chop the state space into tiles and store one value per tile, so the value function becomes a staircase. Slide the number of tiles: few tiles generalize broadly but blur the true value (coarse, high bias); many tiles fit it closely but need far more data to learn each one. This bias–capacity trade is the heart of function approximation.' },
+  function (root) {
+    const W = 540, H = 320, padL = 38, padR = 16, padT = 16, padB = 34;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let tiles = 5;
+    const Vstar = x => Math.exp(-12 * (x - 0.65) * (x - 0.65)) + 0.6 * Math.exp(-30 * (x - 0.25) * (x - 0.25));
+    const X = x => padL + x * (W - padL - padR), Yb = H - padB, ymax = 1.15;
+    const Y = v => Yb - (v / ymax) * (H - padT - padB);
+    function tileVal(x) { const i = Math.min(tiles - 1, Math.floor(x * tiles)); return Vstar((i + 0.5) / tiles); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(0), Yb); ctx.lineTo(X(1), Yb); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      [0, 0.25, 0.5, 0.75, 1].forEach(t => ctx.fillText(t, X(t), Yb + 14)); ctx.fillText('state s', W / 2, H - 4);
+      // tile boundaries
+      ctx.strokeStyle = p.line; ctx.globalAlpha = 0.5; ctx.setLineDash([2, 3]);
+      for (let i = 1; i < tiles; i++) { ctx.beginPath(); ctx.moveTo(X(i / tiles), padT); ctx.lineTo(X(i / tiles), Yb); ctx.stroke(); }
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+      // true V*(s)
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i <= 300; i++) { const x = i / 300, y = Vstar(x); i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)); } ctx.stroke();
+      // tile-coded approximation (staircase) + error
+      ctx.strokeStyle = p.violet; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i < tiles; i++) { const v = Vstar((i + 0.5) / tiles), x0 = X(i / tiles), x1 = X((i + 1) / tiles), yy = Y(v); ctx.moveTo(x0, yy); ctx.lineTo(x1, yy); }
+      ctx.stroke();
+      let err = 0; const N = 400; for (let i = 0; i < N; i++) { const x = (i + 0.5) / N; err += Math.abs(Vstar(x) - tileVal(x)); } err /= N;
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'left'; ctx.fillText('— true V*(s)', X(0.04), padT + 10);
+      ctx.fillStyle = p.violet; ctx.fillText('— tile approximation', X(0.04), padT + 26);
+      info.innerHTML = '<b>' + tiles + '</b> tiles &middot; ' + tiles + ' learned values &middot; mean abs error <b style="color:' + p.violet + '">' + err.toFixed(3) + '</b>. ' +
+        (tiles <= 3 ? 'Coarse: broad generalization but high bias — the staircase misses the peaks.' : tiles >= 16 ? 'Fine: closely fits V*, but now there are many values to learn from data.' : 'More tiles lower the error but cost data per tile — the resolution/generalization trade.');
+    }
+    slider(ctl, { label: 'tiles', min: 1, max: 24, step: 1, value: tiles, fmt: v => String(v), onInput: v => { tiles = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Value-function-approximation visualizer over a continuous state s in [0,1]. A gold curve is the true value V*(s); a violet staircase is a tile-coded (state-aggregation) approximation that stores one value per tile. A slider sets the number of tiles: few tiles give a coarse, high-bias staircase that generalizes broadly, while many tiles track V* closely but require far more data per tile. The mean absolute error falls as tiles increase.');
+    draw();
+  });
+
 })();
