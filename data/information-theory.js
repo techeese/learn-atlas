@@ -128,6 +128,10 @@
             {
               "front": "Bits vs nats",
               "back": "Log base 2 → bits; log base $e$ → nats. Same quantity, units differ by $\\log_2 e\\approx 1.44$."
+            },
+            {
+              "front": "What does entropy say about compression?",
+              "back": "Shannon's source-coding theorem: $H(X)$ bits per symbol is the minimum average length for lossless compression — you can approach it but never beat it. Entropy is the hard floor on how small the data can get."
             }
           ],
           "examples": [
@@ -280,6 +284,10 @@
             {
               "front": "Max-entropy principle (continuous)",
               "back": "Fixed variance → Gaussian; fixed mean on $[0,\\infty)$ → exponential; bounded interval, no other constraint → uniform. Assume the least beyond what's known."
+            },
+            {
+              "front": "Where is differential entropy actually used in ML?",
+              "back": "Through its differences: continuous KL and mutual information (a VAE's Gaussian KL term, InfoNCE) and the entropy bonus in maximum-entropy RL. The raw $h(X)$ alone is unit-dependent, so only these differences are used."
             }
           ],
           "examples": [
@@ -438,6 +446,10 @@
             {
               "front": "Forward vs reverse KL",
               "back": "Forward $D(p\\|q)$ (MLE) is mode-covering (blurry); reverse $D(q\\|p)$ (variational/VAE) is mode-seeking (sharp, can collapse)."
+            },
+            {
+              "front": "Is KL divergence a distance?",
+              "back": "No. $D_{\\mathrm{KL}}(p\\|q)\\ge 0$ with equality iff $p=q$, but it is asymmetric and violates the triangle inequality — a divergence, not a metric. For a true distance use Jensen-Shannon or Wasserstein."
             }
           ],
           "examples": [
@@ -596,6 +608,10 @@
             {
               "front": "Information gain (decision trees)",
               "back": "$H(Y)-H(Y\\mid F)=I(Y;F)$ — the mutual information between a split feature and the label. Trees greedily maximize it."
+            },
+            {
+              "front": "Mutual information as a KL divergence",
+              "back": "$I(X;Y)=D_{\\mathrm{KL}}\\big(p(x,y)\\,\\|\\,p(x)p(y)\\big)$ — the KL from the true joint to the product of the marginals. So MI measures, in bits, how far two variables are from being independent."
             }
           ],
           "examples": [
@@ -754,6 +770,10 @@
             {
               "front": "Compression = prediction",
               "back": "Code length under model $q$ is $\\approx -\\log_2 q$; expected length is cross-entropy $H(p,q)$. A better predictor is a better compressor (why LLMs compress text well)."
+            },
+            {
+              "front": "Huffman vs arithmetic coding",
+              "back": "Huffman is the optimal per-symbol prefix code but must use whole-bit lengths; arithmetic coding encodes an entire message as one fraction in $[0,1)$, getting arbitrarily close to the entropy. Both need the symbol probabilities."
             }
           ],
           "examples": [
@@ -912,6 +932,10 @@
             {
               "front": "Separation theorem",
               "back": "Source coding (compress to entropy $H$) and channel coding (protect up to capacity $C$) can be done separately with no loss; transmit reliably iff $H\\lt C$."
+            },
+            {
+              "front": "Why is channel capacity a maximum over inputs?",
+              "back": "$C=\\max_{p(x)} I(X;Y)$: the channel's noise $p(y\\mid x)$ is fixed, but you choose how often to send each symbol, so capacity is the most information per use under the best input distribution. For the BSC the uniform input is optimal."
             }
           ],
           "examples": [
@@ -1070,6 +1094,10 @@
             {
               "front": "Minimum description length (MDL)",
               "back": "Best model minimizes $L(\\text{model})+L(\\text{data}\\mid\\text{model})$ in bits — Occam's razor as compression; equivalent to NLL + a complexity penalty (regularization)."
+            },
+            {
+              "front": "How does contrastive learning use information theory?",
+              "back": "Methods like InfoNCE and SimCLR train representations by maximizing a lower bound on the mutual information between two augmented views of the same datum — information theory turned into a self-supervised objective."
             }
           ],
           "examples": [

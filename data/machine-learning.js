@@ -128,6 +128,10 @@
             {
               "front": "What makes kNN a 'lazy' / nonparametric learner?",
               "back": "It does no real training (just stores data) and assumes no fixed functional form — its complexity grows with the data. Cost is paid at prediction time."
+            },
+            {
+              "front": "What is kNN's cost at prediction time?",
+              "back": "There is no training — it just stores the data — but each prediction is $O(n\\cdot d)$: it must scan all $n$ points. So it is slow to predict on large datasets; KD-trees or approximate nearest-neighbor search speed it up."
             }
           ],
           "homework": [
@@ -280,6 +284,10 @@
             {
               "front": "Why is decision-tree training greedy?",
               "back": "Finding the optimal tree is NP-hard, so CART/ID3 take the locally-best split at each node. Fast and scalable, but locally-best ≠ globally-best — a source of instability."
+            },
+            {
+              "front": "Do decision trees need feature scaling?",
+              "back": "No. Each split is a threshold test on one feature, so the tree is invariant to monotonic rescaling. Trees also handle mixed numeric/categorical features and nonlinear boundaries with no preprocessing."
             }
           ],
           "homework": [
@@ -438,6 +446,10 @@
             {
               "front": "'Linear in the parameters' — what does it let you do?",
               "back": "Fit nonlinear curves by transforming features (polynomial/basis functions, interactions) while still solving an ordinary-least-squares problem in w. The bridge to kernels and feature engineering."
+            },
+            {
+              "front": "Key assumptions and weaknesses of linear regression?",
+              "back": "It assumes a roughly linear relationship and, using squared error, is sensitive to outliers. Strongly correlated features make the coefficients unstable. Remedies: transform features, use a robust loss, or regularize (ridge/lasso)."
             }
           ],
           "homework": [
@@ -590,6 +602,10 @@
             {
               "front": "Logistic regression and neural networks",
               "back": "Logistic regression IS a single neuron: linear combination + sigmoid, trained with cross-entropy. Stack many such units with nonlinearities and you get a neural net. It's also a strong, calibrated baseline classifier."
+            },
+            {
+              "front": "Why not use plain linear regression for classification?",
+              "back": "Linear regression outputs unbounded numbers, not probabilities, and squared error even penalizes confident-correct predictions. Logistic regression squashes $w^\\top x+b$ through the sigmoid into a calibrated probability in $(0,1)$ and trains with log-loss."
             }
           ],
           "homework": [
@@ -742,6 +758,10 @@
             {
               "front": "Regularization as a Bayesian prior",
               "back": "Penalized loss = MAP estimation: penalty = −log prior on the weights. Gaussian prior → ridge (L2); Laplace prior (peaked at 0) → lasso (L1). λ = prior strength. Weight decay in DL is L2."
+            },
+            {
+              "front": "What is Elastic Net, and the key preprocessing step?",
+              "back": "Elastic Net combines L1 and L2 penalties — sparsity plus stability when features are correlated. Always standardize features first: the penalty is scale-sensitive, so otherwise large-scale features are under-penalized."
             }
           ],
           "homework": [
@@ -900,6 +920,10 @@
             {
               "front": "Why does the SVM margin help generalization?",
               "back": "Maximizing the margin = minimizing ‖w‖ = L2 regularization (lowest-complexity separator). Structural risk minimization links wider margins to tighter test-error bounds, even in high dimensions. Only support vectors matter (sparse, compressible)."
+            },
+            {
+              "front": "What loss does a soft-margin SVM minimize?",
+              "back": "Hinge loss plus an L2 penalty: $\\sum \\max(0,\\,1-y_i(w^\\top x_i+b)) + \\lambda\\lVert w\\rVert^2$. A point correctly outside the margin contributes zero loss. Multiclass is handled by one-vs-rest or one-vs-one."
             }
           ],
           "homework": [
@@ -1052,6 +1076,10 @@
             {
               "front": "Naive Bayes vs logistic regression (generative vs discriminative)",
               "back": "NB is generative — models P(x|y)P(y) then applies Bayes. Logistic regression is discriminative — models P(y|x) directly. NB needs less data and trains instantly (higher asymptotic error); logistic regression wins with enough data (lower error)."
+            },
+            {
+              "front": "Why compute Naive Bayes in log-space, and where does it excel?",
+              "back": "Multiplying many small likelihoods underflows to zero, so you sum log-probabilities instead. Naive Bayes is very fast, needs little data, and thrives in high dimensions — the classic baseline for text and spam classification."
             }
           ],
           "homework": [
@@ -1210,6 +1238,10 @@
             {
               "front": "k-means vs GMM (hard vs soft)",
               "back": "k-means = hard assignment, spherical equal-variance clusters. GMM = soft probabilistic assignment via EM, with per-cluster mean/covariance/weight. k-means is the zero-variance, hard-assignment limit of a GMM; EM generalizes Lloyd's."
+            },
+            {
+              "front": "Does k-means find the global optimum? What is k-means++?",
+              "back": "No — Lloyd's algorithm reaches a local optimum that depends on initialization, so run it several times and keep the lowest-inertia result. k-means++ seeds the centroids spread far apart, giving better and more reliable clusters."
             }
           ],
           "homework": [
@@ -1368,6 +1400,10 @@
             {
               "front": "Why are ensembles so strong, and where?",
               "back": "A crowd of diverse, imperfect models whose errors cancel beats any single one. Tree ensembles (random forests, gradient-boosted trees) are state of the art on tabular/structured data, often beating deep nets there."
+            },
+            {
+              "front": "Bias vs variance: what do bagging and boosting each reduce?",
+              "back": "Bagging averages many high-variance, low-bias models (deep trees) to cut variance. Boosting chains weak, high-bias learners (shallow stumps), each correcting the last's errors, to cut bias."
             }
           ],
           "homework": [
@@ -1526,6 +1562,10 @@
             {
               "front": "What is data leakage and how do you prevent it?",
               "back": "Information unavailable at prediction time (test data, or a target proxy) entering training → inflated scores that collapse in production. Prevent by fitting ALL preprocessing inside each CV fold (use a pipeline), splitting before any data-driven step, and tuning with nested CV."
+            },
+            {
+              "front": "How do you tune hyperparameters without cheating?",
+              "back": "Search (grid or random) using a validation set or cross-validation — never the test set, which is touched once at the very end. To keep the tuning choice from leaking into your performance estimate, use nested cross-validation."
             }
           ],
           "homework": [

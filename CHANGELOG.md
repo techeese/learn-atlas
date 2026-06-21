@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 607 — Flashcard parity for the loop-built topics (content / spaced repetition)
+A parity audit showed the two loop-authored topics were under-resourced versus the original seven: Machine Learning and Information Theory had **5 flashcards & 8 MCQs**
+per lesson, while every other topic has **6 & 16**. Closed the flashcard half this iteration: authored and added a **6th flashcard to all 17 ML + IT lessons** (10 ML +
+7 IT) — each a genuinely *complementary* card filling a real gap in that lesson's existing five (e.g. kNN's predict-time cost, "why not linear regression for
+classification?", the SVM hinge loss, k-means++ & local optima, KL-is-not-a-distance, mutual-information-as-a-KL, Huffman-vs-arithmetic coding, contrastive learning).
+All 17 deduped against existing fronts and render-guarded. ML+IT lessons now match the rest at **6 cards**, deepening spaced-repetition coverage on the newest material.
+Verified: both data files parse; gate ALL GREEN (render-lint passed on all 17 new cards); **0 of 17** ML+IT lessons off 6 cards; **headless** Recall deck renders clean
+(kErr=0, rawDollar=0, errs=0). SW cache `atlas-v547` → `atlas-v548`. **Queued:** the larger MCQ top-up (ML/IT 8 → 16) as a staged multi-iteration effort.
+
 ## iter 606 — Naive Bayes spam viz — the 103rd widget; ML viz now complete (visualizations)
 The last ML lesson without a visualization gets one — and it makes the "naive" trick click. **`ml-nb-viz` "Naive Bayes: how words tip the spam odds"** draws a spam
 filter as evidence on a **log-odds line**: start at the prior, then each word present in the email shifts the odds by its likelihood ratio `P(word|spam)/P(word|ham)` —
