@@ -196,8 +196,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    distribution exactly 25/25/25/25%, full 165-lesson sweep errs=0. Codex fully uniform across all 9 topics (lessons·3dd·3ex·3hw·6 cards·16 MCQ·viz·glossary·prereqs·refs).
    ✅ iter 625: **Poisson viz** (104th). ✅ iter 626: **Exponential/memorylessness viz** (105th, ps-exponential-viz: survival curve + identical remaining-wait copy;
    headless memoryless 0.607=0.607, mean=1/λ; SW →v567).
+   ✅ iter 627: **Glossary +10 missing common distributions + eval metrics** (reference). Poisson/Exponential/Uniform/Binomial/Geometric/Bernoulli distributions,
+   Memorylessness, Confusion matrix, F1 score, Convexity. Glossary 204→214; distribution terms auto-link to their viz via the iter-595 bridge. Verified gate GREEN, headless 5/5 render, kErr=0. SW →v568.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
-   lazy-load-data perf project (owner steer). Vary lanes (don't do viz every iter).
+   lazy-load-data perf project (owner steer). Keep varying lanes.
    One lesson/iter, hand-verify every answer key, de-skew new 8 to 2/2/2/2.
    One lesson/iter, hand-verify every answer key (gate can't catch a wrong key), de-skew new 8 to 2/2/2/2.
    ✅ iter 606: **Naive Bayes spam viz — 103rd widget; ML viz COMPLETE** (visualizations). ml-nb-viz: spam filter as evidence on a log-odds line — each word shifts

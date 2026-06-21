@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 627 — Glossary: the common distributions + eval metrics that were missing (reference)
+A real gap: of the standard probability distributions, only "Normal distribution" was in the glossary. Added the **10 missing high-frequency terms**: **Poisson, Exponential,
+Uniform, Binomial, Geometric, Bernoulli distributions**, **Memorylessness**, **Confusion matrix**, **F1 score**, and **Convexity** — each a concise, formula-bearing
+definition filed under its home topic. Bonus synergy: because the glossary→viz bridge (iter 595) title-matches a term to its lesson's visualization, the new distribution
+terms automatically gained a **"🎛️ Visualize" chip** linking to the relevant widget (e.g. "Poisson distribution" → `ps-poisson-viz`, the one built last iteration). Glossary **204 → 214**.
+Verified: `new Function` on glossary.js clean; gate ALL GREEN; **headless** — all sampled new terms render (5/5), and the "Poisson distribution" card's Visualize chip targets
+`#/lab/ps-poisson-viz`; kErr=0, errs=0. SW cache `atlas-v567` → `atlas-v568`.
+
 ## iter 626 — Exponential / memorylessness viz (visualizations)
 Continuing to fill Probability's viz gaps. The `ps-uniform-exponential` lesson had no viz for its hardest idea — memorylessness. Built the **105th widget,
 `ps-exponential-viz` "Exponential waiting & memorylessness"**: the gold survival curve `P(X>x)=e^(−λx)`, plus an "already waited *s*" slider that draws the renormalized
