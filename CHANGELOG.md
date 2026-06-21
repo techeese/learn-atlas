@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 676 — Information Theory viz coverage COMPLETE: cross-embed CE & KL viz into it-information-in-ml (visualizations / curation)
+The capstone IT lesson `it-information-in-ml` is literally about cross-entropy loss and KL regularization — and viz for both already existed in Deep Learning. Cross-embedded
+**`dl-cross-entropy`** at §2 ("Cross-entropy: the default loss") and **`dl-kl-divergence`** at §3 ("KL divergence as a regularizer"). **Information Theory is now 7/7 — fully viz-covered.**
+Verified: data parses; gate ALL GREEN; **headless** — both embedded canvases hydrate (2), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v613` → `atlas-v614`.
+
 ## iter 675 — Library: curated Bayesian references (reference)
 The new Bayesian module had no resources in the Library. Added 3 real, high-quality references to Probability & Statistics: **Statistical Rethinking** (McElreath — the loved Bayesian
 course), **Bayesian Methods for Hackers** (Davidson-Pilon — free, code-first PyMC notebooks), and **3Blue1Brown's "Bayes' theorem"** video. PS references **5 → 8**.
