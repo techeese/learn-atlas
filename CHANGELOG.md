@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 581 — Information Theory module 4: Source Coding (content / depth)
+Fourth IT lesson — **Source Coding: Compression and the Entropy Limit** (new module "Coding and Communication"), the payoff where entropy *becomes* the
+compression floor. Full parity: 8-section lecture (prefix-free codes, Shannon's source-coding theorem `L≥H`, optimal length `−log₂ p`, Huffman's greedy merge,
+arithmetic coding, and the compression-is-prediction link to LLMs), a **runnable code exercise** (expected length of a Huffman code → 1.75 = entropy, a dyadic
+case), **3 deep-dives** (the Kraft inequality; why Huffman's greedy merge is optimal; compression = prediction / LLMs as compressors), **8 MCQs** (de-skewed
+2/2/2/2), **5 flashcards**, **3 worked examples** (build a Huffman code by hand, Huffman beats fixed-length & stays within 1 bit, compression as cross-entropy),
+**3 homework**. Every number hand-verified (dyadic EL=H=1.75; non-dyadic EL=1.60 ≥ H=1.56 < fixed-length 2).
+Verified: gate ALL GREEN (now **9 topics · 162 lessons · 115 code-exercises**); **headless** — nDD=3, the Huffman code runs to **1.75**, examples reveal,
+**kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v520` → `atlas-v521`. Information Theory now has **4 lessons**; modules 5–6 (channel capacity, information in ML) queued.
+
 ## iter 580 — Step-back: full 9-topic audit (clean) + homework-parity completed (content / depth)
 **Round-number step-back — now 9 topics.** Two health audits:
 - **Runtime kErr+route sweep**: all **161 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **137 non-lesson routes** (incl. 9

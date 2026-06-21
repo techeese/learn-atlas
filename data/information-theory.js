@@ -482,6 +482,164 @@
           ]
         }
       ]
+    },
+    {
+      "id": "it-coding",
+      "title": "Coding and Communication",
+      "lessons": [
+        {
+          "id": "it-source-coding",
+          "title": "Source Coding: Compression and the Entropy Limit",
+          "minutes": 18,
+          "content": "<h3>1. The hook: how small can a file get?</h3>\n<p>Entropy was introduced as \"average surprise,\" but Shannon gave it a hard, physical meaning: it is the <em>floor</em> on lossless compression. <strong>Source coding</strong> is the art of assigning short bit-strings (codewords) to symbols so that, on average, you use as few bits as possible — and no scheme can ever beat the entropy. This lesson turns the abstract $H$ into the answer to \"how small can this file get?\"</p>\n<h3>2. Codes and the prefix-free property</h3>\n<p>A <strong>code</strong> maps each symbol to a binary string. To decode a stream unambiguously without separators, we use <strong>prefix-free</strong> (instant) codes: no codeword is a prefix of another. Then the codewords are the leaves of a binary tree, and decoding just walks the tree bit by bit. The whole game is to give <em>short</em> codewords to <em>frequent</em> symbols and longer ones to rare symbols — exactly like Morse code, where \"E\" is a single dot.</p>\n<h3>3. Shannon's source coding theorem</h3>\n<p>The central result: for a source with entropy $H$, the expected codeword length $L$ of <em>any</em> uniquely decodable code obeys $$L \\ge H,$$ and you can always design a code with $L < H+1$. Encode long blocks of symbols at once and the per-symbol cost approaches $H$ as closely as you like. So <strong>entropy is the compression limit</strong> — the irreducible bits-per-symbol, achievable but never beatable.</p>\n<h3>4. Why the optimal length is $-\\log p$</h3>\n<p>The theorem's heart: the ideal length for a symbol of probability $p$ is $\\ell = -\\log_2 p$ bits — its self-information. Plug those lengths into the expected length and you get $L=\\sum_x p(x)\\,(-\\log_2 p(x)) = H$ exactly. Frequent symbols ($p$ near 1) get tiny codes; rare symbols get long ones; and the weighted average lands precisely on the entropy. (Real codes use whole-bit lengths, so they round up — hence the \"+1\".)</p>\n<h3>5. Huffman coding</h3>\n<p><strong>Huffman's algorithm</strong> builds the optimal prefix code with a beautifully simple greedy rule: repeatedly take the <em>two least-likely</em> symbols, merge them into a node whose probability is their sum, and repeat until one node remains. Reading the resulting tree gives each symbol its codeword. Huffman is provably optimal among per-symbol codes — for a <em>dyadic</em> distribution (all probabilities powers of $\\tfrac12$) it hits the entropy exactly; otherwise it stays within 1 bit of it.</p>\n<h3>6. Compute it yourself</h3>\n<p><b>Try it in code.</b> For probabilities $[0.5,0.25,0.125,0.125]$ a Huffman code has lengths $[1,2,3,3]$. Its expected length should equal the entropy exactly (this is a dyadic distribution), 1.75 bits.</p>\n<div data-code=\"javascript\" data-expected=\"1.75\">// Expected code length L = sum p_i * len_i, in bits\nconst p = [0.5, 0.25, 0.125, 0.125];\nconst len = [1, 2, 3, 3];   // a Huffman code for these probabilities\nlet L = 0;\nfor (let i = p.length - 1; i >= 0; i--) L += p[i] * len[i];\nconsole.log(L.toFixed(2));</div>\n<h3>7. Beyond Huffman: arithmetic coding and the compression-prediction link</h3>\n<p>Huffman is stuck with whole-bit codewords, so it wastes up to ~1 bit per symbol. <strong>Arithmetic coding</strong> sidesteps this by encoding an entire message as a single fraction in $[0,1)$, achieving lengths arbitrarily close to the entropy. Both need to know the symbol probabilities — and that is the deep link to machine learning: <em>a better probabilistic model is a better compressor.</em> A language model that predicts the next token well assigns it high probability, hence a short code; modern compressors and LLMs are two faces of the same coin (this is why a model's loss, in nats/bits, literally measures how well it would compress its data).</p>\n<h3>8. The big picture</h3>\n<p>Source coding makes entropy concrete: $H$ is the minimum average bits per symbol for lossless compression, with $L\\ge H$ and the ideal code length $-\\log_2 p$. Huffman builds the optimal per-symbol code by greedy merging; arithmetic coding gets even closer by coding whole sequences. And because compression needs accurate probabilities, prediction and compression are the same problem — the thread connecting Shannon to modern ML.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the Kraft inequality — what code lengths are even possible</summary>\n<p>Before asking for the <em>best</em> code, ask which sets of codeword lengths are achievable by a prefix code at all. The <strong>Kraft inequality</strong> answers it: a prefix-free binary code with lengths $\\ell_1,\\dots,\\ell_n$ exists if and only if $$\\sum_i 2^{-\\ell_i} \\le 1.$$</p>\n<p><b>The intuition.</b> Picture the infinite binary tree; a codeword of length $\\ell$ claims a node at depth $\\ell$ and <em>forbids</em> its whole subtree (that's the prefix-free condition). A depth-$\\ell$ node's subtree is a fraction $2^{-\\ell}$ of the leaves, so the claimed fractions can't exceed the whole tree, $1$. Short codewords are \"expensive\" — a length-1 codeword eats half the tree — which is precisely why you spend that budget on the most frequent symbols.</p>\n<p>The \"aha\": Kraft turns \"design a prefix code\" into a clean constraint $\\sum 2^{-\\ell_i}\\le 1$. Minimizing expected length $\\sum p_i\\ell_i$ subject to it (via Lagrange multipliers) gives the optimum $\\ell_i=-\\log_2 p_i$ — which is exactly why the entropy $H=\\sum p_i(-\\log_2 p_i)$ is the achievable floor.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why Huffman's greedy merge is optimal</summary>\n<p>Huffman repeatedly merges the two <em>least</em> probable symbols. That this myopic, local rule yields a globally optimal code is a small marvel, and the proof rests on two facts.</p>\n<p><b>The exchange argument.</b> (1) In an optimal prefix code, the two least-frequent symbols can always be taken to be siblings at the maximum depth — if a rarer symbol sat higher than a more common one, swapping them would lower the expected length, contradicting optimality. (2) Once those two are fixed as siblings, replacing them with a single merged symbol (probability = their sum) gives a smaller problem whose optimal solution extends to the original. Induct, and the greedy merge is optimal.</p>\n<p>The \"aha\": Huffman is a textbook case where greedy is provably optimal (most greedy algorithms aren't). It guarantees the best possible <em>per-symbol</em> prefix code — its only \"weakness\" is the integer-length rounding that arithmetic coding removes by coding whole sequences.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: compression is prediction (and why LLMs are compressors)</summary>\n<p>Source coding needs a probability for each symbol, and the better those probabilities, the shorter the code. This makes <strong>compression and prediction literally the same task.</strong></p>\n<p><b>The equivalence.</b> Given a predictive model $q$, you can build a code (via arithmetic coding) that uses about $-\\log_2 q(x)$ bits per symbol. The expected length is then the <em>cross-entropy</em> $H(p,q)$ — minimized exactly when $q=p$. So \"train a model to minimize cross-entropy\" and \"build the best compressor\" are one objective. A model's loss in bits-per-token <em>is</em> the size it would compress the data to.</p>\n<p><b>Why it matters now.</b> Large language models are, by this logic, state-of-the-art compressors of text: by predicting the next token extremely well they assign it a short code. (Researchers have used LLMs as general-purpose compressors, and \"compression = intelligence\" is a serious framing of why next-token prediction yields such capable models.)</p>\n<p>The \"aha\": every bit of predictive accuracy is a bit saved in compression. Entropy is the limit, cross-entropy is what your model actually achieves, and minimizing it trains a predictor and a compressor at once — the conceptual bridge from Shannon (1948) to today's foundation models.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "Shannon's source coding theorem says the expected length $L$ of any lossless code satisfies:",
+              "choices": [
+                "$L \\le H$",
+                "$L = 2H$",
+                "$L \\ge H$ (entropy is the floor)",
+                "$L$ is unrelated to $H$"
+              ],
+              "answer": 2,
+              "explain": "No code beats entropy: $L\\ge H$, and you can get within 1 bit (or arbitrarily close by block coding)."
+            },
+            {
+              "q": "A prefix-free (instant) code is one where:",
+              "choices": [
+                "All codewords have the same length",
+                "Codewords are assigned randomly",
+                "Every codeword starts with 0",
+                "No codeword is a prefix of another"
+              ],
+              "answer": 3,
+              "explain": "The prefix-free property lets you decode a stream unambiguously with no separators."
+            },
+            {
+              "q": "The optimal codeword length for a symbol of probability $p$ is about:",
+              "choices": [
+                "$p$ bits",
+                "$1/p$ bits",
+                "$-\\log_2 p$ bits",
+                "$2^p$ bits"
+              ],
+              "answer": 2,
+              "explain": "Its self-information; plugging these lengths in makes expected length equal the entropy."
+            },
+            {
+              "q": "Huffman's algorithm repeatedly:",
+              "choices": [
+                "Splits the most-probable symbol",
+                "Assigns equal-length codes",
+                "Sorts symbols alphabetically",
+                "Merges the two least-probable symbols"
+              ],
+              "answer": 3,
+              "explain": "Greedy bottom-up merging of the two least-likely nodes builds the optimal prefix-code tree."
+            },
+            {
+              "q": "For a dyadic distribution (all probabilities powers of 1/2), a Huffman code achieves:",
+              "choices": [
+                "Exactly the entropy",
+                "Twice the entropy",
+                "Half the entropy",
+                "Worse than fixed-length coding"
+              ],
+              "answer": 0,
+              "explain": "The ideal lengths $-\\log_2 p$ are integers, so Huffman hits the entropy floor exactly."
+            },
+            {
+              "q": "Compared with Huffman, arithmetic coding:",
+              "choices": [
+                "Is always worse",
+                "Can get arbitrarily close to entropy by coding whole sequences",
+                "Ignores symbol probabilities",
+                "Only works for two symbols"
+              ],
+              "answer": 1,
+              "explain": "It avoids Huffman's whole-bit rounding by encoding a message as one fraction."
+            },
+            {
+              "q": "Why are prediction and compression considered the same problem?",
+              "choices": [
+                "They use the same programming language",
+                "A better probability model yields shorter codes (length $\\approx -\\log_2 q$)",
+                "Both require a GPU",
+                "Neither uses probabilities"
+              ],
+              "answer": 1,
+              "explain": "Expected code length under model $q$ is the cross-entropy $H(p,q)$, minimized when $q=p$."
+            },
+            {
+              "q": "What does the Kraft inequality $\\sum_i 2^{-\\ell_i}\\le 1$ characterize?",
+              "choices": [
+                "Which sets of codeword lengths a prefix code can have",
+                "The speed of Huffman coding",
+                "The entropy of a Gaussian",
+                "The number of symbols allowed"
+              ],
+              "answer": 0,
+              "explain": "A prefix code with those lengths exists iff the inequality holds; short codewords cost more of the tree."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Shannon source coding theorem",
+              "back": "Expected length $L\\ge H$ for any lossless code, and achievable within 1 bit (or $\\to H$ by block coding). Entropy = the compression floor."
+            },
+            {
+              "front": "Prefix-free code",
+              "back": "No codeword is a prefix of another, so a bit-stream decodes unambiguously. Codewords are the leaves of a binary tree."
+            },
+            {
+              "front": "Optimal codeword length",
+              "back": "$\\ell = -\\log_2 p$ (the self-information). With these lengths, expected length $=H$ exactly."
+            },
+            {
+              "front": "Huffman coding",
+              "back": "Greedily merge the two least-likely symbols repeatedly. Optimal per-symbol prefix code; equals $H$ for dyadic $p$, else within 1 bit."
+            },
+            {
+              "front": "Compression = prediction",
+              "back": "Code length under model $q$ is $\\approx -\\log_2 q$; expected length is cross-entropy $H(p,q)$. A better predictor is a better compressor (why LLMs compress text well)."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Build a Huffman code by hand",
+              "scenario": "Symbols A,B,C,D with probabilities $0.5, 0.25, 0.125, 0.125$. Build the Huffman code and give each codeword length.",
+              "solution": "Merge the two least-likely: C+D = 0.25. Now {A:0.5, B:0.25, (CD):0.25}; merge B+CD = 0.5. Now {A:0.5, (BCD):0.5}; merge to the root. Reading the tree, A is one branch from the root (length <b>1</b>), B is two (length <b>2</b>), and C, D are three each (length <b>3</b>). Expected length $=0.5(1)+0.25(2)+0.125(3)+0.125(3)=\\mathbf{1.75}$ bits — and the entropy is also 1.75, so this dyadic code is perfectly efficient."
+            },
+            {
+              "title": "Huffman beats fixed-length, and stays within a bit of entropy",
+              "scenario": "Three symbols with probabilities $0.4, 0.35, 0.25$. Compare a fixed-length code, the entropy, and a Huffman code.",
+              "solution": "Fixed-length needs $\\lceil\\log_2 3\\rceil = 2$ bits per symbol. Entropy: $H=-(0.4\\log_2 0.4 + 0.35\\log_2 0.35 + 0.25\\log_2 0.25)\\approx \\mathbf{1.56}$ bits. Huffman (merge the two smallest, $0.35+0.25=0.6$, then with $0.4$) gives lengths $1,2,2$, so expected length $=0.4(1)+0.35(2)+0.25(2)=\\mathbf{1.60}$ bits. Huffman ($1.60$) beats fixed-length ($2$) and sits just above the entropy floor ($1.56$) — the promised 'within 1 bit.'"
+            },
+            {
+              "title": "Compression as cross-entropy",
+              "scenario": "Your model predicts symbol probabilities $q$, but the true distribution is $p$. What average code length do you pay, and when is it minimized?",
+              "solution": "Coding with the model's lengths $-\\log_2 q(x)$ gives expected length $\\sum_x p(x)\\,(-\\log_2 q(x)) = H(p,q)$ — the <em>cross-entropy</em>. It is minimized when $q=p$, where it drops to the entropy $H(p)$. The gap $H(p,q)-H(p)=D_{\\mathrm{KL}}(p\\|q)$ is the wasted bits from an imperfect model. So training a model to minimize cross-entropy is training the best possible compressor for the data."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "A source emits 4 symbols with probabilities $0.5, 0.25, 0.125, 0.125$. Compare the bits per symbol of a naive fixed-length code with the entropy.",
+              "hint": "Fixed-length needs $\\log_2 4$ bits; entropy is $-\\sum p\\log_2 p$.",
+              "solution": "Fixed-length: $\\log_2 4 = \\mathbf{2}$ bits per symbol. Entropy: $H=-(0.5(-1)+0.25(-2)+0.125(-3)+0.125(-3)) = 0.5+0.5+0.375+0.375 = \\mathbf{1.75}$ bits. A Huffman code achieves exactly 1.75, saving 0.25 bits/symbol (12.5%) over fixed-length — because it gives the common symbol a 1-bit code instead of 2."
+            },
+            {
+              "prompt": "Explain why a prefix code cannot give two different symbols codewords 0 and 01.",
+              "hint": "Decode the stream '01...' — where does the first codeword end?",
+              "solution": "Because 0 is a <em>prefix</em> of 01, the decoder reading '0' cannot tell whether the symbol ended there (codeword 0) or continues (codeword 01) — the stream is ambiguous. The prefix-free rule forbids exactly this: no codeword may be the start of another, which is what makes instant, separator-free decoding possible. (In tree terms, 0 is an internal node on the path to 01, not a leaf.)"
+            },
+            {
+              "prompt": "A language model assigns the actually-occurring next token an average probability such that its cross-entropy is 3 bits/token. What does this say about compressing that text, and what would a better model do?",
+              "hint": "Expected code length under the model is the cross-entropy.",
+              "solution": "You could losslessly compress the text to about <b>3 bits per token</b> using the model's probabilities (via arithmetic coding) — the cross-entropy <em>is</em> the achievable size. A better model assigns higher probability to the true tokens, lowering $-\\log_2 q$ and thus the cross-entropy, so it both predicts better <em>and</em> compresses smaller. The floor is the text's true entropy $H(p)$; the model wastes $D_{\\mathrm{KL}}(p\\|q)$ extra bits until it matches $p$."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
