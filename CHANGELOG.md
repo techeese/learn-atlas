@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 617 — MCQ top-up runway, batch 10: ml-linear-regression 8 → 16 (content / assessment)
+Tenth batch. Added **8 new MCQs to `ml-linear-regression`** (now 16), distinct from the existing eight: numeric prediction (`ŷ=200`), `R²=1` = perfect fit, `R²=0` = mean
+baseline, OLS outlier-sensitivity, training-`R²` is non-decreasing as features are added, the linearity assumption, multicollinearity → unstable coefficients, and
+homoscedasticity. The prediction question was worded "price in thousands" (no money-`$`, to keep `$…$` parity safe). Key assertion confirmed each correct choice; balanced → **4/4/4/4**.
+Verified: data parses; gate ALL GREEN; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, **rawDollar=0**, errs=0. SW cache `atlas-v557` → `atlas-v558`. Runway: **10 of 17** (ML 3/10).
+
 ## iter 616 — MCQ top-up runway, batch 9: ml-decision-trees 8 → 16 (content / assessment)
 Ninth batch. Added **8 new MCQs to `ml-decision-trees`** (now 16), distinct from the existing eight: numeric Gini (`6A/2B → 0.375`) and entropy (`→ 0.81` bits), pure-node
 Gini `0`, max Gini `0.5` at 50/50, the information-gain formula, no feature scaling needed, pre-pruning (max depth / min leaf size), and natural handling of nonlinear

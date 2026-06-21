@@ -600,6 +600,94 @@
               ],
               "answer": 0,
               "explain": "The model is linear in the weights, so transformed features (polynomials, logs, interactions) let it fit curves while the optimization stays ordinary least squares."
+            },
+            {
+              "q": "A model predicts price (in thousands) as $\\hat y=50+0.10\\cdot(\\text{size})-5\\cdot(\\text{age})$. For a 2000 sq ft, 10-year-old house, $\\hat y$ is:",
+              "choices": [
+                "$200$",
+                "$250$",
+                "$150$",
+                "$2050$"
+              ],
+              "answer": 0,
+              "explain": "$50+0.10(2000)-5(10)=50+200-50=200$ (thousand)."
+            },
+            {
+              "q": "An $R^2$ of $1$ means the model:",
+              "choices": [
+                "Is no better than predicting the mean",
+                "Fits perfectly — the residuals are all zero",
+                "Has definitely overfit",
+                "Is undefined"
+              ],
+              "answer": 1,
+              "explain": "$R^2$ is the fraction of variance explained; $1$ means none is left unexplained."
+            },
+            {
+              "q": "An $R^2$ of $0$ means the model:",
+              "choices": [
+                "Is the best possible",
+                "Fits perfectly",
+                "Does no better than just predicting the mean",
+                "Has negative error"
+              ],
+              "answer": 2,
+              "explain": "$R^2=0$ means the fit explains none of the variance beyond the constant mean baseline."
+            },
+            {
+              "q": "Ordinary least squares is especially sensitive to:",
+              "choices": [
+                "Categorical labels only",
+                "The ordering of the features",
+                "The random seed",
+                "Outliers — squared error amplifies large residuals"
+              ],
+              "answer": 3,
+              "explain": "Squaring makes one far-off point dominate the loss; robust losses (Huber) or removing outliers help."
+            },
+            {
+              "q": "Adding another feature to an OLS fit changes the training $R^2$:",
+              "choices": [
+                "It can only stay the same or increase",
+                "It always decreases",
+                "It stays exactly unchanged",
+                "It drops to 0"
+              ],
+              "answer": 0,
+              "explain": "More features never raise training error, so training $R^2$ never falls — which is why we use a validation set or adjusted $R^2$."
+            },
+            {
+              "q": "Linear regression assumes the relationship between features and target is:",
+              "choices": [
+                "Always quadratic",
+                "Approximately linear",
+                "Exponential",
+                "Purely random"
+              ],
+              "answer": 1,
+              "explain": "It fits a hyperplane; strongly nonlinear relationships need feature transforms or a different model."
+            },
+            {
+              "q": "When two features are strongly correlated (multicollinearity), the OLS coefficients become:",
+              "choices": [
+                "Always equal to each other",
+                "Exactly zero",
+                "Unstable and hard to interpret (high variance)",
+                "More accurate"
+              ],
+              "answer": 2,
+              "explain": "The fit cannot tell the correlated features apart, so their weights swing wildly; ridge regression stabilizes them."
+            },
+            {
+              "q": "Homoscedasticity, a standard linear-regression assumption, means:",
+              "choices": [
+                "The mean residual is large",
+                "The features are independent",
+                "The target is Gaussian",
+                "The residual variance is constant across inputs"
+              ],
+              "answer": 3,
+              "explain": "Constant-variance residuals justify the usual standard errors; non-constant (heteroscedastic) errors call for weighted or robust methods."
             }
           ],
           "flashcards": [
