@@ -231,7 +231,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iters 656–659: topped all 4 Bayesian lessons 8→16 MCQ. **MODULE 6 "Bayesian Inference" COMPLETE at full parity** (4 lessons × 16 MCQ/6 cards/3 ex/3 hw + embedded viz). **PS is now a 6-module, 24-lesson course; site 169 lessons.** gate GREEN, SW →v599.
    ✅ iter 660: **NEW viz ps-beta-update** (114th — Beta prior×likelihood→posterior, lgamma-based; embedded in ps-bayesian-inference §3). gate GREEN, headless mean 0.643→0.682 + both canvases, SW →v600.
    ✅ **BAYESIAN ARC COMPLETE** (iters 652–660): PS Module 6 = 4 full lessons at 16 MCQ + dedicated Beta-update viz. PS is a 6-module/24-lesson course; site 169 lessons, 114 viz.
-   ★ Next genuine value again needs OWNER STEER: a brand-new 10th topic, or the lazy-load-data perf refactor. Solo backlog otherwise = polish/curation, not core gaps.
+   ✅ iter 661: **glossary +10 Bayesian terms** (likelihood, conjugate prior, MAP, credible interval, posterior predictive, MCMC, VI, ELBO, Metropolis–Hastings, marginal likelihood). Glossary 230. gate GREEN, headless 8/8 render.
+   ★ Next genuine value again needs OWNER STEER: a brand-new 10th topic, or the lazy-load-data perf refactor. Solo backlog otherwise = polish/curation, not core gaps. (Bayesian module is now fully integrated: lessons + 16 MCQ + viz + glossary.)
    ★ Bigger levers still benefit from OWNER STEER: a brand-new 10th topic, or the lazy-load-data perf refactor. But Module 6 is genuine high-value autonomous work to pursue meanwhile.
    ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged

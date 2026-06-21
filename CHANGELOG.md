@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 661 — Glossary: integrate the Bayesian vocabulary (reference)
+Integrated the new Module 6 by adding its core vocabulary to the glossary (so the terms surface as inline tooltips inside the Bayesian lessons, in ⌘K search, and on the glossary page).
+Added **10 terms**: **Likelihood, Conjugate prior, Maximum a posteriori (MAP), Credible interval, Posterior predictive distribution, Markov chain Monte Carlo (MCMC), Variational
+inference, Evidence lower bound (ELBO), Metropolis–Hastings, Marginal likelihood** — each a concise, formula-bearing definition. (Prior, Posterior, Bayes' theorem already existed.)
+Glossary **220 → 230**.
+Verified: glossary.js parses; gate ALL GREEN (230 glossary terms); **headless** — all sampled new terms render (8/8), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v600` → `atlas-v601`.
+
 ## iter 660 — NEW viz: Bayesian updating (Beta prior → posterior) (visualizations)
 Capped Module 6 with its canonical missing visual. Built the **114th widget, `ps-beta-update` "Bayesian updating: prior × likelihood → posterior"**: three live curves over θ∈[0,1] —
 a gold Beta(α,β) **prior**, a sage normalized **likelihood** for k heads in n flips, and the violet **posterior** Beta(α+k, β+n−k) — computed with a Lanczos `lgamma` so any real α,β
