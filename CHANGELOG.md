@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 706 — MCQ QA pass (clean) + complete the optimization glossary (quality / reference)
+**QA (fresh lane):** spot-audited answer *correctness* (not just gate's range check) for all **80 MCQs** across the 5 recently-authored lessons (causal ×3, duality, proximal) — re-read every marked
+answer; **all correct**, no wrong keys. The bulk authoring was sound.
+**Ship:** the proximal lesson (iter 698) postdates the optimization glossary add (iter 697), so its vocabulary was missing. Added **5 terms**: Proximal operator, Soft-thresholding, Subgradient,
+Projected gradient descent, Proximal gradient descent (ISTA). Glossary **253 → 258**; these power the inline tooltips. (Glossary integrity re-checked: 0 malformed entries.)
+Verified: glossary parses; gate ALL GREEN; **headless** — all 5 render on `#/glossary` (5/5), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v643` → `atlas-v644`.
+
 ## iter 705 — Library: references for the Causal & Optimization arcs (reference)
 The two newest arcs had no Library resources. Added 4 real, free/high-quality references: **The Book of Why** (Pearl) and **Causal Inference: The Mixtape** (Cunningham) to Probability & Statistics; and
 **Convex Optimization** (Boyd & Vandenberghe — the free standard text on duality/KKT) and **Convex Optimization EE364A** (Boyd's Stanford course) to Calculus. PS refs **8 → 10**, calc refs **5 → 7**.
