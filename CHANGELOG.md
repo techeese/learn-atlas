@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 576 — Information Theory module 2: Cross-Entropy & KL Divergence (content / depth)
+Built out the new pillar with its highest-value second lesson — **Cross-Entropy and KL Divergence** (new module "Comparing Distributions"), the bridge from
+entropy to every ML loss. Full parity: 8-section lecture (cross-entropy `H(p,q)=−Σp log q`, the `H(p,q)≥H(p)` floor, KL as the *extra bits*
+`D(p‖q)=H(p,q)−H(p)`, why it's not a metric, and the punchline that **minimizing cross-entropy = minimizing KL to the truth = maximum likelihood**), a
+**runnable KL code exercise** (→0.74 bits), **3 deep-dives** (cross-entropy *is* MLE; forward vs reverse KL = mode-covering vs mode-seeking; JS/Wasserstein when
+you need a real distance), **8 MCQs** (de-skewed 2/2/2/2), **5 flashcards**, **3 worked examples** (log-loss asymmetry, KL asymmetry 0.74≠0.53, the
+CE=H+KL=1.208 decomposition), **3 homework**. **Reuses the existing `dl-cross-entropy` and `dl-kl-divergence` viz** (embedded by id) — the cross-topic payoff.
+Every number hand-verified in node.
+Verified: gate ALL GREEN (now **9 topics · 160 lessons · 109 code-exercises**); **headless** — **nDD=3**, **both embedded viz canvases hydrate**, the KL code
+runs to **0.74**, examples reveal, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v515` → `atlas-v516`. Information Theory now has **2 lessons**; modules
+3–6 (mutual information, source coding, channel capacity, info in ML) queued.
+
 ## iter 575 — NEW PILLAR: started a 9th topic — Information Theory (new functionality / bold move)
 With every content runway complete (all 158 lessons at 3 deep-dives / 3 examples / 3 homework; code on all 8 topics; viz catalog saturated), the
 highest-leverage move is a **new pillar**. Launched **Information Theory** (`data/information-theory.js`, id `information-theory`, icon `ℐ`, teal `#4ba3b8`) —

@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 576: **Information Theory module 2 — Cross-Entropy & KL Divergence** (content/depth). New lesson it-cross-entropy-kl (full parity: 8-section + KL
+   code→0.74 + 3 dd + 8 MCQ 2/2/2/2 + 5 cards + 3 ex + 3 hw); reuses dl-cross-entropy + dl-kl-divergence viz by id. Verified: gate GREEN (9 topics·160 lessons·
+   109 code); headless nDD=3, 2 viz canvases hydrate, code 0.74, kErr=0/errs=0. SW →v516. IT now 2 lessons; modules 3–6 queued.
    ✅ iter 575: **NEW PILLAR — started 9th topic, Information Theory** (new functionality/bold move). data/information-theory.js (icon ℐ, teal #4ba3b8); Phase 1
    = 1 complete foundational lesson "Entropy" (8-section content + entropy code exercise→1.50 + 3 dd + 8 MCQ de-skewed 2/2/2/2 + 5 cards + 3 examples + 3 hw).
    Wired into index.html/sw.js/gate.js TOPICS. Verified: gate GREEN (9 topics·159 lessons·108 code), headless 9 cards/lesson renders/code runs 1.50/kErr=0/errs=0,
