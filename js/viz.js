@@ -6644,4 +6644,45 @@
     draw();
   });
 
+
+  /* ========================================================
+     122. Compounding errors in behavioral cloning (Reinforcement Learning)
+     ======================================================== */
+  register({ id: 'rl-bc-compounding', topic: 'reinforcement-learning', title: 'Why behavioral cloning drifts: errors compound', blurb: 'Behavioral cloning trains a policy by supervised learning on expert demonstrations — but a tiny per-step error rate ε hurts far more than in ordinary supervised learning. One mistake nudges the agent to a state the expert never visited, where it is even more likely to err, so mistakes cascade. The total cost grows like ε·T² over a horizon T (quadratic), versus ε·T (linear) for a method like DAgger that trains on the agent’s own states. Slide the horizon and watch the gap explode.' },
+  function (root) {
+    const W = 540, H = 320, padL = 46, padR = 16, padT = 18, padB = 36;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const eps = 0.06, TMAX = 30;
+    let T = 12;
+    const lin = t => eps * t, quad = t => eps * t * t;
+    const ymax = quad(TMAX);
+    const X = t => padL + (t / TMAX) * (W - padL - padR);
+    const Y = v => (H - padB) - (v / ymax) * (H - padT - padB);
+    function curve(fn, col, lw) { ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath(); for (let i = 0; i <= 120; i++) { const t = i / 120 * TMAX; i ? ctx.lineTo(X(t), Y(fn(t))) : ctx.moveTo(X(t), Y(fn(t))); } ctx.stroke(); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.moveTo(padL, padT); ctx.lineTo(padL, Y(0)); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      [0, 10, 20, 30].forEach(t => ctx.fillText(t, X(t), Y(0) + 14)); ctx.fillText('horizon T (steps)', W / 2, H - 4);
+      ctx.save(); ctx.translate(padL - 30, (padT + Y(0)) / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('total error', 0, 0); ctx.restore();
+      curve(quad, p.rust, 2.6); curve(lin, p.sage, 2.6);
+      // marker at T
+      ctx.strokeStyle = p.line; ctx.globalAlpha = 0.5; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(X(T), padT); ctx.lineTo(X(T), Y(0)); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      ctx.fillStyle = p.rust; ctx.beginPath(); ctx.arc(X(T), Y(quad(T)), 4.5, 0, 7); ctx.fill();
+      ctx.fillStyle = p.sage; ctx.beginPath(); ctx.arc(X(T), Y(lin(T)), 4.5, 0, 7); ctx.fill();
+      // labels
+      ctx.textAlign = 'left'; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace');
+      ctx.fillStyle = p.rust; ctx.fillText('behavioral cloning  ε·T²', X(2), Y(quad(TMAX) * 0.92));
+      ctx.fillStyle = p.sage; ctx.fillText('DAgger / supervised  ε·T', X(11), Y(lin(TMAX)) - 8);
+      info.innerHTML = 'horizon T = <b>' + T + '</b> (ε = ' + eps + ') &middot; DAgger <b style="color:' + p.sage + '">' + lin(T).toFixed(2) + '</b> vs behavioral cloning <b style="color:' + p.rust + '">' + quad(T).toFixed(2) + '</b> &middot; BC is <b>' + T + '×</b> worse. The ratio ε·T²/ε·T = T grows without bound — clone-and-pray fails on long tasks; DAgger restores linear error by labeling the states the agent actually reaches.';
+    }
+    slider(ctl, { label: 'horizon T', min: 2, max: 30, step: 1, value: T, fmt: v => String(v), onInput: v => { T = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Compounding-error visualizer for behavioral cloning. Two curves of total error versus horizon T at a fixed per-step error rate epsilon: a sage line for DAgger/supervised growing linearly as epsilon times T, and a rust curve for behavioral cloning growing quadratically as epsilon times T squared. A slider moves T; the readout shows both errors and notes that behavioral cloning is T times worse, because the ratio epsilon T squared over epsilon T equals T and grows without bound.');
+    draw();
+  });
+
 })();

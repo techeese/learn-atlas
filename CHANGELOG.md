@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 702 — NEW viz: compounding errors in behavioral cloning (visualizations)
+After auditing many surfaces (LA code exercise, dashboard daily picks, glossary search/filter, several hard concepts — all already complete), built the best remaining gap: RL is the least viz-covered
+topic, and behavioral cloning's signature failure (quadratic error growth) was text-only. Built the **122nd widget, `rl-bc-compounding` "Why behavioral cloning drifts: errors compound"** for
+`rl-imitation`: two error-vs-horizon curves — DAgger/supervised ε·T (linear, sage) vs behavioral cloning ε·T² (quadratic, rust) — with a horizon slider showing the ratio ε·T²/ε·T = T grow without
+bound (BC is T× worse). RL viz coverage **16/20 → 17/20**.
+Verified: theory re-derived in Node (T=10: DAgger 0.60, BC 6.00, 10×; T=20: 20×); gate ALL GREEN (now **122 widgets**); **headless** — Lab + lesson hydrate; ratio grows 10×→20× as T doubles; kErr=0, errs=0; screenshot shows the quadratic blow-up. SW cache `atlas-v639` → `atlas-v640`.
+
 ## iter 701 — NEW viz: integration by parts as area → calculus viz COMPLETE (visualizations)
 Varied off the optimization theme. Filled calculus's last no-viz lesson with a classic geometric proof. Built the **121st widget, `calc-by-parts` "Integration by parts is two areas tiling a
 rectangle"** for `c-integration-techniques`: a curve v(u) from the origin to (u,v); the area under it (∫v du, sage) and the area to its left (∫u dv, violet) tile the u·v rectangle exactly — so they
