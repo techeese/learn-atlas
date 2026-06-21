@@ -209,6 +209,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    NOTE: non-viz surfaces all verified complete this arc (content uniform, glossary 214, refs 46 [4-6/topic], keyboard nav, a11y, mobile clean, head perf/preconnect done), AND every PS lesson now has a viz.
    ✅ iter 634: **RL viz curation** — cross-embedded rl-bandit/rl-td-mc/rl-q-learning/rl-policy-gradient into 4 no-viz RL lessons (10/20→14/20). Verified headless canvases hydrate, gate GREEN, SW →v575.
    ⏳ Viz-coverage curation frontier (cross-embed existing widgets into no-viz lessons): RL now 14/20 (6 left); also LLM ~10/19, LA ~10/19, algos ~14/23, calc 17/25, DL 17/22. Match a relevant existing viz to each lesson's intro heading.
+   ✅ iter 635: **connected Information Theory into the prereq graph** (understandability) — 5 accurate cross-topic edges, IT 2/7→7/7. Verified gate GREEN, map renders, edges surface as links, SW →v576.
+   ⏳ Prereq-graph frontier (non-viz): PS is 2/20 cross-topic edges — could connect PS lessons upstream to calculus (integration for continuous distributions) where genuinely dependent.
    ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
    lazy-load-data perf project (owner steer). Keep varying lanes.

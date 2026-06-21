@@ -173,5 +173,20 @@ window.PREREQS = {
   "it-differential-entropy": [
     "ps-random-variables-distributions",
     "c-definite-integral-riemann"
+  ],
+  "it-cross-entropy-kl": [
+    "ps-random-variables-distributions"
+  ],
+  "it-mutual-information": [
+    "ps-joint-distributions"
+  ],
+  "it-source-coding": [
+    "ps-random-variables-distributions"
+  ],
+  "it-channel-capacity": [
+    "ps-conditional-independence-bayes"
+  ],
+  "it-information-in-ml": [
+    "ps-random-variables-distributions"
   ]
 };

@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 635 — Connect Information Theory into the prerequisite graph (understandability / content structure)
+A non-viz structural fix: Information Theory was nearly disconnected from the cross-topic prerequisite graph (only 2 of 7 lessons had edges), so its "🧭 prerequisites build up to
+this" banner, the **Knowledge Map**, and learning-paths under-represented how IT rests on probability. Added **5 accurate cross-topic edges** (each a genuine dependency on a real
+PS lesson): `it-cross-entropy-kl` & `it-source-coding` & `it-information-in-ml` → `ps-random-variables-distributions` (they compare/encode probability distributions);
+`it-mutual-information` → `ps-joint-distributions` (MI is defined over a joint distribution); `it-channel-capacity` → `ps-conditional-independence-bayes` (a channel *is* a
+conditional distribution p(y|x)). Edges point only upstream (IT→PS), avoiding a cycle with the existing `ml-decision-trees → it-entropy` edge. **IT prereq coverage 2/7 → 7/7.**
+Verified: `new Function` clean; gate ALL GREEN (validates every prereq id resolves — all 5 targets are real lessons); **headless** — Knowledge Map renders (764 nodes), and the new
+edges surface as clickable links in-lesson (it-mutual-information → ps-joint-distributions, it-channel-capacity → ps-conditional-independence-bayes); kErr=0, errs=0. SW cache `atlas-v575` → `atlas-v576`.
+
 ## iter 634 — RL viz coverage: cross-embed existing widgets into 4 no-viz lessons (visualizations / curation)
 With PS viz complete, extended the curation approach to the worst-covered topic — Reinforcement Learning (was 10/20 lessons with a viz). Cross-embedded **existing, contextually
 matched** widgets (no new code) at the exact heading where each concept is introduced: **`rl-bandit`** → `rl-what-is-rl` at "Exploration vs. Exploitation"; **`rl-td-mc`** →
