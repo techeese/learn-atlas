@@ -6147,4 +6147,61 @@
     draw();
   });
 
+
+  /* ========================================================
+     112. Max-flow / min-cut (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-maxflow', topic: 'algorithms', title: 'Max-flow = min-cut', blurb: 'How much can flow from source S to sink T through a capacitated network? Ford–Fulkerson pushes flow along augmenting paths until none remain. The max-flow min-cut theorem says the answer always equals the cheapest “cut” — a way to split the nodes into an S-side and a T-side — whose capacity is the sum of edges crossing it. Drag the S→A capacity and watch the bottleneck (the min cut, in rust) move from the source edges to the sink edges.' },
+  function (root) {
+    const W = 540, H = 300;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const pos = [[64, 150], [255, 66], [255, 234], [468, 150]];
+    const NAME = ['S', 'A', 'B', 'T'];
+    const E = [[0, 1], [0, 2], [1, 2], [1, 3], [2, 3]];
+    let capSA = 7;
+    function solve() {
+      const n = 4, C = { '0-1': capSA, '0-2': 6, '1-2': 3, '1-3': 5, '2-3': 8 };
+      const cap = Array.from({ length: n }, () => Array(n).fill(0)); E.forEach(([u, v]) => cap[u][v] = C[u + '-' + v]);
+      const flow = Array.from({ length: n }, () => Array(n).fill(0));
+      function bfs() { const par = Array(n).fill(-1); par[0] = 0; const q = [0]; while (q.length) { const u = q.shift(); for (let v = 0; v < n; v++) if (par[v] < 0 && cap[u][v] - flow[u][v] > 0) { par[v] = u; if (v === 3) return par; q.push(v); } } return null; }
+      let mf = 0, par; while ((par = bfs())) { let a = Infinity; for (let v = 3; v !== 0; v = par[v]) a = Math.min(a, cap[par[v]][v] - flow[par[v]][v]); for (let v = 3; v !== 0; v = par[v]) { flow[par[v]][v] += a; flow[v][par[v]] -= a; } mf += a; }
+      const reach = Array(n).fill(false); reach[0] = true; const q = [0]; while (q.length) { const u = q.shift(); for (let v = 0; v < n; v++) if (!reach[v] && cap[u][v] - flow[u][v] > 0) { reach[v] = true; q.push(v); } }
+      const cut = E.filter(([u, v]) => reach[u] && !reach[v]);
+      return { mf, flow, C, reach, cut };
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const s = solve();
+      E.forEach(([u, v]) => {
+        const isCut = s.cut.some(e => e[0] === u && e[1] === v);
+        const f = s.flow[u][v], cp = s.C[u + '-' + v], sat = f >= cp;
+        const x1 = pos[u][0], y1 = pos[u][1], x2 = pos[v][0], y2 = pos[v][1];
+        const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, r = 18;
+        const ax = x1 + ux * r, ay = y1 + uy * r, bx = x2 - ux * r, by = y2 - uy * r;
+        ctx.strokeStyle = isCut ? p.rust : (sat ? p.gold : p.line); ctx.lineWidth = isCut ? 3 : 2;
+        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+        const ang = Math.atan2(dy, dx); ctx.fillStyle = isCut ? p.rust : (sat ? p.gold : p.mute);
+        ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx - 9 * Math.cos(ang - 0.4), by - 9 * Math.sin(ang - 0.4)); ctx.lineTo(bx - 9 * Math.cos(ang + 0.4), by - 9 * Math.sin(ang + 0.4)); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = isCut ? p.rust : p.ink; ctx.font = '12px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+        const mx = (x1 + x2) / 2, my = (y1 + y2) / 2; ctx.fillText(f + '/' + cp, mx + (uy) * 14, my - (ux) * 14);
+      });
+      pos.forEach((pt, i) => {
+        ctx.beginPath(); ctx.arc(pt[0], pt[1], 18, 0, 7);
+        ctx.fillStyle = s.reach[i] ? p.sage : p.panel; ctx.fill();
+        ctx.strokeStyle = s.reach[i] ? p.sage : p.violet; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = s.reach[i] ? p.bg : p.ink; ctx.font = '14px ' + (cssVar('--font-disp') || 'serif'); ctx.textAlign = 'center'; ctx.fillText(NAME[i], pt[0], pt[1] + 5);
+      });
+      ctx.fillStyle = p.sage; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'left'; ctx.fillText('green = S-side of the cut', 12, H - 10);
+      const cutStr = s.cut.map(e => NAME[e[0]] + '→' + NAME[e[1]]).join(', ');
+      info.innerHTML = 'S→A capacity = <b>' + capSA + '</b> &middot; <b style="color:' + p.gold + '">max-flow = ' + s.mf + '</b> = min-cut capacity. ' +
+        'The cut (rust) crosses <b style="color:' + p.rust + '">' + cutStr + '</b> — exactly the edges leaving the green S-side. Labels are flow/capacity; gold edges are saturated.';
+    }
+    slider(ctl, { label: 'S→A capacity', min: 0, max: 12, step: 1, value: capSA, fmt: v => String(v), onInput: v => { capSA = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Max-flow min-cut visualizer on a small network from source S to sink T through nodes A and B. Each edge shows flow over capacity; saturated edges are gold. A slider sets the S-to-A capacity; the widget computes the maximum flow by Ford–Fulkerson and highlights the minimum cut in rust — the green S-side nodes versus the rest — whose crossing-edge capacity always equals the max-flow. Raising S-to-A moves the bottleneck from the source edges to the sink edges.');
+    draw();
+  });
+
 })();

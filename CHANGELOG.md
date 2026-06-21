@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 648 — NEW viz: Max-flow = Min-cut (visualizations)
+Built the **112th widget, `algo-maxflow` "Max-flow = min-cut"** for `a-network-flow` (which had no viz) — the most substantial build yet: a live **Ford–Fulkerson / Edmonds-Karp**
+solver on a small S→A→B→T network, drawing each edge's flow/capacity (saturated edges gold), computing the **minimum cut** from residual-graph reachability and shading the S-side
+nodes green with the cut edges in rust. A slider on the S→A capacity recomputes everything live — and elegantly demonstrates the theorem: raising S→A **moves the bottleneck** from the
+source edges (`S→A, S→B` = 13) to the sink edges (`A→T, B→T` = 13), max-flow tracking the min-cut the whole way. Embedded under "5. The max-flow min-cut theorem". algos viz coverage **21/23 → 22/23**.
+Verified: max-flow logic re-derived in Node (capSA 7→13, 4→10, 12→13 with the cut shifting); gate ALL GREEN (now **112 widgets**); **headless** — duality holds at every slider value and
+the cut shifts source→sink; lesson canvas hydrates; kErr=0, errs=0; screenshot shows the network with flow/capacity labels and the green S-side. SW cache `atlas-v587` → `atlas-v588`.
+
 ## iter 647 — NEW viz: Trie (prefix tree) (visualizations)
 Built the **111th widget, `algo-trie` "Trie: sharing prefixes across a dictionary"** for `a-string-algorithms` (which had no viz): the words {car, card, cat, do, dog} rendered as a
 character tree with a tidy recursive layout, word-end nodes marked, and query buttons that walk the tree one edge per character — highlighting the path in gold and reporting
