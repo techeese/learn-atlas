@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 698 — NEW lesson: Projected & Proximal Gradient (content)
+Completed the optimization arc's natural span (unconstrained GD → constrained → non-smooth). Added `c-proximal-projected` "Projected & Proximal Gradient: Constraints and Sparsity" to calculus M7:
+8 sections (projected GD + the projection operator · computable projections: box/ball/simplex · subgradients · the proximal operator · proximal gradient / ISTA · **soft-thresholding = the ℓ₁ prox** ·
+the ML payoff), the `calc-gd2d` viz, a runnable **soft-thresholding code exercise** (zeros 3 of 5 small coefficients → lasso sparsity), **3 deep-dives** (projection = prox of an indicator · why soft-
+thresholding zeroes coefficients · ISTA/FISTA convergence), **6 flashcards, 3 examples, 3 homework, 8 MCQs** (2/2/2/2, keys asserted). Site **174 lessons**; calculus M7 now 5 lessons.
+Verified: soft-threshold output re-derived in Node; gate ALL GREEN (ran the code; parity warning flags 8/16 — top-up queued; key-assertion + render guards caught a bad key and a raw `&` pre-commit);
+**headless** — 65 KaTeX/0 errors/rawDollar=0, calc-gd2d hydrates, 3 deep-dives + code runner, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v635` → `atlas-v636`.
+
 ## iter 697 — Glossary: 10 optimization & duality terms (reference)
 Completed the duality lesson's glossary integration (its vocabulary powers the inline hover-tooltips site-wide). Added **10 terms**: Lagrangian, Dual function, Weak duality, Strong duality, Duality
 gap, KKT conditions, Complementary slackness, Slater's condition, Shadow price, and Convex set. Glossary **243 → 253**. (The render guard caught a raw `&` in the KKT def before it could ship — reworded.)

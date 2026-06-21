@@ -6391,6 +6391,162 @@
               "solution": "Since the inputs appear only through inner products, you can replace $x_i^\\top x_j$ with a kernel $k(x_i,x_j)=\\phi(x_i)^\\top\\phi(x_j)$ for some (possibly infinite-dimensional) feature map $\\phi$ — without ever computing $\\phi$. The dual stays the same size (one $\\alpha_i$ per point), so you get a nonlinear decision boundary at the cost of a linear one. This is only visible <em>in the dual</em>."
             }
           ]
+        },
+        {
+          "id": "c-proximal-projected",
+          "title": "Projected & Proximal Gradient: Constraints and Sparsity",
+          "minutes": 18,
+          "content": "<h3>1. The hook: plain gradient descent ignores walls and kinks</h3>\n<p>Ordinary gradient descent assumes the objective is smooth and the variable is free to roam all of space. Real ML problems break both assumptions: weights must satisfy <b>constraints</b> (stay in a set), and regularizers like the $\\ell_1$ norm have <b>kinks</b> where no gradient exists. Two elegant fixes — <b>projected</b> and <b>proximal</b> gradient descent — extend GD to exactly these cases, and they are what actually trains lasso and many constrained models.</p>\n<div data-viz=\"calc-gd2d\"></div>\n<h3>2. Projected gradient descent</h3>\n<p>To minimize $f(x)$ subject to $x\\in C$ (a feasible set), take a normal gradient step and then <b>project back</b> onto $C$: $$x_{k+1}=\\Pi_C\\!\\big(x_k-\\eta\\,\\nabla f(x_k)\\big),\\qquad \\Pi_C(y)=\\arg\\min_{z\\in C}\\lVert z-y\\rVert.$$ The projection $\\Pi_C$ snaps an infeasible point to the nearest feasible one. Step, then snap — repeat. For convex $C$ it converges just like GD.</p>\n<h3>3. Projections you can compute</h3>\n<p>Projection is cheap for the sets ML cares about. Onto a <b>box</b> $[a,b]$: clip each coordinate. Onto the <b>ball</b> $\\lVert x\\rVert\\le r$: rescale if too long. Onto the <b>probability simplex</b> (nonnegative, sums to one): a sort-and-shift. Nonnegativity constraints — common in NMF and many models — are just a clip at zero.</p>\n<h3>4. Non-smooth objectives and subgradients</h3>\n<p>The $\\ell_1$ penalty $\\lambda\\lVert x\\rVert_1$ is convex but not differentiable at $0$ (a kink). The fix is the <b>subgradient</b>: any slope that stays below the function. At a kink there is a whole interval of valid subgradients — for $|x|$ at $0$, every slope in $[-1,1]$. Subgradients let convex optimization proceed through corners.</p>\n<h3>5. The proximal operator</h3>\n<p>The <b>proximal operator</b> generalizes projection to any convex function $h$: $$\\mathrm{prox}_{\\lambda h}(y)=\\arg\\min_x\\Big(h(x)+\\tfrac{1}{2\\lambda}\\lVert x-y\\rVert^2\\Big).$$ It takes a step toward minimizing $h$ while staying near $y$. When $h$ is the indicator of a set $C$ (zero inside, $+\\infty$ outside), the prox <em>is</em> the projection $\\Pi_C$ — so projection is just a special case.</p>\n<h3>6. Proximal gradient descent (ISTA)</h3>\n<p>Split the objective into a smooth part $f$ and a non-smooth part $h$: minimize $f(x)+h(x)$. <b>Proximal gradient</b> alternates a gradient step on $f$ with a prox step on $h$: $$x_{k+1}=\\mathrm{prox}_{\\eta h}\\!\\big(x_k-\\eta\\,\\nabla f(x_k)\\big).$$ For lasso ($f$ = least squares, $h=\\lambda\\lVert x\\rVert_1$) this is <b>ISTA</b>, and the prox step is the famous soft-thresholding operator.</p>\n<h3>7. Soft-thresholding = the prox of the $\\ell_1$ norm</h3>\n<p>The prox of $\\lambda|x|$ is <b>soft-thresholding</b> $S_\\lambda(x)=\\mathrm{sign}(x)\\max(|x|-\\lambda,0)$: shrink every coordinate toward zero by $\\lambda$, and set to <em>exactly</em> zero anything smaller than $\\lambda$. That hard zeroing is why lasso produces <b>sparse</b> models. Run it:</p>\n<div data-code=\"javascript\" data-expected=\"before: 2.5, -0.4, 0.9, -1.8, 0.2\nafter:  1.5, 0, 0, -0.8, 0\nzeros:  3 of 5\">// Soft-thresholding = proximal operator of the L1 penalty (lambda * |x|)\nconst soft = (x, lam) => Math.sign(x) * Math.max(Math.abs(x) - lam, 0);\nconst w = [2.5, -0.4, 0.9, -1.8, 0.2];   // a weight vector\nconst lam = 1.0;                          // regularization strength\nconst sparse = w.map(x => soft(x, lam));\nconsole.log(\"before: \" + w.join(\", \"));\nconsole.log(\"after:  \" + sparse.join(\", \"));\nconsole.log(\"zeros:  \" + sparse.filter(x => x === 0).length + \" of \" + w.length);\n// Coefficients smaller than lambda are driven to EXACTLY zero -> lasso sparsity.</div>\n<h3>8. Why this matters for machine learning</h3>\n<p>Proximal and projected methods are everywhere \"plain GD\" is not enough: <b>lasso</b> and sparse models (soft-thresholding), <b>nonnegativity</b> and simplex constraints (projection), and large-scale constrained learning via <b>ADMM</b> and operator splitting. They keep the cheap, scalable gradient step while handling the constraint or the kink with one extra, closed-form operation.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: projection as the prox of an indicator</summary>\n<p>Define the indicator $\\iota_C(x)=0$ if $x\\in C$ and $+\\infty$ otherwise. Then $\\mathrm{prox}_{\\lambda\\iota_C}(y)=\\arg\\min_x\\big(\\iota_C(x)+\\tfrac{1}{2\\lambda}\\lVert x-y\\rVert^2\\big)=\\arg\\min_{x\\in C}\\lVert x-y\\rVert=\\Pi_C(y)$, independent of $\\lambda$. So projected gradient descent is exactly proximal gradient descent with $h=\\iota_C$ — one framework covers both constraints and regularizers.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why soft-thresholding zeroes coefficients</summary>\n<p>Minimizing $\\lambda|x|+\\tfrac{1}{2}(x-y)^2$ coordinate-wise: for $x\\gt 0$ the derivative is $\\lambda+x-y=0\\Rightarrow x=y-\\lambda$ (valid only if $y\\gt\\lambda$); symmetrically $x=y+\\lambda$ when $y\\lt-\\lambda$; and if $|y|\\le\\lambda$ the kink's subgradient interval contains $0$, so $x=0$. That dead zone $[-\\lambda,\\lambda]\\to 0$ is the source of sparsity — unlike ridge's $\\ell_2$ prox $x=y/(1+\\lambda)$, which only shrinks and never zeroes.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: convergence and FISTA</summary>\n<p>For convex $f$ with an $L$-Lipschitz gradient and any convex $h$, proximal gradient (ISTA) with step $\\eta\\le 1/L$ converges at rate $O(1/k)$ — the same as smooth GD, despite the non-smooth $h$. Nesterov's accelerated version, <b>FISTA</b>, adds a momentum-like extrapolation and improves this to $O(1/k^2)$, which is why it is the default solver for lasso-type problems.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "Projected gradient descent handles a constraint $x\\in C$ by:",
+              "choices": [
+                "Taking a gradient step, then projecting back onto $C$",
+                "Adding $C$ to the objective",
+                "Ignoring infeasible steps",
+                "Increasing the learning rate"
+              ],
+              "answer": 0,
+              "explain": "Step then snap to the nearest feasible point."
+            },
+            {
+              "q": "The projection $\\Pi_C(y)$ returns:",
+              "choices": [
+                "The center of $C$",
+                "The point of $C$ nearest to $y$",
+                "The farthest point of $C$ from $y$",
+                "The gradient at $y$"
+              ],
+              "answer": 1,
+              "explain": "Projection minimizes distance to the feasible set."
+            },
+            {
+              "q": "The proximal operator $\\mathrm{prox}_{\\lambda h}(y)$ minimizes:",
+              "choices": [
+                "only $h(x)$",
+                "$h(x)\\cdot\\lVert x-y\\rVert$",
+                "$h(x)+\\tfrac{1}{2\\lambda}\\lVert x-y\\rVert^2$",
+                "only $\\lVert x-y\\rVert^2$"
+              ],
+              "answer": 2,
+              "explain": "Trade off reducing h against staying near y."
+            },
+            {
+              "q": "Soft-thresholding $S_\\lambda(x)=\\mathrm{sign}(x)\\max(|x|-\\lambda,0)$ is the proximal operator of:",
+              "choices": [
+                "The objective's gradient",
+                "The $\\ell_2$ penalty",
+                "A box constraint",
+                "The $\\ell_1$ penalty $\\lambda|x|$"
+              ],
+              "answer": 3,
+              "explain": "L1 prox = soft-thresholding, the lasso step."
+            },
+            {
+              "q": "Lasso produces sparse solutions because soft-thresholding:",
+              "choices": [
+                "Sets coordinates smaller than $\\lambda$ exactly to zero",
+                "Doubles small coordinates",
+                "Never changes any coordinate",
+                "Only rescales by a constant"
+              ],
+              "answer": 0,
+              "explain": "The dead zone |y|<=λ maps to exactly 0."
+            },
+            {
+              "q": "A subgradient of a convex function at a kink is:",
+              "choices": [
+                "The unique derivative",
+                "Any slope of a line lying below the function there",
+                "Always zero",
+                "The function's value"
+              ],
+              "answer": 1,
+              "explain": "At a kink an interval of supporting slopes exists."
+            },
+            {
+              "q": "Projection is a special case of the proximal operator when $h$ is:",
+              "choices": [
+                "A smooth quadratic",
+                "The $\\ell_1$ norm",
+                "The indicator of the feasible set $C$",
+                "The gradient of $f$"
+              ],
+              "answer": 2,
+              "explain": "prox of the set indicator = projection onto the set."
+            },
+            {
+              "q": "Proximal gradient descent (ISTA) is used when the objective is:",
+              "choices": [
+                "Constant",
+                "Purely smooth everywhere",
+                "Non-convex and discrete",
+                "A smooth part plus a non-smooth convex part"
+              ],
+              "answer": 3,
+              "explain": "Split f (smooth) + h (non-smooth): grad step then prox step."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Projected gradient descent",
+              "back": "$x_{k+1}=\\Pi_C(x_k-\\eta\\nabla f(x_k))$ — take a gradient step, then project back onto the feasible set $C$."
+            },
+            {
+              "front": "The projection operator $\\Pi_C(y)$",
+              "back": "$\\arg\\min_{z\\in C}\\lVert z-y\\rVert$ — the nearest feasible point to $y$. Cheap for boxes, balls, and the simplex."
+            },
+            {
+              "front": "The proximal operator $\\mathrm{prox}_{\\lambda h}(y)$",
+              "back": "$\\arg\\min_x\\big(h(x)+\\tfrac{1}{2\\lambda}\\lVert x-y\\rVert^2\\big)$ — minimize $h$ while staying near $y$. Generalizes projection."
+            },
+            {
+              "front": "Proximal gradient (ISTA)",
+              "back": "For $f+h$ ($f$ smooth, $h$ non-smooth): $x_{k+1}=\\mathrm{prox}_{\\eta h}(x_k-\\eta\\nabla f(x_k))$ — gradient step on $f$, prox step on $h$."
+            },
+            {
+              "front": "Soft-thresholding $S_\\lambda(x)$",
+              "back": "$\\mathrm{sign}(x)\\max(|x|-\\lambda,0)$ — the prox of $\\lambda|x|$. Shrinks toward $0$ and zeroes anything below $\\lambda$ → lasso sparsity."
+            },
+            {
+              "front": "A subgradient",
+              "back": "Any slope of a line that stays below a convex function. At a kink (e.g. $|x|$ at $0$) there is an interval of them ($[-1,1]$)."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "Write the projected-gradient update for minimizing $f(x)$ subject to $x\\ge 0$ (nonnegativity), and state what the projection does.",
+              "hint": "Projection onto the nonnegative orthant.",
+              "solution": "$x_{k+1}=\\Pi_{\\ge 0}(x_k-\\eta\\nabla f(x_k))$, where $\\Pi_{\\ge 0}(y)=\\max(y,0)$ coordinate-wise — clip every negative entry to $0$. So: take a gradient step, then zero out any coordinate that went negative."
+            },
+            {
+              "prompt": "Apply soft-thresholding with $\\lambda=0.5$ to the vector $(1.2,\\,-0.3,\\,0.5)$.",
+              "hint": "$S_\\lambda(x)=\\mathrm{sign}(x)\\max(|x|-\\lambda,0)$.",
+              "solution": "$S_{0.5}(1.2)=1.2-0.5=0.7$; $S_{0.5}(-0.3)=-\\max(0.3-0.5,0)=0$; $S_{0.5}(0.5)=\\max(0.5-0.5,0)=0$. Result: $(0.7,\\,0,\\,0)$ — two coordinates zeroed."
+            },
+            {
+              "prompt": "Why does the $\\ell_1$ proximal step produce exact zeros while an $\\ell_2$ (ridge) step does not?",
+              "hint": "Compare $S_\\lambda$ to $y/(1+\\lambda)$.",
+              "solution": "The $\\ell_1$ prox is soft-thresholding, which maps the whole interval $|y|\\le\\lambda$ to exactly $0$ (a dead zone created by the kink's subgradient). The $\\ell_2$ prox is $x=y/(1+\\lambda)$, which merely scales $y$ down — it approaches $0$ only as $y\\to 0$ and never sets a nonzero coordinate exactly to zero. Hence lasso is sparse and ridge is not."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Projecting onto a box",
+              "body": "A gradient step lands at $x=(1.4,\\,-0.2,\\,0.6)$ but each weight must lie in $[0,1]$. Where does projection put it?",
+              "solution": "Clip coordinate-wise to $[0,1]$: $1.4\\to 1$, $-0.2\\to 0$, $0.6\\to 0.6$. Projected point $(1,\\,0,\\,0.6)$. Box projection is just per-coordinate clipping."
+            },
+            {
+              "title": "One ISTA step for lasso",
+              "body": "With smooth part gradient giving $x-\\eta\\nabla f=(0.9,\\,0.2,\\,-1.1)$ and $\\eta\\lambda=0.3$, what is the next iterate?",
+              "solution": "Apply soft-thresholding $S_{0.3}$: $0.9\\to 0.6$, $0.2\\to 0$ (since $0.2\\lt 0.3$), $-1.1\\to -0.8$. Next iterate $(0.6,\\,0,\\,-0.8)$ — the small coordinate was eliminated, the others shrunk by $0.3$."
+            },
+            {
+              "title": "Constraint or regularizer?",
+              "body": "You want weights that are nonnegative AND sparse. Which operator(s) handle each?",
+              "solution": "Nonnegativity is a <em>constraint</em> $x\\ge 0$ → handled by projection $\\max(x,0)$. Sparsity comes from an $\\ell_1$ <em>regularizer</em> → handled by the proximal soft-threshold. Because projection is a prox, you can combine them (e.g. nonnegative soft-thresholding $\\max(x-\\lambda,0)$) in one proximal-gradient method."
+            }
+          ]
         }
       ]
     }
