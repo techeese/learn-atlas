@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 633 — Cross-embed existing viz into the last 2 no-viz PS lessons → PS viz coverage complete (visualizations / curation)
+A lighter curation pass (rather than a 3rd straight new-viz build): the two remaining Probability lessons without a visualization gained **existing, highly-relevant widgets** —
+no new viz code. `ps-sampling-distributions` §2 ("The sampling distribution") now hosts **`ps-clt`** (a CLT demo *is* a sampling distribution forming); `ps-random-variables-distributions`
+gained two — **`ps-binomial-poisson`** at §3 (a discrete PMF) and **`ps-normal-explorer`** at §4 ("probability is area", a continuous PDF/CDF). **Every Probability & Statistics
+lesson now has a visualization.**
+Verified: gate ALL GREEN; **headless** — random-variables hydrates **2** embedded canvases (kErr=0, rawDollar=0), sampling-distributions hydrates **1** (kErr=0); errs=0. The
+sampling-distributions rawDollar=2 was traced to the pre-existing money figure "\$52,300" in §6 — a DOM check confirms it renders as intact prose (not inside a KaTeX span), math
+renders (52 nodes, 0 errors). SW cache `atlas-v573` → `atlas-v574`.
+
 ## iter 632 — Inclusion–exclusion / two-event Venn viz (visualizations)
 Filled another Probability viz gap (the non-viz surfaces — content, glossary, references, keyboard/a11y, mobile, perf/preconnect — are all verified complete, so the genuine
 remaining gaps are PS viz). `ps-sample-spaces-events` had no viz. Built the **107th widget, `ps-set-events` "Two events: union, intersection & inclusion–exclusion"**: a sample-space

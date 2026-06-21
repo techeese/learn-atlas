@@ -205,8 +205,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    TECHNIQUE (landmine): to audit mobile DOM/overflow at 390px, serve via `python3 -m http.server` and read the iframe's `contentDocument` SAME-ORIGIN — `file://` iframes throw cross-origin on `contentDocument`, so only screenshots work there. Overflow check: `max(documentElement.scrollWidth, app.scrollWidth) - 390 > 2`.
    ✅ iter 631: **expectation-as-balance-point viz** (106th, ps-expectation-balance: weights on a number line, gold fulcrum at E[X], ±SD band). Verified headless uniform E[X]=4.25, skew→6.50, gate GREEN, SW →v572.
    ✅ iter 632: **inclusion–exclusion / two-event Venn viz** (107th, ps-set-events: Ω box, A/B circles, region probs, P(A∪B) with overlap clamp). Verified headless union=0.70, clamp 0.50, gate GREEN, SW →v573.
-   PS viz gaps remaining: random-variables-distributions, sampling-distributions (2 left). Least-recently-touched lanes: animations, performance (lazy-load = owner steer).
-   NOTE: non-viz surfaces all verified complete this arc (content uniform, glossary 214, refs 46 [4-6/topic], keyboard nav, a11y, mobile clean, head perf/preconnect done). After the last 2 PS viz, the big remaining levers (10th topic, lazy-load perf) genuinely need owner steer.
+   ✅ iter 633: **cross-embedded existing viz into the last 2 no-viz PS lessons** (ps-clt→sampling-distributions; ps-binomial-poisson + ps-normal-explorer→random-variables). **PS viz coverage COMPLETE** — every PS lesson has a viz. Verified headless canvases hydrate, gate GREEN, SW →v574.
+   NOTE: non-viz surfaces all verified complete this arc (content uniform, glossary 214, refs 46 [4-6/topic], keyboard nav, a11y, mobile clean, head perf/preconnect done), AND every PS lesson now has a viz.
+   ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor. Autonomous backlog is largely exhausted; remaining work is polish/curation across other topics' viz coverage or marginal enrichment.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
    lazy-load-data perf project (owner steer). Keep varying lanes.
    One lesson/iter, hand-verify every answer key, de-skew new 8 to 2/2/2/2.
