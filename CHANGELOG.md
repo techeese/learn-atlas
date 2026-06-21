@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 667 — Connect the Bayesian module into the prereq graph (understandability / content structure)
+Final integration dimension for Module 6: the 4 Bayesian lessons weren't in the cross-topic prerequisite graph. Added 2 genuinely-accurate upstream edges — **`ps-bayesian-inference` →
+`c-definite-integral-riemann`** (the evidence `p(D)=∫p(D|θ)p(θ)dθ` and the predictive are definite integrals over θ) and **`ps-computational-bayes` → `c-definite-integral-riemann`** (the
+lesson is literally about approximating those posterior-expectation integrals when there's no closed form). Conservative: skipped the debatable downstream "ridge = MAP" edge (it would
+invert the usual teaching order, since regularization is more elementary). The Bayesian module is now fully integrated — lessons · 16 MCQ · viz · glossary · code · prereqs.
+Verified: prereqs.js parses; gate ALL GREEN (every prereq id resolves); **headless** — the new edge surfaces as an in-lesson link (ps-bayesian-inference → c-definite-integral-riemann),
+Knowledge Map renders (786 nodes); kErr=0, errs=0. SW cache `atlas-v605` → `atlas-v606`.
+
 ## iter 666 — Gate: skip data-code blocks in the render/tag lints (tooling)
 Fixed the false-positive class I hit last iteration: the gate's KaTeX `$`-parity and HTML tag-balance lints ran over the *whole* lesson content, including `<div data-code>` exercises whose
 code/expected-output legitimately contain `$` (template literals), `<`, `%`, etc. — so a code exercise with an odd number of `$` would wrongly fail the math check (forcing awkward even-`$`

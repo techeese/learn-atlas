@@ -200,5 +200,11 @@ window.PREREQS = {
   ],
   "ps-covariance-correlation": [
     "la-dot-product-norms"
+  ],
+  "ps-bayesian-inference": [
+    "c-definite-integral-riemann"
+  ],
+  "ps-computational-bayes": [
+    "c-definite-integral-riemann"
   ]
 };
