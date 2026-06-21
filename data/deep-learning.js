@@ -4682,6 +4682,162 @@
               "solution": "<strong>The central difference.</strong> Approximate $f'(x) \\approx \\tfrac{f(x+h) - f(x-h)}{2h}$ for a small $h$. With $h = 0.001$ at $x = 2$:\n$$\\frac{f(2.001) - f(1.999)}{0.002} = \\frac{4.004001 - 3.996001}{0.002} = \\frac{0.008}{0.002} = 4.000,$$\nwhich matches the analytic $f'(2) = 2x = 4$.\n<strong>Why central, not forward.</strong> The forward difference $\\tfrac{f(x+h)-f(x)}{h}$ has error $O(h)$; the <em>central</em> difference's errors cancel to leave $O(h^2)$ — far more accurate for the same $h$, so it is the standard for gradient checks.\n<strong>How it is used.</strong> In a real network you perturb one parameter by $\\pm h$, recompute the loss, and compare the numerical gradient to backprop's analytic one; a relative error below about $10^{-7}$ means the backward pass is correct. (You check only a few parameters — it costs forward passes <em>per parameter</em>, far too slow to train with.)\n<strong>The aha.</strong> Backprop is error-prone to implement but trivial to <em>verify</em>: the definition of the derivative is itself a test. Gradient checking catches sign errors and missing terms before they silently wreck training — then you turn it off and let analytic backprop do the work."
             }
           ]
+        },
+        {
+          "id": "dl-vision-transformers",
+          "title": "Vision Transformers: Images as Patches",
+          "minutes": 16,
+          "content": "<h3>1. The hook: can the transformer see?</h3>\n<p>CNNs dominated vision for a decade by baking in <b>locality</b> and <b>translation equivariance</b>. The <b>Vision Transformer (ViT)</b> threw that inductive bias away and asked: what if we just feed an image to a plain transformer? The answer reshaped the field — with enough data, attention over image patches matches or beats convolution, and it unifies vision and language under one architecture (the foundation of modern multimodal models).</p>\n<h3>2. Patchify: an image as a sequence of tokens</h3>\n<p>A transformer eats a sequence of vectors, so ViT chops the image into a grid of fixed-size <b>patches</b> (e.g. $16\\times16$ pixels), flattens each into a vector, and treats the patches as \"tokens\" — exactly like words in a sentence. A $224\\times224$ image with $16\\times16$ patches becomes a sequence of $14\\times14=196$ patch-tokens.</p>\n<h3>3. Patch embedding, position, and the [CLS] token</h3>\n<p>Each flattened patch is linearly projected to the model dimension (the <b>patch embedding</b>). Since attention is order-blind, a learned <b>position embedding</b> is added so the model knows where each patch sat. A special learnable <b>[CLS] token</b> is prepended; after the encoder, its output vector is the image representation used for classification.</p>\n<h3>4. The encoder is just a transformer</h3>\n<p>From here it is the standard transformer encoder: multi-head self-attention over the patch-tokens lets every patch attend to every other (global context from layer one — no need to stack convolutions to grow the receptive field), followed by an MLP, with residual connections and layer norm. The same blocks you learned for text, applied to image patches.</p>\n<h3>5. ViT vs CNN: bias versus data</h3>\n<p>Because ViT lacks the CNN's built-in locality, it must <em>learn</em> those visual priors from data — so on small datasets a CNN wins, but with large-scale pretraining ViT pulls ahead. Attention is also $O(n^2)$ in the number of patches, so higher resolution (more patches) gets expensive — driving hierarchical and windowed variants (e.g. Swin).</p>\n<h3>6. Counting the tokens</h3>\n<p>Patch size sets the sequence length, and thus both the compute and the spatial detail. Compute it:</p>\n<div data-code=\"javascript\" data-expected=\"patches per side: 14\nnum patches:      196\npatch vector dim: 768\nsequence length:  197 (with [CLS])\">// Vision Transformer: an image becomes a sequence of patch tokens\nconst imgSize = 224, patch = 16, channels = 3;\nconst perSide    = imgSize / patch;            // patches along each edge\nconst numPatches = perSide * perSide;          // total patch-tokens\nconst patchDim   = patch * patch * channels;   // flattened patch vector length\nconst seqLen     = numPatches + 1;             // +1 for the prepended [CLS] token\nconsole.log(\"patches per side: \" + perSide);\nconsole.log(\"num patches:      \" + numPatches);\nconsole.log(\"patch vector dim: \" + patchDim);\nconsole.log(\"sequence length:  \" + seqLen + \" (with [CLS])\");\n// Halving the patch size quadruples the tokens -- and quadruples attention's cost.</div>\n<h3>7. From ViT to multimodal: CLIP</h3>\n<p>Once images are token sequences, vision and language share a language. <b>CLIP</b> trains an image encoder (a ViT) and a text encoder together so that matching image-caption pairs land near each other in a shared embedding space (a contrastive objective). This enables <b>zero-shot</b> classification — score an image against text prompts — and underpins modern <b>multimodal LLMs</b>, which feed a vision encoder's patch embeddings into the language model's token stream.</p>\n<h3>8. Why this matters</h3>\n<p>ViT is the bridge that made AI <em>multimodal</em>: one architecture — attention over tokens — now handles text, images, audio, and video. It is why a single model can caption a photo, answer questions about a chart, or generate images from text. The transformer turned out to be a general sequence processor, not a language-only tool.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: ViT's missing inductive bias</summary>\n<p>A convolution hard-codes two priors: <b>locality</b> (nearby pixels interact) and <b>translation equivariance</b> (a feature is detected wherever it appears). ViT has neither — every patch can attend to every other from the start, so it must learn these regularities from data. That is why ViT underperforms CNNs on ImageNet-scale data but overtakes them when pretrained on far larger sets (e.g. JFT-300M): the bias a CNN assumes, ViT acquires given enough examples. Hybrid models (a few conv stems, then attention) try to get both.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: CLIP's contrastive objective</summary>\n<p>Given a batch of $N$ image-text pairs, CLIP encodes all images and all texts, then forms the $N\\times N$ matrix of cosine similarities. The training target is the identity: each image should match its own caption and no other. A symmetric cross-entropy over rows and columns pulls the $N$ correct pairs together and pushes the $N^2-N$ incorrect pairs apart. No labels are needed — just paired data scraped at scale — which is why CLIP generalizes zero-shot to categories it never explicitly trained on.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: how a multimodal LLM sees</summary>\n<p>A vision-language model (e.g. LLaVA-style) runs the image through a frozen ViT/CLIP encoder to get patch embeddings, then a small learned projection maps those into the LLM's token-embedding space. The projected image tokens are simply <em>prepended</em> to the text tokens, and the ordinary language model attends over both. So \"seeing\" reduces to: turn the image into tokens the LLM already knows how to process — the same patchify trick, one projection layer away from language.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "A Vision Transformer converts an image into transformer input by:",
+              "choices": [
+                "Splitting it into fixed-size patches and treating each as a token",
+                "Running it through many convolution layers first",
+                "Flattening the whole image into one vector",
+                "Using one token per pixel"
+              ],
+              "answer": 0,
+              "explain": "Patchify: the image becomes a sequence of patch-tokens."
+            },
+            {
+              "q": "The [CLS] token in ViT is used to:",
+              "choices": [
+                "Mark the end of the sequence",
+                "Aggregate a whole-image representation for classification",
+                "Encode the patch positions",
+                "Store the learning rate"
+              ],
+              "answer": 1,
+              "explain": "Its post-encoder output is the image embedding."
+            },
+            {
+              "q": "Why is a learned position embedding added to ViT patches?",
+              "choices": [
+                "To make patches larger",
+                "To reduce the number of patches",
+                "Self-attention is order-blind, so the model needs to know where each patch was",
+                "To replace the [CLS] token"
+              ],
+              "answer": 2,
+              "explain": "Without it, attention can't tell patch order/location."
+            },
+            {
+              "q": "Compared to a CNN, a ViT lacks the built-in inductive bias of:",
+              "choices": [
+                "Nonlinearity",
+                "Matrix multiplication",
+                "Backpropagation",
+                "Locality and translation equivariance — so it needs more data"
+              ],
+              "answer": 3,
+              "explain": "CNN priors must be learned from data by ViT."
+            },
+            {
+              "q": "Halving a ViT's patch size (same image) does what to the sequence length?",
+              "choices": [
+                "Quadruples it — and quadruples attention's cost",
+                "Halves it",
+                "Leaves it unchanged",
+                "Doubles it"
+              ],
+              "answer": 0,
+              "explain": "Patches per side doubles → tokens (squared) quadruple."
+            },
+            {
+              "q": "CLIP is trained so that:",
+              "choices": [
+                "Images are reconstructed pixel-by-pixel",
+                "Matching image-text pairs land near each other in a shared embedding space (contrastive)",
+                "Text is generated from images autoregressively",
+                "Each image gets a hard class label"
+              ],
+              "answer": 1,
+              "explain": "Contrastive alignment of image and text encoders."
+            },
+            {
+              "q": "A multimodal LLM incorporates an image by:",
+              "choices": [
+                "Retraining the LLM from scratch per image",
+                "Converting the image to a text caption first, then discarding it",
+                "Projecting a vision encoder's patch embeddings into the LLM's token space and prepending them",
+                "Using the image only as a loss signal"
+              ],
+              "answer": 2,
+              "explain": "Image tokens enter the same token stream as text."
+            },
+            {
+              "q": "On a small dataset with no pretraining, you should generally prefer:",
+              "choices": [
+                "A plain MLP on raw pixels",
+                "A ViT — it always beats CNNs",
+                "Neither can learn from images",
+                "A CNN — its inductive bias wins when data is limited"
+              ],
+              "answer": 3,
+              "explain": "ViT needs large-scale data/pretraining to overtake CNNs."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "How does a Vision Transformer turn an image into transformer input?",
+              "back": "It splits the image into fixed-size patches (e.g. $16\\times16$), flattens and linearly embeds each, and treats the patches as a sequence of tokens."
+            },
+            {
+              "front": "The [CLS] token in ViT",
+              "back": "A learnable token prepended to the patch sequence; after the encoder, its output vector serves as the whole-image representation for classification."
+            },
+            {
+              "front": "Why does ViT need more data than a CNN?",
+              "back": "It lacks the CNN's built-in locality and translation-equivariance, so it must learn those visual priors from large-scale data/pretraining."
+            },
+            {
+              "front": "How does patch size affect a ViT?",
+              "back": "Smaller patches → more tokens → finer detail but $O(n^2)$-higher attention cost; halving the patch size quadruples the sequence length."
+            },
+            {
+              "front": "What does CLIP do?",
+              "back": "Trains an image encoder (ViT) and a text encoder so matching image-text pairs align in a shared space (contrastive), enabling zero-shot classification."
+            },
+            {
+              "front": "How does a multimodal LLM \"see\"?",
+              "back": "A vision encoder's patch embeddings are projected into the LLM's token space and prepended to the text tokens; the LLM then attends over both."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "A ViT uses $32\\times32$ patches on a $256\\times256$ image. How many patch-tokens are there, and what is the sequence length with a [CLS] token?",
+              "hint": "(image/patch)^2, then +1.",
+              "solution": "Patches per side $=256/32=8$, so $8\\times8=64$ patch-tokens. With the prepended [CLS] token the sequence length is $64+1=65$."
+            },
+            {
+              "prompt": "Why is global context available in ViT's first layer, unlike a shallow CNN?",
+              "hint": "What does self-attention connect?",
+              "solution": "Self-attention lets every patch attend to every other patch directly, so information from anywhere in the image reaches any patch in a single layer. A CNN's receptive field grows only gradually with depth (each conv sees a local window), so a shallow CNN cannot relate distant regions."
+            },
+            {
+              "prompt": "Explain in one or two sentences how CLIP enables zero-shot image classification.",
+              "hint": "Shared embedding space + text prompts.",
+              "solution": "CLIP places images and text in a shared embedding space, so you classify by encoding the image and a set of text prompts (e.g. \"a photo of a {class}\") and picking the prompt whose embedding is most similar to the image's — no task-specific training needed, hence zero-shot."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Patchifying an image",
+              "body": "Take a $224\\times224$ RGB image with $16\\times16$ patches. What is the sequence the transformer receives?",
+              "solution": "$14\\times14=196$ patches, each a flattened vector of $16\\times16\\times3=768$ numbers, linearly embedded to the model dimension. Prepend a [CLS] token → a sequence of 197 tokens, plus position embeddings. From here it is an ordinary transformer encoder."
+            },
+            {
+              "title": "When to pick a CNN over a ViT",
+              "body": "You have 5,000 labeled medical images and no pretraining budget. ViT or CNN?",
+              "solution": "A CNN. With only a few thousand images and no large-scale pretraining, ViT cannot learn the visual priors (locality, translation equivariance) that the CNN gets for free, so the CNN will generalize better. ViT shines when you can pretrain on millions of images (or start from a pretrained ViT)."
+            },
+            {
+              "title": "Reading a multimodal model",
+              "body": "A vision-language model answers questions about an uploaded chart. Roughly what happens to the image?",
+              "solution": "The image is patchified and run through a vision encoder (a ViT/CLIP) to produce patch embeddings; a projection layer maps them into the LLM's token-embedding space; those image tokens are prepended to your text question, and the LLM attends over the combined sequence to answer. The chart is, in effect, translated into tokens the language model already understands."
+            }
+          ]
         }
       ]
     },

@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 716 — NEW lesson: Vision Transformers & multimodal (content)
+Filled another genuine *current* gap: DL covered CNNs and transformers separately but had no lesson bridging them — **Vision Transformers (ViT)** and **multimodal/CLIP** had zero coverage (only
+incidental mentions). Added `dl-vision-transformers` "Vision Transformers: Images as Patches" to DL M6: 8 sections (patchify → tokens · patch/position/[CLS] embeddings · the encoder is just a
+transformer · ViT-vs-CNN inductive bias · token-count scaling · **CLIP/contrastive image-text** · multimodal LLMs), a runnable **patch-count code exercise** (224² image, 16² patches → 196 patches, 768-d,
+197 tokens), **3 deep-dives** (missing inductive bias · CLIP's contrastive objective · how a multimodal LLM "sees"), **6 flashcards, 3 examples, 3 homework, 8 MCQs** (2/2/2/2, keys asserted). Site **176 lessons**.
+Verified: patch math re-derived in Node; gate ALL GREEN (ran the code; parity warning flags 8/16 — top-up queued; key-assertion caught a case mismatch pre-commit); **headless** — 11 KaTeX/0 errors/rawDollar=0, 3 deep-dives + code runner, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v652` → `atlas-v653`.
+
 ## iter 715 — Glossary: MoE & state-space terms (reference)
 Completed the MoE/SSM vocabulary in the glossary (it powers the inline hover-tooltips site-wide). Added **5 terms**: Mixture of Experts (MoE), Top-k routing, Conditional computation, State-space model
 (SSM), and Load balancing (MoE). Glossary **258 → 263**.
