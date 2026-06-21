@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 700 — Milestone step-back: clean full sweep + ML↔calculus cross-link (step-back / understandability)
+Iter-700 milestone with a due step-back. **Full 174-lesson regression sweep**: errs=0, no KaTeX errors, bad=none; Knowledge Map renders (807 nodes), the calculus optimization module is present — the
+Bayesian + Causal + Optimization arcs (iters 652–699) introduced **zero regressions**.
+**Ship (understandability):** added an accurate in-content "see also" in `ml-regularization` §5 ("Why L1 zeros weights") linking to `c-proximal-projected` — connecting lasso's *effect* to the
+soft-thresholding *mechanism* that causes it, bridging the ML lesson to its calculus foundation. (Declined to add it as a *prereq* edge — that would be backwards; regularization is taught before the
+proximal math.) Also refreshed the project memory to reflect the three completed arcs and current state (174 lessons · 120 viz · 253 glossary terms).
+Verified: data parses; gate ALL GREEN; **headless** — full sweep clean; the see-also link is present and navigates to the proximal lesson; kErr=0, errs=0. SW cache `atlas-v637` → `atlas-v638`.
+
 ## iter 699 — Proximal lesson MCQ top-up 8 → 16 → Optimization backbone COMPLETE (content / assessment)
 Brought `c-proximal-projected` to the 16-MCQ standard. Added **8 new MCQs**: box projection (clip), nonnegative-orthant projection (max(x,0)), ISTA's O(1/k) rate, the ridge (ℓ₂) prox y/(1+λ),
 which part the prox step acts on, the subgradient set of |x| at 0 ([−1,1]), FISTA acceleration, and soft-thresholding's shrink-by-λ. Balanced → **4/4/4/4**. The lesson is now at full parity, and the
