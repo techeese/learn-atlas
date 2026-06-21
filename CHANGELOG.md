@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 642 — Calculus viz coverage: cross-embed widgets into 6 no-viz lessons (visualizations / curation)
+Continued viz curation for Calculus (was 17/25): **`calc-curve-sketch`** → `c-functions-and-graphs` ("parent function zoo"); **`calc-limit-epsilon`** → `c-computing-limits`
+("indeterminate forms"); **`calc-derivative`** → `c-derivatives-special-functions`; **`calc-chain`** → `c-implicit-related-rates` at "Related rates" (related rates *are* the chain
+rule in time); **`calc-ftc-accumulation`** → `c-antiderivatives` ("Running differentiation backwards" — antiderivative as accumulation); **`calc-saddle`** → `c-partial-derivatives`
+("The Partial Derivative"). calc **17/25 → 23/25** (only `c-integration-techniques` and `c-intro-differential-equations` remain — no clean existing-viz fit).
+Verified: gate ALL GREEN; **headless** — all six lessons hydrate their embedded canvas (kErr=0 each), errs=0. SW cache `atlas-v582` → `atlas-v583`.
+
 ## iter 641 — Algorithms viz coverage: cross-embed widgets into 5 no-viz lessons (visualizations / curation)
 Continued viz curation for Algorithms (was 14/23) with strong matches at the right heading: **`algo-kruskal`** → `a-union-find-range` at "Union-Find" (Kruskal's MST *is* union-find in
 action); **`algo-recursion-tree`** → `a-backtracking-branch-bound` at "depth-first search with feasibility pruning" (backtracking explores a pruned recursion tree); **`algo-hashing`** →
