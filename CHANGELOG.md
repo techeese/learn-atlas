@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 608 — MCQ top-up runway, batch 1: it-entropy 8 → 16 (content / assessment)
+First batch of the queued MCQ-parity runway (ML/IT have 8 MCQs/lesson vs 16 elsewhere). Doing **one lesson per iteration** so every answer key can be hand-verified —
+a wrong key teaches the learner the wrong thing and `gate.js` can't detect it. Added **8 new MCQs to `it-entropy`** (now 16), each distinct from the existing eight:
+fair-die-vs-coin entropy, `log₂ n` for n uniform outcomes, "+1 bit per doubling," the `0·log0 = 0` convention, `H([0.5,0.25,0.25]) = 1.5` bits, `H ≥ 0`, skew lowers
+entropy, and `H(X,Y)=H(X)+H(Y)` for independent variables. Every numeric claim was checked in node; the new eight were balanced to **2/2/2/2**, leaving the combined 16 at
+a perfect **4/4/4/4**.
+Verified: data parses; gate ALL GREEN; an explicit **answer-key assertion confirmed all 8 new MCQs' `answer` points to the genuinely-correct choice (8/8)**; **headless**
+quiz shows "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v548` → `atlas-v549`. Runway: **1 of 17 lessons** at MCQ parity; 16 to go.
+
 ## iter 607 — Flashcard parity for the loop-built topics (content / spaced repetition)
 A parity audit showed the two loop-authored topics were under-resourced versus the original seven: Machine Learning and Information Theory had **5 flashcards & 8 MCQs**
 per lesson, while every other topic has **6 & 16**. Closed the flashcard half this iteration: authored and added a **6th flashcard to all 17 ML + IT lessons** (10 ML +

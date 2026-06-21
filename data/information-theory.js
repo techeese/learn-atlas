@@ -106,6 +106,94 @@
               ],
               "answer": 3,
               "explain": "$H\\approx 0.47$ bits vs 1 bit — more predictable means less average surprise."
+            },
+            {
+              "q": "Which has greater entropy, a fair six-sided die or a fair coin?",
+              "choices": [
+                "The die — more equally likely outcomes",
+                "The coin",
+                "They are equal",
+                "Neither has any entropy"
+              ],
+              "explain": "$H(\\text{die})=\\log_2 6\\approx 2.58$ bits exceeds $H(\\text{coin})=1$ bit: more equally likely outcomes means more uncertainty.",
+              "answer": 0
+            },
+            {
+              "q": "The entropy of $n$ equally likely outcomes is:",
+              "choices": [
+                "$n$",
+                "$\\log_2 n$",
+                "$1/n$",
+                "$n\\log_2 n$"
+              ],
+              "explain": "Uniform over $n$ outcomes: $H=-\\sum \\tfrac1n\\log_2\\tfrac1n=\\log_2 n$.",
+              "answer": 1
+            },
+            {
+              "q": "Doubling the number of equally likely outcomes changes the entropy by:",
+              "choices": [
+                "No change",
+                "It doubles",
+                "$+1$ bit",
+                "$+2$ bits"
+              ],
+              "explain": "$\\log_2(2n)-\\log_2 n=\\log_2 2=1$ bit — each doubling adds exactly one bit.",
+              "answer": 2
+            },
+            {
+              "q": "In the entropy sum, an outcome with probability 0 contributes:",
+              "choices": [
+                "Infinity",
+                "An undefined term that breaks the sum",
+                "$1$ bit",
+                "$0$"
+              ],
+              "explain": "By convention $0\\log 0=0$ (the limiting value), so impossible outcomes add nothing.",
+              "answer": 3
+            },
+            {
+              "q": "The entropy of the distribution $[0.5,\\,0.25,\\,0.25]$ is:",
+              "choices": [
+                "$1.5$ bits",
+                "$1.0$ bit",
+                "$2.0$ bits",
+                "$0.75$ bits"
+              ],
+              "explain": "$-(0.5\\log_2 0.5+0.25\\log_2 0.25+0.25\\log_2 0.25)=0.5+0.5+0.5=1.5$ bits.",
+              "answer": 0
+            },
+            {
+              "q": "Entropy $H(X)$ is always:",
+              "choices": [
+                "Between 0 and 1",
+                "Nonnegative ($\\ge 0$)",
+                "Negative",
+                "Greater than 1"
+              ],
+              "explain": "Each term $-p\\log_2 p\\ge 0$ for $p\\in[0,1]$, so $H\\ge 0$ — zero only for a certain outcome.",
+              "answer": 1
+            },
+            {
+              "q": "If a distribution becomes more skewed (further from uniform), its entropy:",
+              "choices": [
+                "Stays the same",
+                "Increases",
+                "Decreases",
+                "Becomes negative"
+              ],
+              "explain": "The uniform distribution maximizes entropy; concentrating probability lowers uncertainty, so entropy falls toward 0 as one outcome dominates.",
+              "answer": 2
+            },
+            {
+              "q": "For two independent random variables, the joint entropy $H(X,Y)$ equals:",
+              "choices": [
+                "$H(X)-H(Y)$",
+                "$H(X)\\cdot H(Y)$",
+                "$\\max(H(X),H(Y))$",
+                "$H(X)+H(Y)$"
+              ],
+              "explain": "Independence makes information additive: $H(X,Y)=H(X)+H(Y)$ (with dependence it is strictly less).",
+              "answer": 3
             }
           ],
           "flashcards": [
