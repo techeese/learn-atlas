@@ -10,7 +10,7 @@ move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration hi
 **9 topics · 174 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 122 visualizations (all embedded) · 258 glossary terms · cross-topic prereq graph · Library references · code exercises.**
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
 `node gate.js` is ALL GREEN and machine-checks content-parity (warns on any lesson below the standard). Last full 174-lesson regression sweep: iter 708, errs=0/bad=none.
-Lesson (iter 709): a fresh-eyes screenshot review caught a stale hardcoded "6 paths" on the Knowledge Map (now 9 topics) — when the site grows, grep for frozen topic counts (`6`/`six`) in UI copy; prefer `C().length`/`window.COURSES.length`.
+Lesson (iters 709–710): a fresh-eyes screenshot review caught stale "original-6-topics" literals — "6 paths" on the Knowledge Map (fixed) and `store.js` well-rounded `>=6` (→`>=3`, fixed); SKILL.md "Six topics"→"Nine" too. When the site grows, grep for frozen topic counts (`6`/`six`) in UI copy AND logic; prefer `C().length`/`window.COURSES.length`. Visual review of all major pages (dashboard/map/achievements/progress) = polished & consistent (achievements 62/62, all categorized).
 
 ## ★ OWNER DIRECTIVE (standing, 2026-06-17)
 1. **Deepen with genuinely ADVANCED lessons/modules**, not just more basics.

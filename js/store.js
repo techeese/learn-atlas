@@ -467,7 +467,7 @@
       if (nMastered >= 25) unlock("loremaster");
       if (nMastered >= 50) unlock("savant");
       if (nMastered >= 100) unlock("summit");
-      if (window.COURSES.length >= 6 && window.COURSES.every(c => topicMastery(c.id) >= 0.55)) unlock("well-rounded");
+      if (window.COURSES.length >= 3 && window.COURSES.every(c => topicMastery(c.id) >= 0.55)) unlock("well-rounded");  // every subject ≥ Proficient (floor of 3 just guards the degenerate empty/loading case — not tied to the topic count)
     }
     save();
   }

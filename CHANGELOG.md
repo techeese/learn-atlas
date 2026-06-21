@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 710 — Stamp out the last stale "original-6-topics" literal + clean visual/count audit (bug / workflow)
+Continued iter 709's fresh-eyes review across the dashboard, Knowledge Map, **Achievements**, and **Progress** pages — all polished and consistent (achievements show 62/62, all 62 categorized,
+counts dynamic; my earlier "42" read was a small-text misread). The stale-count grep is clean: README/meta/intro all correctly say "nine subjects" and list all 9.
+**Ship:** found the same stale-literal class as "6 paths" lurking in `store.js` — the **"well-rounded" achievement** was gated on `window.COURSES.length >= 6` (frozen at the original 6 topics).
+Changed to `>= 3` (a generic degenerate-case floor, NOT tied to the topic count) so it requires Proficient mastery in *every* subject and auto-adapts as topics are added — logic-preserving at 9 topics.
+Also fixed the loop's own SKILL.md header ("Six topics" → "Nine topics …") so future iterations don't operate on a stale scope.
+Verified: store.js parses; gate ALL GREEN; **headless** — Achievements renders "0 of 62 unlocked", dashboard + achievements load with kErr=0, errs=0. SW cache `atlas-v646` → `atlas-v647`.
+
 ## iter 709 — Fix stale "6 paths" on the Knowledge Map (bug / UI)
 A fresh-eyes visual review of the dashboard, Knowledge Map, and lessons (all otherwise polished) caught a real **stale-count bug**: the Knowledge Map header hardcoded "*N concepts · **6 paths**
 radiating outward*" — but the site has grown to **9 topics** (the original 6 + Machine Learning, Information Theory… 9 courses). The concept count was dynamic; the path count was a frozen literal `6`,
