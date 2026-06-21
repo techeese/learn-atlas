@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 670 — Bayesian module: deep-dives — ps-bayesian-decisions (content / understandability)
+Added 3 deep-dives to `ps-bayesian-decisions`: **why each estimator minimizes its loss** (mean↔squared via the vanishing derivative, median↔absolute, mode↔0–1), **HPD vs equal-tailed
+intervals** (HPD shortest but can be disjoint for multimodal posteriors; equal-tailed reparametrization-invariant), and **the expected value of information** (decision theory extended to
+"should I gather more data?"). 
+Verified: data parses; gate ALL GREEN; **headless** — 3 `details.deep-dive` render, expanded math renders (kErr=0, rawDollar=0), ps-ci-coverage hydrates, errs=0. SW cache `atlas-v608` → `atlas-v609`. (Last deep-dive top-up: ps-computational-bayes.)
+
 ## iter 669 — Bayesian module: deep-dives — ps-conjugate-priors (content / understandability)
 Continued the deep-dive parity fix. Added 3 to `ps-conjugate-priors`: **the exponential family behind every conjugate pair** (sufficient statistics → the "add counts" rule), **prior
 strength as an effective sample size** (Beta(50,50) ≈ 100 prior flips), and **when conjugacy breaks** (mixtures stay conjugate; otherwise MCMC/VI). Site standard is 3 deep-dives/lesson.
