@@ -265,6 +265,7 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    Viz coverage now: PS 25/25, calc 25/25, ML 10/10, IT 7/7, algos 23/23, DL 22/22 FULL; LA 18/19, LLM 18/19, RL 16/20. 121 widgets. Remaining holdouts are discussion/reference lessons.
    ✅ iter 702: **NEW viz rl-bc-compounding** (122nd — behavioral cloning's quadratic error growth εT² vs DAgger εT; RL 16/20→17/20).
    Viz: PS 25/25, calc 25/25, ML 10/10, IT 7/7, algos 23/23, DL 22/22 FULL; RL 17/20, LA 18/19, LLM 18/19. 122 widgets. Remaining no-viz = pure discussion/reference (no good viz).
+   ✅ iter 703: prereq edge **dl-gans → it-cross-entropy-kl** (GAN objective = JS divergence) — anchored an orphaned lesson into the Knowledge Map. (Declined a KL edge for dl-diffusion-models: its text is intuition-framed, no KL/ELBO.)
    ⏳ Keep rotating themes/lanes. Owner-steer big levers: 10th topic / perf refactor.
    ★ Causal arc done (iters 679–689): 3-lesson module + causal-dag viz + glossary + references, fully integrated & verified. Further causal depth optional. Next big levers still owner-steer: Optimization module / 10th topic / lazy-load perf.
    Viz coverage: PS 25/25, ML 10/10, IT 7/7, algos 23/23, DL 22/22 full; calc 24/25, LA 18/19, LLM 18/19, RL 16/20 (remaining holdouts are discussion/reference/no-fit). 118 widgets.

@@ -66,6 +66,9 @@ window.PREREQS = {
     "la-matrix-multiplication",
     "la-dot-product-norms"
   ],
+  "dl-gans": [
+    "it-cross-entropy-kl"
+  ],
   "dl-transformer-architecture": [
     "la-matrix-multiplication"
   ],

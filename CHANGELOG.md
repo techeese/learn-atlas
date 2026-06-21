@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 703 — Knowledge Map: wire GANs to KL/JS divergence (content structure)
+Varied off viz. Found `dl-gans` had **no prereq entry** at all. The lesson's objective is framed around **JS divergence** (with WGAN's Earth-Mover alternative) — which genuinely requires KL/JS divergence,
+taught in `it-cross-entropy-kl`. Added **`dl-gans → it-cross-entropy-kl`**, anchoring a previously-orphaned lesson into the cross-topic graph (and surfacing it as an in-lesson "builds on" link).
+Checked the neighbours for accuracy: `dl-autoencoders-vae` is already well-wired (Gaussian + KL + differential entropy); `dl-diffusion-models` is framed intuitively (no KL/ELBO in its text), so its
+lone `ps-normal-distribution` edge is correct as-is — declined to overstate a KL edge there.
+Verified: prereqs.js parses; gate ALL GREEN (every prereq id resolves); **headless** — the GANs lesson links to it-cross-entropy-kl, Knowledge Map renders (808 nodes), kErr=0, errs=0. SW cache `atlas-v640` → `atlas-v641`.
+
 ## iter 702 — NEW viz: compounding errors in behavioral cloning (visualizations)
 After auditing many surfaces (LA code exercise, dashboard daily picks, glossary search/filter, several hard concepts — all already complete), built the best remaining gap: RL is the least viz-covered
 topic, and behavioral cloning's signature failure (quadratic error growth) was text-only. Built the **122nd widget, `rl-bc-compounding` "Why behavioral cloning drifts: errors compound"** for
