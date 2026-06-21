@@ -6043,4 +6043,51 @@
     reset();
   });
 
+
+  /* ========================================================
+     110. LoRA: low-rank adaptation (LLMs)
+     ======================================================== */
+  register({ id: 'llm-lora', topic: 'llm', title: 'LoRA: training a low-rank update', blurb: 'Full fine-tuning retrains the whole weight matrix W (d×d parameters). LoRA freezes W and learns a small update ΔW = B·A, where B is d×r and A is r×d with the rank r tiny — so you train only 2·d·r parameters. Slide the rank r and watch the trainable parameter count (gold) shrink against the frozen matrix (grey); at realistic widths the saving is hundreds of times.' },
+  function (root) {
+    const W = 540, H = 300, cell = 10, d = 12;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let r = 2;
+    function grid(x, y, rows, cols, fill, stroke) {
+      for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) {
+        ctx.fillStyle = fill; ctx.fillRect(x + j * cell, y + i * cell, cell - 1, cell - 1);
+      }
+      ctx.strokeStyle = stroke; ctx.lineWidth = 1.2; ctx.strokeRect(x - 0.5, y - 0.5, cols * cell, rows * cell);
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const topY = 70, dPx = d * cell;
+      ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.fillStyle = p.mute;
+      // W frozen
+      const wx = 28; grid(wx, topY, d, d, p.panel2 || p.panel, p.line);
+      ctx.fillStyle = p.mute; ctx.fillText('W (frozen)', wx + dPx / 2, topY - 10); ctx.fillText('d×d = ' + (d * d), wx + dPx / 2, topY + dPx + 16);
+      // plus sign
+      ctx.fillStyle = p.ink; ctx.font = '20px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('+', wx + dPx + 18, topY + dPx / 2 + 6);
+      // B (d×r) trainable gold
+      const bx = wx + dPx + 38; grid(bx, topY, d, r, p.gold, p.gold);
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('B', bx + r * cell / 2, topY - 10); ctx.fillText('d×r', bx + r * cell / 2, topY + dPx + 16);
+      // dot
+      ctx.fillStyle = p.ink; ctx.font = '20px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('·', bx + r * cell + 12, topY + dPx / 2 + 6);
+      // A (r×d) trainable sage
+      const ax = bx + r * cell + 26; grid(ax, topY + dPx / 2 - r * cell / 2, r, d, p.sage, p.sage);
+      ctx.fillStyle = p.sage; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('A', ax + dPx / 2, topY + dPx / 2 - r * cell / 2 - 8); ctx.fillText('r×d', ax + dPx / 2, topY + dPx / 2 + r * cell / 2 + 16);
+      // arrow "= ΔW"
+      ctx.fillStyle = p.mute; ctx.textAlign = 'left'; ctx.fillText('B·A = ΔW (the update)', ax, topY + dPx + 4);
+      const full = d * d, lora = 2 * d * r, ratio = full / lora;
+      const realD = 4096, realRatio = realD / (2 * r);
+      info.innerHTML = 'rank r = <b>' + r + '</b> &middot; full fine-tune trains <b>' + full + '</b> params; LoRA trains <b style="color:' + p.gold + '">' + lora + '</b> (= 2·d·r) &rarr; <b>' + ratio.toFixed(1) + '×</b> fewer (here d=' + d + ').<br>' +
+        'At a realistic width d=' + realD + ', rank ' + r + ' trains ~<b style="color:' + p.sage + '">' + Math.round(realRatio) + '×</b> fewer weights — and each task is just one small adapter you can swap in.';
+    }
+    slider(ctl, { label: 'rank r', min: 1, max: 12, step: 1, value: r, fmt: v => String(v), onInput: v => { r = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'LoRA low-rank-adaptation visualizer. A frozen d-by-d weight matrix W (grey) sits beside a trainable low-rank update B·A, where B is d-by-r (gold) and A is r-by-d (sage). A rank slider r controls the width of B and A; the readout compares the full fine-tuning parameter count d-squared against LoRA’s 2·d·r, showing the reduction grows large as r stays small relative to d — hundreds of times fewer at realistic widths.');
+    draw();
+  });
+
 })();

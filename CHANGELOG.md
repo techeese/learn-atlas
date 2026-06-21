@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 646 — NEW viz: LoRA low-rank adaptation (visualizations)
+Built the **110th widget, `llm-lora` "LoRA: training a low-rank update"** for `l-peft-lora` (which had no viz): a frozen `d×d` weight matrix `W` (grey) beside a trainable update
+`ΔW = B·A` — `B` is `d×r` (gold), `A` is `r×d` (sage) — with a rank slider `r`. The readout contrasts full fine-tuning (`d²` params) against LoRA (`2·d·r`), and scales it to a
+realistic width (`d=4096`) to show the hundreds-fold saving. Embedded under "LoRA: Inject Trainable Low-Rank Matrices, Freeze the Rest". LLM viz coverage **15/19 → 16/19**.
+Verified: gate ALL GREEN (now **110 widgets**); **headless** — Lab + lesson canvases hydrate; at r=2 the readout shows "LoRA trains 48" (=2·12·2) and at r=1 "6.0× fewer" (144/24);
+kErr=0, errs=0; screenshot shows the frozen W grid and the thin gold/sage B·A adapters. SW cache `atlas-v585` → `atlas-v586`.
+
 ## iter 645 — NEW viz: Stack vs Queue (LIFO vs FIFO) (visualizations)
 Built the **109th widget, `algo-stack-queue` "Stack vs Queue: LIFO vs FIFO"** for `a-arrays-lists-stacks-queues` (which had no viz): the same sequence is pushed into a vertical stack
 and a horizontal queue, and **Remove** makes them diverge — the stack pops the *newest* (top, Last-In-First-Out) while the queue dequeues the *oldest* (front, First-In-First-Out), each
