@@ -848,9 +848,11 @@
 
     // prerequisite path: lessons that come before this one and aren't done yet
     const pending = learningPath(lid).filter(n => n.lesson.id !== lid && !Store.isLessonDone(n.lesson.id));
+    const firstPre = pending[0];   // earliest unmet prerequisite = the recommended starting point
     const pathBanner = pending.length ? `
       <div class="path-banner reveal">
         <div class="pb-head"><span>🧭</span> <b>${pending.length} prerequisite${pending.length === 1 ? "" : "s"}</b> build up to this concept.</div>
+        <div class="pb-next">Best place to start: <a href="#/lesson/${firstPre.course.id}/${firstPre.lesson.id}" data-route>${esc(firstPre.lesson.title)}</a><span class="pb-sub"> · ${esc(firstPre.course.title)}</span></div>
         <a class="btn" href="#/path/${course.id}/${lid}" data-route>See the full learning path →</a>
       </div>` : "";
 

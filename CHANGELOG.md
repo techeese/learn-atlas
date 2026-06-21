@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 588 — Prerequisite banner now names where to start (understandability / UX)
+When you open a lesson you're not ready for, the 🧭 banner used to only show a *count* ("4 prerequisites build up to this concept") and a link to the full path
+page — leaving "so where do I actually begin?" unanswered. It now also names the **earliest unmet prerequisite** (the foundational starting point, from the
+prereq closure sorted by global order) as a **direct one-tap link**, with its topic: *"Best place to start: Sample Spaces, Events & the Axioms of Probability ·
+Probability & Statistics."* So the learner can act immediately instead of detouring through the path page — and it surfaces the cross-topic foundations the new
+pillars depend on. Reuses the existing `learningPath()` closure; added small `.pb-next`/`.pb-sub` styles.
+Verified: `new Function` on app.js clean; gate ALL GREEN; **headless** on a fresh save opening `it-cross-entropy-kl` — banner renders, the "start here" link
+resolves to a valid `#/lesson/<course>/<lesson>` route (Sample Spaces…), **errs=0**; screenshot confirms the gold link and layout. SW cache `atlas-v528` → `atlas-v529`.
+
 ## iter 587 — Every visualization now has a screen-reader name (accessibility)
 Of the 98 viz widgets, only ~64 set a bespoke `aria-label` on their canvas — the other **33 canvases were nameless**, i.e. invisible to screen readers (a bare
 `<canvas>` announces nothing). Fixed at the single mount point: `register()` now wraps each widget so that, after it mounts, **any canvas left without an

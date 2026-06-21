@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 588: **Prerequisite banner now names where to start** (understandability/UX). The 🧭 lesson banner adds "Best place to start: <earliest unmet
+   prereq>" as a direct one-tap link (+ its topic), not just a count. Reuses learningPath() closure; new .pb-next/.pb-sub CSS. Verified: gate GREEN; headless
+   fresh-save it-cross-entropy-kl → banner names "Sample Spaces…" with a valid lesson link, errs=0; screenshot. SW →v529.
    ✅ iter 587: **Every visualization now has a screen-reader name** (accessibility). register() wraps each widget so any canvas without a bespoke aria-label gets
    role=img + a title/blurb fallback (covers current + future viz). Verified: gate GREEN; headless mounted all 98 widgets — unlabeled=0 (was 33), 33 fallback, 64
    bespoke preserved, errs=0. SW →v528.

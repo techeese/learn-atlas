@@ -885,6 +885,10 @@ body::after {
 }
 .pb-head { color: var(--ink-soft); font-size: 15px; }
 .pb-head b { color: var(--gold); }
+.pb-next { flex-basis: 100%; font-size: 14px; color: var(--ink-soft); }
+.pb-next a { color: var(--gold); font-weight: 600; }
+.pb-next a:hover { text-decoration: underline; }
+.pb-sub { color: var(--ink-mute); }
 .path-banner .btn { margin-left: auto; }
 .path-list { display: flex; flex-direction: column; gap: 8px; max-width: 720px; }
 .path-step {
