@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 721 — Dimensionality-reduction lesson: MCQ top-up 8 → 16 + prereq edge (content / structure)
+Finished integrating the new dimensionality-reduction lesson. **MCQ top-up:** added 8 distinct MCQs (PC1 = max-variance direction, orthogonal components, PCA via SVD, whitening, UMAP-vs-t-SNE, PCA's
+linear limitation, explained-variance ratio, PCA's reusable/invertible transform vs t-SNE) → **4/4/4/4**, full parity. **Knowledge Map:** added the accurate prereq edge **`ml-dimensionality-reduction →
+la-low-rank-pca, la-eigenvalues-eigenvectors`** — wiring the ML technique to its linear-algebra math foundation. All **177 lessons at standard**.
+Verified: data + prereqs parse; gate ALL GREEN with **no parity warning** (every prereq id resolves); **headless** — quiz "Question 1 of 16", 4 choices; the lesson surfaces the la-low-rank-pca prereq link; kErr=0, errs=0. SW cache `atlas-v657` → `atlas-v658`.
+
 ## iter 720 — NEW lesson: Dimensionality Reduction (PCA, t-SNE, UMAP) (content)
 ML's "Unsupervised Learning" module had clustering (k-means) but **no dimensionality reduction** — t-SNE/UMAP absent, PCA only in linear algebra (the math), not as an ML technique. Added
 `ml-dimensionality-reduction` "Dimensionality Reduction: PCA, t-SNE & UMAP" to ML M4: 8 sections (curse of dimensionality · the manifold idea · PCA + embedded `la-pca` viz · explained-variance · PCA in

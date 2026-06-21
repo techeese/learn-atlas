@@ -23,6 +23,10 @@ window.PREREQS = {
     "la-dot-product-norms",
     "c-duality-kkt"
   ],
+  "ml-dimensionality-reduction": [
+    "la-low-rank-pca",
+    "la-eigenvalues-eigenvectors"
+  ],
   "ml-naive-bayes": [
     "ps-conditional-independence-bayes"
   ],

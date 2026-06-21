@@ -2076,6 +2076,94 @@
               ],
               "answer": 3,
               "explain": "PCA is the optimal linear compression = linear autoencoder."
+            },
+            {
+              "q": "PCA's first principal component is:",
+              "choices": [
+                "The direction along which the data varies most",
+                "The feature with the largest name",
+                "A random direction",
+                "The class label"
+              ],
+              "answer": 0,
+              "explain": "PC1 maximizes captured variance."
+            },
+            {
+              "q": "The principal components are always:",
+              "choices": [
+                "Parallel",
+                "Mutually orthogonal",
+                "Equal in variance",
+                "Identical to the original features"
+              ],
+              "answer": 1,
+              "explain": "Each PC is orthogonal to the others."
+            },
+            {
+              "q": "In practice, PCA is computed via:",
+              "choices": [
+                "A decision tree",
+                "Gradient descent on labels",
+                "The SVD (or the eigendecomposition of the covariance matrix)",
+                "Random projection only"
+              ],
+              "answer": 2,
+              "explain": "SVD of centered data = PCA components."
+            },
+            {
+              "q": "\"Whitening\" with PCA means transforming features to be:",
+              "choices": [
+                "Sorted by name",
+                "All set to zero",
+                "Duplicated",
+                "Decorrelated and scaled to unit variance"
+              ],
+              "answer": 3,
+              "explain": "Whitening removes correlation and equalizes variance."
+            },
+            {
+              "q": "Compared to t-SNE, UMAP tends to be:",
+              "choices": [
+                "Faster and to preserve more global structure",
+                "Slower and purely local",
+                "A linear method",
+                "Identical in every way"
+              ],
+              "answer": 0,
+              "explain": "UMAP is faster and keeps more global layout."
+            },
+            {
+              "q": "PCA's key limitation is that it:",
+              "choices": [
+                "Cannot reduce dimensions",
+                "Only captures linear structure — it flattens curved manifolds",
+                "Requires labels",
+                "Is always slower than t-SNE"
+              ],
+              "answer": 1,
+              "explain": "PCA is linear; nonlinear structure needs t-SNE/UMAP."
+            },
+            {
+              "q": "The explained-variance ratio of a principal component equals:",
+              "choices": [
+                "Its index",
+                "The number of features",
+                "Its eigenvalue divided by the sum of all eigenvalues",
+                "One minus the learning rate"
+              ],
+              "answer": 2,
+              "explain": "Fraction of total variance that component captures."
+            },
+            {
+              "q": "Unlike t-SNE, PCA gives:",
+              "choices": [
+                "Class predictions",
+                "A different result every run",
+                "Only a 2-D plot",
+                "A reusable, invertible linear transform you can apply to new data"
+              ],
+              "answer": 3,
+              "explain": "PCA is a fixed linear map; t-SNE/UMAP are viz embeddings."
             }
           ],
           "flashcards": [
