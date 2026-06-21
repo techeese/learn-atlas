@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 645 — NEW viz: Stack vs Queue (LIFO vs FIFO) (visualizations)
+Built the **109th widget, `algo-stack-queue` "Stack vs Queue: LIFO vs FIFO"** for `a-arrays-lists-stacks-queues` (which had no viz): the same sequence is pushed into a vertical stack
+and a horizontal queue, and **Remove** makes them diverge — the stack pops the *newest* (top, Last-In-First-Out) while the queue dequeues the *oldest* (front, First-In-First-Out), each
+"next out" highlighted in gold. Push / Remove / Reset buttons; a readout names what each structure hands back. Embedded under "Stacks and Queues: Policies, Not New Structures". algos viz coverage **19/23 → 20/23**.
+Verified: gate ALL GREEN (now **109 widgets**); **headless** — Lab + lesson canvases hydrate; after Remove the readout shows "stack popped 3" (newest) and "queue dequeued 1" (oldest)
+— LIFO vs FIFO confirmed; kErr=0, errs=0; screenshot shows the stack pile and queue line with their next-out elements highlighted. SW cache `atlas-v584` → `atlas-v585`.
+
 ## iter 644 — MCQ duplicate-choice audit (clean) + harden the gate against render-identical choices (content quality / tooling)
 Rotated off viz to a content-quality pass. Audited all **2,640 MCQs** for duplicate answer choices. Result: **0 real duplicates** — content is clean. (An initial scan flagged 3, but
 they were false positives from over-aggressive case-folding: in math, case is significant — `F(b)−F(a)` (antiderivative) ≠ `f(b)−f(a)` (function), and Big-`O`/`Ω` ≠ little-`o`/`ω`. A

@@ -5992,4 +5992,55 @@
     draw();
   });
 
+
+  /* ========================================================
+     109. Stack vs Queue: LIFO vs FIFO (Algorithms)
+     ======================================================== */
+  register({ id: 'algo-stack-queue', topic: 'algorithms', title: 'Stack vs Queue: LIFO vs FIFO', blurb: 'A stack and a queue are the same boxes under two different removal policies. Push the SAME sequence into both, then Remove: the stack hands back the most-recent item (Last-In-First-Out, like a stack of plates), while the queue hands back the oldest (First-In-First-Out, like a line at a counter). Watch the two diverge.' },
+  function (root) {
+    const W = 540, H = 290;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let stack = [], queue = [], n = 0, lastOut = null;
+    function reset() { stack = []; queue = []; n = 0; lastOut = null; [1, 2, 3].forEach(() => { n++; stack.push(n); queue.push(n); }); draw(); }
+    function push() { n++; stack.push(n); queue.push(n); lastOut = null; draw(); }
+    function remove() { if (!stack.length) { draw(); return; } const s = stack.pop(); const q = queue.shift(); lastOut = { s: s, q: q }; draw(); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const bw = 64, bh = 30, midX = W / 2;
+      // ---- STACK (left): vertical pile, top at top ----
+      ctx.fillStyle = p.ink; ctx.font = '14px ' + (cssVar('--font-disp') || 'serif'); ctx.textAlign = 'center';
+      ctx.fillText('Stack — LIFO', 130, 26);
+      const sx = 130 - bw / 2, baseY = H - 40;
+      stack.forEach((v, i) => {
+        const y = baseY - (i + 1) * (bh + 4);
+        ctx.fillStyle = p.panel; ctx.strokeStyle = (i === stack.length - 1) ? p.gold : p.line; ctx.lineWidth = (i === stack.length - 1) ? 2 : 1;
+        ctx.fillRect(sx, y, bw, bh); ctx.strokeRect(sx, y, bw, bh);
+        ctx.fillStyle = p.ink; ctx.font = '13px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText(v, 130, y + bh / 2 + 4);
+      });
+      if (stack.length) { ctx.fillStyle = p.gold; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('↑ top (next out)', 130, baseY - stack.length * (bh + 4) - 4); }
+      // ---- QUEUE (right): horizontal, front at left ----
+      ctx.fillStyle = p.ink; ctx.font = '14px ' + (cssVar('--font-disp') || 'serif'); ctx.fillText('Queue — FIFO', midX + 135, 26);
+      const qy = H / 2 - bh / 2 + 6, qx0 = midX + 24;
+      queue.forEach((v, i) => {
+        const x = qx0 + i * (52);
+        ctx.fillStyle = p.panel; ctx.strokeStyle = (i === 0) ? p.gold : p.line; ctx.lineWidth = (i === 0) ? 2 : 1;
+        ctx.fillRect(x, qy, 48, bh); ctx.strokeRect(x, qy, 48, bh);
+        ctx.fillStyle = p.ink; ctx.font = '13px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.fillText(v, x + 24, qy + bh / 2 + 4);
+      });
+      if (queue.length) { ctx.fillStyle = p.gold; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'left'; ctx.fillText('↑ front (next out)', qx0, qy + bh + 16); ctx.textAlign = 'right'; ctx.fillStyle = p.mute; ctx.fillText('back ↑', qx0 + queue.length * 52 - 4, qy - 6); }
+      ctx.textAlign = 'left';
+      const peekS = stack.length ? stack[stack.length - 1] : '—', peekQ = queue.length ? queue[0] : '—';
+      info.innerHTML = (lastOut ? 'Removed: stack popped <b style="color:' + p.gold + '">' + lastOut.s + '</b> (newest), queue dequeued <b style="color:' + p.gold + '">' + lastOut.q + '</b> (oldest).<br>' : 'Same items pushed into both. ') +
+        'Next out → stack: <b>' + peekS + '</b> · queue: <b>' + peekQ + '</b>. ' + (stack.length ? '' : 'Both empty — Reset to refill.');
+    }
+    button(ctl, 'Push', push);
+    button(ctl, 'Remove', remove);
+    button(ctl, 'Reset', reset);
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Stack-versus-queue visualizer. The same numbers are pushed into a vertical stack (left) and a horizontal queue (right). Pressing Remove pops the stack’s top element (the most recently added, Last-In-First-Out) and dequeues the queue’s front element (the oldest, First-In-First-Out), so the two structures return items in opposite orders.');
+    reset();
+  });
+
 })();
