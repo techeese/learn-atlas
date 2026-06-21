@@ -5506,6 +5506,94 @@
               ],
               "answer": 3,
               "explain": "Credible intervals make a direct probability statement about $\\theta$ given the data; confidence intervals describe the long-run procedure."
+            },
+            {
+              "q": "The posterior median is the estimate that minimizes expected:",
+              "choices": [
+                "Absolute error $|\\hat\\theta-\\theta|$",
+                "Squared error",
+                "0–1 loss",
+                "Prior variance"
+              ],
+              "answer": 0,
+              "explain": "Median ↔ absolute-error loss; it is robust to skew. (Mean ↔ squared, mode ↔ 0–1.)"
+            },
+            {
+              "q": "The posterior mode (MAP) is the estimate that minimizes expected:",
+              "choices": [
+                "Absolute error",
+                "0–1 loss (right vs wrong)",
+                "Squared error",
+                "KL divergence"
+              ],
+              "answer": 1,
+              "explain": "The mode minimizes 0–1 loss — the most probable single value."
+            },
+            {
+              "q": "For a symmetric posterior, the mean, median, and mode:",
+              "choices": [
+                "Are undefined",
+                "Are all different",
+                "All coincide",
+                "Equal the prior"
+              ],
+              "answer": 2,
+              "explain": "Symmetry collapses the three estimators to the same point; they separate only under skew."
+            },
+            {
+              "q": "With a uniform prior, after 3 heads in 3 flips, the predicted probability the next flip is heads is:",
+              "choices": [
+                "$0.5$",
+                "$1$",
+                "$\\frac{3}{4}$",
+                "$\\frac{4}{5}=0.8$"
+              ],
+              "answer": 3,
+              "explain": "Laplace's rule $\\frac{k+1}{n+2}=\\frac{4}{5}=0.8$ — strong but not certain."
+            },
+            {
+              "q": "An equal-tailed 95% credible interval is formed by:",
+              "choices": [
+                "Cutting 2.5% of posterior probability from each tail",
+                "Taking the shortest possible interval",
+                "Centering on the MLE",
+                "Using the prior quantiles"
+              ],
+              "answer": 0,
+              "explain": "Equal-tailed leaves 2.5% in each tail; the HPD instead minimizes length."
+            },
+            {
+              "q": "Laplace's rule of succession never predicts a probability of:",
+              "choices": [
+                "$0.5$",
+                "Exactly 0 or exactly 1",
+                "More than $0.9$",
+                "Less than $0.1$"
+              ],
+              "answer": 1,
+              "explain": "$\\frac{k+1}{n+2}$ stays strictly between 0 and 1 — the posterior keeps some belief on every value."
+            },
+            {
+              "q": "A feature helps with posterior probability $0.7$; shipping a harmful one costs 10, withholding a helpful one costs 3. The expected-loss decision is to:",
+              "choices": [
+                "Flip a coin",
+                "Ship (it probably helps)",
+                "Withhold (expected loss $2.1\\lt 3.0$)",
+                "Ship only if probability exceeds 0.5"
+              ],
+              "answer": 2,
+              "explain": "E[ship]$=0.3\\times 10=3.0$; E[withhold]$=0.7\\times 3=2.1$. Lower expected loss wins despite \"probably helps\"."
+            },
+            {
+              "q": "When outcome costs are asymmetric, the optimal Bayesian action:",
+              "choices": [
+                "Equals the MLE",
+                "Is always the most-probable outcome",
+                "Ignores the posterior",
+                "Can differ from the single most-probable outcome"
+              ],
+              "answer": 3,
+              "explain": "Decision theory weighs probability × cost, so a likely-but-cheap outcome can lose to an unlikely-but-expensive one."
             }
           ],
           "flashcards": [

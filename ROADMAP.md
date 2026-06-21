@@ -228,8 +228,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 653: **Module 6 lesson 2 `ps-conjugate-priors`** (Beta–Binomial, Gaussian–Gaussian precision-weighting, Gamma–Poisson, exp-family; ps-normal-explorer viz; 8 MCQ). 167 lessons. gate GREEN, headless 32 katex/0 err, SW →v593.
    ✅ iter 654: **Module 6 lesson 3 `ps-bayesian-decisions`** (estimators↔losses, HPD vs equal-tailed, posterior predictive/Laplace, decision theory; ps-ci-coverage viz; 8 MCQ). 168 lessons. gate GREEN, headless 22 katex/0 err, SW →v594.
    ✅ iter 655: **Module 6 lesson 4 `ps-computational-bayes`** (Monte Carlo, MCMC/Metropolis–Hastings, diagnostics, VI/ELBO; ps-lln viz; 8 MCQ). **Module 6 "Bayesian Inference" lessons COMPLETE (4 lessons).** 169 lessons. gate GREEN, headless 24 katex/0 err, SW →v595.
-   ✅ iter 656: top ps-bayesian-inference 8→16. ✅ iter 657: top ps-conjugate-priors 8→16 (4/4/4/4). gate GREEN, headless 16, SW →v597.
-   ⏳ MODULE 6 MCQ top-ups remaining (8→16): ps-bayesian-decisions, ps-computational-bayes (one per iter, hand-verify keys). Optional new Beta prior→posterior update viz. Then PS = full 6-module course at standard.
+   ✅ iters 656–658: top ps-bayesian-inference, ps-conjugate-priors, ps-bayesian-decisions 8→16 (each 4/4/4/4). gate GREEN, SW →v598.
+   ⏳ MODULE 6 last top-up: ps-computational-bayes 8→16. Then all 4 Bayesian lessons at 16 MCQ → PS is a full 6-module course at the site standard. Optional new Beta prior→posterior update viz.
    ★ Bigger levers still benefit from OWNER STEER: a brand-new 10th topic, or the lazy-load-data perf refactor. But Module 6 is genuine high-value autonomous work to pursue meanwhile.
    ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
