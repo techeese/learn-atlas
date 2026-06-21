@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 596 — Library reading list for Information Theory (reference / content)
+The 9th topic was built lesson-by-lesson but never got a **Library** entry — every other topic (and "general") had a curated further-reading list; Information Theory
+had none. Added **6 canonical references**: Shannon's founding 1948 paper, MacKay's *Information Theory, Inference, and Learning Algorithms* (the ML-flavored free
+book), Cover & Thomas's standard textbook, Chris Olah's *Visual Information Theory* essay, 3Blue1Brown's Hamming-codes video, and MIT OCW's 6.441 course — a paper /
+two books / article / video / course spread matching the other topics. Now all nine topics have a complete Library shelf.
+Verified: `new Function` on references.js clean; gate ALL GREEN; **headless** — the Library renders the Information Theory section with the new entries (Shannon, MacKay
+present), total references **43 → 49**, **errs=0**. SW cache `atlas-v536` → `atlas-v537`.
+
 ## iter 595 — Glossary → visualization bridge (understandability / discoverability)
 Glossary cards already linked each term to the lesson that teaches it; now terms whose lesson has a matching visualization also get a **"🎛️ Visualize"** chip that
 jumps straight to that widget in the Lab — so a learner can go from a definition to *seeing the concept animated* in one tap (e.g. Derivative → the derivative viz,

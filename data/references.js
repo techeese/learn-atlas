@@ -63,5 +63,13 @@ window.REFERENCES = {
     { title: "Distill.pub", by: "Distill", kind: "interactive", url: "https://distill.pub/", note: "Interactive, visual ML explanations." },
     { title: "Brilliant", by: "Brilliant.org", kind: "interactive", url: "https://brilliant.org/", note: "Active, problem-first courses across math & CS." },
     { title: "Khan Academy", by: "Khan Academy", kind: "course", url: "https://www.khanacademy.org/", note: "Free foundations for any prerequisite gap." }
+  ],
+  "information-theory": [
+    { title: "A Mathematical Theory of Communication", by: "Claude E. Shannon (1948)", kind: "paper", url: "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf", note: "The founding paper of the whole field — entropy, source coding, channel capacity, all introduced at once. Remarkably readable." },
+    { title: "Information Theory, Inference, and Learning Algorithms", by: "David MacKay", kind: "book", url: "https://www.inference.org.uk/mackay/itila/", note: "The best ML-flavored treatment (free PDF) — links coding, inference, and learning. Start here." },
+    { title: "Elements of Information Theory", by: "Cover & Thomas", kind: "book", url: "https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X", note: "The standard rigorous textbook — entropy, mutual information, rate-distortion, channel capacity." },
+    { title: "Visual Information Theory", by: "Chris Olah", kind: "article", url: "https://colah.github.io/posts/2015-09-Visual-Information/", note: "A gorgeous visual essay on entropy, cross-entropy, and KL divergence — pairs perfectly with this topic's lessons." },
+    { title: "How to send a self-correcting message (Hamming codes)", by: "3Blue1Brown", kind: "video", url: "https://www.youtube.com/watch?v=X8jsijhllIA", note: "Error-correcting codes built up visually from scratch — the channel-coding side of Shannon's theory." },
+    { title: "6.441 Information Theory", by: "MIT OpenCourseWare", kind: "course", url: "https://ocw.mit.edu/courses/6-441-information-theory-spring-2016/", note: "A full graduate course with notes — the rigorous path once the intuition lands." }
   ]
 };
