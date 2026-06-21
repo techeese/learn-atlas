@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 577: **Integrate Information Theory — cross-topic prereqs + glossary** (workflow/reference). +5 prereq edges (it-entropy→ps-random-variables;
+   ml-decision-trees/dl-loss-functions/ml-logistic-regression/l-pretraining→IT), +8 IT glossary terms (self-info, mutual info, bit, nat, info gain, max-ent,
+   channel capacity, source coding). Verified: gate GREEN; headless connections both directions, glossary renders, map ok, errs=0. SW →v517.
    ✅ iter 576: **Information Theory module 2 — Cross-Entropy & KL Divergence** (content/depth). New lesson it-cross-entropy-kl (full parity: 8-section + KL
    code→0.74 + 3 dd + 8 MCQ 2/2/2/2 + 5 cards + 3 ex + 3 hw); reuses dl-cross-entropy + dl-kl-divergence viz by id. Verified: gate GREEN (9 topics·160 lessons·
    109 code); headless nDD=3, 2 viz canvases hydrate, code 0.74, kErr=0/errs=0. SW →v516. IT now 2 lessons; modules 3–6 queued.

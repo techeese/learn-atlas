@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 577 — Integrate Information Theory: cross-topic prereqs + glossary (workflow / reference)
+Wired the new pillar into the rest of the codex (the same integration the ML topic got at iters 528/533) — so it stops being a graph orphan and starts
+surfacing in "Builds on / Leads to", the Knowledge Map, learning paths, inline tooltips, the Glossary page, and ⌘K.
+- **+5 prereq edges** (50→64... now 49 keys): `it-entropy → ps-random-variables-distributions`; and IT now appears as a *foundation* — `ml-decision-trees →
+  it-entropy` (information gain), `dl-loss-functions / ml-logistic-regression / l-pretraining-objective-data → it-cross-entropy-kl` (cross-entropy = their loss).
+- **+8 glossary terms** (information-theory): Self-information, Mutual information, Bit, Nat, Information gain, Maximum entropy principle, Channel capacity,
+  Source coding theorem. (Entropy/Cross-entropy/KL/Perplexity already existed under other topics — not duplicated.)
+Verified: gate ALL GREEN (every prereq id resolves); **headless** — it-entropy shows Builds-on `ps-random-variables-distributions` + Leads-to `ml-decision-trees`;
+`dl-loss-functions` and `ml-decision-trees` now show IT under Builds-on; the new glossary terms render (`kErr=0`); the Knowledge Map renders; errs=0. SW cache `atlas-v516` → `atlas-v517`.
+
 ## iter 576 — Information Theory module 2: Cross-Entropy & KL Divergence (content / depth)
 Built out the new pillar with its highest-value second lesson — **Cross-Entropy and KL Divergence** (new module "Comparing Distributions"), the bridge from
 entropy to every ML loss. Full parity: 8-section lecture (cross-entropy `H(p,q)=−Σp log q`, the `H(p,q)≥H(p)` floor, KL as the *extra bits*

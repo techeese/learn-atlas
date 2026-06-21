@@ -5,14 +5,16 @@ window.PREREQS = {
     "la-dot-product-norms"
   ],
   "ml-decision-trees": [
-    "a-trees-heaps"
+    "a-trees-heaps",
+    "it-entropy"
   ],
   "ml-linear-regression": [
     "la-projection-least-squares",
     "c-gradient-directional"
   ],
   "ml-logistic-regression": [
-    "dl-loss-functions"
+    "dl-loss-functions",
+    "it-cross-entropy-kl"
   ],
   "ml-regularization": [
     "la-dot-product-norms"
@@ -34,7 +36,8 @@ window.PREREQS = {
     "la-dot-product-norms"
   ],
   "dl-loss-functions": [
-    "c-derivatives-special-functions"
+    "c-derivatives-special-functions",
+    "it-cross-entropy-kl"
   ],
   "dl-backpropagation": [
     "c-chain-rule",
@@ -138,7 +141,8 @@ window.PREREQS = {
     "ps-random-variables-distributions"
   ],
   "l-pretraining-objective-data": [
-    "dl-loss-functions"
+    "dl-loss-functions",
+    "it-cross-entropy-kl"
   ],
   "dl-rnn-lstm-gru": [
     "c-chain-rule"
@@ -160,5 +164,8 @@ window.PREREQS = {
   ],
   "a-algorithms-for-ml": [
     "la-matrix-multiplication"
+  ],
+  "it-entropy": [
+    "ps-random-variables-distributions"
   ]
 };
