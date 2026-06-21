@@ -138,6 +138,11 @@
             {
               "q": "For a fixed dataset, describe what happens to the training error and the test (generalization) behavior of kNN as k goes from 1 to n. Why is k=1 not the best choice despite its zero training error?",
               "solution": "At k=1 the training error is 0 (each point is its own nearest neighbor) but the model overfits noise — high variance, jagged boundary, poor test accuracy. As k grows, the boundary smooths: variance drops and bias rises. At k=n every prediction is the global majority class (maximally biased). The best test accuracy is at an intermediate k found by cross-validation; k=1's zero training error is a classic overfitting trap, not a sign of a good model."
+            },
+            {
+              "prompt": "Training points: $A=(1,1)$ labeled blue and $B=(4,4)$ labeled red. Classify the query $(2,2)$ with 1-NN under Euclidean distance.",
+              "hint": "Compute the distance from the query to each point; the nearest one's label wins.",
+              "solution": "$d(q,A)=\\sqrt{(2-1)^2+(2-1)^2}=\\sqrt 2\\approx 1.41$; $d(q,B)=\\sqrt{(2-4)^2+(2-4)^2}=\\sqrt 8\\approx 2.83$. The query is closer to $A$, so 1-NN predicts <b>blue</b>."
             }
           ],
           "examples": [
@@ -283,6 +288,11 @@
             {
               "q": "Explain why a decision tree achieving 100% accuracy on its training set is usually a warning sign rather than a success, and name two ways to address it.",
               "solution": "100% training accuracy almost always means the tree grew deep enough to isolate individual points into pure leaves — it has memorized the training data including its noise, so it will generalize poorly (high variance, classic overfitting). The training score is not evidence of a good model; the test/validation score is. Fix it by restraining capacity: pre-pruning (cap max depth, require a minimum number of samples per leaf or to split, or a minimum impurity decrease) and/or post-pruning (grow fully, then cost-complexity-prune back branches that don't help a validation set). Ensembling (random forests) also reduces the variance."
+            },
+            {
+              "prompt": "A node contains 6 positive and 2 negative examples. Compute its Gini impurity.",
+              "hint": "Gini $=1-\\sum_i p_i^2$ over the class fractions.",
+              "solution": "The fractions are $p_+=6/8=0.75$ and $p_-=0.25$. Gini $=1-(0.75^2+0.25^2)=1-(0.5625+0.0625)=\\mathbf{0.375}$. (A pure node scores 0; the worst 50/50 split scores 0.5.)"
             }
           ],
           "examples": [
@@ -434,6 +444,11 @@
             {
               "q": "A colleague brags that adding 20 more features raised their model's R² from 0.72 to 0.95 on the training set, calling it a big improvement. Why should you be skeptical, and what would convince you?",
               "solution": "Training R² never decreases when you add features — even pure-noise features can only increase it, because the model has more freedom to fit the training points (including their noise). So a jump from 0.72 to 0.95 on training data is expected and not evidence of a better model; it may well be overfitting. What would convince you is improvement on held-out/test data (or cross-validated R²): if test R² also rose, the extra features carry real signal; if test R² fell or barely moved while training R² soared, it's overfitting. Adjusted R² or a validation curve would also help."
+            },
+            {
+              "prompt": "Fit $y=wx$ (through the origin, no intercept) by least squares to the points $(1,2),(2,4),(3,5)$. Use $w=\\dfrac{\\sum x_i y_i}{\\sum x_i^2}$.",
+              "hint": "Sum the products $x_i y_i$ on top and the squares $x_i^2$ on the bottom.",
+              "solution": "$\\sum x_i y_i = 1\\cdot 2 + 2\\cdot 4 + 3\\cdot 5 = 25$; $\\sum x_i^2 = 1+4+9 = 14$. So $w = 25/14 \\approx \\mathbf{1.79}$ — the slope that minimizes the squared residuals."
             }
           ],
           "examples": [
@@ -579,6 +594,11 @@
             {
               "q": "In a logistic model for loan default, the coefficient on 'number of prior late payments' is 0.69. Interpret this on the odds scale, and explain why the effect on the probability is not constant per unit even though the effect on log-odds is.",
               "solution": "On the log-odds scale the effect is constant: each additional late payment adds 0.69 to the log-odds of default. On the odds scale, e^(0.69) ≈ 2, so each late payment multiplies the odds of default by about 2 (doubles them), holding other features fixed. The effect on the PROBABILITY is not constant because the sigmoid is nonlinear: doubling the odds moves the probability a lot in the middle (e.g. 0.5 → 0.67) but very little near the extremes (0.99 → 0.995). Equal additive steps in log-odds (or equal multiplicative steps in odds) produce unequal changes in probability — the S-curve flattens at both ends."
+            },
+            {
+              "prompt": "A logistic model outputs a linear score $z=1.5$. Compute the predicted probability $\\sigma(z)$ and the predicted class at threshold $0.5$.",
+              "hint": "$\\sigma(z)=\\dfrac{1}{1+e^{-z}}$.",
+              "solution": "$\\sigma(1.5)=\\dfrac{1}{1+e^{-1.5}}=\\dfrac{1}{1+0.223}\\approx \\mathbf{0.82}$. Since $0.82 \\ge 0.5$, predict the <b>positive</b> class."
             }
           ],
           "examples": [
@@ -724,6 +744,11 @@
             {
               "q": "A model has two nearly identical (highly correlated) features that are both predictive. Describe how lasso vs ridge would treat them, and which you'd prefer if you want stable coefficients.",
               "solution": "Lasso tends to pick ONE of the correlated pair and drive the other's weight to exactly zero — and which one it keeps can flip with small data changes, so the coefficients are unstable and the 'selection' is somewhat arbitrary. Ridge keeps BOTH and splits the weight between them (roughly halving each), giving smoother, more stable coefficients across resamples. If you want stable coefficients with correlated predictors, prefer ridge (or elastic net, which groups correlated features while still allowing some sparsity). If you specifically want a sparse model and don't mind which of the pair is kept, lasso is fine."
+            },
+            {
+              "prompt": "Ridge regression adds the penalty $\\lambda\\sum_j w_j^2$. For weights $w=(3,4)$ and $\\lambda=0.1$, compute the penalty term.",
+              "hint": "Square each weight, sum, then multiply by $\\lambda$.",
+              "solution": "$\\lambda(3^2+4^2)=0.1\\,(9+16)=0.1\\cdot 25=\\mathbf{2.5}$. This is added to the data loss; larger $\\lambda$ pulls the weights harder toward zero."
             }
           ],
           "examples": [
@@ -875,6 +900,11 @@
             {
               "q": "Explain the effect of increasing the soft-margin C from very small to very large, in terms of bias, variance, and overfitting. When would you prefer a small C?",
               "solution": "Small C: violations are cheap, so the SVM prioritizes a WIDE margin even if several points fall inside it or are misclassified — this is a simpler, smoother boundary with higher bias and lower variance (more regularized). Large C: violations are heavily penalized, so the SVM contorts the boundary to classify (almost) every training point correctly — a narrow margin, low bias, high variance, prone to overfitting noise. You'd prefer a small C when the data is noisy or overlapping, or when you have limited data and want a robust, generalizing boundary rather than one that chases every training point. The right C is found by cross-validation."
+            },
+            {
+              "prompt": "A trained linear SVM has $w=(0,2)$ and $b=-1$. Compute the margin width $2/\\lVert w\\rVert$, and classify the point $x=(5,1)$ by the sign of $w^\\top x+b$.",
+              "hint": "$\\lVert w\\rVert=\\sqrt{0^2+2^2}$; the class is the sign of $w^\\top x+b$.",
+              "solution": "$\\lVert w\\rVert = 2$, so the margin width is $2/2=\\mathbf{1}$. Score: $w^\\top x+b = 0\\cdot 5 + 2\\cdot 1 - 1 = 1 > 0$, so $x$ is the <b>positive</b> class."
             }
           ],
           "examples": [
@@ -1020,6 +1050,11 @@
             {
               "q": "In the same filter, a new email contains the word 'blockchain', which never appeared in any spam training email, so P('blockchain'|spam) was estimated as 0. Explain what goes wrong and how Laplace smoothing fixes it.",
               "solution": "Because Naive Bayes multiplies the per-word probabilities, a single P('blockchain'|spam)=0 makes the entire spam score 0 — no matter how spammy every other word is, the email can never be classified spam. One unseen word vetoes the prediction, which is brittle and almost certainly wrong. Laplace (add-one) smoothing fixes it by adding 1 to every count (and adding the vocabulary size to the denominator), so an unseen word gets a small nonzero probability instead of 0. The product is then dominated by the informative words rather than nuked by one zero. Smoothing is essential whenever the feature space is large enough that test data will contain values unseen in training."
+            },
+            {
+              "prompt": "Given $P(\\text{spam})=0.3$, $P(\\text{win}\\mid\\text{spam})=0.6$, and $P(\\text{win}\\mid\\text{ham})=0.1$, an email contains \"win\". Compute $P(\\text{spam}\\mid\\text{win})$.",
+              "hint": "Bayes: posterior $\\propto$ prior $\\times$ likelihood; normalize over spam and ham.",
+              "solution": "Spam score $=0.3\\cdot 0.6=0.18$; ham score $=0.7\\cdot 0.1=0.07$. Normalizing: $P(\\text{spam}\\mid\\text{win})=\\dfrac{0.18}{0.18+0.07}=\\dfrac{0.18}{0.25}=\\mathbf{0.72}$."
             }
           ],
           "examples": [
@@ -1171,6 +1206,11 @@
             {
               "q": "A colleague clusters customers on (age in years, annual income in dollars) with k-means and finds the clusters split almost entirely by income, ignoring age. Explain why, and how to fix it.",
               "solution": "k-means uses Euclidean distance, which sums squared differences across features. Income spans a huge numeric range (tens of thousands) while age spans tens, so income differences dominate the distance almost completely — two customers' 'closeness' is decided by income alone, and age barely registers. The clusters therefore split on income. Fix: standardize each feature first (subtract mean, divide by standard deviation) so age and income contribute on equal footing; then re-run k-means. This is the same scaling requirement as kNN and SVMs — any distance-based method needs comparable feature scales."
+            },
+            {
+              "prompt": "A cluster contains the two points $(0,0)$ and $(0,2)$. Compute its centroid and its within-cluster sum of squares (WCSS).",
+              "hint": "The centroid is the mean; WCSS sums the squared distances from each point to it.",
+              "solution": "Centroid $=(0,1)$ (the mean of the coordinates). Squared distances: $(0-0)^2+(0-1)^2=1$ and $(0-0)^2+(2-1)^2=1$. WCSS $=1+1=\\mathbf{2}$ — the quantity k-means drives down."
             }
           ],
           "examples": [
@@ -1322,6 +1362,11 @@
             {
               "q": "Explain, using the variance-of-an-average idea, why a random forest can outperform plain bagged trees even with the same number of trees.",
               "solution": "Averaging n models with per-model variance σ² and pairwise correlation ρ gives ensemble variance ρσ² + (1−ρ)σ²/n. With many trees the second term shrinks, so the floor is ρσ² — set entirely by how correlated the trees are. Plain bagged trees are quite correlated (if one feature is strongly predictive, every tree splits on it early and they look alike), so ρ is high and the variance floor stays high — adding trees helps little past a point. A random forest forces each split to consider only a random subset of features, which makes the trees genuinely different (lower ρ), pushing the ρσ² floor down. Same number of trees, but lower correlation → lower ensemble variance → better generalization. Decorrelation is the mechanism."
+            },
+            {
+              "prompt": "Three independent classifiers each have error rate $0.2$. Combined by majority vote, the ensemble is wrong only if at least 2 of the 3 err. Compute the ensemble's error rate.",
+              "hint": "Sum the binomial probabilities of exactly 2 and exactly 3 errors.",
+              "solution": "$\\binom{3}{2}(0.2)^2(0.8)+\\binom{3}{3}(0.2)^3 = 3\\cdot 0.04\\cdot 0.8 + 0.008 = 0.096+0.008=\\mathbf{0.104}$. The vote (0.104) beats any single model (0.2) — the wisdom of (uncorrelated) crowds."
             }
           ],
           "examples": [
@@ -1473,6 +1518,11 @@
             {
               "q": "You build a fraud detector on data that is 0.5% fraud, and it achieves 99.5% accuracy. Explain why this number is uninformative and which metrics you'd report instead, with the reasoning about error costs.",
               "solution": "With only 0.5% fraud, a trivial model that labels EVERY transaction 'legit' already scores 99.5% accuracy while catching zero fraud — so 99.5% tells you nothing about whether fraud is detected. Accuracy is dominated by the overwhelming majority class. Report instead: recall (of actual fraud, how much is caught — missing fraud is costly), precision (of flagged transactions, how many are truly fraud — false alarms annoy customers and cost investigation time), the confusion matrix (to see the actual counts), and ROC-AUC or, better on heavy imbalance, the precision-recall curve / average precision. On error costs: a missed fraud (false negative) is usually far more expensive than a false alarm (false positive), so you'd typically favor higher recall, lowering the decision threshold and accepting some precision loss — then quantify the trade-off with the PR curve and pick the operating point that matches the business cost ratio."
+            },
+            {
+              "prompt": "A classifier yields TP$=40$, FP$=10$, FN$=20$, TN$=30$. Compute its precision, recall, and accuracy.",
+              "hint": "Precision $=\\frac{TP}{TP+FP}$, recall $=\\frac{TP}{TP+FN}$, accuracy $=\\frac{TP+TN}{\\text{all}}$.",
+              "solution": "Precision $=\\dfrac{40}{40+10}=\\mathbf{0.80}$; recall $=\\dfrac{40}{40+20}\\approx \\mathbf{0.67}$; accuracy $=\\dfrac{40+30}{100}=\\mathbf{0.70}$. Precision and recall expose the FN/FP trade that accuracy alone hides."
             }
           ],
           "examples": [

@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 573 — ML homework-parity: a third problem for every ML lesson (content / examples)
+The Machine Learning lessons carried only **2 homework problems** each (avg 2.0) while all seven original topics sit at 3.0. Added a third — a tight,
+computed problem with hint + worked solution — to **all 10 ML lessons** (ML homework avg 2.0 → 3.0):
+1-NN classify · Gini impurity (0.375) · least-squares slope (25/14) · sigmoid prob (0.82) · ridge penalty (2.5) · SVM margin & sign · Naive-Bayes posterior
+(0.72) · k-Means WCSS (2) · ensemble majority-vote error (0.104) · precision/recall/accuracy (0.80/0.67/0.70). Every answer hand-verified.
+Appended via the byte-stable path with the full render-guard (math/tag/`%`/`&` checks).
+Verified: gate ALL GREEN; **0 ML lessons under 3 homework**; **headless** — the Homework tab shows **3** per lesson, solutions reveal with the right numbers
+(0.104, 0.72 confirmed), **kErr=0, errs=0**. SW cache `atlas-v512` → `atlas-v513`.
+
 ## iter 572 — Three more third dives: ε–δ · subgradients · reward shaping (content / depth)
 Three more third deep-dives (calc/calc/RL):
 - **c-limits-intuition** → **the ε–δ definition**: "approaches" as a precise promise — for any `ε>0` a `δ>0` makes `|f(x)−L|<ε` — turning calculus from plausible to provable.
