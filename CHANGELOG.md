@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 651 — Glossary: 6 missing high-frequency ML/DL terms (reference)
+Audited ~60 important terms against the glossary and found six genuinely missing (most candidates were already present or covered by a related entry). Added concise, accurate
+definitions: **Principal Component Analysis (PCA)**, **Bagging**, **Dimensionality reduction**, **Curse of dimensionality**, **Feature scaling**, and **Stochastic gradient descent
+(SGD)** — all frequently referenced across the ML/DL lessons. Glossary **214 → 220**. (The PCA card's viz-chip didn't auto-trigger — the iter-595 bridge matches a glossary term to a
+*lesson title*, and none is titled "Principal Component Analysis" — but the definition stands on its own.)
+Verified: `new Function` on glossary.js clean; gate ALL GREEN; **headless** — all six new terms render in the glossary (6/6), kErr=0, errs=0. SW cache `atlas-v590` → `atlas-v591`.
+
 ## iter 650 — "Visualization of the day" dashboard spotlight + step-back regression sweep (new functionality / step-back)
 Round-number step-back. **Full 165-lesson regression sweep**: errs=0, no KaTeX errors, bad=none — the 6 new viz + cross-embeds since iter 640 introduced zero regressions.
 **Ship (new functionality / discoverability):** the codex now has **113 visualizations**, but most are buried inside lessons. Added a **"Visualization of the day"** card to the dashboard —
