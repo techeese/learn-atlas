@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 572: **3 more 3rd dives: ε–δ · subgradients · reward shaping** (content/depth). c-limits-intuition (ε–δ definition), c-differentiation-rules
+   (non-differentiable points/subgradients), rl-practical-rl (reward shaping/potential-based). Verified: gate GREEN; dump-dom each nDD=3, kErr=0/rawD=0/errs=0.
+   SW →v512. (2dd: 4 left — calc 2, RL 2.)
    ✅ iter 571: **More hands-on code: determinant · exponential CDF · empirical risk** (new functionality/code). la-matrices-as-transformations (2x2 det→10),
    ps-uniform-exponential (exp CDF→0.632), dl-ml-recap-and-the-learning-problem (accuracy→0.50). Verified: gate RUNS them → 107 code-exercises, ALL GREEN;
    headless each Runs OK, errs=0. SW →v511.

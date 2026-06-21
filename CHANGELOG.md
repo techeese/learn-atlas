@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 572 — Three more third dives: ε–δ · subgradients · reward shaping (content / depth)
+Three more third deep-dives (calc/calc/RL):
+- **c-limits-intuition** → **the ε–δ definition**: "approaches" as a precise promise — for any `ε>0` a `δ>0` makes `|f(x)−L|<ε` — turning calculus from plausible to provable.
+- **c-differentiation-rules** → **where derivatives don't exist**: corners/cusps/vertical tangents/jumps; ReLU and the L1 penalty have kinks, so ML uses a
+  **subgradient** (any slope between the one-sided ones).
+- **rl-practical-rl** → **reward shaping & how it backfires**: shaped rewards speed learning but invite gaming (circling for power-ups); potential-based shaping
+  `F=γΦ(s')−Φ(s)` provably preserves the optimal policy.
+Injected via the byte-stable append-dd path (added a raw-`&` guard); ε–δ inequalities written with spaced `<` (safe pre-typeset).
+Verified: gate ALL GREEN; **via `--dump-dom`** all three open with **nDD=3**, **kErr=0, rawDollar=0, errs=0**. SW cache `atlas-v511` → `atlas-v512`.
+
 ## iter 571 — More hands-on code: determinant · exponential CDF · empirical risk (new functionality / code)
 Three more runnable exercises in previously code-free lessons, each matching its content:
 - **la-matrices-as-transformations** → **2×2 determinant** `ad−bc` → `10` (the factor by which the transformation scales areas).
