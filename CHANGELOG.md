@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 643 — NEW viz: slope fields & Euler's method (visualizations)
+With the curation frontier exhausted, shifted to **new builds** for genuinely-uncovered concepts. Built the **108th widget, `calc-slope-field` "Slope fields: seeing the solutions of an
+ODE"** for `c-intro-differential-equations` (which had no viz): a grid of slope segments for `dy/dx = f(x,y)`, with a gold solution curve traced from an adjustable initial height `y₀`
+by **Euler's method**, and a selector between `dy/dx = x − y` (solutions pulled to the line `y = x−1`) and the logistic `dy/dx = y(1−y)` (S-curves leveling at the stable equilibrium
+`y = 1`, drawn as a dashed line). Embedded under the lesson's "Slope fields" section. calc viz coverage now **24/25**.
+Verified: gate ALL GREEN (now **108 widgets**); **headless** — Lab + lesson canvases hydrate; the equation selector switches the field (default shows the `x−y` note; logistic shows
+the `equilibrium y=1` annotation); kErr=0, errs=0; screenshot confirms the slope segments, equilibrium line, and gold Euler curve. SW cache `atlas-v583` → `atlas-v584`.
+
 ## iter 642 — Calculus viz coverage: cross-embed widgets into 6 no-viz lessons (visualizations / curation)
 Continued viz curation for Calculus (was 17/25): **`calc-curve-sketch`** → `c-functions-and-graphs` ("parent function zoo"); **`calc-limit-epsilon`** → `c-computing-limits`
 ("indeterminate forms"); **`calc-derivative`** → `c-derivatives-special-functions`; **`calc-chain`** → `c-implicit-related-rates` at "Related rates" (related rates *are* the chain

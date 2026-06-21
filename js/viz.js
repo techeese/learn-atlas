@@ -5934,4 +5934,62 @@
     draw();
   });
 
+
+  /* ========================================================
+     108. Slope fields & Euler's method (Calculus)
+     ======================================================== */
+  register({ id: 'calc-slope-field', topic: 'calculus', title: 'Slope fields: seeing the solutions of an ODE', blurb: 'A first-order ODE dy/dx = f(x,y) assigns a slope to every point in the plane — draw a tiny segment with that slope everywhere and you get a slope field. A solution is any curve that flows tangent to the field; pick a starting height y₀ and follow the arrows (Euler’s method) to trace one out. Switch between dy/dx = x − y (a slanted attractor) and the logistic dy/dx = y(1−y) (S-curves leveling off at y=1).' },
+  function (root) {
+    const W = 540, H = 340, padL = 36, padR = 16, padT = 14, padB = 30;
+    const X0 = 0, X1 = 6, Y0 = -0.5, Y1 = 2.5;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let ode = 0, y0 = 0.2;
+    const F = [(x, y) => x - y, (x, y) => 1.2 * y * (1 - y)];
+    const NAME = ['dy/dx = x − y', 'dy/dx = y(1 − y)'];
+    const X = x => padL + (x - X0) / (X1 - X0) * (W - padL - padR);
+    const Y = y => (H - padB) - (y - Y0) / (Y1 - Y0) * (H - padT - padB);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const f = F[ode];
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(X(X0), Y(0)); ctx.lineTo(X(X1), Y(0)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(X(0), Y(Y0)); ctx.lineTo(X(0), Y(Y1)); ctx.stroke();
+      // slope field
+      const L = 11;
+      for (let gx = 0; gx <= 12; gx++) for (let gy = 0; gy <= 12; gy++) {
+        const x = X0 + gx / 12 * (X1 - X0), y = Y0 + gy / 12 * (Y1 - Y0);
+        const s = f(x, y); const ang = Math.atan(s * ((H - padT - padB) / (Y1 - Y0)) / ((W - padL - padR) / (X1 - X0)));
+        const dx = Math.cos(ang) * L, dy = Math.sin(ang) * L;
+        ctx.strokeStyle = p.mute; ctx.globalAlpha = 0.55; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(X(x) - dx / 2, Y(y) + dy / 2); ctx.lineTo(X(x) + dx / 2, Y(y) - dy / 2); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      // logistic equilibria
+      if (ode === 1) {
+        ctx.strokeStyle = p.rust; ctx.setLineDash([3, 4]); ctx.globalAlpha = .7;
+        ctx.beginPath(); ctx.moveTo(X(X0), Y(1)); ctx.lineTo(X(X1), Y(1)); ctx.stroke();
+        ctx.setLineDash([]); ctx.globalAlpha = 1;
+        ctx.fillStyle = p.rust; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'left';
+        ctx.fillText('stable equilibrium y=1', X(0) + 6, Y(1) - 4);
+      }
+      // Euler solution from (X0, y0)
+      const h = 0.03; let x = X0, y = y0;
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(X(x), Y(y));
+      while (x < X1) { y += f(x, y) * h; x += h; ctx.lineTo(X(x), Y(Math.max(Y0 - 1, Math.min(Y1 + 1, y)))); }
+      ctx.stroke();
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(X(X0), Y(y0), 4, 0, 7); ctx.fill();
+      info.innerHTML = '<b>' + NAME[ode] + '</b> &middot; start y₀ = <b style="color:' + p.gold + '">' + y0.toFixed(2) + '</b>. ' +
+        'The grey segments are the slope field; the gold curve follows them from the dot (Euler’s method). ' +
+        (ode === 1 ? 'Every start drifts to the stable equilibrium y=1 (and away from y=0).' : 'Every start is pulled toward the slanted line y = x − 1.');
+    }
+    slider(ctl, { label: 'equation', min: 0, max: 1, step: 1, value: ode, fmt: v => NAME[v], onInput: v => { ode = v; draw(); } });
+    slider(ctl, { label: 'initial y₀', min: Y0, max: Y1, step: 0.1, value: y0, fmt: v => v.toFixed(1), onInput: v => { y0 = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Slope-field visualizer for a first-order differential equation. Short grey segments show the slope dy/dx = f(x,y) at every grid point; a gold curve starts at a chosen height y-naught on the left edge and follows the field rightward by Euler’s method, tracing a solution. A selector switches between dy/dx = x minus y, whose solutions are pulled toward the line y = x minus 1, and the logistic dy/dx = y times (1 minus y), whose solutions level off at the stable equilibrium y = 1.');
+    draw();
+  });
+
 })();

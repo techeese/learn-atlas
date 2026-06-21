@@ -218,7 +218,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 640: **step-back full sweep (165 lessons, errs=0, bad=none)** + **DL viz curation** (dl-overfitting/dl-convolution/llm-transformer-block/llm-scaling → 4 lessons; 17/22→21/22). gate GREEN, SW →v581.
    ✅ iter 641: **algos viz curation** — kruskal/recursion-tree/hashing/sorting/kmeans → 5 lessons (14/23→19/23). gate GREEN, headless hydrate, SW →v582.
    ✅ iter 642: **calc viz curation** — curve-sketch/limit-epsilon/derivative/chain/ftc/saddle → 6 lessons (17/25→23/25). gate GREEN, headless hydrate, SW →v583.
-   ⏳ Viz-curation: per-topic coverage now strong everywhere (PS 20/20, ML 10/10, DL 21/22, LA 18/19, calc 23/25, algos 19/23, LLM 15/19, RL 14/20, IT 7/7). Remaining are mostly NO-FIT lessons (need NEW viz) or RL/LLM tail. Curation frontier nearly exhausted → next viz work is NEW builds for genuinely-uncovered concepts (e.g. arrays/stacks-queues, network-flow, ODEs, RL value-approximation).
+   ✅ iter 643: **NEW viz calc-slope-field** (108th — slope field + Euler, x−y & logistic; calc 23/25→24/25). gate GREEN, headless selector works, screenshot, SW →v584.
+   ⏳ NEW-viz build queue (no existing fit): algos a-network-flow (max-flow/min-cut), a-arrays-lists-stacks-queues (push/pop animation), a-np-completeness, a-string-algorithms (KMP/trie); calc c-integration-techniques; RL tail (value-approximation, model-based, offline, imitation); LLM tail (optimization-stability, peft-lora, hallucination-eval, safety). Build one per iter where high-value & visual.
    ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
    lazy-load-data perf project (owner steer). Keep varying lanes.
