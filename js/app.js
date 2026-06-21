@@ -496,6 +496,13 @@
   // ============================================================
   //  VIEWS
   // ============================================================
+  // compact estimated-time formatter ("≈ 4h 20m") from a minute count
+  function fmtTime(mins) {
+    const h = Math.floor(mins / 60), m = mins % 60;
+    if (h === 0) return "≈ " + m + "m";
+    if (m === 0) return "≈ " + h + "h";
+    return "≈ " + h + "h " + m + "m";
+  }
   function viewDashboard() {
     const st = Store.stats();
     const lv = Store.levelInfo();
@@ -597,13 +604,15 @@
       </div>` : "";
     const cards = C().map(c => {
       const p = Store.courseProgress(c.id);
-      const lc = flatLessons(c).length;
+      const fl = flatLessons(c), lc = fl.length;
+      const totalMin = fl.reduce((a, l) => a + (l.minutes || 10), 0);
       const tm = Store.topicMastery(c.id), lvl = Store.masteryLevel(tm);   // avg retained mastery (decays), distinct from completion
       return `
       <div class="course-card reveal" style="--c:${c.color}" data-go="#/course/${c.id}">
         <div class="cc-icon">${esc(c.icon)}</div>
         <h3>${esc(c.title)}</h3>
         <div class="blurb">${esc(c.blurb)}</div>
+        <div class="cc-time" title="Estimated total reading time for this topic">⏱ ${fmtTime(totalMin)} · ${lc} lessons</div>
         <div class="cc-stats">
           <div class="cc-foot" title="Lessons completed">
             <div class="mini-bar"><div class="mini-fill" style="width:${p.pct}%;background:${c.color}"></div></div>
@@ -775,7 +784,7 @@
       <div class="page-head reveal" style="display:flex;align-items:center;gap:20px">
         <div class="cc-icon" style="--c:${c.color};width:64px;height:64px;font-size:32px;color:${c.color};border-color:${c.color};background:color-mix(in srgb, ${c.color} 12%, transparent)">${esc(c.icon)}</div>
         <div>
-          <div class="eyebrow" style="color:${c.color}">${p.done} of ${p.total} lessons · ${p.pct}% complete</div>
+          <div class="eyebrow" style="color:${c.color}">${p.done} of ${p.total} lessons · ${p.pct}% complete · ${fmtTime(flatC.reduce((a, l) => a + (l.minutes || 10), 0))}</div>
           <h2 style="font-size:38px">${esc(c.title)}</h2>
         </div>
       </div>

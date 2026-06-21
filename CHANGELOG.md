@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 591 — Estimated time per topic on the dashboard & course pages (UI/UX)
+Self-paced learners deciding what to start want "how long is this course?" — the topic cards showed progress and mastery but no time signal. Added an **estimated
+total reading time** (summed from each lesson's `minutes`) in two places: the dashboard **topic cards** now show `⏱ ≈ 5h 26m · 19 lessons`, and the **course-page
+header** eyebrow now reads `… · ≈ 6h 34m` alongside the lesson count and completion. A small shared `fmtTime()` formatter renders it as `≈ Xh Ym`. Sensible totals
+across the codex (Calculus ≈ 6h 34m, Algorithms ≈ 6h 19m, Information Theory ≈ 2h 4m) — a quick scope cue that helps plan a study session, distinct from the
+existing *remaining*-time on the start button.
+Verified: `new Function` on app.js clean; gate ALL GREEN; **headless** — all **9 topic cards** render the time line (first: `⏱ ≈ 5h 26m · 19 lessons`), the
+calculus course eyebrow shows `0 of 25 lessons · 0% complete · ≈ 6h 34m`, **errs=0**; screenshots confirm placement and styling. SW cache `atlas-v531` → `atlas-v532`.
+
 ## iter 590 — Step-back: full 9-topic audit (clean) + BSC capacity viz (visualizations)
 **Round-number step-back.** Two health sweeps + reflection, paired with a real ship.
 - **Runtime sweep**: all **165 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **138 non-lesson routes** (incl. 9 cheatsheets, 9
