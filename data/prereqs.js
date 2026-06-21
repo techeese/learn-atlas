@@ -76,6 +76,12 @@ window.PREREQS = {
     "c-improper-integrals",
     "ps-law-of-large-numbers"
   ],
+  "rl-value-iteration": [
+    "a-dynamic-programming"
+  ],
+  "rl-policy-iteration": [
+    "a-dynamic-programming"
+  ],
   "rl-value-approximation": [
     "dl-gradient-descent-and-optimizers",
     "c-gradient-directional"

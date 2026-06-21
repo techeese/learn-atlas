@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 704 — Knowledge Map: connect RL planning to dynamic programming (content structure)
+Audited all 106 prereq-less lessons: LA/calc/algos (65) are intentionally unwired foundations; the real gap was in applied topics. **Value iteration and policy iteration literally *are* dynamic
+programming** (both lessons call the Bellman update "the bedrock under all of dynamic programming"), yet neither linked to `a-dynamic-programming`. Added **`rl-value-iteration → a-dynamic-programming`**
+and **`rl-policy-iteration → a-dynamic-programming`** — connecting RL's planning algorithms to their algorithmic foundation in the Knowledge Map. Declined `rl-td-learning` (it *contrasts* with DP as the
+model-free alternative, not building on it — accuracy discipline).
+Verified: prereqs.js parses; gate ALL GREEN (every prereq id resolves); **headless** — rl-value-iteration links to a-dynamic-programming, Knowledge Map renders (810 nodes), kErr=0, errs=0. SW cache `atlas-v641` → `atlas-v642`.
+
 ## iter 703 — Knowledge Map: wire GANs to KL/JS divergence (content structure)
 Varied off viz. Found `dl-gans` had **no prereq entry** at all. The lesson's objective is framed around **JS divergence** (with WGAN's Earth-Mover alternative) — which genuinely requires KL/JS divergence,
 taught in `it-cross-entropy-kl`. Added **`dl-gans → it-cross-entropy-kl`**, anchoring a previously-orphaned lesson into the cross-topic graph (and surfacing it as an in-lesson "builds on" link).
