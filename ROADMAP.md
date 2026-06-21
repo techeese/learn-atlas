@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 600: **MILESTONE step-back: full audit + fix 53 blank example bodies** (bug/content). Sweeps: 165 lessons + 140 routes all green (errs=0/kErr=0/0 bad);
+   every lesson 3 dd, 0 under-parity. Bug: examples use two schemas (body vs scenario); renderer ignored `scenario` → all 53 ML+IT examples rendered blank. Fixed
+   renderer (body||scenario||prompt) + gate now guards example bodies. Verified: gate GREEN; headless example bodies render (empty 3→0), errs=0. SW →v540.
    ✅ iter 599: **Fix ML homework rendering "undefined" + 20 missing hints** (bug/content). ML's original homework used key `q`; renderer reads `h.prompt` → 20
    problems (first 2 of every ML lesson) showed "undefined". Fixed: renderer `h.prompt||h.q`; normalized 20 q→prompt + authored 20 hints; gate now errors on a
    missing prompt. Verified: gate GREEN, 0 homework missing prompt/hint; headless ml-knn 0 "undefined" (was 2), 3 Hint buttons, errs=0. SW →v539.

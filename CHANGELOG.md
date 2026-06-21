@@ -2,6 +2,23 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 600 — Milestone step-back: full audit + fix 53 blank example bodies (bug / content)
+**Iteration 600.** Two full health sweeps + a coverage audit, paired with a real bug fix the audit surfaced.
+- **Sweeps**: all **165 lessons** (examples + homework tabs opened, dds expanded) → errs=0, kErr=0, 0 bad, **0 "undefined" homework**; all **140 non-lesson routes**
+  → errs=0, kErr=0. **305 routes green.**
+- **Coverage**: every lesson at exactly 3 deep-dives (495), **0 under-parity**. 9 topics · 165 lessons · 2504 MCQs · 974 cards · 496 examples · 495 homework · 118 code
+  · 100 viz · 192 glossary · 50 prereq-keys · 10 reference shelves. MCQ/flashcard schemas uniform.
+**The bug (found by the audit, fixed):** examples come in two schemas — the original six use `{title, body, solution}` but the ML + IT topics use `{title, scenario,
+solution}`. The renderer read `e.body || e.prompt` but **not `e.scenario`**, so **all 53 ML + IT examples rendered with a blank body** — learners saw only a title
+and a "Show working" button, with the actual problem statement missing. It slipped past prior smokes because the body was *empty* (not "undefined"/an error). Fixed:
+renderer now reads `e.body || e.scenario || e.prompt`, and `node gate.js` now **errors if any example lacks a body/scenario** (paired with iter-599's homework-prompt
+guard, both schema-drift classes are now caught).
+**Reflection (590→600):** completed + fully integrated the 9th pillar (Information Theory — lessons, 4 native viz, glossary, Library, prereq graph), built cross-asset
+bridges (glossary→viz, time estimates), hardened the gate (python exercises, homework-prompt + example-body guards), a real perf fix (shell-only SW precache), and
+fixed two latent schema-drift rendering bugs in the newer topics (homework "undefined" → real prompts + 20 hints; 53 blank example bodies). Zero red gates shipped.
+Verified: gate ALL GREEN; **headless** — it-entropy / ml-knn / it-source-coding example bodies now render (empty count **0**, was 3 each; 88–158 chars), kErr=0, errs=0.
+SW cache `atlas-v539` → `atlas-v540`.
+
 ## iter 599 — Fix ML homework rendering "undefined" + add 20 missing hints (bug / content)
 **Real bug found & fixed.** The Machine Learning topic's original homework used the key `q` for the prompt, but the homework renderer reads `h.prompt` — so the
 **first two problems of all 10 ML lessons (20 in total) displayed the literal word "undefined"** to the learner instead of the question. (Later iter-573 additions used

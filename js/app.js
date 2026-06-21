@@ -1512,7 +1512,7 @@
     body.innerHTML = `<div class="hw reveal">` + ex.map((e, i) => `
       <div class="hw-item">
         <div class="hw-num">EXAMPLE ${i + 1}${e.title ? " · " + esc(e.title) : ""}</div>
-        <div class="prose" style="max-width:none">${e.body || e.prompt || ""}</div>
+        <div class="prose" style="max-width:none">${e.body || e.scenario || e.prompt || ""}</div>
         ${e.solution ? `<div class="hw-reveal"><button class="btn" data-ex="${i}">Show working</button></div><div id="ex-${i}"></div>` : ""}
       </div>`).join("") + `</div>`;
     ex.forEach((e, i) => {

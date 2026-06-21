@@ -95,7 +95,7 @@ C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
   if (nq >= 8) { const maxPos = Math.max(0, ...Object.values(ansPos)); if (maxPos / nq > 0.7) skew.push(l.id); }   // egregious correct-answer-position bias
   (l.flashcards || []).forEach((f, i) => { cards++; if (!f.front || !f.back) errors.push("flashcard missing front/back: " + l.id + " #" + i); checkRender(f.front, l.id + " card#" + i + ".front"); checkRender(f.back, l.id + " card#" + i + ".back"); });
   (l.homework || []).forEach((h, i) => { hw++; if (h) { if (!((h.prompt || h.q || "").trim())) errors.push("homework missing prompt in " + l.id + " hw#" + i); Object.keys(h).forEach(k => checkRender(h[k], l.id + " hw#" + i + "." + k)); } });
-  (l.examples || []).forEach((e, i) => { ex++; if (e) Object.keys(e).forEach(k => checkRender(e[k], l.id + " ex#" + i + "." + k)); });
+  (l.examples || []).forEach((e, i) => { ex++; if (e) { if (!((e.body || e.scenario || e.prompt || "").trim())) errors.push("example missing body/scenario in " + l.id + " ex#" + i); Object.keys(e).forEach(k => checkRender(e[k], l.id + " ex#" + i + "." + k)); } });
   ((l.content || "").match(/data-viz="([^"]+)"/g) || []).forEach(s => { const id = s.slice(10, -1); if (!vizIds.has(id)) errors.push("unknown data-viz id '" + id + "' in " + l.id); });
   // run every embedded JavaScript code-exercise and confirm its output equals data-expected (catches a wrong
   // expected string — which silently shows the learner "✗ Doesn't match" on correct code). Python is collected
