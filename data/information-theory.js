@@ -798,6 +798,164 @@
           ]
         }
       ]
+    },
+    {
+      "id": "it-in-ml",
+      "title": "Information in Machine Learning",
+      "lessons": [
+        {
+          "id": "it-information-in-ml",
+          "title": "Information Theory in Machine Learning",
+          "minutes": 18,
+          "content": "<h3>1. The hook: the hidden language of ML</h3>\n<p>By now the surprise should be how <em>often</em> information theory has shown up in the rest of this codex — usually unnamed. The classification loss, the VAE's regularizer, the RLHF leash, decision-tree splits, a language model's score: all are entropy, cross-entropy, KL, or mutual information in disguise. This capstone collects those threads so you can see the single language underneath modern machine learning.</p>\n<h3>2. Cross-entropy: the default loss</h3>\n<p>Almost every classifier and language model is trained by minimizing <strong>cross-entropy</strong> $H(p,q)=-\\sum_x p(x)\\log q(x)$ between the true labels $p$ and the model's predictions $q$. For a one-hot label this is just $-\\log q(\\text{true})$, the log-loss. As we saw, minimizing it equals minimizing $D_{\\mathrm{KL}}(p\\|q)$ (since $H(p)$ is fixed) and is identical to <strong>maximum-likelihood estimation</strong>. The softmax-plus-cross-entropy gradient is the elegant $q-p$. Information theory is not adjacent to training — it <em>is</em> the objective.</p>\n<h3>3. KL divergence as a regularizer</h3>\n<p>KL divergence shows up whenever you want a learned distribution to stay near a reference. In a <strong>variational autoencoder</strong>, the loss is reconstruction error plus $D_{\\mathrm{KL}}\\big(q(z\\mid x)\\,\\|\\,p(z)\\big)$, pulling the encoder's latent posterior toward a standard-normal prior. In <strong>RLHF</strong>, a KL penalty keeps the fine-tuned policy close to the reference model so it doesn't drift into reward-gaming gibberish. In <strong>variational inference</strong> generally, fitting an approximate posterior <em>is</em> minimizing a KL. The same \"extra bits\" quantity becomes a knob for \"stay close to what you trust.\"</p>\n<h3>4. Compute it yourself</h3>\n<p><b>Try it in code.</b> The VAE's KL term has a clean closed form against a standard-normal prior: $\\mathrm{KL}\\big(\\mathcal{N}(\\mu,\\sigma^2)\\,\\|\\,\\mathcal{N}(0,1)\\big)=\\tfrac12(\\mu^2+\\sigma^2-1-\\ln\\sigma^2)$. For $\\mu=1,\\sigma=1$ it is 0.5 — the cost of sitting one unit off the prior's center.</p>\n<div data-code=\"javascript\" data-expected=\"0.50\">// VAE KL term: KL( N(mu, sigma^2) || N(0,1) ) = 0.5 * (mu^2 + sigma^2 - 1 - ln(sigma^2))\nconst mu = 1, sigma = 1;\nconst kl = 0.5 * (mu * mu + sigma * sigma - 1 - Math.log(sigma * sigma));\nconsole.log(kl.toFixed(2));</div>\n<h3>5. Mutual information objectives</h3>\n<p>Mutual information powers a whole family of methods. <strong>Decision trees</strong> split on the feature of highest information gain — the MI between feature and label. <strong>Feature selection</strong> ranks inputs by their MI with the target. <strong>Contrastive learning</strong> (InfoNCE, SimCLR) trains representations by maximizing a lower bound on the MI between two views of the same datum. And the <strong>information bottleneck</strong> frames a good representation $T$ of input $X$ as one that maximizes $I(T;Y)$ (keep what predicts the label) while minimizing $I(T;X)$ (throw away the rest).</p>\n<h3>6. Perplexity: a model's surprise, exponentiated</h3>\n<p>A language model's headline metric, <strong>perplexity</strong>, is pure information theory: it is $2^{H(p,q)}$ (or $e^{H}$ in nats) — the cross-entropy exponentiated. It reads as the model's \"effective branching factor\": a perplexity of 8 means the model is as uncertain as if it were choosing uniformly among 8 equally-likely next tokens. Lower cross-entropy → lower perplexity → a model less surprised by real text (and, equivalently, a better compressor of it).</p>\n<h3>7. Minimum description length and Occam's razor</h3>\n<p>Information theory even formalizes <em>simplicity</em>. The <strong>minimum description length (MDL)</strong> principle says the best model is the one that minimizes the total bits to describe <em>the model plus the data given the model</em>: $L(\\text{model})+L(\\text{data}\\mid\\text{model})$. A more complex model fits the data in fewer bits but costs more to describe; the sweet spot is Occam's razor made quantitative — and it connects directly to regularization (a penalty on model complexity) and to the Bayesian \"Occam factor.\" Compression and learning are, once more, the same pursuit.</p>\n<h3>8. The big picture</h3>\n<p>Information theory is the connective tissue of machine learning: cross-entropy is the loss (= MLE = min KL to the data), KL is the regularizer toward a prior (VAEs, RLHF, variational inference), mutual information is the objective for splits, features, and representations (trees, InfoNCE, the information bottleneck), perplexity is the headline metric, and MDL makes Occam's razor precise. Entropy started as \"average surprise\" — and ended up underpinning how every modern model is trained, measured, and regularized.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the ELBO — why the VAE loss has a KL term</summary>\n<p>The VAE wants to maximize the data likelihood $\\log p(x)$, but that integral is intractable. The trick is the <strong>evidence lower bound (ELBO)</strong>, and a KL divergence falls right out of the algebra.</p>\n<p>Introduce an approximate posterior $q(z\\mid x)$. A short derivation gives $\\log p(x) = \\mathrm{ELBO} + D_{\\mathrm{KL}}\\big(q(z\\mid x)\\,\\|\\,p(z\\mid x)\\big)$, where $$\\mathrm{ELBO} = \\mathbb{E}_{q}[\\log p(x\\mid z)] - D_{\\mathrm{KL}}\\big(q(z\\mid x)\\,\\|\\,p(z)\\big).$$ Since the leftover KL is $\\ge 0$, the ELBO is a <em>lower bound</em> on $\\log p(x)$, and maximizing it both fits the data and tightens the bound. Read the two ELBO terms: the first is <em>reconstruction</em> (decode $z$ back to $x$); the second is the <em>regularizer</em> pulling the latent code toward the prior. That second term is exactly the KL you compute in the exercise above.</p>\n<p>The \"aha\": the VAE's mysterious \"reconstruction + KL\" loss is not ad hoc — it is the ELBO, a variational lower bound on the log-likelihood, with the KL term measuring the gap between your approximate and true posteriors. Information theory turns an intractable likelihood into a trainable objective.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the information bottleneck view of deep learning</summary>\n<p>The <strong>information bottleneck (IB)</strong> principle (Tishby) recasts supervised learning as a compression problem. A representation $T$ of the input $X$ should keep everything relevant to the label $Y$ and discard everything else — formally, minimize $$I(T;X) - \\beta\\, I(T;Y),$$ trading off compression of the input against prediction of the label.</p>\n<p><b>A lens on neural nets.</b> The IB framing suggests deep networks learn in two phases: a fast <em>fitting</em> phase that increases $I(T;Y)$ (grab the label-relevant signal), then a slower <em>compression</em> phase that decreases $I(T;X)$ (forget nuisance details of the input), squeezing the representation toward the minimal sufficient statistic. Whether this picture holds universally is debated, but it gives a principled, information-theoretic story for <em>why</em> good representations generalize: they have thrown away input information that doesn't help predict $Y$.</p>\n<p>The \"aha\": \"learn a good representation\" can be stated entirely in bits — keep $I(T;Y)$, shed $I(T;X)$. The information bottleneck makes generalization a compression phenomenon, linking deep learning back to Shannon's rate-distortion ideas.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: MDL, Occam's razor, and regularization</summary>\n<p>Why prefer a simpler model? <strong>Minimum description length</strong> answers in bits: the best hypothesis minimizes $L(H) + L(D\\mid H)$ — the bits to state the model <em>plus</em> the bits to encode the data using it. This is Occam's razor made quantitative, with a built-in defense against overfitting.</p>\n<p><b>The trade.</b> A more complex model compresses the data better (small $L(D\\mid H)$) but costs more to describe (large $L(H)$); an overly simple model is cheap to state but fits poorly. The minimum of the sum is the right complexity — no separate validation set required, in principle. And it connects straight to the rest of ML: $L(D\\mid H)$ is essentially the negative log-likelihood (cross-entropy), and $L(H)$ is a complexity penalty — i.e. <em>regularization</em>. A Gaussian prior on weights corresponds to an L2 penalty; a sparse prior to L1. The Bayesian \"Occam factor\" is the same idea: marginal likelihood automatically penalizes models that can explain too much.</p>\n<p>The \"aha\": \"the simplest model that fits\" is not a vague heuristic but a coding problem — minimize total description length. Regularization, the bias-variance trade, and Bayesian model selection are all MDL wearing different clothes, and all are information theory: learning is compression.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "The standard classification / language-model loss is:",
+              "choices": [
+                "Cross-entropy between labels and predictions",
+                "Mutual information",
+                "Channel capacity",
+                "Joint entropy"
+              ],
+              "answer": 0,
+              "explain": "Cross-entropy $H(p,q)$; minimizing it equals MLE and minimizing KL to the data."
+            },
+            {
+              "q": "In a VAE, the KL term in the loss does what?",
+              "choices": [
+                "Pulls the latent posterior toward the prior",
+                "Maximizes reconstruction error",
+                "Computes the channel capacity",
+                "Removes the need for a decoder"
+              ],
+              "answer": 0,
+              "explain": "$D_{\\mathrm{KL}}(q(z|x)\\|p(z))$ regularizes the encoder's posterior toward the prior."
+            },
+            {
+              "q": "A language model's perplexity equals:",
+              "choices": [
+                "Its accuracy",
+                "The number of parameters",
+                "$2^{H}$ — the cross-entropy exponentiated",
+                "The KL to a uniform model"
+              ],
+              "answer": 2,
+              "explain": "Perplexity is the exponentiated cross-entropy, the 'effective branching factor.'"
+            },
+            {
+              "q": "The information bottleneck describes a good representation $T$ as one that:",
+              "choices": [
+                "Maximizes $I(T;X)$",
+                "Has zero mutual information with everything",
+                "Maximizes $I(T;Y)$ while minimizing $I(T;X)$",
+                "Equals the input exactly"
+              ],
+              "answer": 2,
+              "explain": "Keep label-relevant info $I(T;Y)$; discard the rest $I(T;X)$ — compression that preserves prediction."
+            },
+            {
+              "q": "In RLHF, the KL penalty between the policy and the reference model:",
+              "choices": [
+                "Speeds up sampling",
+                "Increases the reward unboundedly",
+                "Replaces the reward model",
+                "Keeps the policy from drifting into reward-gaming behavior"
+              ],
+              "answer": 3,
+              "explain": "The KL leash keeps the fine-tuned policy close to the trusted reference."
+            },
+            {
+              "q": "Minimum description length says the best model minimizes:",
+              "choices": [
+                "Only the training error",
+                "The number of layers",
+                "The entropy of the labels",
+                "$L(\\text{model}) + L(\\text{data}\\mid\\text{model})$ in bits"
+              ],
+              "answer": 3,
+              "explain": "Total bits to describe the model plus the data given it — Occam's razor as compression."
+            },
+            {
+              "q": "Contrastive methods like InfoNCE train representations by:",
+              "choices": [
+                "Minimizing entropy of the input",
+                "Maximizing a lower bound on mutual information between views",
+                "Maximizing the channel capacity",
+                "Minimizing the number of features"
+              ],
+              "answer": 1,
+              "explain": "They push up a tractable lower bound on $I$ between two augmentations of the same datum."
+            },
+            {
+              "q": "Why is minimizing cross-entropy the same as maximum likelihood?",
+              "choices": [
+                "They use different data",
+                "Average cross-entropy is the negative log-likelihood of the labels",
+                "Cross-entropy ignores the labels",
+                "It only holds for regression"
+              ],
+              "answer": 1,
+              "explain": "$-\\frac{1}{N}\\sum\\log q(y_n|x_n)$ is both the average cross-entropy and the negative average log-likelihood."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Cross-entropy in ML",
+              "back": "The default classifier/LM loss $H(p,q)$; minimizing it = MLE = minimizing $D_{\\mathrm{KL}}(p\\|q)$. Softmax+CE gradient is $q-p$."
+            },
+            {
+              "front": "KL divergence as a regularizer",
+              "back": "Pulls a learned distribution toward a reference: VAE latent→prior, RLHF policy→reference model, variational inference→true posterior."
+            },
+            {
+              "front": "Perplexity",
+              "back": "$2^{H(p,q)}$ (or $e^H$) — cross-entropy exponentiated; a model's 'effective branching factor.' Lower = less surprised, better compressor."
+            },
+            {
+              "front": "Information bottleneck",
+              "back": "A good representation $T$ maximizes $I(T;Y)$ (keep label info) while minimizing $I(T;X)$ (compress the input) — generalization as compression."
+            },
+            {
+              "front": "Minimum description length (MDL)",
+              "back": "Best model minimizes $L(\\text{model})+L(\\text{data}\\mid\\text{model})$ in bits — Occam's razor as compression; equivalent to NLL + a complexity penalty (regularization)."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Cross-entropy loss is negative log-likelihood",
+              "scenario": "A 3-class classifier predicts $q=[0.7,0.2,0.1]$; the true class is class 1 (one-hot). What is the cross-entropy loss (in nats), and how does it relate to likelihood?",
+              "solution": "For a one-hot label, $H(p,q)=-\\ln q(\\text{true})=-\\ln 0.7\\approx \\mathbf{0.357}$ nats. This is exactly the negative log-likelihood of the observed label under the model. Averaging it over the dataset is what training minimizes — so 'minimize cross-entropy' and 'maximize likelihood' are the same instruction, and a confident-correct prediction ($q\\to 1$) drives the loss to 0."
+            },
+            {
+              "title": "The VAE KL term pulls toward the prior",
+              "scenario": "Compute the VAE KL term $\\tfrac12(\\mu^2+\\sigma^2-1-\\ln\\sigma^2)$ for a latent unit with $(\\mu,\\sigma)=(0,1)$ and for $(\\mu,\\sigma)=(2,1)$.",
+              "solution": "At $(0,1)$: $\\tfrac12(0+1-1-\\ln 1)=\\tfrac12(0)=\\mathbf{0}$ — the posterior already <em>is</em> the standard-normal prior, so no penalty. At $(2,1)$: $\\tfrac12(4+1-1-0)=\\tfrac12(4)=\\mathbf{2}$ nats — sitting two units off-center costs 2 nats. The KL term is the price of straying from the prior; the reconstruction term must justify paying it."
+            },
+            {
+              "title": "From cross-entropy to perplexity",
+              "scenario": "A language model achieves a cross-entropy of 3 bits per token on held-out text. What is its perplexity, and what does it mean?",
+              "solution": "Perplexity $=2^{H}=2^{3}=\\mathbf{8}$. It means the model is, on average, as uncertain about the next token as if it were guessing uniformly among 8 equally-likely options. Halve nothing else but improve the model so cross-entropy drops to 2 bits, and perplexity falls to $2^2=4$ — and the text would compress to ~2 bits/token instead of 3. Lower cross-entropy is simultaneously better prediction, lower perplexity, and better compression."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "Compute the VAE KL term $\\tfrac12(\\mu^2+\\sigma^2-1-\\ln\\sigma^2)$ for a latent unit with $\\mu=0$ and $\\sigma=2$ (an over-wide posterior).",
+              "hint": "Use $\\ln(\\sigma^2)=\\ln 4\\approx 1.386$.",
+              "solution": "$\\tfrac12(0^2+2^2-1-\\ln 4)=\\tfrac12(0+4-1-1.386)=\\tfrac12(1.614)\\approx \\mathbf{0.807}$ nats. A posterior that is too <em>wide</em> ($\\sigma=2 \\gt  1$) is penalized too, not just one that is off-center — the KL term keeps both the mean near 0 and the variance near 1, matching the standard-normal prior."
+            },
+            {
+              "prompt": "A model's cross-entropy on a corpus improves from 4 bits/token to 3 bits/token. By what factor does its perplexity improve, and what does that say about compression?",
+              "hint": "Perplexity is $2^{H}$.",
+              "solution": "Perplexity goes from $2^4=16$ to $2^3=\\mathbf{8}$ — a 2x improvement (halved). Equivalently, the text now compresses to ~3 bits/token instead of 4, a 25% smaller encoding. Each bit of cross-entropy reduction halves the perplexity and saves one bit per token of compressed size — prediction and compression improving in lockstep."
+            },
+            {
+              "prompt": "Explain, in MDL terms, why a model that perfectly memorizes the training data is usually not the best choice.",
+              "hint": "Think about the two parts of the description length: $L(\\text{model})$ and $L(\\text{data}\\mid\\text{model})$.",
+              "solution": "A model that memorizes the data drives $L(\\text{data}\\mid\\text{model})$ toward 0, but only by becoming enormously complex — a huge $L(\\text{model})$ (it must encode every training point). MDL minimizes the <em>sum</em> $L(\\text{model})+L(\\text{data}\\mid\\text{model})$, so the memorizer is penalized for its giant description and loses to a simpler model that captures the pattern in far fewer total bits. That total-bits trade is exactly Occam's razor / regularization, and it predicts the memorizer will also generalize poorly to new data."
+            }
+          ]
+        }
+      ]
     }
   ]
 }

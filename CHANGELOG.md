@@ -2,6 +2,17 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 583 — Information Theory COMPLETE: the capstone, Information in ML (content / depth)
+Sixth and final IT lesson — **Information Theory in Machine Learning** (capstone module "Information in Machine Learning") — collecting every thread: cross-entropy
+as the default loss (= MLE = min KL), KL as the regularizer (VAEs, RLHF, variational inference), mutual information as the objective (trees, feature selection,
+InfoNCE, the information bottleneck), perplexity as the headline metric, and MDL as Occam's razor in bits. Full parity: 8-section lecture, a **runnable VAE-KL
+code exercise** (`½(μ²+σ²−1−ln σ²)` → 0.50), **3 deep-dives** (the ELBO derivation; the information-bottleneck view of deep nets; MDL = Occam = regularization),
+**8 MCQs** (de-skewed 2/2/2/2), **5 flashcards**, **3 examples**, **3 homework**. Numbers hand-verified.
+**This completes the 9th topic — a full 6-module curriculum:** Entropy → Cross-Entropy & KL → Mutual Information → Source Coding → Channel Capacity → Information
+in ML, plus its own binary-entropy viz and full cross-topic integration (prereqs, glossary). It now mirrors the depth of the original pillars.
+Verified: gate ALL GREEN (now **9 topics · 164 lessons · 117 code-exercises**); **headless** — nDD=3, the VAE-KL code runs to **0.50**, examples reveal, **kErr=0,
+rawDollar=0, errs=0**. SW cache `atlas-v523` → `atlas-v524`.
+
 ## iter 582 — Information Theory module 5: Channels, Noise, and Capacity (content / depth)
 Fifth IT lesson — **Channels, Noise, and Capacity** (new module "Channels and Noise"), the communication half of Shannon's theory. Full parity: 8-section
 lecture (noisy-channel model, binary symmetric channel, capacity `C=max I(X;Y)`, the BSC formula `C=1−H(p)`, the noisy-channel coding theorem, error-correcting
