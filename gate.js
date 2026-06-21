@@ -105,6 +105,16 @@ C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
   (l.homework || []).forEach((h, i) => { hw++; if (h) { if (!((h.prompt || h.q || "").trim())) errors.push("homework missing prompt in " + l.id + " hw#" + i); Object.keys(h).forEach(k => checkRender(h[k], l.id + " hw#" + i + "." + k)); } });
   (l.examples || []).forEach((e, i) => { ex++; if (e) { if (!((e.body || e.scenario || e.prompt || "").trim())) errors.push("example missing body/scenario in " + l.id + " ex#" + i); Object.keys(e).forEach(k => checkRender(e[k], l.id + " ex#" + i + "." + k)); } });
   ((l.content || "").match(/data-viz="([^"]+)"/g) || []).forEach(s => { const id = s.slice(10, -1); if (!vizIds.has(id)) errors.push("unknown data-viz id '" + id + "' in " + l.id); });
+  // content-parity warnings (non-blocking): every lesson should reach the site standard of 16 MCQ /
+  // 6 flashcards / 3 examples / 3 homework / 3 deeper-dives. Surfaces gaps in new content automatically
+  // (e.g. the iter-668 catch where a freshly-built module shipped with 0 deep-dives).
+  { const ddN = ((l.content || "").match(/<summary>/g) || []).length, gaps = [];
+    if ((l.mcq || []).length < 16) gaps.push((l.mcq || []).length + "/16 MCQ");
+    if ((l.flashcards || []).length < 6) gaps.push((l.flashcards || []).length + "/6 cards");
+    if ((l.examples || []).length < 3) gaps.push((l.examples || []).length + "/3 examples");
+    if ((l.homework || []).length < 3) gaps.push((l.homework || []).length + "/3 homework");
+    if (ddN < 3) gaps.push(ddN + "/3 deep-dives");
+    if (gaps.length) warnings.push("below content-parity standard: " + l.id + " — " + gaps.join(", ")); }
   // run every embedded JavaScript code-exercise and confirm its output equals data-expected (catches a wrong
   // expected string — which silently shows the learner "✗ Doesn't match" on correct code). Python is collected
   // here and verified in a post-pass via python3 (if installed), so those exercises are protected too.

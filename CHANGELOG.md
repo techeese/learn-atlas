@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 672 — Step-back regression sweep (clean) + gate content-parity warnings (step-back / tooling)
+Round-number step-back after the 20-iteration Bayesian arc. **Full 169-lesson regression sweep**: errs=0, no KaTeX errors, bad=none — the whole arc (4 new lessons, a new viz + cross-embeds,
+10 glossary terms, 4 code exercises, 12 deep-dives, prereq edges) introduced **zero regressions**. Confirmed every lesson is at the site standard (≥16 MCQ / 6 cards / 3 examples / 3
+homework / 3 deep-dives) — 0 below.
+**Ship (tooling):** taught `gate.js` to machine-check that standard — a non-blocking warning when any lesson falls below 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives. This would
+have instantly flagged the iter-668 gap (a freshly-built module shipping with 0 deep-dives) instead of relying on a manual audit. Fires 0 warnings now (all at standard); a self-test
+confirms it correctly flags a sub-standard lesson.
+Verified: gate.js parses; gate ALL GREEN with no parity warnings; full-lessons sweep errs=0/bad=none. No SW bump (gate is a dev-time tool).
+
 ## iter 671 — Bayesian module: deep-dives — ps-computational-bayes → MODULE 6 AT FULL PARITY (content / understandability)
 Final deep-dive top-up. Added 3 to `ps-computational-bayes`: **smarter samplers** (Gibbs sampling; Hamiltonian Monte Carlo, the engine behind Stan), **the two directions of KL**
 (VI minimizes the mode-seeking reverse KL → under-confident), and **the reparameterization trick** (`z=μ+σε` → low-variance ELBO gradients → variational autoencoders). 
