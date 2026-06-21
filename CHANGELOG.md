@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 681 — LLM training-mechanics lesson: cross-embed optimizer & schedule viz (visualizations / curation)
+The LLM lesson `l-optimization-and-stability` ("Training Mechanics: AdamW, Schedules, and Stability") had no viz — but DL has exact matches. Cross-embedded **`dl-optimizers`** (SGD vs
+Momentum vs RMSProp vs Adam) at its "AdamW" section and **`dl-lr-schedules`** (warmup + cosine decay) at its "Learning-Rate Schedules" section. LLM viz coverage **17/19 → 18/19**.
+Verified: data parses; gate ALL GREEN; **headless** — both embedded canvases hydrate (2), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v618` → `atlas-v619`.
+
 ## iter 680 — Causation lesson MCQ top-up 8 → 16 (content / assessment)
 Brought `ps-causation-confounding` to the 16-MCQ standard (the iter-672 gate parity-warning had flagged it at 8/16). Added **8 new MCQs**, distinct from the first eight: the ice-cream/drowning
 confounder, `do(X)` vs observing, **colliders** (conditioning induces spurious association), controlling for a **mediator** (blocks the effect), **instrumental variables**, **selection bias**,
