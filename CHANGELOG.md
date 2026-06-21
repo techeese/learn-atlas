@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 595 — Glossary → visualization bridge (understandability / discoverability)
+Glossary cards already linked each term to the lesson that teaches it; now terms whose lesson has a matching visualization also get a **"🎛️ Visualize"** chip that
+jumps straight to that widget in the Lab — so a learner can go from a definition to *seeing the concept animated* in one tap (e.g. Derivative → the derivative viz,
+Gradient → gradient-descent, Integral → Riemann sums, Hessian → the saddle/critical-point viz). The link is **title-matched** for precision (the viz is genuinely about
+the term, not just a content mention), covering **84 of 192 terms**. Implemented with event delegation on the stable list container, so it survives the search/filter
+re-renders, and it cancels the card's lesson-link navigation so the chip reliably routes to the Lab instead.
+Verified: `new Function` on app.js clean; gate ALL GREEN; **headless** — **84 Visualize chips** render; the "Vector" chip targets `#/lab/la-vector-add`, and clicking
+it **navigates to the Lab** (not the lesson) where the canvas hydrates; **errs=0**; screenshot shows the violet chip beside the gold "Open the lesson →" link. SW cache `atlas-v535` → `atlas-v536`.
+
 ## iter 594 — Glossary catches up with the new IT lessons (reference)
 The Information Theory lessons added at iters 583/589 introduced several first-class terms that never made it into the glossary — so they had no definition, no inline
 tooltip, no ⌘K hit, and no glossary-page entry. Added the three that were missing: **Differential entropy** and **Information bottleneck** (information-theory) and

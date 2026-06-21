@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 595: **Glossary → visualization bridge** (understandability/discoverability). Terms whose (title-matched) lesson has a viz now show a "🎛️ Visualize" chip
+   linking to that widget in the Lab — 84/192 terms; definition → see it animated in one tap. Event-delegated (survives search re-renders), cancels the card's lesson
+   nav. Verified: gate GREEN; headless 84 chips, Vector→la-vector-add, click navigates to Lab + canvas hydrates, errs=0; screenshot. SW →v536.
    ✅ iter 594: **Glossary catches up with the new IT lessons** (reference). Added 3 missing terms — Differential entropy, Information bottleneck (information-theory),
    Soft actor-critic (reinforcement-learning) — so they're discoverable via tooltips/search/glossary. Verified: gate GREEN; headless glossary renders all 3, kErr=0/errs=0.
    Glossary 189→192. SW →v535.

@@ -1949,6 +1949,16 @@
       return lid ? { href: "#/lesson/" + e.topic + "/" + lid, label: "Open the lesson →" }
                  : { href: "#/course/" + e.topic, label: "Explore " + topicName(e.topic) + " →" };
     }
+    // if a TITLE-matched lesson for this term embeds a visualization, offer a direct "see it animated" link
+    // (title match keeps it high-precision — the viz is genuinely about the term, not just a content mention)
+    function vizFor(e) {
+      const course = findCourse(e.topic); if (!course) return null;
+      const tl = e.term.toLowerCase(); let vid = null;
+      course.modules.forEach(m => m.lessons.forEach(l => {
+        if (!vid && (l.title || "").toLowerCase().includes(tl)) { const mm = (l.content || "").match(/data-viz="([^"]+)"/); if (mm) vid = mm[1]; }
+      }));
+      return vid;
+    }
     const present = new Set(g.map(e => e.topic));
     const chipTopics = C().map(c => c.id).filter(id => present.has(id)).concat(present.has("general") ? ["general"] : []);
     let topicF = "all";
@@ -1957,9 +1967,10 @@
       const items = g.filter(e => (topicF === "all" || e.topic === topicF) && (!q || e.term.toLowerCase().includes(q) || e.def.toLowerCase().includes(q) || topicName(e.topic).toLowerCase().includes(q)))
         .slice().sort((a, b) => a.term.localeCompare(b.term));
       document.getElementById("gloss-list").innerHTML = items.length ? items.map(e => {
-        const t = targetFor(e);
+        const t = targetFor(e), vz = vizFor(e);
+        const vizChip = vz ? ` <span class="gloss-viz" data-viz-go="#/lab/${vz}" role="button" tabindex="0" aria-label="See ${esc(e.term)} visualized">🎛️ Visualize</span>` : "";
         const inner = `<div class="gloss-term">${esc(e.term)} <span class="gloss-topic" style="color:${topicColor(e.topic)};border-color:${topicColor(e.topic)}">${esc(topicName(e.topic))}</span></div>
-          <div class="gloss-def">${e.def}</div>` + (t ? `<div class="gloss-go">${esc(t.label)}</div>` : "");
+          <div class="gloss-def">${e.def}</div>` + (t ? `<div class="gloss-go">${esc(t.label)}${vizChip}</div>` : (vizChip ? `<div class="gloss-go">${vizChip}</div>` : ""));
         return t ? `<a class="gloss-item gloss-link" href="${t.href}">${inner}</a>` : `<div class="gloss-item">${inner}</div>`;
       }).join("") : emptyState("🔍", "No terms match “" + esc(q) + "”.");
       typeset();
@@ -1977,6 +1988,13 @@
       <div id="gloss-list" class="gloss-grid reveal"></div>
     </div>`;
     bindGo();
+    // delegated handler: the "🎛️ Visualize" chip lives inside the card's lesson-link, so intercept its
+    // clicks (and keyboard) on the stable container, cancel the link nav, and jump to the Lab instead.
+    // Delegation survives render()'s innerHTML rebuilds on search/filter.
+    const glist = document.getElementById("gloss-list");
+    function vizJump(ev) { const v = ev.target.closest("[data-viz-go]"); if (!v) return; ev.preventDefault(); ev.stopPropagation(); location.hash = v.dataset.vizGo; }
+    glist.addEventListener("click", vizJump);
+    glist.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") vizJump(e); });
     const gs = document.getElementById("gloss-search");
     gs.addEventListener("input", e => render(e.target.value));
     Array.prototype.slice.call(document.querySelectorAll(".lab-tbtn")).forEach(b => b.addEventListener("click", () => {
