@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 618 — MCQ top-up runway, batch 11: ml-logistic-regression 8 → 16 (content / assessment)
+Eleventh batch. Added **8 new MCQs to `ml-logistic-regression`** (now 16), distinct from the existing eight: `σ(0)=0.5`, the `σ→1` limit, `w=0.69 ⇒ odds ×2`, log-odds as a
+linear function, log-loss convexity, `σ(z)≥0.5 ⟺ z≥0`, `σ(z)=0.9 ⇒ 90%` confident, and the linear-boundary/nonlinear-probability-surface distinction. Key assertion confirmed
+each correct choice; balanced → **4/4/4/4**.
+Verified: data parses; gate ALL GREEN; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v558` → `atlas-v559`. Runway: **11 of 17** (ML 4/10).
+
 ## iter 617 — MCQ top-up runway, batch 10: ml-linear-regression 8 → 16 (content / assessment)
 Tenth batch. Added **8 new MCQs to `ml-linear-regression`** (now 16), distinct from the existing eight: numeric prediction (`ŷ=200`), `R²=1` = perfect fit, `R²=0` = mean
 baseline, OLS outlier-sensitivity, training-`R²` is non-decreasing as features are added, the linearity assumption, multicollinearity → unstable coefficients, and

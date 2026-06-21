@@ -844,6 +844,94 @@
               ],
               "answer": 1,
               "explain": "A logistic regression unit computes w·x+b then a sigmoid — exactly one neuron. It is the atom that neural networks stack and add nonlinearities to."
+            },
+            {
+              "q": "The sigmoid evaluated at zero, $\\sigma(0)$, equals:",
+              "choices": [
+                "$0.5$",
+                "$0$",
+                "$1$",
+                "$0.69$"
+              ],
+              "answer": 0,
+              "explain": "$\\sigma(0)=\\dfrac{1}{1+e^{0}}=\\dfrac{1}{2}=0.5$ — the decision boundary sits at $z=0$."
+            },
+            {
+              "q": "As $z\\to+\\infty$, the sigmoid $\\sigma(z)$:",
+              "choices": [
+                "Approaches $0$",
+                "Approaches $1$",
+                "Stays at $0.5$",
+                "Diverges to infinity"
+              ],
+              "answer": 1,
+              "explain": "$\\sigma$ squashes the real line into $(0,1)$: it tends to $1$ as $z\\to+\\infty$ and to $0$ as $z\\to-\\infty$."
+            },
+            {
+              "q": "A logistic-regression coefficient $w_j=0.69$ means each one-unit increase in feature $j$:",
+              "choices": [
+                "Always doubles the probability",
+                "Adds $0.69$ to the probability",
+                "Multiplies the odds by about $2$ (since $e^{0.69}\\approx 2$)",
+                "Has no effect"
+              ],
+              "answer": 2,
+              "explain": "Coefficients are additive on the log-odds, so they are multiplicative on the odds: $e^{0.69}\\approx 2$."
+            },
+            {
+              "q": "Logistic regression models the log-odds $\\log\\frac{p}{1-p}$ as:",
+              "choices": [
+                "A constant",
+                "A quadratic function of the features",
+                "The probability itself",
+                "A linear function $w^\\top x+b$ of the features"
+              ],
+              "answer": 3,
+              "explain": "It is a linear model in log-odds space; the sigmoid then maps that back to a probability."
+            },
+            {
+              "q": "The log-loss (cross-entropy) of logistic regression, as a function of the weights, is:",
+              "choices": [
+                "Convex — a single global minimum",
+                "Non-convex with many local minima",
+                "Always zero",
+                "Linear"
+              ],
+              "answer": 0,
+              "explain": "Convexity is why logistic regression trains reliably to the global optimum (unlike squared error here)."
+            },
+            {
+              "q": "Predicting the positive class when $\\sigma(z)\\ge 0.5$ is equivalent to the rule:",
+              "choices": [
+                "$z\\le 0$",
+                "$z\\ge 0$",
+                "$z=1$",
+                "$z\\gt 1$"
+              ],
+              "answer": 1,
+              "explain": "$\\sigma(z)\\ge 0.5\\iff z\\ge 0$, since $\\sigma(0)=0.5$ and $\\sigma$ is increasing."
+            },
+            {
+              "q": "If $\\sigma(z)=0.9$ for an example, the model is:",
+              "choices": [
+                "Exactly on the decision boundary",
+                "90% confident it is the negative class",
+                "About 90% confident it is the positive class",
+                "Underfitting"
+              ],
+              "answer": 2,
+              "explain": "The sigmoid output is the predicted probability of the positive class."
+            },
+            {
+              "q": "Logistic regression has:",
+              "choices": [
+                "No decision boundary",
+                "Both a linear boundary and linear probabilities",
+                "Both nonlinear",
+                "A linear decision boundary, but a nonlinear (sigmoid) probability surface"
+              ],
+              "answer": 3,
+              "explain": "The boundary $z=0$ is a hyperplane, yet the probability bends smoothly from 0 to 1 through the sigmoid."
             }
           ],
           "flashcards": [
