@@ -2955,6 +2955,162 @@
               "solution": "<strong>Restrict to the column $Y = 0$.</strong> The relevant cells are $P(X=0, Y=0) = 0.1$ and $P(X=1, Y=0) = 0.3$; their sum is the marginal $P(Y=0) = 0.4$.\n<strong>Normalize to a conditional distribution.</strong> $P(X=0 \\mid Y=0) = \\tfrac{0.1}{0.4} = 0.25$ and $P(X=1 \\mid Y=0) = \\tfrac{0.3}{0.4} = 0.75$. They sum to 1 — conditioning rescales a slice of the joint into its own distribution.\n<strong>Take the expectation.</strong> $\\mathbb{E}[X \\mid Y=0] = 0(0.25) + 1(0.75) = 0.75$. Knowing $Y=0$ nudges the best guess of $X$ from its marginal mean $\\mathbb{E}[X] = 0.7$ up to $0.75$ — that shift is exactly the information $Y$ carries about $X$.\n<strong>The aha.</strong> A conditional expectation is \"slice, renormalize, average\": fix the conditioning event, turn that slice of the joint into a probability distribution, and take its mean. $\\mathbb{E}[X \\mid Y]$ is itself a random variable (a function of $Y$), and averaging it back over $Y$ recovers $\\mathbb{E}[X]$ — the tower property."
             }
           ]
+        },
+        {
+          "id": "ps-causation-confounding",
+          "title": "Correlation, Causation & Confounding",
+          "minutes": 16,
+          "content": "<h3>1. The slogan that bites: correlation ≠ causation</h3>\n<p>That $X$ and $Y$ move together does <em>not</em> mean $X$ causes $Y$. A correlation can arise four ways: $X$ causes $Y$, $Y$ causes $X$ (reverse causation), a third variable causes both (confounding), or pure chance in a small sample. Mistaking association for causation is the single most common analytical error — and the costliest in ML, medicine, and policy.</p>\n<h3>2. Confounders: the lurking common cause</h3>\n<p>A <b>confounder</b> $Z$ is a variable that influences both $X$ and $Y$, manufacturing a correlation between them that is not causal. Ice-cream sales correlate with drownings — but the confounder is summer heat, which drives both. Control for the season and the ice-cream–drowning link vanishes. The whole game of causal inference is separating real effects from confounded ones.</p>\n<h3>3. Spurious correlation in the data</h3>\n<div data-viz=\"ps-covariance-scatter\"></div>\n<p>A strong sample correlation is necessary but never sufficient for causation. Two unrelated quantities can correlate by chance (especially with few points or many variables tested), and confounded quantities correlate strongly yet manipulating one does nothing to the other.</p>\n<h3>4. Simpson's paradox: a trend that reverses</h3>\n<p>The starkest confounding trap: an association can hold in <em>every</em> subgroup yet reverse in the aggregate. In the classic kidney-stone study, treatment A beats B for small stones <em>and</em> for large stones, but B beats A overall — because A was given to the harder (large-stone) cases. The confounder (stone size) is unevenly distributed across treatments. Run it:</p>\n<div data-code=\"javascript\" data-expected=\"small: A 93%  B 87%\nlarge: A 73%  B 69%\nALL:   A 78%  B 83%\">// Simpson's paradox: recovery rates for two kidney-stone treatments\nconst A = { smallOk: 81,  smallN: 87,  largeOk: 192, largeN: 263 };\nconst B = { smallOk: 234, smallN: 270, largeOk: 55,  largeN: 80  };\nconst pct = (o, n) => Math.round(100 * o / n) + \"%\";\nconsole.log(\"small: A \" + pct(A.smallOk, A.smallN) + \"  B \" + pct(B.smallOk, B.smallN));\nconsole.log(\"large: A \" + pct(A.largeOk, A.largeN) + \"  B \" + pct(B.largeOk, B.largeN));\nconsole.log(\"ALL:   A \" + pct(A.smallOk + A.largeOk, A.smallN + A.largeN) + \"  B \" + pct(B.smallOk + B.largeOk, B.smallN + B.largeN));\n// A wins BOTH subgroups but loses overall -- never trust an aggregate without checking confounders.</div>\n<h3>5. The gold standard: randomized experiments</h3>\n<p>Randomly assigning the treatment ($A$/$B$ coin-flip per subject) <b>breaks confounding</b>: because assignment is independent of everything else, confounders are balanced across groups in expectation, so a difference in outcomes can only be the treatment's effect. This is why randomized controlled trials (and online A/B tests) are the gold standard — randomization severs the arrows from confounders into the treatment.</p>\n<h3>6. Adjusting in observational data</h3>\n<p>When you cannot randomize, you estimate the causal effect by <b>controlling for confounders</b>: compare like with like (same stone size, same age, …) and combine the within-group effects. This is the \"backdoor adjustment\" — block every confounding path between $X$ and $Y$. It only works for confounders you can <em>measure</em>; unmeasured ones leave residual bias, the Achilles heel of observational studies.</p>\n<h3>7. Reverse causation and selection bias</h3>\n<p>Two more traps. <b>Reverse causation</b>: \"people who exercise are healthier\" — but maybe being healthy lets people exercise. <b>Selection bias</b>: studying only hospital patients can create correlations absent in the general population (conditioning on being admitted). Both produce real correlations with no direct causal link from $X$ to $Y$.</p>\n<h3>8. Why this matters for machine learning</h3>\n<p>ML models learn <em>correlations</em>, so they happily latch onto <b>spurious features</b> — a watermark that predicts the label, a scanner ID that predicts disease. These work in-distribution and collapse under shift, because they are not causal. Causal thinking explains distribution-shift failures, motivates robust and fair models, and underlies treatment-effect estimation, off-policy evaluation, and modern causal ML.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the do-operator</summary>\n<p>Pearl's notation separates seeing from doing. $P(Y\\mid X{=}x)$ is <em>observing</em> $X=x$ (and may carry confounding); $P(Y\\mid \\text{do}(X{=}x))$ is <em>intervening</em> to set $X=x$, which deletes the arrows into $X$ (graph surgery). Causal effects are statements about $\\text{do}(\\cdot)$. Randomization physically performs the do; backdoor adjustment computes it from observational data when the confounders are measured.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: don't control for everything (colliders)</summary>\n<p>Adjusting is not always good. A <b>collider</b> is a common <em>effect</em> of $X$ and $Y$ (both arrows point into it); conditioning on a collider <em>creates</em> a spurious association where none existed (this is how selection bias arises). And controlling for a <b>mediator</b> on the causal path blocks the very effect you want. Adjust for confounders — not colliders or mediators — which is why you need the causal graph, not just the data.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: instrumental variables</summary>\n<p>When confounders are unmeasured and randomization is impossible, an <b>instrument</b> $Z$ can rescue you: it affects $X$, has no direct path to $Y$, and shares no confounder with $Y$. Then variation in $X$ driven by $Z$ is \"as good as random\", letting you recover the causal effect (e.g. using distance-to-college as an instrument for years of schooling when estimating its effect on wages).</p>\n</details>\n",
+          "mcq": [
+            {
+              "q": "A strong correlation between $X$ and $Y$ implies:",
+              "choices": [
+                "Not necessarily that $X$ causes $Y$ — it may be confounding, reverse causation, or chance",
+                "That $X$ definitely causes $Y$",
+                "That $Y$ definitely causes $X$",
+                "That there is no relationship"
+              ],
+              "answer": 0,
+              "explain": "Correlation has four possible sources; only one is \"$X$ causes $Y$\"."
+            },
+            {
+              "q": "A confounder is a variable that:",
+              "choices": [
+                "Is caused by both $X$ and $Y$",
+                "Causes both $X$ and $Y$, creating a non-causal association",
+                "Has no relation to $X$ or $Y$",
+                "Is the outcome of interest"
+              ],
+              "answer": 1,
+              "explain": "A common cause of $X$ and $Y$ manufactures a correlation that is not causal."
+            },
+            {
+              "q": "Simpson's paradox occurs when:",
+              "choices": [
+                "A sample is too large",
+                "Two variables are independent",
+                "An association reverses between the subgroups and the aggregate",
+                "The correlation is exactly zero"
+              ],
+              "answer": 2,
+              "explain": "Uneven confounder distribution can flip the aggregate trend versus every subgroup."
+            },
+            {
+              "q": "The gold standard for establishing causation is:",
+              "choices": [
+                "A more complex model",
+                "A larger observational sample",
+                "A higher correlation coefficient",
+                "A randomized controlled experiment"
+              ],
+              "answer": 3,
+              "explain": "Randomization balances confounders, so outcome differences are causal."
+            },
+            {
+              "q": "Randomization establishes causation because it:",
+              "choices": [
+                "Makes the treatment independent of all confounders",
+                "Increases the sample size",
+                "Removes measurement error",
+                "Guarantees a large effect"
+              ],
+              "answer": 0,
+              "explain": "Independence of treatment and confounders makes the groups comparable."
+            },
+            {
+              "q": "In observational data, you estimate a causal effect by:",
+              "choices": [
+                "Ignoring all other variables",
+                "Controlling for the measured confounders (backdoor adjustment)",
+                "Maximizing the correlation",
+                "Choosing the largest subgroup"
+              ],
+              "answer": 1,
+              "explain": "Adjusting for confounders blocks non-causal paths — but only those you can measure."
+            },
+            {
+              "q": "\"People who exercise are healthier\" might reflect reverse causation, meaning:",
+              "choices": [
+                "Health and exercise are unrelated",
+                "Exercise always causes health",
+                "Being healthy enables exercising, rather than exercise causing health",
+                "The sample was randomized"
+              ],
+              "answer": 2,
+              "explain": "The causal arrow may run $Y\\to X$ instead of $X\\to Y$."
+            },
+            {
+              "q": "A spurious (non-causal) feature an ML model relies on will typically:",
+              "choices": [
+                "Be a causal driver of the label",
+                "Always generalize perfectly",
+                "Improve robustness",
+                "Work in-distribution but fail under distribution shift"
+              ],
+              "answer": 3,
+              "explain": "Non-causal shortcuts break when the spurious correlation no longer holds."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "The four sources of a correlation",
+              "back": "$X\\to Y$, $Y\\to X$ (reverse), a confounder causing both, or chance — only the first is \"$X$ causes $Y$\"."
+            },
+            {
+              "front": "What is a confounder?",
+              "back": "A variable that influences both $X$ and $Y$, creating a non-causal association between them (e.g. summer heat behind ice-cream sales and drownings)."
+            },
+            {
+              "front": "Simpson's paradox",
+              "back": "An association present in every subgroup can reverse in the aggregate when a confounder is unevenly distributed across groups."
+            },
+            {
+              "front": "Why do randomized experiments establish causation?",
+              "back": "Random assignment makes treatment independent of all confounders, balancing them across groups — so any outcome difference is the treatment's effect."
+            },
+            {
+              "front": "Backdoor adjustment",
+              "back": "Estimate a causal effect from observational data by controlling for (conditioning on) the measured confounders, blocking non-causal paths."
+            },
+            {
+              "front": "do-operator: $P(Y\\mid \\text{do}(X))$ vs $P(Y\\mid X)$",
+              "back": "$\\text{do}(X)$ is intervening to set $X$ (effect of acting); $P(Y\\mid X)$ is merely observing $X$ (may include confounding)."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "Sales of sunglasses correlate with ice-cream sales. Give three non-causal explanations for the correlation.",
+              "hint": "Think confounder, reverse, chance.",
+              "solution": "(1) Confounding: hot, sunny weather drives both. (2) Reverse-ish/common-driver framing: the same \"going outside\" behavior causes both. (3) Chance: in a small sample the two could line up coincidentally. None means sunglasses cause ice-cream cravings."
+            },
+            {
+              "prompt": "A drug shows a 70% recovery rate in men and 60% in women, but a competitor shows 80% in men and 65% in women. Which drug looks better per-subgroup, and what would let the competitor still win overall?",
+              "hint": "Simpson's paradox via uneven group sizes.",
+              "solution": "The competitor is better in BOTH subgroups (80%>70%, 65%>60%). It could still \"lose\" overall only if the first drug were given disproportionately to the easier group — i.e. an uneven confounder distribution. (Here the competitor wins both, so an honest aggregate must also favor it once you weight subgroups equally.) The lesson: always check subgroup vs aggregate."
+            },
+            {
+              "prompt": "Explain in two sentences why a randomized controlled trial identifies a causal effect that an observational study cannot.",
+              "hint": "What does randomization do to confounders?",
+              "solution": "Randomizing the treatment makes it statistically independent of every confounder (measured or not), so the treatment and control groups are comparable and any outcome gap is caused by the treatment. An observational study cannot guarantee this — unmeasured confounders may differ between who did and did not receive the treatment."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Ice cream and drowning",
+              "body": "Monthly ice-cream sales correlate strongly (r≈0.9) with drownings. Should we ban ice cream?",
+              "solution": "No — the confounder is summer heat: it raises both ice-cream sales and swimming (hence drownings). Condition on temperature/season and the correlation disappears. Banning ice cream would do nothing to drownings."
+            },
+            {
+              "title": "The kidney-stone reversal",
+              "body": "Treatment A beats B on small stones (93% vs 87%) and large stones (73% vs 69%), yet B beats A overall (83% vs 78%). How?",
+              "solution": "Stone size confounds the comparison: A was used far more on large (harder) stones, dragging its overall rate down. Within each size A is better; the aggregate is misleading. Compare within subgroups (or randomize) — never trust the pooled number alone."
+            },
+            {
+              "title": "A spurious feature in ML",
+              "body": "A pneumonia model is highly accurate — but partly keys on which hospital's scanner took the X-ray. Why is that dangerous?",
+              "solution": "Scanner ID correlates with severity only because sicker patients were imaged at certain hospitals — it is a confounded, non-causal shortcut. Deploy the model at a new hospital and accuracy collapses. Robust models must rely on causal signal (the lung pathology), not the spurious correlate."
+            }
+          ]
         }
       ]
     },

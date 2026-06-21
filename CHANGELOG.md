@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 679 — NEW lesson: Correlation, Causation & Confounding (content)
+Filled a genuine curriculum gap — the site taught correlation thoroughly but never **causation**. Added a full lesson **`ps-causation-confounding` "Correlation, Causation & Confounding"**
+to PS Module 3 (Joint Distributions & Dependence): 8 sections (correlation≠causation · confounders · spurious correlation · **Simpson's paradox** · randomized experiments · backdoor
+adjustment · reverse causation & selection bias · why it matters for ML/spurious features), the `ps-covariance-scatter` viz, a runnable **Simpson's-paradox** code exercise (the kidney-stone
+reversal: A wins both subgroups, loses overall), **3 deep-dives** (the do-operator · colliders/don't-control-for-everything · instrumental variables), **6 flashcards, 3 examples, 3 homework,
+and 8 MCQs** (2/2/2/2, keys asserted). Site **170 lessons**.
+Verified: Simpson's numbers + code output re-derived in Node; gate ALL GREEN (gate ran the code exercise; the new parity warning correctly flags it at 8/16 MCQ — top-up queued); **headless** —
+lecture renders 34 KaTeX/0 errors/rawDollar=0, ps-covariance-scatter hydrates, 3 deep-dives + code runner present, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v616` → `atlas-v617`.
+
 ## iter 678 — NEW viz: calibration / reliability diagram (visualizations)
 Filled a no-viz LLM lesson with a genuinely visual, high-value concept. Built the **118th widget, `llm-calibration` "Calibration: does confidence match accuracy?"** for
 `l-hallucination-and-evaluation`: a reliability diagram (accuracy vs confidence, dashed perfect-calibration diagonal) with a slider from **over-confident** (dots below the line — the
