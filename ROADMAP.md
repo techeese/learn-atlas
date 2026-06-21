@@ -8,7 +8,7 @@ move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration hi
 
 ## Current state (iter 708, 2026-06-22)
 **9 topics · 176 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 123 visualizations (all embedded) · 263 glossary terms · cross-topic prereq graph · Library references · code exercises.**
-- ⏳ Top `dl-vision-transformers` 8→16 MCQ (iter 716 added it; gate parity-warns). Recent current-gap fills: MoE, SSM/Mamba, ViT/multimodal.
+- ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ (full parity; 176 lessons all at standard). Recent current-gap fills (iters 711–717): MoE, SSM/Mamba, ViT/multimodal — modern AI landscape now covered.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
 `node gate.js` is ALL GREEN and machine-checks content-parity (warns on any lesson below the standard). Last full 174-lesson regression sweep: iter 708, errs=0/bad=none.
 Lesson (iters 709–710): a fresh-eyes screenshot review caught stale "original-6-topics" literals — "6 paths" on the Knowledge Map (fixed) and `store.js` well-rounded `>=6` (→`>=3`, fixed); SKILL.md "Six topics"→"Nine" too. When the site grows, grep for frozen topic counts (`6`/`six`) in UI copy AND logic; prefer `C().length`/`window.COURSES.length`. Visual review of all major pages (dashboard/map/achievements/progress) = polished & consistent (achievements 62/62, all categorized).

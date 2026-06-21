@@ -4776,6 +4776,94 @@
               ],
               "answer": 3,
               "explain": "ViT needs large-scale data/pretraining to overtake CNNs."
+            },
+            {
+              "q": "The \"patch embedding\" in a ViT is:",
+              "choices": [
+                "A linear projection of each flattened patch to the model dimension",
+                "A convolution over the whole image",
+                "The [CLS] token",
+                "A softmax over patches"
+              ],
+              "answer": 0,
+              "explain": "Each flattened patch is linearly projected to d_model."
+            },
+            {
+              "q": "Why does ViT have global context already in its first layer?",
+              "choices": [
+                "It uses very large convolution kernels",
+                "Self-attention lets every patch attend to every other patch directly",
+                "It processes the image as one token",
+                "It has more layers than a CNN"
+              ],
+              "answer": 1,
+              "explain": "Attention connects all patch pairs immediately."
+            },
+            {
+              "q": "A ViT's self-attention cost scales as:",
+              "choices": [
+                "$O(\\log n)$",
+                "$O(n)$",
+                "$O(n^2)$ in the number of patches $n$",
+                "Constant in $n$"
+              ],
+              "answer": 2,
+              "explain": "All-pairs attention over n patches is quadratic."
+            },
+            {
+              "q": "CLIP performs zero-shot classification by:",
+              "choices": [
+                "Counting pixels",
+                "Fine-tuning on each new class",
+                "Reconstructing the image",
+                "Comparing the image embedding to embeddings of text prompts like \"a photo of a {class}\""
+              ],
+              "answer": 3,
+              "explain": "Pick the text prompt nearest the image in the shared space."
+            },
+            {
+              "q": "For a $p\\times p$ RGB patch, the flattened patch-vector length is:",
+              "choices": [
+                "$p\\times p\\times 3$",
+                "$p\\times 3$",
+                "$p^2$ only",
+                "$3$"
+              ],
+              "answer": 0,
+              "explain": "p*p pixels times 3 colour channels."
+            },
+            {
+              "q": "Hierarchical/windowed ViTs (e.g. Swin) exist mainly to:",
+              "choices": [
+                "Remove the need for position embeddings",
+                "Tame the $O(n^2)$ attention cost at high image resolution",
+                "Add convolutions back for locality",
+                "Eliminate the [CLS] token"
+              ],
+              "answer": 1,
+              "explain": "Windowed attention keeps cost manageable for many patches."
+            },
+            {
+              "q": "A ViT typically overtakes a comparable CNN when:",
+              "choices": [
+                "Patches are made as large as the image",
+                "The dataset is tiny",
+                "It is pretrained on very large-scale data",
+                "Attention is removed"
+              ],
+              "answer": 2,
+              "explain": "Large pretraining lets ViT learn the priors CNNs assume."
+            },
+            {
+              "q": "After patch + position embedding, a ViT processes the tokens with:",
+              "choices": [
+                "A single linear classifier",
+                "A stack of pooling layers",
+                "A recurrent network",
+                "A standard transformer encoder (multi-head self-attention + MLP, residuals, layer norm)"
+              ],
+              "answer": 3,
+              "explain": "It's the ordinary transformer encoder applied to patches."
             }
           ],
           "flashcards": [

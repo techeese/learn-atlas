@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 717 — ViT lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `dl-vision-transformers` to the 16-MCQ standard. Added **8 new MCQs**: patch embedding (linear projection), first-layer global context, the `O(n²)` attention cost, CLIP zero-shot via text
+prompts, the `p×p×3` patch-vector dimension, windowed/hierarchical ViTs (Swin), pretraining-beats-CNN, and "the encoder is a standard transformer." Balanced → **4/4/4/4**. Lesson now at full parity (176 lessons all at standard).
+Verified: data parses; gate ALL GREEN with **no parity warning** (key-assertion caught a `$`-delimited substring mismatch in a key pre-commit); **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v653` → `atlas-v654`.
+
 ## iter 716 — NEW lesson: Vision Transformers & multimodal (content)
 Filled another genuine *current* gap: DL covered CNNs and transformers separately but had no lesson bridging them — **Vision Transformers (ViT)** and **multimodal/CLIP** had zero coverage (only
 incidental mentions). Added `dl-vision-transformers` "Vision Transformers: Images as Patches" to DL M6: 8 sections (patchify → tokens · patch/position/[CLS] embeddings · the encoder is just a
