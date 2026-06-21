@@ -31,7 +31,8 @@ window.REFERENCES = {
     { title: "Neural Networks (series)", by: "3Blue1Brown", kind: "video", url: "https://www.3blue1brown.com/topics/neural-networks", note: "The clearest visual intro to nets & backprop." },
     { title: "Deep Learning", by: "Goodfellow, Bengio, Courville", kind: "book", url: "https://www.deeplearningbook.org/", note: "The foundational textbook, free online." },
     { title: "Practical Deep Learning", by: "fast.ai", kind: "course", url: "https://course.fast.ai/", note: "Top-down, code-first; train real models fast." },
-    { title: "Dive into Deep Learning (d2l)", by: "Zhang, Lipton, Li, Smola", kind: "interactive", url: "https://d2l.ai/", note: "Interactive book with runnable code & math." }
+    { title: "Dive into Deep Learning (d2l)", by: "Zhang, Lipton, Li, Smola", kind: "interactive", url: "https://d2l.ai/", note: "Interactive book with runnable code & math." },
+    { title: "An Image is Worth 16x16 Words (ViT)", by: "Dosovitskiy et al.", kind: "paper", url: "https://arxiv.org/abs/2010.11929", note: "The Vision Transformer paper — transformers applied to image patches, the bridge to multimodal models." }
   ],
   "reinforcement-learning": [
     { title: "Reinforcement Learning: An Introduction", by: "Sutton & Barto", kind: "book", url: "http://incompleteideas.net/book/the-book-2nd.html", note: "The RL bible — free PDF. Start here." },
@@ -44,7 +45,8 @@ window.REFERENCES = {
     { title: "The Illustrated Transformer", by: "Jay Alammar", kind: "article", url: "https://jalammar.github.io/illustrated-transformer/", note: "Attention & the Transformer, beautifully visualized." },
     { title: "Let's build GPT (nanoGPT)", by: "Andrej Karpathy", kind: "video", url: "https://www.youtube.com/watch?v=kCc8FmEb1nY", note: "Code a GPT from scratch in ~2 hours." },
     { title: "The Annotated Transformer", by: "Harvard NLP", kind: "article", url: "https://nlp.seas.harvard.edu/annotated-transformer/", note: "The paper, line-by-line, as runnable code." },
-    { title: "Transformer Circuits", by: "Anthropic", kind: "reference", url: "https://transformer-circuits.pub/", note: "How attention & MLPs work mechanistically inside." }
+    { title: "Transformer Circuits", by: "Anthropic", kind: "reference", url: "https://transformer-circuits.pub/", note: "How attention & MLPs work mechanistically inside." },
+    { title: "Mixture of Experts Explained", by: "Hugging Face", kind: "article", url: "https://huggingface.co/blog/moe", note: "Clear walkthrough of MoE, routing, and load balancing — the sparse-expert architecture behind Mixtral & friends." }
   ],
   "probability-statistics": [
     { title: "Seeing Theory", by: "Daniel Kunin · Brown University", kind: "interactive", url: "https://seeing-theory.brown.edu/", note: "A visual, interactive introduction to probability and statistics. Start here." },
@@ -63,6 +65,7 @@ window.REFERENCES = {
     { title: "The Elements of Statistical Learning (ESL)", by: "Hastie, Tibshirani & Friedman", kind: "book", url: "https://hastie.su.domains/ElemStatLearn/", note: "The rigorous reference (free PDF). The advanced companion to ISL." },
     { title: "StatQuest", by: "Josh Starmer", kind: "video", url: "https://statquest.org/video-index/", note: "Wonderfully clear, visual explanations of kNN, trees, SVMs, boosting, cross-validation, and more." },
     { title: "CS229: Machine Learning", by: "Andrew Ng · Stanford", kind: "course", url: "https://cs229.stanford.edu/", note: "The classic graduate course — full notes and lectures, free." },
+    { title: "How to Use t-SNE Effectively", by: "Wattenberg, Viégas, Johnson (Distill)", kind: "interactive", url: "https://distill.pub/2016/misread-tsne/", note: "Interactive demo of why t-SNE plots mislead — cluster sizes and distances are not meaningful." },
     { title: "scikit-learn User Guide", by: "scikit-learn", kind: "reference", url: "https://scikit-learn.org/stable/user_guide.html", note: "The practical toolkit: every algorithm here, with usage notes and the API to run it." },
     { title: "Pattern Recognition and Machine Learning", by: "Christopher Bishop", kind: "book", url: "https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/", note: "A deep, probabilistic treatment (free PDF) — strong on the Bayesian view." }
   ],

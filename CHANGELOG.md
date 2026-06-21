@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 725 — Library: canonical resources for the modern lessons (reference)
+The recent MoE/ViT/DR lessons added current content, but the Library held only the classics for those topics. Added 3 canonical resources: the **ViT paper** ("An Image is Worth 16×16 Words") to Deep
+Learning, **"Mixture of Experts Explained"** (Hugging Face) to LLMs, and **Distill's "How to Use t-SNE Effectively"** to Machine Learning (which perfectly complements the lesson's "why t-SNE distances
+lie" deep-dive). DL 5→6, LLM 5→6, ML 6→7 references.
+Verified: references.js parses; gate ALL GREEN; **headless** — all 3 render on the Library page (3/3), kErr=0, errs=0. SW cache `atlas-v661` → `atlas-v662`.
+
 ## iter 724 — NEW viz: the curse of dimensionality (distance concentration) (visualizations)
 Made iter-723's deep-dive visual. Built the **125th widget, `ml-curse-dimensionality` "Curse of dimensionality: distances concentrate"**: a histogram of all pairwise distances among 40 random points,
 with a dimension slider. As d grows the histogram collapses into a narrow spike far from zero — the relative spread (std/mean) shrinks and the nearest/farthest ratio climbs toward 1, so points become
