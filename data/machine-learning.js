@@ -1088,6 +1088,94 @@
               ],
               "answer": 1,
               "explain": "Because the penalty depends on weight magnitudes, features on different scales are penalized inconsistently; standardizing puts them on equal footing."
+            },
+            {
+              "q": "Lasso adds which penalty term to the loss?",
+              "choices": [
+                "$\\lambda\\sum_j |w_j|$ (the L1 norm)",
+                "$\\lambda\\sum_j w_j^2$ (the L2 norm)",
+                "$\\lambda$ by itself",
+                "No penalty at all"
+              ],
+              "answer": 0,
+              "explain": "Lasso penalizes the L1 norm $\\sum_j|w_j|$; ridge penalizes the squared L2 norm $\\sum_j w_j^2$."
+            },
+            {
+              "q": "As the regularization strength $\\lambda\\to 0$, the regularized model approaches:",
+              "choices": [
+                "A constant predictor",
+                "Ordinary (unregularized) least squares",
+                "A random model",
+                "A model with all weights zero"
+              ],
+              "answer": 1,
+              "explain": "With no penalty the fit is plain OLS; as $\\lambda\\to\\infty$ instead, the weights are driven to zero."
+            },
+            {
+              "q": "Regularization typically trades:",
+              "choices": [
+                "Less bias for more variance",
+                "More bias and more variance",
+                "A little more bias for much less variance",
+                "Nothing — it is free"
+              ],
+              "answer": 2,
+              "explain": "Shrinking the weights biases the fit slightly but greatly reduces its sensitivity to the training sample, improving test error."
+            },
+            {
+              "q": "Elastic Net combines:",
+              "choices": [
+                "Bagging and boosting",
+                "Two separate L1 penalties",
+                "Dropout and L2",
+                "L1 and L2 penalties"
+              ],
+              "answer": 3,
+              "explain": "It adds both penalties — L1's sparsity plus L2's stability under correlated features."
+            },
+            {
+              "q": "Which regularizer is preferred when you want automatic feature selection?",
+              "choices": [
+                "L1 (lasso) — it drives weak features' weights to exactly zero",
+                "L2 (ridge)",
+                "No regularizer can select features",
+                "Only Elastic Net with $\\lambda=0$"
+              ],
+              "answer": 0,
+              "explain": "L1's corner solutions zero out coefficients, effectively dropping features; L2 only shrinks them."
+            },
+            {
+              "q": "Regularization helps most when:",
+              "choices": [
+                "There are very few features",
+                "There are many features relative to training examples (high-variance regime)",
+                "The data is perfectly linearly separable",
+                "The model is already underfitting"
+              ],
+              "answer": 1,
+              "explain": "With many parameters and little data the model overfits; penalizing complexity is exactly the cure."
+            },
+            {
+              "q": "Why does too small a $\\lambda$ risk overfitting?",
+              "choices": [
+                "It removes all the features",
+                "It always underfits",
+                "A weak penalty lets the weights grow to fit noise",
+                "It has no effect on the fit"
+              ],
+              "answer": 2,
+              "explain": "Little regularization is close to unconstrained fitting, so the model can chase noise in the training data."
+            },
+            {
+              "q": "The L1 (lasso) constraint region is:",
+              "choices": [
+                "Undefined",
+                "A circle, while L2's is a diamond",
+                "An axis-aligned square",
+                "A diamond — its corners on the axes drive sparsity; L2's region is a circle"
+              ],
+              "answer": 3,
+              "explain": "Loss contours tend to first touch the diamond at a corner (a coordinate axis), zeroing a weight — the geometric reason L1 is sparse."
             }
           ],
           "flashcards": [
