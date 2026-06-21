@@ -5879,4 +5879,59 @@
     draw();
   });
 
+
+  /* ========================================================
+     107. Two events & inclusion-exclusion (Probability & Statistics)
+     ======================================================== */
+  register({ id: 'ps-set-events', topic: 'probability-statistics', title: 'Two events: union, intersection & inclusion–exclusion', blurb: 'Events are subsets of the sample space Ω. Slide P(A), P(B), and their overlap P(A∩B) and watch the four regions — only A, only B, both, and neither — with their probabilities. The point of inclusion–exclusion: P(A∪B)=P(A)+P(B)−P(A∩B), because adding the two circles counts the overlap twice, so you subtract it once.' },
+  function (root) {
+    const W = 540, H = 300, m = 18, boxB = H - 70;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let pa = 0.45, pb = 0.40, pab = 0.15;
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      let a = pa, b = pb, ab = pab;
+      const abMin = Math.max(0, a + b - 1), abMax = Math.min(a, b);
+      ab = Math.min(abMax, Math.max(abMin, ab));
+      const onlyA = a - ab, onlyB = b - ab, both = ab, uni = a + b - ab, neither = 1 - uni;
+      // sample space box (Omega)
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1.5; ctx.strokeRect(m, m, W - 2 * m, boxB - m);
+      ctx.fillStyle = p.mute; ctx.font = '13px ' + (cssVar('--font-disp') || 'serif'); ctx.textAlign = 'left'; ctx.fillText('Ω', m + 8, m + 20);
+      ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      ctx.fillStyle = p.mute; ctx.fillText('neither: ' + neither.toFixed(2), W - m - 8, boxB - 10);
+      // circles
+      const cy = (m + boxB) / 2, r = 74, cxA = W / 2 - 44, cxB = W / 2 + 44;
+      ctx.globalAlpha = 0.38; ctx.fillStyle = p.sage; ctx.beginPath(); ctx.arc(cxA, cy, r, 0, 7); ctx.fill();
+      ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(cxB, cy, r, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+      ctx.lineWidth = 1.5; ctx.strokeStyle = p.sage; ctx.beginPath(); ctx.arc(cxA, cy, r, 0, 7); ctx.stroke();
+      ctx.strokeStyle = p.violet; ctx.beginPath(); ctx.arc(cxB, cy, r, 0, 7); ctx.stroke();
+      // labels A / B
+      ctx.textAlign = 'center'; ctx.font = '14px ' + (cssVar('--font-disp') || 'serif');
+      ctx.fillStyle = p.sage; ctx.fillText('A', cxA - r / 2, cy - r + 22);
+      ctx.fillStyle = p.violet; ctx.fillText('B', cxB + r / 2, cy - r + 22);
+      // region probabilities
+      ctx.font = '12px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillStyle = p.ink;
+      ctx.fillText(onlyA.toFixed(2), cxA - 38, cy + 4);
+      ctx.fillText(both.toFixed(2), (cxA + cxB) / 2, cy + 4);
+      ctx.fillText(onlyB.toFixed(2), cxB + 38, cy + 4);
+      // union bar below box
+      const bx = m, bw = W - 2 * m, by = boxB + 14, bh = 16;
+      ctx.fillStyle = p.panel; ctx.fillRect(bx, by, bw, bh);
+      ctx.fillStyle = p.gold; ctx.globalAlpha = 0.55; ctx.fillRect(bx, by, bw * uni, bh); ctx.globalAlpha = 1;
+      ctx.strokeStyle = p.line; ctx.strokeRect(bx, by, bw, bh);
+      ctx.fillStyle = p.ink; ctx.textAlign = 'left'; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace');
+      ctx.fillText('P(A∪B) = ' + uni.toFixed(2), bx + 6, by + bh + 16);
+      info.innerHTML = 'P(A) = <b style="color:' + p.sage + '">' + a.toFixed(2) + '</b> &middot; P(B) = <b style="color:' + p.violet + '">' + b.toFixed(2) + '</b> &middot; P(A∩B) = <b>' + both.toFixed(2) + '</b>.<br>' +
+        'Inclusion–exclusion: P(A∪B) = ' + a.toFixed(2) + ' + ' + b.toFixed(2) + ' − ' + both.toFixed(2) + ' = <b style="color:' + p.gold + '">' + uni.toFixed(2) + '</b>. Subtracting the overlap fixes the double-count; P(neither) = ' + neither.toFixed(2) + '.';
+    }
+    slider(ctl, { label: 'P(A)', min: 0, max: 1, step: 0.01, value: pa, fmt: v => v.toFixed(2), onInput: v => { pa = v; draw(); } });
+    slider(ctl, { label: 'P(B)', min: 0, max: 1, step: 0.01, value: pb, fmt: v => v.toFixed(2), onInput: v => { pb = v; draw(); } });
+    slider(ctl, { label: 'P(A∩B) overlap', min: 0, max: 1, step: 0.01, value: pab, fmt: v => v.toFixed(2), onInput: v => { pab = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Two-event Venn visualizer: a box is the sample space Omega; two overlapping circles A and B sit inside it. Sliders set P(A), P(B) and the overlap P(A and B), and the four regions (only A, only B, both, neither) show their probabilities. A gold bar and readout compute inclusion-exclusion: P(A or B) = P(A) + P(B) minus P(A and B), subtracting the overlap that the two circles would otherwise double-count.');
+    draw();
+  });
+
 })();

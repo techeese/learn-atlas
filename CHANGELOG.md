@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 632 — Inclusion–exclusion / two-event Venn viz (visualizations)
+Filled another Probability viz gap (the non-viz surfaces — content, glossary, references, keyboard/a11y, mobile, perf/preconnect — are all verified complete, so the genuine
+remaining gaps are PS viz). `ps-sample-spaces-events` had no viz. Built the **107th widget, `ps-set-events` "Two events: union, intersection & inclusion–exclusion"**: a sample-space
+box Ω with two overlapping circles A and B; sliders for P(A), P(B), and the overlap P(A∩B) (auto-clamped to the valid `[max(0,P(A)+P(B)−1), min(P(A),P(B))]` range) label the four
+regions (only A / both / only B / neither) and compute **P(A∪B)=P(A)+P(B)−P(A∩B)** live with a gold union bar — making concrete *why* you subtract the double-counted overlap.
+Embedded under §7 ("Inclusion–exclusion for two events").
+Verified: gate ALL GREEN (now **107 widgets**); **headless** — Lab + lesson canvases hydrate; defaults give **P(A∪B)=0.70** (0.45+0.40−0.15), and setting the overlap past
+`min(P(A),P(B))` clamps to 0.50 → union 0.50; kErr=0, errs=0; screenshot shows Ω, the two circles, and region probs 0.30/0.15/0.25. SW cache `atlas-v572` → `atlas-v573`.
+
 ## iter 631 — Expectation-as-balance-point viz (visualizations)
 Filled another Probability viz gap. `ps-expectation-variance` (whose §1 is literally "The center of mass of randomness") had no viz. Built the **106th widget,
 `ps-expectation-balance` "Expectation = the balance point"**: four weights sit on a number line at x=1,3,5,8; sliders set them, they normalize to probabilities, and a **gold

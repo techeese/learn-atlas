@@ -204,7 +204,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 630: **step-back + mobile overflow audit (9 routes clean) + clickable streak pill → #/stats** (UI/UX). gate GREEN, headless click→Progress, 390px clean, SW →v571.
    TECHNIQUE (landmine): to audit mobile DOM/overflow at 390px, serve via `python3 -m http.server` and read the iframe's `contentDocument` SAME-ORIGIN — `file://` iframes throw cross-origin on `contentDocument`, so only screenshots work there. Overflow check: `max(documentElement.scrollWidth, app.scrollWidth) - 390 > 2`.
    ✅ iter 631: **expectation-as-balance-point viz** (106th, ps-expectation-balance: weights on a number line, gold fulcrum at E[X], ±SD band). Verified headless uniform E[X]=4.25, skew→6.50, gate GREEN, SW →v572.
-   PS viz gaps remaining: sample-spaces-events, random-variables-distributions, sampling-distributions. Also least-recently-touched lanes: animations, performance (lazy-load = owner steer).
+   ✅ iter 632: **inclusion–exclusion / two-event Venn viz** (107th, ps-set-events: Ω box, A/B circles, region probs, P(A∪B) with overlap clamp). Verified headless union=0.70, clamp 0.50, gate GREEN, SW →v573.
+   PS viz gaps remaining: random-variables-distributions, sampling-distributions (2 left). Least-recently-touched lanes: animations, performance (lazy-load = owner steer).
+   NOTE: non-viz surfaces all verified complete this arc (content uniform, glossary 214, refs 46 [4-6/topic], keyboard nav, a11y, mobile clean, head perf/preconnect done). After the last 2 PS viz, the big remaining levers (10th topic, lazy-load perf) genuinely need owner steer.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
    lazy-load-data perf project (owner steer). Keep varying lanes.
    One lesson/iter, hand-verify every answer key, de-skew new 8 to 2/2/2/2.
