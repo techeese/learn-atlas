@@ -219,6 +219,7 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 641: **algos viz curation** — kruskal/recursion-tree/hashing/sorting/kmeans → 5 lessons (14/23→19/23). gate GREEN, headless hydrate, SW →v582.
    ✅ iter 642: **calc viz curation** — curve-sketch/limit-epsilon/derivative/chain/ftc/saddle → 6 lessons (17/25→23/25). gate GREEN, headless hydrate, SW →v583.
    ✅ iter 643: **NEW viz calc-slope-field** (108th — slope field + Euler, x−y & logistic; calc 23/25→24/25). gate GREEN, headless selector works, screenshot, SW →v584.
+   ✅ iter 644: **MCQ duplicate-choice audit (0 found, content clean) + gate hardening** (whitespace-collapsed, case-preserving dup-choice check). gate GREEN; self-test catches $a - b$/$a-b$, allows $F(x)$/$f(x)$. No SW bump (gate not cached).
    ⏳ NEW-viz build queue (no existing fit): algos a-network-flow (max-flow/min-cut), a-arrays-lists-stacks-queues (push/pop animation), a-np-completeness, a-string-algorithms (KMP/trie); calc c-integration-techniques; RL tail (value-approximation, model-based, offline, imitation); LLM tail (optimization-stability, peft-lora, hallucination-eval, safety). Build one per iter where high-value & visual.
    ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged

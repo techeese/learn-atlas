@@ -84,6 +84,10 @@ C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
     const trimmed = choices.map(c => String(c).trim());
     if (trimmed.some(c => !c)) errors.push("empty MCQ choice: " + l.id + " #" + i);
     if (new Set(trimmed).size !== trimmed.length) errors.push("duplicate MCQ choices: " + l.id + " #" + i);
+    // also catch render-identical duplicates that differ only by whitespace (KaTeX renders "$a-b$" and "$a - b$"
+    // the same) — collapse all whitespace but PRESERVE case, since math case is significant (F≠f, O≠o, Ω≠ω).
+    const collapsed = choices.map(c => String(c).replace(/\s+/g, ""));
+    if (new Set(collapsed).size !== collapsed.length) errors.push("duplicate MCQ choices (whitespace-normalized): " + l.id + " #" + i);
     if (!String(q.q || "").trim()) errors.push("empty MCQ stem: " + l.id + " #" + i);
     checkRender(q.q, l.id + " mcq#" + i + ".q"); checkRender(q.explain, l.id + " mcq#" + i + ".explain");
     choices.forEach((ch, ci) => checkRender(ch, l.id + " mcq#" + i + ".choice" + ci));

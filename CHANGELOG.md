@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 644 — MCQ duplicate-choice audit (clean) + harden the gate against render-identical choices (content quality / tooling)
+Rotated off viz to a content-quality pass. Audited all **2,640 MCQs** for duplicate answer choices. Result: **0 real duplicates** — content is clean. (An initial scan flagged 3, but
+they were false positives from over-aggressive case-folding: in math, case is significant — `F(b)−F(a)` (antiderivative) ≠ `f(b)−f(a)` (function), and Big-`O`/`Ω` ≠ little-`o`/`ω`. A
+case-preserving rescan confirmed zero.) Still, gate's existing duplicate-choice check is **exact-trim**, so it would miss choices that render identically but differ only by whitespace
+(KaTeX renders `$a - b$` and `$a-b$` the same). **Hardened `gate.js`**: added a whitespace-collapsed (case-preserving) duplicate-choice check so that class can't ship in future.
+Verified: gate.js parses; **gate ALL GREEN** (the new check doesn't false-fire on current content); a self-test confirms it **catches** `$a - b$`/`$a-b$` and correctly **allows**
+`$F(x)$`/`$f(x)$`. No SW bump (gate is a dev-time integrity tool, not a served asset).
+
 ## iter 643 — NEW viz: slope fields & Euler's method (visualizations)
 With the curation frontier exhausted, shifted to **new builds** for genuinely-uncovered concepts. Built the **108th widget, `calc-slope-field` "Slope fields: seeing the solutions of an
 ODE"** for `c-intro-differential-equations` (which had no viz): a grid of slope segments for `dy/dx = f(x,y)`, with a gold solution curve traced from an adjustable initial height `y₀`
