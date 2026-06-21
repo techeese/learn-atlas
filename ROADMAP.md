@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 593: **Halve first-visit download — shell-only SW precache** (performance). install now precaches only the ~330KB app shell (CORE), not the ~6.4MB data
+   + viz.js; the fetch handler caches those lazily on first load (offline still works), removing a ~7MB double-download on first visit. Verified: sw.js valid, CORE
+   files exist, runtime caching preserved, gate GREEN, route smoke errs=0. SW →v534.
    ✅ iter 592: **Huffman-coding tree viz — the 100th widget** (visualizations). it-source-coding-viz draws the Huffman tree (gold nodes, 0/1 sage/gold edges, leaf
    boxes with symbol·prob·code) for Dyadic/Uniform/Skewed presets, showing L=H for dyadic and L≥H otherwise. Embedded in it-source-coding (last IT lesson without a
    viz). IT now has 4 native viz. Verified: gate GREEN (100 widgets); headless Dyadic 1.75/1.75, Uniform 2.00/2.00, Skewed 1.60/1.57, kErr=0/errs=0; screenshot. SW →v533.
@@ -2081,6 +2084,12 @@ shared "topics index" (id/title/blurb/color) loaded first + full lessons on dema
 12. **Gamification** — depth and motivation (without cheapening learning).
 
 ## Backlog (ideas — mine these; add as you discover more)
+- **(iter 593 PERF — big but risky) Lazy-load topic data.** The 9 `data/*.js` files total ~6.4MB and are ALL loaded eagerly via `<script defer>` on every page
+  (algorithms 1MB, DL/RL/LLM ~950KB each). The dashboard/search/glossary/prereqs only need course+lesson *metadata* (id/title/icon/color/blurb/minutes/module
+  structure), not the heavy per-lesson `content`/`mcq`/`flashcards`/`examples`/`homework`. A real first-load win would be to split each topic into a tiny manifest
+  (eager) + heavy content (lazy per-topic on first lesson open). It's a sizable architecture change (the app assumes `window.COURSES` is fully populated
+  synchronously everywhere — gate.js, search, prereqs, glossary cross-refs), so do it as a carefully-staged phase with its own gate, not a casual iteration.
+  iter 593 already took the safe half: the SW no longer double-downloads these at install.
 - **(iter 240 note for future iters) JS code-exercises are now gate-verified** — `node gate.js` runs every
   `data-code="javascript"` block and asserts output===`data-expected`. So when authoring a new JS exercise you no longer
   need the manual browser pg-check ritual to confirm the answer key; the gate catches a wrong `data-expected`. (A quick

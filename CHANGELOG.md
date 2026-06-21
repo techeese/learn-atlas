@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 593 — Halve first-visit download: shell-only SW precache (performance)
+The service worker's `install` precached **all 21 assets — including ~6.4MB of per-topic lesson data plus viz.js (468KB)** — via `addAll(ASSETS)`. But the fetch
+handler already caches every same-origin GET on first load, so first-time visitors were downloading those ~7MB **twice** (once for the page's `<script defer>` loads,
+once for the SW pre-fetch). Now `install` precaches only the lightweight **app shell** (`CORE`: html, css, app.js, store.js, manifest, icon — ~330KB); the heavy data
+files, viz.js, glossary/references/prereqs are cached lazily by the existing fetch handler as the page loads them. **First-visit bytes drop ~7MB**, with **identical
+offline support after the first full load** (everything still ends up cached) and an unchanged update-prompt flow.
+Verified: `new Function` on sw.js clean; all 6 CORE assets exist on disk; the runtime fetch handler still caches same-origin GETs (offline preserved); gate ALL GREEN;
+**headless** route smoke across dashboard / lesson / lab / map / glossary → **errs=0** (the app runtime is untouched — only the install precache list changed). SW cache `atlas-v533` → `atlas-v534`.
+
 ## iter 592 — Huffman-coding tree viz — the 100th widget (visualizations)
 The Source Coding lesson was the last IT lesson without a visualization; now it has the most visual algorithm in the topic. **`it-source-coding-viz` "Huffman
 coding: building the optimal prefix code"** draws the Huffman tree for a chosen distribution: internal nodes as gold dots, leaves as boxes showing each symbol, its
