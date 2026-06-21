@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 707 — Hard-concept: the bias–variance decomposition (content / understandability)
+Found a genuine treatment gap: bias-variance is discussed across ~8 lessons and has a viz (`ml-bias-variance-viz`, embedded in `ml-model-selection`) and a U-curve diagnosis section — but the formal
+*decomposition* lived only in Deep Learning. Added a 4th deep-dive to `ml-model-selection` — "the bias–variance decomposition": $\mathbb E[(y-\hat f)^2]=\text{bias}^2+\text{variance}+\sigma^2$, naming
+each term (underfitting / overfitting / irreducible noise) and tying it to the U-shaped test-error curve the lesson already shows. Now ML learners get the rigorous decomposition where they diagnose it.
+Verified: data parses; gate ALL GREEN; **headless** — 4 deep-dives render and the display decomposition typesets when expanded (kErr=0, rawDollar=0), errs=0. SW cache `atlas-v644` → `atlas-v645`.
+
 ## iter 706 — MCQ QA pass (clean) + complete the optimization glossary (quality / reference)
 **QA (fresh lane):** spot-audited answer *correctness* (not just gate's range check) for all **80 MCQs** across the 5 recently-authored lessons (causal ×3, duality, proximal) — re-read every marked
 answer; **all correct**, no wrong keys. The bulk authoring was sound.

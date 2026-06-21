@@ -270,6 +270,7 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    NOTE: 106 lessons have no prereq entry, but LA/calc/algos (65) are intentionally root foundations; remaining applied-topic orphans mostly build on same-topic chains (no genuine cross-topic edge). Graph is now well-connected.
    ✅ iter 705: **Library +4 references** — Book of Why & Mixtape (causal → PS), Convex Optimization book + EE364A course (→ calc). PS refs 8→10, calc 5→7. Causal & Optimization arcs now have Library resources.
    ✅ iter 706: QA-audited all 80 recent-arc MCQ answers (clean, no wrong keys) + **+5 proximal glossary terms** (proximal operator, soft-thresholding, subgradient, projected/proximal GD). Glossary 253→258. Optimization arc fully integrated everywhere.
+   ✅ iter 707: hard-concept deep-dive — **bias–variance decomposition** added to ml-model-selection (formal E[(y−ŷ)²]=bias²+variance+σ²; was only in DL). Now 4 deep-dives.
    ⏳ Keep rotating themes/lanes. Owner-steer big levers: 10th topic / perf refactor.
    ★ Causal arc done (iters 679–689): 3-lesson module + causal-dag viz + glossary + references, fully integrated & verified. Further causal depth optional. Next big levers still owner-steer: Optimization module / 10th topic / lazy-load perf.
    Viz coverage: PS 25/25, ML 10/10, IT 7/7, algos 23/23, DL 22/22 full; calc 24/25, LA 18/19, LLM 18/19, RL 16/20 (remaining holdouts are discussion/reference/no-fit). 118 widgets.
