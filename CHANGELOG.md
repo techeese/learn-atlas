@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 682 — Model-based RL lesson: cross-embed the gridworld planning viz (visualizations / curation)
+`rl-model-based` ("Model-Based RL & Planning") had no viz, yet its core is *planning* — running value iteration on a (learned) model to extract a policy, which is exactly what `rl-gridworld`
+shows. Cross-embedded **`rl-gridworld`** at §4 "Planning: turning a model into a policy". RL viz coverage **15/20 → 16/20**.
+Verified: data parses; gate ALL GREEN; **headless** — the gridworld canvas hydrates (1), navigating away leaves errs=0 (no animation leak via stopAll), kErr=0. SW cache `atlas-v619` → `atlas-v620`.
+
 ## iter 681 — LLM training-mechanics lesson: cross-embed optimizer & schedule viz (visualizations / curation)
 The LLM lesson `l-optimization-and-stability` ("Training Mechanics: AdamW, Schedules, and Stability") had no viz — but DL has exact matches. Cross-embedded **`dl-optimizers`** (SGD vs
 Momentum vs RMSProp vs Adam) at its "AdamW" section and **`dl-lr-schedules`** (warmup + cosine decay) at its "Learning-Rate Schedules" section. LLM viz coverage **17/19 → 18/19**.
