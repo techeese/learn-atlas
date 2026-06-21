@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 692 — Lesson flow: hand the primary CTA to "Next lesson" once complete (workflow / UI-UX)
+After verifying (no valid targets) that a viz active-state sweep would be wrong — most lab buttons are *actions* and modes use `select()` dropdowns — and that workflow is otherwise well-built
+(prev/next/complete/bookmark/notes/connections all present), landed a small momentum win. In the lesson footer the **primary** button was always "Mark complete"; now once a lesson is done the
+emphasis shifts to **"Next lesson →"** (complete becomes a ghost ✓, the forward action becomes primary) — both on initial render of an already-done lesson and live the moment you click complete.
+This nudges the natural forward step and keeps momentum (north star: *want to come back*).
+Verified: app.js parses; gate ALL GREEN; **headless** — before: complete=primary / next=plain; after clicking complete: complete=ghost / next=primary; errs=0. SW cache `atlas-v629` → `atlas-v630`.
+
 ## iter 691 — Hard-concept explanation: why attention divides by √dₖ (content / understandability)
 A broad audit first confirmed the site is healthy (scripts already `defer`; achievements/daily-picks are dynamic, not stale; gamification comprehensive; hard concepts all carry 3 deep-dives) —
 no bug found. Then, per the owner's standing "hard-concept extra explanations" direction, filled a genuine conceptual gap: the attention lesson explained the **O(L²) compute** scaling but never

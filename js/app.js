@@ -1012,9 +1012,9 @@
         <textarea id="notes-area" placeholder="Jot your own notes, questions, or 'aha' moments — saved automatically on this device.">${esc(Store.getNote(lesson.id))}</textarea>
       </div>
       <div class="lesson-actions">
-        <button class="btn primary" id="complete-btn">${done ? "✓ Completed" : "Mark complete (+50 XP)"}</button>
+        <button class="btn ${done ? "ghost" : "primary"}" id="complete-btn">${done ? "✓ Completed" : "Mark complete (+50 XP)"}</button>
         ${prev ? `<a class="btn ghost" href="#/lesson/${course.id}/${prev.id}" data-route>← ${esc(prev.title)}</a>` : ""}
-        ${next ? `<a class="btn" href="#/lesson/${course.id}/${next.id}" data-route>${esc(next.title)} →</a>` : `<a class="btn" href="#/course/${course.id}" data-route>Back to course →</a>`}
+        ${next ? `<a class="btn ${done ? "primary" : ""}" id="next-btn" href="#/lesson/${course.id}/${next.id}" data-route>${esc(next.title)} →</a>` : `<a class="btn ${done ? "primary" : ""}" id="next-btn" href="#/course/${course.id}" data-route>Back to course →</a>`}
         <button class="btn ghost" id="bookmark-btn" aria-pressed="${Store.isBookmarked(lesson.id)}" style="margin-left:auto">${Store.isBookmarked(lesson.id) ? "★ Bookmarked" : "☆ Bookmark"}</button>
         <button class="btn ghost" id="print-lesson">🖨️ Print</button>
       </div>
@@ -1048,6 +1048,8 @@
       Store.completeLesson(lesson.id);
       btn.textContent = "✓ Completed";
       if (!was) {
+        btn.classList.remove("primary"); btn.classList.add("ghost");   // done → de-emphasize; hand the primary CTA to "Next lesson"
+        const nb = document.getElementById("next-btn"); if (nb) nb.classList.add("primary");
         celebrateLessonDone(btn);   // the "you did it" stamp — the core learning action deserves a beat
         toast("✨", "+50 XP", "Lesson complete: " + lesson.title);
         const newly = before ? [...readySet()].filter(id => !before.has(id)).map(id => index()[id]).filter(Boolean) : [];
