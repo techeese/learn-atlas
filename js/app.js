@@ -172,6 +172,16 @@
     const node = index()[pick.lid];
     return node ? { node, k: pick.k, title } : null;
   }
+  // a rotating interactive to surface the visualization catalog (most widgets live inside lessons)
+  function dailyViz() {
+    const cat = window.VIZ_CATALOG || [];
+    if (!cat.length) return null;
+    const rng = mulberry(dayNumber() + 211);   // offset apart from concept(+7) and dive(+101)
+    const v = cat[Math.floor(rng() * cat.length)];
+    let ctx = null;
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (!ctx && String(l.content || "").indexOf('data-viz="' + v.id + '"') >= 0) ctx = { course: c, lesson: l }; })));
+    return { v, ctx };
+  }
 
   // ---------- toast ----------
   let toastWrap;
@@ -603,6 +613,21 @@
           <span class="btn primary" style="pointer-events:none">Read the dive →</span>
         </div>
       </div>` : "";
+    const dv = dailyViz();
+    const dvCol = dv && dv.ctx ? dv.ctx.course.color : "var(--violet)";
+    const dvHtml = dv ? `
+      <div class="cotd reveal" style="--c:${dvCol}" data-go="#/lab/${dv.v.id}">
+        <div class="cotd-side">
+          <div class="cotd-ico" style="color:${dvCol};border-color:${dvCol}">🎛️</div>
+          <div class="cotd-tag">Visualization of the day</div>
+        </div>
+        <div class="cotd-body">
+          <div class="cotd-course">${dv.ctx ? esc(dv.ctx.course.title + " · " + dv.ctx.lesson.title) : "Interactive Lab"}</div>
+          <h3>${esc(dv.v.title)}</h3>
+          <p>${esc(String(dv.v.blurb || "").replace(/\s+/g, " ").slice(0, 150))}${(dv.v.blurb || "").length > 150 ? "…" : ""}</p>
+          <span class="btn primary" style="pointer-events:none">Explore it ↗</span>
+        </div>
+      </div>` : "";
     const cards = C().map(c => {
       const p = Store.courseProgress(c.id);
       const fl = flatLessons(c), lc = fl.length;
@@ -692,6 +717,7 @@
       ${contHtml}
       ${cdHtml}
       ${dddHtml}
+      ${dvHtml}
 
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px" class="reveal">
         <a class="btn primary" href="#/session" data-route>🎯 Start Daily Mix</a>

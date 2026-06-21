@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 650 — "Visualization of the day" dashboard spotlight + step-back regression sweep (new functionality / step-back)
+Round-number step-back. **Full 165-lesson regression sweep**: errs=0, no KaTeX errors, bad=none — the 6 new viz + cross-embeds since iter 640 introduced zero regressions.
+**Ship (new functionality / discoverability):** the codex now has **113 visualizations**, but most are buried inside lessons. Added a **"Visualization of the day"** card to the dashboard —
+a deterministic daily pick from `VIZ_CATALOG` (seeded `dayNumber()+211`, offset from the concept/deep-dive picks so the three don't correlate), showing the widget's title + blurb +
+its home lesson, linking straight to `#/lab/<id>`. Surfaces the interactive catalog and gives a third, distinct kind of daily engagement (an interactive, alongside a concept and a
+deep-dive). Verified by screenshot that the three daily cards read as intentional variety (distinct icons 🧩/🎛️, colors, labels), not clutter. Confirmed the Lab page renders text cards
+(not 113 live canvases) — no perf concern there.
+Verified: `new Function` on app.js clean; gate ALL GREEN; **headless** — the card renders ("Visualization of the day"), today's pick links to `#/lab/algo-master-theorem`, clicking
+navigates to the Lab (onLab=true), 3 daily cards total, errs=0; full-lessons sweep errs=0/bad=none; dashboard screenshot looks clean. SW cache `atlas-v589` → `atlas-v590`.
+
 ## iter 649 — NEW viz: P / NP / NP-complete map → Algorithms viz COMPLETE (visualizations)
 Built the **113th widget, `algo-pnp` "P, NP, NP-complete: the map of difficulty"** for `a-np-completeness` (the last no-viz Algorithms lesson). The canonical complexity-class
 containment diagram with a two-world toggle: **P ≠ NP** (P strictly inside NP; NP-complete inside NP but outside P; NP-hard reaching beyond, dashed) versus the **P = NP** collapse (all
