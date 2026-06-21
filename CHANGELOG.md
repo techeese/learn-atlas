@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 701 — NEW viz: integration by parts as area → calculus viz COMPLETE (visualizations)
+Varied off the optimization theme. Filled calculus's last no-viz lesson with a classic geometric proof. Built the **121st widget, `calc-by-parts` "Integration by parts is two areas tiling a
+rectangle"** for `c-integration-techniques`: a curve v(u) from the origin to (u,v); the area under it (∫v du, sage) and the area to its left (∫u dv, violet) tile the u·v rectangle exactly — so they
+sum to uv, which rearranges to ∫u dv = uv − ∫v du. A slider moves the endpoint; the two areas always tile the box. Embedded at the "Integration by parts" section. **Calculus is now 25/25 — fully viz-covered.**
+Verified: areas re-derived in Node; gate ALL GREEN (now **121 widgets**); **headless** — Lab + lesson hydrate; ∫v du (0.576) + ∫u dv (1.152) = u·v (1.728), tiling confirmed; kErr=0, errs=0; screenshot shows the two regions tiling the rectangle. SW cache `atlas-v638` → `atlas-v639`.
+
 ## iter 700 — Milestone step-back: clean full sweep + ML↔calculus cross-link (step-back / understandability)
 Iter-700 milestone with a due step-back. **Full 174-lesson regression sweep**: errs=0, no KaTeX errors, bad=none; Knowledge Map renders (807 nodes), the calculus optimization module is present — the
 Bayesian + Causal + Optimization arcs (iters 652–699) introduced **zero regressions**.

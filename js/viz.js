@@ -6599,4 +6599,49 @@
     draw();
   });
 
+
+  /* ========================================================
+     121. Integration by parts as area (Calculus)
+     ======================================================== */
+  register({ id: 'calc-by-parts', topic: 'calculus', title: 'Integration by parts is two areas tiling a rectangle', blurb: 'Integration by parts, ∫u dv = uv − ∫v du, is a picture. Take a curve v(u) from the origin to (u, v). The area UNDER it (∫v du, sage) and the area to its LEFT (∫u dv, violet) fit together perfectly to fill the rectangle of area u·v — no overlap, no gap. So the two integrals must sum to uv, which is exactly the by-parts identity rearranged. Slide the endpoint and watch the two pieces always tile the box.' },
+  function (root) {
+    const W = 540, H = 320, padL = 42, padR = 16, padT = 16, padB = 34;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let u1 = 1.1;
+    const UMAX = 1.5, VMAX = 2.3;
+    const f = u => u * u;                 // v = u^2 (monotonic through the origin)
+    const X = u => padL + (u / UMAX) * (W - padL - padR);
+    const Y = v => (H - padB) - (v / VMAX) * (H - padT - padB);
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const v1 = f(u1), N = 80;
+      // region UNDER the curve  =  ∫ v du   (sage)
+      ctx.fillStyle = p.sage; ctx.globalAlpha = 0.28; ctx.beginPath(); ctx.moveTo(X(0), Y(0));
+      for (let i = 0; i <= N; i++) { const u = u1 * i / N; ctx.lineTo(X(u), Y(f(u))); }
+      ctx.lineTo(X(u1), Y(0)); ctx.closePath(); ctx.fill();
+      // region LEFT of the curve  =  ∫ u dv   (violet)
+      ctx.fillStyle = p.violet; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(0), Y(v1)); ctx.lineTo(X(u1), Y(v1));
+      for (let i = N; i >= 0; i--) { const u = u1 * i / N; ctx.lineTo(X(u), Y(f(u))); }
+      ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+      // rectangle outline (area u*v)
+      ctx.strokeStyle = p.gold; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.4; ctx.strokeRect(X(0), Y(v1), X(u1) - X(0), Y(0) - Y(v1)); ctx.setLineDash([]);
+      // the curve
+      ctx.strokeStyle = p.ink; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i <= N; i++) { const u = u1 * i / N; i ? ctx.lineTo(X(u), Y(f(u))) : ctx.moveTo(X(u), Y(f(u))); } ctx.stroke();
+      ctx.fillStyle = p.ink; ctx.beginPath(); ctx.arc(X(u1), Y(v1), 4, 0, 7); ctx.fill();
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.moveTo(padL, padT); ctx.lineTo(padL, Y(0)); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('u', W - padR - 6, Y(0) + 16); ctx.save(); ctx.translate(padL - 26, padT + 10); ctx.rotate(-Math.PI / 2); ctx.fillText('v', 0, 0); ctx.restore();
+      const below = u1 * u1 * u1 / 3, left = 2 * u1 * u1 * u1 / 3, rect = u1 * v1;
+      info.innerHTML = '<b style="color:' + p.sage + '">∫v du = ' + below.toFixed(3) + '</b> &nbsp;+&nbsp; <b style="color:' + p.violet + '">∫u dv = ' + left.toFixed(3) + '</b> &nbsp;=&nbsp; <b style="color:' + p.gold + '">u·v = ' + rect.toFixed(3) + '</b>. The two areas tile the rectangle, so ∫u dv = uv − ∫v du — integration by parts.';
+    }
+    slider(ctl, { label: 'endpoint u', min: 0.3, max: 1.5, step: 0.02, value: u1, fmt: v => v.toFixed(2), onInput: v => { u1 = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Integration-by-parts area visualizer. A curve v = u squared runs from the origin to the point (u, v). The sage region under the curve is the integral of v du; the violet region to the left of the curve is the integral of u dv. Together they exactly fill the dashed gold rectangle of area u times v, with no overlap or gap — so the two integrals sum to u v, which rearranges to the by-parts identity integral of u dv = u v minus integral of v du. A slider moves the endpoint u.');
+    draw();
+  });
+
 })();

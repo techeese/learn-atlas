@@ -261,7 +261,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 698: **NEW lesson c-proximal-projected** (projected GD, projections, subgradients, proximal operator, ISTA, soft-thresholding/lasso; calc-gd2d viz + code + 3dd + 8 MCQ). 174 lessons; calc M7 now 5 lessons.
    ✅ iter 699: topped c-proximal-projected 8→16 MCQ. ★ **Optimization backbone COMPLETE at parity** (convexity → GD-convergence → Lagrange → duality/KKT → projected/proximal). All 174 lessons at standard.
    ✅ iter 700 (milestone): clean full sweep (174 lessons, errs=0/bad=none) + ML↔calc cross-link (ml-regularization → c-proximal-projected "see also") + memory refresh. Site: 174 lessons · 120 viz · 253 glossary · 9 topics.
-   ⏳ VARY THEME next (not more optimization). Options: a neglected-topic deepening, a new viz in RL/LLM, UX/gamification, or owner-steer big levers (10th topic / perf refactor).
+   ✅ iter 701: **NEW viz calc-by-parts** (121st — integration by parts as two areas tiling a rectangle; calc 24/25→25/25 COMPLETE). Fresh theme off optimization.
+   Viz coverage now: PS 25/25, calc 25/25, ML 10/10, IT 7/7, algos 23/23, DL 22/22 FULL; LA 18/19, LLM 18/19, RL 16/20. 121 widgets. Remaining holdouts are discussion/reference lessons.
+   ⏳ Keep rotating themes/lanes. Owner-steer big levers: 10th topic / perf refactor.
    ★ Causal arc done (iters 679–689): 3-lesson module + causal-dag viz + glossary + references, fully integrated & verified. Further causal depth optional. Next big levers still owner-steer: Optimization module / 10th topic / lazy-load perf.
    Viz coverage: PS 25/25, ML 10/10, IT 7/7, algos 23/23, DL 22/22 full; calc 24/25, LA 18/19, LLM 18/19, RL 16/20 (remaining holdouts are discussion/reference/no-fit). 118 widgets.
    Viz coverage now: PS 24/24, ML 10/10, IT 7/7, algos 23/23, DL 22/22 fully covered; calc 24/25, LA 18/19, LLM 17/19, RL 15/20. 118 widgets. Remaining gaps are conceptual/discussion lessons (LLM optimization-stability/safety, RL practical/offline/imitation/frontiers/model-based, calc integration-techniques, la-matrix-derivative-identities) — viz only where genuinely visual.
