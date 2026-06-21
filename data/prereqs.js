@@ -20,7 +20,8 @@ window.PREREQS = {
     "la-dot-product-norms"
   ],
   "ml-svm": [
-    "la-dot-product-norms"
+    "la-dot-product-norms",
+    "c-duality-kkt"
   ],
   "ml-naive-bayes": [
     "ps-conditional-independence-bayes"

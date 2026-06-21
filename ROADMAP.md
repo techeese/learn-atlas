@@ -256,6 +256,7 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    ✅ iter 693: **NEW lesson c-duality-kkt** (Lagrangian duality, weak/strong duality, Slater, KKT, SVM dual; calc-lagrange viz + duality code + 3dd + 8 MCQ). 173 lessons; calculus M7 now 4 lessons.
    ✅ iter 694: topped c-duality-kkt 8→16 MCQ (Lagrangian form, stationarity, Slater, dual problem, support vectors, shadow price, KKT nec+suff). Now full parity; all 173 lessons at standard.
    ✅ iter 695: **NEW viz calc-duality** (120th — weak→strong duality, the duality gap; embedded in c-duality-kkt). Calc M7 optimization module: convexity·GD-convergence·Lagrange·duality/KKT, each with viz.
+   ✅ iter 696: prereq edge **ml-svm → c-duality-kkt** (SVM solved via duality) — wires the optimization backbone into the Knowledge Map.
    ⏳ Optimization thread could extend (gradient-method convergence rates, proximal/projected methods) if owner wants an Optimization push.
    ★ Causal arc done (iters 679–689): 3-lesson module + causal-dag viz + glossary + references, fully integrated & verified. Further causal depth optional. Next big levers still owner-steer: Optimization module / 10th topic / lazy-load perf.
    Viz coverage: PS 25/25, ML 10/10, IT 7/7, algos 23/23, DL 22/22 full; calc 24/25, LA 18/19, LLM 18/19, RL 16/20 (remaining holdouts are discussion/reference/no-fit). 118 widgets.

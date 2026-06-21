@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 696 — Knowledge Map: connect the SVM to its mathematical basis (content structure)
+Integrated iter-693's duality lesson into the cross-topic prerequisite graph. The Support Vector Machine is *solved via* Lagrangian duality (the dual derivation is what enables the kernel trick),
+so added **`ml-svm → c-duality-kkt`** to `data/prereqs.js` (alongside its existing `la-dot-product-norms`). This wires the calculus optimization backbone to its headline ML application in the
+Knowledge Map, and surfaces it as an in-lesson "builds on" link.
+Verified: prereqs.js parses; gate ALL GREEN (every prereq id resolves); **headless** — the SVM lesson links to c-duality-kkt, Knowledge Map renders (803 nodes), kErr=0, errs=0. SW cache `atlas-v633` → `atlas-v634`.
+
 ## iter 695 — NEW viz: the duality gap (weak → strong duality) (visualizations)
 The duality lesson explained the dual function abstractly but had no picture of it. Built the **120th widget, `calc-duality` "Duality: the dual is a floor under the primal"**: for min x² s.t.
 x≥1, it draws the primal optimum p★=1 as a gold ceiling and the concave dual g(λ)=λ−λ²/4 below it; a λ slider shows the **duality gap** (rust bar) shrinking to zero at λ★=2 — weak duality becoming
