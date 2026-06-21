@@ -1982,6 +1982,162 @@
               "solution": "First the centroids (the mean of each cluster): $c_A=(1,0)$ and $c_B=(6,0)$. Cluster A's squared distances: $(0-1)^2+(2-1)^2 = 1+1 = 2$. Cluster B's: $(5-6)^2+(7-6)^2 = 1+1 = 2$. Total WCSS $= 2+2 = 4$. This single number is k-means' objective — every assign-then-recenter step provably lowers it (or leaves it unchanged), which is why the algorithm converges. It is also what the elbow plot tracks against $k$: WCSS always drops as $k$ grows, so you look for the bend where extra clusters stop helping, not the minimum."
             }
           ]
+        },
+        {
+          "id": "ml-dimensionality-reduction",
+          "title": "Dimensionality Reduction: PCA, t-SNE & UMAP",
+          "minutes": 16,
+          "content": "<h3>1. The hook: too many features</h3>\n<p>Real data often has hundreds or thousands of features, but the meaningful variation usually lives in far fewer dimensions. High dimensionality brings the <b>curse of dimensionality</b> — distances become uninformative, models overfit, and visualization is impossible. <b>Dimensionality reduction</b> finds a low-dimensional representation that keeps what matters, for compression, denoising, faster models, and seeing your data.</p>\n<h3>2. The idea: find the low-dimensional structure</h3>\n<p>The bet is that data lies near a low-dimensional <em>manifold</em> embedded in the high-dimensional space — points scattered in 1000-D might really sit close to a 2-D sheet. Reduction methods recover coordinates on that sheet. They split into <b>linear</b> (PCA) and <b>nonlinear</b> (t-SNE, UMAP) families.</p>\n<h3>3. PCA: the variance-preserving projection</h3>\n<div data-viz=\"la-pca\"></div>\n<p><b>Principal Component Analysis</b> finds the orthogonal directions of greatest variance and projects onto the top few. The first principal component is the axis along which the data spreads most; each next one is orthogonal and captures the most remaining variance. Keeping the top $k$ components gives the best <em>linear</em> $k$-dimensional approximation of the data (minimum reconstruction error).</p>\n<h3>4. How many components? Variance explained</h3>\n<p>Each component's eigenvalue is the variance it captures; the <b>explained-variance ratio</b> tells you how many to keep. Often a handful capture most of it:</p>\n<div data-code=\"javascript\" data-expected=\"top-1: 53% variance\ntop-2: 80% variance\ntop-3: 93% variance\ntop-4: 100% variance\">// PCA: cumulative variance captured by the top principal components\nconst eigenvalues = [4.0, 2.0, 1.0, 0.5];   // variance along each component (sorted desc)\nconst total = eigenvalues.reduce((a, b) => a + b, 0);\nlet cum = 0;\neigenvalues.forEach((v, i) => {\n  cum += v;\n  console.log(\"top-\" + (i + 1) + \": \" + Math.round(100 * cum / total) + \"% variance\");\n});\n// Here 2 of 4 components already capture 80% -- keep those, drop the rest.</div>\n<h3>5. PCA in the ML pipeline</h3>\n<p>PCA is a workhorse preprocessing step: <b>compress</b> features (speed + less overfit), <b>denoise</b> (drop low-variance components that are mostly noise), <b>decorrelate/whiten</b> inputs, and visualize in 2-D/3-D. Because it is a fixed linear map learned on the training set, it applies cleanly to new data — fit on train, transform everywhere.</p>\n<h3>6. Nonlinear methods: t-SNE and UMAP</h3>\n<p>When structure is curved, linear PCA flattens it. <b>t-SNE</b> and <b>UMAP</b> are nonlinear methods built for <em>visualization</em>: they place points in 2-D so that local neighborhoods are preserved — nearby points stay nearby — revealing clusters PCA can miss. UMAP is faster and tends to keep more global structure; t-SNE often gives crisp local clusters.</p>\n<h3>7. Choosing a method</h3>\n<p>Use <b>PCA</b> when you want a fast, invertible, general-purpose reduction for modeling or compression (and a baseline). Use <b>t-SNE/UMAP</b> when you want to <em>see</em> cluster structure in 2-D — but treat them as visualization tools, not preprocessing for downstream models (they are not designed to be applied to new points the way PCA is, and UMAP's embedding is stochastic).</p>\n<h3>8. The big picture</h3>\n<p>Dimensionality reduction is the unsupervised counterpart to clustering: clustering groups points, reduction re-coordinates them. Together they are how you explore unlabeled data — and PCA in particular threads through the whole stack, from preprocessing to the SVD-based methods that power recommender systems and embeddings.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: PCA is the eigendecomposition of the covariance (and the SVD)</summary>\n<p>Center the data matrix $X$; its covariance is $\\Sigma=\\tfrac{1}{n}X^\\top X$. The principal components are the <b>eigenvectors of $\\Sigma$</b>, and their eigenvalues are the variances captured. Equivalently, the <b>SVD</b> $X=U\\Sigma V^\\top$ gives the components directly as the right singular vectors $V$ — which is how PCA is computed in practice (more stable than forming the covariance). So PCA, the covariance eigenproblem, and the truncated SVD are three views of one thing.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why t-SNE distances lie</summary>\n<p>t-SNE optimizes only that <em>near</em> points stay near; it makes no promise about far ones. So in a t-SNE plot, the <b>distance between clusters is not meaningful</b>, <b>cluster sizes are not meaningful</b> (dense and sparse clusters get rescaled), and the layout changes with the perplexity hyperparameter and random seed. Read it as \"these points are neighbors,\" never as \"these two clusters are twice as far apart as those.\"</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: PCA vs autoencoders</summary>\n<p>A linear <b>autoencoder</b> with a bottleneck and squared-error loss learns exactly the PCA subspace — PCA is the optimal <em>linear</em> compression. Swap in nonlinear activations and depth and the autoencoder can capture curved manifolds PCA cannot, at the cost of a harder, non-convex optimization. So PCA is the closed-form linear special case of the broader deep-learning idea of learning a compact latent code.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "The \"curse of dimensionality\" refers to:",
+              "choices": [
+                "Distances becoming uninformative and models overfitting as features grow",
+                "Models training too fast",
+                "Having too few features",
+                "Labels being noisy"
+              ],
+              "answer": 0,
+              "explain": "High-D space makes distances/density degenerate."
+            },
+            {
+              "q": "PCA reduces dimensions by:",
+              "choices": [
+                "Randomly dropping features",
+                "Projecting onto the orthogonal directions of greatest variance",
+                "Keeping the features with the largest names",
+                "Adding noise"
+              ],
+              "answer": 1,
+              "explain": "Top principal components = max-variance directions."
+            },
+            {
+              "q": "A component's eigenvalue in PCA represents:",
+              "choices": [
+                "The class label",
+                "The number of features",
+                "The amount of variance captured along that component",
+                "The learning rate"
+              ],
+              "answer": 2,
+              "explain": "Eigenvalue = variance along that principal direction."
+            },
+            {
+              "q": "t-SNE and UMAP are primarily used for:",
+              "choices": [
+                "Computing exact distances",
+                "Linear compression for deployment",
+                "Supervised classification",
+                "Nonlinear 2-D visualization that preserves local neighborhoods"
+              ],
+              "answer": 3,
+              "explain": "Neighborhood-preserving visualization of clusters."
+            },
+            {
+              "q": "In a t-SNE plot, the distance between two clusters is:",
+              "choices": [
+                "Not meaningful — t-SNE only preserves local neighborhoods",
+                "Exactly the true distance",
+                "Proportional to class difference",
+                "Always zero"
+              ],
+              "answer": 0,
+              "explain": "t-SNE makes no promise about far-apart points."
+            },
+            {
+              "q": "Keeping the top $k$ principal components gives:",
+              "choices": [
+                "A nonlinear embedding",
+                "The best linear $k$-dimensional approximation of the data",
+                "A random subset of features",
+                "The class boundaries"
+              ],
+              "answer": 1,
+              "explain": "PCA minimizes linear reconstruction error."
+            },
+            {
+              "q": "For preprocessing 300 features down to 30 for a deployed model, prefer:",
+              "choices": [
+                "UMAP — it is deterministic",
+                "t-SNE — it generalizes to new points",
+                "PCA — a fixed, invertible linear map you can apply to new points",
+                "No reduction is ever helpful"
+              ],
+              "answer": 2,
+              "explain": "PCA is a stable transform; t-SNE/UMAP are for viz."
+            },
+            {
+              "q": "A linear autoencoder with a bottleneck and squared-error loss learns:",
+              "choices": [
+                "Nothing useful",
+                "A nonlinear manifold PCA cannot",
+                "The class labels",
+                "The same subspace as PCA"
+              ],
+              "answer": 3,
+              "explain": "PCA is the optimal linear compression = linear autoencoder."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "What does dimensionality reduction do?",
+              "back": "Finds a low-dimensional representation of high-dimensional data that preserves the meaningful structure — for compression, denoising, speed, and visualization."
+            },
+            {
+              "front": "What does PCA find?",
+              "back": "The orthogonal directions (principal components) of greatest variance; projecting onto the top $k$ gives the best linear $k$-dimensional approximation."
+            },
+            {
+              "front": "Explained-variance ratio",
+              "back": "Each component's eigenvalue over the total — tells you how many components to keep (often a few capture most of the variance)."
+            },
+            {
+              "front": "t-SNE / UMAP",
+              "back": "Nonlinear methods for 2-D visualization that preserve <em>local</em> neighborhoods, revealing clusters; UMAP is faster and keeps more global structure."
+            },
+            {
+              "front": "Key t-SNE caveat",
+              "back": "Between-cluster distances and cluster sizes in a t-SNE plot are NOT meaningful — it only preserves local neighborhoods."
+            },
+            {
+              "front": "PCA vs t-SNE/UMAP — when?",
+              "back": "PCA for fast, invertible, general-purpose reduction/preprocessing; t-SNE/UMAP for <em>seeing</em> cluster structure (visualization), not as preprocessing for new points."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "A dataset's principal components have variances (eigenvalues) $[6, 3, 1]$. What fraction of the total variance do the top 2 components capture?",
+              "hint": "Sum top-2 over total.",
+              "solution": "Total $=6+3+1=10$; top 2 capture $6+3=9$, i.e. $9/10=90\\%$. So a 2-D PCA projection retains 90% of the variance — usually plenty to model or plot."
+            },
+            {
+              "prompt": "Why should you NOT interpret the distance between two clusters in a t-SNE plot as meaningful?",
+              "hint": "What does t-SNE optimize?",
+              "solution": "t-SNE only optimizes that nearby (neighboring) points remain nearby; it places no constraint on far-apart points. So inter-cluster gaps are artifacts of the layout and hyperparameters, not real distances — two clusters drawn far apart may be no more dissimilar than two drawn close."
+            },
+            {
+              "prompt": "Give two distinct reasons to run PCA before training a model.",
+              "hint": "Think speed, overfitting, noise, correlation.",
+              "solution": "Any two of: (1) <b>speed</b> — fewer features means faster training/inference; (2) <b>less overfitting</b> — dropping low-variance directions reduces parameters/noise; (3) <b>denoising</b> — low-variance components are often noise; (4) <b>decorrelation/whitening</b> — PCA produces uncorrelated features, which some models prefer."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Reading explained variance",
+              "body": "PCA on 50 features shows the first 5 components explain 92% of variance. What does that suggest?",
+              "solution": "The data effectively lives in a ~5-dimensional subspace: you can project 50 → 5 features and keep 92% of the variation, hugely simplifying modeling and enabling a near-lossless compression. The remaining 45 components (8% of variance) are mostly noise or redundancy you can drop."
+            },
+            {
+              "title": "PCA can't, t-SNE can",
+              "body": "Two classes form two interleaved spirals. A 2-D PCA plot shows them overlapping; t-SNE separates them. Why?",
+              "solution": "The spirals are a curved (nonlinear) structure. PCA can only take linear projections, so no straight-line axes separate interleaved spirals — they collapse on top of each other. t-SNE preserves local neighborhoods nonlinearly, so points along each spiral stay together and the two emerge as distinct clusters. Use PCA for linear structure, t-SNE/UMAP to see nonlinear clusters."
+            },
+            {
+              "title": "When NOT to use t-SNE",
+              "body": "You want to reduce 300 features to 30 as preprocessing for a classifier you'll deploy. PCA or t-SNE?",
+              "solution": "PCA. It learns a fixed linear map you can apply to new/test points consistently and invert, and 30-D is a sensible modeling target. t-SNE/UMAP are visualization tools (typically 2–3 D, neighborhood-preserving, not a stable transform for unseen points), so they are the wrong choice for a deployable preprocessing step."
+            }
+          ]
         }
       ]
     },

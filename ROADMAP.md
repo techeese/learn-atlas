@@ -7,7 +7,8 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
 ## Current state (iter 708, 2026-06-22)
-**9 topics · 176 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 123 visualizations (all embedded) · 268 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
+**9 topics · 177 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 124 visualizations (all embedded) · 268 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
+- ⏳ Top `ml-dimensionality-reduction` 8→16 MCQ (iter 720; gate parity-warns) + add prereq edge → la-low-rank-pca / la-eigenvalues-eigenvectors (PCA's math home). Rounds out ML's Unsupervised module (clustering + dim-reduction).
 - ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ. ✅ iter 719: **NEW viz dl-vit-patchify** (124th — image→patches→tokens; DL viz 23/23). Recent current-gap fills (iters 711–719): MoE (lesson+viz), SSM/Mamba (deep-dive), ViT/multimodal (lesson+viz) — all fully built & integrated.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
 `node gate.js` is ALL GREEN and machine-checks content-parity (warns on any lesson below the standard). Last full 174-lesson regression sweep: iter 708, errs=0/bad=none.

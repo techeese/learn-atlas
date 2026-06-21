@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 720 — NEW lesson: Dimensionality Reduction (PCA, t-SNE, UMAP) (content)
+ML's "Unsupervised Learning" module had clustering (k-means) but **no dimensionality reduction** — t-SNE/UMAP absent, PCA only in linear algebra (the math), not as an ML technique. Added
+`ml-dimensionality-reduction` "Dimensionality Reduction: PCA, t-SNE & UMAP" to ML M4: 8 sections (curse of dimensionality · the manifold idea · PCA + embedded `la-pca` viz · explained-variance · PCA in
+the pipeline · t-SNE/UMAP for visualization · choosing a method · clustering's counterpart), a runnable **explained-variance code exercise** (eigenvalues → top-2 = 80%), **3 deep-dives** (PCA = covariance
+eigendecomp/SVD · why t-SNE distances lie · PCA vs autoencoders), **6 flashcards, 3 examples, 3 homework, 8 MCQs** (2/2/2/2, keys asserted). Site **177 lessons**; ML's unsupervised module now 2 lessons.
+Verified: variance math re-derived in Node; gate ALL GREEN (ran the code + validated the la-pca embed; parity warning flags 8/16 — top-up queued); **headless** — 9 KaTeX/0 errors/rawDollar=0, la-pca hydrates, 3 deep-dives + code runner, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v656` → `atlas-v657`.
+
 ## iter 719 — NEW viz: Vision Transformer patchify → DL viz COMPLETE again (visualizations)
 Gave the new ViT lesson its visual. Built the **124th widget, `dl-vit-patchify` "Vision Transformer: an image becomes a sequence of patches"**: a patchified image (d×d grid over a gradient/blob) on the
 left, the resulting d² patch-tokens as a sequence strip on the right, and a patches-per-side slider showing the token count grow as d² with the readout "attention cost ∝ n²" — making the patch-size /
