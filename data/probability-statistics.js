@@ -3199,6 +3199,162 @@
               "solution": "Scanner ID correlates with severity only because sicker patients were imaged at certain hospitals — it is a confounded, non-causal shortcut. Deploy the model at a new hospital and accuracy collapses. Robust models must rely on causal signal (the lung pathology), not the spurious correlate."
             }
           ]
+        },
+        {
+          "id": "ps-causal-graphs",
+          "title": "Causal Graphs & the Backdoor Criterion",
+          "minutes": 17,
+          "content": "<h3>1. The hook: draw your assumptions as a graph</h3>\n<p>A <b>causal DAG</b> (directed acyclic graph) makes your causal assumptions explicit: each node is a variable, each arrow $X\\to Y$ asserts \"$X$ is a direct cause of $Y$\". Once the graph is drawn, simple path rules tell you exactly which variables to adjust for to read a causal effect off observational data — turning a vague worry about confounding into a precise, checkable procedure.</p>\n<h3>2. Nodes, edges, and paths</h3>\n<p>A <b>path</b> is any sequence of connected edges between two nodes, ignoring arrow direction. A <b>causal path</b> follows the arrows from $X$ to $Y$ (it carries the effect we want). A <b>backdoor path</b> starts with an arrow <em>into</em> $X$ — it is non-causal but still transmits association (this is confounding). The goal: keep causal paths open, block every backdoor path.</p>\n<h3>3. The three building blocks</h3>\n<div data-viz=\"causal-dag\"></div>\n<p>Every path is built from three junctions. A <b>chain</b> $X\\to Z\\to Y$ ($Z$ a mediator) and a <b>fork</b> $X\\leftarrow Z\\to Y$ ($Z$ a confounder) both transmit association — and both are <em>blocked</em> by conditioning on $Z$. A <b>collider</b> $X\\to Z\\leftarrow Y$ is the opposite: it blocks association by default, and conditioning on $Z$ (or a descendant) <em>opens</em> it, creating spurious correlation.</p>\n<h3>4. d-separation: when does information flow?</h3>\n<p>$X$ and $Y$ are <b>d-separated</b> by a set $Z$ — implying $X \\perp Y \\mid Z$ — when every path between them is blocked. A path is blocked if it contains a chain or fork whose middle node is in $Z$, <em>or</em> a collider whose node (and all its descendants) is <em>not</em> in $Z$. d-separation is the graphical test for conditional independence.</p>\n<h3>5. The backdoor criterion</h3>\n<p>To identify the causal effect of $X$ on $Y$, find an adjustment set $Z$ that (1) <b>blocks every backdoor path</b> from $X$ to $Y$, and (2) contains <b>no descendant of $X$</b>. Such a $Z$ \"satisfies the backdoor criterion\" — controlling for it removes all confounding while leaving the causal path intact. The graph, not the data, tells you which $Z$ qualifies.</p>\n<h3>6. The adjustment formula</h3>\n<p>Given a valid backdoor set $Z$, the interventional distribution is the confounder-weighted average $$P(Y\\mid \\text{do}(X{=}x)) = \\sum_z P(Y\\mid X{=}x,\\, Z{=}z)\\,P(Z{=}z).$$ Compare that to the naive $P(Y\\mid X{=}x)$, which mixes in confounding. The code below contrasts them on a severity-confounded drug trial:</p>\n<div data-code=\"javascript\" data-expected=\"adjusted ATE = 0.10\">// Effect of treatment X on recovery Y, confounded by severity Z\nconst pz = { 0: 0.6, 1: 0.4 };                 // 60% mild (z=0), 40% severe (z=1)\nconst pY = { \"1,0\": 0.9, \"0,0\": 0.8,           // P(recover | treated/untreated, mild)\n             \"1,1\": 0.6, \"0,1\": 0.5 };         // P(recover | treated/untreated, severe)\n// Backdoor adjustment: average the within-severity effect over P(z)\nlet ate = 0;\nfor (const z of [0, 1]) ate += (pY[\"1,\" + z] - pY[\"0,\" + z]) * pz[z];\nconsole.log(\"adjusted ATE = \" + ate.toFixed(2));\n// Within EACH severity the drug adds 0.10 -- the honest causal effect, free of the\n// severity confounding that a naive treated-minus-untreated comparison would carry.</div>\n<h3>7. When you cannot adjust</h3>\n<p>Sometimes no measured set blocks the backdoors (an unobserved confounder). Two escapes: the <b>front-door criterion</b> exploits a fully-observed mediator to route around unmeasured confounding, and an <b>instrumental variable</b> uses a source of \"as-good-as-random\" variation in $X$. Both recover causal effects when plain adjustment cannot.</p>\n<h3>8. Why this matters for ML and experimentation</h3>\n<p>DAGs explain <em>why</em> randomized A/B tests work (randomizing $X$ deletes all arrows into it, erasing every backdoor), which features are safe to condition on, and when a model will break under distribution shift (it leaned on a backdoor, not a causal, path). The same graphs underlie causal ML, fairness analysis, and treatment-effect estimation.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: d-separation, precisely</summary>\n<p>A path is <b>blocked</b> by a set $Z$ if it contains either (i) a chain $a\\to b\\to c$ or fork $a\\leftarrow b\\to c$ with the middle node $b\\in Z$, or (ii) a collider $a\\to b\\leftarrow c$ with $b\\notin Z$ <em>and</em> no descendant of $b$ in $Z$. If every path from $X$ to $Y$ is blocked, they are d-separated given $Z$, which implies $X\\perp Y\\mid Z$ in every distribution compatible with the graph.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: the front-door criterion</summary>\n<p>Suppose $X\\to M\\to Y$ with an <em>unmeasured</em> confounder between $X$ and $Y$, but $M$ fully mediates the effect and is itself unconfounded with $Y$ given $X$. Then you can identify the effect in two adjusted steps — $X$ on $M$, then $M$ on $Y$ — and chain them. The front-door formula recovers $P(Y\\mid\\text{do}(X))$ even though no backdoor set exists.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why not control for everything?</summary>\n<p>\"Adjust for every covariate\" is wrong. Conditioning on a <b>mediator</b> removes part of the causal effect; conditioning on a <b>collider</b> (or its descendant) opens a spurious path; and conditioning on a pre-treatment collider can even create \"M-bias\" between two otherwise-independent confounders. The DAG is what distinguishes a helpful control from a harmful one — data alone cannot.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "An arrow $X\\to Y$ in a causal DAG means:",
+              "choices": [
+                "$X$ is a direct cause of $Y$",
+                "$X$ and $Y$ are correlated",
+                "$Y$ causes $X$",
+                "$X$ and $Y$ are independent"
+              ],
+              "answer": 0,
+              "explain": "Edges encode direct causation, not mere association."
+            },
+            {
+              "q": "A backdoor path from $X$ to $Y$ is:",
+              "choices": [
+                "The direct causal path $X\\to Y$",
+                "A non-causal path that starts with an arrow into $X$",
+                "Any path of length one",
+                "A path that cannot transmit association"
+              ],
+              "answer": 1,
+              "explain": "Backdoor paths begin with an arrow into X and carry confounding."
+            },
+            {
+              "q": "The backdoor criterion requires an adjustment set $Z$ that:",
+              "choices": [
+                "Includes at least one collider",
+                "Contains every variable in the graph",
+                "Blocks all backdoor paths and contains no descendant of $X$",
+                "Is always empty"
+              ],
+              "answer": 2,
+              "explain": "Block backdoors, exclude descendants of X (mediators/effects)."
+            },
+            {
+              "q": "A chain or fork path is blocked when you:",
+              "choices": [
+                "Remove the outcome",
+                "Condition on a collider",
+                "Leave all nodes unconditioned",
+                "Condition on its middle (non-collider) node"
+              ],
+              "answer": 3,
+              "explain": "Conditioning on the mediator/confounder middle node blocks the path."
+            },
+            {
+              "q": "A path through a collider is:",
+              "choices": [
+                "Blocked by default, but opened by conditioning on the collider",
+                "Always open",
+                "Opened by leaving the collider unconditioned",
+                "Unaffected by conditioning"
+              ],
+              "answer": 0,
+              "explain": "Colliders block until you condition on them (or a descendant)."
+            },
+            {
+              "q": "To estimate the causal effect of $X$ on $Y$ you should adjust for:",
+              "choices": [
+                "Every available variable",
+                "Confounders (backdoor variables), not mediators or colliders",
+                "Only colliders",
+                "Only mediators"
+              ],
+              "answer": 1,
+              "explain": "Adjust for confounders; controlling mediators/colliders introduces bias."
+            },
+            {
+              "q": "Conditioning on a mediator on the $X\\to Y$ path:",
+              "choices": [
+                "Has no effect on the estimate",
+                "Removes confounding with no downside",
+                "Blocks part of the causal effect, underestimating it",
+                "Is required by the backdoor criterion"
+              ],
+              "answer": 2,
+              "explain": "A mediator transmits the effect; adjusting for it removes that portion."
+            },
+            {
+              "q": "In $P(Y\\mid\\text{do}(X{=}x))=\\sum_z P(Y\\mid X{=}x,Z{=}z)P(Z{=}z)$, the sum is over:",
+              "choices": [
+                "All nodes in the graph",
+                "The values of the outcome $Y$",
+                "The values of the treatment $X$",
+                "The values of the adjustment set $Z$"
+              ],
+              "answer": 3,
+              "explain": "Adjustment re-weights strata of the backdoor set Z by P(z)."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "What does an edge $X\\to Y$ in a causal DAG assert?",
+              "back": "That $X$ is a <b>direct cause</b> of $Y$ (relative to the other variables in the graph)."
+            },
+            {
+              "front": "What is a backdoor path?",
+              "back": "A non-causal path from $X$ to $Y$ that starts with an arrow <em>into</em> $X$; it transmits confounding association."
+            },
+            {
+              "front": "The backdoor criterion",
+              "back": "Adjust for a set $Z$ that blocks all backdoor paths from $X$ to $Y$ and contains no descendant of $X$."
+            },
+            {
+              "front": "When is a path blocked (d-separation)?",
+              "back": "If a chain/fork has its middle node in $Z$, or a collider has its node (and all descendants) NOT in $Z$."
+            },
+            {
+              "front": "The backdoor adjustment formula",
+              "back": "$P(Y\\mid\\text{do}(X{=}x))=\\sum_z P(Y\\mid X{=}x,Z{=}z)\\,P(Z{=}z)$ for a valid backdoor set $Z$."
+            },
+            {
+              "front": "Why does randomizing $X$ identify the effect?",
+              "back": "It deletes every arrow into $X$, so there are no backdoor paths left to block."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "In a fork $X\\leftarrow Z\\to Y$ (with $X\\to Y$ also present), what is the adjustment set needed to estimate the effect of $X$ on $Y$, and why?",
+              "hint": "Block the backdoor through Z.",
+              "solution": "Adjust for $\\{Z\\}$. The backdoor path $X\\leftarrow Z\\to Y$ is a fork through $Z$; conditioning on $Z$ blocks it, leaving only the causal path $X\\to Y$. $Z$ is not a descendant of $X$, so it satisfies the backdoor criterion."
+            },
+            {
+              "prompt": "Explain why conditioning on a collider biases a causal estimate.",
+              "hint": "What does conditioning on a collider do to the path?",
+              "solution": "A collider $X\\to Z\\leftarrow Y$ blocks its path by default, so $X$ and $Y$ are unassociated through it. Conditioning on $Z$ (e.g. by selecting on it) opens the path, inducing a spurious, non-causal association between $X$ and $Y$ — the estimate now reflects selection/collider bias, not the true effect."
+            },
+            {
+              "prompt": "State the two conditions of the backdoor criterion for an adjustment set $Z$.",
+              "hint": "Blocking + a restriction on descendants.",
+              "solution": "(1) $Z$ blocks every backdoor path from $X$ to $Y$ (paths into $X$). (2) $Z$ contains no descendant of $X$. Then $P(Y\\mid\\text{do}(X))=\\sum_z P(Y\\mid X,z)P(z)$."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Choosing the adjustment set",
+              "body": "Genotype $Z$ affects both smoking $X$ and lung cancer $Y$; smoking also causes cancer. To estimate smoking's effect, what do you adjust for?",
+              "solution": "Adjust for $Z$ (the genotype). It opens a backdoor fork $X\\leftarrow Z\\to Y$; conditioning on $Z$ blocks that confounding path while leaving the causal $X\\to Y$ intact. If $Z$ were unmeasured you would need an instrument or front-door route instead."
+            },
+            {
+              "title": "A collider you must not control for",
+              "body": "Talent $X$ and looks $Y$ are independent in the population, but both help you become a celebrity $Z$. Among celebrities, talent and looks are negatively correlated. Why?",
+              "solution": "$Z$ is a collider ($X\\to Z\\leftarrow Y$). Studying only celebrities conditions on $Z$, opening the collider path and inducing a spurious negative association — if a celebrity isn't talented, they're probably good-looking (and vice versa). Controlling for \"is a celebrity\" would manufacture a correlation that isn't causal."
+            },
+            {
+              "title": "Reading an effect off the formula",
+              "body": "With confounder $Z$, you have $P(Y{=}1\\mid X{=}1,Z)$ and $P(Z)$. How do you get the causal effect?",
+              "solution": "Use backdoor adjustment: $P(Y{=}1\\mid\\text{do}(X{=}1))=\\sum_z P(Y{=}1\\mid X{=}1,z)P(z)$, and similarly for $X{=}0$; subtract for the average treatment effect. This re-weights each stratum by its population share $P(z)$ rather than by how treatment happened to be distributed — exactly what the code example computes."
+            }
+          ]
         }
       ]
     },

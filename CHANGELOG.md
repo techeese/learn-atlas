@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 684 — NEW lesson: Causal Graphs & the Backdoor Criterion (content)
+Second lesson of the causal thread, built around iter-683's `causal-dag` viz. Added `ps-causal-graphs` "Causal Graphs & the Backdoor Criterion" to PS Module 3: 8 sections (DAGs · paths &
+backdoor paths · the three junctions + embedded `causal-dag` · d-separation · the backdoor criterion · the adjustment formula · front-door & instruments · why it matters for ML/A-B tests), a
+runnable **backdoor-adjustment code exercise** (severity-confounded drug trial → adjusted ATE = 0.10), **3 deep-dives** (d-separation precisely · front-door criterion · why not control for
+everything / M-bias), **6 flashcards, 3 examples, 3 homework, 8 MCQs** (2/2/2/2, keys asserted). Site **171 lessons**; PS Module 3 now 5 lessons.
+Verified: adjustment code output re-derived in Node; gate ALL GREEN (ran the code; parity warning flags 8/16 MCQ — top-up queued); **headless** — 55 KaTeX/0 errors/rawDollar=0 (incl. the
+display adjustment formula), causal-dag hydrates, 3 deep-dives + code runner present, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v621` → `atlas-v622`.
+
 ## iter 683 — NEW viz: causal DAGs — fork, chain, collider & d-separation (visualizations)
 Built the **119th widget, `causal-dag` "Causal graphs: when conditioning helps or hurts"** — the keystone picture of causal inference. Pick **fork** (confounder Z→X, Z→Y), **chain** (mediator
 X→Z→Y), or **collider** (X→Z←Y), and toggle "condition on Z" to watch the path between X and Y open or close: conditioning *removes* a fork's spurious tie, *blocks* a chain's real effect, and —
