@@ -1582,6 +1582,94 @@
               ],
               "answer": 0,
               "explain": "One counting pass makes it extremely fast and effective with little data and many features (text), which is why it's a strong baseline despite poor calibration."
+            },
+            {
+              "q": "A filter has $P(\\text{spam})=0.4$, $P(\\text{ham})=0.6$, $P(\\text{\"free\"}\\mid\\text{spam})=0.5$, $P(\\text{\"free\"}\\mid\\text{ham})=0.1$. The posterior $P(\\text{spam}\\mid\\text{\"free\"})$ is:",
+              "choices": [
+                "$\\approx 0.77$",
+                "$0.5$",
+                "$0.2$",
+                "$\\approx 0.23$"
+              ],
+              "answer": 0,
+              "explain": "$\\dfrac{0.4\\cdot 0.5}{0.4\\cdot 0.5+0.6\\cdot 0.1}=\\dfrac{0.2}{0.26}\\approx 0.77$."
+            },
+            {
+              "q": "Naive Bayes sums log-probabilities instead of multiplying probabilities to:",
+              "choices": [
+                "Make the model nonlinear",
+                "Avoid numerical underflow from many tiny factors",
+                "Add regularization",
+                "Speed up training only"
+              ],
+              "answer": 1,
+              "explain": "Products of many small probabilities underflow to 0; summing logs is numerically stable and order-preserving."
+            },
+            {
+              "q": "Gaussian Naive Bayes is appropriate when the features are:",
+              "choices": [
+                "Strictly binary",
+                "Word counts",
+                "Continuous (each modeled as a per-class Gaussian)",
+                "Categorical only"
+              ],
+              "answer": 2,
+              "explain": "Gaussian NB estimates a mean and variance per feature per class; multinomial/Bernoulli variants handle counts/binary features."
+            },
+            {
+              "q": "Bernoulli Naive Bayes models each feature as:",
+              "choices": [
+                "A probability",
+                "A real number",
+                "A word count",
+                "Binary — present or absent"
+              ],
+              "answer": 3,
+              "explain": "Bernoulli NB uses presence/absence indicators (and explicitly models absence), unlike multinomial NB which uses counts."
+            },
+            {
+              "q": "The denominator $P(x)$ in Bayes' rule can be ignored when classifying because it:",
+              "choices": [
+                "Is the same across classes — only the numerators need comparing",
+                "Is always 1",
+                "Equals the prior",
+                "Cancels the likelihood"
+              ],
+              "answer": 0,
+              "explain": "$P(x)$ is a constant normalizer; the predicted class is $\\arg\\max_c P(c)\\prod_i P(x_i\\mid c)$."
+            },
+            {
+              "q": "With Laplace (add-one) smoothing, a word never seen in spam training gets a spam likelihood that is:",
+              "choices": [
+                "Exactly 0",
+                "Small but nonzero (not exactly 0)",
+                "Exactly 1",
+                "Negative"
+              ],
+              "answer": 1,
+              "explain": "Adding 1 to every count means no estimate is ever 0, so one unseen word cannot veto the whole product."
+            },
+            {
+              "q": "In Bayes' rule $P(c\\mid x)\\propto P(x\\mid c)\\,P(c)$, the term $P(c)$ is the:",
+              "choices": [
+                "Posterior",
+                "Likelihood",
+                "Prior — the base rate of each class",
+                "Evidence"
+              ],
+              "answer": 2,
+              "explain": "$P(c)$ is the class prior (estimated from class frequencies); $P(x\\mid c)$ is the likelihood."
+            },
+            {
+              "q": "If the classes have equal priors, Naive Bayes reduces to choosing the class with the largest:",
+              "choices": [
+                "Feature mean",
+                "Prior",
+                "Number of features",
+                "Likelihood $\\prod_i P(x_i\\mid c)$ (maximum likelihood)"
+              ],
+              "answer": 3,
+              "explain": "Equal priors cancel, leaving a pure maximum-likelihood decision over the product of per-feature likelihoods."
             }
           ],
           "flashcards": [

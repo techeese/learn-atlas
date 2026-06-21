@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 621 — MCQ top-up runway, batch 14: ml-naive-bayes 8 → 16 (content / assessment)
+Fourteenth batch. Added **8 new MCQs to `ml-naive-bayes`** (now 16), distinct from the existing eight: a numeric posterior (`P(spam|"free")≈0.77`), log-space to avoid
+underflow, Gaussian NB (continuous) and Bernoulli NB (binary) variants, why `P(x)` cancels in classification, the Laplace mechanism (unseen word → small nonzero), `P(c)` =
+the prior, and equal-priors → maximum-likelihood. Key assertion confirmed each correct choice; balanced → **4/4/4/4**.
+Verified: data parses; gate ALL GREEN; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v561` → `atlas-v562`. Runway: **14 of 17** (ML 7/10).
+
 ## iter 620 — MCQ top-up runway, batch 13: ml-svm 8 → 16 (content / assessment)
 Thirteenth batch. Added **8 new MCQs to `ml-svm`** (now 16), distinct from the existing eight: non-support-vector deletion leaves the boundary unchanged, `C↑` → low-bias/
 high-variance, `C↓` → softer wider margin, the hinge loss, multiclass via one-vs-rest/one-vs-one, functional margin `=1` on the margin, SV sparsity, and large RBF `γ` →
