@@ -22,12 +22,12 @@
             {
               "q": "The self-information of an event with probability $p$ is defined as:",
               "choices": [
-                "$-\\log p$",
-                "$1-p$",
                 "$p\\log p$",
+                "$1-p$",
+                "$-\\log p$",
                 "$p^2$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$I=-\\log p$: certain events ($p=1$) carry 0 information, rare events ($p\\to 0$) carry a lot."
             },
             {
@@ -44,23 +44,23 @@
             {
               "q": "A fair coin has an entropy of:",
               "choices": [
-                "0 bits",
-                "2 bits",
                 "1 bit",
+                "2 bits",
+                "0 bits",
                 "Infinite"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$H=-(0.5\\log_2 0.5 + 0.5\\log_2 0.5)=1$ bit — one yes/no answer's worth."
             },
             {
               "q": "For a fixed number of outcomes $n$, entropy is maximized by:",
               "choices": [
-                "A distribution concentrated on one outcome",
+                "The uniform distribution (all outcomes equally likely)",
                 "Any skewed distribution",
                 "A distribution with two equally likely outcomes",
-                "The uniform distribution (all outcomes equally likely)"
+                "A distribution concentrated on one outcome"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Uniform = maximal uncertainty, $H=\\log_2 n$, the largest possible."
             },
             {
@@ -77,12 +77,12 @@
             {
               "q": "An outcome that is certain ($p=1$) contributes how much to the entropy?",
               "choices": [
-                "Exactly 0",
-                "1 bit",
                 "Infinite",
+                "1 bit",
+                "Exactly 0",
                 "It depends on the other outcomes"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$-1\\cdot\\log 1 = 0$. A certain event carries no surprise and no information."
             },
             {
@@ -101,10 +101,10 @@
               "choices": [
                 "Higher entropy",
                 "The same entropy",
-                "Lower entropy (it is more predictable)",
-                "Zero entropy"
+                "Zero entropy",
+                "Lower entropy (it is more predictable)"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "$H\\approx 0.47$ bits vs 1 bit — more predictable means less average surprise."
             }
           ],
@@ -174,12 +174,12 @@
             {
               "q": "Differential entropy is defined as:",
               "choices": [
-                "$-\\int f(x)\\log f(x)\\,dx$",
-                "$-\\sum_x p(x)\\log p(x)$",
                 "$\\int x f(x)\\,dx$",
+                "$-\\sum_x p(x)\\log p(x)$",
+                "$-\\int f(x)\\log f(x)\\,dx$",
                 "$\\max_x f(x)$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The continuous analogue of entropy: a density-weighted integral of $-\\log f$."
             },
             {
@@ -196,67 +196,67 @@
             {
               "q": "A uniform distribution on $[0,a]$ has differential entropy:",
               "choices": [
-                "$a$",
-                "$1/a$",
                 "$\\log_2 a$",
+                "$1/a$",
+                "$a$",
                 "$0$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$h=\\log_2 a$ — negative when $a\\lt 1$, zero at $a=1$, positive when $a\\gt 1$."
             },
             {
               "q": "Among all distributions with a fixed variance, which has the maximum differential entropy?",
               "choices": [
                 "The uniform",
-                "The exponential",
                 "The Gaussian",
+                "The exponential",
                 "The Laplace"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The Gaussian is the maximum-entropy distribution for a fixed variance — the 'least presumptuous' choice."
             },
             {
               "q": "Why are KL divergence and mutual information still well-behaved for continuous variables?",
               "choices": [
-                "They ignore the density",
+                "They are differences of differential entropies, so unit-dependent terms cancel",
                 "They only work for Gaussians",
                 "They are always zero",
-                "They are differences of differential entropies, so unit-dependent terms cancel"
+                "They ignore the density"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "As differences, the coordinate-dependent and density-height terms cancel, leaving invariant, nonnegative quantities."
             },
             {
               "q": "The differential entropy of a Gaussian is $\\tfrac12\\log_2(2\\pi e\\,\\sigma^2)$. Doubling $\\sigma$:",
               "choices": [
                 "Halves the entropy",
-                "Adds exactly 1 bit",
                 "Leaves it unchanged",
+                "Adds exactly 1 bit",
                 "Makes it negative"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Entropy grows with $\\log\\sigma$; doubling $\\sigma$ adds $\\log_2 2=1$ bit."
             },
             {
               "q": "Differential entropy depends on:",
               "choices": [
-                "The units in which $x$ is measured",
                 "Only the mean",
+                "The units in which $x$ is measured",
                 "Only the sample size",
                 "Nothing — it is invariant"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Rescaling $x\\mapsto cx$ shifts $h$ by $\\log_2 c$; it is not coordinate-invariant (KL and MI are)."
             },
             {
               "q": "Maximum-entropy reinforcement learning adds to the reward:",
               "choices": [
                 "A penalty on entropy",
-                "A differential-entropy bonus to keep the policy random",
+                "The KL to a uniform prior over states",
                 "The channel capacity",
-                "The KL to a uniform prior over states"
+                "A differential-entropy bonus to keep the policy random"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "An entropy bonus keeps the policy as stochastic as possible while earning return — the idea behind soft actor-critic."
             }
           ],
@@ -334,76 +334,76 @@
               "choices": [
                 "The entropy of $q$ alone",
                 "The number of outcomes",
-                "The average bits to encode outcomes from $p$ using $q$'s code",
-                "The variance of $p$"
+                "The variance of $p$",
+                "The average bits to encode outcomes from $p$ using $q$'s code"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "$H(p,q)=-\\sum p\\log q$: average surprise of $p$'s outcomes measured by $q$."
             },
             {
               "q": "How do cross-entropy, entropy, and KL relate?",
               "choices": [
                 "$H(p,q)=H(p)-D_{\\mathrm{KL}}(p\\|q)$",
-                "They are unrelated",
                 "$H(p,q)=H(p)+D_{\\mathrm{KL}}(p\\|q)$",
+                "They are unrelated",
                 "$H(p,q)=D_{\\mathrm{KL}}(p\\|q)$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Cross-entropy = entropy + KL; the KL term is the extra bits from using the wrong distribution."
             },
             {
               "q": "KL divergence $D_{\\mathrm{KL}}(p\\|q)$ is always:",
               "choices": [
                 "Negative",
-                "Nonnegative, and zero only when $p=q$",
                 "Symmetric in $p$ and $q$",
+                "Nonnegative, and zero only when $p=q$",
                 "Equal to 1"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Gibbs' inequality: $D_{\\mathrm{KL}}\\ge 0$, with equality iff $p=q$."
             },
             {
               "q": "Is KL divergence a true distance metric?",
               "choices": [
-                "No — it is asymmetric and violates the triangle inequality",
-                "Yes, it satisfies all metric axioms",
                 "Only for continuous distributions",
+                "Yes, it satisfies all metric axioms",
+                "No — it is asymmetric and violates the triangle inequality",
                 "Only when $p=q$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$D_{\\mathrm{KL}}(p\\|q)\\neq D_{\\mathrm{KL}}(q\\|p)$ in general; it is a divergence, not a metric."
             },
             {
               "q": "Minimizing cross-entropy loss is equivalent to:",
               "choices": [
-                "Maximizing the entropy of the labels",
+                "Maximum-likelihood estimation",
                 "Minimizing the variance",
                 "Maximizing the KL divergence",
-                "Maximum-likelihood estimation"
+                "Maximizing the entropy of the labels"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Average cross-entropy is the negative log-likelihood, so minimizing it is MLE (and minimizes KL to the data)."
             },
             {
               "q": "For a one-hot true label, cross-entropy reduces to:",
               "choices": [
-                "$-\\log q(\\text{true class})$",
+                "$\\sum_x q(x)^2$",
                 "$0$ always",
                 "The entropy of $q$",
-                "$\\sum_x q(x)^2$"
+                "$-\\log q(\\text{true class})$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Only the true class has $p=1$, so $H(p,q)=-\\log q(\\text{true class})$ — the log-loss."
             },
             {
               "q": "Forward KL $D_{\\mathrm{KL}}(p\\|q)$ (as in MLE) tends to make the fitted $q$:",
               "choices": [
-                "Lock onto a single mode",
+                "Cover all of $p$'s modes (mode-covering)",
                 "Ignore $p$ entirely",
                 "Become uniform",
-                "Cover all of $p$'s modes (mode-covering)"
+                "Lock onto a single mode"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Forward KL blows up where $p>0$ but $q\\approx 0$, forcing $q$ to spread over every mode of $p$."
             },
             {
@@ -491,11 +491,11 @@
               "q": "Mutual information $I(X;Y)$ measures:",
               "choices": [
                 "The total entropy of the pair",
-                "The linear correlation of $X$ and $Y$",
+                "The reduction in uncertainty about $X$ from learning $Y$",
                 "The entropy of $Y$ alone",
-                "The reduction in uncertainty about $X$ from learning $Y$"
+                "The linear correlation of $X$ and $Y$"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "$I(X;Y)=H(X)-H(X\\mid Y)$ — the bits of uncertainty about $X$ removed by knowing $Y$."
             },
             {
@@ -512,45 +512,45 @@
             {
               "q": "Mutual information equals zero:",
               "choices": [
-                "Only if $X=Y$",
                 "If and only if $X$ and $Y$ are independent",
+                "Only if $X=Y$",
                 "Whenever the correlation is zero",
                 "Never"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$I=D_{\\mathrm{KL}}(p(x,y)\\|p(x)p(y))=0$ iff $p(x,y)=p(x)p(y)$ — independence."
             },
             {
               "q": "Compared with the correlation coefficient, mutual information:",
               "choices": [
-                "Detects any dependence, including nonlinear",
+                "Ignores the joint distribution",
                 "Only detects linear relationships",
                 "Is always equal to the correlation",
-                "Ignores the joint distribution"
+                "Detects any dependence, including nonlinear"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Correlation sees only linear structure; MI captures arbitrary dependence."
             },
             {
               "q": "For $Y=X^2$ with $X$ symmetric about 0, which is true?",
               "choices": [
                 "Correlation is high, MI is zero",
-                "Both are zero",
                 "Correlation is zero, but MI is positive",
+                "Both are zero",
                 "Both are maximal and equal"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The relationship is non-monotonic so $\\rho=0$, yet $X$ determines $Y$ so $I(X;Y)>0$."
             },
             {
               "q": "Mutual information is:",
               "choices": [
-                "Symmetric: $I(X;Y)=I(Y;X)$",
+                "Negative when variables are dependent",
                 "Asymmetric in general",
                 "Always greater than 1 bit",
-                "Negative when variables are dependent"
+                "Symmetric: $I(X;Y)=I(Y;X)$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "It is the shared overlap, so it is symmetric and nonnegative."
             },
             {
@@ -558,21 +558,21 @@
               "choices": [
                 "The variance of the feature",
                 "The feature's correlation with the label",
-                "The entropy of the feature",
-                "The mutual information between the feature and the label"
+                "The mutual information between the feature and the label",
+                "The entropy of the feature"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "$\\mathrm{IG}=H(Y)-H(Y\\mid F)=I(Y;F)$ — mutual information."
             },
             {
               "q": "Conditional entropy $H(X\\mid Y)$ represents:",
               "choices": [
-                "The uncertainty in $X$ before knowing $Y$",
                 "The uncertainty remaining in $X$ after $Y$ is known",
+                "The uncertainty in $X$ before knowing $Y$",
                 "The mutual information",
                 "The joint entropy"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "It is the leftover uncertainty in $X$ given $Y$; $H(X)-H(X\\mid Y)=I(X;Y)$."
             }
           ],
@@ -650,10 +650,10 @@
               "choices": [
                 "$L \\le H$",
                 "$L = 2H$",
-                "$L \\ge H$ (entropy is the floor)",
-                "$L$ is unrelated to $H$"
+                "$L$ is unrelated to $H$",
+                "$L \\ge H$ (entropy is the floor)"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "No code beats entropy: $L\\ge H$, and you can get within 1 bit (or arbitrarily close by block coding)."
             },
             {
@@ -670,45 +670,45 @@
             {
               "q": "The optimal codeword length for a symbol of probability $p$ is about:",
               "choices": [
-                "$p$ bits",
-                "$1/p$ bits",
                 "$-\\log_2 p$ bits",
+                "$1/p$ bits",
+                "$p$ bits",
                 "$2^p$ bits"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Its self-information; plugging these lengths in makes expected length equal the entropy."
             },
             {
               "q": "Huffman's algorithm repeatedly:",
               "choices": [
-                "Splits the most-probable symbol",
+                "Merges the two least-probable symbols",
                 "Assigns equal-length codes",
                 "Sorts symbols alphabetically",
-                "Merges the two least-probable symbols"
+                "Splits the most-probable symbol"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Greedy bottom-up merging of the two least-likely nodes builds the optimal prefix-code tree."
             },
             {
               "q": "For a dyadic distribution (all probabilities powers of 1/2), a Huffman code achieves:",
               "choices": [
-                "Exactly the entropy",
                 "Twice the entropy",
+                "Exactly the entropy",
                 "Half the entropy",
                 "Worse than fixed-length coding"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The ideal lengths $-\\log_2 p$ are integers, so Huffman hits the entropy floor exactly."
             },
             {
               "q": "Compared with Huffman, arithmetic coding:",
               "choices": [
                 "Is always worse",
-                "Can get arbitrarily close to entropy by coding whole sequences",
                 "Ignores symbol probabilities",
+                "Can get arbitrarily close to entropy by coding whole sequences",
                 "Only works for two symbols"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "It avoids Huffman's whole-bit rounding by encoding a message as one fraction."
             },
             {
@@ -725,12 +725,12 @@
             {
               "q": "What does the Kraft inequality $\\sum_i 2^{-\\ell_i}\\le 1$ characterize?",
               "choices": [
-                "Which sets of codeword lengths a prefix code can have",
-                "The speed of Huffman coding",
                 "The entropy of a Gaussian",
+                "The speed of Huffman coding",
+                "Which sets of codeword lengths a prefix code can have",
                 "The number of symbols allowed"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A prefix code with those lengths exists iff the inequality holds; short codewords cost more of the tree."
             }
           ],
@@ -819,21 +819,21 @@
               "choices": [
                 "$H(p)$",
                 "$p$",
-                "$1-p$",
-                "$1-H(p)$"
+                "$1-H(p)$",
+                "$1-p$"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Uniform input is optimal, giving $C=1-H(p)$ bits per use."
             },
             {
               "q": "A BSC with $p=0.5$ has capacity:",
               "choices": [
                 "1 bit",
-                "0.5 bits",
                 "0 (no information passes)",
+                "0.5 bits",
                 "Infinite"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$C=1-H(0.5)=1-1=0$: the output is independent of the input."
             },
             {
@@ -850,45 +850,45 @@
             {
               "q": "A noiseless channel ($p=0$) has capacity:",
               "choices": [
-                "1 bit per use",
                 "0",
+                "1 bit per use",
                 "Infinite",
                 "$H(0)$ which is undefined"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$C=1-H(0)=1-0=1$ bit per use — every bit gets through."
             },
             {
               "q": "How do we approach capacity in practice?",
               "choices": [
-                "By sending faster",
+                "By adding structured redundancy (error-correcting codes)",
                 "By removing all redundancy",
                 "By lowering the voltage",
-                "By adding structured redundancy (error-correcting codes)"
+                "By sending faster"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Codes like Hamming, LDPC, and turbo add redundancy to detect and correct noise."
             },
             {
               "q": "A 3x repetition code (majority vote) is:",
               "choices": [
                 "Optimal",
-                "Simple but inefficient (low rate for its protection)",
+                "Better than LDPC codes",
                 "Unable to correct any errors",
-                "Better than LDPC codes"
+                "Simple but inefficient (low rate for its protection)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Rate 1/3 to cut a 10% error to ~3%; real codes do far better near the Shannon limit."
             },
             {
               "q": "The separation theorem states that source coding and channel coding:",
               "choices": [
                 "Must always be designed jointly",
-                "Can be designed separately with no loss (compress, then protect)",
+                "Are the same operation",
                 "Cannot be combined",
-                "Are the same operation"
+                "Can be designed separately with no loss (compress, then protect)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Separate stages are optimal for point-to-point channels; reliable transmission needs $H\\lt C$."
             }
           ],
@@ -975,12 +975,12 @@
             {
               "q": "In a VAE, the KL term in the loss does what?",
               "choices": [
-                "Pulls the latent posterior toward the prior",
                 "Maximizes reconstruction error",
+                "Pulls the latent posterior toward the prior",
                 "Computes the channel capacity",
                 "Removes the need for a decoder"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$D_{\\mathrm{KL}}(q(z|x)\\|p(z))$ regularizes the encoder's posterior toward the prior."
             },
             {
@@ -988,10 +988,10 @@
               "choices": [
                 "Its accuracy",
                 "The number of parameters",
-                "$2^{H}$ — the cross-entropy exponentiated",
-                "The KL to a uniform model"
+                "The KL to a uniform model",
+                "$2^{H}$ — the cross-entropy exponentiated"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Perplexity is the exponentiated cross-entropy, the 'effective branching factor.'"
             },
             {
@@ -1009,11 +1009,11 @@
               "q": "In RLHF, the KL penalty between the policy and the reference model:",
               "choices": [
                 "Speeds up sampling",
-                "Increases the reward unboundedly",
+                "Keeps the policy from drifting into reward-gaming behavior",
                 "Replaces the reward model",
-                "Keeps the policy from drifting into reward-gaming behavior"
+                "Increases the reward unboundedly"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "The KL leash keeps the fine-tuned policy close to the trusted reference."
             },
             {
@@ -1021,32 +1021,32 @@
               "choices": [
                 "Only the training error",
                 "The number of layers",
-                "The entropy of the labels",
-                "$L(\\text{model}) + L(\\text{data}\\mid\\text{model})$ in bits"
+                "$L(\\text{model}) + L(\\text{data}\\mid\\text{model})$ in bits",
+                "The entropy of the labels"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Total bits to describe the model plus the data given it — Occam's razor as compression."
             },
             {
               "q": "Contrastive methods like InfoNCE train representations by:",
               "choices": [
                 "Minimizing entropy of the input",
-                "Maximizing a lower bound on mutual information between views",
+                "Minimizing the number of features",
                 "Maximizing the channel capacity",
-                "Minimizing the number of features"
+                "Maximizing a lower bound on mutual information between views"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "They push up a tractable lower bound on $I$ between two augmentations of the same datum."
             },
             {
               "q": "Why is minimizing cross-entropy the same as maximum likelihood?",
               "choices": [
-                "They use different data",
                 "Average cross-entropy is the negative log-likelihood of the labels",
+                "They use different data",
                 "Cross-entropy ignores the labels",
                 "It only holds for regression"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$-\\frac{1}{N}\\sum\\log q(y_n|x_n)$ is both the average cross-entropy and the negative average log-likelihood."
             }
           ],

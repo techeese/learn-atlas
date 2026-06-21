@@ -21,45 +21,45 @@
             {
               "q": "A model achieves 0.1% error on its training set but 18% error on a held-out test set drawn i.i.d. from the same distribution. Which single description is most accurate?",
               "choices": [
-                "High bias / underfitting; the model class is too simple",
                 "High variance / overfitting; a large generalization gap from memorizing the training data",
+                "High bias / underfitting; the model class is too simple",
                 "The i.i.d. assumption has been violated by the data collection",
                 "Irreducible error dominates; no model could do better"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Near-zero training error with much higher test error is a large generalization gap — the signature of overfitting (high variance), where the model memorizes the training set rather than generalizing."
             },
             {
               "q": "Which statement correctly distinguishes parametric from non-parametric models?",
               "choices": [
                 "Parametric models have parameters; non-parametric models have none",
-                "In a parametric model the number of parameters is fixed in advance; in a non-parametric model the effective complexity grows with the number of training examples $n$",
+                "Neural networks are non-parametric because they have so many parameters",
                 "Non-parametric models are always more accurate because they have more capacity",
-                "Neural networks are non-parametric because they have so many parameters"
+                "In a parametric model the number of parameters is fixed in advance; in a non-parametric model the effective complexity grows with the number of training examples $n$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Parametric means a fixed-size parameter vector independent of $n$ (e.g., neural nets, linear regression); non-parametric means complexity scales with the data (e.g., k-NN, kernel methods). 'Non-parametric' is not 'no parameters'."
             },
             {
               "q": "Why is empirical risk $\\hat{R}_S(f)$ used to train models instead of the true risk $R(f)$?",
               "choices": [
                 "Empirical risk is always a better objective than true risk",
-                "True risk requires knowing the data distribution $\\mathcal{D}$, which is unknown, so we approximate its expectation with a sample average over the training set",
+                "True risk can only be used for non-parametric models",
                 "Empirical risk has no relationship to true risk but is easier to compute",
-                "True risk can only be used for non-parametric models"
+                "True risk requires knowing the data distribution $\\mathcal{D}$, which is unknown, so we approximate its expectation with a sample average over the training set"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$R(f)=\\mathbb{E}_{\\mathcal{D}}[\\ell]$ depends on the unknown distribution $\\mathcal{D}$. The empirical risk is the sample-average estimator of that expectation, which the i.i.d. assumption justifies."
             },
             {
               "q": "Why does deep learning favor learned representations over hand-engineered features?",
               "choices": [
                 "Hand-engineered features are mathematically impossible to compute",
-                "Learned features are optimized end-to-end for the task objective, can transfer across problems, and improve with scale, rather than being limited by human design choices",
                 "Learned features eliminate the need for any training data",
+                "Learned features are optimized end-to-end for the task objective, can transfer across problems, and improve with scale, rather than being limited by human design choices",
                 "Hand-engineered features always cause the i.i.d. assumption to fail"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Deep nets fold feature construction into the parametric function and optimize it against the same empirical risk, so features are tailored to the objective, transfer to other tasks, and scale with data/compute — unlike fixed human-designed features."
             },
             {
@@ -76,12 +76,12 @@
             {
               "q": "According to the lesson, what is the relationship between the dataset $S$ and the distribution $\\mathcal{D}$?",
               "choices": [
-                "$S$ defines $\\mathcal{D}$, since $\\mathcal{D}$ is just the empirical distribution of the observed examples",
-                "$\\mathcal{D}$ is a finite, known sample while $S$ is the unknown infinite population",
                 "$S$ is a finite i.i.d. sample drawn from the fixed but unknown distribution $\\mathcal{D}$",
+                "$\\mathcal{D}$ is a finite, known sample while $S$ is the unknown infinite population",
+                "$S$ defines $\\mathcal{D}$, since $\\mathcal{D}$ is just the empirical distribution of the observed examples",
                 "$S$ and $\\mathcal{D}$ are interchangeable once $n$ is large enough"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The lesson defines $\\mathcal{D}$ as the fixed but unknown data-generating distribution over pairs $(x,y)$, and $S = \\{(x_i, y_i)\\}_{i=1}^n$ as a finite sample drawn i.i.d. from it. $S$ does not define $\\mathcal{D}$, $\\mathcal{D}$ is not the finite object, and they never become literally interchangeable."
             },
             {
@@ -98,12 +98,12 @@
             {
               "q": "The lesson claims deep learning 'becomes a story about how we parameterize and optimize functions — not a new branch of mathematics.' Which statement best captures the central thesis being argued?",
               "choices": [
-                "Convolutions and attention are mathematically unrelated to classical supervised learning",
-                "Deep networks fail in entirely novel ways that classical ML theory cannot describe",
                 "Both the successes and failures of deep networks are inherited from supervised learning as function fitting",
+                "Deep networks fail in entirely novel ways that classical ML theory cannot describe",
+                "Convolutions and attention are mathematically unrelated to classical supervised learning",
                 "Deep learning replaces the goal of generalization with the goal of memorizing the training set"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The lesson's opening thesis is that 'almost everything that makes a deep network work (and the ways it fails) is inherited from a much older, simpler framework: supervised learning as function fitting.' Both successes and failures trace back to that framework, which contradicts the claims of novelty, unrelatedness, or abandoning generalization."
             },
             {
@@ -111,10 +111,10 @@
               "choices": [
                 "Deploy $M=9$: zero training error is the strongest possible evidence that the model has learned the true function",
                 "Deploy $M=1$: its train and validation errors are closest together, so it has the smallest generalization gap",
-                "Deploy $M=3$: it has the lowest validation MSE, which best estimates performance on unseen data",
-                "Deploy $M=9$ but only after also checking that its test MSE is near 0, which it will be since training MSE is 0"
+                "Deploy $M=9$ but only after also checking that its test MSE is near 0, which it will be since training MSE is 0",
+                "Deploy $M=3$: it has the lowest validation MSE, which best estimates performance on unseen data"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "We select on validation error because it estimates true risk on unseen data; $M=3$ wins at 0.014. The $M=9$ model's zero training error is just interpolation of 10 points (10 parameters), and its val MSE of 0.480 reveals a huge generalization gap — overfitting, not learning."
             },
             {
@@ -132,11 +132,11 @@
               "q": "A team reports 94% accuracy by trying 200 hyperparameter configurations and, each time, evaluating on the test set and keeping the best score. Even though every individual model was trained only on the training set, why is the reported 94% an optimistically biased estimate of true risk?",
               "choices": [
                 "Training 200 models necessarily causes overfitting, so any reported number is inflated regardless of how it is measured",
-                "Selecting the maximum of 200 noisy test estimates uses the test set to make a modeling decision, so it partly reflects luck on that particular sample rather than generalization",
                 "Accuracy is not a valid loss function, so the percentage cannot estimate true risk at all",
+                "Selecting the maximum of 200 noisy test estimates uses the test set to make a modeling decision, so it partly reflects luck on that particular sample rather than generalization",
                 "The i.i.d. assumption is automatically violated whenever more than one configuration is evaluated on the same test set"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "By picking the configuration that maximizes the test score, the test set was used to make a decision — the maximum of 200 noisy estimates is upward-biased and partly reflects luck. The fix is to select on a validation set and touch the sealed test set only once at the end."
             },
             {
@@ -164,34 +164,34 @@
             {
               "q": "The difference between *classification* and *regression* is that:",
               "choices": [
-                "classification predicts a discrete category/label, while regression predicts a continuous numeric value",
                 "classification is supervised but regression is unsupervised",
+                "classification predicts a discrete category/label, while regression predicts a continuous numeric value",
                 "they are two names for the same task",
                 "regression always uses more features"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Both are supervised, but the *output type* differs: classification assigns a class (cat/dog, spam/not), regression outputs a real number (house price, temperature). The choice drives the loss (cross-entropy vs MSE) and the output activation (softmax/sigmoid vs identity)."
             },
             {
               "q": "The ultimate goal of a supervised learning model is to:",
               "choices": [
                 "drive the training error to exactly zero",
-                "memorize the training set perfectly",
+                "generalize — perform well on new, unseen data from the same distribution",
                 "run as fast as possible",
-                "generalize — perform well on new, unseen data from the same distribution"
+                "memorize the training set perfectly"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Training accuracy is only a proxy; what matters is *generalization* to unseen data. A model that memorizes the training set (zero training error) but fails on new data is *overfitting* — the central failure mode the whole field guards against."
             },
             {
               "q": "What is the role of a separate *validation* set (distinct from the test set)?",
               "choices": [
                 "to train the model's weights",
-                "to tune hyperparameters and choose between models during development, without touching the final test set",
+                "it has no real purpose",
                 "to report the final accuracy you publish",
-                "it has no real purpose"
+                "to tune hyperparameters and choose between models during development, without touching the final test set"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Weights are learned on the *training* set; the *validation* set guides choices made by you — learning rate, architecture, when to stop. The *test* set is touched only once, at the end, for an honest generalization estimate. Tuning on the test set leaks information and inflates the reported score."
             }
           ],
@@ -266,11 +266,11 @@
               "q": "In a fully-connected layer mapping an input $\\mathbf{x}\\in\\mathbb{R}^n$ to an output $\\mathbf{a}\\in\\mathbb{R}^m$ via $\\mathbf{a}=\\sigma(W\\mathbf{x}+\\mathbf{b})$, what are the shapes of $W$ and $\\mathbf{b}$?",
               "choices": [
                 "$W$ is $n\\times m$ and $\\mathbf{b}$ has length $n$",
-                "$W$ is $m\\times n$ and $\\mathbf{b}$ has length $m$",
+                "$W$ is $n\\times n$ and $\\mathbf{b}$ has length $m$",
                 "$W$ is $m\\times m$ and $\\mathbf{b}$ has length $n$",
-                "$W$ is $n\\times n$ and $\\mathbf{b}$ has length $m$"
+                "$W$ is $m\\times n$ and $\\mathbf{b}$ has length $m$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Each of the $m$ output neurons has $n$ weights, so $W$ is $m\\times n$ (output dim by input dim) and there is one bias per output neuron, giving $\\mathbf{b}$ length $m$."
             },
             {
@@ -278,32 +278,32 @@
               "choices": [
                 "Without it, gradients would always be exactly zero and training could not start",
                 "Without it, the network could only output values in the range $(0,1)$",
-                "Without it, any stack of layers reduces to a single affine map, so depth adds no expressive power",
-                "Without it, the weight matrices could not be multiplied due to shape mismatches"
+                "Without it, the weight matrices could not be multiplied due to shape mismatches",
+                "Without it, any stack of layers reduces to a single affine map, so depth adds no expressive power"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "A composition of affine maps is itself affine ($W^{(2)}(W^{(1)}\\mathbf{x}+\\mathbf{b}^{(1)})+\\mathbf{b}^{(2)} = W'\\mathbf{x}+\\mathbf{b}'$), so without a nonlinearity any depth collapses to one equivalent linear layer."
             },
             {
               "q": "Which statement best captures the Universal Approximation Theorem and its practical limits?",
               "choices": [
-                "A single wide-enough hidden layer can approximate any continuous function on a bounded region, but the theorem only guarantees existence of weights and the required width may be enormous",
-                "Only networks with at least three hidden layers can approximate continuous functions, regardless of width",
                 "Any MLP, regardless of activation, exactly represents every continuous function with finitely many neurons",
+                "Only networks with at least three hidden layers can approximate continuous functions, regardless of width",
+                "A single wide-enough hidden layer can approximate any continuous function on a bounded region, but the theorem only guarantees existence of weights and the required width may be enormous",
                 "The theorem guarantees that gradient descent will always find the optimal weights for any continuous target"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Universal approximation is an existence result for arbitrarily good approximation with sufficient width; it does not promise that training finds those weights, nor that the width is practical (which is why depth is often preferred)."
             },
             {
               "q": "For the input $\\mathbf{x}=(1,2)$ and $W^{(1)}=\\begin{bmatrix}0.5 & -0.5\\\\ 1.0 & 0.0\\end{bmatrix}$, $\\mathbf{b}^{(1)}=(0,1)$, what is the hidden pre-activation vector $\\mathbf{z}^{(1)}=W^{(1)}\\mathbf{x}+\\mathbf{b}^{(1)}$ (before applying $\\sigma$)?",
               "choices": [
-                "$(-0.5,\\ 2.0)$",
                 "$(0.5,\\ 1.0)$",
+                "$(-0.5,\\ 2.0)$",
                 "$(-0.5,\\ 1.0)$",
                 "$(1.5,\\ 3.0)$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$z_1 = 0.5\\cdot1 + (-0.5)\\cdot2 + 0 = -0.5$ and $z_2 = 1.0\\cdot1 + 0.0\\cdot2 + 1 = 2.0$, giving $(-0.5, 2.0)$."
             },
             {
@@ -320,23 +320,23 @@
             {
               "q": "The lesson states that a single sigmoid neuron is 'logistic regression in disguise.' Which fact most directly justifies this claim?",
               "choices": [
-                "Both fit their parameters by minimizing squared error on the activations",
                 "Both compute $\\sigma(\\mathbf{w}\\cdot\\mathbf{x}+b)$, producing a probability from a linear score passed through the logistic function",
+                "Both fit their parameters by minimizing squared error on the activations",
                 "Both require at least one hidden layer to separate the classes",
                 "Both use the ReLU activation to guarantee a valid probability"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Logistic regression is exactly the model $\\sigma(\\mathbf{w}\\cdot\\mathbf{x}+b)$ with the logistic sigmoid, which is identical to a single sigmoid neuron's computation."
             },
             {
               "q": "For a neuron using the logistic sigmoid $\\sigma(z)=\\tfrac{1}{1+e^{-z}}$, what output does it produce, and what does its bias $b$ control?",
               "choices": [
-                "Output in $(0,1)$; $b$ shifts the threshold at which the neuron fires regardless of the inputs",
-                "Output in $(-1,1)$; $b$ rescales every input by a constant factor",
                 "Output in $[0,\\infty)$; $b$ determines the slope of the activation",
+                "Output in $(-1,1)$; $b$ rescales every input by a constant factor",
+                "Output in $(0,1)$; $b$ shifts the threshold at which the neuron fires regardless of the inputs",
                 "Output in $\\{0,1\\}$; $b$ selects which input is most important"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The logistic sigmoid squashes any real $z$ into $(0,1)$, and the bias adds a constant to $z$ that shifts the firing threshold independently of the inputs."
             },
             {
@@ -355,10 +355,10 @@
               "choices": [
                 "$20$",
                 "$25$",
-                "$31$",
-                "$45$"
+                "$45$",
+                "$31$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Layer 1: $W^{(1)}$ is $5\\times 4=20$ weights plus $5$ biases $=25$. Layer 2: $W^{(2)}$ is $1\\times 5=5$ weights plus $1$ bias $=6$. Total $25+6=31$. The tempting $20$ counts only the first weight matrix and forgets the biases and the output layer."
             },
             {
@@ -386,23 +386,23 @@
             {
               "q": "For a neuron with logistic sigmoid $\\sigma(z)=\\tfrac{1}{1+e^{-z}}$, as the pre-activation $z\\to+\\infty$, both the output $\\sigma(z)$ and the derivative $\\sigma'(z)=\\sigma(z)(1-\\sigma(z))$ behave how?",
               "choices": [
-                "$\\sigma(z)\\to 1$ and $\\sigma'(z)\\to 1$, so learning speeds up for confident neurons",
-                "$\\sigma(z)\\to 0$ and $\\sigma'(z)\\to 1$",
                 "$\\sigma(z)\\to 1$ and $\\sigma'(z)\\to 0$, so the gradient vanishes (saturation)",
+                "$\\sigma(z)\\to 0$ and $\\sigma'(z)\\to 1$",
+                "$\\sigma(z)\\to 1$ and $\\sigma'(z)\\to 1$, so learning speeds up for confident neurons",
                 "$\\sigma(z)\\to\\infty$ and $\\sigma'(z)\\to 0$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "As $z\\to+\\infty$, $\\sigma(z)\\to 1$, and then $\\sigma'(z)=\\sigma(z)(1-\\sigma(z))\\to 1\\cdot 0=0$. The output saturates and the gradient vanishes, slowing learning. The distractor wrongly assumes a large output means a large derivative; in fact saturation kills the gradient."
             },
             {
               "q": "In a neuron's computation $\\sigma(\\mathbf{w}\\cdot\\mathbf{x}+b)$, the weights $\\mathbf{w}$ and bias $b$ are:",
               "choices": [
                 "fixed constants chosen by hand",
-                "the learnable parameters adjusted during training (weights scale each input's influence; the bias shifts the threshold)",
                 "the inputs to the neuron",
+                "the learnable parameters adjusted during training (weights scale each input's influence; the bias shifts the threshold)",
                 "the neuron's outputs"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\mathbf{w}$ and $b$ are exactly what learning tunes (via gradient descent). Each weight sets how strongly its input pushes the pre-activation $z=\\mathbf{w}\\cdot\\mathbf{x}+b$; the bias offsets $z$ so the neuron can fire even when inputs are zero. A whole network is just many such parameters."
             },
             {
@@ -419,23 +419,23 @@
             {
               "q": "For a $K$-class classification network, the final layer typically applies ___ to turn its scores into class probabilities.",
               "choices": [
-                "softmax",
                 "ReLU",
+                "softmax",
                 "the identity (no activation)",
                 "a single sigmoid"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Softmax exponentiates and normalizes the $K$ output scores into a probability distribution (all positive, summing to 1). A single sigmoid handles only the *binary* case; ReLU and the identity don't produce normalized probabilities."
             },
             {
               "q": "The *forward pass* of a neural network:",
               "choices": [
                 "computes the gradients of the loss",
-                "updates the weights",
                 "feeds the input through the layers to compute the output (prediction)",
+                "updates the weights",
                 "is just another name for backpropagation"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The forward pass evaluates the network — input → hidden layers → output — producing the prediction (and the loss). The *backward* pass (backpropagation) then computes gradients of that loss; the optimizer uses them to update weights. Forward computes, backward learns."
             }
           ],
@@ -521,22 +521,22 @@
               "q": "A unit has pre-activation $z = 6$. For which activation is the local derivative $\\phi'(6)$ effectively zero (deepest saturation)?",
               "choices": [
                 "ReLU",
-                "Sigmoid",
                 "Leaky ReLU",
+                "Sigmoid",
                 "Identity"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Sigmoid saturates in both tails, so $\\sigma'(6) = \\sigma(6)(1-\\sigma(6)) \\approx 0.0025$, essentially zero. ReLU, Leaky ReLU, and identity all have derivative near or equal to 1 for large positive $z$."
             },
             {
               "q": "During training you notice that about 40% of the units in a ReLU layer output exactly 0 for every example in the dataset and never change. What is happening and what is a direct fix?",
               "choices": [
                 "Vanishing gradients from the 0.25 derivative cap; switch to tanh",
-                "Dying ReLU: those units' gradients are stuck at 0; use Leaky ReLU or lower the learning rate",
+                "Normal sparsity that requires no action and cannot be improved",
                 "Exploding gradients; add a sigmoid output",
-                "Normal sparsity that requires no action and cannot be improved"
+                "Dying ReLU: those units' gradients are stuck at 0; use Leaky ReLU or lower the learning rate"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Units permanently outputting 0 are dead ReLUs: their pre-activation is negative for all inputs, so the gradient is exactly 0 and they can't recover. Leaky ReLU keeps a nonzero negative-side slope, and a smaller learning rate prevents the large update that kills them."
             },
             {
@@ -554,22 +554,22 @@
               "q": "A colleague builds a 50-layer network using only affine transforms $z = Wx + b$ with no activation functions between layers, reasoning that more layers means more power. What can this network represent?",
               "choices": [
                 "An arbitrarily complex piecewise-linear function, one linear piece per layer",
-                "Exactly a single affine map $W'x + b'$, equivalent to one linear layer",
                 "Any continuous function, by the universal approximation theorem",
+                "Exactly a single affine map $W'x + b'$, equivalent to one linear layer",
                 "A function that can solve XOR because depth alone provides nonlinearity"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Composing affine maps yields another affine map ($W_2(W_1x+b_1)+b_2 = (W_2W_1)x + (W_2b_1+b_2)$), so without nonlinearity the 50 layers collapse to a single perceptron incapable of even XOR."
             },
             {
               "q": "GELU is described as a 'smooth, probabilistically-motivated cousin of ReLU.' What is the precise meaning of the $\\Phi(z)$ factor in $\\mathrm{GELU}(z) = z\\cdot\\Phi(z)$?",
               "choices": [
                 "It is the sigmoid of $z$, which bounds the output to $(0,1)$",
-                "It is the standard normal CDF, weighting the input by the probability the gate should be open",
                 "It is a learnable scaling hyperparameter analogous to Leaky ReLU's $\\alpha$",
+                "It is the standard normal CDF, weighting the input by the probability the gate should be open",
                 "It is the derivative of ReLU, smoothed at the origin"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\Phi$ is the standard normal CDF, so GELU multiplies $z$ by how likely a standard normal falls below it, replacing ReLU's hard gate with a soft probabilistic one that is smooth everywhere."
             },
             {
@@ -586,78 +586,78 @@
             {
               "q": "At pre-activation $z = -4$, both tanh ($\\tanh'(-4)\\approx 0.0013$) and a ReLU ($\\mathrm{ReLU}'(-4)=0$) pass essentially no gradient. Why is the ReLU situation qualitatively worse if $z<0$ holds across the entire dataset?",
               "choices": [
-                "Tanh's gradient is larger, so it always trains faster than ReLU at every input",
                 "The tanh unit is only temporarily stuck and revives if $z$ moves toward 0, whereas the ReLU receives exactly zero gradient and is permanently dead",
+                "Tanh's gradient is larger, so it always trains faster than ReLU at every input",
                 "ReLU outputs a negative number that destabilizes later layers",
                 "Tanh saturation is permanent while ReLU saturation is temporary"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Tanh's near-zero gradient is recoverable because nudging $z$ toward 0 restores a large slope, but a ReLU stuck at $z<0$ for all inputs gets exactly zero gradient forever and can never climb back, making its death permanent."
             },
             {
               "q": "You want to confirm experimentally that nonlinearity is what enables a 2-layer network to solve XOR. You build a network with one hidden layer of width 100 but accidentally set $\\phi$ to the identity function $\\phi(z)=z$. After full training, what is the best accuracy you can expect on XOR?",
               "choices": [
                 "About 100%, because 100 hidden units give more than enough capacity to memorize 4 points",
-                "At most about 75% (3 of 4 points), because the whole network collapses to a single linear decision boundary",
+                "About 87.5%, because width partially compensates for the missing nonlinearity",
                 "About 50%, because identity activations make the gradients vanish completely",
-                "About 87.5%, because width partially compensates for the missing nonlinearity"
+                "At most about 75% (3 of 4 points), because the whole network collapses to a single linear decision boundary"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "With $\\phi(z)=z$ the two affine layers compose into one affine map $W'x+b'$, so the network is a single linear classifier regardless of width; a line cannot separate XOR and can classify at most 3 of the 4 points correctly. Width is irrelevant because the collapse is representational, not a capacity issue."
             },
             {
               "q": "Consider $\\mathrm{ReLU}(z)=\\max(0,z)$ and a 'leaky' variant $\\mathrm{LReLU}(z)=\\max(0.01z,\\,z)$. For a unit that has drifted to $z<0$ on every training example, which statement correctly contrasts their gradient behavior?",
               "choices": [
                 "Both pass zero gradient for $z<0$, so leaky ReLU offers no advantage over plain ReLU",
-                "ReLU passes a derivative of $0$ while leaky ReLU passes $0.01$, giving the dead unit a path to recover",
                 "Leaky ReLU passes a larger gradient than ReLU only when $z>0$, so it cannot revive a unit stuck at $z<0$",
+                "ReLU passes a derivative of $0$ while leaky ReLU passes $0.01$, giving the dead unit a path to recover",
                 "ReLU passes $0.01$ and leaky ReLU passes $1$, so leaky ReLU learns 100x faster on negative inputs"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "For $z<0$, $\\mathrm{ReLU}'=0$ (no gradient, unit is dead and frozen) whereas $\\mathrm{LReLU}'=0.01$, a small but nonzero slope that lets the weights keep updating and potentially push $z$ back above zero. The leaky slope acts precisely on the negative region, which is exactly where plain ReLU fails."
             },
             {
               "q": "A unit uses sigmoid $\\sigma(z)=\\frac{1}{1+e^{-z}}$. Its derivative is $\\sigma'(z)=\\sigma(z)(1-\\sigma(z))$. At what input $z$ is the gradient flowing through this unit the largest, and what is that maximum value?",
               "choices": [
-                "At $z\\to+\\infty$, where $\\sigma'\\to 1$, because the output is most confident there",
-                "At $z=1$, where $\\sigma'\\approx 0.20$, matching the function's steepest visible rise",
                 "At $z=0$, where $\\sigma'=0.25$, the global maximum of the derivative",
+                "At $z=1$, where $\\sigma'\\approx 0.20$, matching the function's steepest visible rise",
+                "At $z\\to+\\infty$, where $\\sigma'\\to 1$, because the output is most confident there",
                 "At $z=0$, where $\\sigma'=1$, since the slope of the curve is steepest at the center"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$\\sigma(0)=0.5$, so $\\sigma'(0)=0.5\\cdot(1-0.5)=0.25$, which is the global maximum of the derivative; the function saturates and the gradient shrinks toward $0$ as $|z|$ grows. The common error is thinking the maximum slope is $1$ (that is tanh's peak slope, not sigmoid's)."
             },
             {
               "q": "GELU is $\\mathrm{GELU}(z)=z\\cdot\\Phi(z)$ where $\\Phi$ is the standard normal CDF. Unlike ReLU, GELU dips slightly below zero for small negative $z$ before rising back toward $0$. Why is this small non-monotonic region often considered beneficial rather than a defect?",
               "choices": [
-                "It guarantees the output is always positive, which stabilizes batch statistics",
-                "It makes GELU exactly equal to ReLU in expectation, so it inherits ReLU's sparsity",
                 "It gives a smooth, everywhere-differentiable curve with nonzero gradient near $z=0^{-}$, avoiding ReLU's hard kink and dead-zone for slightly negative inputs",
+                "It makes GELU exactly equal to ReLU in expectation, so it inherits ReLU's sparsity",
+                "It guarantees the output is always positive, which stabilizes batch statistics",
                 "It forces large negative inputs to pass full gradient, preventing any saturation"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "GELU is smooth everywhere, so it has no nondifferentiable kink and retains a small nonzero gradient for slightly negative $z$, letting units near the threshold keep learning instead of being hard-clipped to zero like ReLU. It does not make outputs always positive, nor does it pass full gradient for large negative $z$ (where $\\Phi(z)\\to 0$ and the function saturates)."
             },
             {
               "q": "The ReLU activation is defined as:",
               "choices": [
-                "$\\dfrac{1}{1+e^{-z}}$",
+                "$\\max(0, z)$",
                 "$\\tanh(z)$",
                 "$z^2$",
-                "$\\max(0, z)$"
+                "$\\dfrac{1}{1+e^{-z}}$"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "ReLU (rectified linear unit) is $\\max(0,z)$: it passes positive inputs through unchanged and clamps negatives to $0$. Cheap to compute, and its derivative is $1$ for $z>0$ — which is why gradients don't vanish through many layers the way they do with sigmoid/tanh."
             },
             {
               "q": "The $\\tanh$ activation outputs values in the range:",
               "choices": [
                 "$(0, 1)$",
-                "$(-1, 1)$",
+                "$(-\\infty, \\infty)$",
                 "$(0, \\infty)$",
-                "$(-\\infty, \\infty)$"
+                "$(-1, 1)$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$\\tanh$ squashes any real input into $(-1, 1)$, and it is *zero-centered* (output $0$ at $z=0$) — its advantage over the sigmoid, whose $(0,1)$ output is always positive and can bias the next layer's gradients."
             },
             {
@@ -665,21 +665,21 @@
               "choices": [
                 "it outputs valid probabilities",
                 "it is bounded between 0 and 1",
-                "its gradient is exactly $1$ for positive inputs, so it doesn't saturate — gradients flow through many layers",
-                "it is smooth and differentiable everywhere"
+                "it is smooth and differentiable everywhere",
+                "its gradient is exactly $1$ for positive inputs, so it doesn't saturate — gradients flow through many layers"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Sigmoid and tanh *saturate*: for large $|z|$ their derivatives shrink toward $0$, so gradients vanish across deep stacks. ReLU's derivative is a constant $1$ wherever $z>0$, keeping the gradient signal alive — the key to training very deep networks. (It is *not* smooth at $0$, and its outputs aren't probabilities.)"
             },
             {
               "q": "For the *output* layer of a *binary* classifier, the natural activation is:",
               "choices": [
-                "the logistic sigmoid (maps the score to a probability in $(0,1)$)",
                 "ReLU",
+                "the logistic sigmoid (maps the score to a probability in $(0,1)$)",
                 "$\\tanh$",
                 "the identity (no activation)"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "A binary classifier needs a single probability in $(0,1)$ — exactly what the sigmoid produces (paired with binary cross-entropy loss). ReLU/tanh/identity don't give a calibrated probability. (For $K>2$ classes you'd use softmax; for *regression*, the identity.)"
             }
           ],
@@ -770,45 +770,45 @@
             {
               "q": "Why does PyTorch's CrossEntropyLoss expect raw logits rather than softmax probabilities as input?",
               "choices": [
-                "Logits train faster because they are larger numbers",
                 "It fuses softmax and the log into a numerically stable log-sum-exp and yields the clean $\\hat{y}-y$ gradient; pre-applying softmax double-normalizes and loses precision",
+                "Logits train faster because they are larger numbers",
                 "Probabilities cannot be differentiated",
                 "The loss internally needs the logits to compute MSE"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Fusing the operations avoids overflow/underflow via log-sum-exp and produces the exact gradient directly. Passing already-softmaxed values applies softmax twice, a common silent bug."
             },
             {
               "q": "For classification, why is softmax + cross-entropy preferred over sigmoid + MSE?",
               "choices": [
-                "MSE is undefined for probabilities",
                 "Cross-entropy's gradient at the logits is $\\hat{y}-y$ with no saturating factor, while sigmoid+MSE includes a $\\hat{y}(1-\\hat{y})$ term that vanishes when the network is confidently wrong",
+                "MSE is undefined for probabilities",
                 "Softmax is faster to compute than sigmoid",
                 "MSE always converges to a worse accuracy by definition"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The $\\hat{y}(1-\\hat{y})$ factor in sigmoid+MSE kills the gradient exactly when confident corrections are needed; cross-entropy avoids this saturation, giving a strong corrective signal."
             },
             {
               "q": "MSE arises as the maximum-likelihood loss under which assumption about the target?",
               "choices": [
                 "The target follows a categorical distribution",
-                "The target equals the prediction plus zero-mean Gaussian noise of constant variance",
+                "The target is bounded in $[0,1]$",
                 "The target is Laplace-distributed around the prediction",
-                "The target is bounded in $[0,1]$"
+                "The target equals the prediction plus zero-mean Gaussian noise of constant variance"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Negative log-likelihood of a Gaussian with constant variance reduces (after dropping constants) to the squared error; that Gaussian-noise assumption is exactly what MSE encodes."
             },
             {
               "q": "The lesson highlights that softmax composed with cross-entropy yields the gradient of the loss with respect to the logits $z$ as:",
               "choices": [
-                "$\\hat{y} - y$",
+                "$-y / \\hat{y}$",
                 "$y - \\hat{y}$",
                 "$\\hat{y}(1 - \\hat{y})$",
-                "$-y / \\hat{y}$"
+                "$\\hat{y} - y$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The clean cancellation of softmax's Jacobian against cross-entropy's $-\\log$ leaves the gradient w.r.t. the logits as simply the predicted probabilities minus the one-hot target, $\\hat{y} - y$."
             },
             {
@@ -825,67 +825,67 @@
             {
               "q": "According to the lesson's unifying view, what is the common thread linking MSE and cross-entropy?",
               "choices": [
-                "Both are negative log-likelihoods under a chosen probability model for the target",
+                "Both are minimized only by setting all parameters to zero",
                 "Both assume the target is generated by Gaussian noise",
                 "Both require the network's output to be a probability distribution",
-                "Both are minimized only by setting all parameters to zero"
+                "Both are negative log-likelihoods under a chosen probability model for the target"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The lesson states that almost every standard loss is a negative log-likelihood in disguise: MSE follows from a Gaussian assumption and cross-entropy from a categorical/Bernoulli assumption."
             },
             {
               "q": "Suppose a 3-class softmax network outputs $\\hat{y} = (0.7, 0.2, 0.1)$ and the true label is class 0, so $y = (1, 0, 0)$. Using the softmax+cross-entropy result, what is the gradient of the loss with respect to the logits?",
               "choices": [
-                "$(-0.3, 0.2, 0.1)$",
-                "$(0.3, -0.2, -0.1)$",
                 "$(0.7, 0.2, 0.1)$",
+                "$(0.3, -0.2, -0.1)$",
+                "$(-0.3, 0.2, 0.1)$",
                 "$(-0.7, -0.2, -0.1)$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The gradient is $\\hat{y} - y = (0.7-1,\\ 0.2-0,\\ 0.1-0) = (-0.3, 0.2, 0.1)$; the negative entry on the correct class means descent raises that logit, while the others are pushed down."
             },
             {
               "q": "A regression network is trained with MSE. Halfway through training you discover the targets $y$ contain a few extreme outliers. Compared to mean absolute error (MAE), how does MSE respond to these outliers, and why?",
               "choices": [
                 "MSE responds identically to MAE, since both are negative log-likelihoods of the same Gaussian model.",
-                "MSE is more sensitive to outliers because squaring makes the loss (and gradient) grow proportionally to the error magnitude, so large errors dominate.",
                 "MSE is less sensitive to outliers because the square shrinks small differences toward zero.",
+                "MSE is more sensitive to outliers because squaring makes the loss (and gradient) grow proportionally to the error magnitude, so large errors dominate.",
                 "MSE ignores outliers entirely because its gradient is constant regardless of error size."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "For a single example MSE is $(\\hat{y}-y)^2$ with gradient $2(\\hat{y}-y)$, so the gradient grows linearly with the residual and large errors dominate; MAE's gradient is constant ($\\pm 1$), making it more robust. MSE corresponds to a Gaussian likelihood while MAE corresponds to a Laplace likelihood, so they are not the same model."
             },
             {
               "q": "In the softmax+cross-entropy gradient derivation, the loss for a one-hot target with true class $c$ simplifies to $\\mathcal{L} = -\\log \\hat{y}_c$ where $\\hat{y}_c$ is the softmax probability of the correct class. As the model becomes confident and correct ($\\hat{y}_c \\to 1$), what happens to this loss?",
               "choices": [
-                "It approaches $0$, since $-\\log 1 = 0$.",
-                "It approaches $1$, the maximum probability.",
                 "It approaches $+\\infty$, penalizing confidence.",
+                "It approaches $1$, the maximum probability.",
+                "It approaches $0$, since $-\\log 1 = 0$.",
                 "It approaches $-\\infty$, rewarding confidence with negative loss."
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Cross-entropy is $-\\log \\hat{y}_c$, and $\\log 1 = 0$, so a perfectly confident correct prediction has zero loss. The loss instead blows up to $+\\infty$ as $\\hat{y}_c \\to 0$ (confident and wrong), which is exactly the desired asymmetry."
             },
             {
               "q": "A student claims that because the softmax+cross-entropy gradient with respect to the logits is the clean $\\hat{y} - y$, the gradient with respect to the logits of the correct class is always negative. Is this reasoning correct?",
               "choices": [
-                "No — the gradient $\\hat{y}-y$ only holds for binary problems, not multi-class.",
-                "Yes, and it is also always positive for every incorrect class's logit.",
                 "No — for the correct class $y_c = 1$, the component is $\\hat{y}_c - 1$, which is $\\le 0$, so gradient descent raises that logit; for wrong classes the component $\\hat{y}_k - 0 = \\hat{y}_k \\ge 0$.",
+                "Yes, and it is also always positive for every incorrect class's logit.",
+                "No — the gradient $\\hat{y}-y$ only holds for binary problems, not multi-class.",
                 "No — the sign of the gradient depends on the learning rate, so it cannot be determined from $\\hat{y}-y$ alone."
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Since softmax probabilities lie in $[0,1]$, the correct-class component $\\hat{y}_c - 1 \\le 0$ and each wrong-class component $\\hat{y}_k \\ge 0$; gradient descent subtracts the gradient, so it pushes the correct logit up and wrong logits down. The student's conclusion is right but the second clause (about wrong classes) is what makes choice answer fully correct, and the learning rate never changes a gradient's sign."
             },
             {
               "q": "Why does the softmax+cross-entropy gradient $\\hat{y} - y$ avoid the 'vanishing gradient' problem that plagues sigmoid + MSE, even when the model is very wrong?",
               "choices": [
-                "Because softmax outputs are always larger than sigmoid outputs, giving bigger gradients.",
                 "Because cross-entropy's $\\log$ cancels the softmax's exponential, leaving a gradient that does not get multiplied by a saturating $\\sigma'(z)$ factor.",
+                "Because softmax outputs are always larger than sigmoid outputs, giving bigger gradients.",
                 "Because cross-entropy clips the gradient to a fixed maximum so it never vanishes.",
                 "Because MSE has no closed-form gradient, whereas cross-entropy does."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With sigmoid+MSE the chain rule introduces a $\\sigma'(z) = \\sigma(z)(1-\\sigma(z))$ factor that vanishes when the unit saturates, stalling learning; cross-entropy's logarithm exactly cancels softmax's exponential so the surviving gradient is simply $\\hat{y}-y$, which stays large precisely when the prediction is far off. The distractor about output magnitude is irrelevant, and MSE does have a closed-form gradient."
             },
             {
@@ -904,32 +904,32 @@
               "choices": [
                 "A one-hot vector with a 1 at the position of the largest logit",
                 "A vector whose entries each lie in \\([-1,1]\\)",
-                "A vector of nonnegative entries that sum to 1 — a proper probability distribution",
-                "A vector of independent probabilities that each lie in \\([0,1]\\) but need not sum to 1"
+                "A vector of independent probabilities that each lie in \\([0,1]\\) but need not sum to 1",
+                "A vector of nonnegative entries that sum to 1 — a proper probability distribution"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Exponentiating makes every entry positive, and dividing by the sum \\(\\sum_j e^{z_j}\\) forces them to add to 1. So softmax outputs a categorical distribution over the \\(K\\) mutually exclusive classes (unlike independent per-class sigmoids, whose outputs need not sum to 1)."
             },
             {
               "q": "For a binary (two-class) classification problem, what is the standard output-activation + loss pairing?",
               "choices": [
-                "A single sigmoid output + binary cross-entropy",
-                "A linear output + mean squared error",
                 "A softmax over two units + mean squared error",
+                "A linear output + mean squared error",
+                "A single sigmoid output + binary cross-entropy",
                 "A ReLU output + mean absolute error"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A single sigmoid squashes the logit to a probability \\(\\hat y\\in(0,1)\\) for the positive class, scored by binary cross-entropy \\(-[y\\log\\hat y + (1-y)\\log(1-\\hat y)]\\) — the negative log-likelihood of a Bernoulli. (Softmax over two units + cross-entropy is mathematically equivalent; pairing softmax with MSE is not the right loss.)"
             },
             {
               "q": "Why is the output layer of a plain regression network usually left linear (no sigmoid/ReLU on the output)?",
               "choices": [
                 "Because a linear output trains faster than any nonlinear alternative",
-                "Because ReLU on the output would make the loss non-differentiable",
+                "Because the target can be any real number, and a squashing activation would artificially bound the output range and bias the predictions",
                 "Because regression targets are always probabilities, which behave linearly",
-                "Because the target can be any real number, and a squashing activation would artificially bound the output range and bias the predictions"
+                "Because ReLU on the output would make the loss non-differentiable"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "MSE is the maximum-likelihood loss under additive Gaussian noise, and a Gaussian target can take any real value. A sigmoid or ReLU on the output would clamp predictions to a bounded range, systematically biasing them — so the regression output stays linear."
             }
           ],
@@ -1003,45 +1003,45 @@
             {
               "q": "For a linear layer $Y = XW$ with $X$ of shape $n\\times d$ and $W$ of shape $d\\times m$, given upstream gradient $\\bar{Y}$, what is the gradient with respect to the weights $\\bar{W}$?",
               "choices": [
-                "$\\bar{Y} W^{\\top}$",
                 "$X^{\\top} \\bar{Y}$",
+                "$\\bar{Y} W^{\\top}$",
                 "$\\bar{Y}^{\\top} X$",
                 "$W^{\\top} \\bar{Y}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\bar{W}$ must have $W$'s shape $d\\times m$; the only product of $X$ ($n\\times d$) and $\\bar{Y}$ ($n\\times m$) giving $d\\times m$ is $X^{\\top}\\bar{Y}$. Note it reuses the cached input $X$."
             },
             {
               "q": "Why does reverse-mode autodiff (backprop) rather than forward-mode dominate deep learning?",
               "choices": [
                 "Reverse mode is more numerically stable than forward mode",
-                "The loss is a single scalar output while there are many parameter inputs, so one backward sweep yields all gradients",
                 "Forward mode cannot handle nonlinear activations like ReLU",
+                "The loss is a single scalar output while there are many parameter inputs, so one backward sweep yields all gradients",
                 "Reverse mode avoids needing to cache any activations"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Reverse mode gives the derivative of one output w.r.t. all inputs in one sweep; with a scalar loss and millions of parameters that is exactly the cheap direction. Forward mode would need one sweep per input."
             },
             {
               "q": "During backprop, a node $b = a_1 \\cdot a_2$ receives upstream gradient $\\bar{b}$. What gets added to $\\bar{a}_1$?",
               "choices": [
                 "$\\bar{b}\\cdot a_1$",
-                "$\\bar{b}\\cdot a_2$",
                 "$\\bar{b}\\cdot (a_1 + a_2)$",
+                "$\\bar{b}\\cdot a_2$",
                 "$\\bar{b}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The local derivative $\\partial b/\\partial a_1 = a_2$, so the multiply rule swaps operands: the gradient to one input is scaled by the OTHER input's cached value."
             },
             {
               "q": "A ReLU unit had pre-activation $z_1 = -0.3$ on the forward pass. What does its backward rule do to the upstream gradient $\\bar{a}_1$?",
               "choices": [
-                "Passes it through unchanged",
-                "Multiplies it by $-0.3$",
                 "Sets the downstream gradient to $0$",
+                "Multiplies it by $-0.3$",
+                "Passes it through unchanged",
                 "Multiplies it by $0.5$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "ReLU's local derivative is $\\mathbf{1}[z>0]$; since $z_1 = -0.3 \\le 0$ the gate is closed and $\\bar{z}_1 = 0$, so no gradient flows to earlier layers through this unit for this example."
             },
             {
@@ -1058,56 +1058,56 @@
             {
               "q": "For the graph $u=wx$, $v=u+b$, $e=v-y$, $L=e\\cdot e$, what is the local derivative $\\partial L/\\partial e$ at the squaring node?",
               "choices": [
-                "$2e$",
                 "$e^2$",
+                "$2e$",
                 "$2v$",
                 "$e$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Since $L=e^2$, the local derivative of the node's output with respect to its input $e$ is $2e$. The input to the squaring node is $e$ (not $v$), so $2v$ is wrong, and $e^2$ is the value, not the derivative."
             },
             {
               "q": "The lesson says that at every node during the backward pass we only ever need two things. What are they?",
               "choices": [
-                "The value cached from the forward pass and the node's local derivative(s) with respect to its inputs",
+                "The full Hessian of the node and its forward output",
                 "The global gradient $\\nabla_\\theta L$ and the learning rate",
                 "The original input data $x$ and the target label $y$",
-                "The full Hessian of the node and its forward output"
+                "The value cached from the forward pass and the node's local derivative(s) with respect to its inputs"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Each node needs only its cached forward output and its local input derivatives, which combine via the chain rule (adjoint times local derivative) to send gradient to each input."
             },
             {
               "q": "According to the lesson, what is backpropagation, stated most precisely?",
               "choices": [
-                "A special case of reverse-mode automatic differentiation applied to a scalar-valued function",
+                "A forward-mode differentiation technique specialized for DAGs",
                 "A new learning principle distinct from gradient descent",
                 "An approximation to the true gradient that trades accuracy for speed",
-                "A forward-mode differentiation technique specialized for DAGs"
+                "A special case of reverse-mode automatic differentiation applied to a scalar-valued function"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The lesson defines backprop as a special case of reverse-mode autodiff applied to a scalar-valued loss. It explicitly states it is not a new learning principle, not magic/an approximation, and reverse (not forward) mode."
             },
             {
               "q": "A node $a$ feeds into two downstream nodes $b$ and $c$ (it is used in two places in the graph). During the backward pass, how is the gradient $\\bar{a}$ formed from the upstream contributions?",
               "choices": [
                 "You overwrite $\\bar{a}$ with whichever branch's gradient arrives last",
-                "You sum the contributions: $\\bar{a} = \\bar{a}_{\\text{from }b} + \\bar{a}_{\\text{from }c}$",
+                "You take the maximum of the two contributions",
                 "You average the two contributions to keep the scale consistent",
-                "You take the maximum of the two contributions"
+                "You sum the contributions: $\\bar{a} = \\bar{a}_{\\text{from }b} + \\bar{a}_{\\text{from }c}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "When a value fans out to multiple consumers, the multivariate chain rule sums the gradients flowing back from every path it influences. Overwriting (a common bug) drops part of the gradient; averaging or max are not what the chain rule prescribes."
             },
             {
               "q": "A linear layer computes $Y = XW$ with $X$ of shape $n\\times d$ and $W$ of shape $d\\times m$, and the backward pass produces $\\bar{X}$. Using the upstream gradient $\\bar{Y}$ (shape $n\\times m$), what is $\\bar{X}$?",
               "choices": [
-                "$\\bar{X} = \\bar{Y} W^\\top$",
-                "$\\bar{X} = W^\\top \\bar{Y}$",
                 "$\\bar{X} = X^\\top \\bar{Y}$",
+                "$\\bar{X} = W^\\top \\bar{Y}$",
+                "$\\bar{X} = \\bar{Y} W^\\top$",
                 "$\\bar{X} = \\bar{Y} W$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$\\bar{X}$ must have $X$'s shape $n\\times d$; only $\\bar{Y}W^\\top$ ($n\\times m$ times $m\\times d$) gives that, matching the chain rule for $Y=XW$. The other forms have mismatched shapes or correspond to $\\bar{W}$, not $\\bar{X}$."
             },
             {
@@ -1124,34 +1124,34 @@
             {
               "q": "Consider the graph $u = wx$, $v = u + b$, $e = v - y$, $L = e^2$, with $w=2$, $x=3$, $b=1$, $y=4$. After computing $\\bar{L}=1$, what is the gradient $\\partial L/\\partial w$?",
               "choices": [
-                "$18$",
+                "$12$",
                 "$6$",
                 "$3$",
-                "$12$"
+                "$18$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Forward: $u=6,\\,v=7,\\,e=3,\\,L=9$. Backward: $\\bar{e}=2e=6$, $\\bar{v}=6$, $\\bar{u}=6$, and $\\partial L/\\partial w = \\bar{u}\\cdot x = 6\\cdot 3 = 18$. The distractor $6$ forgets to multiply by the local factor $x$ at the $u=wx$ node."
             },
             {
               "q": "How does a computational graph represent a function such as a neural network?",
               "choices": [
-                "As a directed acyclic graph (DAG) whose nodes are intermediate values and whose edges record which value is computed from which",
-                "As a cyclic graph that loops until the loss converges",
                 "As a flat list of parameters with no dependency structure",
+                "As a cyclic graph that loops until the loss converges",
+                "As a directed acyclic graph (DAG) whose nodes are intermediate values and whose edges record which value is computed from which",
                 "As a tree in which every node has exactly one child"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Any composition of operations is a DAG: nodes hold intermediate values, edges carry the dependency \"this value is computed from that one.\" The forward pass evaluates it left-to-right; backprop walks it right-to-left."
             },
             {
               "q": "Backprop seeds the backward pass with what value at the loss node, before propagating gradients?",
               "choices": [
-                "\\(0\\)",
-                "the value of the loss \\(L\\) itself",
                 "\\(\\bar L = \\partial L/\\partial L = 1\\)",
+                "the value of the loss \\(L\\) itself",
+                "\\(0\\)",
                 "the learning rate \\(\\eta\\)"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The adjoint of the output with respect to itself is \\(\\partial L/\\partial L = 1\\). Seeding \\(\\bar L = 1\\) and applying each node's local backward rule in reverse propagates \\(\\partial L/\\partial(\\cdot)\\) to every node."
             },
             {
@@ -1169,11 +1169,11 @@
               "q": "Once backprop has produced \\(\\partial L/\\partial\\theta_i\\) for every parameter, how does gradient descent update the parameters to reduce the loss?",
               "choices": [
                 "\\(\\theta \\leftarrow \\theta + \\eta\\,\\nabla_\\theta L\\) — move along the gradient",
-                "\\(\\theta \\leftarrow \\nabla_\\theta L\\) — replace each parameter with its gradient",
+                "\\(\\theta \\leftarrow \\theta - \\eta\\,\\nabla_\\theta L\\) — take a small step opposite the gradient",
                 "\\(\\theta \\leftarrow \\theta - \\eta\\,L\\) — subtract the scalar loss from each parameter",
-                "\\(\\theta \\leftarrow \\theta - \\eta\\,\\nabla_\\theta L\\) — take a small step opposite the gradient"
+                "\\(\\theta \\leftarrow \\nabla_\\theta L\\) — replace each parameter with its gradient"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "The gradient points toward steepest increase of \\(L\\), so stepping in the opposite direction (scaled by the learning rate \\(\\eta\\)) decreases the loss. Backprop supplies the gradient; gradient descent consumes it."
             }
           ],
@@ -1264,66 +1264,66 @@
               "q": "What is the purpose of bias correction ($\\hat m_t = m_t/(1-\\beta_1^t)$) in Adam?",
               "choices": [
                 "It decays the learning rate over time",
-                "It counteracts the moment estimates being biased toward zero early in training because they start at 0",
                 "It prevents division by zero in the denominator",
+                "It counteracts the moment estimates being biased toward zero early in training because they start at 0",
                 "It adds momentum to RMSProp"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Because $m_0=v_0=0$, the running averages underestimate the true moments at the start. Dividing by $(1-\\beta^t)$ rescales them so they are unbiased; the correction fades as $\\beta^t\\to 0$."
             },
             {
               "q": "Which statement correctly matches each optimizer to what it accumulates?",
               "choices": [
-                "Momentum accumulates squared gradients; RMSProp accumulates raw gradients",
                 "Momentum accumulates raw gradients (1st moment); RMSProp accumulates squared gradients (2nd moment); Adam accumulates both",
+                "Momentum accumulates squared gradients; RMSProp accumulates raw gradients",
                 "All three accumulate only the raw gradient, differing only in learning rate",
                 "RMSProp accumulates both moments; Adam accumulates only the second"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Momentum keeps a running average of the gradient (first moment); RMSProp keeps a running average of the squared gradient (second moment); Adam combines the two plus bias correction."
             },
             {
               "q": "Why is minibatch gradient descent generally preferred over both full-batch and single-sample (pure stochastic) GD?",
               "choices": [
                 "Its gradient is exact, unlike the other two",
-                "It balances cheap, frequent, GPU-parallel updates with a lower-variance gradient estimate than single-sample SGD",
                 "It is the only method whose gradient is an unbiased estimate of the true gradient",
+                "It balances cheap, frequent, GPU-parallel updates with a lower-variance gradient estimate than single-sample SGD",
                 "It guarantees convergence to the global minimum"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Minibatches exploit GPU parallelism and update frequently like SGD, while averaging over the batch reduces gradient variance (roughly like $1/|\\mathcal{B}|$) compared to a single sample. Both SGD and minibatch give unbiased estimates, so that is not the distinguishing reason."
             },
             {
               "q": "The base gradient descent update is $\\theta \\leftarrow \\theta - \\eta\\,\\nabla L(\\theta)$. Why does it use the *negative* gradient rather than the gradient itself?",
               "choices": [
-                "The gradient points toward steepest increase of the loss, so we step opposite to it to decrease the loss",
                 "The negative sign converts the learning rate into a positive value",
+                "The gradient points toward steepest increase of the loss, so we step opposite to it to decrease the loss",
                 "Gradients are always negative for a correctly trained network",
                 "Subtracting prevents the parameters from ever becoming negative"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$\\nabla L(\\theta)$ points in the direction of steepest ascent (increasing loss), so moving in the opposite direction reduces the loss."
             },
             {
               "q": "In the 'ball on a hilly landscape in the dark' analogy, what does the learning rate $\\eta$ correspond to?",
               "choices": [
                 "The slope you feel under your feet",
-                "The stride length of each step you take",
+                "The number of times you stop to feel the ground",
                 "The depth of the valley you are seeking",
-                "The number of times you stop to feel the ground"
+                "The stride length of each step you take"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The analogy maps the learning rate to stride length: too small and you crawl, too large and you overshoot the valley. The slope is the gradient and the valley is the minimum."
             },
             {
               "q": "Why can't we just solve $\\nabla L(\\theta) = 0$ directly to train a deep network?",
               "choices": [
-                "The gradient of a deep network is always exactly zero at initialization",
                 "The loss is high-dimensional, non-convex, and tangled, so there is no closed-form solution",
+                "The gradient of a deep network is always exactly zero at initialization",
                 "Computers cannot represent the value zero precisely enough",
                 "Setting the gradient to zero would erase all the weights"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Because $L(\\theta)$ is high-dimensional and non-convex with no closed-form solution, we descend iteratively rather than solving for the optimum analytically."
             },
             {
@@ -1342,76 +1342,76 @@
               "choices": [
                 "It guarantees convergence to the global minimum even on non-convex loss surfaces",
                 "It replaces the gradient direction with the direction of steepest descent in a rotated coordinate system",
-                "It gives each parameter its own effective learning rate, shrinking steps for coordinates with large recent gradients and growing them for coordinates with small ones",
-                "It removes the need for a learning rate $\\eta$ entirely, since the division already normalizes the step"
+                "It removes the need for a learning rate $\\eta$ entirely, since the division already normalizes the step",
+                "It gives each parameter its own effective learning rate, shrinking steps for coordinates with large recent gradients and growing them for coordinates with small ones"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Because $v_t$ is tracked element-wise, each coordinate is divided by its own running gradient magnitude, equalizing step sizes across parameters with very different gradient scales. It does not guarantee global convergence, does not rotate coordinates, and $\\eta$ still sets the overall scale."
             },
             {
               "q": "A student claims: 'Adam divides the step by $\\sqrt{\\hat v_t}$, so when a gradient is large the step gets small — that means Adam takes tiny steps exactly where the slope is steepest, which is backwards.' What is the correct response?",
               "choices": [
-                "The student is right; this is a known flaw that bias correction was introduced to cancel out",
                 "The division normalizes by the gradient's *typical magnitude*, so the update size depends on the gradient's sign/consistency, not its raw steepness; a steep but stable direction still produces a roughly unit-scale step",
+                "The student is right; this is a known flaw that bias correction was introduced to cancel out",
                 "The student is right; Adam should instead multiply by $\\sqrt{\\hat v_t}$ to move faster on steep slopes",
                 "The division only affects the bias terms, not the weight updates, so steepness is irrelevant"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Since $\\hat m_t$ (numerator) and $\\sqrt{\\hat v_t}$ (denominator) both scale with the gradient magnitude, the per-coordinate update is roughly normalized to order $\\eta$ regardless of absolute steepness — it tracks the *consistency/sign* of the gradient, not its raw size. The misconception treats numerator and denominator as independent."
             },
             {
               "q": "Momentum keeps a velocity $m_t = \\beta_1 m_{t-1} + g_t$ and updates $\\theta \\leftarrow \\theta - \\eta\\, m_t$. Consider a steep, narrow ravine where the gradient oscillates back and forth across the valley walls but has a small, consistent component pointing along the valley floor. Why does momentum speed up training here compared to plain SGD?",
               "choices": [
                 "It increases the learning rate automatically whenever the loss stops decreasing",
-                "Oscillating components in the across-valley direction partly cancel between steps while the consistent along-valley component accumulates, so net progress is faster",
+                "It adds random noise that helps escape the ravine entirely",
                 "It projects the gradient onto the eigenvector of the Hessian with the largest eigenvalue",
-                "It adds random noise that helps escape the ravine entirely"
+                "Oscillating components in the across-valley direction partly cancel between steps while the consistent along-valley component accumulates, so net progress is faster"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The alternating-sign across-valley gradients cancel in the running velocity, damping oscillation, while the steadily-signed along-valley component builds up — accelerating motion down the floor. Momentum has no automatic LR schedule and does no explicit Hessian eigen-decomposition."
             },
             {
               "q": "In the Adam (and RMSProp) update $\\theta \\leftarrow \\theta - \\eta\\,\\hat m_t / (\\sqrt{\\hat v_t} + \\epsilon)$ with $\\epsilon = 10^{-8}$, what is the primary role of $\\epsilon$?",
               "choices": [
-                "To prevent division by zero (or near-zero) when $\\hat v_t$ is tiny, keeping the per-parameter step from blowing up",
-                "To set the effective learning rate, since $\\eta$ has no effect once $\\epsilon$ is present",
                 "To add momentum-like smoothing to the gradient estimate",
+                "To set the effective learning rate, since $\\eta$ has no effect once $\\epsilon$ is present",
+                "To prevent division by zero (or near-zero) when $\\hat v_t$ is tiny, keeping the per-parameter step from blowing up",
                 "To correct the initialization bias of $m_t$ and $v_t$ toward zero"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$\\epsilon$ is a small numerical stabilizer that bounds the denominator away from zero, so coordinates with vanishing second moment do not produce enormous updates. Bias correction is handled by the $1-\\beta^t$ factors, not $\\epsilon$, and $\\eta$ still controls the step scale."
             },
             {
               "q": "In which direction does the gradient \\(\\nabla L(\\theta)\\) of the loss point?",
               "choices": [
                 "The direction of steepest decrease of the loss",
-                "The direction of steepest increase of the loss",
                 "Straight toward the nearest local minimum",
+                "The direction of steepest increase of the loss",
                 "Perpendicular to the loss surface, neither up nor down"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "By definition the gradient points in the direction of steepest ascent of \\(L\\). That is exactly why gradient descent steps in the negative gradient direction to lower the loss."
             },
             {
               "q": "The minibatch gradient used by SGD is called an *unbiased estimator* of the true full-dataset gradient. What does \"unbiased\" mean here?",
               "choices": [
                 "Every individual step points in exactly the true gradient direction",
-                "It always has lower variance than the full-batch gradient",
                 "Its expected value, averaged over the random choice of example/batch, equals the true full-dataset gradient",
+                "It always has lower variance than the full-batch gradient",
                 "It can never point uphill on the loss surface"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Unbiased means \\(\\mathbb{E}[\\nabla L_{\\text{batch}}] = \\nabla L_{\\text{full}}\\): on average the noisy estimate equals the true gradient. Any single step still jitters (nonzero variance) — that noise is what helps escape sharp minima and saddle points."
             },
             {
               "q": "Momentum keeps a velocity \\(m_t = \\beta\\,m_{t-1} + g_t\\) with \\(\\beta\\) typically near \\(0.9\\). What does increasing \\(\\beta\\) toward 1 do?",
               "choices": [
-                "Increases the influence of accumulated past gradients (more inertia), smoothing the update over a longer history",
                 "Makes the optimizer ignore past gradients and behave like plain SGD",
+                "Increases the influence of accumulated past gradients (more inertia), smoothing the update over a longer history",
                 "Directly increases the learning rate \\(\\eta\\)",
                 "Forces the gradient estimate to become unbiased"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Larger \\(\\beta\\) weights the running average toward older gradients, so the velocity carries more inertia and averages out oscillations across a longer window. \\(\\beta = 0\\) recovers plain SGD; \\(\\beta\\) controls memory, not the step size \\(\\eta\\)."
             },
             {
@@ -1496,12 +1496,12 @@
             {
               "q": "During training the loss drops quickly for the first few hundred steps, then plateaus at a high value and oscillates noisily up and down without settling. The validation loss tracks the training loss closely. What is the most likely fix?",
               "choices": [
-                "Decrease the learning rate",
+                "Train for many more epochs at the same settings",
                 "Increase the learning rate",
                 "Add dropout / weight decay to reduce overfitting",
-                "Train for many more epochs at the same settings"
+                "Decrease the learning rate"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Noisy oscillation around a high plateau is the classic signature of a learning rate that is too high: each step overshoots the local minimum. Since train and val loss track each other, it is not overfitting."
             },
             {
@@ -1530,11 +1530,11 @@
               "q": "In the cosine annealing schedule $\\eta(t) = \\eta_{\\min} + \\frac{1}{2}(\\eta_{\\max}-\\eta_{\\min})(1+\\cos(\\pi t / T))$, what is the learning rate exactly halfway through the schedule, at $t = T/2$?",
               "choices": [
                 "$\\eta_{\\max}$",
-                "The midpoint $\\eta_{\\min} + \\frac{1}{2}(\\eta_{\\max}-\\eta_{\\min})$",
                 "$\\eta_{\\min}$",
+                "The midpoint $\\eta_{\\min} + \\frac{1}{2}(\\eta_{\\max}-\\eta_{\\min})$",
                 "Zero, regardless of $\\eta_{\\min}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "At $t=T/2$, $\\cos(\\pi/2)=0$, so $\\eta = \\eta_{\\min} + \\frac{1}{2}(\\eta_{\\max}-\\eta_{\\min})$ — exactly the average of the two endpoints."
             },
             {
@@ -1563,110 +1563,110 @@
               "q": "Your training loss decreases smoothly and almost linearly, with no oscillation or divergence, but it is still far from converged when the epoch budget runs out. What is the most likely diagnosis and fix?",
               "choices": [
                 "Learning rate is too high; decrease it",
-                "Learning rate is too low; increase it (or run an LR range test to find a larger stable rate)",
                 "The model is overfitting; add weight decay",
+                "Learning rate is too low; increase it (or run an LR range test to find a larger stable rate)",
                 "Gradients are not being zeroed; add zero_grad()"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Smooth, glacially slow, near-linear descent with no instability is the signature of a learning rate that is too low, so you should raise it to take larger steps."
             },
             {
               "q": "Using $N = 60{,}000$, $B = 600$, $30$ epochs, warmup over the first epoch, and peak $\\eta_{\\max}=0.01$, at which global step does the learning rate first reach its peak, and what is the LR one step into the cosine phase relative to that peak?",
               "choices": [
-                "At step 100, and the LR begins decreasing immediately after (just below 0.01)",
+                "At step 1450, and the LR is exactly 0.005 there",
                 "At step 100, and the LR jumps back to 0 because cosine restarts",
                 "At step 3000, and the LR stays at 0.01 for the whole run",
-                "At step 1450, and the LR is exactly 0.005 there"
+                "At step 100, and the LR begins decreasing immediately after (just below 0.01)"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Steps per epoch = 60000/600 = 100, so warmup ends and the peak 0.01 is reached at step 100, after which the cosine phase starts its gentle decay just below 0.01."
             },
             {
               "q": "A colleague removes the `optimizer.zero_grad()` line from the canonical loop, reasoning that fewer lines means faster code. Training still runs without errors. What actually happens to the gradients used in `optimizer.step()`?",
               "choices": [
-                "Each step uses the sum of the current batch's gradient and all previous batches' gradients, so the effective step size grows and training typically destabilizes.",
-                "PyTorch silently overwrites `.grad` on each backward pass, so the result is identical and the line was indeed redundant.",
                 "`loss.backward()` raises a RuntimeError because stale gradients are still attached to the graph.",
+                "PyTorch silently overwrites `.grad` on each backward pass, so the result is identical and the line was indeed redundant.",
+                "Each step uses the sum of the current batch's gradient and all previous batches' gradients, so the effective step size grows and training typically destabilizes.",
                 "Only the most recent batch's gradient is used, but the optimizer's momentum buffers are corrupted."
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "PyTorch accumulates (adds) gradients into `.grad` rather than overwriting, so without zeroing, each step uses a running sum of all prior gradients, inflating the update and usually destabilizing training. The 'overwrite' option is the exact misconception the accumulation design contradicts."
             },
             {
               "q": "You are running the canonical loop and want to implement gradient accumulation to simulate a larger batch. Where must `optimizer.zero_grad()` and `optimizer.step()` be placed relative to the inner per-microbatch `loss.backward()` calls?",
               "choices": [
                 "Call `zero_grad()` and `step()` once per microbatch, exactly as in the canonical loop.",
-                "Call `backward()` on every microbatch, but call `step()` and then `zero_grad()` only once every $k$ microbatches.",
+                "Call `step()` every microbatch but `zero_grad()` only every $k$ microbatches.",
                 "Call `zero_grad()` every microbatch but `step()` only every $k$ microbatches.",
-                "Call `step()` every microbatch but `zero_grad()` only every $k$ microbatches."
+                "Call `backward()` on every microbatch, but call `step()` and then `zero_grad()` only once every $k$ microbatches."
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Gradient accumulation relies on PyTorch summing gradients across the $k$ microbatch `backward()` calls, then applying one update and clearing: `step()` and `zero_grad()` fire once per $k$ microbatches. Zeroing every microbatch (option 2) would erase the accumulation entirely."
             },
             {
               "q": "Two practitioners debate scaling rules. One uses linear scaling ($\\eta \\propto B$) and the other uses square-root scaling ($\\eta \\propto \\sqrt{B}$) when increasing batch size from $B$ to $4B$. By what factor does each scale the learning rate?",
               "choices": [
-                "Linear $\\times 16$; square-root $\\times 4$.",
-                "Linear $\\times 2$; square-root $\\times 4$.",
                 "Linear $\\times 4$; square-root $\\times 2$.",
+                "Linear $\\times 2$; square-root $\\times 4$.",
+                "Linear $\\times 16$; square-root $\\times 4$.",
                 "Linear $\\times 4$; square-root $\\times 4$."
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Linear scaling multiplies $\\eta$ by the batch-size ratio $4$, while square-root scaling multiplies by $\\sqrt{4}=2$. The distractors mishandle the square root or apply the ratio to the wrong rule."
             },
             {
               "q": "A model trains stably for several epochs, then the loss suddenly jumps to `inf` and every subsequent output is `NaN`. The learning rate schedule and data are unchanged at the moment of failure. Which explanation is most consistent with this pattern, and what is the standard mitigation?",
               "choices": [
-                "The learning rate decayed too far toward zero, freezing the parameters; raise $\\eta_{\\min}$.",
                 "A rare batch produced an exploding gradient that took a huge step into a bad region; add gradient clipping to bound the update norm.",
+                "The learning rate decayed too far toward zero, freezing the parameters; raise $\\eta_{\\min}$.",
                 "The optimizer's momentum buffers overflowed because `zero_grad()` was called too often; call it less frequently.",
                 "The validation set leaked into training, so the loss became artificially low then unstable; re-split the data."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A sudden mid-training divergence to inf/NaN after stable progress is the signature of an exploding gradient on an outlier batch, and gradient clipping (capping the gradient norm) is the standard fix. A too-small learning rate would stall progress, not blow it up, so option 0 is the tempting but wrong diagnosis."
             },
             {
               "q": "In the canonical PyTorch training loop, what is the correct order of the five core operations within one step?",
               "choices": [
-                "forward → loss → step → backward → zero_grad",
                 "zero_grad → forward → compute loss → backward → step",
+                "forward → loss → step → backward → zero_grad",
                 "forward → zero_grad → loss → step → backward",
                 "backward → step → zero_grad → forward → loss"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Clear old gradients (zero_grad), run the forward pass, compute the scalar loss, backpropagate to fill .grad, then step the optimizer. Forgetting zero_grad first lets last batch's gradients accumulate into this step."
             },
             {
               "q": "How is an *epoch* defined?",
               "choices": [
-                "One parameter update computed from a single batch",
-                "The set of examples used in one step",
                 "One full pass over the entire training set",
+                "The set of examples used in one step",
+                "One parameter update computed from a single batch",
                 "The total number of parameters in the model"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "An epoch is one complete sweep through all \\(N\\) training examples. A step (iteration) is one update from one batch; with batch size \\(B\\) there are \\(\\lceil N/B\\rceil\\) steps per epoch."
             },
             {
               "q": "Why must the quantity returned by the loss function be a single scalar?",
               "choices": [
-                "Because we differentiate it — backprop computes \\(\\partial L/\\partial\\theta\\), and the gradient is well-defined for a scalar-valued function of the parameters",
+                "Because the learning rate must be set equal to the loss value",
                 "Because GPUs can only store one number at a time",
                 "Because a vector-valued loss would make training run faster",
-                "Because the learning rate must be set equal to the loss value"
+                "Because we differentiate it — backprop computes \\(\\partial L/\\partial\\theta\\), and the gradient is well-defined for a scalar-valued function of the parameters"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Backprop needs \\(\\partial L/\\partial\\theta_i\\) for every parameter, and the gradient of a function is defined when its output is a scalar. A multi-output objective must be reduced (e.g. summed or averaged) to a single number before \\(\\texttt{loss.backward()}\\)."
             },
             {
               "q": "Why do learning-rate schedules typically *decay* the learning rate over the course of training?",
               "choices": [
                 "To increase the gradient variance as training proceeds",
-                "Because gradients grow larger over time and must be counteracted",
+                "To take large, fast steps early while far from a minimum, then small steps later to settle in without overshooting and oscillating",
                 "To keep the loss value a scalar throughout training",
-                "To take large, fast steps early while far from a minimum, then small steps later to settle in without overshooting and oscillating"
+                "Because gradients grow larger over time and must be counteracted"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Early on, a large \\(\\eta\\) makes fast progress across the loss landscape; later, a smaller \\(\\eta\\) lets the optimizer settle into a minimum instead of bouncing around it. Decay schedules (step, exponential, cosine) trade exploration for fine convergence."
             }
           ],
@@ -1747,11 +1747,11 @@
               "q": "A model's learning curves show training loss plateauing at $0.9$ and validation loss also around $0.95$, with both curves flat and close together. What is the best next step?",
               "choices": [
                 "Add stronger L2 regularization and dropout",
-                "Increase model capacity / train longer / reduce regularization",
+                "Collect a much larger validation set",
                 "Apply early stopping at the current epoch",
-                "Collect a much larger validation set"
+                "Increase model capacity / train longer / reduce regularization"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "High training loss with a small gap is underfitting (high bias). The fix is to increase effective capacity; regularization or early stopping would only make the fit worse."
             },
             {
@@ -1769,11 +1769,11 @@
               "q": "Validation loss reaches its minimum at epoch 12 and then steadily rises through epoch 50, while training loss continues to fall toward zero. Which interpretation and action are correct?",
               "choices": [
                 "Underfitting; train for many more epochs",
-                "Overfitting; keep the epoch-12 checkpoint (early stopping) and add regularization/augmentation",
                 "The learning rate is too low; increase it and remove weight decay",
+                "Overfitting; keep the epoch-12 checkpoint (early stopping) and add regularization/augmentation",
                 "Irreducible noise dominates; nothing can be done"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Rising validation loss with falling training loss is the signature of overfitting; early stopping recovers the best-generalizing model and further regularization or augmentation reduces the gap going forward."
             },
             {
@@ -1790,34 +1790,34 @@
             {
               "q": "In the squared-error decomposition $\\mathbb{E}[(y-\\hat{f}(x))^2] = \\text{bias}^2 + \\text{variance} + \\sigma^2$, what does the term $\\sigma^2$ represent, and what is its practical implication?",
               "choices": [
-                "The variance of the learned predictor across training sets; it can be driven to zero with enough regularization",
-                "The squared bias from too small a hypothesis class; it shrinks as you add capacity",
                 "Irreducible noise in the data itself; it is a floor on test error that no model can beat",
+                "The squared bias from too small a hypothesis class; it shrinks as you add capacity",
+                "The variance of the learned predictor across training sets; it can be driven to zero with enough regularization",
                 "The contribution of weight decay to the loss; it is removed once $\\lambda = 0$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$\\sigma^2$ is the irreducible noise inherent in the data, so it sets a lower bound on achievable test error regardless of model choice or regularization."
             },
             {
               "q": "For a quadratic loss with Hessian eigenvalues $\\alpha_i$, L2 regularization rescales each eigen-direction of the optimum by $\\frac{\\alpha_i}{\\alpha_i + \\lambda}$. Which directions get shrunk most aggressively toward zero?",
               "choices": [
-                "Flat directions with small $\\alpha_i$, which the data only weakly constrains",
+                "Only directions where the gradient is exactly zero",
                 "Sharply curved directions with large $\\alpha_i$, which the data strongly determines",
                 "All directions equally, since $\\lambda$ is a single scalar",
-                "Only directions where the gradient is exactly zero"
+                "Flat directions with small $\\alpha_i$, which the data only weakly constrains"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "When $\\alpha_i$ is small the factor $\\frac{\\alpha_i}{\\alpha_i+\\lambda}$ is near zero, so flat, weakly-constrained directions are suppressed hard while well-determined large-$\\alpha_i$ directions (factor near 1) are barely touched."
             },
             {
               "q": "A practitioner adds aggressive augmentation to an image classifier by randomly flipping digits horizontally (left-right mirror) on an MNIST-style task. Why might this hurt rather than help?",
               "choices": [
-                "Flipping increases the effective dataset size $n$, which always raises the generalization gap",
                 "Horizontal flips are not label-preserving here (e.g. a mirrored '2' or '3' is no longer a valid digit of that class), so they inject label noise",
+                "Flipping increases the effective dataset size $n$, which always raises the generalization gap",
                 "Augmentation only reduces bias, and this task is variance-limited",
                 "Flips force the model to memorize pixel-exact images, defeating regularization"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Augmentations must encode genuine invariances; digits are not left-right symmetric, so a horizontal flip changes or destroys the true label (a mirrored '2'/'3'/'7' is not that digit), adding label noise instead of useful diversity and degrading performance."
             },
             {
@@ -1834,23 +1834,23 @@
             {
               "q": "You train a model and observe: training accuracy 99%, validation accuracy 71%. You then collect 10x more training data and retrain with the same architecture. What is the most likely effect on the generalization gap?",
               "choices": [
-                "The gap will likely shrink, because more data makes the empirical risk $\\hat{R}$ a tighter estimate of the true risk $R$ and gives the high-capacity model less room to memorize quirks",
                 "The gap will be unchanged, because the generalization gap depends only on model capacity, not on dataset size",
+                "The gap will likely shrink, because more data makes the empirical risk $\\hat{R}$ a tighter estimate of the true risk $R$ and gives the high-capacity model less room to memorize quirks",
                 "The gap will grow, because more data means more noise for the model to overfit",
                 "The gap will vanish entirely, because any model trained on enough data achieves zero generalization gap"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "A large train/val gap with near-perfect train accuracy signals overfitting; adding data reduces the variance term and constrains memorization, typically shrinking the gap. The gap depends on the ratio of capacity to data, not capacity alone, and it never provably reaches exactly zero."
             },
             {
               "q": "A colleague claims: 'Dropout works by adding noise, so I should keep it on at test time to make predictions robust.' Why is this reasoning flawed?",
               "choices": [
                 "Dropout only affects the input layer, so leaving it on at test time changes nothing",
-                "Dropout is a regularizer used during training to prevent co-adaptation of units; at test time units are kept and activations are scaled so the network uses its full, deterministic capacity for the best single prediction",
+                "Keeping dropout on at test time is required, otherwise the expected activation magnitudes would be wrong",
                 "Dropout permanently removes the dropped units, so they are unavailable at test time anyway",
-                "Keeping dropout on at test time is required, otherwise the expected activation magnitudes would be wrong"
+                "Dropout is a regularizer used during training to prevent co-adaptation of units; at test time units are kept and activations are scaled so the network uses its full, deterministic capacity for the best single prediction"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Dropout randomly zeros units during training to discourage co-adaptation, but inference uses all units (with inverted-scaling applied during training) to give a stable, full-capacity prediction. Keeping it active at test time injects unnecessary variance and degrades accuracy."
             },
             {
@@ -1858,21 +1858,21 @@
               "choices": [
                 "Model A has high variance and low bias; Model B has low variance and high bias",
                 "Both models have identical bias and variance since they fit the same data",
-                "Model A has high bias and low variance; Model B has low bias and high variance",
-                "Model B always achieves lower expected test error because it has lower bias"
+                "Model B always achieves lower expected test error because it has lower bias",
+                "Model A has high bias and low variance; Model B has low bias and high variance"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The low-capacity linear model is too rigid to capture structure (high bias) but is stable across datasets (low variance), while the flexible degree-15 model fits the training set including its noise (low bias, high variance). Lower bias does not guarantee lower test error, since the variance term can dominate."
             },
             {
               "q": "For L2-regularized linear regression (ridge), you increase the penalty strength $\\lambda$ from a small value toward a very large value. What happens to the trained weight vector $\\hat{w}$ and the model's bias/variance?",
               "choices": [
-                "As $\\lambda \\to \\infty$, $\\hat{w} \\to 0$, increasing bias and decreasing variance",
                 "As $\\lambda \\to \\infty$, $\\hat{w}$ grows without bound, decreasing bias and increasing variance",
+                "As $\\lambda \\to \\infty$, $\\hat{w} \\to 0$, increasing bias and decreasing variance",
                 "As $\\lambda \\to \\infty$, $\\hat{w}$ converges to the ordinary least-squares solution, leaving bias and variance unchanged",
                 "As $\\lambda \\to \\infty$, exactly half the weights become zero and the rest are unaffected"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The L2 penalty shrinks weights toward the origin; in the limit of huge $\\lambda$ the data-fit term is negligible and $\\hat{w} \\to 0$, yielding a near-constant predictor with high bias but low variance. Driving individual weights to exactly zero is the behavior of L1, not L2."
             },
             {
@@ -1889,23 +1889,23 @@
             {
               "q": "What is the purpose of holding out a validation set, separate from both the training set and the test set?",
               "choices": [
-                "To give the model more examples to memorize during training",
-                "To compute the training loss more accurately",
                 "To estimate generalization to unseen data and tune choices (when to stop, how much to regularize) without contaminating the final test set",
+                "To compute the training loss more accurately",
+                "To give the model more examples to memorize during training",
                 "To make each gradient step run faster"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The training set fits parameters; the validation set is unseen data used to estimate the generalization gap and to choose hyperparameters / when to stop. Keeping it separate from the test set preserves the test set as an untouched final estimate of real-world performance."
             },
             {
               "q": "The \"generalization gap\" is defined as which quantity?",
               "choices": [
-                "The difference between the true expected risk $R(f)$ and the empirical training risk $\\hat R(f)$",
-                "The difference between the training loss at the start and end of training",
                 "The number of parameters minus the number of training examples",
+                "The difference between the training loss at the start and end of training",
+                "The difference between the true expected risk $R(f)$ and the empirical training risk $\\hat R(f)$",
                 "The gap between the learning rate and the batch size"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Generalization gap \\(= R(f) - \\hat R(f)\\): how much worse the model does on the true data distribution than on its training sample. Training drives \\(\\hat R\\) down; the question of generalization is whether \\(R\\) follows. Overfitting is exactly this gap growing large."
             },
             {
@@ -1913,10 +1913,10 @@
               "choices": [
                 "It removes the least-used neurons from the network after training",
                 "It automatically collects more training data",
-                "It raises the learning rate as training proceeds",
-                "It adds a penalty proportional to the squared magnitude of the weights, $\\lambda\\lVert w\\rVert_2^2$, to the loss — discouraging large weights and shrinking effective capacity"
+                "It adds a penalty proportional to the squared magnitude of the weights, $\\lambda\\lVert w\\rVert_2^2$, to the loss — discouraging large weights and shrinking effective capacity",
+                "It raises the learning rate as training proceeds"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "\\(L_2\\) adds \\(\\lambda\\lVert w\\rVert_2^2\\) to the loss, so the optimizer is pulled toward smaller weights. Like every regularizer, its effect is to reduce the model's *effective capacity*, trading a little bias for a large drop in variance."
             }
           ],
@@ -2013,44 +2013,44 @@
               "q": "Why is LayerNorm preferred over BatchNorm in transformers?",
               "choices": [
                 "LayerNorm has more learnable parameters, so it has higher capacity",
-                "LayerNorm normalizes within each example's features, so it is batch-independent and behaves identically at train and test time — ideal for variable-length sequences and one-token-at-a-time generation",
+                "LayerNorm removes the need for the $\\gamma$ and $\\beta$ parameters",
                 "BatchNorm cannot be combined with attention layers due to a dimensional incompatibility",
-                "LayerNorm removes the need for the $\\gamma$ and $\\beta$ parameters"
+                "LayerNorm normalizes within each example's features, so it is batch-independent and behaves identically at train and test time — ideal for variable-length sequences and one-token-at-a-time generation"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "LayerNorm computes statistics over a single example's feature dimension, so it does not depend on batch composition or length and needs no running averages — exactly what variable-length, autoregressive transformer workloads require."
             },
             {
               "q": "What is the role of the learnable $\\gamma$ (scale) and $\\beta$ (shift) parameters in BatchNorm?",
               "choices": [
                 "They are fixed hyperparameters set before training to control the learning rate",
-                "They let the network rescale and re-shift the normalized activations, so normalization never reduces representational power (it can even undo the normalization)",
+                "They implement the dropout mask inside the normalization layer",
                 "They store the running mean and variance used at test time",
-                "They implement the dropout mask inside the normalization layer"
+                "They let the network rescale and re-shift the normalized activations, so normalization never reduces representational power (it can even undo the normalization)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "After forcing zero-mean/unit-variance, $\\gamma$ and $\\beta$ restore the network's freedom to choose any mean and scale, so BN changes only the optimization geometry, not the set of representable functions."
             },
             {
               "q": "Dropout and normalization layers are described as solving two distinct problems. Which statement best captures this distinction?",
               "choices": [
-                "Dropout is primarily a regularizer fighting overfitting, while normalization layers are primarily an optimization aid that makes the loss landscape friendlier",
-                "Dropout is primarily an optimization aid, while normalization layers are primarily a regularizer",
                 "Both are purely regularizers with no effect on optimization",
+                "Dropout is primarily an optimization aid, while normalization layers are primarily a regularizer",
+                "Dropout is primarily a regularizer fighting overfitting, while normalization layers are primarily an optimization aid that makes the loss landscape friendlier",
                 "Dropout speeds up training and normalization layers shrink the weights like $L_2$ decay"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The lesson explicitly frames dropout as a regularizer against fragile co-adaptations and normalization as an optimization aid that smooths the loss landscape (with only a mild regularizing side effect). The other options invert or distort this: dropout actually slows convergence, and normalization does not shrink weights like L2 decay."
             },
             {
               "q": "During a single training forward pass with dropout, how is the mask $\\mathbf{m}$ applied and how do gradients behave?",
               "choices": [
-                "A fresh mask is sampled each minibatch with each $m_i \\sim \\text{Bernoulli}(q)$, and gradients flow back only through units that survived",
                 "A single fixed mask is reused for the entire epoch, and gradients flow through all units",
+                "A fresh mask is sampled each minibatch with each $m_i \\sim \\text{Bernoulli}(q)$, and gradients flow back only through units that survived",
                 "The mask zeros units with probability $q$, and gradients flow only through dropped units",
                 "The mask is applied only on the backward pass, leaving the forward activations unchanged"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The lesson states a fresh Bernoulli($q$) mask is drawn on every minibatch and gradients flow back only through the units that survived. A unit is kept (not zeroed) with probability $q$, so the option claiming units are zeroed with probability $q$ and that gradients flow through dropped units is wrong."
             },
             {
@@ -2067,12 +2067,12 @@
             {
               "q": "What is the single most common silent bug the lesson warns about regarding dropout and normalization layers?",
               "choices": [
-                "Getting the train/eval distinction wrong, since both layers behave differently at training time than at test time",
+                "Using elementwise multiplication instead of matrix multiplication for the mask",
                 "Choosing a drop probability $p$ that is too small",
                 "Forgetting to add $L_2$ weight decay alongside dropout",
-                "Using elementwise multiplication instead of matrix multiplication for the mask"
+                "Getting the train/eval distinction wrong, since both layers behave differently at training time than at test time"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The lesson stresses that both layers behave differently at train vs. test time and that getting this distinction wrong (e.g. forgetting model.eval()) is one of the most common and most silent bugs in practice. The mask is correctly applied with elementwise multiplication, so that option is also factually wrong."
             },
             {
@@ -2101,66 +2101,66 @@
               "q": "In a residual block written as $y = x + F(\\text{Norm}(x))$ versus the older $y = \\text{Norm}(x + F(x))$, why does placing the normalization on the input to $F$ (pre-norm) typically make very deep networks easier to train?",
               "choices": [
                 "Pre-norm removes the need for learnable $\\gamma$ and $\\beta$ parameters entirely",
-                "Pre-norm leaves a clean identity path for $x$ to flow through unnormalized, so gradients can propagate to early layers without being repeatedly rescaled by the normalization",
                 "Pre-norm computes statistics over the batch instead of the feature dimension, which is always more stable",
+                "Pre-norm leaves a clean identity path for $x$ to flow through unnormalized, so gradients can propagate to early layers without being repeatedly rescaled by the normalization",
                 "Pre-norm guarantees the output of every block has exactly unit variance regardless of depth"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Pre-norm keeps the skip connection $x$ as an unmodified identity path, so gradient flow to early layers is not attenuated by stacked normalization, which is why deep transformers train more stably this way. Pre-norm still uses $\\gamma/\\beta$, does not change which axis statistics are taken over, and does not force unit variance on the block output (the residual add breaks that)."
             },
             {
               "q": "An engineer notices that at evaluation time BatchNorm uses fixed running averages of the mean and variance rather than statistics of the current eval batch. Why is using the running averages (instead of recomputing per eval batch) the correct choice?",
               "choices": [
                 "Recomputing per batch at eval time is too slow to be practical",
-                "It makes each input's prediction deterministic and independent of the other examples it happens to be batched with, which is essential for consistent, batch-size-invariant inference",
                 "Running averages are larger in magnitude, which sharpens the softmax outputs",
+                "It makes each input's prediction deterministic and independent of the other examples it happens to be batched with, which is essential for consistent, batch-size-invariant inference",
                 "The learnable $\\gamma$ and $\\beta$ are only valid when paired with running statistics"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Using fixed running statistics at eval makes a sample's output depend only on itself, so predictions don't change based on which other examples share its batch (or whether batch size is 1) — the key requirement for reliable inference. Speed is not the main reason, running averages aren't systematically larger, and $\\gamma/\\beta$ are valid with any normalization statistics."
             },
             {
               "q": "During training, what does dropout with drop probability $p$ do on each forward pass?",
               "choices": [
-                "Permanently deletes a fraction $p$ of the network’s weights",
                 "Independently sets each unit’s activation to zero with probability $p$ (keeping it with probability $q = 1-p$)",
+                "Permanently deletes a fraction $p$ of the network’s weights",
                 "Multiplies every activation by the constant $p$",
                 "Adds Gaussian noise of variance $p$ to every weight"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Dropout samples a fresh Bernoulli mask each forward pass, zeroing each unit independently with probability \\(p\\) (kept with \\(q=1-p\\)). Nothing is deleted permanently — a different random sub-network is used on every minibatch."
             },
             {
               "q": "Why is dropout turned off at test (inference) time?",
               "choices": [
-                "Because the network has no units left to drop after training",
-                "Because dropout only affects the loss, never the predictions",
                 "Because we want a single deterministic prediction, not a randomly different output on each run",
+                "Because dropout only affects the loss, never the predictions",
+                "Because the network has no units left to drop after training",
                 "Because test data is guaranteed to contain no noise"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Randomly zeroing units at inference would make the prediction for one input change from run to run — unacceptable in production. So dropout is disabled and activations are scaled (or were pre-scaled via inverted dropout) so the expected values match what downstream units saw during training."
             },
             {
               "q": "For a given feature, what does Batch Normalization compute?",
               "choices": [
-                "It normalizes that feature to approximately zero mean and unit variance across the examples in the minibatch, then applies a learnable scale $\\gamma$ and shift $\\beta$",
+                "It converts the feature into a one-hot vector over the batch",
                 "It rescales the feature to exactly the range $[0,1]$ using the global min and max",
                 "It subtracts the largest activation in the layer from every value",
-                "It converts the feature into a one-hot vector over the batch"
+                "It normalizes that feature to approximately zero mean and unit variance across the examples in the minibatch, then applies a learnable scale $\\gamma$ and shift $\\beta$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "BatchNorm standardizes each feature using the current minibatch mean and variance (\\(\\hat x = (x-\\mu_B)/\\sqrt{\\sigma_B^2+\\epsilon}\\)), then restores flexibility with learnable \\(\\gamma,\\beta\\) so the network can choose the feature's scale and mean."
             },
             {
               "q": "In terms of *what they normalize over*, how does Layer Normalization differ from Batch Normalization?",
               "choices": [
-                "LayerNorm normalizes the network’s weights; BatchNorm normalizes its activations",
+                "LayerNorm normalizes across the features of a single example; BatchNorm normalizes each feature across the batch",
                 "They are identical; only the name differs",
                 "LayerNorm runs only at test time; BatchNorm only at training time",
-                "LayerNorm normalizes across the features of a single example; BatchNorm normalizes each feature across the batch"
+                "LayerNorm normalizes the network’s weights; BatchNorm normalizes its activations"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Same formula, different axis. BatchNorm pools statistics over the batch (so they depend on the other examples); LayerNorm pools over one example's own feature vector — making it batch-independent with identical train/test behavior, ideal for sequences and transformers."
             }
           ],
@@ -2246,22 +2246,22 @@
               "q": "A network with many sigmoid layers trains extremely slowly, and the gradients reaching the first layers are essentially zero while later layers update fine. What is the most likely cause?",
               "choices": [
                 "Exploding gradients from weights initialized too large",
-                "Vanishing gradients: sigmoid's derivative maxes at 0.25, so products of many such factors decay geometrically",
                 "The learning rate is too high, causing divergence",
+                "Vanishing gradients: sigmoid's derivative maxes at 0.25, so products of many such factors decay geometrically",
                 "Gradient clipping is removing the early-layer gradients"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Sigmoid's derivative peaks at only 0.25 and is near zero in its tails, so each layer multiplies the backprop signal by a small factor; over many layers the product vanishes, starving early layers of gradient. This is the classic vanishing-gradient signature."
             },
             {
               "q": "Why is clip-by-global-norm generally preferred over clipping each gradient component to a fixed value?",
               "choices": [
                 "It is faster to compute because it avoids the norm",
-                "It preserves the gradient's direction and only rescales its length, whereas per-component clipping can distort the descent direction",
+                "It guarantees the loss decreases every step",
                 "It also fixes vanishing gradients by amplifying small components",
-                "It guarantees the loss decreases every step"
+                "It preserves the gradient's direction and only rescales its length, whereas per-component clipping can distort the descent direction"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Global-norm clipping rescales the whole gradient vector uniformly, keeping its direction intact and only shortening it when the norm exceeds the threshold. Per-component clipping changes the relative sizes of components and can point the step in a different direction."
             },
             {
@@ -2290,77 +2290,77 @@
               "q": "Xavier/Glorot uses $\\mathrm{Var}(W) = 2/(n_{\\text{in}} + n_{\\text{out}})$ instead of simply $1/n_{\\text{in}}$. What does this particular choice accomplish?",
               "choices": [
                 "It compensates for ReLU discarding the negative half of its inputs",
-                "It is a compromise between the forward condition ($1/n_{\\text{in}}$) and the backward condition ($1/n_{\\text{out}}$), which generally conflict",
+                "It adds an identity term to the layer's Jacobian to preserve gradient flow",
                 "It guarantees the gradient norm never exceeds a fixed threshold $\\tau$",
-                "It adds an identity term to the layer's Jacobian to preserve gradient flow"
+                "It is a compromise between the forward condition ($1/n_{\\text{in}}$) and the backward condition ($1/n_{\\text{out}}$), which generally conflict"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Preserving forward variance wants $1/n_{\\text{in}}$ while preserving backward (gradient) variance wants $1/n_{\\text{out}}$; since these usually disagree, Xavier averages the two fan counts into $2/(n_{\\text{in}}+n_{\\text{out}})$."
             },
             {
               "q": "A fully connected ReLU layer maps $n_{\\text{in}} = 200$ inputs to some outputs. Using He initialization, what standard deviation should the weights be drawn from?",
               "choices": [
-                "$\\sqrt{2/200} = 0.1$",
                 "$\\sqrt{1/200} \\approx 0.0707$",
+                "$\\sqrt{2/200} = 0.1$",
                 "$2/200 = 0.01$",
                 "$\\sqrt{200/2} = 10$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "He init sets $\\mathrm{Var}(W) = 2/n_{\\text{in}} = 2/200 = 0.01$, so $\\mathrm{std}(W) = \\sqrt{0.01} = 0.1$."
             },
             {
               "q": "A 60-layer ReLU network has gradients that steadily shrink toward zero in its early layers, but no loss spikes or NaNs ever occur. Would adding global-norm gradient clipping fix the slow learning of the early layers?",
               "choices": [
                 "Yes, clipping rescales small gradients back up to the threshold $\\tau$",
-                "No — clipping only caps large gradients; vanishing gradients are an initialization/architecture problem that clipping does not address",
                 "Yes, because clipping preserves direction it restores the lost early-layer signal",
+                "No — clipping only caps large gradients; vanishing gradients are an initialization/architecture problem that clipping does not address",
                 "No, but only because clipping requires residual connections to function"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Clipping is a speed limiter that shortens overly long gradients while leaving small ones untouched; chronic vanishing must be fixed with appropriate initialization (e.g. He) or architecture changes like residual connections, not by clipping."
             },
             {
               "q": "You initialize every weight in a deep fully-connected network to the exact same nonzero constant $c$, with biases at zero. After one forward and backward pass, what goes wrong?",
               "choices": [
-                "Activations immediately saturate because identical weights make pre-activations too large",
                 "All neurons in a layer receive identical gradients and stay identical forever, so the layer can only ever represent one feature",
+                "Activations immediately saturate because identical weights make pre-activations too large",
                 "Gradients vanish exponentially because constant weights have variance zero",
                 "Nothing goes wrong as long as $c$ is small; constant init behaves like small random init"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With identical incoming weights, every neuron in a layer computes the same output and therefore receives the same gradient, so they update in lockstep and never differentiate — this is the symmetry-breaking problem. Random init exists precisely to break this; scaling alone (small $c$) cannot, because the issue is sameness, not magnitude."
             },
             {
               "q": "A 50-layer network is initialized so that each layer's effective multiplier on the signal is about $1.1$ rather than $1$. Roughly what factor does a signal get multiplied by after passing through all 50 layers?",
               "choices": [
-                "About $1.1 \\times 50 \\approx 55$",
-                "About $1.1$, since per-layer effects average out",
                 "About $1.1^{50} \\approx 117$",
+                "About $1.1$, since per-layer effects average out",
+                "About $1.1 \\times 50 \\approx 55$",
                 "About $\\sqrt{50} \\times 1.1 \\approx 7.8$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Per-layer multipliers compound multiplicatively across depth, so the total factor is $1.1^{50} \\approx 117$ — a small per-layer excess explodes over many layers. The additive answer $1.1 \\times 50$ wrongly treats stacking as a sum rather than a product."
             },
             {
               "q": "He initialization uses $\\mathrm{Var}(W) = 2/n_{\\text{in}}$ while Xavier uses roughly $1/n_{\\text{in}}$. Why does He include the extra factor of 2 specifically for ReLU networks?",
               "choices": [
-                "ReLU zeroes out about half of its inputs, halving the variance of the activations, so $W$ must be twice as large to compensate",
+                "ReLU outputs are unbounded, so doubling the variance prevents overflow",
                 "ReLU has a derivative of 2 in its active region, which must be cancelled",
                 "The factor of 2 accounts for both the forward and backward passes simultaneously",
-                "ReLU outputs are unbounded, so doubling the variance prevents overflow"
+                "ReLU zeroes out about half of its inputs, halving the variance of the activations, so $W$ must be twice as large to compensate"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "ReLU sets negative pre-activations to zero, so on average only half the units fire and the output variance is roughly halved; the factor of 2 restores unit variance. The Xavier derivation assumes a symmetric activation (like tanh) where no such halving occurs."
             },
             {
               "q": "You switch a hidden layer's activation from ReLU to tanh but keep He initialization ($\\mathrm{Var}(W) = 2/n_{\\text{in}}$). Compared to using Xavier init, what is the most likely consequence in a deep stack of such tanh layers?",
               "choices": [
                 "No difference, since both initializations target unit activation variance",
-                "Activations tend to be pushed too large, driving tanh toward its saturated $\\pm 1$ regions where gradients are tiny",
                 "Gradients vanish faster because He variance is smaller than Xavier variance",
+                "Activations tend to be pushed too large, driving tanh toward its saturated $\\pm 1$ regions where gradients are tiny",
                 "The network trains identically forward but diverges only on the backward pass"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "He init injects extra variance to offset ReLU's halving, but tanh does not halve the signal, so the doubled variance overshoots and pushes pre-activations into tanh's flat saturated tails where gradients shrink. Xavier is the variance-matched choice for symmetric activations like tanh."
             },
             {
@@ -2378,11 +2378,11 @@
               "q": "Why must the weights be initialized to small *random* values rather than all set to the same constant?",
               "choices": [
                 "Random numbers happen to train faster on a GPU",
-                "Otherwise all units in a layer compute identical outputs and receive identical gradients, so they never differentiate — the symmetry is never broken",
                 "A constant initialization would use too much memory",
+                "Otherwise all units in a layer compute identical outputs and receive identical gradients, so they never differentiate — the symmetry is never broken",
                 "Because the loss function requires non-integer weights"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "If every weight is the same constant, all units in a layer are interchangeable: identical forward outputs and identical gradients, so they update in lockstep forever and the layer effectively has one unit. Random init breaks this symmetry so units can learn different features."
             },
             {
@@ -2390,21 +2390,21 @@
               "choices": [
                 "The learning rate assigned to that layer",
                 "The number of training examples in each minibatch",
-                "The number of incoming connections (input units) feeding a neuron in that layer",
-                "The total depth of the network in layers"
+                "The total depth of the network in layers",
+                "The number of incoming connections (input units) feeding a neuron in that layer"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Fan-in \\(n_{\\text{in}}\\) is how many inputs are summed into a pre-activation \\(z=\\sum_{j=1}^{n_{\\text{in}}} W_j a_j\\). Since \\(\\operatorname{Var}(z)=n_{\\text{in}}\\operatorname{Var}(W)\\operatorname{Var}(a)\\), the variance grows with fan-in — which is exactly why the init scale is set as \\(\\propto 1/n_{\\text{in}}\\)."
             },
             {
               "q": "What is the central goal when choosing a weight-initialization scale for a deep network?",
               "choices": [
-                "Make the weights as large as possible to speed up learning",
+                "Keep the variance of the signal roughly constant from layer to layer, so the per-layer multiplier stays near 1 — neither vanishing nor exploding",
                 "Set every weight to its eventual trained value right away",
                 "Guarantee the training loss starts at exactly zero",
-                "Keep the variance of the signal roughly constant from layer to layer, so the per-layer multiplier stays near 1 — neither vanishing nor exploding"
+                "Make the weights as large as possible to speed up learning"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Good init tunes the per-layer gain to \\(\\approx 1\\) so that \\(\\operatorname{Var}(a^{(l)})\\approx\\operatorname{Var}(a^{(l-1)})\\). With the multiplier near 1, no geometric blow-up or decay accumulates across depth, and gradients survive their trip back to the early layers."
             }
           ],
@@ -2484,12 +2484,12 @@
             {
               "q": "A conv layer takes a $(64,64,16)$ input and applies $32$ filters of size $3\\times3$ with stride $1$ and padding $1$. What is the output shape and the number of learnable parameters?",
               "choices": [
-                "Output $(64,64,32)$; params $= (3\\cdot3\\cdot16+1)\\cdot32 = 4640$",
+                "Output $(64,64,16)$; params $= (3\\cdot3\\cdot32+1)\\cdot16 = 4624$",
                 "Output $(64,64,32)$; params $= 3\\cdot3\\cdot32 = 288$",
                 "Output $(62,62,32)$; params $= (3\\cdot3\\cdot16)\\cdot32 = 4608$",
-                "Output $(64,64,16)$; params $= (3\\cdot3\\cdot32+1)\\cdot16 = 4624$"
+                "Output $(64,64,32)$; params $= (3\\cdot3\\cdot16+1)\\cdot32 = 4640$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "With $K=3,P=1,S=1$ spatial size is preserved (64), depth equals the 32 filters, and each filter spans all 16 input channels: $(9\\cdot16+1)\\cdot32 = 4640$ (the $+1$ is the per-filter bias)."
             },
             {
@@ -2506,78 +2506,78 @@
             {
               "q": "Stacking three $3\\times3$ convolutions with stride 1 gives each final-layer unit a receptive field over the original input of size:",
               "choices": [
-                "$3\\times3$",
-                "$5\\times5$",
                 "$7\\times7$",
+                "$5\\times5$",
+                "$3\\times3$",
                 "$9\\times9$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Receptive field grows as $RF_\\ell = RF_{\\ell-1} + (K-1)$ from $RF_0=1$: $1 \\to 3 \\to 5 \\to 7$."
             },
             {
               "q": "Increasing the stride from $1$ to $2$ in a conv layer (kernel and padding fixed) primarily:",
               "choices": [
                 "Increases the number of learnable parameters",
-                "Roughly halves each output spatial dimension, downsampling the feature map",
+                "Eliminates the need for any padding",
                 "Leaves the output size unchanged but doubles the channels",
-                "Eliminates the need for any padding"
+                "Roughly halves each output spatial dimension, downsampling the feature map"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Stride controls the spatial step between evaluations; $S=2$ roughly halves $H$ and $W$ via $\\lfloor(W-K+2P)/S\\rfloor+1$, while parameter count (which depends only on $k,C_{in},C_{out}$) is unaffected."
             },
             {
               "q": "The lesson notes that deep-learning libraries call the operation \"convolution\" even though it is technically cross-correlation (true convolution flips the kernel, using $K(-m,-n)$). Why does this distinction not matter in practice for a trained conv layer?",
               "choices": [
-                "Because the kernel weights are learned, so the network simply learns whatever (possibly flipped) values it needs; the flip just relabels which weight sits where",
                 "Because cross-correlation and convolution always produce numerically identical feature maps for any kernel",
+                "Because the kernel weights are learned, so the network simply learns whatever (possibly flipped) values it needs; the flip just relabels which weight sits where",
                 "Because the bias term $b$ automatically cancels out the effect of flipping the kernel",
                 "Because libraries internally flip the kernel anyway before computing the dot product"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Since the weights are learned, a flip is irrelevant — the network can just learn the flipped weights, so cross-correlation and true convolution define the same hypothesis class."
             },
             {
               "q": "A $3 \\times 3$ kernel is applied to an RGB ($C_{in}=3$) input. How many weights does this single kernel have, and how many feature maps does it produce?",
               "choices": [
-                "$9$ weights (one $3\\times3$ slice shared across channels); produces $3$ feature maps, one per channel",
                 "$27$ weights (a $3\\times3\\times3$ tensor spanning all channels); produces $1$ feature map",
+                "$9$ weights (one $3\\times3$ slice shared across channels); produces $3$ feature maps, one per channel",
                 "$27$ weights; produces $3$ feature maps, one per input channel",
                 "$3$ weights (one per channel); produces $1$ feature map"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A kernel always spans the full input depth, so it is $3\\times3\\times3=27$ weights, and its dot product sums over all channels to yield a single feature map."
             },
             {
               "q": "An input of spatial width $W=10$ is convolved with kernel size $K=4$, padding $P=1$, and stride $S=3$. What is the output width $W_{out}$ from the formula $W_{out}=\\lfloor (W-K+2P)/S \\rfloor + 1$?",
               "choices": [
                 "$4$",
-                "$3$",
+                "$5$",
                 "$2$",
-                "$5$"
+                "$3$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$(10-4+2)/3 = 8/3 = 2.67$, floored to $2$, plus $1$ gives $W_{out}=3$ (the floor handles the inexact division when the kernel runs off the edge)."
             },
             {
               "q": "The lesson's worked example computes only $2432$ parameters but roughly $1.88\\times10^6$ MACs for one layer. What general property of convolutional layers does this illustrate?",
               "choices": [
                 "They are parameter-heavy but compute-cheap, so they need huge memory but little arithmetic",
-                "They are parameter-cheap but compute-heavy, since shared weights are reused at every spatial position",
+                "Their compute cost is independent of the spatial size of the feature map",
                 "Their parameter count and FLOP count are always proportional, so one can be inferred from the other",
-                "Their compute cost is independent of the spatial size of the feature map"
+                "They are parameter-cheap but compute-heavy, since shared weights are reused at every spatial position"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Weight sharing makes parameters few, but applying those shared weights at every spatial location makes the arithmetic large — convolutions are parameter-cheap but compute-heavy, the opposite of dense layers."
             },
             {
               "q": "A common belief is that convolution is \"the same operation everywhere\" because the same kernel slides over the whole image. Which statement most precisely captures the property this gives a convolutional layer?",
               "choices": [
-                "Translation invariance: the layer's output is identical no matter where an object appears in the image",
                 "Translation equivariance: shifting the input by some amount shifts the feature map by the same amount",
+                "Translation invariance: the layer's output is identical no matter where an object appears in the image",
                 "Rotation equivariance: rotating the input rotates each feature map by the same angle",
                 "Scale invariance: the layer responds identically to objects of any size"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Weight sharing makes convolution translation-equivariant: a shifted input produces an equally shifted feature map (a later pooling/global step is what introduces approximate invariance). It is not invariance, nor does the operation provide rotation or scale guarantees."
             },
             {
@@ -2594,34 +2594,34 @@
             {
               "q": "Two students debate why the parameter count of a conv layer does NOT depend on the input's spatial size $H \\times W$. Which reasoning is correct?",
               "choices": [
-                "The output feature map is downsampled, so spatial size cancels out of the weight count",
-                "Padding is chosen to keep $H$ and $W$ constant, which is what removes them from the count",
                 "The same kernel weights are reused at every spatial position, so weights depend only on kernel size and channel counts, not on $H \\times W$",
+                "Padding is chosen to keep $H$ and $W$ constant, which is what removes them from the count",
+                "The output feature map is downsampled, so spatial size cancels out of the weight count",
                 "Larger images are processed in batches, and batching averages away the spatial dependence"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Weight sharing means one set of kernel weights is applied at all spatial locations, so parameters scale with kernel size and channels but not with $H \\times W$ (only the number of MACs and the output map size grow with input size). Downsampling, padding choices, and batching do not determine the parameter count."
             },
             {
               "q": "Using $W_{out}=\\lfloor (W-K+2P)/S \\rfloor + 1$, what padding $P$ keeps the output width equal to the input width for a kernel of size $K=7$ with stride $S=1$?",
               "choices": [
-                "$P=3$",
                 "$P=7$",
+                "$P=3$",
                 "$P=6$",
                 "$P=1$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "For stride $1$, 'same' padding requires $P=(K-1)/2 = (7-1)/2 = 3$, which gives $W_{out}=\\lfloor(W-7+6)/1\\rfloor+1 = W$. Choosing $P=6$ or $P=7$ would enlarge the output rather than preserve it."
             },
             {
               "q": "In a convolutional layer, what is a \"kernel\" (filter)?",
               "choices": [
-                "A small array of learnable weights that slides across the input, acting as a learned pattern detector",
-                "A fixed lookup table mapping pixel colors to outputs",
                 "The fully-connected layer at the end of the network",
+                "A fixed lookup table mapping pixel colors to outputs",
+                "A small array of learnable weights that slides across the input, acting as a learned pattern detector",
                 "The learning-rate schedule used for the convolutional layer"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A kernel is a small array of learnable weights (e.g. $3\\times3$, spanning the full input depth). It slides over the input; at each position it computes a dot product with the overlapping patch. Training learns which patterns are worth detecting — so each kernel becomes a pattern detector."
             },
             {
@@ -2640,10 +2640,10 @@
               "choices": [
                 "Color constancy and rotation invariance",
                 "Sparsity of the labels and balance of the classes",
-                "Large batch sizes and high learning rates",
-                "Locality (useful patterns are local) and translation equivariance (a pattern is detected the same way wherever it appears)"
+                "Locality (useful patterns are local) and translation equivariance (a pattern is detected the same way wherever it appears)",
+                "Large batch sizes and high learning rates"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Convolution encodes two structural assumptions: locality (a unit looks only at a small neighborhood) and translation equivariance (the same kernel is applied at every position, so a shifted input gives a correspondingly shifted feature map). These match how natural images actually behave, which is why convs beat dense layers on vision."
             },
             {
@@ -2729,110 +2729,110 @@
               "q": "A plain (non-residual) 56-layer CNN achieves *higher training error* than an otherwise-identical 20-layer CNN. What does this primarily demonstrate, and what did ResNet introduce to address it?",
               "choices": [
                 "Overfitting; ResNet added dropout to the deep layers",
-                "The degradation/optimization problem (not overfitting); ResNet added identity skip connections so blocks learn a residual $F(x)=H(x)-x$",
+                "Exploding parameters; ResNet replaced all convs with pooling",
                 "Vanishing data; ResNet added more training images",
-                "Exploding parameters; ResNet replaced all convs with pooling"
+                "The degradation/optimization problem (not overfitting); ResNet added identity skip connections so blocks learn a residual $F(x)=H(x)-x$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Worse *training* error rules out overfitting and reveals an optimization/degradation failure. Skip connections let a block learn $F(x)$ and output $F(x)+x$, making identity mappings (and gradient flow) easy."
             },
             {
               "q": "Why do two stacked $3\\times 3$ convolutions often replace a single $5\\times 5$ convolution in VGG-style networks?",
               "choices": [
                 "They have a smaller receptive field, which reduces overfitting",
-                "They cover the same $5\\times 5$ receptive field but with more nonlinearity and fewer parameters",
+                "A $5\\times 5$ conv cannot be backpropagated through",
                 "They eliminate the need for any pooling layers",
-                "A $5\\times 5$ conv cannot be backpropagated through"
+                "They cover the same $5\\times 5$ receptive field but with more nonlinearity and fewer parameters"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Two $3\\times 3$ layers match a $5\\times 5$ receptive field, add an extra ReLU (more expressivity), and for $C$ channels cost $18C^2$ vs $25C^2$ parameters."
             },
             {
               "q": "For a $2\\times 2$ max pooling layer with stride 2 applied to a $28\\times 28\\times 32$ tensor, what is the output shape, and how do the channels change?",
               "choices": [
-                "$14\\times 14\\times 32$; channels unchanged because pooling is applied per-channel",
-                "$14\\times 14\\times 16$; channels are halved along with spatial size",
                 "$28\\times 28\\times 32$; pooling only changes values, not shape",
+                "$14\\times 14\\times 16$; channels are halved along with spatial size",
+                "$14\\times 14\\times 32$; channels unchanged because pooling is applied per-channel",
                 "$14\\times 14\\times 64$; pooling doubles channels to compensate for lost resolution"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Output size $= \\lfloor(28-2)/2\\rfloor+1 = 14$ per spatial axis, and pooling operates independently on each channel so the channel count (32) is unchanged."
             },
             {
               "q": "In a residual block $y = F(x) + x$, why does the skip connection help gradients reach early layers in a very deep network?",
               "choices": [
                 "It multiplies gradients by a large constant at each layer",
-                "Because $\\partial y/\\partial x = \\partial F/\\partial x + I$, the identity term gives gradients an un-attenuated path that does not vanish even if $\\partial F/\\partial x \\to 0$",
                 "It removes the nonlinearities, so the network becomes linear",
+                "Because $\\partial y/\\partial x = \\partial F/\\partial x + I$, the identity term gives gradients an un-attenuated path that does not vanish even if $\\partial F/\\partial x \\to 0$",
                 "It stores gradients in memory and replays them later"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Differentiating the shortcut yields an additive identity $I$, so gradient flow has a direct route backward; deep gradients become a sum of paths rather than a long product of small Jacobians."
             },
             {
               "q": "During backpropagation through a $2\\times 2$ max pooling layer, an upstream gradient $g$ arrives at one output position. How is it distributed back to the four input positions of that window?",
               "choices": [
                 "It is split equally, so each of the four inputs receives $g/4$",
-                "It is routed entirely to the single input that produced the maximum; the other three receive zero",
+                "All four inputs receive the full gradient $g$, since they all contributed to the window",
                 "It is routed to the input with the smallest value, since pooling discards the rest",
-                "All four inputs receive the full gradient $g$, since they all contributed to the window"
+                "It is routed entirely to the single input that produced the maximum; the other three receive zero"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Max pooling has a winner-take-all gradient: only the argmax position (the input that was selected as the max in the forward pass) receives the upstream gradient $g$, while the other three positions in the window receive zero."
             },
             {
               "q": "Modern classifiers like ResNet replace the large dense (fully-connected) layers of AlexNet/VGG with global average pooling (GAP) before the final linear layer. What does GAP do to an $H\\times W\\times C$ tensor, and why is this beneficial?",
               "choices": [
-                "It produces an $H\\times W\\times 1$ map by averaging over channels, reducing depth to save memory",
                 "It collapses each feature map to one number, yielding a length-$C$ vector, which removes the parameter-heavy dense layers and acts as a structural regularizer",
+                "It produces an $H\\times W\\times 1$ map by averaging over channels, reducing depth to save memory",
                 "It doubles the channel count to $2C$ to increase classifier capacity before softmax",
                 "It applies a learned $C\\times C$ weight matrix to mix channels, adding trainable parameters at the head"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "GAP averages each entire $H\\times W$ map into a single value, turning the tensor into a length-$C$ vector. This eliminates the huge dense layers and acts as a regularizer, since the pooling operation itself has no parameters to overfit."
             },
             {
               "q": "A learned edge detector fires strongly at exactly one location in a $2\\times 2$ window (value 8) and is near zero elsewhere. Why is max pooling typically preferred over average pooling for such features inside a classic CNN's body?",
               "choices": [
                 "Average pooling would output 8 as well, so the choice is arbitrary",
-                "Max pooling preserves the peak response (8), whereas average pooling attenuates it to about $8/4 = 2$, diluting a sparse, informative signal",
+                "Max pooling increases the receptive field whereas average pooling shrinks it",
                 "Average pooling adds learnable parameters that overfit, while max pooling does not",
-                "Max pooling increases the receptive field whereas average pooling shrinks it"
+                "Max pooling preserves the peak response (8), whereas average pooling attenuates it to about $8/4 = 2$, diluting a sparse, informative signal"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Because learned features are sparse and localized, max pooling keeps the strong peak (8), while average pooling divides it across the window, $(8+0+0+0)/4 = 2$, washing out the evidence."
             },
             {
               "q": "AlexNet (2012) was conceptually 'LeNet scaled up' but introduced ReLU activations $\\max(0,x)$ in place of LeNet's saturating tanh/sigmoid. What was the primary benefit of this swap?",
               "choices": [
                 "ReLU added learnable parameters that increased model capacity",
-                "ReLU does not saturate for positive inputs, so its gradient does not vanish there, giving far faster convergence",
                 "ReLU made the network invariant to translations, removing the need for pooling",
+                "ReLU does not saturate for positive inputs, so its gradient does not vanish there, giving far faster convergence",
                 "ReLU reduced the parameter count from 60 million to roughly 60 thousand"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Saturating nonlinearities like tanh/sigmoid flatten and kill gradients in their tails, whereas ReLU keeps a constant gradient of 1 for positive inputs, so training converges much faster."
             },
             {
               "q": "A pooling layer downsamples a $32\\times 32\\times 64$ feature map using a $2\\times 2$ window with stride 2. Approximately how many learnable parameters does this pooling layer add, and why?",
               "choices": [
-                "About $4\\times 64 = 256$ parameters, one weight per window position per channel",
                 "Zero parameters, because pooling applies a fixed reduction (max or mean) with no weights to learn",
+                "About $4\\times 64 = 256$ parameters, one weight per window position per channel",
                 "About $64$ parameters, one bias per output channel",
                 "About $16{,}384$ parameters, one per output spatial location"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Pooling is a parameter-free operation: it just takes the max or mean over each window, so there is nothing to learn. A common misconception is that the window 'weights' the inputs, but max/average pooling use fixed (or no) coefficients."
             },
             {
               "q": "You have a $7\\times 7$ feature map and want to reduce it to $3\\times 3$ using max pooling with a $3\\times 3$ window and stride 2 (no padding). Using the formula $\\left\\lfloor \\frac{N - F}{S} \\right\\rfloor + 1$, what output size do you get, and is $3\\times 3$ achievable?",
               "choices": [
                 "Output is $4\\times 4$; the target $3\\times 3$ is not achievable with these settings",
-                "Output is $2\\times 2$; the target $3\\times 3$ is not achievable with these settings",
                 "Output is $3\\times 3$, exactly matching the target",
+                "Output is $2\\times 2$; the target $3\\times 3$ is not achievable with these settings",
                 "Output is $5\\times 5$, exactly matching the target"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$\\lfloor (7-3)/2 \\rfloor + 1 = \\lfloor 2 \\rfloor + 1 = 3$, so the output is $3\\times 3$. The tempting wrong answers come from forgetting the '+1' term or misapplying the floor."
             },
             {
@@ -2871,34 +2871,34 @@
             {
               "q": "Besides shrinking spatial resolution, what is the main purpose of a pooling layer?",
               "choices": [
-                "To build in tolerance to small spatial shifts (local translation invariance)",
-                "To add learnable parameters that increase the model’s capacity",
                 "To increase the number of channels in the feature map",
+                "To add learnable parameters that increase the model’s capacity",
+                "To build in tolerance to small spatial shifts (local translation invariance)",
                 "To normalize activations to zero mean and unit variance"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Pooling summarizes a small window into one number, so a feature shifting by a pixel or two within the window leaves the output unchanged — building in tolerance to small translations. It also downsamples so deeper layers cover a larger effective receptive field cheaply."
             },
             {
               "q": "How many learnable parameters does a standard max- or average-pooling layer have?",
               "choices": [
                 "One parameter per input channel",
-                "One weight per position in the pooling window",
+                "None — pooling is a fixed reduction (max or average) with nothing to learn",
                 "The same number as a convolution with an equal window size",
-                "None — pooling is a fixed reduction (max or average) with nothing to learn"
+                "One weight per position in the pooling window"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Pooling applies a fixed function (max or mean) over each window — there are no weights and no bias, so it adds zero learnable parameters. That is also why global average pooling acts as a structural regularizer: there is nothing in it to overfit."
             },
             {
               "q": "A $2\\times2$ pooling layer with stride 2 is applied to an $H\\times W\\times C$ tensor. What is the output shape?",
               "choices": [
-                "$(H, W, C/2)$ — it halves the number of channels",
-                "$(2H, 2W, C)$ — it upsamples the spatial dimensions",
                 "$(H/2, W/2, C)$ — spatial dimensions halve while the channel count is unchanged (pooling acts per channel)",
+                "$(2H, 2W, C)$ — it upsamples the spatial dimensions",
+                "$(H, W, C/2)$ — it halves the number of channels",
                 "$(H\\cdot W, 1, C)$ — it flattens the spatial grid into one axis"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Pooling is applied independently to each channel, so depth $C$ is untouched; a $2\\times2$ window at stride 2 halves each spatial dimension, giving $(H/2, W/2, C)$ — a quarter of the spatial positions, same number of channels."
             }
           ],
@@ -2984,22 +2984,22 @@
               "q": "Why should backbone layers be fine-tuned with a much smaller learning rate than the freshly added head?",
               "choices": [
                 "Smaller layers mathematically require smaller learning rates for gradient descent to converge",
-                "The backbone has more parameters, so each one should move less to keep total movement constant",
                 "The pretrained weights are already near a good solution; large steps cause catastrophic forgetting before the network adapts, while the random head needs large steps to learn",
+                "The backbone has more parameters, so each one should move less to keep total movement constant",
                 "A small learning rate lets you skip data augmentation on the backbone inputs"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The pretrained weights encode useful generic features and sit in a good basin; a large step (especially driven by the random head's noisy early gradients) overwrites them. The random head, having learned nothing, needs large steps."
             },
             {
               "q": "Your target domain is grayscale ultrasound images — a LARGE dataset but very DIFFERENT from natural photos. What is the most sensible approach?",
               "choices": [
                 "Freeze the entire backbone and train only a linear head on its final-layer features",
-                "Fine-tune the whole network end-to-end with a low learning rate (or train from scratch if the domain is truly alien), since you have ample data",
                 "Use the frozen late-layer features directly with no head at all",
+                "Fine-tune the whole network end-to-end with a low learning rate (or train from scratch if the domain is truly alien), since you have ample data",
                 "Train only the first convolutional layer and freeze everything above it"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Large data means you can safely adapt many parameters; low similarity means the specialized late features don't transfer well, so the network must re-specialize. Pretraining still helps as a warm start, but the late layers in particular need to change."
             },
             {
@@ -3007,32 +3007,32 @@
               "choices": [
                 "Equal to $\\eta_{\\max}$",
                 "$0.3\\,\\eta_{\\max}$",
-                "About $0.027\\,\\eta_{\\max}$",
-                "Zero (the bottom layer is always frozen)"
+                "Zero (the bottom layer is always frozen)",
+                "About $0.027\\,\\eta_{\\max}$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "For $\\ell=1$: $\\eta_1=\\eta_{\\max}\\cdot 0.3^{\\,4-1}=\\eta_{\\max}\\cdot 0.3^3=0.027\\,\\eta_{\\max}$. The generic bottom layers get the smallest steps; freezing would be the separate $\\eta=0$ limit, not implied here."
             },
             {
               "q": "In the decomposition $\\hat{y} = h_\\phi(f_\\theta(x))$ for a ResNet-50 ($d=2048$) being adapted to a new task with $K=7$ classes, what is the very first structural change you must make to reuse this network?",
               "choices": [
-                "Discard the backbone $f_\\theta$ and retrain it from scratch on the 7 classes",
-                "Keep the original head $h_\\phi$ but freeze it so it cannot change",
                 "Discard the head $h_\\phi$ and attach a new head whose final layer outputs $K=7$ scores, because the original head predicts the wrong label set",
+                "Keep the original head $h_\\phi$ but freeze it so it cannot change",
+                "Discard the backbone $f_\\theta$ and retrain it from scratch on the 7 classes",
                 "Reduce the embedding dimension $d$ from 2048 to 7 by retraining the backbone"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The backbone is reused for its general features while the source-specific head is replaced with a new one whose output dimension matches the target's $K=7$ classes. Retraining the backbone from scratch throws away the transferable features, freezing the old head keeps the wrong label set, and the embedding dimension $d$ is unrelated to $K$."
             },
             {
               "q": "According to the lesson's feature hierarchy, why do the EARLY layers of a pretrained CNN transfer so well to almost any new visual task?",
               "choices": [
                 "They are tightly coupled to the source label set, so they encode the most discriminative information",
-                "They learn generic, near-universal primitives like oriented edges and color blobs that natural images everywhere are built from",
+                "They assemble parts into task-specific concepts like 'dog face' that generalize across domains",
                 "They contain the largest number of parameters, giving them the most capacity to adapt",
-                "They assemble parts into task-specific concepts like 'dog face' that generalize across domains"
+                "They learn generic, near-universal primitives like oriented edges and color blobs that natural images everywhere are built from"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Early layers learn task-agnostic low-level features (edges, color blobs, Gabor-like filters) that are useful for essentially any natural-image task, which is why the reusable bottom of the network transfers. Coupling to source labels and high-level part assembly ('dog face') are properties of the LATE layers, not the early ones."
             },
             {
@@ -3040,10 +3040,10 @@
               "choices": [
                 "Because the head $h_\\phi$ already captures all low-level structure, making the backbone irrelevant",
                 "Because retraining early layers always destroys the embedding $z = f_\\theta(x)$",
-                "Because ImageNet contains every possible image, so no target dataset can ever differ from it",
-                "Because natural images everywhere are composed of edges, textures, and gradients, so a low-level filter bank is useful regardless of the specific source labels"
+                "Because natural images everywhere are composed of edges, textures, and gradients, so a low-level filter bank is useful regardless of the specific source labels",
+                "Because ImageNet contains every possible image, so no target dataset can ever differ from it"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Only the top of the network is specialized to the source labels; the low-level edge/texture/gradient filters are largely task-agnostic and remain useful for other natural-image domains. The head captures high-level structure (not low-level), retraining does not 'always destroy' the embedding, and ImageNet plainly does not contain every possible image."
             },
             {
@@ -3083,22 +3083,22 @@
               "q": "A practitioner with the 1,200-image, 10-class flower dataset decides to fine-tune all ~23M ResNet-50 parameters at once from the start, skipping the head warm-up. Validation accuracy collapses below the frozen-head baseline. Which two effects from the lesson best explain this failure?",
               "choices": [
                 "The embedding dimension $d=2048$ is too large for 10 classes, and weight decay was too weak",
-                "Fitting ~23M parameters from 1,200 examples (~19,000 params per example) overfits, and the random head's large early gradients flow back and damage the pretrained weights (catastrophic forgetting)",
                 "BatchNorm running statistics were frozen, and the learning rate was too small to escape the pretrained basin",
+                "Fitting ~23M parameters from 1,200 examples (~19,000 params per example) overfits, and the random head's large early gradients flow back and damage the pretrained weights (catastrophic forgetting)",
                 "Cross-entropy is the wrong loss for 10 classes, and the cached embeddings were stale"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Two lesson principles combine: 1,200 examples cannot estimate 23M parameters (~19,000 per example) without memorizing, and an unfrozen backbone exposed to the random head's large, noisy initial gradients suffers catastrophic forgetting. Warming up the head first and freezing most of the backbone addresses both."
             },
             {
               "q": "The two-phase recipe says to keep BatchNorm layers in eval mode while the backbone is frozen in Phase 1. What goes wrong if instead you leave BN in training mode during this phase?",
               "choices": [
                 "The BN layers would have no gradients and would raise an error in the optimizer",
-                "BN would keep updating its running mean/variance on your small target batches, drifting the \"frozen\" backbone's statistics and corrupting the very features you meant to preserve",
                 "BN would double-count the weight decay applied to the head",
+                "BN would keep updating its running mean/variance on your small target batches, drifting the \"frozen\" backbone's statistics and corrupting the very features you meant to preserve",
                 "BN in training mode disables the global pooling step that produces the embedding"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "BatchNorm's running mean and variance update from the data in training mode even when its weights are frozen. On a small, possibly skewed target dataset this shifts the backbone's effective statistics, so the backbone is not truly frozen and the preserved features get disturbed — hence keep BN in eval mode while frozen."
             },
             {
@@ -3116,33 +3116,33 @@
               "q": "In transfer learning, what distinguishes \"feature extraction\" from \"fine-tuning\"?",
               "choices": [
                 "Feature extraction needs a larger dataset; fine-tuning needs a smaller one",
-                "Feature extraction freezes the backbone and trains only the new head; fine-tuning also unfreezes and updates the backbone weights",
+                "They are two names for exactly the same procedure",
                 "Feature extraction works only for text, fine-tuning only for images",
-                "They are two names for exactly the same procedure"
+                "Feature extraction freezes the backbone and trains only the new head; fine-tuning also unfreezes and updates the backbone weights"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Both attach a new head, but they differ in which weights gradient descent may change. Feature extraction keeps the backbone frozen ($\\nabla_\\theta\\mathcal{L}$ never applied) and trains only the head; fine-tuning unfreezes some or all backbone layers and updates them too (usually with a much smaller learning rate)."
             },
             {
               "q": "Empirically, how do the features learned by a CNN change from its early to its late layers?",
               "choices": [
-                "Late layers learn generic edges while early layers learn task-specific concepts",
-                "Every layer learns essentially identical features",
                 "Early layers learn generic primitives (oriented edges, color blobs); late layers assemble task-specific concepts tied to the original labels",
+                "Every layer learns essentially identical features",
+                "Late layers learn generic edges while early layers learn task-specific concepts",
                 "Early layers hold all the parameters while late layers have none"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "CNNs organize into a hierarchy of increasing abstraction: early layers learn near-universal primitives (edges, color blobs, Gabor-like filters), middle layers compose textures and parts, and late layers assemble task-specific concepts. That is exactly why the lower layers transfer to almost any visual task."
             },
             {
               "q": "A pretrained classifier is written $\\hat{y} = h(f(x))$ (backbone $f$, head $h$). When adapting it to a new task with $K$ classes, what is the standard first step?",
               "choices": [
-                "Discard the old head $h$ and attach a fresh head whose randomly-initialized final layer has output dimension $K$",
                 "Retrain the entire network from random initialization",
+                "Discard the old head $h$ and attach a fresh head whose randomly-initialized final layer has output dimension $K$",
                 "Convert every convolution in the backbone into a dense layer",
                 "Increase the input image resolution to match the new task"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The original head predicts the source label set, which is useless for the new task. So every transfer recipe starts by discarding $h$ and attaching a fresh head ending in a randomly-initialized layer of output dimension $K$ — the reusable backbone $f$ is kept (then frozen or fine-tuned)."
             }
           ],
@@ -3222,34 +3222,34 @@
             {
               "q": "In an LSTM, the gradient of the cell state satisfies $\\partial c_t/\\partial c_{t-1} = \\operatorname{diag}(f_t)$. Why does this mitigate the vanishing-gradient problem that plagues vanilla RNNs?",
               "choices": [
-                "Because $f_t$ is always equal to 1, so the gradient is never attenuated",
                 "Because the backward signal through the cell is multiplied by the (learnable) forget gate rather than by a fixed recurrent matrix passed through a saturating tanh, so when the model learns $f_t\\approx 1$ the gradient passes nearly undamped across many steps",
+                "Because $f_t$ is always equal to 1, so the gradient is never attenuated",
                 "Because the sigmoid in $f_t$ has a larger derivative than the tanh in a vanilla RNN",
                 "Because the cell state is reset to zero at every step, preventing accumulation"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The additive cell update makes the per-step Jacobian the diagonal forget gate. When the network chooses to remember ($f_t\\approx 1$), the product of these factors stays near 1, so gradients survive over long gaps — the constant error carousel."
             },
             {
               "q": "An RNN's long-range Jacobian is $\\partial h_t/\\partial h_k = \\prod_{i=k+1}^{t}\\operatorname{diag}(\\tanh'(z_i))\\,W_{hh}$. If the largest singular value of $W_{hh}$ is $\\sigma_{\\max}>1$, what typically happens, and what is the standard remedy?",
               "choices": [
-                "Gradients vanish; remedy is gradient clipping",
                 "Gradients explode; remedy is gradient clipping (rescale by norm)",
+                "Gradients vanish; remedy is gradient clipping",
                 "Gradients explode; there is no remedy short of changing architecture",
                 "Gradients vanish; remedy is initializing the forget-gate bias high"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\sigma_{\\max}>1$ makes the product grow geometrically (exploding gradients). Clipping the gradient norm caps the update size cheaply. Vanishing ($\\sigma_{\\max}<1$) is the hard case with no value to clip."
             },
             {
               "q": "Which statement about the GRU's update gate $z_t$ in $h_t=(1-z_t)\\odot h_{t-1}+z_t\\odot\\tilde{h}_t$ is correct?",
               "choices": [
-                "$z_t\\approx 0$ replaces the hidden state entirely with the new candidate",
                 "$z_t\\approx 0$ copies the previous state through unchanged, preserving gradient flow much like an LSTM forget gate near 1",
+                "$z_t\\approx 0$ replaces the hidden state entirely with the new candidate",
                 "$z_t$ controls how much past state is used to compute the candidate (that is the reset gate's job)",
                 "The GRU needs a separate cell state for $z_t$ to function"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With $z_t\\approx 0$, $h_t\\approx h_{t-1}$: the past is carried forward losslessly, giving the same gradient-highway behavior as the LSTM forget gate near 1. The reset gate $r_t$, not $z_t$, gates the past inside the candidate."
             },
             {
@@ -3266,45 +3266,45 @@
             {
               "q": "In the vanilla Elman RNN, $h_t = \\tanh(W_{hh} h_{t-1} + W_{xh} x_t + b_h)$, why is the same matrix $W_{hh}$ reused at every time step rather than learning a distinct matrix per position?",
               "choices": [
-                "Parameter sharing lets one learned function $f$ apply to sequences of arbitrary, unbounded length and generalize across positions",
-                "Tying the weights guarantees the gradients cannot vanish or explode during backpropagation through time",
                 "Distinct per-step matrices would make the model unable to represent order-dependent meaning like 'dog bites man' vs 'man bites dog'",
+                "Tying the weights guarantees the gradients cannot vanish or explode during backpropagation through time",
+                "Parameter sharing lets one learned function $f$ apply to sequences of arbitrary, unbounded length and generalize across positions",
                 "Sharing $W_{hh}$ is required so the hidden state $h_t$ can be initialized to zero"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Parameter sharing across positions is what lets a single function handle variable/unbounded length, exactly analogous to a convolution filter shared across spatial positions. Tying weights does not prevent vanishing/exploding gradients (that is the core RNN problem), order can still be modeled by the recurrence, and zero-initialization is unrelated."
             },
             {
               "q": "An RNN is described as being 'unrolled' into a feedforward graph. What is the effective depth of this unrolled network for an input sequence of length $T$?",
               "choices": [
-                "Equal to $T$, with all layers tied to the same weights",
+                "Equal to the number of weight matrices, which is three",
                 "Equal to the hidden dimension $d_h$, independent of $T$",
                 "Equal to $T$, but each layer has independently learned weights",
-                "Equal to the number of weight matrices, which is three"
+                "Equal to $T$, with all layers tied to the same weights"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Unrolling copies the cell $T$ times so depth equals sequence length, but every copy shares the same tied weights. Depth scales with $T$, not with $d_h$ or the number of weight matrices, and the copies are not independent."
             },
             {
               "q": "In a sequence-to-one configuration (e.g. predicting the sentiment of a whole review), from which quantity is the prediction produced?",
               "choices": [
-                "The final hidden state $h_T$, which summarizes the entire sequence",
+                "The recurrent matrix $W_{hh}$ applied to the raw input vector",
                 "The average of all hidden states $h_1, \\dots, h_T$",
                 "The first hidden state $h_1$, since it sees the freshest input",
-                "The recurrent matrix $W_{hh}$ applied to the raw input vector"
+                "The final hidden state $h_T$, which summarizes the entire sequence"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Sequence-to-one reads the whole sequence and predicts from the final hidden state $h_T$, the compressed summary of everything seen. Averaging is a different (pooling) design, $h_1$ has seen only the first token, and $W_{hh}$ is a parameter, not a readout."
             },
             {
               "q": "The lesson stresses that 'if something didn't make it into $h_t$, it is gone.' What architectural fact about the vanilla RNN does this intuition capture?",
               "choices": [
-                "The hidden state $h_t$ is the only channel through which past inputs can influence future outputs",
+                "The output $\\hat{y}_t$ feeds back into $h_{t+1}$ as the sole memory mechanism",
                 "The tanh nonlinearity permanently deletes any negative-valued features at each step",
                 "Inputs $x_t$ are discarded immediately after being read and never affect later states",
-                "The output $\\hat{y}_t$ feeds back into $h_{t+1}$ as the sole memory mechanism"
+                "The hidden state $h_t$ is the only channel through which past inputs can influence future outputs"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Because the recurrence passes information only via $h_{t-1}$, the hidden state is the single bottleneck connecting the past to the future, so anything not encoded in it is lost. tanh does not delete negatives, inputs do influence later states (through $h_t$), and in an Elman RNN it is the hidden state, not the output, that is fed forward."
             },
             {
@@ -3333,33 +3333,33 @@
               "q": "A common claim is that an LSTM 'cannot suffer from vanishing gradients because the cell state has an additive update.' What is the most accurate correction to this claim?",
               "choices": [
                 "It is fully correct; the additive path guarantees gradients never shrink across any number of steps.",
-                "Gradients can still vanish: the cell-state Jacobian is $\\operatorname{diag}(f_t)$, so if the forget gates stay below 1 over many steps their product still decays toward zero.",
+                "Gradients can only explode in an LSTM, never vanish, because the gates are bounded in $[0,1]$.",
                 "It is wrong because LSTMs actually have no additive update; the cell is overwritten each step like a vanilla RNN.",
-                "Gradients can only explode in an LSTM, never vanish, because the gates are bounded in $[0,1]$."
+                "Gradients can still vanish: the cell-state Jacobian is $\\operatorname{diag}(f_t)$, so if the forget gates stay below 1 over many steps their product still decays toward zero."
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The gated additive path mitigates but does not eliminate vanishing: $\\partial c_t/\\partial c_{t-1}=\\operatorname{diag}(f_t)$, and a product of forget gates each $<1$ still shrinks geometrically. The LSTM helps because gates can learn to stay near 1, not because vanishing is impossible."
             },
             {
               "q": "You build a sequence-to-one classifier (e.g. sentiment of a full review) on top of an RNN, but instead of feeding the final hidden state $h_T$ to the classifier you feed only the first hidden state $h_1$. Assuming the rest of the network is trained correctly, what is the predictable consequence?",
               "choices": [
-                "The model can see almost none of the review, since $h_1$ summarizes only the first token plus the initial state.",
-                "Performance is unchanged, because every hidden state $h_t$ contains the complete sequence by parameter sharing.",
                 "It improves accuracy, since $h_1$ avoids the vanishing-gradient corruption present in $h_T$.",
+                "Performance is unchanged, because every hidden state $h_t$ contains the complete sequence by parameter sharing.",
+                "The model can see almost none of the review, since $h_1$ summarizes only the first token plus the initial state.",
                 "Training fails entirely, because backpropagation through time requires reading the last state."
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "An RNN's state $h_t$ summarizes inputs up to and including step $t$, so $h_1$ reflects essentially only the first token; the classifier loses the rest of the review. Choice 1 misstates the directionality—$h_t$ summarizes the past, not the entire (future-inclusive) sequence."
             },
             {
               "q": "In an RNN with recurrence $h_t = f(h_{t-1}, x_t)$, what does the hidden state $h_t$ represent?",
               "choices": [
-                "A learned, compressed summary of everything seen up to step $t$ — the only channel through which the past reaches the future",
                 "The network's output prediction at step $t$",
+                "A learned, compressed summary of everything seen up to step $t$ — the only channel through which the past reaches the future",
                 "The raw input token presented at step $t$",
                 "The fixed parameters that define the recurrent cell"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$h_t$ is the network's running memory: at each step it reads the new token $x_t$, updates its notes given $h_{t-1}$, and passes them forward. Anything not encoded in $h_t$ cannot influence later steps — \"if it didn't make it into $h_t$, it is gone.\""
             },
             {
@@ -3387,12 +3387,12 @@
             {
               "q": "An RNN used to predict the sentiment of a whole review (one label per sequence) is which configuration?",
               "choices": [
-                "Sequence-to-sequence (aligned) — one output emitted per input token",
+                "Sequence-to-one — read the whole sequence and predict from the final hidden state $h_T$",
                 "Encoder-decoder — two RNNs communicating through a context vector",
                 "Feedforward — there is no recurrence involved",
-                "Sequence-to-one — read the whole sequence and predict from the final hidden state $h_T$"
+                "Sequence-to-sequence (aligned) — one output emitted per input token"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Sequence-to-one reads the entire input and produces a single prediction from the last hidden state $h_T$, which summarizes the whole sequence. (Per-token labels would be seq-to-seq; translation would be encoder-decoder.)"
             }
           ],
@@ -3467,11 +3467,11 @@
               "q": "Under a one-hot encoding, what is the cosine similarity between the vectors for two *distinct* words?",
               "choices": [
                 "1, because each word is identical to itself",
-                "0, because distinct one-hot vectors are orthogonal",
                 "It depends on how semantically related the two words are",
+                "0, because distinct one-hot vectors are orthogonal",
                 "-1, because the words are opposites"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Distinct one-hot vectors share no nonzero coordinate, so their dot product is 0, making cosine similarity 0. One-hot encodes identity but no graded similarity — which is exactly its weakness."
             },
             {
@@ -3488,23 +3488,23 @@
             {
               "q": "If you embed a sentence of 20 tokens using an embedding table with dimension $d = 256$, what is the shape of the resulting matrix, and what does $d$ represent?",
               "choices": [
-                "$20 \\times 256$; $d$ is the length (width) of each token's vector",
+                "$256 \\times 20$; $d$ is the number of distinct sentences",
                 "$256 \\times 256$; $d$ is the vocabulary size",
                 "$20 \\times 20$; $d$ is the number of tokens",
-                "$256 \\times 20$; $d$ is the number of distinct sentences"
+                "$20 \\times 256$; $d$ is the length (width) of each token's vector"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Each of the 20 tokens becomes a $d$-dimensional vector, giving a $20 \\times 256$ matrix. The dimension $d$ is the width of each embedding, independent of how many tokens are processed."
             },
             {
               "q": "Why is cosine similarity typically preferred over raw Euclidean distance for comparing learned word embeddings?",
               "choices": [
-                "It is the only metric that can be negative",
                 "It compares direction while ignoring magnitude, which often reflects nuisance factors like word frequency",
+                "It is the only metric that can be negative",
                 "It is always faster to compute than Euclidean distance",
                 "It guarantees the embeddings are orthogonal"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "In learned spaces, a vector's direction tends to carry meaning while its norm can correlate with confounders like frequency; cosine isolates direction. (After L2-normalization the two metrics become monotonically related.)"
             },
             {
@@ -3512,32 +3512,32 @@
               "choices": [
                 "0",
                 "1",
-                "2",
-                "$\\sqrt{2}$"
+                "$\\sqrt{2}$",
+                "2"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Since each has norm 1 and their dot product is 0, the squared distance is $1 + 1 - 2(0) = 2$ for any distinct pair."
             },
             {
               "q": "The lesson argues that what a model learns about 'Paris' in 'flights to Paris' cannot transfer to 'Rome'. Why does one-hot encoding cause this failure to generalize?",
               "choices": [
-                "Because distinct words share no coordinates, so learned weights touch only that word's axis",
                 "Because the vocabulary is too small to contain both cities",
+                "Because distinct words share no coordinates, so learned weights touch only that word's axis",
                 "Because cosine similarity is undefined for city names",
                 "Because one-hot vectors have non-zero dot products that confuse the model"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Each word occupies its own orthogonal axis, so weight updates for one word's coordinate cannot affect any other word."
             },
             {
               "q": "The lesson calls one-hot vectors 'perfect labels but useless features.' What does this intuition mean?",
               "choices": [
                 "They are useful only for unsupervised learning, not supervised learning",
-                "They identify which word it is but carry no information about what the word is like",
                 "They store the word's meaning but lose its spelling",
+                "They identify which word it is but carry no information about what the word is like",
                 "They work for small vocabularies but break for large ones"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Because all distinct words are mutually orthogonal and equidistant, a one-hot vector uniquely tags identity but encodes zero relational or semantic structure."
             },
             {
@@ -3545,10 +3545,10 @@
               "choices": [
                 "The vectors must be normalized at every step, doubling the compute",
                 "Cosine similarity must be recomputed for all 50,000 words each forward pass",
-                "The input dimension equals $|V|$, so nearly all entries are zero and you spend compute multiplying by zeros",
-                "Backpropagation through orthogonal vectors requires extra matrix inversions"
+                "Backpropagation through orthogonal vectors requires extra matrix inversions",
+                "The input dimension equals $|V|$, so nearly all entries are zero and you spend compute multiplying by zeros"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "One-hot dimensionality equals vocabulary size, forcing a weight row per word while almost every input entry is zero, wasting memory and compute."
             },
             {
@@ -3577,66 +3577,66 @@
               "q": "After training, you find that the embeddings for 'king', 'queen', 'man', and 'woman' satisfy the approximate relationship $\\vec{king} - \\vec{man} + \\vec{woman} \\approx \\vec{queen}$. What does this illustrate about learned embeddings that one-hot encoding can never exhibit?",
               "choices": [
                 "That the embedding dimension $d$ must equal the vocabulary size $|V|$ for arithmetic to work",
-                "That learned embeddings place semantically related tokens in a continuous geometry where directions encode meaning, enabling transfer between related words",
                 "That cosine similarity between any two embeddings is always exactly $0$",
+                "That learned embeddings place semantically related tokens in a continuous geometry where directions encode meaning, enabling transfer between related words",
                 "That every token's embedding has unit norm by construction"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Learned embeddings live in a continuous space where geometric structure (directions, distances) reflects semantic relationships, so knowledge about one token generalizes to nearby ones. One-hot vectors are mutually orthogonal and equidistant, so no such arithmetic or transfer is possible, regardless of dimension."
             },
             {
               "q": "A practitioner claims: 'Since one-hot vectors are orthonormal, they already give the network a perfectly clean, information-rich starting representation, so a learned embedding can only throw information away.' What is the flaw in this reasoning?",
               "choices": [
                 "One-hot vectors are not actually orthonormal, so the premise is false",
-                "Orthonormality means every pair of distinct tokens is equidistant and uncorrelated, encoding no similarity structure; an embedding adds useful structure rather than discarding it",
+                "A learned embedding always has higher dimension than the one-hot vector, so it strictly contains more information",
                 "Learned embeddings are also orthonormal, so the two representations are identical",
-                "A learned embedding always has higher dimension than the one-hot vector, so it strictly contains more information"
+                "Orthonormality means every pair of distinct tokens is equidistant and uncorrelated, encoding no similarity structure; an embedding adds useful structure rather than discarding it"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Orthonormality is precisely the problem: it forces all distinct tokens to be equally dissimilar, so the representation carries zero similarity information. An embedding maps tokens into a lower-dimensional space that learns meaningful relationships, adding structure the one-hot encoding lacks."
             },
             {
               "q": "What is a learned word embedding?",
               "choices": [
-                "A one-hot vector with a single 1 marking the token's vocabulary index",
+                "A dense, low-dimensional, real-valued vector — learned by the model — that represents a token, with similar tokens ending up near each other",
                 "The integer ID assigned to the token in the vocabulary",
                 "The softmax probability the model assigns to the token",
-                "A dense, low-dimensional, real-valued vector — learned by the model — that represents a token, with similar tokens ending up near each other"
+                "A one-hot vector with a single 1 marking the token's vocabulary index"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "An embedding maps each token to a dense vector in $\\mathbb{R}^d$ ($d\\ll|V|$) whose entries are trained by backprop. Unlike one-hot codes, embeddings place related tokens close together, so the model can generalize across similar words."
             },
             {
               "q": "A one-hot encoding of a token drawn from a vocabulary of size $|V|$ is...",
               "choices": [
-                "A $|V|$-dimensional vector that is 1 at the token's index and 0 everywhere else",
-                "A dense $d$-dimensional learned vector",
                 "The token's frequency count in the corpus",
+                "A dense $d$-dimensional learned vector",
+                "A $|V|$-dimensional vector that is 1 at the token's index and 0 everywhere else",
                 "A vector of $|V|$ random values"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "One-hot puts a single 1 at the token's coordinate and 0 elsewhere. It is injective but wasteful and similarity-free: any two distinct one-hot vectors are orthogonal and exactly $\\sqrt 2$ apart, so \"cat\" is as far from \"dog\" as from \"democracy.\""
             },
             {
               "q": "What is tokenization in an NLP pipeline?",
               "choices": [
                 "Converting embedding vectors back into readable text",
-                "Normalizing embedding vectors to unit length",
                 "Splitting raw text into the discrete units (tokens — words, subwords, or characters) that each receive an embedding",
+                "Normalizing embedding vectors to unit length",
                 "Assigning a probability to each word in the vocabulary"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Tokenization decides what actually gets an embedding: it chops raw text into tokens (whole words, subword pieces like BPE, or characters). Each resulting token is then mapped to a row of the embedding table before any sequence model runs."
             },
             {
               "q": "An embedding table $E$ for a vocabulary of $|V|$ tokens with embedding dimension $d$ — what is its shape, and how is a token embedded?",
               "choices": [
-                "$E$ is $d\\times d$; the embedding is $E$ times the token's frequency",
                 "$E$ is $|V|\\times d$; the embedding of token $i$ is simply row $i$ of $E$ (a fast table lookup)",
+                "$E$ is $d\\times d$; the embedding is $E$ times the token's frequency",
                 "$E$ is $|V|\\times|V|$; the embedding is a column of $E$",
                 "$E$ is $1\\times d$, a single row shared by every token"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The table has one learnable row per token, so $E\\in\\mathbb{R}^{|V|\\times d}$. Embedding token $i$ means selecting row $i$ — equivalent to $e_i^\\top E$ with a one-hot $e_i$, but implemented as a direct gather/lookup."
             }
           ],
@@ -3710,56 +3710,56 @@
             {
               "q": "Why is the attention score divided by $\\sqrt{d}$ (where $d$ is the query/key dimension)?",
               "choices": [
-                "To make the attention weights sum to exactly 1",
                 "Because the dot product of unit-variance vectors has variance $d$, so dividing by $\\sqrt{d}$ restores unit variance and keeps softmax out of its saturated, low-gradient region",
+                "To make the attention weights sum to exactly 1",
                 "To reduce the $O(L^2 d)$ computational cost to $O(L^2)$",
                 "Because $\\sqrt{d}$ is the number of attention heads"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "For independent unit-variance components, $\\operatorname{Var}(q\\cdot k)=d$, so the std is $\\sqrt{d}$; dividing by it normalizes scores to $O(1)$ so softmax gradients don't vanish. The summing-to-1 is softmax's job, not the scaling's."
             },
             {
               "q": "What precisely distinguishes self-attention from cross-attention?",
               "choices": [
                 "Self-attention uses softmax; cross-attention uses a hard argmax",
-                "Self-attention has no value vectors, only keys and queries",
                 "In self-attention $Q$, $K$, and $V$ all come from the same sequence; in cross-attention $Q$ comes from one sequence while $K$ and $V$ come from another",
+                "Self-attention has no value vectors, only keys and queries",
                 "Cross-attention omits the $1/\\sqrt{d}$ scaling"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The arithmetic is identical in both; only the provenance differs. Keys and values always come from the same source, and whether the query shares that source determines self vs. cross."
             },
             {
               "q": "In scaled dot-product attention with multiple queries, the softmax in $\\operatorname{softmax}(QK^\\top/\\sqrt{d})V$ is applied:",
               "choices": [
-                "Over the entire $QK^\\top$ matrix as one flat distribution",
                 "Row-wise, so each query forms its own probability distribution over the keys",
+                "Over the entire $QK^\\top$ matrix as one flat distribution",
                 "Column-wise, so each key forms a distribution over the queries",
                 "Element-wise, like a sigmoid"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Each row of $QK^\\top$ holds one query's scores against all keys; softmax is applied per row so every query gets an independent distribution over the $n$ keys that sums to 1."
             },
             {
               "q": "Why are keys and values kept as separate vectors instead of being the same thing?",
               "choices": [
-                "So a token can advertise how it is matched (key) separately from the content it delivers (value), making the soft lookup more expressive",
+                "It is required only for cross-attention, not self-attention",
                 "To halve the memory required to store the dictionary",
                 "Because keys must be integers and values must be floats",
-                "It is required only for cross-attention, not self-attention"
+                "So a token can advertise how it is matched (key) separately from the content it delivers (value), making the soft lookup more expressive"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Decoupling the 'address' (key) from the 'payload' (value) lets a token be found one way while carrying different downstream content, unlike a hard dictionary where key and value are bound."
             },
             {
               "q": "According to the lesson, what is the fundamental conceptual shift that attention introduces relative to RNN/LSTM hidden states?",
               "choices": [
-                "It reframes memory as on-demand retrieval rather than compression into a single state",
-                "It replaces the softmax with a hard argmax for sharper selection",
                 "It adds more recurrent layers so the hidden state has higher capacity",
+                "It replaces the softmax with a hard argmax for sharper selection",
+                "It reframes memory as on-demand retrieval rather than compression into a single state",
                 "It compresses the sequence into a smaller fixed vector to save memory"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The lesson's 'Big picture' callout states attention reframes 'memory' as retrieval rather than compression: instead of cramming everything into one state, the model keeps every token's representation around and retrieves a tailored mixture on demand. Attention still uses softmax (not a hard argmax), does not add recurrence, and explicitly removes the fixed-vector compression rather than shrinking it."
             },
             {
@@ -3767,43 +3767,43 @@
               "choices": [
                 "Attention requires the query to exactly equal a key, just like q == k_i",
                 "Attention returns a single value, while a dict returns a weighted blend",
-                "Attention uses a graded similarity score and returns a weighted blend of values, not one exact match",
-                "Attention stores keys and values together, whereas a dict binds them separately"
+                "Attention stores keys and values together, whereas a dict binds them separately",
+                "Attention uses a graded similarity score and returns a weighted blend of values, not one exact match"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The lesson contrasts a dict's hard lookup (exact q == k_i match returning exactly one value) with attention's soft generalization: it scores similarity continuously via a dot product, softmaxes the scores, and returns a weighted average of the values. The roles are reversed in the 'single value' option, and it is the dict that binds key and value together while attention decouples them."
             },
             {
               "q": "Given query $q$, keys $k_i$, and values $v_i$, which sequence correctly describes how scaled dot-product attention produces its output?",
               "choices": [
                 "Softmax the keys, dot them with the query, then average the queries",
-                "Dot $q$ with each $k_i$ for similarity, softmax those scores into weights, then take the weighted average of the $v_i$",
                 "Average all $v_i$ uniformly, then multiply by the dot product of $q$ and $k_i$",
+                "Dot $q$ with each $k_i$ for similarity, softmax those scores into weights, then take the weighted average of the $v_i$",
                 "Pick the single $v_i$ whose $k_i$ has the largest dot product with $q$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The lesson's three steps are: (1) score each key with the query-key dot product $s_i = q\\cdot k_i$, (2) softmax the scores into a probability distribution $\\alpha$, and (3) return $\\sum_i \\alpha_i v_i$, the weighted average of the values. Uniform averaging and hard single-value selection are both explicitly contrasted as what attention does not do."
             },
             {
               "q": "The lesson calls the RNN/LSTM approach an 'information bottleneck' and notes performance degraded sharply with sequence length. Why does longer input make this worse?",
               "choices": [
-                "Longer sequences force more meaning to be crammed into the same fixed-length summary vector, saturating its capacity",
                 "The softmax over a longer sequence becomes numerically unstable",
+                "Longer sequences force more meaning to be crammed into the same fixed-length summary vector, saturating its capacity",
                 "The decoder runs out of attention weights to distribute across positions",
                 "Each additional word shrinks the dimensionality of the hidden state"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The lesson explains the entire sequence is compressed into one fixed-length vector (e.g. 512 numbers), so a longer sentence packs more meaning into the same fixed capacity until the bottleneck saturates and performance degrades. The RNN approach has no attention weights, the hidden-state dimension is fixed (not shrinking), and the issue is capacity, not softmax stability."
             },
             {
               "q": "A single query attends over three values $v_1=\\begin{bmatrix}8\\\\2\\end{bmatrix}$, $v_2=\\begin{bmatrix}4\\\\6\\end{bmatrix}$, $v_3=\\begin{bmatrix}0\\\\10\\end{bmatrix}$ with some attention weights $\\alpha$. Which of the following is a possible output?",
               "choices": [
                 "$\\begin{bmatrix}10\\\\0\\end{bmatrix}$",
-                "$\\begin{bmatrix}5\\\\5\\end{bmatrix}$",
+                "$\\begin{bmatrix}9\\\\1\\end{bmatrix}$",
                 "$\\begin{bmatrix}-2\\\\6\\end{bmatrix}$",
-                "$\\begin{bmatrix}9\\\\1\\end{bmatrix}$"
+                "$\\begin{bmatrix}5\\\\5\\end{bmatrix}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The output $\\sum_i\\alpha_i v_i$ with $\\alpha_i\\ge 0$, $\\sum\\alpha_i=1$ is a convex combination, so each coordinate is bounded by the min and max of that coordinate across the values: first coord in $[0,8]$, second in $[2,10]$. Only $[5,5]$ satisfies both; $[10,0]$ and $[9,1]$ exceed the first-coordinate max of 8, and $[-2,6]$ falls below the first-coordinate min of 0."
             },
             {
@@ -3832,55 +3832,55 @@
               "q": "In practice $Q$, $K$, $V$ are formed as $Q=X_q W^Q$, $K=X_k W^K$, $V=X_k W^V$. Based on this, which statement is correct?",
               "choices": [
                 "$W^Q$, $W^K$, $W^V$ must be identical so that queries, keys, and values lie in the same space",
-                "Keys and values are projected from the same source $X_k$, while the query source $X_q$ may differ — and self vs. cross-attention is determined by whether $X_q=X_k$",
                 "The projections are needed only in cross-attention; self-attention feeds raw $X$ directly as $Q$, $K$, $V$",
+                "Keys and values are projected from the same source $X_k$, while the query source $X_q$ may differ — and self vs. cross-attention is determined by whether $X_q=X_k$",
                 "Because $K$ and $V$ share the source $X_k$, the matrices $W^K$ and $W^V$ are forced to be equal"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Keys and values always travel together (both projected from $X_k$), while the query comes from $X_q$; self-attention has $X_q=X_k=X$ and cross-attention has them differ. The three projection matrices $W^Q,W^K,W^V$ are independent learned weights even when the source sequences coincide, so they need not be equal or identical."
             },
             {
               "q": "In attention, what do the query, key, and value vectors represent?",
               "choices": [
                 "Query, key, and value are three identical copies of the same input vector",
-                "The query is what the current position is looking for; each key advertises what a position offers; the value is the content retrieved if that position is attended to",
+                "They are the forget, input, and output gates of an LSTM cell",
                 "The query is the output, the key is the loss, and the value is the gradient",
-                "They are the forget, input, and output gates of an LSTM cell"
+                "The query is what the current position is looking for; each key advertises what a position offers; the value is the content retrieved if that position is attended to"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Attention is a soft dictionary. The query says what you want; each key advertises how a position can be found; the value is the payload delivered. Keys and values are deliberately decoupled so a token can be matched one way yet contribute different content."
             },
             {
               "q": "Scaled dot-product attention produces its output by which sequence of operations?",
               "choices": [
                 "Average all the values, then multiply the result by the query",
-                "Take only the single highest-scoring value (a hard lookup)",
+                "Score each key against the query (dot product), softmax the scores into weights, then return the weighted average of the values",
                 "Concatenate all the values and pass them through a linear layer",
-                "Score each key against the query (dot product), softmax the scores into weights, then return the weighted average of the values"
+                "Take only the single highest-scoring value (a hard lookup)"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Three steps: (1) $s_i = q\\cdot k_i$ scores each key; (2) $\\alpha=\\operatorname{softmax}(s/\\sqrt d)$ turns scores into weights; (3) output $=\\sum_i \\alpha_i v_i$, a weighted blend of values — mostly the best match, with smaller contributions from the rest."
             },
             {
               "q": "After the softmax step in attention, what do the attention weights $\\alpha$ represent?",
               "choices": [
-                "A probability distribution over the positions — non-negative and summing to 1 — giving how much each position is attended to",
-                "The raw dot-product scores, before any normalization",
                 "The learnable parameters of the attention layer",
+                "The raw dot-product scores, before any normalization",
+                "A probability distribution over the positions — non-negative and summing to 1 — giving how much each position is attended to",
                 "The gradient of the loss with respect to each value"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Softmax maps the raw scores to $\\alpha_i\\ge 0$ with $\\sum_i\\alpha_i=1$ — a distribution over positions. A peaked $\\alpha$ acts like a hard lookup (attend to one position); a flat $\\alpha$ averages everything."
             },
             {
               "q": "What characterizes self-attention, as opposed to cross-attention?",
               "choices": [
-                "The queries come from one sequence while the keys and values come from a different sequence",
-                "It uses no softmax — only a hard maximum over the scores",
                 "The queries, keys, and values are all derived from the same input sequence — every position attends within that one sequence",
+                "It uses no softmax — only a hard maximum over the scores",
+                "The queries come from one sequence while the keys and values come from a different sequence",
                 "It has no learnable parameters"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "In self-attention $Q$, $K$, and $V$ are all projections of the same input $X$, so each position attends to the others in its own sequence. Cross-attention draws queries from one sequence and keys/values from another (e.g. decoder attending to encoder outputs)."
             }
           ],
@@ -3961,11 +3961,11 @@
               "q": "Why is the dot-product attention score divided by $\\sqrt{d_k}$ before the softmax?",
               "choices": [
                 "To make the attention weights sum to 1, which softmax alone cannot guarantee",
-                "Because for large $d_k$ the dot products grow in variance and push softmax into saturated regions with tiny gradients",
+                "To normalize the value vectors $V$ so each has unit norm",
                 "To reduce the $O(n^2)$ memory cost of the attention matrix",
-                "To normalize the value vectors $V$ so each has unit norm"
+                "Because for large $d_k$ the dot products grow in variance and push softmax into saturated regions with tiny gradients"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "With unit-variance components, $q\\cdot k$ has variance $d_k$; dividing by $\\sqrt{d_k}$ restores unit variance and keeps softmax in a high-gradient regime. Softmax already guarantees the weights sum to 1 regardless of scaling."
             },
             {
@@ -3973,43 +3973,43 @@
               "choices": [
                 "To reduce computation by skipping future tokens",
                 "Because the encoder output is not yet available for future positions",
-                "To prevent each position from attending to future tokens, so it cannot 'cheat' by seeing the answer it must predict",
-                "To make self-attention permutation-equivariant"
+                "To make self-attention permutation-equivariant",
+                "To prevent each position from attending to future tokens, so it cannot 'cheat' by seeing the answer it must predict"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Training feeds the whole target sequence in parallel, but each position must predict the next token using only its past; masking future positions to $-\\infty$ before softmax enforces this autoregressive constraint."
             },
             {
               "q": "What is the primary purpose of adding positional encodings to token embeddings?",
               "choices": [
                 "To increase the embedding dimension so the FFN has more capacity",
-                "Because self-attention is permutation-equivariant and otherwise has no notion of token order",
                 "To normalize embeddings to zero mean and unit variance",
+                "Because self-attention is permutation-equivariant and otherwise has no notion of token order",
                 "To provide the residual connection with a gradient highway"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Self-attention treats its input as a set; shuffling tokens just shuffles outputs. Positional encodings inject order information that the architecture would otherwise lack entirely."
             },
             {
               "q": "In a standard Transformer, which two operations alternate to mix information, and along which axes?",
               "choices": [
                 "Self-attention mixes across features; the FFN mixes across positions",
-                "Self-attention mixes across positions; the position-wise FFN mixes across feature dimensions",
                 "Layer norm mixes across positions; residual connections mix across features",
+                "Self-attention mixes across positions; the position-wise FFN mixes across feature dimensions",
                 "Cross-attention mixes across heads; multi-head attention mixes across layers"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Attention lets tokens exchange information across the sequence (across positions), while the FFN is applied independently per position and transforms the feature dimension. This position/feature decomposition is the backbone of the architecture."
             },
             {
               "q": "For a sequence of length $n$ with model dimension $d$, what is the time and memory complexity of computing the full self-attention score matrix $QK^\\top$, and why does this matter for very long sequences?",
               "choices": [
-                "$O(n \\cdot d)$ time and memory, so cost grows only linearly with sequence length",
                 "$O(n^2 \\cdot d)$ time and $O(n^2)$ memory, so cost grows quadratically with sequence length",
+                "$O(n \\cdot d)$ time and memory, so cost grows only linearly with sequence length",
                 "$O(n \\log n)$ time and memory, because attention is implemented as a fast transform",
                 "$O(n \\cdot d^2)$ time and $O(d^2)$ memory, independent of sequence length"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Computing all $n \\times n$ pairwise scores costs $O(n^2 d)$ time and stores an $O(n^2)$ matrix, the quadratic bottleneck that makes long sequences expensive and motivates efficient-attention research."
             },
             {
@@ -4070,56 +4070,56 @@
             {
               "q": "Both an encoder self-attention sublayer and a decoder cross-attention sublayer compute $\\text{softmax}(QK^\\top/\\sqrt{d_k})V$. What distinguishes cross-attention?",
               "choices": [
-                "The queries come from the decoder while the keys and values come from the encoder output",
                 "Cross-attention omits the $\\sqrt{d_k}$ scaling because the two sequences have different lengths",
+                "The queries come from the decoder while the keys and values come from the encoder output",
                 "All of $Q$, $K$, and $V$ are computed from the encoder output, ignoring the decoder",
                 "Cross-attention uses a causal mask whereas self-attention never does"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "In cross-attention the decoder's current representations form the queries while keys and values are projected from the encoder's outputs, letting each decoder position read from the source sequence. The scaling is unchanged (B wrong), $Q$ comes from the decoder not encoder (C wrong), and causal masking is a property of decoder self-attention, not cross-attention (D wrong)."
             },
             {
               "q": "A practitioner removes all residual (skip) connections from a deep Transformer and finds that training becomes unstable and the deep model performs no better than a shallow one. Which explanation best fits?",
               "choices": [
-                "Without residuals the attention weights can exceed 1, breaking the convex-combination property of softmax",
+                "Residuals provide a direct gradient path and let each sublayer learn a perturbation of its input, so without them gradients degrade and stacking depth stops helping",
                 "Residual connections are what make attention permutation-equivariant; removing them breaks that symmetry",
                 "Residual connections reduce the parameter count, so removing them causes overfitting on small data",
-                "Residuals provide a direct gradient path and let each sublayer learn a perturbation of its input, so without them gradients degrade and stacking depth stops helping"
+                "Without residuals the attention weights can exceed 1, breaking the convex-combination property of softmax"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Residual connections give gradients a short, near-identity path through every layer and let each sublayer model a residual update, which is what makes very deep stacks trainable; removing them reverts to the deep-network optimization problems Transformers were designed to avoid. They do not affect softmax bounds, permutation-equivariance, or parameter count in the ways the distractors claim."
             },
             {
               "q": "What is the Transformer's defining architectural change relative to the RNN?",
               "choices": [
-                "It removes recurrence entirely — every token attends directly to every other in one parallel operation, making the path length between any two positions $O(1)$ instead of $O(n)$",
+                "It eliminates the need for any learnable weights",
                 "It processes tokens strictly one at a time, like an RNN but with a faster cell",
                 "It replaces all matrix multiplications with convolutions",
-                "It eliminates the need for any learnable weights"
+                "It removes recurrence entirely — every token attends directly to every other in one parallel operation, making the path length between any two positions $O(1)$ instead of $O(n)$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The RNN's sequential recurrence ($h_t=f(h_{t-1},x_t)$) blocks parallelism and forces an $O(n)$ path between distant tokens. The Transformer drops recurrence so the whole sequence is processed at once via matrix multiplies, and any two tokens interact directly ($O(1)$ path) — the change that made internet-scale training feasible."
             },
             {
               "q": "What does multi-head attention do?",
               "choices": [
                 "It stacks many Transformer layers directly on top of one another",
-                "It applies attention to only the single most important token",
                 "It runs several attention operations in parallel on different learned projections (subspaces) of the input, then concatenates their outputs — so the model can attend to several kinds of relationships at once",
+                "It applies attention to only the single most important token",
                 "It averages the embeddings of all tokens into one vector before attending"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "A single attention pools everything into one weighted average. Multi-head splits the model dimension into $h$ heads, runs attention independently in each subspace, and concatenates — letting one token simultaneously track, say, its subject, its coreferent, and its topic."
             },
             {
               "q": "In a Transformer, how is each sublayer (self-attention, feed-forward) wrapped?",
               "choices": [
-                "With dropout only, and no skip connection",
                 "With a residual (skip) connection around it plus layer normalization — e.g. $\\mathrm{LayerNorm}(x + \\mathrm{Sublayer}(x))$ — to keep gradients flowing and stabilize deep stacks",
+                "With dropout only, and no skip connection",
                 "With a pooling layer that halves the sequence length each time",
                 "With a softmax applied directly to the raw inputs"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Every sublayer is wrapped in a residual connection and layer norm. The skip connection gives gradients a clean path back through depth (removing them destabilizes training); layer norm keeps activations well-scaled. This residual+norm pattern is what lets Transformers stack dozens of layers."
             },
             {
@@ -4204,67 +4204,67 @@
             {
               "q": "You need sentence-level embeddings for a semantic search / retrieval system, where the full document text is always available at inference time. Which pretraining objective is the most natural fit, and why?",
               "choices": [
-                "Next-token prediction (GPT-style), because it learns the full joint distribution $p(x)$",
                 "Masked language modeling (BERT-style), because bidirectional context gives each token a representation conditioned on its full neighborhood",
+                "Next-token prediction (GPT-style), because it learns the full joint distribution $p(x)$",
                 "Either is identical for this task since both use the Transformer architecture",
                 "Next-token prediction, because causal masking produces richer embeddings"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Retrieval/understanding tasks benefit from bidirectional context, which MLM provides; the whole input is available so there is no need for left-to-right causality. AR models can work but spend capacity on generation."
             },
             {
               "q": "Under the LoRA reparameterization $W' = W_0 + BA$ with $W_0 \\in \\mathbb{R}^{d\\times d}$, $B \\in \\mathbb{R}^{d\\times r}$, $A \\in \\mathbb{R}^{r\\times d}$, which statement is correct?",
               "choices": [
                 "LoRA trains all of $W_0$, $A$, and $B$ jointly to maximize expressiveness",
-                "$W_0$ is frozen and only $A$ and $B$ are trained, reducing trainable parameters from $d^2$ to $2dr$",
+                "LoRA increases the number of trainable parameters relative to full fine-tuning",
                 "LoRA adds permanent inference latency because $BA$ must be recomputed every forward pass",
-                "LoRA increases the number of trainable parameters relative to full fine-tuning"
+                "$W_0$ is frozen and only $A$ and $B$ are trained, reducing trainable parameters from $d^2$ to $2dr$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "LoRA freezes the pretrained $W_0$ and learns only the low-rank factors $A,B$ ($2dr$ params, with $r \\ll d$). Once merged into $W_0$ there is no extra inference latency."
             },
             {
               "q": "Chinchilla-style compute-optimal scaling (with training FLOPs $C \\approx 6ND$ for $N$ parameters and $D$ tokens) implies which practice for a fixed compute budget?",
               "choices": [
                 "Maximize parameters $N$ and use as few tokens as possible",
-                "Scale parameters $N$ and training tokens $D$ together in roughly equal proportion",
                 "Fix the model size and only ever add more tokens",
+                "Scale parameters $N$ and training tokens $D$ together in roughly equal proportion",
                 "Compute budget is irrelevant; only architecture matters"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "For a fixed budget, loss is minimized by growing $N$ and $D$ together; many early models were over-parameterized and under-trained on too few tokens."
             },
             {
               "q": "Why can a sufficiently large autoregressive model perform a new task from a few examples placed in its prompt, with no weight updates (in-context learning)?",
               "choices": [
-                "Because the masked language modeling objective explicitly trains for few-shot tasks",
-                "Because gradient descent runs silently on the prompt tokens at inference time",
                 "Because pretraining the joint distribution $p(x)$ at scale produced a model general enough to recognize and continue patterns, doing the 'learning' transiently in its activations",
+                "Because gradient descent runs silently on the prompt tokens at inference time",
+                "Because the masked language modeling objective explicitly trains for few-shot tasks",
                 "Because the model stores every training example and retrieves the nearest match"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "In-context learning is an emergent property of large-scale generative pretraining: the pattern is inferred in the activations within a single forward pass, with parameters frozen and no gradient steps."
             },
             {
               "q": "MLM and autoregressive (AR) pretraining differ in how much learning signal each sequence provides. For a sequence of length $n$, how many prediction targets does a standard ~15% MLM objective yield versus the AR objective, and what is the consequence?",
               "choices": [
                 "MLM yields $n$ targets and AR yields ~$0.15n$; AR is therefore sample-inefficient",
-                "MLM yields ~$0.15n$ targets (only the masked tokens) while AR yields $n$ targets (every position), making MLM comparatively sample-inefficient per sequence",
+                "MLM yields $n^2$ targets because of bidirectional attention over all token pairs",
                 "Both yield exactly $n$ targets, so their sample efficiency is identical",
-                "MLM yields $n^2$ targets because of bidirectional attention over all token pairs"
+                "MLM yields ~$0.15n$ targets (only the masked tokens) while AR yields $n$ targets (every position), making MLM comparatively sample-inefficient per sequence"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "MLM only gets a learning signal from the ~15% masked positions, whereas AR predicts every one of the $n$ tokens, so MLM extracts fewer targets per sequence and is somewhat less sample-efficient."
             },
             {
               "q": "The lesson stresses that pretraining loss falls as a smooth power law, yet some capabilities like multi-step arithmetic 'appear fairly abruptly' past a scale threshold (emergence). What is the correct reconciliation of these two facts?",
               "choices": [
-                "The power law is wrong; loss actually jumps discontinuously whenever a capability emerges",
-                "Emergence proves scaling laws only hold for small models and break down at large scale",
                 "Average (smooth) loss and discrete downstream behaviors are different quantities, so a steadily declining loss can still hide sharp jumps in specific capabilities",
+                "Emergence proves scaling laws only hold for small models and break down at large scale",
+                "The power law is wrong; loss actually jumps discontinuously whenever a capability emerges",
                 "Emergent capabilities are caused by fine-tuning, not by the scale of pretraining"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Smooth aggregate loss and discrete task behaviors are not the same metric, so the loss curve can decline steadily while particular capabilities turn on sharply past a threshold."
             },
             {
@@ -4293,11 +4293,11 @@
               "q": "A team has one frozen 7B base model deployed and must serve 50 different specialized tasks. Compare storing 50 full fine-tuned copies versus 50 LoRA adapters (each rank-8 adapter is a few MB). Which statement best captures the operational advantage the lesson attributes to LoRA here?",
               "choices": [
                 "Full fine-tuning copies are cheaper to store because each copy can be quantized, whereas adapters must stay in full precision",
-                "LoRA lets all 50 tasks share one resident base model in memory and swap in tiny adapters, instead of holding 50 separate multi-gigabyte models",
+                "Both approaches need 50 full-size models in memory; LoRA only saves disk, not RAM",
                 "LoRA adapters must each be re-merged at every forward pass, so they add permanent inference latency that full copies avoid",
-                "Both approaches need 50 full-size models in memory; LoRA only saves disk, not RAM"
+                "LoRA lets all 50 tasks share one resident base model in memory and swap in tiny adapters, instead of holding 50 separate multi-gigabyte models"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The lesson notes LoRA's benefit is tiny per-task adapters plus one shared frozen base in memory, so you swap adapters to switch tasks rather than load 50 full models. Once $BA$ is merged into $W_0$ there is no added inference latency, ruling out the latency distractor."
             },
             {
@@ -4338,10 +4338,10 @@
               "choices": [
                 "Train a separate model from scratch for each new task",
                 "Train only on human-labeled data, one label per example, for every task",
-                "Freeze a model's weights at initialization and never update them",
-                "Train one large model once on a huge pile of (mostly unlabeled) data — the expensive step — then cheaply adapt that same model to many downstream tasks"
+                "Train one large model once on a huge pile of (mostly unlabeled) data — the expensive step — then cheaply adapt that same model to many downstream tasks",
+                "Freeze a model's weights at initialization and never update them"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Instead of one-model-per-task, you pretrain a single large model once on enormous unlabeled data, then adapt it many times (fine-tuning, prompting). The intelligence lives in the pretrained weights; adaptation just indexes into capabilities that already exist. It is transfer learning taken to the extreme."
             },
             {
@@ -4360,21 +4360,21 @@
               "choices": [
                 "Predict each token using only the tokens that come before it",
                 "Translate text from one language into another",
-                "Predict a randomly masked subset of tokens (~15%) from the surrounding context on *both* sides (bidirectional)",
-                "Classify whole sentences into a fixed set of categories"
+                "Classify whole sentences into a fixed set of categories",
+                "Predict a randomly masked subset of tokens (~15%) from the surrounding context on *both* sides (bidirectional)"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "MLM hides ~15% of tokens and reconstructs them from the full left-and-right context (a cloze test). Because prediction sees both sides, the encoder builds richly contextual representations — ideal for understanding tasks like classification, retrieval, and tagging."
             },
             {
               "q": "Autoregressive next-token prediction (the GPT family) trains the model to...",
               "choices": [
-                "Predict each token from only its predecessors (left-to-right, causal) — which is exactly why it can generate text by sampling one token at a time and feeding it back",
-                "Predict masked tokens using both left and right context",
                 "Predict the entire sequence in a single parallel step",
+                "Predict masked tokens using both left and right context",
+                "Predict each token from only its predecessors (left-to-right, causal) — which is exactly why it can generate text by sampling one token at a time and feeding it back",
                 "Predict only the final token of each sequence"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "AR factorizes $p(x)=\\prod_i p(x_i\\mid x_{<i})$ — each token is predicted from its predecessors, enforced by a causal mask so position $i$ can't see positions $>i$. Learning the full generative distribution is what lets the model generate fluently and be prompted."
             }
           ],
@@ -4448,56 +4448,56 @@
             {
               "q": "You train a 10-class classifier with softmax + cross-entropy. At the very first step, before any learning, what training loss should you roughly expect from a correctly-implemented model?",
               "choices": [
-                "About 0, since the model hasn't overfit yet",
                 "About $\\ln 10 \\approx 2.30$, because predictions are near-uniform at init",
+                "About 0, since the model hasn't overfit yet",
                 "About 10, equal to the number of classes",
                 "It is undefined until the first backward pass"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "At initialization the softmax outputs are roughly uniform ($1/C$ each), so cross-entropy $= -\\ln(1/C) = \\ln C = \\ln 10 \\approx 2.30$. A starting loss far from this signals a bug before training even begins."
             },
             {
               "q": "Why does bfloat16 (BF16) usually NOT need loss scaling, whereas float16 (FP16) often does?",
               "choices": [
                 "BF16 has more mantissa bits, so it is more precise",
-                "BF16 uses the same 8-bit exponent as FP32, giving it FP32's dynamic range so small gradients don't underflow to zero",
+                "Loss scaling is a property of the optimizer, not the dtype",
                 "BF16 stores weights in FP32 automatically",
-                "Loss scaling is a property of the optimizer, not the dtype"
+                "BF16 uses the same 8-bit exponent as FP32, giving it FP32's dynamic range so small gradients don't underflow to zero"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "BF16 trades mantissa bits for keeping FP32's 8-bit exponent, so it spans the same range. FP16's 5-bit exponent makes tiny gradients underflow to zero, which is exactly what loss scaling counteracts."
             },
             {
               "q": "In the graph $z = x\\,y$, $w = z + x$, $L = w^2$, why must $\\partial L/\\partial x$ be computed by adding contributions from two paths rather than a single chain?",
               "choices": [
                 "Because multiplication is non-commutative",
-                "Because $x$ influences $L$ through both $z$ and directly through $w$, and the multivariate chain rule sums over all paths",
+                "Because the square operation has two roots",
                 "Because reverse-mode AD always doubles every gradient",
-                "Because the square operation has two roots"
+                "Because $x$ influences $L$ through both $z$ and directly through $w$, and the multivariate chain rule sums over all paths"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$x$ reaches $L$ via $x\\to z\\to w\\to L$ and via $x\\to w\\to L$. The multivariate chain rule sums these contributions, which is exactly why a tensor used multiple times has its gradients accumulated."
             },
             {
               "q": "Your network's training loss is flat. You overfit a single batch and the loss drops to near zero, but full-dataset training stays flat. What does this most strongly implicate?",
               "choices": [
-                "A vanishing-gradient problem in the deep layers",
-                "The learning rate is zero",
                 "The data pipeline (e.g. labels misaligned with inputs), since the model CAN learn but the full task has no learnable mapping",
+                "The learning rate is zero",
+                "A vanishing-gradient problem in the deep layers",
                 "Insufficient model capacity"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Successfully overfitting one batch proves the optimization path works and capacity/LR are fine. If full training still won't move, the consistent mapping is broken upstream — typically labels shuffled independently of inputs in the data loader."
             },
             {
               "q": "A matmul $C = AB$ with $A \\in \\mathbb{R}^{m\\times k}$ and $B \\in \\mathbb{R}^{k\\times n}$ costs $O(mnk)$ FLOPs. According to the lesson, why is this operation so well-suited to a GPU?",
               "choices": [
-                "It has $O(mn)$ independent output entries, each an independent dot product, so the work parallelizes massively",
                 "It minimizes memory bandwidth by reusing the same cache line for every output",
+                "It has $O(mn)$ independent output entries, each an independent dot product, so the work parallelizes massively",
                 "It requires only a single core because the dot products must be computed sequentially",
                 "It reduces the total FLOP count below what a CPU would need"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Each of the $mn$ output entries is an independent dot product, giving $O(mn)$ independent work units that map perfectly onto a throughput machine's thousands of cores."
             },
             {
@@ -4516,10 +4516,10 @@
               "choices": [
                 "CPUs have many simple throughput cores; GPUs have few latency-optimized cores",
                 "Both are latency-optimized, but GPUs simply run at higher clock speeds",
-                "CPUs have a few powerful latency-optimized cores; GPUs have thousands of simpler throughput-optimized cores",
-                "GPUs win because they have larger caches per core than CPUs"
+                "GPUs win because they have larger caches per core than CPUs",
+                "CPUs have a few powerful latency-optimized cores; GPUs have thousands of simpler throughput-optimized cores"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "A CPU uses a handful of powerful cores to finish one instruction stream fast (latency), while a GPU uses thousands of simpler cores to do the same op across huge arrays (throughput)."
             },
             {
@@ -4537,11 +4537,11 @@
               "q": "During training you log activation statistics for a hidden ReLU layer and find that a large fraction of its units output exactly $0$ for every example in every batch, and their incoming weights never update. Which diagnosis and fix is most consistent with the lesson's 'dead ReLU' failure mode?",
               "choices": [
                 "The units are saturating at their maximum; clip activations and increase weight decay to pull them back into range.",
-                "Those units are stuck on the flat ($\\le 0$) side of ReLU, so their gradient is $0$ and they never recover; lowering the learning rate (and/or better init) helps prevent it.",
                 "This is normal sparsity from ReLU and requires no action, since some dead units always improve generalization.",
+                "Those units are stuck on the flat ($\\le 0$) side of ReLU, so their gradient is $0$ and they never recover; lowering the learning rate (and/or better init) helps prevent it.",
                 "The data loader is feeding all-zero inputs; re-normalize the inputs to unit variance to wake the units up."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A dead ReLU sits where its pre-activation is always negative, so the local gradient is exactly zero and no weight update can revive it; an overly large learning rate is a classic cause, so reducing LR or using better initialization prevents it. ReLU does saturate, but not at a maximum (it is unbounded above), and all-units-dead is a pathology, not benign sparsity."
             },
             {
@@ -4581,11 +4581,11 @@
               "q": "In a deep-learning framework, what is a \"tensor\" and which three attributes define it?",
               "choices": [
                 "A single scalar loss value, defined by its sign, exponent, and mantissa",
-                "An $n$-dimensional array, defined by its shape, its dtype (e.g. float32/bfloat16), and its device (CPU or a specific GPU)",
+                "A gradient, defined by its direction, magnitude, and learning rate",
                 "A layer of the network, defined by its weights, bias, and activation function",
-                "A gradient, defined by its direction, magnitude, and learning rate"
+                "An $n$-dimensional array, defined by its shape, its dtype (e.g. float32/bfloat16), and its device (CPU or a specific GPU)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A tensor is just an $n$-dimensional array carrying three attributes — shape, dtype, and device. The lesson's point: almost every runtime bug (shape mismatch, dtype clash, CPU/GPU mixup) reduces to a question about one of those three."
             },
             {
@@ -4593,21 +4593,21 @@
               "choices": [
                 "Mixing several datasets of different quality within one batch",
                 "Using a different learning rate for every layer of the network",
-                "Training entirely in float64 for maximum accuracy",
-                "Doing most computation in a lower-precision format (e.g. bfloat16/float16) rather than float32 — which speeds up matmuls and cuts memory, at some cost in numeric precision"
+                "Doing most computation in a lower-precision format (e.g. bfloat16/float16) rather than float32 — which speeds up matmuls and cuts memory, at some cost in numeric precision",
+                "Training entirely in float64 for maximum accuracy"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Mixed precision runs the bulk of the math (especially matmuls, where tensor cores are fastest) in 16-bit, keeping a few sensitive parts in 32-bit. You gain speed and memory headroom; the trade is reduced precision/range, which is why FP16 often needs loss scaling while BF16 usually doesn't."
             },
             {
               "q": "Training hits a CUDA out-of-memory error. What usually dominates the memory, and what is a standard fix?",
               "choices": [
-                "Activations kept for the backward pass (scaling with batch × sequence × width × depth), plus parameters and optimizer state; fixes include a smaller batch, shorter sequences, or gradient checkpointing",
                 "The learning-rate schedule; fix it by lowering the learning rate",
+                "Activations kept for the backward pass (scaling with batch × sequence × width × depth), plus parameters and optimizer state; fixes include a smaller batch, shorter sequences, or gradient checkpointing",
                 "The number of epochs; fix it by training for fewer epochs",
                 "The dataset's size on disk; fix it by compressing the data files"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Two things eat GPU memory in training: parameters + optimizer state (Adam stores weights, grad, and two moments — ~4× params in FP32), and activations (every forward intermediate kept for backprop), which usually dominate. Standard fixes shrink the activation footprint: smaller batch, shorter sequences, or gradient checkpointing."
             },
             {
@@ -4698,45 +4698,45 @@
             {
               "q": "An autoencoder is trained with reconstruction loss but no labels $y$. Which category does this place it in?",
               "choices": [
-                "Reinforcement learning, because the reconstruction loss acts as a reward",
                 "Self-supervised / unsupervised learning, because the target is derived from the input itself",
+                "Reinforcement learning, because the reconstruction loss acts as a reward",
                 "Supervised learning, because every input has a target (its own copy)",
                 "Semi-supervised learning, because only some inputs need labels"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "No external labels are provided; the training target is constructed from the data itself ($x$ as both input and target), which is the defining feature of self-supervised/unsupervised learning. Calling it supervised is the tempting trap, but 'supervised' specifically means externally provided labels."
             },
             {
               "q": "You remove the bottleneck and make the autoencoder's hidden layer wider than the input (an overcomplete autoencoder) with no other regularization. What is the most likely failure?",
               "choices": [
                 "The reconstruction loss explodes because there are too many parameters",
-                "The network learns the identity function and copies input to output without discovering useful structure",
+                "The latent code automatically matches $\\mathcal{N}(0,I)$",
                 "Gradients vanish because the latent code is too large",
-                "The latent code automatically matches $\\mathcal{N}(0,I)$"
+                "The network learns the identity function and copies input to output without discovering useful structure"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Without a narrow bottleneck (or other constraint), the network has enough capacity to trivially copy the input through, learning the identity map and no meaningful compressed representation. The whole point of the bottleneck is to forbid this shortcut."
             },
             {
               "q": "A linear autoencoder with a $k$-dimensional bottleneck, linear activations, and squared-error loss is fully trained. What subspace does its encoder learn to project onto?",
               "choices": [
                 "A random $k$-dimensional subspace, since linear autoencoders are not identifiable",
-                "The subspace spanned by the top $k$ principal components of the data",
                 "The subspace spanned by the $k$ smallest-variance directions",
+                "The subspace spanned by the top $k$ principal components of the data",
                 "The full input space, since linear maps cannot compress"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A linear autoencoder with squared loss recovers the same subspace as PCA — the span of the top $k$ principal components (largest-variance directions). It is PCA's deep, nonlinear-capable cousin, but in the linear case it collapses back to PCA itself."
             },
             {
               "q": "A denoising autoencoder is fed a corrupted input $\\tilde{x}$ and trained to output the clean $x$. Why does this corruption help compared to a plain autoencoder?",
               "choices": [
-                "It forces the network to learn robust features by filling in missing/corrupted structure rather than copying",
                 "It guarantees the latent space matches the prior $\\mathcal{N}(0,I)$",
+                "It forces the network to learn robust features by filling in missing/corrupted structure rather than copying",
                 "It reduces the number of parameters the network needs",
                 "It converts the reconstruction loss into a classification loss"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "By mapping corrupted inputs back to clean ones, the network cannot rely on copying; it must learn the data's underlying structure to repair the corruption, yielding more robust features. It does nothing to shape the latent toward a prior — that is the VAE's job."
             },
             {
@@ -4753,12 +4753,12 @@
             {
               "q": "Both a plain autoencoder and a VAE encode an input to a low-dimensional latent. What does the VAE's encoder output that the plain autoencoder's does not?",
               "choices": [
-                "A class label for the input",
+                "The parameters of a distribution ($\\mu$ and $\\sigma$) from which $z$ is sampled",
                 "A reconstruction of the input",
                 "A single deterministic point in latent space",
-                "The parameters of a distribution ($\\mu$ and $\\sigma$) from which $z$ is sampled"
+                "A class label for the input"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "The VAE encoder emits the mean $\\mu$ and standard deviation $\\sigma$ of a distribution, and $z\\sim\\mathcal{N}(\\mu,\\sigma^2)$ is then sampled. The plain autoencoder emits a single deterministic point, which is exactly the difference that lets the VAE structure its latent space."
             },
             {
@@ -4787,22 +4787,22 @@
               "q": "The reparameterization trick rewrites the sampling step as $z = \\mu + \\sigma \\odot \\varepsilon$ with $\\varepsilon\\sim\\mathcal{N}(0,I)$. What problem does this specifically solve?",
               "choices": [
                 "It makes the prior $p(z)$ unnecessary",
-                "It lets gradients flow through $\\mu$ and $\\sigma$ even though sampling is involved",
+                "It guarantees the KL term equals zero",
                 "It removes all randomness from the model",
-                "It guarantees the KL term equals zero"
+                "It lets gradients flow through $\\mu$ and $\\sigma$ even though sampling is involved"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "You cannot backpropagate through a raw random sampling node, but writing $z$ as a deterministic function of $\\mu,\\sigma$ plus external noise $\\varepsilon$ moves the randomness outside the differentiable path, so gradients flow through $\\mu$ and $\\sigma$. Randomness is not removed — it is just relocated to $\\varepsilon$."
             },
             {
               "q": "A VAE encodes a 3 to $z_1=(2,-1)$ and an 8 to $z_2=(-2,3)$. You decode the interpolation $z = (1-t)z_1 + t z_2$ at $t=0.25$. What latent point is decoded, and what do you expect to see?",
               "choices": [
-                "$(1,0)$ — a plausible glyph blending toward the 3 and 8",
-                "$(0,1)$ — pure noise, since interpolation only works in plain autoencoders",
                 "$(-1,2)$ — a glyph mostly resembling the 8",
+                "$(0,1)$ — pure noise, since interpolation only works in plain autoencoders",
+                "$(1,0)$ — a plausible glyph blending toward the 3 and 8",
                 "$(0,0)$ — always the prior mean regardless of $t$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$(1-0.25)(2,-1)+(0.25)(-2,3) = (1.5,-0.75)+(-0.5,0.75) = (1,0)$. Because the VAE's KL-regularized latent is smooth and gap-free, this intermediate point decodes to a believable in-between digit; interpolation works in VAEs precisely (not in plain autoencoders)."
             },
             {
@@ -4830,34 +4830,34 @@
             {
               "q": "What is the structure of an autoencoder?",
               "choices": [
-                "An encoder that compresses the input into a low-dimensional latent code, followed by a decoder that reconstructs the input from that code — trained to minimize reconstruction error",
                 "Two networks competing in a minimax game",
+                "An encoder that compresses the input into a low-dimensional latent code, followed by a decoder that reconstructs the input from that code — trained to minimize reconstruction error",
                 "A fixed process that adds noise plus a learned process that removes it",
                 "A single classifier that maps each input directly to a label"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "An autoencoder has two halves: an encoder $z=f_\\phi(x)$ that squeezes $x$ through a narrow bottleneck into a latent code, and a decoder $\\hat x=g_\\theta(z)$ that rebuilds $x$. Trained on a reconstruction loss like $\\lVert x-\\hat x\\rVert^2$, the bottleneck forces it to learn the data's efficient, recurring structure."
             },
             {
               "q": "How do generative models differ from discriminative models?",
               "choices": [
-                "They are always larger and slower than discriminative models",
-                "They require labeled data, whereas discriminative models never do",
                 "They learn the structure/distribution of the data itself so they can create new, realistic samples — rather than only mapping an input $x$ to a label $y$",
+                "They require labeled data, whereas discriminative models never do",
+                "They are always larger and slower than discriminative models",
                 "They can only classify inputs, never produce new ones"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "A discriminative model learns $p(y\\mid x)$ — given an input, predict a label. A generative model learns the data distribution itself (so it can sample brand-new faces, molecules, sentences). Autoencoders, VAEs, GANs, and diffusion models are all generative."
             },
             {
               "q": "The VAE's reparameterization trick writes the sampled latent code as...",
               "choices": [
                 "$z = \\mu \\cdot \\sigma$, with no noise term at all",
-                "$z = \\mu + \\sigma\\odot\\varepsilon$ with $\\varepsilon\\sim\\mathcal{N}(0,I)$ — making $z$ a differentiable function of $\\mu,\\sigma$ plus external noise",
                 "$z =$ a fresh random draw that depends on neither $\\mu$ nor $\\sigma$",
+                "$z = \\mu + \\sigma\\odot\\varepsilon$ with $\\varepsilon\\sim\\mathcal{N}(0,I)$ — making $z$ a differentiable function of $\\mu,\\sigma$ plus external noise",
                 "$z =$ the raw input $x$ passed straight through unchanged"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "You can't backpropagate through \"sample $z\\sim\\mathcal{N}(\\mu,\\sigma^2)$\" directly. The trick moves the randomness outside the network: $z=\\mu+\\sigma\\odot\\varepsilon$ with $\\varepsilon\\sim\\mathcal{N}(0,I)$, so gradients flow through the deterministic $\\mu$ and $\\sigma$ while $\\varepsilon$ supplies the noise."
             },
             {
@@ -4942,122 +4942,122 @@
             {
               "q": "For a fixed generator $G$, the optimal discriminator is $D^*(x)=\\dfrac{p_{\\text{data}}(x)}{p_{\\text{data}}(x)+p_g(x)}$. At a point where the real density is $p_{\\text{data}}(x)=0.6$ and the generator density is $p_g(x)=0.2$, what does the optimal discriminator output?",
               "choices": [
-                "$0.75$",
+                "$0.25$",
                 "$0.5$",
                 "$0.6$",
-                "$0.25$"
+                "$0.75$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$D^*=0.6/(0.6+0.2)=0.6/0.8=0.75$. The value $0.5$ only occurs where $p_g=p_{\\text{data}}$; here the real density dominates, so $D$ correctly leans toward 'real'."
             },
             {
               "q": "Why does $G$ receive a useful learning signal even though it never looks at a single real image?",
               "choices": [
                 "It minimizes a pixel-wise reconstruction loss against the nearest real image",
-                "It backpropagates the discriminator's gradient with respect to $G(z)$, so $D$ relays what 'real' looks like",
                 "It directly maximizes the log-likelihood of the real data under its own density",
+                "It backpropagates the discriminator's gradient with respect to $G(z)$, so $D$ relays what 'real' looks like",
                 "It copies the discriminator's weights every few steps"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The generator's gradient flows back through the (frozen) discriminator: $\\nabla_\\theta$ of $\\log D(G(z))$ passes through $D$, which encodes the difference between real and fake. There is no reconstruction target and no access to real samples — only the relayed adversarial signal."
             },
             {
               "q": "A practitioner reports that the generator's loss is steadily decreasing while the discriminator's loss is also steadily decreasing, and concludes training is going well. What is the flaw in this reasoning?",
               "choices": [
-                "Both losses decreasing means equilibrium has been reached, so the conclusion is correct",
-                "Loss should be replaced by accuracy, which always rises at equilibrium",
                 "In a minimax game the two objectives are opposed, so a smoothly falling 'overall' loss is not the success signal — you must monitor sample quality and balance",
+                "Loss should be replaced by accuracy, which always rises at equilibrium",
+                "Both losses decreasing means equilibrium has been reached, so the conclusion is correct",
                 "Decreasing loss for both proves mode collapse has occurred"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "GAN training is adversarial: when one player improves it tends to hurt the other, so there is no single loss curve that monotonically descends toward success. Convergence is judged by sample quality/diversity and by the two networks staying balanced, not by a falling loss."
             },
             {
               "q": "Early in training the generator produces obvious garbage that $D$ rejects with $D(G(z))\\approx 0$. Why does the original minimax objective $\\min_G \\log(1-D(G(z)))$ stall here, and how does the non-saturating loss fix it?",
               "choices": [
                 "The original loss is undefined at $D=0$; the fix adds a small constant",
-                "$\\log(1-D(G(z)))$ is flat (near-zero gradient) when $D(G(z))\\approx 0$; maximizing $\\log D(G(z))$ gives large gradients exactly when $G$ is losing",
+                "Both losses behave identically; the change is purely cosmetic",
                 "The original loss explodes to $+\\infty$; the fix clips it",
-                "Both losses behave identically; the change is purely cosmetic"
+                "$\\log(1-D(G(z)))$ is flat (near-zero gradient) when $D(G(z))\\approx 0$; maximizing $\\log D(G(z))$ gives large gradients exactly when $G$ is losing"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "As $D(G(z))\\to 0$, the slope of $\\log(1-D(G(z)))$ flattens, so $G$ gets almost no gradient just when it most needs to improve. The non-saturating form $\\max\\log D(G(z))$ is steep near $D(G(z))=0$, supplying a strong signal early on."
             },
             {
               "q": "Suppose during training the discriminator becomes nearly perfect, outputting $D(x)\\approx 1$ on all real data and $D(G(z))\\approx 0$ on all fakes. What is the most likely consequence for the generator?",
               "choices": [
                 "The generator converges quickly because the gradient is large",
-                "The generator's gradient nearly vanishes, so it stops improving",
+                "The discriminator's accuracy drops to 50%",
                 "The generator immediately reaches the global optimum $p_g=p_{\\text{data}}$",
-                "The discriminator's accuracy drops to 50%"
+                "The generator's gradient nearly vanishes, so it stops improving"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "An over-strong discriminator that confidently rejects every fake sits in a flat region of its output, relaying almost no gradient back to $G$ — the vanishing-gradient failure mode. Keeping $D$ and $G$ balanced is what preserves an informative signal."
             },
             {
               "q": "Mode collapse is best described as a failure of which property, and why is it not penalized by the standard objective?",
               "choices": [
                 "A failure of sharpness; the objective rewards blur",
-                "A failure of diversity/coverage; the objective only rewards fooling $D$, not covering all of $p_{\\text{data}}$",
                 "A failure of the discriminator's calibration; the objective ignores $D$",
+                "A failure of diversity/coverage; the objective only rewards fooling $D$, not covering all of $p_{\\text{data}}$",
                 "A failure of convergence speed; the objective has no time term"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Mode collapse means $G$ emits only a few outputs, dropping much of the data's diversity. The minimax value function rewards making $D(G(z))$ high — fooling the discriminator — but contains no explicit term forcing $G$ to span every mode, so collapsing onto a winning subset can still lower its loss."
             },
             {
               "q": "WGAN replaces the original GAN objective with the Earth-Mover (Wasserstein) distance and renames the second network a 'critic' rather than a discriminator. What is the most important behavioral difference of the critic?",
               "choices": [
-                "It outputs a probability in $[0,1]$ like before, just trained longer",
                 "It outputs an unbounded real-valued score (not a probability) and provides usable gradients even when real and fake distributions barely overlap",
+                "It outputs a probability in $[0,1]$ like before, just trained longer",
                 "It is frozen and never updated, acting as a fixed feature extractor",
                 "It is trained to maximize pixel reconstruction accuracy"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The WGAN critic estimates the Wasserstein distance and emits an unbounded scalar score, not a $[0,1]$ probability. Because the Earth-Mover distance varies smoothly even when distributions don't overlap, the critic still gives meaningful gradients where a saturating JS-based discriminator would not."
             },
             {
               "q": "In the GAN value function, which term does the generator $G$ have any influence over through its parameters?",
               "choices": [
-                "$\\mathbb{E}_{x\\sim p_{\\text{data}}}[\\log D(x)]$",
                 "$\\mathbb{E}_{z\\sim p_z}[\\log(1-D(G(z)))]$",
+                "$\\mathbb{E}_{x\\sim p_{\\text{data}}}[\\log D(x)]$",
                 "Both terms equally",
                 "Neither term; $G$ only affects $D$'s weights"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$G$ appears only inside $G(z)$ in the second expectation, so only that term carries a gradient with respect to $G$'s parameters. The first term depends solely on real data and $D$, so $\\nabla_G$ of it is zero — which is why the generator's update concerns only the fake-sample term."
             },
             {
               "q": "Why is the generator $z\\sim\\mathcal{N}(0,I)$ input random noise rather than, say, a fixed constant vector?",
               "choices": [
                 "The noise is needed so $D$ cannot see the inputs",
-                "Randomness lets a deterministic network $G$ transform varied $z$ into a varied distribution of outputs covering $p_{\\text{data}}$",
                 "Gaussian noise directly encodes the labels of the real data",
+                "Randomness lets a deterministic network $G$ transform varied $z$ into a varied distribution of outputs covering $p_{\\text{data}}$",
                 "The noise is only used at test time, not during training"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$G$ is a deterministic function, so its output distribution comes entirely from the distribution of its input $z$. Sampling $z$ from a known prior and pushing it through $G$ is what turns a single network into a sampler for a whole distribution; a fixed input would yield a single fixed output."
             },
             {
               "q": "At the global optimum where $p_g=p_{\\text{data}}$ and $D\\equiv\\tfrac12$, what is the value of $V(D,G)$? (Use natural log.)",
               "choices": [
                 "$0$",
-                "$-\\log 4 \\approx -1.386$",
                 "$\\log 2 \\approx 0.693$",
+                "$-\\log 4 \\approx -1.386$",
                 "$-\\infty$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Plugging $D=\\tfrac12$ gives $\\mathbb{E}[\\log\\tfrac12]+\\mathbb{E}[\\log(1-\\tfrac12)] = \\log\\tfrac12 + \\log\\tfrac12 = -\\log 2 - \\log 2 = -\\log 4$. The tempting $0$ ignores that even a chance-level $D$ contributes $\\log\\tfrac12$ in each term."
             },
             {
               "q": "A common misconception is that 'the discriminator should be trained to 100% accuracy before each generator update so it gives the best feedback.' What is the key problem with this advice?",
               "choices": [
-                "A perfect discriminator is impossible to train, so the advice is moot",
                 "A near-perfect $D$ saturates and stops passing useful gradient to $G$, starving its learning",
+                "A perfect discriminator is impossible to train, so the advice is moot",
                 "Training $D$ longer always causes mode collapse in $D$",
                 "It is correct advice and is standard practice"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Pushing $D$ to be perfect drives its outputs into flat, saturated regions where gradients to $G$ vanish, halting the generator's progress. Effective training keeps the two roughly matched — challenging but not crushing — so the relayed gradient stays informative."
             },
             {
@@ -5075,11 +5075,11 @@
               "q": "A GAN consists of which two components, and what does each do?",
               "choices": [
                 "An encoder and a decoder that reconstruct the input through a bottleneck",
-                "A fixed noising process and a learned denoising network",
+                "A generator that maps random noise to fake samples, and a discriminator that estimates the probability a sample is real — trained adversarially against each other",
                 "Two identical classifiers trained on the same labels",
-                "A generator that maps random noise to fake samples, and a discriminator that estimates the probability a sample is real — trained adversarially against each other"
+                "A fixed noising process and a learned denoising network"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "The generator $G$ turns noise $z\\sim\\mathcal{N}(0,I)$ into fakes $G(z)$; the discriminator $D$ outputs $D(x)\\in[0,1]$, the probability that $x$ is real. $G$ never sees real data directly — it learns only through the gradient $D$ relays, so $D$ acts as a learned, adaptive loss function for $G$."
             },
             {
@@ -5098,21 +5098,21 @@
               "choices": [
                 "The discriminator reaches 100% accuracy on every real and fake sample",
                 "The generator's loss reaches exactly zero",
-                "The generator's distribution matches the true data distribution and the discriminator is reduced to guessing ($D\\equiv\\tfrac12$)",
-                "Both networks lose all gradient and their weights freeze at their initial values"
+                "Both networks lose all gradient and their weights freeze at their initial values",
+                "The generator's distribution matches the true data distribution and the discriminator is reduced to guessing ($D\\equiv\\tfrac12$)"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "When the forger becomes perfect ($p_g=p_{\\text{data}}$), the two \"piles of sand\" coincide and no boundary separates them — the best the detective can do is output $\\tfrac12$ everywhere. Generator-matched-to-data with discriminator-at-chance is the fixed point."
             },
             {
               "q": "What is \"mode collapse\" in GAN training?",
               "choices": [
-                "The generator producing only a few outputs that reliably fool the discriminator, ignoring the diversity of the real data",
                 "The discriminator forgetting how to classify real data",
+                "The generator producing only a few outputs that reliably fool the discriminator, ignoring the diversity of the real data",
                 "The loss curve collapsing to zero so training halts",
                 "The latent noise vector shrinking to all zeros"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Mode collapse is a failure of diversity: $G$ finds a handful of outputs that consistently beat $D$ and emits only those (e.g. one kind of face). The standard objective doesn't penalize it because fooling $D$ sample-by-sample says nothing about covering the whole data distribution."
             }
           ],
@@ -5186,12 +5186,12 @@
             {
               "q": "In the forward process, the marginal is $x_t = \\sqrt{\\bar\\alpha_t}\\,x_0 + \\sqrt{1-\\bar\\alpha_t}\\,\\varepsilon$. As $t$ grows from $0$ toward $T$, what happens to the coefficients $\\sqrt{\\bar\\alpha_t}$ and $\\sqrt{1-\\bar\\alpha_t}$?",
               "choices": [
-                "$\\sqrt{\\bar\\alpha_t}$ shrinks toward 0 while $\\sqrt{1-\\bar\\alpha_t}$ grows toward 1",
-                "Both grow toward 1",
                 "$\\sqrt{\\bar\\alpha_t}$ grows toward 1 while $\\sqrt{1-\\bar\\alpha_t}$ shrinks toward 0",
+                "Both grow toward 1",
+                "$\\sqrt{\\bar\\alpha_t}$ shrinks toward 0 while $\\sqrt{1-\\bar\\alpha_t}$ grows toward 1",
                 "Both stay constant since the schedule is fixed"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Since $\\bar\\alpha_t=\\prod_{s\\le t}(1-\\beta_s)$ is a shrinking product of factors $<1$, $\\bar\\alpha_t\\to0$, so the signal weight $\\sqrt{\\bar\\alpha_t}\\to0$ and the noise weight $\\sqrt{1-\\bar\\alpha_t}\\to1$ — the data fades and noise dominates. 'Fixed schedule' refers to $\\beta_t$, not to these cumulative coefficients being constant."
             },
             {
@@ -5219,111 +5219,111 @@
             {
               "q": "Suppose at a given timestep $\\bar\\alpha_t = 0.36$. With $x_0$ and $\\varepsilon$ both having unit scale, what fraction of $x_t$'s 'energy' (squared coefficient) comes from the original signal $x_0$?",
               "choices": [
-                "About 0.36",
                 "About 0.6",
+                "About 0.36",
                 "About 0.64",
                 "About 0.8"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The signal coefficient is $\\sqrt{\\bar\\alpha_t}$, so its squared weight is exactly $\\bar\\alpha_t=0.36$, and the noise contributes $1-\\bar\\alpha_t=0.64$. The tempting 0.6 is just $\\sqrt{0.36}$, the amplitude, not the energy fraction."
             },
             {
               "q": "Why does diffusion's per-step learning problem make training more stable than generating an image in a single shot?",
               "choices": [
-                "Because the network is smaller than a one-shot generator",
                 "Because each reverse step only has to undo a tiny amount of noise — a gentle, well-conditioned regression — rather than map pure noise to a full image at once",
+                "Because the network is smaller than a one-shot generator",
                 "Because the forward process removes the need for any neural network",
                 "Because adding noise back during sampling cancels all gradient variance"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Breaking generation into many tiny denoising steps means each step is an easy local correction with a concrete MSE target, which descends smoothly. A one-leap noise-to-image map is a far harder, less stable optimization — the core reason diffusion trains gracefully."
             },
             {
               "q": "The callout notes diffusion models are 'score-based models in disguise.' What does predicting the noise $\\varepsilon$ in $x_t$ correspond to?",
               "choices": [
-                "The entropy of the data distribution",
+                "Knowing 'which way is less noisy' — i.e. the gradient of the (log) data density, the score $\\nabla_{x}\\log p(x)$",
                 "The cumulative noise schedule $\\bar\\alpha_t$",
                 "The reconstruction loss of a VAE",
-                "Knowing 'which way is less noisy' — i.e. the gradient of the (log) data density, the score $\\nabla_{x}\\log p(x)$"
+                "The entropy of the data distribution"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Estimating the noise tells you the direction toward higher data density, which is exactly the score $\\nabla_x\\log p(x)$ up to a known scaling. This is why score-based and denoising-diffusion formulations are equivalent; the other options confuse it with unrelated quantities."
             },
             {
               "q": "During sampling, fresh Gaussian noise is added back at every reverse step except the last. What goes wrong if you instead deterministically take the predicted mean at every intermediate step in the standard stochastic sampler?",
               "choices": [
-                "The samples become brighter than the training data",
-                "The reverse Markov chain runs in the wrong direction",
                 "You collapse each step's reverse distribution to its mean, producing over-averaged, blurry results instead of sampling diverse plausible images",
+                "The reverse Markov chain runs in the wrong direction",
+                "The samples become brighter than the training data",
                 "Training diverges because the loss is no longer MSE"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Each reverse step represents a distribution over plausible slightly-cleaner images; injecting calibrated noise samples from it. Always taking the bare mean averages over modes and yields blurry output. (DDIM achieves quality determinism by a different reformulation, not by naively dropping the noise from the stochastic sampler.)"
             },
             {
               "q": "What is the principal practical disadvantage of diffusion models compared to GANs, and the main remedy?",
               "choices": [
                 "Unstable minimax training; fixed by adding a discriminator",
-                "Poor mode coverage; fixed by larger batch sizes",
                 "Slow inference needing many sequential network passes; fixed by fast samplers like DDIM and distillation",
+                "Poor mode coverage; fixed by larger batch sizes",
                 "High memory at training time; fixed by latent compression alone"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "A GAN generates in one pass while naive diffusion needs hundreds to thousands of sequential passes, so inference is the bottleneck. DDIM (deterministic, fewer steps) and distillation cut this to tens of steps. Mode coverage and training stability are actually diffusion's strengths, not weaknesses."
             },
             {
               "q": "In latent diffusion (Stable Diffusion), where does the diffusion process actually run, and why?",
               "choices": [
                 "Directly on the $512\\times512$ pixel grid, for maximum fidelity",
-                "On a U-Net's attention maps, to save memory",
+                "In a VAE's compressed latent space (e.g. $64\\times64$), drastically cutting compute versus operating on full-resolution pixels",
                 "On the raw text tokens of the prompt before any image exists",
-                "In a VAE's compressed latent space (e.g. $64\\times64$), drastically cutting compute versus operating on full-resolution pixels"
+                "On a U-Net's attention maps, to save memory"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Latent diffusion compresses images with a VAE, runs the entire noising/denoising process in that small latent, then decodes — slashing compute relative to working on millions of pixels. Running diffusion directly on pixels is exactly what latent diffusion avoids."
             },
             {
               "q": "How is the timestep $t$ used by the denoising network, and why is it necessary?",
               "choices": [
-                "It is fed in as an embedding so one shared network knows how much noise to expect and can behave differently across noise levels",
-                "It selects which of $T$ separately trained networks to call at that step",
                 "It is appended to the loss as a regularization weight",
+                "It selects which of $T$ separately trained networks to call at that step",
+                "It is fed in as an embedding so one shared network knows how much noise to expect and can behave differently across noise levels",
                 "It scales the learning rate during training"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A single network handles all timesteps, but the right denoising behavior differs at high vs low noise, so $t$ is supplied as an embedding to condition the network. There are not $T$ separate networks — that would be wildly impractical and defeats weight sharing."
             },
             {
               "q": "A student says: \"At $t=T$ the image $x_T$ still secretly contains $x_0$'s structure, since the forward process is invertible.\" Why is this misleading for generation?",
               "choices": [
                 "The forward process is learned, so it can be exactly inverted",
-                "Because $\\bar\\alpha_T\\approx0$, $x_T$ is essentially indistinguishable from standard Gaussian noise; the structure is statistically gone, which is precisely why sampling can start from pure $\\mathcal{N}(0,I)$",
                 "The forward process adds noise only at the final step, so earlier structure is preserved",
+                "Because $\\bar\\alpha_T\\approx0$, $x_T$ is essentially indistinguishable from standard Gaussian noise; the structure is statistically gone, which is precisely why sampling can start from pure $\\mathcal{N}(0,I)$",
                 "$x_T$ equals $x_0$ exactly because the steps compose"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "With $\\bar\\alpha_T\\approx0$, the signal coefficient vanishes and $x_T\\sim\\mathcal{N}(0,I)$ to high accuracy — there is no usable structure left, which is what lets generation begin from fresh noise. The chain is not practically invertible without the learned reverse network."
             },
             {
               "q": "Why is no discriminator or minimax game involved in training a diffusion model, and what is the consequence for the loss landscape?",
               "choices": [
-                "A discriminator is used but only at inference time",
                 "The objective is a plain MSE regression against a fixed, known noise target, so the loss descends smoothly with no adapting adversary to chase",
+                "A discriminator is used but only at inference time",
                 "The objective is a KL divergence between two learned networks",
                 "The discriminator is replaced by the VAE decoder during training"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Each example has a concrete target — the actual noise $\\varepsilon$ added — so training is ordinary supervised regression that simply descends, with no second network creating a moving target. This absence of a minimax game is exactly why diffusion avoids GAN-style oscillation and mode collapse."
             },
             {
               "q": "What is the core idea of a diffusion model?",
               "choices": [
                 "Two networks compete so a forger learns to fool a detective",
-                "Gradually destroy data by adding noise over many steps (a fixed forward process), and train a network to reverse it step by step — then generate by denoising from pure noise",
+                "Predict the next token from the tokens that precede it",
                 "Compress data through a bottleneck and decode it back",
-                "Predict the next token from the tokens that precede it"
+                "Gradually destroy data by adding noise over many steps (a fixed forward process), and train a network to reverse it step by step — then generate by denoising from pure noise"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Diffusion \"learns to generate by learning to destroy\": a fixed forward process drowns data in noise, and a learned network reverses that decay one small step at a time. Run the reversal from pure noise and a coherent sample is sculpted out of static."
             },
             {
@@ -5331,21 +5331,21 @@
               "choices": [
                 "A learned network that compresses the data into a latent code",
                 "The step in which the model predicts the clean image in one shot",
-                "An adversarial game played against a discriminator",
-                "A fixed (non-learned) process that adds a little Gaussian noise at each of $T$ steps, turning a data point into essentially pure $\\mathcal{N}(0,I)$ noise"
+                "A fixed (non-learned) process that adds a little Gaussian noise at each of $T$ steps, turning a data point into essentially pure $\\mathcal{N}(0,I)$ noise",
+                "An adversarial game played against a discriminator"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The forward process is fixed, not trained: $q(x_t\\mid x_{t-1})=\\mathcal{N}(\\sqrt{1-\\beta_t}\\,x_{t-1},\\beta_t I)$. By $t=T$ almost all structure is gone and $x_T$ is essentially standard normal. Its one-shot form lets you jump to any $t$ directly during training."
             },
             {
               "q": "To generate a new sample with a trained diffusion model, you...",
               "choices": [
-                "Start from pure Gaussian noise and iteratively apply the denoising network, removing a sliver of noise at each step until a clean sample emerges",
+                "Run the fixed forward noising process forward in time",
                 "Pass a class label through a decoder in a single forward step",
                 "Sample a latent $z$ and decode it once, as a VAE does",
-                "Run the fixed forward noising process forward in time"
+                "Start from pure Gaussian noise and iteratively apply the denoising network, removing a sliver of noise at each step until a clean sample emerges"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Generation runs the arrow backward: draw $x_T\\sim\\mathcal{N}(0,I)$, then loop $t=T,\\dots,1$ using $\\varepsilon_\\theta(x_t,t)$ to estimate and partially remove the noise (re-adding a touch except at the last step), ending at a clean $x_0$. The cost is many network passes — the speed bottleneck fast samplers attack."
             },
             {
@@ -5353,10 +5353,10 @@
               "choices": [
                 "The next pixel autoregressively, trained with cross-entropy",
                 "The probability a sample is real, trained with a minimax loss",
-                "The noise $\\varepsilon$ that was added to a noised input, trained with a simple mean-squared-error regression — no discriminator, no minimax",
-                "The class label of the image, trained with softmax cross-entropy"
+                "The class label of the image, trained with softmax cross-entropy",
+                "The noise $\\varepsilon$ that was added to a noised input, trained with a simple mean-squared-error regression — no discriminator, no minimax"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Training is a plain regression: take a clean $x_0$, a random $t$, form $x_t$ with the one-shot formula, and have the network predict the added noise, minimizing $\\lVert\\varepsilon-\\varepsilon_\\theta(x_t,t)\\rVert^2$. One smoothly-descending loss — no adversarial game — is why diffusion trains far more stably than a GAN."
             }
           ],

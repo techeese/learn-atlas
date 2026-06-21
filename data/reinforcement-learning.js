@@ -21,56 +21,56 @@
             {
               "q": "An image-classification model is trained on a fixed dataset where each photo is labeled with the correct species. A second system plays Atari, receiving only the score change after each action and learning which sequences of joystick moves earn points. Which statement is correct?",
               "choices": [
-                "Both are reinforcement learning, since both improve over time",
                 "The first is supervised learning; the second is reinforcement learning",
+                "Both are reinforcement learning, since both improve over time",
                 "The first is reinforcement learning; the second is supervised learning",
                 "The first is supervised; the second is unsupervised, since there are no labels"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The classifier learns from given correct labels (instructive feedback, fixed data) which is supervised. The Atari agent learns from an evaluative reward whose data it generates by acting, which is reinforcement learning — not unsupervised, because there is a reward to maximize."
             },
             {
               "q": "In the agent-environment loop, after the agent takes action $A_t$, what does the environment return at the next step?",
               "choices": [
-                "A reward $R_{t+1}$ and the next state $S_{t+1}$",
+                "The full return $G_t$ for the rest of the episode",
                 "The optimal action $A_{t+1}^*$ it should have taken",
                 "A gradient telling the agent how to change its policy",
-                "The full return $G_t$ for the rest of the episode"
+                "A reward $R_{t+1}$ and the next state $S_{t+1}$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The environment emits a scalar reward and the next state. It never reveals the optimal action (that would be supervised/instructive) nor the full future return (which depends on actions not yet taken) nor any gradient."
             },
             {
               "q": "Why is temporal credit assignment fundamentally hard in RL?",
               "choices": [
-                "Because rewards are always negative until the goal is reached",
-                "Because the discount factor $\\gamma$ makes the return diverge",
                 "Because a delayed outcome results from many actions plus noise, and you only observe the single path you actually took, never the counterfactuals",
+                "Because the discount factor $\\gamma$ makes the return diverge",
+                "Because rewards are always negative until the goal is reached",
                 "Because supervised labels are too expensive to collect"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Delay, entanglement of many actions, environment noise, and the impossibility of observing counterfactual alternatives all make it hard to attribute a late reward to the specific earlier action responsible."
             },
             {
               "q": "An agent always picks the action with the highest estimated value and never tries anything else. What is the primary risk?",
               "choices": [
                 "It will overfit the training labels",
-                "It may lock onto a suboptimal action and never discover a better one (too little exploration)",
+                "It violates the reward hypothesis",
                 "Its return will fail to converge because $\\gamma < 1$",
-                "It violates the reward hypothesis"
+                "It may lock onto a suboptimal action and never discover a better one (too little exploration)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Pure exploitation means the agent never gathers information about untried actions, so a genuinely better option can remain undiscovered. This is the exploration-exploitation tradeoff; $\\epsilon$-greedy is one simple fix."
             },
             {
               "q": "What does it mean that RL feedback is \"evaluative rather than instructive\"?",
               "choices": [
                 "The environment explicitly labels the correct action at every step",
-                "The reward tells the agent how good its action was, but not what the optimal action would have been",
                 "The agent receives a full gradient of the loss with respect to each action",
+                "The reward tells the agent how good its action was, but not what the optimal action would have been",
                 "Feedback is given only at the very end of training, never during interaction"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Evaluative feedback scores the chosen action with a scalar reward, whereas instructive feedback (as in supervised learning) would reveal the correct target action. Choice 0 describes instructive feedback, and choices 2-3 confuse it with gradients and delayed timing."
             },
             {
@@ -98,12 +98,12 @@
             {
               "q": "In the agent-environment loop indexed by discrete time steps $t = 0, 1, 2, \\dots$, which quantity does the agent itself produce at step $t$?",
               "choices": [
-                "The action $A_t$",
                 "The state $S_{t+1}$",
+                "The action $A_t$",
                 "The reward $R_{t+1}$",
                 "Both the next state $S_{t+1}$ and reward $R_{t+1}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The agent observes $S_t$ and emits the action $A_t$, while the environment responds with the next state $S_{t+1}$ and reward $R_{t+1}$. The agent never generates the state or the reward."
             },
             {
@@ -122,32 +122,32 @@
               "choices": [
                 "Rewards are always vectors, whereas supervised labels are always scalars",
                 "There is no flaw; reward and label are interchangeable training targets",
-                "A reward only evaluates the action that was taken; it never reveals what the best action would have been, and the agent's own actions determine which data it ever sees",
-                "Supervised learning also lacks any notion of a correct answer, so the two are identical"
+                "Supervised learning also lacks any notion of a correct answer, so the two are identical",
+                "A reward only evaluates the action that was taken; it never reveals what the best action would have been, and the agent's own actions determine which data it ever sees"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "A label in supervised learning states the correct output, but a reward only scores the chosen action (evaluative, not instructive) and the agent's behavior shapes its future data distribution. Treating reward as a label ignores both differences."
             },
             {
               "q": "Suppose an agent received rewards $R_1 = 0$, $R_2 = 0$, $R_3 = 5$ over three steps and uses a discount factor $\\gamma = 0.5$. What is the discounted return $G_0 = R_1 + \\gamma R_2 + \\gamma^2 R_3$ computed from the start?",
               "choices": [
-                "$1.25$",
                 "$2.5$",
+                "$1.25$",
                 "$5$",
                 "$0$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$G_0 = 0 + 0.5 \\cdot 0 + 0.5^2 \\cdot 5 = 0.25 \\cdot 5 = 1.25$. The later reward is discounted by $\\gamma^2$ because it arrives two steps after the start."
             },
             {
               "q": "An agent in an unfamiliar environment has so far found one action that reliably yields a small reward. A friend insists the agent should immediately commit to that action forever to be safe. Why is this advice questionable in the RL setting?",
               "choices": [
-                "Because reward signals in RL are guaranteed to be instructive, so no further sampling is needed",
+                "Because purely exploiting the current best-known action can lock the agent into a suboptimal behavior, since better actions it never tries stay undiscovered",
                 "Because committing to the known action removes the time-step index $t$ from the loop",
                 "Because RL problems can always be solved offline first, making any online choice irrelevant",
-                "Because purely exploiting the current best-known action can lock the agent into a suboptimal behavior, since better actions it never tries stay undiscovered"
+                "Because reward signals in RL are guaranteed to be instructive, so no further sampling is needed"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "With only evaluative feedback, the agent cannot know an action is best without trying alternatives, so always exploiting risks missing higher-reward actions (the exploration-exploitation trade-off). The other options misstate RL's feedback type, the loop structure, or wrongly assume offline solvability."
             },
             {
@@ -265,12 +265,12 @@
             {
               "q": "A robot's state is a single camera frame showing a ball, and the dynamics depend on the ball's velocity. Why does this representation typically violate the Markov property, and what is the standard fix?",
               "choices": [
-                "It doesn't violate it; a single frame is always sufficient because it shows the current position",
                 "It violates it because velocity (needed to predict the next frame) can't be inferred from one frame; stacking several recent frames restores sufficiency",
+                "It doesn't violate it; a single frame is always sufficient because it shows the current position",
                 "It violates it because the reward is missing from the state; appending the last reward fixes it",
                 "It violates it because the action isn't shown in the frame; the fix is to render the chosen action into the image"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The Markov property requires the state to be a sufficient statistic of history. One frame lacks velocity, so the past (previous frames) carries extra predictive information; stacking recent frames (as DQN did with 4 frames) reintroduces that information."
             },
             {
@@ -288,33 +288,33 @@
               "q": "Given the reward sequence $R_1=2,\\ R_2=0,\\ R_3=-1,\\ R_4=4$ and then termination, with $\\gamma = 0.5$, what is the return $G_0$?",
               "choices": [
                 "5.0",
-                "2.25",
                 "1.75",
+                "2.25",
                 "3.5"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$G_0 = 2 + 0.5(0) + 0.25(-1) + 0.125(4) = 2 + 0 - 0.25 + 0.5 = 2.25$."
             },
             {
               "q": "Which expression correctly relates $p(s' \\mid s, a)$ to the full dynamics $p(s', r \\mid s, a)$?",
               "choices": [
                 "$p(s' \\mid s, a) = \\max_r p(s', r \\mid s, a)$",
-                "$p(s' \\mid s, a) = \\sum_r p(s', r \\mid s, a)$",
+                "$p(s' \\mid s, a) = p(s', r \\mid s, a) \\cdot r(s,a)$",
                 "$p(s' \\mid s, a) = \\sum_{s'} p(s', r \\mid s, a)$",
-                "$p(s' \\mid s, a) = p(s', r \\mid s, a) \\cdot r(s,a)$"
+                "$p(s' \\mid s, a) = \\sum_r p(s', r \\mid s, a)$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The state-transition probability is the marginal over reward, obtained by summing the joint distribution over all possible reward values $r$."
             },
             {
               "q": "The lesson claims the MDP is to RL what the i.i.d. dataset is to supervised learning. What is the intended force of this analogy?",
               "choices": [
                 "It guarantees that any MDP can be converted into an equivalent supervised-learning dataset",
-                "It means the MDP is the shared problem formulation that lets the field reuse algorithms and proofs, and is an assumption worth questioning when it may be violated",
+                "It implies reward labels are drawn i.i.d. from a fixed distribution",
                 "It means MDP-based methods always outperform supervised methods on sequential data",
-                "It implies reward labels are drawn i.i.d. from a fixed distribution"
+                "It means the MDP is the shared problem formulation that lets the field reuse algorithms and proofs, and is an assumption worth questioning when it may be violated"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The lesson presents the MDP as the standard, load-bearing problem formulation analogous to i.i.d. data, explicitly noting it is just as important to question when it might be violated."
             },
             {
@@ -322,21 +322,21 @@
               "choices": [
                 "The state space $S$, since it encodes everything relevant about the world",
                 "The transition dynamics $P$, since they determine which futures are reachable",
-                "The reward function $R$, since reward is the entire specification of the goal",
-                "The discount factor $\\gamma$, since it ranks futures against the present"
+                "The discount factor $\\gamma$, since it ranks futures against the present",
+                "The reward function $R$, since reward is the entire specification of the goal"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The lesson states reward is the entire specification of the goal and the agent has no other notion of 'good.'"
             },
             {
               "q": "In the tuple $(S, A, P, R, \\gamma)$, which component is described as where the randomness of the environment lives?",
               "choices": [
-                "The transition dynamics $P$",
-                "The action space $A$",
                 "The reward function $R$",
+                "The action space $A$",
+                "The transition dynamics $P$",
                 "The discount factor $\\gamma$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The lesson defines $P$ as the probability distribution over the next state (and reward) given the current state and action, calling it where the randomness of the environment lives."
             },
             {
@@ -365,11 +365,11 @@
               "q": "Consider an MDP where the transition is deterministic: from each $(s,a)$ the environment always moves to a single fixed next state with probability 1. Which statement is true?",
               "choices": [
                 "Such a system is not an MDP, because $P$ must assign probability to at least two next states.",
-                "It is still an MDP; determinism is just the special case where $P(s'\\mid s,a)$ puts all its mass on one state, and the formalism handles it without modification.",
                 "It is an MDP only if the reward $R$ is also deterministic.",
+                "It is still an MDP; determinism is just the special case where $P(s'\\mid s,a)$ puts all its mass on one state, and the formalism handles it without modification.",
                 "It cannot be an MDP because the Markov property requires genuine randomness in the transitions."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$P(s'\\mid s,a)$ is a probability distribution, and a degenerate (point-mass) distribution is perfectly valid, so deterministic dynamics are simply a special MDP. The Markov property constrains *what* the next-state distribution may depend on, not whether it must be random."
             },
             {
@@ -377,65 +377,65 @@
               "choices": [
                 "$\\infty$, because the rewards never stop.",
                 "$0.9$",
-                "$10$",
-                "$1$, because only the first reward is counted."
+                "$1$, because only the first reward is counted.",
+                "$10$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "With a constant reward of 1 the return is the geometric series $\\sum_{t=0}^{\\infty}\\gamma^t = \\frac{1}{1-\\gamma} = \\frac{1}{0.1} = 10$. Discounting (with $\\gamma<1$) is exactly what keeps an infinite stream of rewards finite, so the 'infinity' answer is the misconception being tested."
             },
             {
               "q": "Two reward designs are proposed for a navigation MDP: (A) $+0$ on every step and $+1$ on reaching the goal; (B) $+10$ on every step and $+11$ on reaching the goal. Using discount $\\gamma < 1$, why might these produce different optimal policies even though each just adds a constant 10 to design (A)?",
               "choices": [
-                "They cannot differ: adding a constant to all rewards never changes the optimal policy under any $\\gamma$.",
                 "Because with $\\gamma < 1$ a per-step bonus of $+10$ is discounted differently depending on how many steps are taken, so design (B) effectively rewards *delaying* the goal, changing which policy is optimal.",
+                "They cannot differ: adding a constant to all rewards never changes the optimal policy under any $\\gamma$.",
                 "Because $R$ is not part of the MDP tuple, so changing it has no formal effect.",
                 "Because the discount factor only applies to the goal reward, not to per-step rewards."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Under discounting, a longer trajectory accumulates more of the per-step $+10$ (each discounted but still summing larger over many steps), so design (B) can make dawdling more valuable than reaching the goal quickly — the policy can change. The claim that adding a constant is always policy-invariant holds only for undiscounted/equal-length episodes, not here."
             },
             {
               "q": "A (finite) Markov Decision Process is defined by which components?",
               "choices": [
-                "Just a dataset of (state, correct-action) pairs",
+                "A tuple $(S, A, P, R, \\gamma)$: a state space, an action space, transition dynamics, a reward function, and a discount factor",
                 "A single reward function and nothing else",
                 "An encoder, a decoder, and a latent code",
-                "A tuple $(S, A, P, R, \\gamma)$: a state space, an action space, transition dynamics, a reward function, and a discount factor"
+                "Just a dataset of (state, correct-action) pairs"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "The MDP is RL's standard problem object: $S$ (situations), $A$ (choices), $P$ (how the world responds — the environment's randomness), $R$ (the goal, as a scalar signal), and $\\gamma$ (how much the future counts). Nearly every RL algorithm is a recipe for solving an MDP."
             },
             {
               "q": "What does the Markov property state?",
               "choices": [
-                "Rewards are always deterministic",
                 "The next state and reward depend only on the current state and action — not on the full history of how the agent got there",
+                "Rewards are always deterministic",
                 "The agent must remember its entire trajectory in order to act well",
                 "Every state is visited equally often"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "\"Markov\" = memoryless: $\\Pr(S_{t+1},R_{t+1}\\mid S_t,A_t)$ doesn't depend on earlier states/actions. The current state is a sufficient statistic for the future — which is exactly why a good state representation must capture everything relevant (a single camera frame, lacking velocity, violates this)."
             },
             {
               "q": "What do the transition dynamics $p(s',r\\mid s,a)$ describe?",
               "choices": [
                 "The agent's policy for choosing actions",
-                "The discounted sum of future rewards",
                 "The probability of landing in next-state $s'$ with reward $r$, given the agent took action $a$ in state $s$ — where the environment's randomness lives",
+                "The discounted sum of future rewards",
                 "The fixed reward for reaching the goal state"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$p(s',r\\mid s,a)$ is the single most complete description of the environment: a proper distribution (it sums to 1 over all $s',r$ for each $s,a$). From it you can derive the state-transition probabilities $p(s'\\mid s,a)$ and the expected reward $r(s,a)$."
             },
             {
               "q": "In an MDP, which component specifies <em>what</em> the agent is trying to achieve?",
               "choices": [
-                "The reward function $R$ — it is the entire specification of the goal; the agent has no other notion of \"good\"",
                 "The state space $S$",
+                "The reward function $R$ — it is the entire specification of the goal; the agent has no other notion of \"good\"",
                 "The discount factor $\\gamma$",
                 "The transition dynamics $P$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "In RL the goal lives <i>entirely</i> in the reward. The agent maximizes expected cumulative reward and has no separate objective — which is why reward design (and its pitfalls, like reward hacking) is so consequential."
             }
           ],
@@ -510,44 +510,44 @@
               "q": "What is the precise difference between $v_\\pi(s)$ and $q_\\pi(s,a)$?",
               "choices": [
                 "$v_\\pi$ uses discounting but $q_\\pi$ does not",
-                "$q_\\pi$ fixes an arbitrary first action $a$ and follows $\\pi$ afterward, while $v_\\pi$ follows $\\pi$ from the very first step",
                 "$v_\\pi$ is for deterministic policies and $q_\\pi$ is for stochastic policies",
+                "$q_\\pi$ fixes an arbitrary first action $a$ and follows $\\pi$ afterward, while $v_\\pi$ follows $\\pi$ from the very first step",
                 "$q_\\pi$ is always larger than $v_\\pi$ in every state"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Both use the same return and discounting; the only difference is that $q_\\pi(s,a)$ commits to taking $a$ first (possibly off-policy) then follows $\\pi$, whereas $v_\\pi$ follows $\\pi$ immediately. Indeed $v_\\pi(s)=\\sum_a\\pi(a\\mid s)q_\\pi(s,a)$."
             },
             {
               "q": "How do the Bellman optimality equations differ structurally from the Bellman expectation equations?",
               "choices": [
                 "They drop the discount factor $\\gamma$",
-                "They replace the immediate reward $r$ with the return $G_t$",
                 "They replace the policy-weighted sum $\\sum_a \\pi(a\\mid s)(\\cdot)$ over actions with a $\\max_a(\\cdot)$",
+                "They replace the immediate reward $r$ with the return $G_t$",
                 "They add an extra expectation over the policy at the next state"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The expectation equations average action-values under the policy; the optimality equations take the maximum over actions. That single change makes them nonlinear and encodes optimal (greedy) decision-making."
             },
             {
               "q": "Given the optimal action-value function $q_*$, how do you obtain an optimal policy, and why is this convenient?",
               "choices": [
-                "Act greedily, $\\pi_*(s)=\\arg\\max_a q_*(s,a)$; no model of the dynamics is required",
+                "Average $q_*$ over all actions and pick the state with the highest average",
                 "Solve $(I-\\gamma P_\\pi)^{-1}\\mathbf{r}_\\pi$ for each candidate policy",
                 "Take $\\pi_*(s)=\\arg\\max_a \\sum_{s',r}p(s',r\\mid s,a)[r+\\gamma v_*(s')]$, which needs the model $p$",
-                "Average $q_*$ over all actions and pick the state with the highest average"
+                "Act greedily, $\\pi_*(s)=\\arg\\max_a q_*(s,a)$; no model of the dynamics is required"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The optimal policy is greedy with respect to $q_*$, requiring only a lookup over actions in the current state. Extracting a policy from $v_*$ (option 3) is also valid but needs the transition model for a one-step look-ahead."
             },
             {
               "q": "For a finite MDP with $\\gamma<1$, why does the Bellman expectation equation for $v_\\pi$ have a unique closed-form solution while the Bellman optimality equation generally does not?",
               "choices": [
                 "The optimality equation has more unknowns than equations",
-                "The expectation equation is linear ($\\mathbf{v}_\\pi=(I-\\gamma P_\\pi)^{-1}\\mathbf{r}_\\pi$), whereas the $\\max$ in the optimality equation makes it nonlinear",
                 "The discount factor only appears in the expectation equation",
+                "The expectation equation is linear ($\\mathbf{v}_\\pi=(I-\\gamma P_\\pi)^{-1}\\mathbf{r}_\\pi$), whereas the $\\max$ in the optimality equation makes it nonlinear",
                 "The optimality equation has no solution unless the MDP is deterministic"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Fixing $\\pi$ makes the system linear with invertible $I-\\gamma P_\\pi$. The $\\max_a$ in the optimality equation is nonlinear, so it is solved iteratively (value iteration) rather than by matrix inversion, though it still has a unique fixed point by the contraction property."
             },
             {
@@ -566,32 +566,32 @@
               "choices": [
                 "$2$",
                 "$2.2$",
-                "$20$",
-                "$11$"
+                "$11$",
+                "$20$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Self-consistency gives $v_*(B)=2+0.9\\,v_*(B)$, so $v_*(B)=2/(1-0.9)=20$, matching the geometric sum of a constant +2 reward discounted at $\\gamma=0.9$."
             },
             {
               "q": "The identity $q_\\pi(s,a) = r(s,a) + \\gamma\\sum_{s'} p(s'\\mid s,a)\\,v_\\pi(s')$ expresses the action-value as which of the following?",
               "choices": [
-                "The expected immediate reward for taking $a$ plus the discounted expected value of the next state under $\\pi$",
-                "The maximum over all future rewards reachable from $s$",
                 "The policy-weighted average of $v_\\pi$ over all actions in $s$",
+                "The maximum over all future rewards reachable from $s$",
+                "The expected immediate reward for taking $a$ plus the discounted expected value of the next state under $\\pi$",
                 "The undiscounted sum of all rewards collected after taking $a$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "This is the one-step decomposition: take $a$ now to earn expected immediate reward $r(s,a)$, then collect the discounted value $\\gamma v_\\pi(s')$ of wherever you land, averaged over next states. The max version would describe $q_*$, and averaging $q_\\pi$ over actions under $\\pi$ recovers $v_\\pi$, not $q_\\pi$."
             },
             {
               "q": "The lesson notes that both Bellman equations are instances of a fixed point $v = Tv$ where the Bellman operator $T$ is a $\\gamma$-contraction in the max-norm. Why does this property matter?",
               "choices": [
-                "It proves the optimal policy must be stochastic",
                 "It guarantees a unique fixed point that iterative methods (value iteration, Q-learning) provably converge to from any starting estimate",
+                "It proves the optimal policy must be stochastic",
                 "It makes the Bellman optimality equation linear and solvable by a matrix inverse",
                 "It removes the need for a discount factor when $\\gamma = 1$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "By the Banach fixed-point theorem a $\\gamma$-contraction has a unique fixed point and repeatedly applying $T$ converges to it geometrically from any start -- this is the engine behind value iteration and Q-learning convergence. The optimality operator is nonlinear because of the $\\max$, so no matrix-inverse solution exists."
             },
             {
@@ -608,23 +608,23 @@
             {
               "q": "In the same 2-state MDP, $A$ offers <code>stay</code> (reward $+1$, stay in $A$) or <code>go</code> (reward $0$, move to $B$). With $\\gamma=0.9$ the optimal action in $A$ is <code>go</code>. If we instead set $\\gamma=0$ (a fully myopic agent), what is the optimal action in $A$, and why does this reveal a subtlety?",
               "choices": [
-                "Still <code>go</code>, because $B$ is the higher-value state regardless of $\\gamma$.",
                 "<code>stay</code>, because with $\\gamma=0$ only the immediate reward counts and $+1>0$ — so changing $\\gamma$ can flip the optimal action.",
+                "Still <code>go</code>, because $B$ is the higher-value state regardless of $\\gamma$.",
                 "Undefined, because the Bellman optimality equation has no solution when $\\gamma=0$.",
                 "<code>go</code>, because the discount factor never affects which action is greedy, only the magnitude of the values."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With $\\gamma=0$ the return is just $R_{t+1}$, so the agent maximizes immediate reward: <code>stay</code> ($+1$) beats <code>go</code> ($0$). The optimal action genuinely depends on $\\gamma$ — patience ($\\gamma=0.9$) makes the short-term sacrifice of <code>go</code> worthwhile to reach the richer state $B$."
             },
             {
               "q": "A student claims: \"For any finite MDP, there is always a deterministic optimal policy, and no stochastic policy can ever beat the best deterministic one.\" Is this correct?",
               "choices": [
-                "Correct: a deterministic policy that is greedy with respect to $q_*$ achieves the optimal value $v_*$ in every state, so no policy (stochastic or not) can do better.",
+                "Correct, but only when $\\gamma=1$; for $\\gamma<1$ the optimal policy must be stochastic.",
                 "Incorrect: stochastic policies always dominate deterministic ones because randomization improves exploration.",
                 "Incorrect: deterministic optimal policies only exist when the MDP has a unique optimal action in every state.",
-                "Correct, but only when $\\gamma=1$; for $\\gamma<1$ the optimal policy must be stochastic."
+                "Correct: a deterministic policy that is greedy with respect to $q_*$ achieves the optimal value $v_*$ in every state, so no policy (stochastic or not) can do better."
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "For a finite MDP there is always a deterministic policy that is greedy w.r.t. $q_*$ and attains $v_*$ everywhere, which is optimal by definition. Randomization can tie this value (e.g., spreading mass over equally-optimal actions) but never exceed it; exploration is a learning concern, not a property of the optimal policy itself."
             },
             {
@@ -632,21 +632,21 @@
               "choices": [
                 "It converges to $v_*$, the optimal value function, regardless of $\\pi$.",
                 "It oscillates and does not converge unless $v_0$ is chosen close to $v_\\pi$.",
-                "It converges to $v_\\pi$, the value function of the policy $\\pi$ used to define $T^\\pi$.",
-                "It converges to $\\max_\\pi v_\\pi$ because each application improves the policy."
+                "It converges to $\\max_\\pi v_\\pi$ because each application improves the policy.",
+                "It converges to $v_\\pi$, the value function of the policy $\\pi$ used to define $T^\\pi$."
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "$T^\\pi$ is a $\\gamma$-contraction whose unique fixed point is $v_\\pi$ (it has no $\\max$ over actions — it evaluates the fixed policy $\\pi$), so iteration converges to $v_\\pi$ from any $v_0$. Reaching $v_*$ requires the Bellman optimality operator (which takes a max over actions), not $T^\\pi$."
             },
             {
               "q": "What is the state-value function $v_\\pi(s)$?",
               "choices": [
-                "The immediate reward received in state $s$",
                 "The expected return when you start in state $s$ and then follow policy $\\pi$ thereafter",
+                "The immediate reward received in state $s$",
                 "The number of times state $s$ is visited",
                 "The probability the policy assigns to the best action in $s$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$v_\\pi(s)=\\mathbb{E}_\\pi[G_t\\mid S_t=s]$: starting here and behaving according to $\\pi$, how much discounted reward do I expect to accumulate? It scores <i>states</i> under a fixed policy."
             },
             {
@@ -654,10 +654,10 @@
               "choices": [
                 "The same as $v_\\pi(s)$ for every action $a$",
                 "The immediate reward $r(s,a)$ only, ignoring the future",
-                "The probability of taking action $a$ under $\\pi$",
-                "The expected return from taking action $a$ in state $s$ now and following $\\pi$ thereafter — which lets you compare actions in a state"
+                "The expected return from taking action $a$ in state $s$ now and following $\\pi$ thereafter — which lets you compare actions in a state",
+                "The probability of taking action $a$ under $\\pi$"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "$q_\\pi(s,a)=\\mathbb{E}_\\pi[G_t\\mid S_t=s,A_t=a]$ \"probes\" an arbitrary first action $a$ (even one $\\pi$ wouldn't pick) and then defers to $\\pi$. Comparing $q$ across actions is how you improve a policy without a model — the basis of Q-learning and SARSA."
             },
             {
@@ -675,11 +675,11 @@
               "q": "What are the optimal value function $v_*(s)$ and an optimal policy $\\pi_*$?",
               "choices": [
                 "The value and policy of a randomly initialized agent",
-                "The average value taken over all possible policies",
                 "$v_*$ is the best achievable expected return from each state; an optimal policy $\\pi_*$ attains it (e.g. by acting greedily with respect to $q_*$)",
+                "The average value taken over all possible policies",
                 "Quantities defined only for supervised-learning problems"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$v_*(s)=\\max_\\pi v_\\pi(s)$ — the most return obtainable from $s$. Once you have $q_*$, an optimal policy is simply greedy: $\\pi_*(s)=\\arg\\max_a q_*(s,a)$ — which is why so much of RL focuses on estimating optimal value functions."
             }
           ],
@@ -782,11 +782,11 @@
               "q": "During policy iteration, the policy improvement step produces a new greedy policy $\\pi'$ that turns out to be identical to $\\pi$. What does this imply?",
               "choices": [
                 "The algorithm has stalled at a local optimum and should restart from a new initialization",
-                "$v_\\pi$ satisfies the Bellman optimality equation, so $\\pi$ is optimal",
+                "Evaluation did not converge tightly enough; lower the tolerance $\\theta$",
                 "The discount factor $\\gamma$ is too small and must be increased",
-                "Evaluation did not converge tightly enough; lower the tolerance $\\theta$"
+                "$v_\\pi$ satisfies the Bellman optimality equation, so $\\pi$ is optimal"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "If greedy improvement yields no change, then $v_\\pi(s) = \\max_a q_\\pi(s,a)$ for all $s$, which is exactly the Bellman optimality equation; therefore $v_\\pi = v_*$ and $\\pi$ is optimal. There are no suboptimal fixed points to get stuck in."
             },
             {
@@ -814,23 +814,23 @@
             {
               "q": "In policy iteration, what guarantees that the algorithm terminates after a *finite* number of iterations for a finite MDP?",
               "choices": [
-                "There are only finitely many deterministic policies, and each improvement step strictly improves the policy until no change occurs",
+                "The reward function $R(s,a)$ is bounded, so the values cannot grow without limit",
                 "The discount factor $\\gamma$ eventually shrinks all future rewards to exactly zero",
                 "Each policy-evaluation step converges in finitely many backups",
-                "The reward function $R(s,a)$ is bounded, so the values cannot grow without limit"
+                "There are only finitely many deterministic policies, and each improvement step strictly improves the policy until no change occurs"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Because there is a finite set of deterministic policies and each improvement step yields a strictly better policy (or no change, signaling optimality), the process must terminate after finitely many iterations. Discounting and bounded rewards do not by themselves force termination, and iterative evaluation converges only asymptotically."
             },
             {
               "q": "The state-value function is defined as an infinite-horizon expected discounted return. Why can it nonetheless be computed without simulating infinitely far into the future?",
               "choices": [
-                "Its self-referential (recursive) structure lets the infinite sum be captured by the Bellman fixed-point equation $T^\\pi v_\\pi = v_\\pi$",
-                "The discount factor truncates the sum to a finite number of nonzero terms",
                 "Rewards beyond a fixed horizon are defined to be exactly zero",
+                "The discount factor truncates the sum to a finite number of nonzero terms",
+                "Its self-referential (recursive) structure lets the infinite sum be captured by the Bellman fixed-point equation $T^\\pi v_\\pi = v_\\pi$",
                 "The Markov property guarantees the return is the same from every state"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Peeling off the first reward and using the Markov property collapses the infinite horizon into the recursive Bellman equation, whose fixed point is $v_\\pi$. Discounting shrinks distant terms toward zero but never makes them exactly zero, so it does not truncate the sum."
             },
             {
@@ -847,23 +847,23 @@
             {
               "q": "Consider a 2-state MDP under a fixed policy $\\pi$. The Bellman expectation backup is $v_{k+1}(s) = R_\\pi(s) + \\gamma \\sum_{s'} P_\\pi(s'\\mid s)\\, v_k(s')$. Suppose $R_\\pi = [2, 0]^\\top$, $\\gamma = 0.5$, transitions are $P_\\pi(\\cdot\\mid s_1) = [0, 1]$ and $P_\\pi(\\cdot\\mid s_2) = [1, 0]$, and you initialize $v_0 = [0, 0]^\\top$. What is $v_2$ after two synchronous sweeps?",
               "choices": [
-                "$v_2 = [2.0,\\ 1.0]^\\top$",
-                "$v_2 = [4.0,\\ 0.0]^\\top$",
                 "$v_2 = [2.0,\\ 0.0]^\\top$",
+                "$v_2 = [4.0,\\ 0.0]^\\top$",
+                "$v_2 = [2.0,\\ 1.0]^\\top$",
                 "$v_2 = [2.5,\\ 1.0]^\\top$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Sweep 1 from $v_0=[0,0]$: $v_1(s_1)=2+0.5\\cdot v_0(s_2)=2$, $v_1(s_2)=0+0.5\\cdot v_0(s_1)=0$, so $v_1=[2,0]$. Sweep 2: $v_2(s_1)=2+0.5\\cdot v_1(s_2)=2$, $v_2(s_2)=0+0.5\\cdot v_1(s_1)=0.5\\cdot 2=1$, so $v_2=[2,1]$. Choice $[2.0,0.0]$ is just $v_1$—the result of stopping after a single sweep rather than completing the second one."
             },
             {
               "q": "In policy iteration, the greedy improvement step sets $\\pi'(s) = \\arg\\max_a \\big[ R(s,a) + \\gamma \\sum_{s'} P(s'\\mid s,a)\\, v_\\pi(s') \\big]$ where $v_\\pi$ is the value of the OLD policy $\\pi$. A student objects that this is circular, since $v_\\pi$ does not reflect the new policy's behavior. What is the correct response?",
               "choices": [
-                "The objection is valid; one must first compute $v_{\\pi'}$ before defining $\\pi'$, so the formula as written is wrong.",
                 "Using $v_\\pi$ is intentional: it makes $\\pi'$ greedy with respect to the old policy's values, and the policy improvement theorem guarantees $v_{\\pi'} \\ge v_\\pi$ regardless.",
+                "The objection is valid; one must first compute $v_{\\pi'}$ before defining $\\pi'$, so the formula as written is wrong.",
                 "It only works if $v_\\pi$ is replaced by $v_*$, the optimal value function, otherwise no improvement is guaranteed.",
                 "The values $v_\\pi$ must be recomputed after every single state's update within the improvement step to avoid bias."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Greedy improvement deliberately uses the old policy's $v_\\pi$; the policy improvement theorem proves the resulting $\\pi'$ satisfies $v_{\\pi'}\\ge v_\\pi$, so it is not circular. Requiring $v_*$ (choice 2) would assume you already solved the problem, defeating the purpose of iteration."
             },
             {
@@ -871,54 +871,54 @@
               "choices": [
                 "It normalizes the reward so that all state values lie in $[0,1]$.",
                 "It ensures each sweep visits every state exactly once, guaranteeing a synchronous update.",
-                "It makes the Bellman expectation operator a $\\gamma$-contraction in the max-norm, which is what guarantees convergence to a unique fixed point.",
-                "It guarantees the transition matrix $P_\\pi$ becomes stochastic, which is required for the matrix inverse to exist."
+                "It guarantees the transition matrix $P_\\pi$ becomes stochastic, which is required for the matrix inverse to exist.",
+                "It makes the Bellman expectation operator a $\\gamma$-contraction in the max-norm, which is what guarantees convergence to a unique fixed point."
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "With $\\gamma<1$ the Bellman expectation operator is a contraction with modulus $\\gamma$ in the max-norm, so by the Banach fixed-point theorem the iterates converge geometrically to the unique $v_\\pi$. Choice 0 is false (values can exceed 1), and $P_\\pi$ is already stochastic independent of $\\gamma$ (choice 3)."
             },
             {
               "q": "Suppose two distinct deterministic policies $\\pi$ and $\\pi'$ happen to share the exact same state-value function, i.e. $v_\\pi = v_{\\pi'}$ at every state. If you run one greedy policy-improvement step starting from $v_\\pi$, which conclusion is justified?",
               "choices": [
                 "The improvement step must fail to produce a valid policy because the $\\arg\\max$ is ambiguous between $\\pi$ and $\\pi'$.",
-                "Greedy improvement from $v_\\pi$ yields a policy whose value is at least $v_\\pi$, and if both $\\pi$ and $\\pi'$ are already greedy w.r.t. $v_\\pi$ then this shared value is optimal, $v_\\pi = v_*$.",
                 "Sharing a value function is impossible for two distinct policies, so the premise cannot occur.",
+                "Greedy improvement from $v_\\pi$ yields a policy whose value is at least $v_\\pi$, and if both $\\pi$ and $\\pi'$ are already greedy w.r.t. $v_\\pi$ then this shared value is optimal, $v_\\pi = v_*$.",
                 "The two policies must differ in value at some state, so the premise contradicts the Bellman expectation equation."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Greedy improvement always returns a policy with value $\\ge v_\\pi$ (policy improvement theorem). If improvement returns a policy with the same value (a fixed point), the Bellman optimality equation is satisfied, so $v_\\pi=v_*$. Distinct policies can indeed share a value function (e.g. ties in the $\\arg\\max$), so choice 2 is false."
             },
             {
               "q": "What does <em>policy evaluation</em> compute?",
               "choices": [
-                "It searches for the single best action to take in each state",
                 "The state-value function $v_\\pi$ of a <em>fixed</em> policy $\\pi$ — how much return that policy earns from each state — by iterating the Bellman expectation backup to convergence",
+                "It searches for the single best action to take in each state",
                 "It updates the policy to be greedy with respect to the current values",
                 "It estimates the environment's transition probabilities from sampled data"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Policy evaluation answers \"how good is <em>this</em> policy?\" — it computes $v_\\pi$ for a fixed $\\pi$. Because $v_\\pi$ is the fixed point of the Bellman expectation operator $T^\\pi$, you can reach it by applying the backup $v_{k+1}=T^\\pi v_k$ repeatedly from any start."
             },
             {
               "q": "In policy iteration, what does the <em>policy-improvement</em> step do?",
               "choices": [
                 "Re-runs policy evaluation with a smaller discount factor",
-                "Averages the values of all actions in each state",
+                "Builds a new policy that acts greedily with respect to the current value function: $\\pi'(s)=\\arg\\max_a\\big[R(s,a)+\\gamma\\sum_{s'}P(s'\\mid s,a)\\,v_\\pi(s')\\big]$",
                 "Adds noise to the policy to encourage exploration",
-                "Builds a new policy that acts greedily with respect to the current value function: $\\pi'(s)=\\arg\\max_a\\big[R(s,a)+\\gamma\\sum_{s'}P(s'\\mid s,a)\\,v_\\pi(s')\\big]$"
+                "Averages the values of all actions in each state"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Improvement makes the policy greedy w.r.t. the value of the current policy. The policy-improvement theorem guarantees this new $\\pi'$ is at least as good as $\\pi$ everywhere — so alternating evaluation and improvement can only climb."
             },
             {
               "q": "What is <em>policy iteration</em>?",
               "choices": [
-                "Alternating policy evaluation and greedy policy improvement, repeating until the policy stops changing — at which point it is optimal",
-                "Running a single Bellman expectation backup once and stopping",
                 "Randomly trying many policies and keeping the best one seen",
+                "Running a single Bellman expectation backup once and stopping",
+                "Alternating policy evaluation and greedy policy improvement, repeating until the policy stops changing — at which point it is optimal",
                 "Estimating values from Monte-Carlo rollouts with no model"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Policy iteration loops: evaluate $\\pi$ → improve to $\\pi'$ → evaluate $\\pi'$ → … For a finite MDP it converges to an optimal policy in finitely many steps; when an improvement step returns the same policy, the Bellman optimality equation holds and you are done."
             },
             {
@@ -926,10 +926,10 @@
               "choices": [
                 "Because it uses a neural network to approximate the value function",
                 "Because it only works on continuous state spaces",
-                "Because it assumes the dynamics $P(s'\\mid s,a)$ and reward $R$ are fully known — it computes a solution from the model rather than learning from sampled experience",
-                "Because the agent must physically act in the environment to gather rewards"
+                "Because the agent must physically act in the environment to gather rewards",
+                "Because it assumes the dynamics $P(s'\\mid s,a)$ and reward $R$ are fully known — it computes a solution from the model rather than learning from sampled experience"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "DP needs a <em>model</em>: the transition and reward functions are given, so it solves the MDP by computation. Model-free methods (Monte-Carlo, TD, Q-learning — the next module) instead <em>learn</em> from sampled experience, with no access to $P$ or $R$."
             }
           ],
@@ -1003,34 +1003,34 @@
             {
               "q": "Which statement best captures the relationship between value iteration and policy iteration?",
               "choices": [
-                "Value iteration is policy iteration with the policy-evaluation step truncated to a single sweep, with the greedy improvement folded into the $\\max_a$ of the backup",
-                "Value iteration evaluates the policy to convergence between improvements, while policy iteration does only one sweep",
                 "Value iteration uses the Bellman expectation backup, while policy iteration uses the Bellman optimality backup",
+                "Value iteration evaluates the policy to convergence between improvements, while policy iteration does only one sweep",
+                "Value iteration is policy iteration with the policy-evaluation step truncated to a single sweep, with the greedy improvement folded into the $\\max_a$ of the backup",
                 "Value iteration never improves the policy; it only evaluates a fixed random policy"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Value iteration truncates evaluation to one sweep and fuses it with greedy improvement via the $\\max_a$; full evaluation-to-convergence is policy iteration's behavior, not value iteration's."
             },
             {
               "q": "The Bellman optimality operator $T_*$ satisfies $\\|T_* u - T_* v\\|_\\infty \\le \\gamma \\|u-v\\|_\\infty$. What does this contraction property directly guarantee?",
               "choices": [
-                "That value iteration converges in exactly one sweep regardless of $\\gamma$",
                 "That $T_*$ has a unique fixed point $v_*$ and that iterating $T_*$ from any $v_0$ converges to it geometrically at rate $\\gamma$",
+                "That value iteration converges in exactly one sweep regardless of $\\gamma$",
                 "That the optimal policy is always stochastic",
                 "That convergence requires the initial values to be set to the true $v_*$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A $\\gamma$-contraction with $\\gamma<1$ satisfies the Banach fixed-point theorem: a unique fixed point ($v_*$) that is reached from any starting point with error shrinking by a factor $\\gamma$ each sweep."
             },
             {
               "q": "What are the two fundamental limitations of dynamic programming for solving MDPs?",
               "choices": [
                 "It requires a stochastic policy and only works for $\\gamma=1$",
-                "It cannot handle negative rewards and requires deterministic transitions",
                 "It requires a known model $p(s',r\\mid s,a)$ and suffers the curse of dimensionality (cost grows with $|S|$, which is exponential in the number of state variables)",
+                "It cannot handle negative rewards and requires deterministic transitions",
                 "It only converges for episodic tasks and cannot extract a greedy policy"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "DP backups contain the exact expectation over $p$, so the model must be known (planning, not learning); and every sweep enumerates the state space, whose size explodes exponentially with state dimensionality."
             },
             {
@@ -1047,34 +1047,34 @@
             {
               "q": "Value iteration can be viewed as a special case of policy iteration in which each policy-evaluation phase is truncated. How many sweeps of policy evaluation does this truncation correspond to before each improvement step?",
               "choices": [
-                "Exactly one sweep",
                 "Zero sweeps (no evaluation at all)",
+                "Exactly one sweep",
                 "Sweeps until $v_\\pi$ fully converges",
                 "A number that grows with the iteration index $k$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Value iteration is equivalent to policy iteration where policy evaluation is stopped after just a single sweep, after which a greedy improvement is implicitly folded into the same $\\max_a$ update."
             },
             {
               "q": "In the value iteration update $(T_* v)(s) = \\max_a \\sum_{s',r} p(s',r\\mid s,a)[r + \\gamma\\, v(s')]$, what is the key structural difference from the Bellman expectation backup used in policy evaluation?",
               "choices": [
-                "The $\\max_a$ replaces the expectation $\\sum_a \\pi(a\\mid s)$ over actions",
                 "It omits the discount factor $\\gamma$",
+                "The $\\max_a$ replaces the expectation $\\sum_a \\pi(a\\mid s)$ over actions",
                 "It sums over actions instead of over next states",
                 "It uses $v(s)$ rather than $v(s')$ inside the bracket"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The optimality backup maximizes over actions ($\\max_a$) instead of averaging them under a fixed policy's distribution $\\pi(a\\mid s)$, which is exactly what turns evaluation into optimization."
             },
             {
               "q": "During the intermediate iterations of value iteration, the value function $v_k$ produced by the updates generally...",
               "choices": [
-                "does not correspond to the value function of any particular policy",
-                "always equals $v_\\pi$ for the current greedy policy $\\pi$",
                 "is guaranteed to be an upper bound on $v_*$",
+                "always equals $v_\\pi$ for the current greedy policy $\\pi$",
+                "does not correspond to the value function of any particular policy",
                 "stays constant until the final iteration"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Because each sweep applies a $\\max_a$ that may pick different actions across states and iterations, the intermediate $v_k$ need not be the true value of any single policy, even though it converges to $v_*$."
             },
             {
@@ -1091,45 +1091,45 @@
             {
               "q": "Consider a single state $s$ with two deterministic actions. Action $a_1$ gives reward $1$ and leads to a state with current estimated value $v(s_1)=10$; action $a_2$ gives reward $4$ and leads to a state with $v(s_2)=5$. With $\\gamma=0.9$, what is the value-iteration update $(T_* v)(s)$, and which action is greedy?",
               "choices": [
-                "$10.0$, taking action $a_1$",
+                "$8.5$, taking action $a_1$",
                 "$8.5$, taking action $a_2$",
                 "$9.25$, averaging the two actions",
-                "$8.5$, taking action $a_1$"
+                "$10.0$, taking action $a_1$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Value iteration takes the max over actions: $a_1$ gives $1+0.9\\cdot10=10.0$ and $a_2$ gives $4+0.9\\cdot5=8.5$. The max is $10.0$ via $a_1$. The tempting distractor $8.5$ comes from being lured by the larger immediate reward of $a_2$, ignoring the discounted future value, and averaging is wrong because $T_*$ uses $\\max$, not an expectation over actions."
             },
             {
               "q": "After value iteration has converged to (approximately) $v_*$, how is the optimal policy $\\pi_*$ obtained?",
               "choices": [
-                "It is read off directly as a byproduct, since value iteration explicitly maintains and updates a policy at every sweep",
                 "By performing one final greedy extraction: $\\pi_*(s)=\\arg\\max_a \\sum_{s',r} p(s',r\\mid s,a)[r+\\gamma\\, v_*(s')]$",
+                "It is read off directly as a byproduct, since value iteration explicitly maintains and updates a policy at every sweep",
                 "By running policy evaluation on $v_*$ to recover the action probabilities",
                 "By normalizing $v_*(s)$ into a probability distribution over actions"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Value iteration only tracks a value function; the optimal policy is recovered after convergence by a single greedy (argmax) one-step lookahead. It does not maintain an explicit policy during its sweeps, which distinguishes it from policy iteration."
             },
             {
               "q": "A student claims: \"In value iteration, the intermediate value function $v_k$ is the true value $v_{\\pi_k}$ of the greedy policy $\\pi_k$ implied at iteration $k$.\" Why is this claim wrong?",
               "choices": [
                 "Because $v_k$ is the value of the optimal policy $v_*$ at every iteration, not of $\\pi_k$",
-                "Because $v_k$ is generally not the value of any policy at all — it is just an intermediate iterate of the operator $T_*$ and need not equal $v_{\\pi_k}$",
                 "Because the greedy policy $\\pi_k$ changes every sweep, so $v_{\\pi_k}$ is undefined",
+                "Because $v_k$ is generally not the value of any policy at all — it is just an intermediate iterate of the operator $T_*$ and need not equal $v_{\\pi_k}$",
                 "Because $v_k$ underestimates $v_{\\pi_k}$ by exactly a factor of $\\gamma$ each sweep"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Each $v_k$ is just the result of applying $T_*$ to $v_0$ $k$ times; it is an estimate converging to $v_*$ but is generally not the exact value function of any policy. Truly evaluating the greedy policy $\\pi_k$ would require running policy evaluation to convergence, which value iteration deliberately skips."
             },
             {
               "q": "In Generalized Policy Iteration, evaluation and improvement are described as two processes that simultaneously cooperate and compete. In what sense do they 'compete'?",
               "choices": [
-                "Improvement makes the policy greedy w.r.t. the current value, which typically makes that value an incorrect (over-optimistic) estimate of the new policy, so evaluation must work to catch up",
+                "Improvement decreases the value function while evaluation increases it, and equilibrium is where they cancel",
                 "Evaluation and improvement run on separate copies of the value function that must later be reconciled by averaging",
                 "They compete for computational budget, and only the faster one is allowed to run each iteration",
-                "Improvement decreases the value function while evaluation increases it, and equilibrium is where they cancel"
+                "Improvement makes the policy greedy w.r.t. the current value, which typically makes that value an incorrect (over-optimistic) estimate of the new policy, so evaluation must work to catch up"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Greedifying changes the policy, so the value function (computed for the old policy) no longer matches the new policy — improvement 'breaks' evaluation's consistency, and evaluation then chases the moving target. They cooperate because both drive toward the same fixed point (the Bellman optimality equation), where the policy is greedy w.r.t. its own value."
             },
             {
@@ -1137,43 +1137,43 @@
               "choices": [
                 "It evaluates a fixed policy to convergence and then stops",
                 "It samples trajectories and averages the observed returns",
-                "It repeatedly applies the Bellman <em>optimality</em> backup (a $\\max_a$ over a one-step lookahead) to the values until they converge to $v_*$ — with no explicit policy maintained until the end",
-                "It enumerates every possible policy and picks the best"
+                "It enumerates every possible policy and picks the best",
+                "It repeatedly applies the Bellman <em>optimality</em> backup (a $\\max_a$ over a one-step lookahead) to the values until they converge to $v_*$ — with no explicit policy maintained until the end"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Value iteration iterates $v_{k+1}=T_* v_k$ where $(T_* v)(s)=\\max_a\\sum_{s',r}p(s',r\\mid s,a)[r+\\gamma v(s')]$. The $\\max_a$ folds greedy improvement into the backup, so there is no separate evaluate-then-improve loop; you read off the greedy policy only at the end."
             },
             {
               "q": "What does the Bellman <em>optimality</em> equation say the optimal value $v_*(s)$ equals?",
               "choices": [
-                "$\\max_a\\sum_{s',r}p(s',r\\mid s,a)\\big[r+\\gamma\\,v_*(s')\\big]$ — act optimally for one step, then continue optimally",
+                "$\\min_a\\big[\\dots\\big]$ — the value of the worst available action",
                 "$\\sum_a \\pi(a\\mid s)\\big[\\dots\\big]$ — an average over a fixed policy's actions",
                 "$R(s)$ — simply the immediate reward in state $s$",
-                "$\\min_a\\big[\\dots\\big]$ — the value of the worst available action"
+                "$\\max_a\\sum_{s',r}p(s',r\\mid s,a)\\big[r+\\gamma\\,v_*(s')\\big]$ — act optimally for one step, then continue optimally"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The optimality equation replaces the expectation-over-the-policy with a <em>maximization</em> over actions: $v_*(s)=\\max_a q_*(s,a)$. That single $\\max$ is the difference from the Bellman <em>expectation</em> equation, and it is what makes $v_*$ describe optimal (not merely some policy's) behavior."
             },
             {
               "q": "What is <em>Generalized Policy Iteration</em> (GPI)?",
               "choices": [
-                "A method that only works when the discount factor is exactly 1",
+                "The general pattern of letting policy evaluation and policy improvement interact — at any granularity or order — until they converge to the optimal value and policy; nearly all of RL is an instance of it",
                 "A way to evaluate a policy without any model of the environment",
                 "A schedule for decaying the learning rate during training",
-                "The general pattern of letting policy evaluation and policy improvement interact — at any granularity or order — until they converge to the optimal value and policy; nearly all of RL is an instance of it"
+                "A method that only works when the discount factor is exactly 1"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "GPI abstracts away <em>how much</em> you evaluate or improve each round. Policy iteration (evaluate fully) and value iteration (one sweep) are both special cases; Monte-Carlo and TD control are too. Evaluation makes the value consistent with the policy; improvement makes the policy greedy w.r.t. the value; together they converge."
             },
             {
               "q": "Value iteration's loop runs \"until $\\Delta<\\theta$.\" What is this stopping rule, and why is it sound?",
               "choices": [
                 "Stop once the policy has been improved exactly $|\\mathcal{S}|$ times",
-                "Stop when the largest value change over a sweep, $\\Delta=\\max_s|v_{\\text{new}}(s)-v_{\\text{old}}(s)|$, drops below a small threshold $\\theta$ — sound because the $\\gamma$-contraction bounds the remaining distance to $v_*$",
                 "Stop when every state's value becomes exactly zero",
+                "Stop when the largest value change over a sweep, $\\Delta=\\max_s|v_{\\text{new}}(s)-v_{\\text{old}}(s)|$, drops below a small threshold $\\theta$ — sound because the $\\gamma$-contraction bounds the remaining distance to $v_*$",
                 "Stop when the discount factor $\\gamma$ reaches 1"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Each sweep is a $\\gamma$-contraction, so consecutive iterates get geometrically closer to the unique fixed point $v_*$. A small max-change $\\Delta$ therefore certifies $v_k$ is close to $v_*$ (within $\\tfrac{\\gamma}{1-\\gamma}\\Delta$), giving a principled stopping test."
             }
           ],
@@ -1275,144 +1275,144 @@
             {
               "q": "Which statement about first-visit vs every-visit MC is correct?",
               "choices": [
-                "First-visit MC is unbiased; every-visit MC is biased in finite samples but both converge to $v_\\pi$",
-                "Every-visit MC is unbiased while first-visit MC is biased",
                 "Both are biased and neither converges to $v_\\pi$",
+                "Every-visit MC is unbiased while first-visit MC is biased",
+                "First-visit MC is unbiased; every-visit MC is biased in finite samples but both converge to $v_\\pi$",
                 "They always produce identical estimates regardless of sample size"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "First-visit averages i.i.d. returns (unbiased); every-visit reuses correlated within-episode returns (biased for finite n), yet both are consistent and converge to $v_\\pi$."
             },
             {
               "q": "In MC control, why do we estimate action values $Q(s,a)$ rather than state values $V(s)$?",
               "choices": [
-                "Greedy policy improvement from $V$ alone would require the transition model $p$, which is unavailable model-free",
+                "$Q$ removes the need for any exploration",
                 "$Q$ has lower variance than $V$",
                 "$V$ cannot be estimated by Monte Carlo at all",
-                "$Q$ removes the need for any exploration"
+                "Greedy policy improvement from $V$ alone would require the transition model $p$, which is unavailable model-free"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Improving a policy greedily from $V$ needs $\\arg\\max_a \\sum p(s',r|s,a)[r+\\gamma V(s')]$, i.e. the model. With $Q$, greedy improvement is just $\\arg\\max_a Q(s,a)$ — fully model-free."
             },
             {
               "q": "An agent runs MC control where the policy keeps changing between episodes, making the target returns non-stationary. Compared with the $\\tfrac{1}{N(s)}$ averaging rule, what does replacing it with a constant step size $\\alpha$ in $V(s)\\leftarrow V(s)+\\alpha\\,(G-V(s))$ achieve?",
               "choices": [
-                "It produces an exponentially weighted average that keeps weighting recent returns, so the estimate never stops adapting",
+                "It removes the need to wait for episodes to terminate",
                 "It makes the estimate converge to the exact sample mean of all returns ever seen",
                 "It eliminates the variance of the return $G$ entirely",
-                "It removes the need to wait for episodes to terminate"
+                "It produces an exponentially weighted average that keeps weighting recent returns, so the estimate never stops adapting"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "A constant $\\alpha$ weights recent returns exponentially more than old ones (old returns decay by $(1-\\alpha)$ each step), so the estimate keeps tracking a moving target — ideal for non-stationary control. The $\\tfrac{1}{N(s)}$ rule instead gives the exact equal-weighted sample mean."
             },
             {
               "q": "Relative to temporal-difference learning, what is the signature bias–variance profile of first-visit Monte Carlo?",
               "choices": [
-                "Zero bias but high variance, because a full return aggregates the randomness of every reward and transition until termination",
                 "High bias but low variance, because it bootstraps from current estimates",
+                "Zero bias but high variance, because a full return aggregates the randomness of every reward and transition until termination",
                 "Both low bias and low variance, which is why it dominates TD in every setting",
                 "Zero bias and zero variance, since it uses the exact definition of the value function"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "MC averages complete returns, which are unbiased estimates of the value (zero bias), but each return compounds randomness across an entire episode (high variance) — the opposite end of the dial from bootstrapping TD, which is biased but lower-variance."
             },
             {
               "q": "In a state with $|\\mathcal{A}(s)|=4$ actions and $\\varepsilon=0.2$, under the $\\varepsilon$-greedy policy what probability is assigned to the single greedy action?",
               "choices": [
-                "$0.85$",
                 "$0.80$",
+                "$0.85$",
                 "$0.95$",
                 "$0.20$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The greedy action gets $1-\\varepsilon+\\varepsilon/|\\mathcal{A}(s)| = 0.8 + 0.2/4 = 0.8+0.05 = 0.85$; each of the three non-greedy actions gets $\\varepsilon/|\\mathcal{A}(s)|=0.05$, and $0.85+3(0.05)=1$."
             },
             {
               "q": "Why are $\\varepsilon$-soft policies often preferred over exploring starts as the exploration mechanism in MC control?",
               "choices": [
-                "Exploring starts requires being able to begin episodes from arbitrary state–action pairs, which is unrealistic in many real environments, whereas $\\varepsilon$-soft keeps exploration inside the policy",
-                "$\\varepsilon$-soft policies are guaranteed to converge to the optimal deterministic policy while exploring starts is not",
                 "Exploring starts cannot guarantee that every $(s,a)$ pair is eventually visited",
+                "$\\varepsilon$-soft policies are guaranteed to converge to the optimal deterministic policy while exploring starts is not",
+                "Exploring starts requires being able to begin episodes from arbitrary state–action pairs, which is unrealistic in many real environments, whereas $\\varepsilon$-soft keeps exploration inside the policy",
                 "$\\varepsilon$-soft policies remove the need to estimate $Q(s,a)$ at all"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "You usually cannot teleport an agent into an arbitrary $(s,a)$ pair to start an episode, so $\\varepsilon$-soft policies sustain exploration on-policy without that assumption. (By definition exploring starts do guarantee every $(s,a)$ is visited, and $\\varepsilon$-soft converges only to the best $\\varepsilon$-soft policy, not a deterministic optimum.)"
             },
             {
               "q": "An agent wants to evaluate a target policy $\\pi$ while collecting episodes from a different behavior policy $b$. Using ordinary importance sampling, each return $G_t$ is weighted by $\\rho_{t:T-1}=\\prod_{k=t}^{T-1}\\frac{\\pi(A_k\\mid S_k)}{b(A_k\\mid S_k)}$. For this estimator of $v_\\pi(s)$ to be valid, which condition on $b$ is required?",
               "choices": [
-                "$b$ must be the greedy policy with respect to the current $Q$ estimates",
                 "$b(a\\mid s)>0$ whenever $\\pi(a\\mid s)>0$ (coverage)",
+                "$b$ must be the greedy policy with respect to the current $Q$ estimates",
                 "$b$ must equal $\\pi$ on at least half of all states",
                 "$b$ must be deterministic so that each $\\rho_{t:T-1}$ equals $0$ or $1$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Importance sampling requires the assumption of coverage: every action the target policy can take must have nonzero probability under the behavior policy, otherwise some returns can never be sampled and the estimate is biased. If $b$ were deterministic it would generally violate coverage for a stochastic $\\pi$, and $b$ need not equal or be greedy w.r.t. $\\pi$."
             },
             {
               "q": "In MC control with an $\\varepsilon$-greedy behavior policy, why is letting $\\varepsilon$ decay toward $0$ over time (e.g. $\\varepsilon_k=1/k$) important for convergence to the optimal policy?",
               "choices": [
-                "It guarantees every episode terminates faster, reducing return variance",
-                "It removes the need to average returns, since later estimates are exact",
                 "It maintains enough exploration that all actions are tried infinitely often, while ensuring the policy becomes greedy in the limit",
+                "It removes the need to average returns, since later estimates are exact",
+                "It guarantees every episode terminates faster, reducing return variance",
                 "It makes the returns stationary so a constant step size is no longer needed"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "This is the GLIE idea (Greedy in the Limit with Infinite Exploration): a fixed $\\varepsilon>0$ keeps exploring forever but stays $\\varepsilon$-soft (never fully greedy), so decaying $\\varepsilon$ to $0$ lets the policy approach the true greedy optimum while still visiting every action infinitely often. Decaying $\\varepsilon$ does not speed termination or make estimates exact, and it actually makes the target more non-stationary, not less."
             },
             {
               "q": "You maintain a running MC estimate of $V(s)$ using the incremental form $V(s)\\leftarrow V(s)+\\frac{1}{N(s)}\\big(G-V(s)\\big)$. Currently $V(s)=10$ with $N(s)=4$ (four returns averaged so far). A fifth episode visits $s$ and yields return $G=20$. What is the updated $V(s)$?",
               "choices": [
                 "$15$",
-                "$11$",
                 "$12$",
+                "$11$",
                 "$14$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "After the new visit $N(s)=5$, so $V(s)\\leftarrow 10+\\frac{1}{5}(20-10)=10+2=12$, which equals the true mean of the five returns. Choosing $15$ wrongly averages only the old mean and the new return as $(10+20)/2$; $11$ and $14$ are simply incorrect values that do not match the incremental average (note that mistakenly using the old $N=4$ would instead give $10+\\frac{1}{4}(20-10)=12.5$)."
             },
             {
               "q": "For which of the following tasks is plain Monte Carlo prediction LEAST suitable as described in this lesson?",
               "choices": [
-                "A continuing task with no terminal state, where interaction never ends",
+                "A simulated maze where every rollout eventually terminates",
                 "An episodic game like Blackjack where each hand ends in a win or loss",
                 "A gridworld navigation task that always reaches a goal or trap state",
-                "A simulated maze where every rollout eventually terminates"
+                "A continuing task with no terminal state, where interaction never ends"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "MC methods average complete returns and therefore require episodes that terminate; in a purely continuing task there is no episode boundary at which the return $G_t$ becomes available, so plain MC cannot form an update. The other three are all episodic tasks with guaranteed termination, exactly where MC applies."
             },
             {
               "q": "What is the core idea of Monte Carlo prediction?",
               "choices": [
-                "Estimate $v_\\pi(s)$ by averaging the actual returns $G_t$ observed after visits to $s$ across many sampled episodes — a sample mean standing in for the expectation",
-                "Sweep all states using the known transition probabilities $p(s'\\mid s,a)$",
                 "Bootstrap each state's value from the estimated value of the next state",
+                "Sweep all states using the known transition probabilities $p(s'\\mid s,a)$",
+                "Estimate $v_\\pi(s)$ by averaging the actual returns $G_t$ observed after visits to $s$ across many sampled episodes — a sample mean standing in for the expectation",
                 "Fit a neural network to predict the immediate reward at each step"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$v_\\pi(s)=\\mathbb{E}_\\pi[G_t\\mid S_t=s]$ is an expectation, so the most direct estimator is to roll out the policy, collect the actual returns following $s$, and average them. By the law of large numbers that sample average converges to $v_\\pi(s)$."
             },
             {
               "q": "What does it mean that Monte Carlo methods are <em>model-free</em>?",
               "choices": [
                 "They use a smaller discount factor than dynamic programming",
-                "They require the full transition and reward model to be known in advance",
                 "They learn purely from sampled experience (episodes the agent actually generates), needing no model of the transition dynamics or reward function",
+                "They require the full transition and reward model to be known in advance",
                 "They only work in deterministic environments"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Unlike dynamic programming, which needs $p(s',r\\mid s,a)$, MC just acts and observes. It estimates values straight from the returns it experiences — exactly the situation of an agent that does not possess the equations of its world."
             },
             {
               "q": "Monte Carlo prediction notably does <em>not</em> rely on the Markov property. What does it assume instead?",
               "choices": [
                 "That the environment is deterministic",
-                "Only that episodes terminate, so a complete return $G_t$ can actually be observed",
+                "That the state space is finite and small",
                 "That the transition probabilities are known",
-                "That the state space is finite and small"
+                "Only that episodes terminate, so a complete return $G_t$ can actually be observed"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Because MC averages whole observed returns rather than bootstrapping off a state estimate, it doesn't need the current state to be a sufficient statistic (the Markov property). Its one real requirement is termination — a return is a sum that runs to the end of an episode."
             },
             {
@@ -1420,10 +1420,10 @@
               "choices": [
                 "It changes the estimate from a mean into a maximum",
                 "It introduces bootstrapping into Monte Carlo",
-                "It deliberately makes the estimate biased",
-                "It maintains the running average <em>online</em> — algebraically the same sample mean, but updated after each new return without storing all past returns"
+                "It maintains the running average <em>online</em> — algebraically the same sample mean, but updated after each new return without storing all past returns",
+                "It deliberately makes the estimate biased"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The incremental form is exactly the batch average rewritten so you can update on the fly: keep a count $N(s)$ and nudge $V(s)$ toward each new return by $1/N(s)$. Replacing $1/N(s)$ with a constant $\\alpha$ gives a \"recency-weighted\" average, useful when the target is non-stationary."
             }
           ],
@@ -1498,22 +1498,22 @@
               "q": "Which statement about the TD target $R_{t+1} + \\gamma V(S_{t+1})$ versus the MC target $G_t$ is correct?",
               "choices": [
                 "The TD target is unbiased but high-variance; the MC target is biased but low-variance",
-                "The TD target is biased (it bootstraps off the current estimate) but low-variance; the MC target is unbiased but high-variance",
+                "Both targets are biased, but the MC target has lower variance",
                 "Both targets are unbiased, but the TD target has higher variance",
-                "Both targets are biased, but the MC target has lower variance"
+                "The TD target is biased (it bootstraps off the current estimate) but low-variance; the MC target is unbiased but high-variance"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "MC's full-return target is an unbiased sample of $V^\\pi$ but accumulates the variance of many random rewards; TD's one-step target uses the current (imperfect) estimate $V(S_{t+1})$, making it biased but far lower variance."
             },
             {
               "q": "Given $V(S_t)=4$, $V(S_{t+1})=10$, observed reward $R_{t+1}=1$, $\\gamma=0.9$, what is the TD error $\\delta_t$?",
               "choices": [
                 "$3$",
-                "$6$",
                 "$-3$",
+                "$6$",
                 "$11$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\delta_t = R_{t+1} + \\gamma V(S_{t+1}) - V(S_t) = 1 + 0.9(10) - 4 = 1 + 9 - 4 = 6$."
             },
             {
@@ -1530,56 +1530,56 @@
             {
               "q": "Why can TD(0) be applied to continuing (non-terminating) tasks while standard Monte Carlo cannot?",
               "choices": [
-                "TD requires a model of the environment, which resolves the infinite horizon",
                 "TD updates after every step using a one-step bootstrap, whereas MC needs a complete episode to compute the return $G_t$",
+                "TD requires a model of the environment, which resolves the infinite horizon",
                 "MC has lower variance and so needs fewer episodes",
                 "TD only works when $\\gamma = 1$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "MC must wait for an episode to terminate to compute $G_t$; in a continuing task that never happens. TD bootstraps off $V(S_{t+1})$ and updates online every step, so no terminal state is needed."
             },
             {
               "q": "Given $V(S_t)=4$, $V(S_{t+1})=10$, observed reward $R_{t+1}=1$, $\\gamma=0.9$, what is the TD error $\\delta_t = R_{t+1} + \\gamma V(S_{t+1}) - V(S_t)$?",
               "choices": [
-                "$6.0$",
-                "$5.4$",
                 "$7.0$",
+                "$5.4$",
+                "$6.0$",
                 "$-6.0$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$\\delta_t = 1 + 0.9 \\times 10 - 4 = 1 + 9 - 4 = 6.0$. The positive error means the outcome was better than predicted, so the TD(0) update would increase $V(S_t)$."
             },
             {
               "q": "The TD(0) update rule is $V(S_t) \\leftarrow V(S_t) + \\alpha\\,\\big[R_{t+1} + \\gamma V(S_{t+1}) - V(S_t)\\big]$. A student claims TD(0) is unbiased because it uses the real observed reward $R_{t+1}$. What is the most accurate response?",
               "choices": [
-                "The student is correct; TD(0) is unbiased for the same reason MC is.",
                 "TD(0) is generally biased because its target bootstraps on the estimate $V(S_{t+1})$, which is itself inaccurate during learning.",
+                "The student is correct; TD(0) is unbiased for the same reason MC is.",
                 "TD(0) is unbiased only when $\\gamma = 1$, otherwise the discount introduces bias.",
                 "TD(0) is unbiased but has higher variance than MC, which is the real drawback."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The TD target $R_{t+1} + \\gamma V(S_{t+1})$ depends on the current (imperfect) estimate $V(S_{t+1})$, so it is a biased estimate of $V^\\pi(S_t)$ even though the reward itself is real. MC, which uses the full return $G_t$, is the unbiased one; and TD actually has lower variance than MC, not higher."
             },
             {
               "q": "Consider a transition from state $A$ to state $B$ with reward $R_{t+1}=2$ and $\\gamma=0.5$. Currently $V(A)=3$ and $V(B)=6$. Using step size $\\alpha=0.1$, what is the new value $V(A)$ after one TD(0) update?",
               "choices": [
                 "$3.0$",
-                "$5.0$",
                 "$3.2$",
+                "$5.0$",
                 "$2.8$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The TD error is $\\delta = 2 + 0.5\\cdot 6 - 3 = 2$, so $V(A) \\leftarrow 3 + 0.1\\cdot 2 = 3.2$. The distractor $5.0$ wrongly moves $V(A)$ all the way to the target instead of only an $\\alpha$-fraction toward it."
             },
             {
               "q": "Which scenario best illustrates a situation where TD(0) can learn something useful but Monte Carlo cannot (within the same amount of experience)?",
               "choices": [
                 "An agent that has only experienced full episodes from start to terminal states.",
-                "An agent partway through a long episode that has not yet terminated, observing one new transition.",
                 "An agent in a fully deterministic environment with a known model.",
+                "An agent partway through a long episode that has not yet terminated, observing one new transition.",
                 "An agent that wants the lowest-variance possible estimate of returns."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "TD(0) updates after each step via bootstrapping, so it learns from an in-progress, non-terminated episode; MC must wait for the episode to end to compute $G_t$. The known-model case favors DP, and lowest variance favors MC, not TD."
             },
             {
@@ -1587,87 +1587,87 @@
               "choices": [
                 "They converge exactly to $V^\\pi$ because TD(0) is guaranteed to converge for any $\\alpha$.",
                 "They diverge to infinity because constant $\\alpha$ always destabilizes bootstrapping.",
-                "They fluctuate around $V^\\pi$ without fully settling, because a constant step keeps responding to noise.",
-                "They converge to the Monte Carlo estimate rather than $V^\\pi$."
+                "They converge to the Monte Carlo estimate rather than $V^\\pi$.",
+                "They fluctuate around $V^\\pi$ without fully settling, because a constant step keeps responding to noise."
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Tabular TD(0) requires a decaying step size (Robbins-Monro conditions) to converge exactly; with a constant $\\alpha$ it tracks but keeps bouncing around the true values due to ongoing stochasticity. It does not diverge in the tabular case, nor does it target the MC estimate specifically."
             },
             {
               "q": "In the limit of infinite experience from a fixed batch of episodes, TD(0) and Monte Carlo converge to different solutions. What does the TD(0) batch solution correspond to?",
               "choices": [
-                "The value function of the maximum-likelihood Markov model fit to the observed data (the certainty-equivalence estimate).",
+                "The same solution as MC, since both are consistent estimators.",
                 "The value function that minimizes the mean-squared error on the observed returns.",
                 "The optimal value function $V^*$ under the greedy policy.",
-                "The same solution as MC, since both are consistent estimators."
+                "The value function of the maximum-likelihood Markov model fit to the observed data (the certainty-equivalence estimate)."
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Batch TD(0) converges to the certainty-equivalence solution: the values of the maximum-likelihood MDP implied by the data. Batch MC instead minimizes mean-squared error on the observed returns, which is why the two can differ on finite data."
             },
             {
               "q": "A reward-prediction-error interpretation links the TD error $\\delta_t$ to dopamine signaling. If an outcome is exactly as good as the agent's current value estimate predicted, what should $\\delta_t$ be?",
               "choices": [
-                "Equal to the reward $R_{t+1}$, since reward always drives the signal.",
                 "Approximately zero, because the bootstrapped target matches the current estimate.",
+                "Equal to the reward $R_{t+1}$, since reward always drives the signal.",
                 "Large and positive, signaling a successful prediction.",
                 "Equal to $\\gamma V(S_{t+1})$, the discounted future value."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\delta_t = R_{t+1} + \\gamma V(S_{t+1}) - V(S_t)$ measures surprise: when the outcome matches the prediction, the target equals the current estimate and $\\delta_t \\approx 0$. A nonzero (especially positive) signal indicates the outcome was better than expected, mirroring the dopamine reward-prediction-error story."
             },
             {
               "q": "Which of the following correctly characterizes the bias-variance trade-off between the TD(0) target and the Monte Carlo target?",
               "choices": [
                 "Both targets have the same bias and variance; only the timing of updates differs.",
-                "The MC target has lower variance because it averages many rewards, while TD has higher variance from bootstrapping.",
                 "The TD target has lower variance (it depends on one random reward and transition) but is biased, while the MC target is unbiased but higher-variance.",
+                "The MC target has lower variance because it averages many rewards, while TD has higher variance from bootstrapping.",
                 "The TD target is both lower-bias and lower-variance, which is why it dominates MC."
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The TD target uses just $R_{t+1}$ and one bootstrapped value, so it has lower variance than the full random return $G_t$, but bootstrapping on an imperfect estimate makes it biased. MC's $G_t$ is unbiased but accumulates randomness over the whole episode, giving higher variance."
             },
             {
               "q": "What is the TD(0) <em>target</em>?",
               "choices": [
                 "The full return $G_t$ summed all the way to the end of the episode",
-                "The maximum action-value available at the next state",
                 "$R_{t+1} + \\gamma V(S_{t+1})$ — one observed reward plus the discounted <em>current estimate</em> of the next state's value",
+                "The maximum action-value available at the next state",
                 "The average reward across all states"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "TD exploits the Bellman expectation equation: instead of waiting for the whole return, it takes one real step and substitutes its own estimate $V(S_{t+1})$ for the unknown remainder. That $R_{t+1}+\\gamma V(S_{t+1})$ is the TD target — \"one real reward, then trust my guess about the rest.\""
             },
             {
               "q": "What does the TD error $\\delta_t$ represent?",
               "choices": [
-                "A prediction error — the TD target minus the current estimate, $\\delta_t=R_{t+1}+\\gamma V(S_{t+1})-V(S_t)$ — i.e. \"was my one-step prediction consistent with what actually happened?\"",
+                "The gradient of the value function with respect to its parameters",
                 "The total reward collected over the whole episode",
                 "The difference between two successive policies",
-                "The gradient of the value function with respect to its parameters"
+                "A prediction error — the TD target minus the current estimate, $\\delta_t=R_{t+1}+\\gamma V(S_{t+1})-V(S_t)$ — i.e. \"was my one-step prediction consistent with what actually happened?\""
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$\\delta_t$ is the surprise: how far the observed reward-plus-next-value was from what you predicted. TD nudges $V(S_t)$ by $\\alpha\\delta_t$. If an outcome is exactly as good as predicted, $\\delta_t=0$ and nothing changes — the same quantity that mirrors dopamine reward-prediction-error signals."
             },
             {
               "q": "In what sense is TD learning like Monte Carlo, and how does it differ?",
               "choices": [
                 "It needs the full transition model, exactly like dynamic programming",
-                "It can only be used for prediction, never for control",
+                "Like MC, it learns directly from raw experience with no model of the environment — but unlike MC it updates after <em>every step</em> instead of waiting for the episode to end",
                 "It requires storing every reward of the episode before updating",
-                "Like MC, it learns directly from raw experience with no model of the environment — but unlike MC it updates after <em>every step</em> instead of waiting for the episode to end"
+                "It can only be used for prediction, never for control"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "TD is the synthesis: model-free like MC (learns from experience), bootstrapping like DP (updates an estimate from another estimate). That bootstrapping is what lets it update online, every step, and even on continuing (non-terminating) tasks."
             },
             {
               "q": "Run as a prediction method for a fixed policy $\\pi$ (with a suitably decaying step size), TD(0) converges to what?",
               "choices": [
-                "The optimal value function $v_*$, regardless of the policy followed",
                 "The value function $v_\\pi$ of the policy $\\pi$ that is generating the experience",
+                "The optimal value function $v_*$, regardless of the policy followed",
                 "The average reward per step",
                 "Zero for every state"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "TD(0) prediction estimates the value of whatever policy is producing the data: it converges to $v_\\pi$. Finding $v_*$ requires <em>control</em> (improving the policy too), which is the job of SARSA and Q-learning in the next lesson."
             }
           ],
@@ -1742,11 +1742,11 @@
               "q": "Which target rule belongs to Q-learning?",
               "choices": [
                 "$R_{t+1} + \\gamma\\, Q(S_{t+1}, A_{t+1})$ where $A_{t+1}$ is the action actually taken",
-                "$R_{t+1} + \\gamma \\max_{a'} Q(S_{t+1}, a')$",
+                "$R_{t+1} + \\gamma\\, V(S_{t+1})$ with $V$ the on-policy state value",
                 "$R_{t+1} + \\gamma \\sum_{a'} \\pi(a'\\mid S_{t+1}) Q(S_{t+1}, a')$",
-                "$R_{t+1} + \\gamma\\, V(S_{t+1})$ with $V$ the on-policy state value"
+                "$R_{t+1} + \\gamma \\max_{a'} Q(S_{t+1}, a')$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Q-learning bootstraps from the greedy (max) action value at the next state, independent of what the behavior policy did. Choice 0 is SARSA; choice 2 is Expected SARSA."
             },
             {
@@ -1764,33 +1764,33 @@
               "q": "Maximization bias in Q-learning arises because:",
               "choices": [
                 "The discount factor $\\gamma$ is too close to 1",
-                "The same noisy estimator is used both to select the maximizing action and to evaluate it, and $\\mathbb{E}[\\max Q] \\ge \\max \\mathbb{E}[Q]$",
                 "The step size $\\alpha$ does not decay over time",
+                "The same noisy estimator is used both to select the maximizing action and to evaluate it, and $\\mathbb{E}[\\max Q] \\ge \\max \\mathbb{E}[Q]$",
                 "Rewards are stochastic rather than deterministic"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Selecting and evaluating with one noisy estimator makes positive noise systematically chosen, so the max overestimates the true value (the max is convex, so Jensen's inequality gives the bias). Double Q-learning fixes this by using a second independent estimator for evaluation."
             },
             {
               "q": "Setting the target policy $\\pi$ in Expected SARSA to be fully greedy makes the algorithm equivalent to:",
               "choices": [
                 "Plain SARSA",
-                "Monte Carlo control",
                 "Q-learning",
+                "Monte Carlo control",
                 "TD(0) prediction"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "With a greedy $\\pi$, $\\sum_{a'} \\pi(a'\\mid S')Q(S',a') = \\max_{a'} Q(S',a')$, which is exactly Q-learning's target. Q-learning is the greedy-target special case of Expected SARSA."
             },
             {
               "q": "Why does model-free TD control center on estimating action-values $Q(s,a)$ rather than state-values $v(s)$?",
               "choices": [
                 "Action-values converge faster than state-values under TD updates",
-                "Greedy improvement from $Q$ is $\\arg\\max_a Q(s,a)$, which needs no model, whereas improving from $v$ requires the transition model $p(s',r\\mid s,a)$",
+                "$Q$ requires less memory to store than $v$",
                 "State-values cannot represent the optimal policy, only action-values can",
-                "$Q$ requires less memory to store than $v$"
+                "Greedy improvement from $Q$ is $\\arg\\max_a Q(s,a)$, which needs no model, whereas improving from $v$ requires the transition model $p(s',r\\mid s,a)$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "With $v$ alone, policy improvement needs $p$ to look ahead, but $\\arg\\max_a Q(s,a)$ is directly model-free, which is exactly why control uses $Q$."
             },
             {
@@ -1807,56 +1807,56 @@
             {
               "q": "An on-policy method using an $\\varepsilon$-greedy policy with a fixed $\\varepsilon > 0$ converges to which policy?",
               "choices": [
-                "The optimal deterministic policy",
                 "The best soft (near-greedy) policy, not the optimal deterministic one unless $\\varepsilon \\to 0$",
+                "The optimal deterministic policy",
                 "A purely random policy",
                 "Whatever policy the behavior policy was initialized to"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Because the policy itself stays soft to keep exploring, on-policy learning converges to the best soft policy, reaching the optimal deterministic policy only as $\\varepsilon \\to 0$."
             },
             {
               "q": "For a self-driving agent that must occasionally take random actions to learn, why is off-policy learning often preferable?",
               "choices": [
-                "Off-policy learning eliminates the need for any exploration",
                 "It can evaluate the value of good driving (greedy target $\\pi$) while still exploring with $b$, rather than valuing 'drive well but occasionally swerve at random'",
+                "Off-policy learning eliminates the need for any exploration",
                 "On-policy learning cannot handle continuous action spaces",
                 "Off-policy methods never suffer from any estimation bias"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Off-policy decouples exploration from evaluation, so the agent learns the value of the optimal target policy instead of the value of a policy that includes its own random exploratory swerves."
             },
             {
               "q": "Using the lesson's setup ($\\gamma = 0.9$, $\\alpha = 0.5$, $Q(S,A)=3$, $R=2$, and at $S'$ the values $Q(S',\\text{up})=5$, $Q(S',\\text{down})=1$), suppose the agent's exploratory move at $S'$ was $A'=\\text{up}$ instead of down. What is the resulting SARSA update for $Q(S,A)$?",
               "choices": [
-                "$2.95$",
                 "$4.75$",
+                "$2.95$",
                 "$4.57$",
                 "$2.90$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "SARSA bootstraps from the sampled action: target $= 2 + 0.9\\cdot Q(S',\\text{up}) = 2 + 0.9(5) = 6.5$, so $\\delta = 6.5-3=3.5$ and $Q \\leftarrow 3 + 0.5(3.5) = 4.75$. Here the sampled action happens to be the greedy one, so SARSA momentarily coincides with the Q-learning result (4.75); the 2.95 distractor is the original case where $A'=\\text{down}$."
             },
             {
               "q": "An engineer claims: \"Expected SARSA has lower variance than plain SARSA, so it must also be less computationally expensive per step.\" What is wrong with this reasoning?",
               "choices": [
                 "Expected SARSA actually has higher variance because summing over actions amplifies estimation noise",
-                "Lower variance and cost are unrelated: Expected SARSA removes the sampling variance of $A_{t+1}$ but pays extra cost by summing $\\sum_{a'}\\pi(a'\\mid S')Q(S',a')$ over all actions each step",
                 "Expected SARSA cannot use $\\alpha=1$, so it is strictly slower to converge in every environment",
+                "Lower variance and cost are unrelated: Expected SARSA removes the sampling variance of $A_{t+1}$ but pays extra cost by summing $\\sum_{a'}\\pi(a'\\mid S')Q(S',a')$ over all actions each step",
                 "Expected SARSA and plain SARSA have identical per-step cost because both touch only one next action"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Variance reduction comes from replacing the single sampled $A_{t+1}$ with its expectation, but computing that expectation requires a sum over all actions, making each step heavier, not lighter. The two properties trade off rather than coincide; the lesson notes the extra cost is 'usually worth it.'"
             },
             {
               "q": "On the Cliff Walking gridworld with a fixed exploration rate $\\varepsilon > 0$, why does SARSA accumulate higher online reward during training even though Q-learning has learned the better deploy-time policy?",
               "choices": [
-                "SARSA's on-policy target accounts for $\\varepsilon$-greedy slips, so it learns a safer path away from the cliff that loses less reward when exploration occurs",
-                "SARSA uses a larger step size, so it simply learns the optimal cliff-edge path faster than Q-learning",
                 "Q-learning's $\\max$ operator makes it ignore rewards entirely until $\\varepsilon \\to 0$",
+                "SARSA uses a larger step size, so it simply learns the optimal cliff-edge path faster than Q-learning",
+                "SARSA's on-policy target accounts for $\\varepsilon$-greedy slips, so it learns a safer path away from the cliff that loses less reward when exploration occurs",
                 "SARSA disables exploration near the cliff, so it never falls off during training"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "SARSA's target bootstraps from the action actually taken under the soft policy, so it 'knows' that exploration will occasionally step off the cliff and prefers a safer detour, earning more online reward. Q-learning's greedy target learns the optimal edge path but suffers costly exploratory falls while $\\varepsilon$ stays fixed."
             },
             {
@@ -1896,22 +1896,22 @@
               "q": "What is the difference between an agent's <em>behavior</em> policy and its <em>target</em> policy?",
               "choices": [
                 "They must always be identical",
-                "The behavior policy is the one we deploy; the target policy only explores",
                 "The <em>behavior</em> policy $b$ is the one the agent follows to generate experience (it must explore); the <em>target</em> policy $\\pi$ is the one whose value we are learning and ultimately want to deploy",
+                "The behavior policy is the one we deploy; the target policy only explores",
                 "Both are fixed and never change during learning"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "On-policy methods (SARSA) use $b=\\pi$; off-policy methods (Q-learning) let $b\\ne\\pi$ — act with an exploratory $b$ but learn the value of a greedy target $\\pi$. Off-policy decouples exploration from the policy being evaluated."
             },
             {
               "q": "In TD control, why must the behavior policy keep exploring (e.g. $\\varepsilon$-greedy) rather than act purely greedily?",
               "choices": [
-                "If it acted purely greedily it might never try other actions, so their $Q$ estimates stay wrong and it can lock onto a suboptimal choice — exploration keeps improving every action-value",
+                "Random actions are required to satisfy the Markov property",
                 "Exploration is only ever needed in dynamic programming",
                 "A greedy policy cannot be represented by a $Q$-table",
-                "Random actions are required to satisfy the Markov property"
+                "If it acted purely greedily it might never try other actions, so their $Q$ estimates stay wrong and it can lock onto a suboptimal choice — exploration keeps improving every action-value"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Control estimates $Q(s,a)$ from experience, so an action that is never tried never gets a reliable value. A purely greedy agent can fixate on a seemingly-best action and never discover a better one; $\\varepsilon$-greedy guarantees every action keeps being sampled."
             }
           ],
@@ -1997,99 +1997,99 @@
               "q": "In the backward view of TD($\\lambda$), setting $\\lambda = 0$ produces which behavior?",
               "choices": [
                 "Every-visit Monte Carlo, because credit never decays",
-                "Pure TD(0): only the current state is updated by $\\alpha\\delta_t$, since the trace does not persist",
+                "No updates at all, because all traces are zero",
                 "An equal-weighted average of all n-step returns",
-                "No updates at all, because all traces are zero"
+                "Pure TD(0): only the current state is updated by $\\alpha\\delta_t$, since the trace does not persist"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "With $\\lambda=0$ the trace is $E_t(s)=\\mathbb{1}[S_t=s]$ (it decays instantly), so only the current state gets updated by the one-step TD error — exactly TD(0). $\\lambda=1$ would give Monte Carlo."
             },
             {
               "q": "Which statement about the bias–variance behavior of n-step returns is correct?",
               "choices": [
-                "Increasing $n$ increases bias and decreases variance",
                 "Increasing $n$ decreases bias (less reliance on possibly-wrong estimates) but increases variance (more random rewards/transitions)",
+                "Increasing $n$ increases bias and decreases variance",
                 "$n$ affects neither bias nor variance, only computational cost",
                 "Decreasing $n$ toward 1 makes the estimate unbiased"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "More real reward steps reduce dependence on the bootstrap estimate (lower bias) but accumulate more sampling noise (higher variance). The MC end ($n=\\infty$) is unbiased; the TD end ($n=1$) is biased but low-variance."
             },
             {
               "q": "Why is the $\\lambda$-return a valid update target even though it averages many different n-step returns?",
               "choices": [
                 "Because $\\lambda$ is always less than 1",
-                "Because the geometric weights $(1-\\lambda)\\lambda^{n-1}$ are nonnegative and sum to 1, making it a convex combination of valid targets",
                 "Because only the longest n-step return actually matters",
+                "Because the geometric weights $(1-\\lambda)\\lambda^{n-1}$ are nonnegative and sum to 1, making it a convex combination of valid targets",
                 "Because the eligibility traces normalize it automatically"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Any convex combination (nonnegative weights summing to 1) of valid targets is itself a valid target; the geometric series $(1-\\lambda)\\sum_n \\lambda^{n-1}=1$ guarantees this."
             },
             {
               "q": "An agent observes rewards $R_{t+1}=2$, $R_{t+2}=0$, $R_{t+3}=4$ with $\\gamma=0.5$, and the current estimate $V(S_{t+3})=10$. What is the 3-step return $G_t^{(3)}$?",
               "choices": [
-                "$4.25$",
-                "$3.25$",
                 "$6.00$",
+                "$3.25$",
+                "$4.25$",
                 "$13.00$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$G_t^{(3)} = R_{t+1} + \\gamma R_{t+2} + \\gamma^2 R_{t+3} + \\gamma^3 V(S_{t+3}) = 2 + 0.5\\cdot 0 + 0.25\\cdot 4 + 0.125\\cdot 10 = 2 + 0 + 1 + 1.25 = 4.25$."
             },
             {
               "q": "Why do n-step methods incur a delay of $n$ steps before they can update $V(S_t)$?",
               "choices": [
-                "Because the target $G_t^{(n)}$ requires rewards through time $t+n$ and the bootstrap value $V(S_{t+n})$, which are only known after observing $S_{t+n}$",
+                "Because the episode must terminate before any n-step return can be computed",
                 "Because the learning rate $\\alpha$ must be annealed over $n$ steps before any update is valid",
                 "Because bootstrapping introduces bias that takes $n$ steps to wash out of the estimate",
-                "Because the episode must terminate before any n-step return can be computed"
+                "Because the target $G_t^{(n)}$ requires rewards through time $t+n$ and the bootstrap value $V(S_{t+n})$, which are only known after observing $S_{t+n}$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The n-step target depends on rewards up to $R_{t+n}$ and on the bootstrap value $V(S_{t+n})$, so the update for $S_t$ cannot be performed until step $t+n$ has been observed."
             },
             {
               "q": "As $n$ increases, how do the bias and variance of the n-step return $G_t^{(n)}$ as an estimate of $v_\\pi(S_t)$ tend to change?",
               "choices": [
-                "Bias decreases (less reliance on the bootstrap estimate) while variance increases (more sampled rewards accumulate noise)",
-                "Both bias and variance decrease, which is why large $n$ is always optimal",
                 "Bias increases because more bootstrapping is used, while variance decreases",
+                "Both bias and variance decrease, which is why large $n$ is always optimal",
+                "Bias decreases (less reliance on the bootstrap estimate) while variance increases (more sampled rewards accumulate noise)",
                 "Both bias and variance stay constant since $n$ only affects the update delay"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Larger $n$ uses more real sampled rewards and less of the (possibly inaccurate) bootstrap, lowering bias but accumulating more reward noise and thus raising variance, moving toward the Monte Carlo endpoint."
             },
             {
               "q": "In the n-step return formula, what role does the trailing term $\\gamma^n V(S_{t+n})$ play?",
               "choices": [
-                "It is the bootstrap term: a single value estimate that summarizes all expected return from step $n$ onward",
+                "It is the importance-sampling correction needed for off-policy n-step updates",
                 "It is a regularization penalty that shrinks the value estimate toward zero",
                 "It is the exact remaining true return from $S_{t+n}$, making the target unbiased",
-                "It is the importance-sampling correction needed for off-policy n-step updates"
+                "It is the bootstrap term: a single value estimate that summarizes all expected return from step $n$ onward"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The term $\\gamma^n V(S_{t+n})$ bootstraps by substituting a current value estimate for everything beyond the $n$ sampled reward steps; it vanishes only when $S_{t+n}$ is terminal (recovering the full Monte Carlo return)."
             },
             {
               "q": "Using accumulating eligibility traces with $\\gamma=1$ and $\\lambda=0.5$, an agent follows $S_A \\to S_B \\to S_A$ (it revisits $S_A$). Traces start at 0. What is $E(S_A)$ at the moment just after the second visit to $S_A$?",
               "choices": [
                 "$0.25$",
-                "$1.0$",
                 "$1.25$",
+                "$1.0$",
                 "$0.5$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "After the first visit, $E(S_A)=1$. Two decays by $\\gamma\\lambda=0.5$ would leave $0.25$, but the accumulating trace then *adds* 1 on the revisit: $0.5\\cdot 1 \\cdot 0.5 + ... $ — concretely the old trace decays to $0.5\\times1=0.5$ over the $S_B$ step, then to $0.25$, and the $+1$ bump gives $0.25+1=1.25$. Choosing $1.0$ wrongly treats it as a replacing trace that resets to 1."
             },
             {
               "q": "The forward-view $\\lambda$-return and the backward-view TD($\\lambda$) with eligibility traces are described as 'equivalent.' Under what condition does this equivalence hold exactly?",
               "choices": [
-                "Only when $\\lambda=0$, since both then reduce to TD(0)",
                 "For offline updates accumulated over an episode and applied at the end",
+                "Only when $\\lambda=0$, since both then reduce to TD(0)",
                 "Always, for every individual online update at every time step",
                 "Only in deterministic environments where returns have no variance"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The equivalence theorem holds for *offline* updates: summed over an episode, backward TD($\\lambda$) produces the same per-state total update as the forward $\\lambda$-return. It is not exact for individual online updates (that motivated later 'true online' variants), so the 'always, every step' option is the tempting but wrong choice."
             },
             {
@@ -2107,11 +2107,11 @@
               "q": "In a highly stochastic environment where your value estimates are already fairly accurate, which choice of $\\lambda$ is most likely to learn best, and why?",
               "choices": [
                 "$\\lambda=1$ (Monte Carlo), because unbiased targets are always preferable",
-                "A small-to-moderate $\\lambda$, because good estimates make bootstrapping reliable while small $\\lambda$ suppresses the high variance of long noisy returns",
+                "$\\lambda$ has no effect once value estimates are accurate",
                 "$\\lambda$ near $1$, because high stochasticity demands looking all the way to termination",
-                "$\\lambda$ has no effect once value estimates are accurate"
+                "A small-to-moderate $\\lambda$, because good estimates make bootstrapping reliable while small $\\lambda$ suppresses the high variance of long noisy returns"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "When estimates are already good, bootstrapping introduces little bias, so leaning on it (smaller $\\lambda$) is safe; meanwhile high stochasticity makes long returns very noisy, so a smaller $\\lambda$ cuts variance. Picking $\\lambda=1$ ignores that MC's main cost — variance — is worst exactly in stochastic settings."
             },
             {
@@ -2130,10 +2130,10 @@
               "choices": [
                 "The largest $n$-step return among all $n$",
                 "The $n$-step return for the single best choice of $n$",
-                "The return achieved by the greedy policy",
-                "A single target that geometrically averages <em>all</em> $n$-step returns, weighting $G_t^{(n)}$ by $(1-\\lambda)\\lambda^{n-1}$ — a smooth blend controlled by $\\lambda\\in[0,1]$"
+                "A single target that geometrically averages <em>all</em> $n$-step returns, weighting $G_t^{(n)}$ by $(1-\\lambda)\\lambda^{n-1}$ — a smooth blend controlled by $\\lambda\\in[0,1]$",
+                "The return achieved by the greedy policy"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Rather than commit to one $n$, the $\\lambda$-return $G_t^\\lambda=(1-\\lambda)\\sum_{n\\ge1}\\lambda^{n-1}G_t^{(n)}$ averages them all. Any weighted average of valid targets (weights summing to 1) is itself valid. $\\lambda=0$ gives TD(0); $\\lambda=1$ gives the Monte-Carlo return."
             },
             {
@@ -2150,12 +2150,12 @@
             {
               "q": "What is the relationship between the <em>forward view</em> and the <em>backward view</em> of TD($\\lambda$)?",
               "choices": [
-                "They are unrelated algorithms that merely share a name",
-                "The forward view is for control; the backward view is for prediction",
                 "The forward view defines the target by looking ahead (the $\\lambda$-return); the backward view implements it online with eligibility traces, looking back to credit recent states — and the two are equivalent",
+                "The forward view is for control; the backward view is for prediction",
+                "They are unrelated algorithms that merely share a name",
                 "The backward view requires a model of the environment"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Forward view: at each state, look ahead and update toward the $\\lambda$-return — conceptually clean but acausal (needs the future). Backward view: keep eligibility traces and apply each TD error to all recently-visited states — causal and online. They produce the same total updates (exactly so, offline)."
             }
           ],
@@ -2235,45 +2235,45 @@
             {
               "q": "In linear semi-gradient TD(0) with $\\hat{v}(s,\\mathbf{w}) = \\mathbf{w}^\\top\\mathbf{x}(s)$, which is the correct per-step weight update?",
               "choices": [
-                "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\alpha\\,[R_{t+1} + \\gamma\\hat{v}(S_{t+1},\\mathbf{w}) - \\hat{v}(S_t,\\mathbf{w})]\\,\\mathbf{x}(S_t)$",
-                "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\alpha\\,[R_{t+1} + \\gamma\\hat{v}(S_{t+1},\\mathbf{w}) - \\hat{v}(S_t,\\mathbf{w})]\\,[\\gamma\\mathbf{x}(S_{t+1}) - \\mathbf{x}(S_t)]$",
                 "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\alpha\\,[G_t - \\hat{v}(S_t,\\mathbf{w})]\\,\\mathbf{x}(S_t)$",
+                "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\alpha\\,[R_{t+1} + \\gamma\\hat{v}(S_{t+1},\\mathbf{w}) - \\hat{v}(S_t,\\mathbf{w})]\\,[\\gamma\\mathbf{x}(S_{t+1}) - \\mathbf{x}(S_t)]$",
+                "$\\mathbf{w} \\leftarrow \\mathbf{w} + \\alpha\\,[R_{t+1} + \\gamma\\hat{v}(S_{t+1},\\mathbf{w}) - \\hat{v}(S_t,\\mathbf{w})]\\,\\mathbf{x}(S_t)$",
                 "$\\mathbf{w} \\leftarrow \\mathbf{w} - \\alpha\\,[R_{t+1} + \\gamma\\hat{v}(S_{t+1},\\mathbf{w}) - \\hat{v}(S_t,\\mathbf{w})]\\,\\mathbf{x}(S_t)$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The semi-gradient uses only the gradient of the prediction $\\nabla\\hat{v}(S_t)=\\mathbf{x}(S_t)$, scaled by the TD error and a positive $+\\alpha$ (choice 1). Choice 2 differentiates through the target (a residual-style term with $\\gamma\\mathbf{x}(S_{t+1})$), choice 3 is Monte Carlo (target $G_t$), and choice 4 has the wrong sign $-\\alpha$."
             },
             {
               "q": "Why is semi-gradient TD called 'semi'-gradient rather than a full gradient method?",
               "choices": [
-                "Because it only updates half of the weight vector on each step",
                 "Because the bootstrapped target also depends on $\\mathbf{w}$, but we ignore that dependence and differentiate only the prediction",
+                "Because it only updates half of the weight vector on each step",
                 "Because the step size $\\alpha$ is halved relative to Monte Carlo",
                 "Because it uses half the data, processing every other transition"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The target $R_{t+1}+\\gamma\\hat{v}(S_{t+1},\\mathbf{w})$ contains $\\mathbf{w}$, but we treat it as a constant ('stop-gradient') and take the gradient of $\\hat{v}(S_t,\\mathbf{w})$ only — so it is not the true gradient of any fixed loss."
             },
             {
               "q": "Which combination constitutes the 'deadly triad' that risks divergence in value-based RL?",
               "choices": [
                 "Large step size + high discount + sparse rewards",
-                "Function approximation + bootstrapping + off-policy training",
+                "Neural networks + experience replay + target networks",
                 "Continuous actions + exploration + delayed rewards",
-                "Neural networks + experience replay + target networks"
+                "Function approximation + bootstrapping + off-policy training"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The deadly triad is function approximation, bootstrapping, and off-policy training together. Danger requires all three; removing any one restores convergence guarantees."
             },
             {
               "q": "You are running on-policy semi-gradient TD(0) with a nonlinear (neural-net) approximator and it diverges. Switching to Monte Carlo with the same network and same data fixes it. What does this most directly reveal?",
               "choices": [
-                "The instability was caused by bootstrapping; Monte Carlo uses full returns and removes that triad ingredient",
                 "Monte Carlo always converges faster than TD",
+                "The instability was caused by bootstrapping; Monte Carlo uses full returns and removes that triad ingredient",
                 "Nonlinear features can never be used with TD; only Monte Carlo supports neural networks",
                 "The reward scale was too large for TD but not for Monte Carlo"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Monte Carlo replaces the bootstrapped target with the actual return $G_t$, which does not depend on $\\mathbf{w}$, making it true SGD on a fixed loss. Removing bootstrapping eliminates one triad ingredient and restores stability — even with nonlinear function approximation, where on-policy semi-gradient TD has no convergence guarantee. (Note: with LINEAR features, on-policy semi-gradient TD provably converges, so it could not diverge in the first place; the nonlinearity is what permits the divergence here.)"
             },
             {
@@ -2290,12 +2290,12 @@
             {
               "q": "In the parameterized form $\\hat{v}(s,\\mathbf{w}) \\approx v_\\pi(s)$ with $\\mathbf{w} \\in \\mathbb{R}^d$, what is the essential requirement on $d$ that makes approximation worthwhile?",
               "choices": [
-                "$d \\ll |\\mathcal{S}|$, so there are far fewer weights than states",
-                "$d = |\\mathcal{S}|$, exactly one weight per state",
                 "$d \\gg |\\mathcal{S}|$, so the model has enough capacity to memorize",
+                "$d = |\\mathcal{S}|$, exactly one weight per state",
+                "$d \\ll |\\mathcal{S}|$, so there are far fewer weights than states",
                 "$d = 1$, a single scalar weight suffices for any state space"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The whole point is that the number of parameters $d$ is far smaller than the number of states, so we cannot store one value per state and must generalize instead."
             },
             {
@@ -2312,45 +2312,45 @@
             {
               "q": "Under state aggregation, why is tabular RL described as the extreme special case?",
               "choices": [
-                "Every state forms its own singleton group, so $\\mathbf{x}(s)$ becomes a one-hot indicator over all states",
+                "The feature vector becomes continuous rather than one-hot",
                 "All states are merged into a single group sharing one value",
                 "Polynomial features are applied to each aggregated group",
-                "The feature vector becomes continuous rather than one-hot"
+                "Every state forms its own singleton group, so $\\mathbf{x}(s)$ becomes a one-hot indicator over all states"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "When each group contains exactly one state, the one-hot group indicator reduces to a one-hot over all states, recovering the per-state lookup table of tabular RL."
             },
             {
               "q": "Gradient Monte Carlo minimizes the Mean Squared Value Error $\\overline{VE}(\\mathbf{w}) = \\sum_s \\mu(s)\\,[v_\\pi(s) - \\hat{v}(s,\\mathbf{w})]^2$. What role does the weighting $\\mu(s)$ play, and why does it matter once a table is replaced by an approximator?",
               "choices": [
                 "It is a fixed uniform weight over all states, ensuring every state is fit with equal accuracy regardless of how often it occurs",
-                "It is the on-policy state distribution (how often each state is visited), so the approximator trades off accuracy across states in proportion to how much time the policy spends in them",
                 "It is the discount factor raised to the time of first visit, downweighting states reached late in an episode",
+                "It is the on-policy state distribution (how often each state is visited), so the approximator trades off accuracy across states in proportion to how much time the policy spends in them",
                 "It is a learnable parameter optimized jointly with $\\mathbf{w}$ to decide which states deserve the most accuracy"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\mu(s)$ is the on-policy distribution specifying how often states occur under $\\pi$; because limited capacity ($d \\ll |\\mathcal{S}|$) prevents fitting every state exactly, the objective sacrifices accuracy on rare states to do better on frequently visited ones. It is neither uniform nor a tunable parameter."
             },
             {
               "q": "Using $\\hat{v}(s,\\mathbf{w}) = \\mathbf{w}^\\top \\mathbf{x}(s)$, suppose feature vector $\\mathbf{x}(S_t) = (2, 0, 1)^\\top$, current weights $\\mathbf{w} = (1, 5, -1)^\\top$, the Monte Carlo return is $G_t = 6$, and step size $\\alpha = 0.1$. What is the new weight vector after one gradient Monte Carlo update?",
               "choices": [
-                "$(2.0, 5, -0.5)^\\top$",
                 "$(2.2, 5, -0.4)^\\top$",
+                "$(2.0, 5, -0.5)^\\top$",
                 "$(1.5, 5.5, -0.5)^\\top$",
                 "$(2.0, 5.5, -0.5)^\\top$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$\\hat{v} = 2(1)+0(5)+1(-1) = 1$, so the error is $G_t - \\hat{v} = 6 - 1 = 5$; the update is $\\mathbf{w} \\leftarrow \\mathbf{w} + \\alpha\\,(G_t-\\hat{v})\\,\\mathbf{x}(S_t) = (1,5,-1)^\\top + 0.1\\cdot 5 \\cdot (2,0,1)^\\top = (1,5,-1)^\\top + (1,0,0.5)^\\top = (2.0, 5, -0.5)^\\top$. The middle weight is unchanged because its feature is 0; $(2.2,5,-0.4)$ wrongly uses error $6$ (forgetting to subtract $\\hat{v}$), and the others incorrectly change the middle weight whose feature is zero."
             },
             {
               "q": "A student claims: 'In semi-gradient TD(0), the target is $R_{t+1} + \\gamma\\,\\hat{v}(S_{t+1},\\mathbf{w})$, which depends on $\\mathbf{w}$, so the true gradient of the squared TD error must include a $-\\gamma\\,\\nabla\\hat{v}(S_{t+1},\\mathbf{w})$ term — and dropping it is just a sloppy approximation we make for speed.' What is the correct response?",
               "choices": [
                 "The student is right that it is purely a speed optimization; including that term would converge to the same fixed point, only more slowly",
-                "The omission is deliberate, not for speed: we treat the bootstrapped target as a fixed label so the update follows the gradient of the prediction toward that target, which is exactly the behavior that gives TD its bootstrapping fixed point",
+                "Including the missing term would make the method a true gradient method that always converges even under the deadly triad",
                 "The student is wrong because $\\hat{v}(S_{t+1},\\mathbf{w})$ does not actually depend on $\\mathbf{w}$ when $S_{t+1} \\neq S_t$",
-                "Including the missing term would make the method a true gradient method that always converges even under the deadly triad"
+                "The omission is deliberate, not for speed: we treat the bootstrapped target as a fixed label so the update follows the gradient of the prediction toward that target, which is exactly the behavior that gives TD its bootstrapping fixed point"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The bootstrapped target is intentionally held fixed (not differentiated), so the update moves the prediction toward the target rather than down the full gradient; this is the defining 'semi' behavior, not a speed hack. The 'full-gradient' variant (residual gradient) is a different method with different fixed points, and it does not immunize against the deadly triad."
             },
             {
@@ -2367,12 +2367,12 @@
             {
               "q": "Why does large-scale RL need <em>function approximation</em> instead of a value table?",
               "choices": [
-                "To make the value function train faster on a small gridworld",
                 "Because real state spaces (images, continuous control, Go's $10^{170}$ states) are far too large or infinite to store one value per state — and a table can't generalize to states never visited",
+                "To make the value function train faster on a small gridworld",
                 "Because tables cannot represent negative values",
                 "To avoid having to define a reward function"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A lookup table needs one entry per state, which is impossible for continuous or astronomically large state spaces — and even if you could store it, it would say nothing about unseen states. A parameterized $\\hat v(s,\\mathbf w)$ with $d\\ll|\\mathcal S|$ both fits in memory and <em>generalizes</em> across similar states."
             },
             {
@@ -2380,32 +2380,32 @@
               "choices": [
                 "The vector of weights $\\mathbf{w}$ that the model learns",
                 "The sequence of rewards collected during an episode",
-                "A one-hot encoding of the action the agent chose",
-                "An encoding of a state as a numeric vector $\\mathbf{x}(s)=(x_1(s),\\dots,x_d(s))$ that the approximator consumes — good features expose the structure that predicts return"
+                "An encoding of a state as a numeric vector $\\mathbf{x}(s)=(x_1(s),\\dots,x_d(s))$ that the approximator consumes — good features expose the structure that predicts return",
+                "A one-hot encoding of the action the agent chose"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Before a function approximator can score a state it must be turned into numbers. The feature vector does that; choices range from state aggregation and tile coding to RBFs or learned (neural-net) features. The quality of $\\mathbf x(s)$ largely determines how well the values generalize."
             },
             {
               "q": "What is the form of a <em>linear</em> value-function approximator?",
               "choices": [
-                "$\\hat v(s,\\mathbf{w})=\\mathbf{w}^\\top\\mathbf{x}(s)$ — a weighted sum of the features; its gradient w.r.t. $\\mathbf{w}$ is simply $\\mathbf{x}(s)$",
+                "a lookup table with one entry per state",
                 "$\\hat v(s,\\mathbf{w})=\\max_a \\mathbf{w}^\\top\\mathbf{x}(s,a)$",
                 "$\\hat v(s,\\mathbf{w})=\\mathbf{w}^\\top\\mathbf{w}$, independent of the state",
-                "a lookup table with one entry per state"
+                "$\\hat v(s,\\mathbf{w})=\\mathbf{w}^\\top\\mathbf{x}(s)$ — a weighted sum of the features; its gradient w.r.t. $\\mathbf{w}$ is simply $\\mathbf{x}(s)$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Linear VFA takes the inner product of weights and features. Because $\\nabla_{\\mathbf w}\\hat v=\\mathbf x(s)$ (independent of $\\mathbf w$), the optimization surface is well-behaved — which is why linear methods enjoy the strongest convergence guarantees, while nonlinear nets trade those guarantees for expressiveness."
             },
             {
               "q": "In what sense is a neural network a value-function approximator?",
               "choices": [
                 "The whole network is discarded and replaced by a table at test time",
-                "A neural network cannot be used as a value-function approximator",
                 "Its hidden layers learn the feature representation $\\mathbf{x}(s)$ while the final linear layer learns the weights $\\mathbf{w}$ — a learned, scalable feature constructor",
+                "A neural network cannot be used as a value-function approximator",
                 "Only the input layer matters; the hidden layers are fixed random projections"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "A deep net is a <em>learned</em> feature constructor: its hidden layers transform the raw state into useful features and its last linear layer combines them into a value. This is the modern, scalable answer to feature design and the foundation of value-based deep RL (DQN)."
             }
           ],
@@ -2503,32 +2503,32 @@
               "choices": [
                 "It uses two replay buffers and averages their samples",
                 "It clips the reward to $[-1,1]$ before computing the target",
-                "It uses the online network to select the maximizing next action but the target network to evaluate that action's value, decoupling selection from evaluation",
-                "It removes the max operator entirely and averages over all next actions"
+                "It removes the max operator entirely and averages over all next actions",
+                "It uses the online network to select the maximizing next action but the target network to evaluate that action's value, decoupling selection from evaluation"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Standard DQN selects and evaluates the next action with the same (noisy) network, so positive noise is systematically picked up by the max. Double DQN selects with $\\theta$ and evaluates with $\\theta^-$, so an overestimate by one network is unlikely to be echoed by the other."
             },
             {
               "q": "In prioritized experience replay, transitions are sampled with probability proportional to $|\\delta_i|^\\alpha$. Why are importance-sampling weights necessary?",
               "choices": [
-                "To make the buffer use less memory",
                 "To correct the bias introduced by sampling from a non-uniform distribution, so the expected gradient still matches the intended objective",
+                "To make the buffer use less memory",
                 "To increase the learning rate on rare transitions",
                 "To prevent the TD errors from becoming negative"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Non-uniform sampling changes the distribution over which the loss expectation is taken. The IS weights $w_i = (N \\cdot P(i))^{-\\beta}$ (equivalently $w_i = (\\tfrac{1}{N}\\cdot\\tfrac{1}{P(i)})^{\\beta}$) reweight each sample's loss to undo that bias, recovering an (approximately) unbiased gradient as $\\beta \\to 1$."
             },
             {
               "q": "The lesson describes DQN as 'the collision of two worlds.' What single assumption from supervised learning is violated by the fact that the regression target $y = r + \\gamma \\max_{a'} Q(s',a';\\theta)$ is computed using the same network being trained?",
               "choices": [
-                "The assumption of fixed (stationary) targets",
+                "The assumption of a discrete action space",
                 "The assumption of i.i.d. data",
                 "The assumption of bounded rewards",
-                "The assumption of a discrete action space"
+                "The assumption of fixed (stationary) targets"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Because the label $y$ depends on the very parameters $\\theta$ being updated, the regression target moves as the network learns, breaking supervised learning's assumption that targets are fixed. (The i.i.d. assumption is violated separately, by correlated samples, not by how the target is computed.)"
             },
             {
@@ -2545,23 +2545,23 @@
             {
               "q": "The lesson notes that a lookup table is hopeless for Atari because an $84\\times84\\times4$ frame has about 28,000 pixels. What property of a neural network $Q(s,a;\\theta)$ specifically solves this problem that a table cannot?",
               "choices": [
-                "It generalizes across states, sharing learned structure between states never visited twice",
-                "It guarantees convergence to the optimal policy unlike a table",
                 "It removes the need for a discount factor $\\gamma$",
+                "It guarantees convergence to the optimal policy unlike a table",
+                "It generalizes across states, sharing learned structure between states never visited twice",
                 "It stores one separate parameter for every possible state-action pair"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A parametric network generalizes across the astronomically many states, so experience from one state informs predictions on similar unseen states. DQN offers no convergence guarantee, still needs $\\gamma$, and crucially does NOT store a separate entry per state-action pair (that is exactly what the table does)."
             },
             {
               "q": "The lesson identifies correlated samples as a failure mode because 'the screen barely changes frame to frame.' Why does feeding this correlated stream to stochastic gradient descent cause trouble?",
               "choices": [
-                "SGD assumes roughly i.i.d. minibatches, so it overfits to the current situation and forgets the rest",
                 "SGD requires the targets to be non-stationary, which correlation prevents",
+                "SGD assumes roughly i.i.d. minibatches, so it overfits to the current situation and forgets the rest",
                 "Correlated samples make the learning rate $\\alpha$ grow without bound",
                 "Correlation guarantees the gradient is always zero, halting learning"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "SGD's stability relies on roughly i.i.d. minibatches, so a highly correlated trajectory drives the network to overfit whatever it is currently seeing and forget previously learned behavior. SGD does not require non-stationary targets, correlation does not change $\\alpha$, and the gradient is not forced to zero."
             },
             {
@@ -2578,12 +2578,12 @@
             {
               "q": "A practitioner replaces the hard periodic sync $\\theta^- \\leftarrow \\theta$ (every $C$ steps) with the soft update $\\theta^- \\leftarrow \\tau\\,\\theta + (1-\\tau)\\,\\theta^-$ using $\\tau = 0.005$. Compared to a large hard-sync period like $C = 10{,}000$, what is the main qualitative tradeoff?",
               "choices": [
-                "The soft update makes the target network identical to the online network, eliminating the moving-target problem entirely",
                 "The soft update tracks the online weights more smoothly and continuously but more slowly, trading abrupt target jumps for gradual lag",
+                "The soft update makes the target network identical to the online network, eliminating the moving-target problem entirely",
                 "The soft update removes the need for experience replay because targets are now stationary",
                 "The soft update guarantees the Bellman operator regains its contraction property under function approximation"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A small $\\tau$ means $\\theta^-$ barely moves each step, giving smooth, continuously-tracking targets that lag the online net rather than jumping every $C$ steps. (a) is wrong because $\\tau$ is tiny so $\\theta^-\\neq\\theta$; (c) replay addresses correlation, an orthogonal issue; (d) the lesson states the contraction guarantee is lost under function approximation and target networks only approximate stability."
             },
             {
@@ -2613,10 +2613,10 @@
               "choices": [
                 "A tabular Q-learning agent that simply uses a larger table",
                 "A policy-gradient method that directly outputs action probabilities",
-                "Q-learning in which a neural network $Q(s,a;\\theta)$ replaces the lookup table, fit by minimizing the squared TD error — so Q-learning scales to huge or image-based state spaces",
-                "A model-based planner that learns the transition dynamics and plans against them"
+                "A model-based planner that learns the transition dynamics and plans against them",
+                "Q-learning in which a neural network $Q(s,a;\\theta)$ replaces the lookup table, fit by minimizing the squared TD error — so Q-learning scales to huge or image-based state spaces"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "DQN keeps the Q-learning target $r+\\gamma\\max_{a'}Q(s',a')$ but represents $Q$ with a neural network, training it like a regression toward that target. That is what let Q-learning play Atari from raw pixels — but the naive version diverges without the two stabilizing tricks below."
             },
             {
@@ -2635,21 +2635,21 @@
               "choices": [
                 "The policy network that selects actions during play",
                 "A network that predicts the environment's next state",
-                "The replay buffer that stores past transitions",
-                "A periodically-frozen copy of the Q-network, with weights $\\theta^-$, used to compute the bootstrap target $y=r+\\gamma\\max_{a'}Q(s',a';\\theta^-)$ so the target doesn't move every gradient step"
+                "A periodically-frozen copy of the Q-network, with weights $\\theta^-$, used to compute the bootstrap target $y=r+\\gamma\\max_{a'}Q(s',a';\\theta^-)$ so the target doesn't move every gradient step",
+                "The replay buffer that stores past transitions"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "If the target $y$ used the live weights $\\theta$, each gradient step would move $Q(s,a)$ and the target together — chasing a runaway target. Freezing a copy $\\theta^-$ (synced every $C$ steps, or slowly via a soft update) holds the target still long enough for stable regression."
             },
             {
               "q": "Given a state, how does a DQN produce action-values?",
               "choices": [
                 "It requires a separate forward pass for every possible action",
-                "The network outputs the Q-values for <em>all</em> actions in a single forward pass, so the greedy action and $\\max_{a'}Q$ are read straight off the output vector",
+                "It outputs the next state rather than any action values",
                 "It outputs a single scalar that must be thresholded to pick an action",
-                "It outputs the next state rather than any action values"
+                "The network outputs the Q-values for <em>all</em> actions in a single forward pass, so the greedy action and $\\max_{a'}Q$ are read straight off the output vector"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The standard DQN maps a state to a length-$|\\mathcal A|$ vector of Q-values in one pass. This is efficient (one network evaluation per state) and makes the $\\max_{a'}Q(s',a')$ in the target and the greedy $\\arg\\max$ for acting trivial to compute."
             }
           ],
@@ -2729,23 +2729,23 @@
             {
               "q": "In the policy gradient $\\nabla_\\theta J(\\theta) = \\mathbb{E}_{\\tau\\sim p_\\theta}[\\nabla_\\theta \\log p_\\theta(\\tau)\\, R(\\tau)]$, why does the environment's transition model $p(s_{t+1}\\mid s_t,a_t)$ not appear in the final estimator?",
               "choices": [
-                "Because $\\log p_\\theta(\\tau)$ splits into a sum, and the transition terms (like $\\rho_0$) contain no $\\theta$, so their gradients are zero",
-                "Because the transitions are assumed to be deterministic in REINFORCE",
                 "Because the transition probabilities are approximated by the value function",
+                "Because the transitions are assumed to be deterministic in REINFORCE",
+                "Because $\\log p_\\theta(\\tau)$ splits into a sum, and the transition terms (like $\\rho_0$) contain no $\\theta$, so their gradients are zero",
                 "Because the log-derivative trick cancels all probability terms, including the policy"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Taking $\\nabla_\\theta$ of $\\log p_\\theta(\\tau)=\\log\\rho_0+\\sum\\log\\pi_\\theta+\\sum\\log p(s'\\mid s,a)$ kills every term independent of $\\theta$, leaving only $\\sum_t \\nabla_\\theta\\log\\pi_\\theta(a_t\\mid s_t)$ — this is exactly why the method is model-free."
             },
             {
               "q": "For a softmax policy $\\pi_\\theta(a_i)=e^{\\theta_i}/\\sum_k e^{\\theta_k}$, what is $\\frac{\\partial}{\\partial\\theta_j}\\log\\pi_\\theta(a_i)$ for the chosen action $a_i$?",
               "choices": [
-                "$\\pi_\\theta(a_j) - \\mathbb{1}[i=j]$",
                 "$\\mathbb{1}[i=j] - \\pi_\\theta(a_j)$",
+                "$\\pi_\\theta(a_j) - \\mathbb{1}[i=j]$",
                 "$\\mathbb{1}[i=j]\\cdot \\pi_\\theta(a_j)$",
                 "$\\log\\pi_\\theta(a_j)$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The softmax log-likelihood gradient is the standard 'one-hot minus softmax', $\\mathbb{1}[i=j]-\\pi_\\theta(a_j)$ — identical to the cross-entropy gradient in supervised classification, which is why REINFORCE looks like return-weighted maximum likelihood."
             },
             {
@@ -2753,10 +2753,10 @@
               "choices": [
                 "An action-dependent baseline makes the variance larger but keeps the estimator unbiased",
                 "Both are equally valid; the distinction is only computational",
-                "An action-dependent baseline introduces bias, because the proof of unbiasedness relies on $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)]=0$, which requires $b$ to be constant in $a$",
-                "A state-only baseline is biased, so action-dependence is preferred in practice"
+                "A state-only baseline is biased, so action-dependence is preferred in practice",
+                "An action-dependent baseline introduces bias, because the proof of unbiasedness relies on $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)]=0$, which requires $b$ to be constant in $a$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The cancellation $\\mathbb{E}_a[b(s)\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)] = b(s)\\,\\mathbb{E}_a[\\nabla_\\theta\\log\\pi_\\theta]=b(s)\\cdot 0=0$ only goes through when $b$ can be pulled out of the action-expectation; if $b$ depends on $a$ it cannot, and bias appears."
             },
             {
@@ -2773,78 +2773,78 @@
             {
               "q": "A robotic arm is controlled by 7 continuous joint torques, each $a_i \\in \\mathbb{R}$. Why does a value-based method like DQN struggle here, while a policy network does not?",
               "choices": [
-                "Selecting an action requires $\\arg\\max_a Q(s,a)$, which is itself a hard optimization over a 7-D continuous space at every step, whereas the policy outputs the action in one forward pass",
                 "DQN cannot store a Q-table large enough for 7 dimensions, but a policy network compresses it",
+                "Selecting an action requires $\\arg\\max_a Q(s,a)$, which is itself a hard optimization over a 7-D continuous space at every step, whereas the policy outputs the action in one forward pass",
                 "Q-learning needs a reward function while policy gradients do not",
                 "Policy networks are always faster to train than value networks"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Greedy action selection requires solving the inner $\\arg\\max_a Q(s,a)$ at every timestep, which is intractable over continuous high-dimensional actions, whereas a policy network directly emits the action (or its distribution) in a single forward pass."
             },
             {
               "q": "In rock-paper-scissors against an adaptive opponent, the optimal play is uniformly random. Why can a deterministic greedy-over-$Q$ policy NOT achieve this, while a stochastic $\\pi_\\theta$ can?",
               "choices": [
                 "Q-learning cannot handle adversarial rewards at all",
-                "A greedy policy always picks a single action for a given state and cannot represent 'play each option one-third of the time'",
+                "Greedy policies require continuous actions, which RPS lacks",
                 "Stochastic policies have more parameters, so they memorize the opponent",
-                "Greedy policies require continuous actions, which RPS lacks"
+                "A greedy policy always picks a single action for a given state and cannot represent 'play each option one-third of the time'"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Acting greedily with respect to $Q$ yields a deterministic action per state, so it cannot represent a genuinely random optimal policy, whereas a parameterized stochastic $\\pi_\\theta$ can output a probability distribution like uniform-random."
             },
             {
               "q": "The lesson argues policy gradients give 'smoother optimization' than value-based methods. What is the core mechanism behind this claimed stability advantage?",
               "choices": [
-                "Policy gradients ignore the value function entirely, removing a source of error",
-                "Gradient ascent is mathematically guaranteed to reach the global optimum",
                 "Small changes in $\\theta$ produce small changes in action probabilities, whereas a tiny change in $Q$ can discontinuously flip the $\\arg\\max$ and abruptly change the policy",
+                "Gradient ascent is mathematically guaranteed to reach the global optimum",
+                "Policy gradients ignore the value function entirely, removing a source of error",
                 "Policy networks use Adam while value methods are stuck with plain SGD"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Because the policy depends continuously on $\\theta$, small parameter updates shift action probabilities gradually, avoiding the discontinuous policy jumps that value-based methods suffer when a small $Q$ change flips the $\\arg\\max$."
             },
             {
               "q": "The lesson frames RLHF for large language models as an instance of policy gradients. In that mapping, what plays the role of the policy $\\pi_\\theta$, the action, and the reward respectively?",
               "choices": [
                 "The reward model is the policy, a sentence is the action, and human labels are the reward",
-                "The tokenizer is the policy, a word embedding is the action, and perplexity is the reward",
+                "The language model is the policy, a generated token is the action, and a learned preference (reward) model supplies the reward",
                 "The optimizer is the policy, a gradient step is the action, and the loss is the reward",
-                "The language model is the policy, a generated token is the action, and a learned preference (reward) model supplies the reward"
+                "The tokenizer is the policy, a word embedding is the action, and perplexity is the reward"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "In RLHF the language model itself is the policy $\\pi_\\theta$, each emitted token is an action, and the reward comes from a learned preference (reward) model, making REINFORCE the conceptual root of the alignment pipeline."
             },
             {
               "q": "In the autodiff implementation, the lesson builds the surrogate loss $L(\\theta) = -\\frac{1}{N}\\sum_t \\log \\pi_\\theta(a_t\\mid s_t)\\,\\hat A_t$ and calls <code>.backward()</code>. Why must $\\hat A_t$ be detached (stop-gradient) rather than left as a live function of $\\theta$?",
               "choices": [
-                "The policy gradient theorem treats the weight (return/advantage) as a fixed scalar multiplier on the score; letting gradients flow through $\\hat A_t$ would add spurious terms not present in $\\mathbb{E}[\\sum_t \\nabla_\\theta\\log\\pi_\\theta\\,A_t]$",
-                "Detaching $\\hat A_t$ is purely a memory optimization and has no effect on the computed gradient",
                 "Detaching is required because $\\hat A_t$ is always negative and would otherwise flip the sign of the ascent direction",
+                "Detaching $\\hat A_t$ is purely a memory optimization and has no effect on the computed gradient",
+                "The policy gradient theorem treats the weight (return/advantage) as a fixed scalar multiplier on the score; letting gradients flow through $\\hat A_t$ would add spurious terms not present in $\\mathbb{E}[\\sum_t \\nabla_\\theta\\log\\pi_\\theta\\,A_t]$",
                 "Without detaching, the loss would be non-differentiable and <code>.backward()</code> would raise an error"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The derived estimator only differentiates the $\\log\\pi_\\theta$ factor and uses $A_t$ as a constant weight; if autodiff also backpropagated through $\\hat A_t$ (which may depend on $\\theta$ via the sampled trajectory or critic) it would inject extra gradient terms that do not belong to $\\nabla_\\theta J$, biasing the update. It is not merely a memory trick, and the sign claim is irrelevant."
             },
             {
               "q": "For a continuous Gaussian policy $\\pi_\\theta(a\\mid s)=\\mathcal{N}\\big(\\mu_\\theta(s),\\sigma^2\\big)$ with fixed $\\sigma$, what is the score $\\nabla_{\\mu}\\log\\pi_\\theta(a\\mid s)$ used to weight the return in REINFORCE?",
               "choices": [
-                "$\\dfrac{(a-\\mu_\\theta(s))^2}{2\\sigma^2}$",
                 "$\\dfrac{a-\\mu_\\theta(s)}{\\sigma^2}$",
+                "$\\dfrac{(a-\\mu_\\theta(s))^2}{2\\sigma^2}$",
                 "$\\dfrac{\\mu_\\theta(s)-a}{\\sigma}$",
                 "$-\\dfrac{1}{\\sigma^2}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "From $\\log\\pi_\\theta = -\\frac{(a-\\mu)^2}{2\\sigma^2}+\\text{const}$, differentiating w.r.t. $\\mu$ gives $(a-\\mu_\\theta(s))/\\sigma^2$. Weighted by a positive return, this nudges $\\mu$ toward the sampled action $a$ — the continuous analogue of 'make the chosen action more likely'; the squared and constant forms are the log-density itself or the $\\sigma$-gradient, not the $\\mu$-score."
             },
             {
               "q": "A student claims: 'Subtracting the value-function baseline $V^\\pi(s)$ works because it makes REINFORCE's gradient point in a better direction than the unbiased estimator does.' What is the precise correction?",
               "choices": [
                 "Correct — the baseline tilts the expected gradient toward higher-advantage actions",
-                "The baseline changes both the expected gradient and the variance, trading a little bias for much less variance",
                 "The baseline leaves the EXPECTED gradient exactly unchanged (still unbiased); it only reduces the VARIANCE of the single-sample estimate around that same expectation",
+                "The baseline changes both the expected gradient and the variance, trading a little bias for much less variance",
                 "The baseline reduces variance but introduces bias proportional to $V^\\pi(s)$, which must be corrected separately"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Because $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)]=0$, any state-only $b(s)$ subtracts a mean-zero term, so $\\mathbb{E}[\\hat g]$ is identical to the no-baseline case — the bandit example confirms both give $(0.25,-0.25)$. The benefit is purely variance reduction, with no bias and no change of direction in expectation."
             },
             {
@@ -2861,45 +2861,45 @@
             {
               "q": "What defines <em>policy-gradient</em> methods (vs value-based methods)?",
               "choices": [
-                "They directly parameterize a differentiable policy $\\pi_\\theta(a\\mid s)$ and optimize $\\theta$ by gradient ascent on expected return — rather than learning $Q$ and acting greedily",
-                "They learn a transition model of the environment and plan with it",
                 "They store one value per state in a lookup table",
+                "They learn a transition model of the environment and plan with it",
+                "They directly parameterize a differentiable policy $\\pi_\\theta(a\\mid s)$ and optimize $\\theta$ by gradient ascent on expected return — rather than learning $Q$ and acting greedily",
                 "They only work for small discrete action spaces"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Value-based methods (Q-learning, DQN) learn $Q(s,a)$ and act greedily — the policy is implicit. Policy-gradient methods make the policy an explicit differentiable function $\\pi_\\theta$ and climb $\\nabla_\\theta J(\\theta)$, which is what makes continuous actions and genuinely stochastic optimal policies natural."
             },
             {
               "q": "What objective $J(\\theta)$ do policy-gradient methods maximize?",
               "choices": [
                 "The squared TD error of a value function",
-                "The entropy of the policy",
                 "The expected return $J(\\theta)=\\mathbb{E}_{\\tau\\sim\\pi_\\theta}[R(\\tau)]$ — the average total reward of trajectories the policy generates",
+                "The entropy of the policy",
                 "The KL divergence between successive policies"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The goal is simply to make the policy earn more reward on average: $J(\\theta)=\\mathbb{E}_{\\tau\\sim p_\\theta}[R(\\tau)]$. The catch is that the sampling distribution $p_\\theta(\\tau)$ itself depends on $\\theta$ — which the log-derivative (score-function) trick resolves."
             },
             {
               "q": "What is the core REINFORCE gradient estimator?",
               "choices": [
                 "It sets the value of every state equal to its immediate reward",
-                "$\\nabla_\\theta J=\\mathbb{E}\\big[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)\\,R\\big]$ — scale each action's log-probability gradient by the return, pushing up the probability of actions that led to high reward",
                 "It maximizes $Q(s,a)$ by dynamic programming over a known model",
+                "$\\nabla_\\theta J=\\mathbb{E}\\big[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)\\,R\\big]$ — scale each action's log-probability gradient by the return, pushing up the probability of actions that led to high reward",
                 "It clips the policy ratio to a trust region"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Via the log-derivative trick, $\\nabla_\\theta J=\\mathbb{E}_{\\tau}[\\nabla_\\theta\\log\\pi_\\theta(\\tau)\\,R(\\tau)]$. Intuitively: take the gradient that raises the log-probability of the actions you took, and weight it by how much reward followed — good trajectories get reinforced. Crucially the environment's dynamics drop out."
             },
             {
               "q": "Why subtract a <em>baseline</em> $b(s)$ from the return in the policy gradient?",
               "choices": [
-                "To bias the gradient toward more exploration",
+                "To reduce the variance of the gradient estimate without adding bias — subtracting a state-only baseline (e.g. $V(s)$) leaves the gradient's expectation unchanged",
                 "To increase the learning rate automatically",
                 "To force the policy to become deterministic",
-                "To reduce the variance of the gradient estimate without adding bias — subtracting a state-only baseline (e.g. $V(s)$) leaves the gradient's expectation unchanged"
+                "To bias the gradient toward more exploration"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Because $\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)\\,b(s)]=0$ for any function of the state alone, the baseline doesn't change the expected gradient — but choosing $b(s)=V(s)$ makes the weight \"how much better than average,\" which can sharply cut variance and speed learning."
             }
           ],
@@ -2995,12 +2995,12 @@
             {
               "q": "Subtracting a state-dependent baseline $b(s)$ (e.g. $V_\\phi(s)$) from the credit signal in the policy gradient is valid because:",
               "choices": [
-                "It biases the gradient toward better actions, which speeds convergence",
                 "$\\mathbb{E}_{a\\sim\\pi}[\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)\\,b(s)]=0$, so the gradient stays unbiased while its variance can drop",
+                "It biases the gradient toward better actions, which speeds convergence",
                 "Baselines are only valid when the policy is deterministic",
                 "It converts the policy gradient into a value-iteration update"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Since $\\sum_a \\nabla_\\theta \\pi_\\theta(a\\mid s) = \\nabla_\\theta 1 = 0$, any function of $s$ alone has zero expected contribution to the gradient, so it leaves the estimator unbiased while reducing variance."
             },
             {
@@ -3008,10 +3008,10 @@
               "choices": [
                 "A2C learns a value function but A3C does not",
                 "A3C uses the advantage while A2C uses the raw return",
-                "A3C has workers push gradients asynchronously to shared parameters (lock-free, stale updates), whereas A2C synchronizes all workers into one batched update each step",
-                "A2C is only for continuous actions and A3C only for discrete actions"
+                "A2C is only for continuous actions and A3C only for discrete actions",
+                "A3C has workers push gradients asynchronously to shared parameters (lock-free, stale updates), whereas A2C synchronizes all workers into one batched update each step"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Both are advantage actor-critic; the distinction is coordination: A3C is asynchronous/Hogwild-style across threads, while A2C waits and averages workers into a single synchronous update, which is simpler and more GPU-friendly."
             },
             {
@@ -3039,67 +3039,67 @@
             {
               "q": "The lesson describes the actor and critic as 'two networks bootstrapping each other,' analogous to GANs and self-play. What roles do the actor and critic play in this dance?",
               "choices": [
-                "The actor predicts state values while the critic selects actions to maximize them",
                 "The actor proposes actions and improves toward ones the critic praises, while the critic learns to predict how much reward will follow",
+                "The actor predicts state values while the critic selects actions to maximize them",
                 "Both networks predict returns and the one with lower error is used to act",
                 "The critic generates trajectories and the actor labels them as good or bad"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Per the lesson, the actor acts and gets better at proposing the actions the critic praises, while the critic watches the actor and gets better at predicting how much reward will follow. Choice 0 reverses the two roles."
             },
             {
               "q": "Why is the state-value function $V^\\pi(s)$ called the 'natural' baseline for the credit signal $\\Psi_t$?",
               "choices": [
-                "It is the only baseline that keeps the gradient unbiased",
                 "It is the average return from $s$, so subtracting it makes $\\Psi_t$ measure how much better than average an action was",
+                "It is the only baseline that keeps the gradient unbiased",
                 "It is the easiest function to compute exactly without learning",
                 "It guarantees zero variance in the gradient estimate"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The lesson identifies $V^\\pi(s)$ as the average return from $s$, so subtracting it makes $\\Psi_t$ express how much better than average an action turned out to be. Choice 0 is wrong because any function of the state alone keeps the gradient unbiased, not only $V^\\pi$."
             },
             {
               "q": "In the critic update $\\phi \\leftarrow \\phi + \\beta(y_t - V_\\phi(s_t))\\nabla_\\phi V_\\phi(s_t)$ with target $y_t = r_t + \\gamma V_{\\phi^-}(s_{t+1})$, why is the bootstrap target $y_t$ treated as a constant (stop-gradient on $\\phi^-$) rather than differentiated?",
               "choices": [
-                "Detaching the target gives semi-gradient TD learning, which is what makes the method stable in practice; differentiating through $V_\\phi(s_{t+1})$ would chase a moving target and destabilize training",
-                "The target $y_t$ does not actually depend on $\\phi$, so detaching it changes nothing mathematically",
                 "It is required so that the actor and critic can share parameters in one network",
+                "The target $y_t$ does not actually depend on $\\phi$, so detaching it changes nothing mathematically",
+                "Detaching the target gives semi-gradient TD learning, which is what makes the method stable in practice; differentiating through $V_\\phi(s_{t+1})$ would chase a moving target and destabilize training",
                 "Differentiating the target would make the critic loss negative, which gradient descent cannot handle"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The target genuinely contains $V_\\phi(s_{t+1})$, so it does depend on $\\phi$; deliberately detaching it yields semi-gradient TD (as in DQN), trading a true-gradient guarantee for the stability of regressing toward a fixed-looking target. Choice 1 is the tempting misconception — the dependence is real, which is exactly why a stop-gradient is needed."
             },
             {
               "q": "A rollout ends at a non-terminal state, so $V_\\phi(s_T)$ is used to bootstrap the final return. A practitioner instead sets the bootstrap value to $0$ at this non-terminal cutoff. What is the most likely effect on the GAE advantages near the end of the rollout?",
               "choices": [
-                "No effect, because GAE already discounts late terms to negligible weight",
-                "It only changes the critic targets, never the advantages",
                 "It introduces bias: pretending future value is $0$ makes the last TD errors artificially negative, underestimating advantages for actions late in the rollout",
+                "It only changes the critic targets, never the advantages",
+                "No effect, because GAE already discounts late terms to negligible weight",
                 "It reduces variance with no downside, which is why truncation is always done this way"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Bootstrapping with $V_\\phi(s_T)$ is correct precisely because the episode did not end; forcing it to $0$ falsely asserts no future reward, so $\\delta_{T-1}=r_{T-1}+\\gamma\\cdot 0 - V_\\phi(s_{T-1})$ is biased low and that bias propagates backward through the GAE recursion. The zero-value treatment is only correct at genuine terminal states."
             },
             {
               "q": "Using the worked example's setup ($V_\\phi(s)=1.0$, $\\gamma=0.9$), suppose instead the observed reward is $r=0.0$ and the next-state value is $V_\\phi(s')=0.5$ after sampling action $R$. What is the one-step advantage $\\hat A=\\delta$, and which way does the actor push $\\pi(R\\mid s)$?",
               "choices": [
-                "$\\delta = -0.55$; decrease the probability of $R$",
+                "$\\delta = +0.55$; decrease the probability of $R$",
                 "$\\delta = +0.45$; increase the probability of $R$",
                 "$\\delta = -0.45$; increase the probability of $R$",
-                "$\\delta = +0.55$; decrease the probability of $R$"
+                "$\\delta = -0.55$; decrease the probability of $R$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$\\delta = r + \\gamma V_\\phi(s') - V_\\phi(s) = 0.0 + 0.9(0.5) - 1.0 = -0.55$; a negative advantage means $R$ under-delivered relative to the critic's reference, so the gradient step lowers $\\log\\pi(R\\mid s)$ and makes $R$ less probable."
             },
             {
               "q": "In the combined A2C loss $L = -\\hat A_t\\log\\pi_\\theta(a_t\\mid s_t) + c_v(\\hat R_t - V_\\phi(s_t))^2 - c_e H(\\pi_\\theta(\\cdot\\mid s_t))$, what is the role of the entropy term $-c_e H$?",
               "choices": [
                 "It is the critic's regression target and replaces the value loss",
-                "Minimizing $-c_e H$ raises the policy's entropy, discouraging premature collapse to a near-deterministic policy and thus encouraging exploration",
+                "It is a second baseline that makes the policy gradient unbiased",
                 "It biases the advantage estimate toward zero to stabilize the gradient",
-                "It is a second baseline that makes the policy gradient unbiased"
+                "Minimizing $-c_e H$ raises the policy's entropy, discouraging premature collapse to a near-deterministic policy and thus encouraging exploration"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Because the loss is minimized, the $-c_e H$ term pushes entropy $H$ up, keeping $\\pi_\\theta$ stochastic so the agent keeps exploring rather than locking onto one action too early. It plays no role in the critic regression or in the unbiasedness argument (that is the baseline's job)."
             },
             {
@@ -3107,21 +3107,21 @@
               "choices": [
                 "Two competing policies playing a zero-sum game",
                 "A value table plus an $\\varepsilon$-greedy action rule",
-                "A model of the environment plus a planner",
-                "A learned policy (the <em>actor</em>) paired with a learned value function (the <em>critic</em>) that scores states/actions, so the actor no longer needs the full Monte-Carlo return to learn"
+                "A learned policy (the <em>actor</em>) paired with a learned value function (the <em>critic</em>) that scores states/actions, so the actor no longer needs the full Monte-Carlo return to learn",
+                "A model of the environment plus a planner"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The actor is $\\pi_\\theta$; the critic is a learned $V_\\phi$ (or $Q_\\phi$). The actor proposes actions and the critic evaluates them, supplying a low-variance credit signal so the policy can update every step instead of waiting for the episode's full return — two networks improving each other."
             },
             {
               "q": "What does the <em>advantage</em> function $A^\\pi(s,a)$ represent?",
               "choices": [
                 "The total discounted return of an entire episode",
-                "$A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)$ — how much better taking action $a$ is than the policy's average behavior in state $s$ (positive → make it more likely)",
+                "The probability the policy assigns to action $a$",
                 "The entropy of the action distribution",
-                "The probability the policy assigns to action $a$"
+                "$A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)$ — how much better taking action $a$ is than the policy's average behavior in state $s$ (positive → make it more likely)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The advantage centers the action-value on the state's own baseline: $A=Q-V$. It answers exactly what the policy gradient cares about — \"was $a$ better or worse than what I usually do here?\" — and using it as the credit signal gives an unbiased gradient with near-minimal variance."
             },
             {
@@ -3138,12 +3138,12 @@
             {
               "q": "How is the critic itself trained?",
               "choices": [
-                "Like a value-function approximator — by regression, nudging $V_\\phi(s)$ toward a target such as the TD target $r+\\gamma V_\\phi(s')$ or the observed return",
                 "By maximizing the policy's entropy",
+                "Like a value-function approximator — by regression, nudging $V_\\phi(s)$ toward a target such as the TD target $r+\\gamma V_\\phi(s')$ or the observed return",
                 "By the same clipped objective the actor uses",
                 "It is not trained — the environment provides it"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The critic learns a value function by minimizing a squared error toward a bootstrapped (TD) or Monte-Carlo target — exactly value-function approximation. Its target is treated as a constant (stop-gradient) so the regression is stable, and the improving critic in turn sharpens the actor's credit signal."
             }
           ],
@@ -3217,23 +3217,23 @@
             {
               "q": "In the PPO clipped objective $\\min\\!\\big(r_t \\hat A_t,\\ \\mathrm{clip}(r_t, 1-\\epsilon, 1+\\epsilon)\\hat A_t\\big)$ with $\\epsilon = 0.2$, suppose $\\hat A_t > 0$ and $r_t = 1.5$. What happens?",
               "choices": [
-                "The unclipped term $1.5\\,\\hat A_t$ is selected and the gradient drives $r_t$ higher",
                 "The clipped term $1.2\\,\\hat A_t$ is selected and the gradient w.r.t. $\\theta$ is zero",
+                "The unclipped term $1.5\\,\\hat A_t$ is selected and the gradient drives $r_t$ higher",
                 "The ratio $r_t$ is hard-reset to $1.2$ in the parameters",
                 "The objective becomes negative, penalizing the good action"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With $\\hat A_t>0$ and $r_t>1+\\epsilon$, the clipped value $1.2\\hat A_t$ is the smaller of the two, so $\\min$ picks it; being constant, it has zero gradient, so there is no incentive to push the probability further."
             },
             {
               "q": "Why does PPO take the $\\min$ of the clipped and unclipped terms rather than always using the clipped term?",
               "choices": [
                 "To make the objective differentiable everywhere",
-                "To increase the variance of the gradient estimate",
                 "So that excessive updates can still be corrected: when a step overshoots harmfully, the unclipped term stays active and pulls the ratio back",
+                "To increase the variance of the gradient estimate",
                 "Because the clipped term is biased and the unclipped term removes the bias"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The $\\min$ makes the bound one-sided: it removes the reward for moving too far in the advantage's favored direction, but keeps the gradient alive to undo overshoots (e.g., a positive-advantage action whose ratio fell below $1-\\epsilon$), so the policy can always be pulled back."
             },
             {
@@ -3250,34 +3250,34 @@
             {
               "q": "How does TRPO differ from PPO in enforcing the trust region?",
               "choices": [
-                "TRPO imposes an explicit KL-divergence constraint solved via natural gradient and line search, while PPO uses a cheap clipped surrogate optimizable by ordinary SGD",
+                "They are identical; PPO is just a faster implementation of TRPO",
                 "TRPO clips the ratio while PPO uses a hard KL constraint",
                 "TRPO constrains the parameter norm $\\|\\theta-\\theta_{\\text{old}}\\|$ while PPO constrains KL",
-                "They are identical; PPO is just a faster implementation of TRPO"
+                "TRPO imposes an explicit KL-divergence constraint solved via natural gradient and line search, while PPO uses a cheap clipped surrogate optimizable by ordinary SGD"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "TRPO solves a KL-constrained problem (second-order, Fisher-vector products, line search) giving a monotonic-improvement guarantee; PPO replaces all that with a first-order clipped objective that approximates the same 'stay close' effect at a fraction of the complexity."
             },
             {
               "q": "The lesson stresses that RL is \"crueler\" than supervised learning regarding step size. What is the core reason a single overly large policy update can be unrecoverable?",
               "choices": [
                 "The policy network's weights overflow numerically once the gradient exceeds a threshold",
-                "The policy generates its own training data, so a bad update shifts the state distribution $d^{\\pi_\\theta}$ and the actions sampled, feeding worse gradients back into the next update",
                 "RL uses a fixed dataset that cannot be re-shuffled after a bad batch",
+                "The policy generates its own training data, so a bad update shifts the state distribution $d^{\\pi_\\theta}$ and the actions sampled, feeding worse gradients back into the next update",
                 "The reward signal is delayed, so the optimizer cannot detect the bad step until the episode ends"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The pathology is the self-reinforcing feedback loop: $\\pi_\\theta$ both is optimized and generates the data, so a bad step degrades the data distribution and thus all future gradients. Supervised learning has a fixed data distribution, which is exactly why a bad step there is only a local annoyance."
             },
             {
               "q": "In the clipped objective with $\\epsilon = 0.2$, suppose $\\hat A_t < 0$ (the action was worse than average) and the new policy makes it more likely, giving $r_t = 0.7$. What is the value of the clipped surrogate term for this sample?",
               "choices": [
                 "$0.7\\,\\hat A_t$, because $0.7$ lies outside $[0.8, 1.2]$ but clipping only applies when $\\hat A_t > 0$",
-                "$1.2\\,\\hat A_t$, the upper clip bound",
                 "$0.8\\,\\hat A_t$, because $r_t = 0.7$ is clipped up to the lower bound $1 - \\epsilon = 0.8$ and the $\\min$ selects it",
+                "$1.2\\,\\hat A_t$, the upper clip bound",
                 "$\\hat A_t$, because the ratio is reset to $1$ whenever it leaves the trust region"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "With $\\hat A_t<0$, $\\mathrm{clip}(0.7, 0.8, 1.2)=0.8$. The unclipped term is $0.7\\hat A_t$ and the clipped term is $0.8\\hat A_t$; since $\\hat A_t<0$, $0.8\\hat A_t < 0.7\\hat A_t$, so the $\\min$ picks $0.8\\hat A_t$. This caps the incentive to keep increasing a bad action's probability."
             },
             {
@@ -3285,21 +3285,21 @@
               "choices": [
                 "It is valid because PPO recomputes the advantages from scratch each epoch; nothing breaks",
                 "It is valid only because the clip removes all bias from the importance sampling estimator",
-                "It works because the state distribution $d^{\\pi_\\theta}$ is guaranteed constant within a batch",
-                "The importance ratio $r_t$ corrects for the mismatch between $\\pi_\\theta$ and $\\pi_{\\theta_{\\text{old}}}$, but as $\\theta$ drifts far from $\\theta_{\\text{old}}$ the ratios become large/small and the off-policy estimate degrades"
+                "The importance ratio $r_t$ corrects for the mismatch between $\\pi_\\theta$ and $\\pi_{\\theta_{\\text{old}}}$, but as $\\theta$ drifts far from $\\theta_{\\text{old}}$ the ratios become large/small and the off-policy estimate degrades",
+                "It works because the state distribution $d^{\\pi_\\theta}$ is guaranteed constant within a batch"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The ratio $r_t = \\pi_\\theta/\\pi_{\\theta_{\\text{old}}}$ is an importance-sampling correction that lets a sample from the old policy estimate the new policy's objective, but importance sampling only stays well-behaved while the policies are close. As $\\theta$ moves far, variance blows up; clipping limits but does not eliminate this degradation."
             },
             {
               "q": "The lesson's analogy is a car whose camera is bolted to the steering wheel. Which design principle of trust-region / PPO methods does this most directly illustrate?",
               "choices": [
-                "Limit how far each update can move the policy, because the data (the \"view\") you use for the next correction depends on where this step lands you",
-                "Increase the learning rate over time so corrections become sharper as training proceeds",
                 "Always steer toward the highest-advantage action regardless of step size",
+                "Increase the learning rate over time so corrections become sharper as training proceeds",
+                "Limit how far each update can move the policy, because the data (the \"view\") you use for the next correction depends on where this step lands you",
                 "Decouple the value function from the policy so the camera and wheel move independently"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The camera-on-the-wheel captures that your next observations depend on the current move, so the fix is bounding each step's size, which is precisely what trust regions and the PPO clip enforce. Cranking the learning rate or ignoring step size is the failure mode the analogy warns against."
             },
             {
@@ -3316,12 +3316,12 @@
             {
               "q": "A common misconception is that the PPO clip is just gradient clipping under a different name. Which statement correctly distinguishes them?",
               "choices": [
-                "They are identical; both rescale the gradient vector to a fixed norm",
-                "Gradient clipping bounds $r_t$, while the PPO clip bounds the gradient norm",
                 "The PPO clip bounds the probability ratio $r_t$ in the objective (limiting how much the policy distribution changes), whereas gradient clipping bounds the magnitude of the gradient vector regardless of distribution change",
+                "Gradient clipping bounds $r_t$, while the PPO clip bounds the gradient norm",
+                "They are identical; both rescale the gradient vector to a fixed norm",
                 "The PPO clip only affects the value-function loss, while gradient clipping affects the policy loss"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Gradient clipping caps the size of the update step in parameter space; the PPO clip caps how far the policy's output distribution can move (via $r_t$) regardless of the resulting gradient norm. They operate on different quantities, so they are not interchangeable."
             },
             {
@@ -3350,11 +3350,11 @@
               "q": "What is a <em>trust region</em> in policy optimization?",
               "choices": [
                 "A region of the state space the agent is forbidden from entering",
-                "A constraint that keeps each policy update <em>close</em> to the current policy, so the data distribution and the local gradient estimate stay approximately valid",
+                "A fixed learning-rate schedule",
                 "The set of actions that currently have positive advantage",
-                "A fixed learning-rate schedule"
+                "A constraint that keeps each policy update <em>close</em> to the current policy, so the data distribution and the local gradient estimate stay approximately valid"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Because the policy generates its own data, a too-large step lands you in a region the old gradient never described — a self-reinforcing collapse. A trust region limits how far each update can move the policy, keeping the surrogate objective an accurate guide."
             },
             {
@@ -3362,32 +3362,32 @@
               "choices": [
                 "It clips the gradient's norm to a fixed maximum",
                 "It zeroes out all negative advantages",
-                "It decays the discount factor $\\gamma$ over training",
-                "It discourages the probability ratio $r_t=\\pi_\\theta/\\pi_{\\theta_{\\text{old}}}$ from moving far outside $[1-\\epsilon,1+\\epsilon]$, so no single update changes the policy too much — a cheap, first-order stand-in for a hard trust region"
+                "It discourages the probability ratio $r_t=\\pi_\\theta/\\pi_{\\theta_{\\text{old}}}$ from moving far outside $[1-\\epsilon,1+\\epsilon]$, so no single update changes the policy too much — a cheap, first-order stand-in for a hard trust region",
+                "It decays the discount factor $\\gamma$ over training"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "PPO removes the incentive to push $r_t$ beyond the clip range: once a positive-advantage action's ratio exceeds $1+\\epsilon$ (or a negative one's drops below $1-\\epsilon$), the objective flattens and its gradient vanishes. This bounds the policy change per update without TRPO's expensive constrained optimization."
             },
             {
               "q": "Why must PPO collect fresh trajectories every iteration rather than train forever on one batch?",
               "choices": [
-                "PPO is on-policy: the importance-sampling surrogate is only trustworthy while $\\pi_\\theta$ stays near $\\pi_{\\theta_{\\text{old}}}$, so after a few epochs on a batch you must gather new data with the updated policy",
                 "PPO never needs new data; it trains indefinitely on the first batch",
+                "PPO is on-policy: the importance-sampling surrogate is only trustworthy while $\\pi_\\theta$ stays near $\\pi_{\\theta_{\\text{old}}}$, so after a few epochs on a batch you must gather new data with the updated policy",
                 "PPO requires the full transition model in order to recollect data",
                 "PPO learns entirely offline from a fixed, pre-collected dataset"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The surrogate reweights old data by $r_t=\\pi_\\theta/\\pi_{\\theta_{\\text{old}}}$, an approximation valid only near $\\pi_{\\theta_{\\text{old}}}$. A handful of epochs is fine, but once the policy has moved the importance weights become unreliable — so PPO re-collects on-policy data each round."
             },
             {
               "q": "What does the probability ratio $r_t(\\theta)=\\pi_\\theta(a_t\\mid s_t)/\\pi_{\\theta_{\\text{old}}}(a_t\\mid s_t)$ measure?",
               "choices": [
-                "The advantage of the action taken",
-                "The entropy of the current policy",
                 "How much more ($r_t>1$) or less ($r_t<1$) likely the new policy makes the taken action versus the old policy — it equals 1 at the very start of each update (when $\\theta=\\theta_{\\text{old}}$)",
+                "The entropy of the current policy",
+                "The advantage of the action taken",
                 "The discounted sum of future rewards"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$r_t$ is the importance-sampling weight that lets PPO evaluate the new policy's preferences on data drawn from the old one. $r_t=1$ means no change; $r_t>1$ means the update favors that action more, $r_t<1$ less — and clipping bounds exactly this quantity."
             }
           ],
@@ -3468,33 +3468,33 @@
               "q": "In the multi-armed bandit, an algorithm is considered good if its cumulative regret $L_T$ grows...",
               "choices": [
                 "Linearly in $T$ ($\\Theta(T)$)",
-                "Sublinearly, e.g. logarithmically ($\\Theta(\\log T)$)",
                 "Exponentially in $T$",
+                "Sublinearly, e.g. logarithmically ($\\Theta(\\log T)$)",
                 "As a constant independent of $T$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Sublinear (logarithmic) regret means per-step regret $L_T/T \\to 0$, so the agent eventually plays near-optimally; the Lai-Robbins bound shows $\\Omega(\\log T)$ is the best achievable. Constant regret is impossible because every arm must be sampled at least a little."
             },
             {
               "q": "Using UCB1 with $c=\\sqrt{2}$ at time $t$ with $\\ln t = 4$, arm A has $\\hat{Q}=0.9, N=16$ and arm B has $\\hat{Q}=0.5, N=1$. Which arm does UCB select?",
               "choices": [
                 "Arm A, because its estimated mean is higher",
-                "Arm B, because its uncertainty bonus dominates",
+                "Neither — UCB pulls the least recently used arm",
                 "Either is equally likely (UCB randomizes)",
-                "Neither — UCB pulls the least recently used arm"
+                "Arm B, because its uncertainty bonus dominates"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Arm A score = 0.9 + 1.414*sqrt(4/16) = 0.9 + 0.707 = 1.607. Arm B score = 0.5 + 1.414*sqrt(4/1) = 0.5 + 2.828 = 3.328. B's small N gives a huge bonus, so UCB explores it despite the lower mean."
             },
             {
               "q": "Why are intrinsic-motivation / curiosity bonuses needed in sparse-reward problems where UCB and $\\varepsilon$-greedy struggle?",
               "choices": [
                 "They reduce the variance of the value estimate using importance sampling",
-                "They provide a learning/novelty signal so the agent is guided even when extrinsic reward is almost always zero",
+                "They eliminate the need for a discount factor",
                 "They guarantee logarithmic regret in continuous state spaces",
-                "They eliminate the need for a discount factor"
+                "They provide a learning/novelty signal so the agent is guided even when extrinsic reward is almost always zero"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "When extrinsic reward is nearly always zero, value-based exploration has no signal to act on. An intrinsic reward for novelty or prediction error (count bonuses, ICM, RND) gives the agent a dense gradient toward unexplored regions."
             },
             {
@@ -3502,21 +3502,21 @@
               "choices": [
                 "The estimated mean value of each arm",
                 "The total number of timesteps elapsed",
-                "The uncertainty / confidence in each arm's estimate",
-                "The reward received on the previous step"
+                "The reward received on the previous step",
+                "The uncertainty / confidence in each arm's estimate"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Softmax assigns probability purely from estimated value $\\hat{Q}$, so a confidently-bad arm and a barely-sampled arm with equal $\\hat{Q}$ are treated identically. UCB (via its bonus) and Thompson (via posterior width) both explicitly exploit uncertainty."
             },
             {
               "q": "What property makes the multi-armed bandit the ideal pure-exploration testbed, distinguishing it from full RL?",
               "choices": [
-                "It has no state and no delayed consequences, so an action affects only the immediate reward and the information gained",
-                "Its rewards are always deterministic, so there is no noise to average out",
                 "It guarantees that a greedy policy converges to the optimal arm",
+                "Its rewards are always deterministic, so there is no noise to average out",
+                "It has no state and no delayed consequences, so an action affects only the immediate reward and the information gained",
                 "It includes a feature vector (context) but omits the reward signal"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The bandit strips out state, transitions, and long-horizon credit assignment, so any performance gap between strategies is attributable purely to how they handle the explore-exploit tradeoff."
             },
             {
@@ -3534,11 +3534,11 @@
               "q": "Thompson sampling and UCB both make exploration proportional to uncertainty, yet they inject optimism differently. How?",
               "choices": [
                 "UCB injects optimism stochastically via posterior sampling; Thompson injects it deterministically via a bonus",
-                "UCB adds a deterministic bonus to the mean; Thompson draws a random sample from each arm's posterior and plays the highest",
+                "Thompson ignores uncertainty entirely and only matches empirical means",
                 "Both add the identical $c\\sqrt{\\ln t / N}$ bonus but UCB rounds it to an integer",
-                "Thompson ignores uncertainty entirely and only matches empirical means"
+                "UCB adds a deterministic bonus to the mean; Thompson draws a random sample from each arm's posterior and plays the highest"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "UCB injects optimism deterministically through an additive confidence bonus, while Thompson injects it stochastically by sampling each arm's posterior and acting greedily on the hallucinated sample."
             },
             {
@@ -3556,33 +3556,33 @@
               "q": "You run Thompson sampling on a Bernoulli bandit with a $\\text{Beta}(1,1)$ prior on each arm. Arm X has been pulled 10 times with 9 successes; arm Y has been pulled 2 times with 2 successes. On the next decision step, which statement best describes how the two arms compete?",
               "choices": [
                 "Arm Y is chosen deterministically because its empirical success rate (1.0) exceeds arm X's (0.9)",
-                "Arm X is always chosen because it has more total successes (9 > 2)",
                 "Each arm draws a sample from its posterior — $\\text{Beta}(10,2)$ for X, $\\text{Beta}(3,1)$ for Y — and the higher sample wins; Y's wider posterior means it still wins a meaningful fraction of the time",
+                "Arm X is always chosen because it has more total successes (9 > 2)",
                 "Both posteriors are identical because they share the same $\\text{Beta}(1,1)$ prior, so the choice is a fair coin flip"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Thompson updates to $\\text{Beta}(1+S,1+F)$: X is $\\text{Beta}(10,2)$, Y is $\\text{Beta}(3,1)$. Selection is by sampling, not by comparing point estimates, so Y's wide posterior (few pulls) occasionally samples above X — that is exactly how exploration emerges. Neither arm is chosen deterministically."
             },
             {
               "q": "Fixed-$\\varepsilon$ greedy (constant $\\varepsilon$, never decayed) suffers linear regret $L_T = \\Theta(T)$, the mark of failure. What is the underlying reason?",
               "choices": [
                 "It can never identify which arm has the highest mean, even with infinite samples",
-                "Even after the best arm is known, it keeps spending a constant fraction $\\approx \\varepsilon$ of steps on uniformly random (often suboptimal) arms forever, losing $\\approx \\varepsilon\\bar\\Delta$ per step",
                 "The empirical means $\\hat{Q}$ are biased and never converge to $q_*(a)$",
+                "Even after the best arm is known, it keeps spending a constant fraction $\\approx \\varepsilon$ of steps on uniformly random (often suboptimal) arms forever, losing $\\approx \\varepsilon\\bar\\Delta$ per step",
                 "Its exploration bonus grows with $\\ln t$, so total regret accumulates logarithmically"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Fixed-$\\varepsilon$ greedy estimates the best arm just fine, but it never stops exploring: a constant $\\varepsilon$ fraction of pulls go to random arms every step, incurring a constant per-step regret that sums to $\\Theta(T)$. The fix is to decay $\\varepsilon$; the $\\ln t$ bonus belongs to UCB, not $\\varepsilon$-greedy."
             },
             {
               "q": "A 3-armed bandit has true means $q_*(\\text{A})=1.0,\\ q_*(\\text{B})=0.7,\\ q_*(\\text{C})=0.4$. Over $T=100$ pulls an algorithm pulled A 90 times, B 6 times, and C 4 times. Using $L_T=\\sum_a \\Delta_a\\,N_T(a)$, what is its cumulative regret?",
               "choices": [
-                "$4.2$",
                 "$10.0$",
+                "$4.2$",
                 "$1.0$",
                 "$71.8$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The optimal arm is A, so $\\Delta_A=0$, $\\Delta_B=1.0-0.7=0.3$, $\\Delta_C=1.0-0.4=0.6$. Regret counts only suboptimal pulls: $L_T = 0.3(6)+0.6(4)=1.8+2.4=4.2$. Pulls of the optimal arm contribute nothing to regret."
             },
             {
@@ -3621,23 +3621,23 @@
             {
               "q": "In a multi-armed bandit, what does <em>regret</em> measure?",
               "choices": [
-                "The total reward collected over $T$ steps",
                 "The cumulative reward lost relative to an oracle that always played the best arm — $L_T=\\sum_t\\big(q_*-q_*(A_t)\\big)$; lower is better, and a good algorithm makes it grow <em>sublinearly</em> in $T$",
+                "The total reward collected over $T$ steps",
                 "The variance of the reward distribution",
                 "The probability of pulling the wrong arm on the final step"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Raw reward is hard to compare across problems, so we measure the gap to a perfect oracle. Sublinear regret ($L_T/T\\to0$) means the agent eventually plays optimally almost all the time — the hallmark of a good exploration strategy."
             },
             {
               "q": "What is the core idea behind UCB (Upper Confidence Bound) exploration?",
               "choices": [
-                "Pick the arm with the lowest estimated value, to gather information",
+                "\"Optimism in the face of uncertainty\": pick the arm with the highest <em>upper confidence bound</em> $\\hat Q(a)+c\\sqrt{\\ln t/N(a)}$ — favoring arms that are either high-value or under-explored, and exploring less as evidence accumulates",
                 "Pick a uniformly random arm at every step",
                 "Pick the arm that has been pulled the fewest times, regardless of its value",
-                "\"Optimism in the face of uncertainty\": pick the arm with the highest <em>upper confidence bound</em> $\\hat Q(a)+c\\sqrt{\\ln t/N(a)}$ — favoring arms that are either high-value or under-explored, and exploring less as evidence accumulates"
+                "Pick the arm with the lowest estimated value, to gather information"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "UCB adds an exploration bonus that shrinks as an arm is pulled more. It tries arms that <em>could plausibly</em> be best given current uncertainty — directed exploration, unlike $\\varepsilon$-greedy's blind coin flip — which earns it logarithmic (sublinear) regret."
             }
           ],
@@ -3712,11 +3712,11 @@
               "q": "You add an auxiliary reward to densify a sparse task. Which form is guaranteed to leave the set of optimal policies unchanged?",
               "choices": [
                 "Any reward that is positive only near states you believe are good",
-                "A potential-based term $F(s,s') = \\gamma\\,\\Phi(s') - \\Phi(s)$ for some $\\Phi:\\mathcal{S}\\to\\mathbb{R}$",
                 "A reward proportional to the agent's current speed toward the goal, with a tuned coefficient",
+                "A potential-based term $F(s,s') = \\gamma\\,\\Phi(s') - \\Phi(s)$ for some $\\Phi:\\mathcal{S}\\to\\mathbb{R}$",
                 "Any bounded reward, since bounded shaping cannot change the argmax"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Only potential-based shaping is provably policy-invariant: summed over a trajectory it telescopes to a constant. Hand-crafted positive bonuses or velocity rewards can create new, unintended optima (i.e., they are hackable)."
             },
             {
@@ -3724,10 +3724,10 @@
               "choices": [
                 "The cumulative reward, to confirm the collapse is real",
                 "The wall-clock time per update, to check for a slowdown",
-                "The policy entropy, which often crashes just before a policy collapse",
-                "The number of distinct environments used, to check parallelism"
+                "The number of distinct environments used, to check parallelism",
+                "The policy entropy, which often crashes just before a policy collapse"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Policy collapse is typically driven by instability such as entropy crashing to zero (the policy becomes prematurely deterministic) or a value function diverging; the entropy curve usually signals it before the return falls."
             },
             {
@@ -3745,11 +3745,11 @@
               "q": "A team reports a single learning curve from one seed showing their new algorithm beating a baseline. The strongest methodological objection is:",
               "choices": [
                 "They should have plotted return against wall-clock time instead of steps",
-                "RL outcomes vary enormously across seeds, so one run characterizes nothing; they must report a distribution over many seeds with a robust aggregate like IQM",
                 "They used the wrong discount factor, invalidating the comparison",
+                "RL outcomes vary enormously across seeds, so one run characterizes nothing; they must report a distribution over many seeds with a robust aggregate like IQM",
                 "Learning curves are inherently unreliable and should be replaced by final-policy screenshots"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Henderson et al. and Agarwal et al. showed identical setups differing only in seed can yield opposite conclusions; rigorous reporting requires many seeds and robust aggregate metrics (e.g., interquartile mean with uncertainty bands), not a single curve."
             },
             {
@@ -3767,22 +3767,22 @@
               "q": "An on-policy agent diverges when raw observations have features on wildly different scales (e.g. one in [0,1], another in the thousands) and rewards are occasionally huge. Standard practice normalizes both observations and value targets (often with a running mean and variance). What is the core reason this helps?",
               "choices": [
                 "It changes the task's optimal policy to an easier one that the network can represent",
-                "It keeps inputs and regression targets in a well-conditioned numerical range so gradients stay stable and no single large feature or reward dominates the updates",
+                "It guarantees the value estimates are unbiased by removing the discount factor's effect",
                 "It replaces the true reward function with a denser surrogate, improving credit assignment",
-                "It guarantees the value estimates are unbiased by removing the discount factor's effect"
+                "It keeps inputs and regression targets in a well-conditioned numerical range so gradients stay stable and no single large feature or reward dominates the updates"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Normalization rescales inputs and targets to a well-conditioned range, preventing huge-magnitude features or rewards from producing exploding, unstable gradient updates, without altering the underlying optimal policy."
             },
             {
               "q": "Model-based RL learns dynamics $\\hat{p}(s'\\mid s,a)$ and plans against them. In a setting where the environment is hard to model accurately, what is the characteristic failure mode (the 'Dyna trap') that can make model-based WORSE than a model-free baseline?",
               "choices": [
-                "The learned model is too accurate, causing the agent to overfit the exact transitions and fail to generalize",
-                "Planning consumes so much wall-clock time that the agent never finishes a single episode",
                 "The policy exploits errors in the imperfect model, and longer imagined rollouts compound that model bias into a confidently wrong policy",
+                "Planning consumes so much wall-clock time that the agent never finishes a single episode",
+                "The learned model is too accurate, causing the agent to overfit the exact transitions and fail to generalize",
                 "Model-based methods require a known reward function, which is unavailable in this setting"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "When the model is inaccurate, the planner optimizes against its errors and compounding bias over multi-step imagined rollouts yields a confidently wrong policy, the essence of the Dyna trap."
             },
             {
@@ -3799,12 +3799,12 @@
             {
               "q": "A cleaning robot is rewarded $+1$ each time it picks up a piece of trash and $-1$ when it deposits trash in the bin. After training, it learns to repeatedly knock over the bin and re-collect the same trash forever. This is a textbook example of:",
               "choices": [
-                "A normalization failure, since the reward magnitudes were not scaled to unit variance",
                 "Reward hacking: the agent maximizes the literal return via a loophole the designer did not intend",
+                "A normalization failure, since the reward magnitudes were not scaled to unit variance",
                 "A sample-efficiency problem that more environment steps would resolve",
                 "Catastrophic forgetting, because the policy overwrote its earlier behavior"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The agent found a high-return trajectory (endless collect/un-collect cycles) that satisfies the written reward but defeats its purpose; the fix is the reward specification (e.g. reward bin contents, not pickups), not more steps or scaling. Normalization and forgetting concern training dynamics, not the misspecified objective itself."
             },
             {
@@ -3823,21 +3823,21 @@
               "choices": [
                 "Team Y's curve will look worse, since picking one seed discards the averaging benefit of the other nine",
                 "Team Y's curve will look better and is the more trustworthy estimate of typical performance",
-                "Team Y's curve will look better but overstates typical performance; Team X's aggregate is the more honest summary",
-                "Both reports are equivalent because the underlying algorithm and seeds are identical"
+                "Both reports are equivalent because the underlying algorithm and seeds are identical",
+                "Team Y's curve will look better but overstates typical performance; Team X's aggregate is the more honest summary"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Reporting the best-of-10 seed is a form of cherry-picking that inflates apparent performance relative to the typical run, whereas the multi-seed mean with a dispersion band reflects what you should actually expect. The reports are not equivalent precisely because Y conditions on the luckiest seed."
             },
             {
               "q": "A practitioner claims: \"Off-policy algorithms like Q-learning with a replay buffer are inherently more sample-efficient than on-policy methods like PPO because they can reuse each transition many times.\" The most accurate response is:",
               "choices": [
                 "False: replay buffers only store data; reuse does not affect how many environment steps are needed",
-                "Partly right on reuse, but this typically trades sample efficiency for added instability and tuning sensitivity, so it is not free",
                 "True without qualification: off-policy reuse always dominates on-policy methods on every axis",
+                "Partly right on reuse, but this typically trades sample efficiency for added instability and tuning sensitivity, so it is not free",
                 "False: on-policy methods are always more sample-efficient because their gradient estimates are unbiased"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Reusing transitions can genuinely cut the number of environment steps, but off-policy bootstrapping (deadly-triad effects, stale data) tends to be more brittle and harder to tune, so the gain comes with a stability cost rather than being a free lunch. The absolute claims in the other options ignore this real-world trade-off."
             },
             {
@@ -3845,43 +3845,43 @@
               "choices": [
                 "When the learning rate is set too high and the loss diverges",
                 "When the discount factor is too small to value future reward",
-                "When the replay buffer overflows and old transitions are lost",
-                "When the agent maximizes the <em>literal</em> reward while violating your intent — finding a high-return loophole you never imagined (e.g. the boat that circles to farm respawning pickups instead of finishing the race)"
+                "When the agent maximizes the <em>literal</em> reward while violating your intent — finding a high-return loophole you never imagined (e.g. the boat that circles to farm respawning pickups instead of finishing the race)",
+                "When the replay buffer overflows and old transitions are lost"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The agent optimizes exactly what you wrote, not what you meant. A capable optimizer will find any high-return trajectory, so the question is never \"would a reasonable agent do this?\" but \"does the math forbid it?\" — treat the reward like a contract a ruthless lawyer will exploit."
             },
             {
               "q": "What is the tradeoff between <em>sparse</em> and <em>dense</em> rewards?",
               "choices": [
                 "Sparse rewards always train faster than dense rewards",
-                "Sparse rewards (e.g. +1 only at the goal) are unambiguous about intent but give little learning signal (brutal credit assignment over many zero steps); dense rewards give feedback every step but invite baked-in wrong assumptions and are where most reward hacking is born",
+                "Sparse and dense rewards always induce the same optimal policy",
                 "Dense rewards are mathematically guaranteed never to be hacked",
-                "Sparse and dense rewards always induce the same optimal policy"
+                "Sparse rewards (e.g. +1 only at the goal) are unambiguous about intent but give little learning signal (brutal credit assignment over many zero steps); dense rewards give feedback every step but invite baked-in wrong assumptions and are where most reward hacking is born"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Sparse = honest about the goal but hard to learn from; dense = easy to learn from but risky, because you're encoding your own (often wrong) idea of <em>how</em> to solve the task. Potential-based shaping is the one provably safe way to densify without changing the optimal policy."
             },
             {
               "q": "What does <em>sample efficiency</em> mean in RL?",
               "choices": [
                 "How fast the algorithm runs in wall-clock time on a GPU",
-                "The number of parameters in the policy network",
                 "How much performance the agent gains per unit of <em>environment interaction</em> (samples) — the metric that matters most when each real-world step is slow or costly",
+                "The number of parameters in the policy network",
                 "The fraction of the reward that is intrinsic rather than extrinsic"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Sample efficiency is about data, not compute: an algorithm that reaches a target in fewer environment steps is more sample-efficient even if it costs more GPU time per step. It's decisive on real robots or any setting where collecting experience is the bottleneck."
             },
             {
               "q": "What distinguishes <em>model-free</em> from <em>model-based</em> RL?",
               "choices": [
-                "Model-free methods learn values or a policy directly from experience with no model of the world; model-based methods learn the dynamics $\\hat p(s'\\mid s,a)$ and plan against them — usually more sample-efficient, but limited by model error",
                 "Model-free methods require a simulator; model-based methods do not",
+                "Model-free methods learn values or a policy directly from experience with no model of the world; model-based methods learn the dynamics $\\hat p(s'\\mid s,a)$ and plan against them — usually more sample-efficient, but limited by model error",
                 "Model-based methods can only be used with discrete action spaces",
                 "They are two names for the same approach"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Model-based RL can squeeze more learning from each interaction by planning in a learned model — but if the environment is hard to model, errors compound (the \"Dyna trap\") and it can underperform a simple model-free baseline. The choice hinges on how learnable the dynamics are."
             }
           ],
@@ -3956,44 +3956,44 @@
               "q": "A team has an LLM that already writes fluent, on-topic answers after SFT, but it sometimes produces confident-sounding wrong answers and they have no single 'correct' response to demonstrate — only the ability to say which of two answers is better. Which approach directly fits this situation?",
               "choices": [
                 "More supervised fine-tuning on the existing demonstrations",
-                "RLHF / preference optimization using pairwise comparisons",
+                "Increasing the model size and re-running SFT",
                 "Unsupervised pretraining on more raw text",
-                "Increasing the model size and re-running SFT"
+                "RLHF / preference optimization using pairwise comparisons"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The feedback available is comparative ('A is better than B'), which is evaluative — RL/preference optimization's native signal. SFT needs a single target response per prompt and can only push probability up on demonstrated text, never down on bad-but-fluent answers."
             },
             {
               "q": "In offline RL, why does naively running Q-learning on a fixed logged dataset tend to fail?",
               "choices": [
-                "The dataset is too small to estimate gradients accurately",
                 "The $\\max$ in the Bellman target selects out-of-distribution actions whose Q-values are erroneously overestimated, with no new data to correct them",
+                "The dataset is too small to estimate gradients accurately",
                 "Rewards in logged data are always sparser than in online data",
                 "Offline data violates the Markov property by construction"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The Bellman backup's max systematically queries actions absent from the data, where Q is over-estimated; without interaction those errors compound. Fixes constrain to data support (BCQ/TD3+BC) or add pessimism on OOD actions (CQL)."
             },
             {
               "q": "What is the correct ordering of the three RLHF stages?",
               "choices": [
                 "Reward model training, then SFT, then PPO optimization",
-                "SFT, then reward model training (Bradley-Terry on preference pairs), then KL-regularized RL",
+                "Reward model training, then PPO, then DPO",
                 "Pretraining, then PPO, then SFT to clean up",
-                "Reward model training, then PPO, then DPO"
+                "SFT, then reward model training (Bradley-Terry on preference pairs), then KL-regularized RL"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "RLHF is: (1) supervised fine-tuning to get a good reference policy, (2) train a reward model on human preference comparisons via the Bradley-Terry loss, (3) optimize the policy against that reward with a KL penalty to the SFT reference (classically PPO)."
             },
             {
               "q": "What is the key difference between AlphaZero and MuZero?",
               "choices": [
-                "AlphaZero uses MCTS while MuZero uses pure policy gradients with no search",
                 "AlphaZero plans with a known/given environment model (the game rules), while MuZero learns a latent dynamics model and plans inside it",
+                "AlphaZero uses MCTS while MuZero uses pure policy gradients with no search",
                 "MuZero requires human demonstration data while AlphaZero learns from self-play",
                 "AlphaZero is model-free while MuZero is model-based"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Both are model-based and both use MCTS with self-play. The advance of MuZero is that it learns a value-equivalent latent model (representation, dynamics, prediction) and plans without being told the rules, extending the approach beyond games with known dynamics."
             },
             {
@@ -4011,33 +4011,33 @@
               "q": "Direct Preference Optimization (DPO) is presented as a 'bridge between two worlds.' What does it actually exploit to avoid training a reward model, sampling, and running PPO?",
               "choices": [
                 "It replaces the Bradley-Terry model with a simpler hinge loss on preference pairs",
-                "It uses the closed-form optimum $\\pi^\\star(y\\mid x)\\propto \\pi^{\\text{SFT}}(y\\mid x)\\exp\\!\\big(r(x,y)/\\beta\\big)$, inverting it to write the reward in terms of the policy and collapsing RLHF into one supervised-style loss",
                 "It distills the reward model into the policy by minimizing KL between them",
+                "It uses the closed-form optimum $\\pi^\\star(y\\mid x)\\propto \\pi^{\\text{SFT}}(y\\mid x)\\exp\\!\\big(r(x,y)/\\beta\\big)$, inverting it to write the reward in terms of the policy and collapsing RLHF into one supervised-style loss",
                 "It runs PPO but caches the reward model outputs so they need not be recomputed"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "DPO exploits the closed-form optimum of the KL-regularized objective, inverting it to express the reward via the policy so the entire RLHF objective becomes a single supervised-style loss on preference pairs — no reward model, no sampling, no PPO. DPO actually retains the Bradley-Terry/logistic preference form (not a hinge loss), so option 0 is false."
             },
             {
               "q": "In the worked toy example, the alignment-optimal policy puts about 88% probability on the better response $A$ rather than 100%. What is the role of that residual ~12% mass on the worse response?",
               "choices": [
-                "It is numerical error from the exponential normalization and should ideally be zero",
                 "It is the KL regularization deliberately holding the policy back from collapsing onto $A$, which preserves diversity and guards against reward hacking",
+                "It is numerical error from the exponential normalization and should ideally be zero",
                 "It reflects the reward model's uncertainty about whether $A$ is truly better than $B$",
                 "It comes from the PPO clipping range, which prevents the probability from reaching 1.0"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The KL penalty to the SFT reference deliberately keeps the optimal policy from collapsing entirely onto the highest-reward response; the lesson states this residual mass is the regularization that prevents reward hacking and preserves diversity. It is not numerical error, reward-model uncertainty, or a PPO clipping effect — the 0.881/0.119 split comes directly from the closed-form KL-regularized optimum."
             },
             {
               "q": "According to the lesson, what is PPO's distinctive contribution to the RLHF optimization in Stage 3?",
               "choices": [
                 "It defines a fundamentally different objective than the KL-regularized reward maximization",
-                "It removes the need for a reward model by using verifiable rewards",
                 "It clips the probability ratio so the policy moves toward the target in small, stable steps rather than overshooting on noisy reward estimates",
+                "It removes the need for a reward model by using verifiable rewards",
                 "It guarantees the policy converges exactly to the closed-form optimum $\\pi^\\star$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The lesson states PPO's whole contribution is stability: its clipped ratio caps how far each update can move the policy, so it approaches the target in small steps over many minibatches instead of overshooting on a noisy reward estimate. The text explicitly says this is 'not a different objective,' PPO does not use verifiable rewards or remove the reward model, and it offers no exact-convergence guarantee."
             },
             {
@@ -4045,76 +4045,76 @@
               "choices": [
                 "$\\pi^\\star(A)$ rises toward $1.0$, because a larger $\\beta$ rewards committing harder to the higher-reward response.",
                 "$\\pi^\\star(A)$ stays fixed at $\\approx 0.881$, because the optimum depends only on the reward gap, not on $\\beta$.",
-                "$\\pi^\\star(A)$ falls back toward $0.5$, because a larger $\\beta$ shrinks the effective reward $r/\\beta$ and pulls the policy toward the reference.",
-                "$\\pi^\\star(A)$ drops below $0.5$, because the KL penalty inverts the preference once $\\beta$ exceeds the reward gap."
+                "$\\pi^\\star(A)$ drops below $0.5$, because the KL penalty inverts the preference once $\\beta$ exceeds the reward gap.",
+                "$\\pi^\\star(A)$ falls back toward $0.5$, because a larger $\\beta$ shrinks the effective reward $r/\\beta$ and pulls the policy toward the reference."
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Larger $\\beta$ divides the reward, so $\\exp(r/\\beta)\\to 1$ for all responses and the optimum collapses onto the reference distribution (here $0.5$). The tempting choice that bigger $\\beta$ means more commitment reverses the role of $\\beta$ as the alignment-tax knob: large $\\beta$ means barely improve, small $\\beta$ means reward-hack toward $A$."
             },
             {
               "q": "A team replaces the learned reward model in their RLHF Stage 3 with a programmatic check — for each generated solution they run the unit tests and set the reward to $1$ if all pass, else $0$ (RLVR). What changes relative to standard RLHF?",
               "choices": [
-                "Nothing about the RL machinery changes; only the source of the scalar reward changes — the agent still maximizes a KL-regularized return over whole generations.",
-                "It is no longer RL, because a verifiable pass/fail signal is a ground-truth label, making it ordinary supervised learning.",
                 "The KL-to-reference term becomes unnecessary, because a verifiable reward cannot be hacked.",
+                "It is no longer RL, because a verifiable pass/fail signal is a ground-truth label, making it ordinary supervised learning.",
+                "Nothing about the RL machinery changes; only the source of the scalar reward changes — the agent still maximizes a KL-regularized return over whole generations.",
                 "Credit assignment disappears, because each generation now gets a single deterministic score instead of a learned one."
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The lesson states the RL machinery is identical and only the reward source changes when moving from a learned reward model to verifiable rewards. The distractors confuse a programmatic reward with a per-token label (it is still evaluative, sequence-level feedback) and wrongly assume verifiable rewards remove the need for KL regularization or credit assignment."
             },
             {
               "q": "Offline RL is described as 'strictly more powerful' than behavior cloning even though both learn from the same frozen dataset $\\mathcal{D}$ generated by $\\pi_\\beta$. What capability gives offline RL this edge, and what guardrail does it require to keep it?",
               "choices": [
                 "It can query the environment for a few corrective interactions, as long as it stays within a safety budget.",
-                "It can stitch together good fragments of different trajectories to exceed $\\pi_\\beta$, provided it constrains itself to the support of the data to avoid overestimating OOD actions.",
                 "It can extrapolate Q-values to unseen actions, provided the dataset is large enough that no action is truly out-of-distribution.",
+                "It can stitch together good fragments of different trajectories to exceed $\\pi_\\beta$, provided it constrains itself to the support of the data to avoid overestimating OOD actions.",
                 "It can re-weight the dataset toward high-reward transitions, provided the behavior policy was already near-optimal."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Offline RL can recombine good segments of separate trajectories to beat the data-generating policy, but only if it respects support constraints (or pessimism) so the Bellman max does not exploit erroneously high Q-values on OOD actions. The 'extrapolate to unseen actions' option is exactly the failure mode offline RL must avoid, and offline RL by definition allows no further interaction."
             },
             {
               "q": "After SFT, a chatbot writes fluent answers but still emits a polished, confident falsehood for certain prompts. A colleague proposes 'just add more high-quality demonstrations to the SFT set.' Why is that structurally insufficient, and what does RL post-training add?",
               "choices": [
                 "SFT overfits the demonstrations; RL adds dropout-style regularization that improves generalization to new prompts.",
-                "SFT only trains on short sequences; RL extends the context window so longer correct answers become reachable.",
+                "SFT can only raise the probability of demonstrated sequences and never push down a bad-but-fluent completion; RL optimizes a scalar over whole generations, so it can both reward better answers and penalize undesirable ones.",
                 "SFT minimizes a token-level loss that is too noisy; RL replaces it with a lower-variance supervised target.",
-                "SFT can only raise the probability of demonstrated sequences and never push down a bad-but-fluent completion; RL optimizes a scalar over whole generations, so it can both reward better answers and penalize undesirable ones."
+                "SFT only trains on short sequences; RL extends the context window so longer correct answers become reachable."
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "The negative-log-likelihood SFT objective only ever increases the probability of the demonstrated tokens; it gives no signal to suppress a fluent-but-wrong completion, so more demonstrations cannot directly down-weight bad outputs. RL optimizes an answer-level scalar objective, letting it trade off tokens to raise quality and explicitly penalize undesirable generations — the other options misattribute the gap to overfitting, context length, or variance."
             },
             {
               "q": "What makes reinforcement learning different \"in kind\" from supervised and unsupervised learning?",
               "choices": [
                 "RL simply uses larger neural networks",
-                "Evaluative (not instructive) feedback, sequential credit assignment across time, and the agent controlling its own data distribution — together they make RL a different discipline, not just a harder regression",
+                "RL always requires a perfect model of the environment",
                 "RL never uses gradient descent",
-                "RL always requires a perfect model of the environment"
+                "Evaluative (not instructive) feedback, sequential credit assignment across time, and the agent controlling its own data distribution — together they make RL a different discipline, not just a harder regression"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Supervised learning gets the right answer for each input from a fixed dataset; RL only gets a <em>score</em>, rewards can be delayed, and the policy's own actions determine the next data — breaking the i.i.d. assumption. \"The data distribution depends on the model\" is the single fact behind most hard RL problems."
             },
             {
               "q": "In LLM post-training, what is the core difference between supervised fine-tuning (SFT) and RL?",
               "choices": [
-                "They are identical; \"RL\" is just a newer name for fine-tuning",
+                "SFT teaches by <em>example</em> (imitate demonstrated answers — its ceiling is demo quality, and it can't say which of two answers is better); RL teaches by <em>consequence</em> (raise the probability of higher-scoring whole answers and push down bad ones)",
                 "SFT improves a policy by consequence, while RL clones demonstrations",
                 "SFT needs a reward model, while RL needs labeled $(x,y^\\star)$ pairs",
-                "SFT teaches by <em>example</em> (imitate demonstrated answers — its ceiling is demo quality, and it can't say which of two answers is better); RL teaches by <em>consequence</em> (raise the probability of higher-scoring whole answers and push down bad ones)"
+                "They are identical; \"RL\" is just a newer name for fine-tuning"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "SFT is pure next-token imitation — it can only increase the probability of demonstrated sequences, never down-weight a bad-but-fluent one. RL optimizes a scalar objective over whole generations, so it can express comparative preferences and penalize undesirable outputs. SFT clones a policy; RL improves one."
             },
             {
               "q": "In RLHF, what is the <em>reward model</em>?",
               "choices": [
-                "A model trained on human <em>preference comparisons</em> (A is better than B) that scores a response, providing the scalar reward the RL stage then optimizes — needed because open-ended quality has no single \"correct\" label",
                 "The environment's built-in reward function, handed to you",
+                "A model trained on human <em>preference comparisons</em> (A is better than B) that scores a response, providing the scalar reward the RL stage then optimizes — needed because open-ended quality has no single \"correct\" label",
                 "A model that predicts the next state from the current state and action",
                 "The discount factor applied to future rewards"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Because you can't write a ground-truth label for \"a good answer,\" RLHF learns a reward model from human rankings of competing responses, then uses RL (e.g. PPO) to push the policy toward responses the reward model scores highly — turning comparative human judgment into an optimizable signal."
             },
             {
@@ -4218,10 +4218,10 @@
               "choices": [
                 "By training a deep neural network with backpropagation",
                 "By solving the Bellman optimality equation directly",
-                "By sampling from a fixed prior distribution over dynamics",
-                "By counting visit frequencies for transitions and averaging observed rewards"
+                "By counting visit frequencies for transitions and averaging observed rewards",
+                "By sampling from a fixed prior distribution over dynamics"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "For small discrete problems the model reduces to tabulated frequencies (for $\\hat{p}$) and sample averages (for $\\hat{r}$). Neural networks are reserved for large or continuous spaces, and the Bellman equation is part of planning, not model fitting."
             },
             {
@@ -4238,45 +4238,45 @@
             {
               "q": "A student claims: 'Once we have learned a perfect model, planning against it gives the optimal policy, so model-based RL can never fail.' What is the flaw?",
               "choices": [
-                "Models in practice are imperfect, and planning amplifies any model errors, so the policy is only as good as the learned model",
                 "The claim is correct; a perfect model always yields the optimal policy via planning",
+                "Models in practice are imperfect, and planning amplifies any model errors, so the policy is only as good as the learned model",
                 "Planning ignores the reward model, so even a perfect transition model is useless",
                 "Optimal policies require model-free methods regardless of model quality"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The conditional 'once we have a perfect model' rarely holds — learned models have errors, and a planner can exploit those errors, producing a policy that fails in the real environment. This is the well-known model-bias pitfall the lesson warns about."
             },
             {
               "q": "In model-based RL, what does it mean to 'plan' once you have a model?",
               "choices": [
                 "To collect more real environment transitions to refine the model",
-                "To use the model's predicted dynamics and rewards to compute a good policy without further real interaction",
+                "To randomly perturb the current policy and keep improvements",
                 "To directly observe the true transition probabilities of the environment",
-                "To randomly perturb the current policy and keep improvements"
+                "To use the model's predicted dynamics and rewards to compute a good policy without further real interaction"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Planning means computing a good policy using the model's simulated transitions and rewards, which is precisely how model-based RL saves real interactions. Collecting more real data is model learning, not planning."
             },
             {
               "q": "Suppose a learned transition model is highly accurate near states the agent has visited but wildly wrong in rarely-visited states. Why is this dangerous for a planner seeking high return?",
               "choices": [
-                "The planner will avoid all unvisited states and stay perfectly safe",
-                "Reward models are unaffected by transition errors, so there is no danger",
                 "The planner may be drawn toward unvisited states where the erroneous model hallucinates high reward",
+                "Reward models are unaffected by transition errors, so there is no danger",
+                "The planner will avoid all unvisited states and stay perfectly safe",
                 "Accurate models near visited states guarantee globally accurate planning"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "A planner optimizing predicted return can latch onto regions where model errors falsely promise high reward — exploiting the model's mistakes. This is why naive model exploitation in poorly-modeled regions is risky."
             },
             {
               "q": "A discrete environment has been observed taking action $a$ in state $s$ five times, landing in $s_1$ three times and $s_2$ twice, with rewards $2, 2, 2, 4, 4$. What does the tabular learned model give for $\\hat{p}(s_1\\mid s,a)$ and $\\hat{r}(s,a)$?",
               "choices": [
-                "$\\hat{p}(s_1\\mid s,a)=0.5$ and $\\hat{r}(s,a)=3.0$",
+                "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=2.8$",
                 "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=3.0$",
                 "$\\hat{p}(s_1\\mid s,a)=0.4$ and $\\hat{r}(s,a)=2.8$",
-                "$\\hat{p}(s_1\\mid s,a)=0.6$ and $\\hat{r}(s,a)=2.8$"
+                "$\\hat{p}(s_1\\mid s,a)=0.5$ and $\\hat{r}(s,a)=3.0$"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "The frequency estimate is $3/5=0.6$, and the reward average is $(2+2+2+4+4)/5=14/5=2.8$. The distractors mix up the count ratio or miscompute the mean (e.g., 3.0 ignores the correct sum)."
             },
             {
@@ -4305,11 +4305,11 @@
               "q": "A model-based agent has learned its model from only 50 transitions and immediately plans an aggressive policy that the planner predicts will earn huge reward. What is the most prudent concern?",
               "choices": [
                 "The planner is too conservative and should be made greedier",
-                "With so little data the model is likely inaccurate, so the predicted huge reward may be a planning artifact, not real",
                 "The reward model is irrelevant after planning begins",
+                "With so little data the model is likely inaccurate, so the predicted huge reward may be a planning artifact, not real",
                 "More data would make the policy worse, so 50 transitions is ideal"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "With scarce data the learned model is unreliable, and the planner may be exploiting model errors that produce illusory high return — overconfidence in an under-trained model is the central model-based pitfall. Gathering more data generally improves, not worsens, the model."
             },
             {
@@ -4317,32 +4317,32 @@
               "choices": [
                 "A policy network and a value network",
                 "An advantage estimator and a baseline",
-                "A transition model $\\hat{p}(s'\\mid s,a)$ and a reward model $\\hat{r}(s,a)$",
-                "A Q-function and an exploration schedule"
+                "A Q-function and an exploration schedule",
+                "A transition model $\\hat{p}(s'\\mid s,a)$ and a reward model $\\hat{r}(s,a)$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Learning a model means fitting the dynamics $\\hat{p}(s'\\mid s,a)$ and the reward $\\hat{r}(s,a)$ from logged $(s,a,r,s')$ tuples. Policies, values, advantages, and Q-functions are products of model-free learning or downstream planning, not the model itself."
             },
             {
               "q": "All else equal, if two agents reach the same final policy quality, which property most favors the model-based agent in a setting where real interactions are scarce and expensive?",
               "choices": [
-                "It is mathematically simpler to implement",
+                "It used fewer real environment interactions to get there",
                 "It is guaranteed to be unbiased",
                 "It avoids needing a reward signal",
-                "It used fewer real environment interactions to get there"
+                "It is mathematically simpler to implement"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "The defining advantage of model-based RL is sample efficiency — reaching comparable quality with fewer costly real interactions. Simplicity and unbiasedness are actually strengths of model-free methods, and a reward signal is still required to fit the reward model."
             },
             {
               "q": "What is <em>model-based</em> RL?",
               "choices": [
-                "Learn a model of the environment — the transition dynamics $\\hat p(s'\\mid s,a)$ and reward $\\hat r(s,a)$ — then <em>plan</em> against it to derive a policy, rather than learning a value/policy directly from experience",
-                "Learn a value function purely by trial and error, with no model",
                 "Memorize an expert's actions from demonstrations",
+                "Learn a value function purely by trial and error, with no model",
+                "Learn a model of the environment — the transition dynamics $\\hat p(s'\\mid s,a)$ and reward $\\hat r(s,a)$ — then <em>plan</em> against it to derive a policy, rather than learning a value/policy directly from experience",
                 "Run gradient ascent directly on the policy's expected return"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Model-based RL first fits a model of how the world responds, then computes a good policy by planning against it (value/policy iteration on the model, or rollouts). The bet: squeeze far more from each costly real interaction — at the cost of being only as good as the learned model."
             },
             {
@@ -4350,32 +4350,32 @@
               "choices": [
                 "It trains two networks adversarially against each other",
                 "It plans once at the start, then acts greedily forever",
-                "After each real step it (1) updates values from the real transition, (2) updates the learned model, and (3) runs $k$ extra updates on <em>simulated</em> transitions sampled from the model — \"imagining\" experience to learn faster",
-                "It discards the model and uses only Monte-Carlo returns"
+                "It discards the model and uses only Monte-Carlo returns",
+                "After each real step it (1) updates values from the real transition, (2) updates the learned model, and (3) runs $k$ extra updates on <em>simulated</em> transitions sampled from the model — \"imagining\" experience to learn faster"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Dyna fuses learning and planning: each hard-won real transition is also used to improve the model and then \"rehearsed\" $k$ times via simulated updates. Those imagined experiences propagate value information far faster than real steps alone."
             },
             {
               "q": "What is Monte Carlo Tree Search (MCTS)?",
               "choices": [
                 "A method for inferring the reward function from demonstrations",
-                "A planner that grows a search tree of futures — repeatedly <em>select</em> a promising path (balancing exploration/exploitation, e.g. UCT), <em>expand</em> a node, <em>simulate</em> a rollout, and <em>back up</em> the value to ancestors — the planning engine behind AlphaGo/AlphaZero",
+                "A replay buffer that stores past transitions for reuse",
                 "A scheme for normalizing observations before training",
-                "A replay buffer that stores past transitions for reuse"
+                "A planner that grows a search tree of futures — repeatedly <em>select</em> a promising path (balancing exploration/exploitation, e.g. UCT), <em>expand</em> a node, <em>simulate</em> a rollout, and <em>back up</em> the value to ancestors — the planning engine behind AlphaGo/AlphaZero"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Given a model (often a known simulator), MCTS spends compute to look ahead selectively, focusing search on promising lines. In AlphaZero it is guided by learned value and policy networks — a celebrated marriage of planning and learning."
             },
             {
               "q": "Why is model-based RL often far more sample-efficient than model-free?",
               "choices": [
                 "Because model-based RL needs many more environment samples than model-free",
-                "Because the model is always given by the environment and never has to be learned",
+                "Because model-learning is ordinary supervised regression that extracts signal from <em>every</em> transition (including failures), whereas a value update extracts only one scalar per step — and planning then trades compute for real samples",
                 "Because planning removes the need for any reward signal",
-                "Because model-learning is ordinary supervised regression that extracts signal from <em>every</em> transition (including failures), whereas a value update extracts only one scalar per step — and planning then trades compute for real samples"
+                "Because the model is always given by the environment and never has to be learned"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "A transition $(s,a,r,s')$ is a full supervised training example for the model, but only a single scalar of TD signal for a value function. Learning the dynamics once and then planning in it (Dyna, MCTS) reuses each precious real interaction many times over."
             }
           ],
@@ -4450,33 +4450,33 @@
               "q": "In offline RL, what makes the Q-learning target $r + \\gamma\\max_{a'}Q(s',a')$ more dangerous than a target that uses the dataset's logged next action, $r + \\gamma Q(s',a'_{\\text{data}})$?",
               "choices": [
                 "The $\\max$ operator is slower to compute over large action spaces",
-                "The logged-action target ignores the discount factor $\\gamma$ entirely",
+                "The $\\max$ actively selects the action with the highest estimated value, which is exactly the over-optimistic OOD extrapolation",
                 "The $\\max$ target requires a known transition model $P$, which is unavailable offline",
-                "The $\\max$ actively selects the action with the highest estimated value, which is exactly the over-optimistic OOD extrapolation"
+                "The logged-action target ignores the discount factor $\\gamma$ entirely"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "For actions absent from $\\mathcal{D}$, $Q$ is an unconstrained extrapolation that tends to be erroneously high; the $\\max$ deliberately seeks the highest value and so latches onto exactly those inflated OOD phantoms. The logged-action target only queries $Q$ where the data has evidence, so it is far more stable."
             },
             {
               "q": "A practitioner runs vanilla DQN on a fixed dataset and finds the Q-values blow up over training, even though the same DQN code works fine when allowed to interact online. What is the most likely root cause?",
               "choices": [
-                "Offline, overestimated OOD action values are never corrected by trying them, so the error feeds back through Bellman targets and compounds",
-                "The replay buffer is too small to hold the fixed dataset",
                 "The learning rate must always be larger offline than online",
+                "The replay buffer is too small to hold the fixed dataset",
+                "Offline, overestimated OOD action values are never corrected by trying them, so the error feeds back through Bellman targets and compounds",
                 "Distributional shift only affects policy-gradient methods, so DQN is immune"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Online, an overvalued action gets tried, the low reward is observed, and the estimate is corrected; offline that corrective loop is severed, so overestimation propagates through Bellman targets and compounds, often causing divergence. Buffer size and learning rate are not the defining issue."
             },
             {
               "q": "Why is 'optimism in the face of uncertainty' — a useful principle in online RL — exactly the wrong default in offline RL?",
               "choices": [
                 "Offline datasets are always larger, so there is no uncertainty to be optimistic about",
-                "Optimism drives exploration online to validate high guesses, but offline the agent can never try the action, so an optimistic value becomes an uncorrectable delusion the policy chases",
                 "Optimism causes the discount factor to exceed 1, destabilizing the Bellman backup",
+                "Optimism drives exploration online to validate high guesses, but offline the agent can never try the action, so an optimistic value becomes an uncorrectable delusion the policy chases",
                 "Offline RL maximizes regret rather than return, which reverses the sign of optimism"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Online, optimism is a feature: high values for under-explored actions push the agent to try them and confirm or correct the guess. Offline there is no trial, so the optimistic estimate is never validated and the policy keeps chasing it — hence pessimism about the unknown is the correct default."
             },
             {
@@ -4484,43 +4484,43 @@
               "choices": [
                 "Both increase the discount factor to weight long-term rewards more heavily",
                 "Both require additional online rollouts to refine the policy after training",
-                "Both prefer actions the dataset supports and are pessimistic about everything else",
-                "Both replace the $\\max$ with a softmax to smooth the Bellman target"
+                "Both replace the $\\max$ with a softmax to smooth the Bellman target",
+                "Both prefer actions the dataset supports and are pessimistic about everything else"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "CQL pushes down OOD Q-values (value penalization) while BCQ/BEAR force the policy to stay near dataset actions (policy constraint), but both encode the same idea: trust $Q$ only where there is evidence and be pessimistic about unsupported actions. Neither relies on online rollouts."
             },
             {
               "q": "Which of the following best describes what 'distributional shift' refers to in offline RL?",
               "choices": [
                 "The reward distribution drifts over time within the logged dataset",
-                "The state visitation of the behavior policy is non-stationary across episodes",
+                "The learned policy wants to take actions the dataset rarely or never contains, where $Q$ has no data to be evaluated against",
                 "The discount factor must shift to account for the finite dataset size",
-                "The learned policy wants to take actions the dataset rarely or never contains, where $Q$ has no data to be evaluated against"
+                "The state visitation of the behavior policy is non-stationary across episodes"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Distributional shift is the mismatch between the actions the learned policy prefers and the actions present in $\\mathcal{D}$: the policy queries $Q$ at out-of-distribution actions the data cannot vouch for. It is about the action/state coverage gap, not a drifting reward or discount."
             },
             {
               "q": "Consider an offline learner that, instead of using $\\max_{a'}Q(s',a')$, restricts the maximization to actions with sufficient support in $\\mathcal{D}$ at state $s'$. How does this most directly help?",
               "choices": [
-                "It prevents the target from reaching for unsupported OOD actions whose $Q$-values are unreliable extrapolations",
-                "It guarantees the policy will exactly match the behavior policy",
                 "It eliminates the need for a discount factor in the Bellman backup",
+                "It guarantees the policy will exactly match the behavior policy",
+                "It prevents the target from reaching for unsupported OOD actions whose $Q$-values are unreliable extrapolations",
                 "It makes the algorithm on-policy rather than off-policy"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "By only maximizing over in-support actions, the target never queries $Q$ at OOD actions where the value is an over-optimistic extrapolation, breaking the overestimation loop. It does not force the policy to copy the behavior policy (it can still pick the best supported action) and does not remove $\\gamma$."
             },
             {
               "q": "The stated goal of offline RL is to output a policy that is BETTER than the behavior policy using only $\\mathcal{D}$. Why is simply doing behavioral cloning on $\\mathcal{D}$ insufficient for this goal?",
               "choices": [
-                "Behavioral cloning requires online interaction, which is forbidden offline",
                 "Behavioral cloning only reproduces the behavior policy's choices, so it can at best match — not exceed — the logged behavior",
+                "Behavioral cloning requires online interaction, which is forbidden offline",
                 "Behavioral cloning cannot use the reward signal $r$, so it diverges on fixed data",
                 "Behavioral cloning overestimates OOD actions even more aggressively than Q-learning"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Cloning imitates the logged actions, so it caps performance at roughly the behavior policy's level and cannot improve on it. Offline RL's value is using the rewards in $\\mathcal{D}$ to find a policy that recombines logged decisions into something better, while staying conservative about unsupported actions."
             },
             {
@@ -4548,45 +4548,45 @@
             {
               "q": "You must choose online vs. offline RL for three settings: (a) a board game with a fast, accurate simulator; (b) a sepsis-treatment policy to be learned from 10 years of ICU records; (c) a warehouse robot with a cordoned-off area where it can safely practice. Which assignment is correct?",
               "choices": [
-                "(a) offline, (b) online, (c) offline",
                 "(a) online, (b) offline, (c) online",
+                "(a) offline, (b) online, (c) offline",
                 "(a) offline, (b) offline, (c) online",
                 "(a) online, (b) online, (c) offline"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The deciding question is whether the agent can safely and affordably explore. A fast simulator (a) and a safe practice area (c) make exploration available, favoring online; sepsis treatment (b) cannot be experimented on real patients and already has a large logged dataset, the canonical offline case."
             },
             {
               "q": "An offline learner is trained on hospital records containing only treatments A and B, never an untested drug C. A naive value method recommends C for every patient. What is the conservative-offline diagnosis and remedy?",
               "choices": [
-                "C is OOD with an unconstrained, inflated $Q$; a conservative method pushes its value down (or forbids straying to it), keeping the policy to A/B where evidence exists",
                 "C is in-distribution but underrewarded; raise its learning rate to fix the estimate",
+                "C is OOD with an unconstrained, inflated $Q$; a conservative method pushes its value down (or forbids straying to it), keeping the policy to A/B where evidence exists",
                 "The behavior policy was stochastic, so importance weights overcounted C; reweight the returns",
                 "C should be recommended because no data contradicts its high value"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "With no $(s, C, r, s')$ transitions, $Q(s,C)$ is pure upward extrapolation, and the $\\max$ prefers C everywhere — a hallucination that can never be checked. CQL-style value penalization or a policy constraint distrusts unsupported actions, anchoring recommendations to A/B and yielding a policy that safely improves on logged practice."
             },
             {
               "q": "Which statement most accurately captures the core lesson offline RL teaches about decision-making under uncertainty?",
               "choices": [
-                "Uncertainty should always be resolved by exploring, regardless of the cost of mistakes",
                 "When you cannot gather more data, the safe move is pessimism about the unknown, not optimism",
+                "Uncertainty should always be resolved by exploring, regardless of the cost of mistakes",
                 "The right response to unseen actions is to assume they match the average value of seen actions",
                 "Pessimism is only appropriate when the dataset is small; large datasets justify optimism about OOD actions"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Because beliefs about unseen actions cannot be tested offline, an optimistic overestimate becomes a permanent, uncorrectable delusion the policy chases; pessimism about the unknown keeps the policy to improvements the data can justify. This principle echoes across robust ML and decision-making under uncertainty, independent of dataset size."
             },
             {
               "q": "What is <em>offline (batch)</em> reinforcement learning?",
               "choices": [
-                "Reinforcement learning that simply runs without a GPU",
+                "Learning the best possible policy purely from a <em>fixed, pre-collected</em> dataset of logged transitions, with <em>no further interaction</em> with the environment",
                 "RL where the reward arrives only at the very end of an episode",
                 "RL that learns a model of the dynamics and plans against it",
-                "Learning the best possible policy purely from a <em>fixed, pre-collected</em> dataset of logged transitions, with <em>no further interaction</em> with the environment"
+                "Reinforcement learning that simply runs without a GPU"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Offline RL removes the agent's ability to act: you are handed a dataset $\\mathcal{D}$ of $(s,a,r,s')$ logged by some behavior policy and must produce a better policy from that alone — no exploration to test or fix new ideas."
             },
             {
@@ -4605,21 +4605,21 @@
               "choices": [
                 "The policy the offline algorithm outputs at the end",
                 "A learned model of the environment's dynamics",
-                "The policy that <em>generated</em> the logged dataset (e.g. the doctors' past decisions, a deployed recommender) — offline RL aims to learn a policy that beats it, using only that data",
-                "A uniformly random exploration policy"
+                "A uniformly random exploration policy",
+                "The policy that <em>generated</em> the logged dataset (e.g. the doctors' past decisions, a deployed recommender) — offline RL aims to learn a policy that beats it, using only that data"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The dataset $\\mathcal{D}$ is whatever the behavior policy did. Offline RL's goal is to <em>improve</em> on it from the logs alone — which is why simply cloning the behavior policy (behavioral cloning) can't exceed it."
             },
             {
               "q": "What is the guiding principle that makes offline RL work?",
               "choices": [
-                "Be <em>pessimistic</em> about actions the data can't vouch for — stay close to the dataset and distrust (or penalize) the values of out-of-distribution actions, since you can never test them",
+                "Ignore the logged rewards and learn the policy from scratch",
                 "Be optimistic about unseen actions to encourage exploration",
                 "Always pick the action with the highest extrapolated $Q$-value",
-                "Ignore the logged rewards and learn the policy from scratch"
+                "Be <em>pessimistic</em> about actions the data can't vouch for — stay close to the dataset and distrust (or penalize) the values of out-of-distribution actions, since you can never test them"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Online RL's safety net — try a bad guess, see it fail, correct it — is gone offline, so an over-estimated unseen action becomes a permanent delusion the $\\max$ actively chases. Conservatism (policy constraints like BCQ, or value penalties like CQL) keeps the policy to what the data supports. Pessimism, not optimism, is the right default when you can't test your beliefs."
             }
           ],
@@ -4693,12 +4693,12 @@
             {
               "q": "Behavioral cloning is best characterized as which kind of learning problem?",
               "choices": [
-                "A supervised learning problem: fit a map from states to expert actions",
                 "An unsupervised clustering of expert trajectories",
+                "A supervised learning problem: fit a map from states to expert actions",
                 "An online RL problem that maximizes a known reward via environment interaction",
                 "A planning problem that searches the state space for the optimal path"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "BC treats demonstration pairs (state → expert action) as a labeled dataset and trains a classifier/regressor — plain supervised learning, with no reward and no environment interaction. The RL option is the classic confusion BC is precisely defined to avoid."
             },
             {
@@ -4706,10 +4706,10 @@
               "choices": [
                 "$O(\\epsilon T)$, because each decision is independent of the others",
                 "$O(\\epsilon \\log T)$, because errors partially cancel over long episodes",
-                "$O(\\epsilon T^2)$, because each mistake shifts the future state distribution, inducing cascades up to $O(T)$ steps long",
-                "$O(\\epsilon^2 T)$, because two independent errors must coincide to cause failure"
+                "$O(\\epsilon^2 T)$, because two independent errors must coincide to cause failure",
+                "$O(\\epsilon T^2)$, because each mistake shifts the future state distribution, inducing cascades up to $O(T)$ steps long"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Because the agent's action determines its next state, a single mistake pushes it off-distribution where further mistakes are likelier; each of the $\\sim\\epsilon T$ initial errors can trigger a cascade of up to $O(T)$ steps, giving $O(\\epsilon T^2)$. The $O(\\epsilon T)$ option wrongly assumes the i.i.d. independence that BC violates."
             },
             {
@@ -4717,10 +4717,10 @@
               "choices": [
                 "The expert's actions drift over the course of a single demonstration",
                 "The reward function changes between training and deployment",
-                "The labels (expert actions) are noisy and inconsistent across demonstrations",
-                "The state distribution at deployment (states the agent visits) differs from the state distribution in training (states the expert visited)"
+                "The state distribution at deployment (states the agent visits) differs from the state distribution in training (states the expert visited)",
+                "The labels (expert actions) are noisy and inconsistent across demonstrations"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Covariate shift is a mismatch in the input (state) distribution: BC trains on expert-visited states but acts on its own states. It is about inputs, not noisy labels or a changing reward — BC has no reward at all."
             },
             {
@@ -4749,88 +4749,88 @@
               "q": "What does inverse reinforcement learning (IRL) try to recover from demonstrations?",
               "choices": [
                 "A direct state→action policy that mimics the expert",
-                "A value function $v(s)$ computed by Monte Carlo over the demos",
                 "A reward function the expert appears to be optimizing, which RL then maximizes",
+                "A value function $v(s)$ computed by Monte Carlo over the demos",
                 "A transition model $p(s'\\mid s,a)$ of the environment"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "IRL infers the reward the expert is optimizing and then runs ordinary RL on that recovered reward. Learning a direct policy is BC; IRL deliberately recovers the objective ('why'), not the surface actions."
             },
             {
               "q": "Why can an IRL-based agent sometimes generalize to off-distribution states where a behavioral-cloning policy fails?",
               "choices": [
                 "IRL trains on far more demonstrations than BC requires",
-                "IRL's recovered reward is defined over all states, so RL can compute good actions even in states the demos never showed",
                 "IRL memorizes the expert's exact trajectories with higher fidelity",
+                "IRL's recovered reward is defined over all states, so RL can compute good actions even in states the demos never showed",
                 "IRL avoids any environment interaction, eliminating distribution shift"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A recovered reward is a global objective defined everywhere, so an RL agent can derive sensible actions in novel states by optimizing return. BC only stores state→action mappings for seen states, so it has no response off-distribution; and IRL actually requires more interaction (an inner RL loop), not less."
             },
             {
               "q": "A claim states: 'Since behavioral cloning learns directly from a near-optimal expert, with enough data it will reliably surpass the expert's performance.' What is wrong with this claim?",
               "choices": [
                 "BC can only surpass the expert if trained with a discount factor $\\gamma < 1$",
-                "Nothing is wrong; more data always pushes BC past the demonstrator",
+                "BC has no notion of reward and only reproduces demonstrated behavior, so its performance ceiling is roughly the demonstrator's level",
                 "BC needs the reward function to exceed the expert, which it never has",
-                "BC has no notion of reward and only reproduces demonstrated behavior, so its performance ceiling is roughly the demonstrator's level"
+                "Nothing is wrong; more data always pushes BC past the demonstrator"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "BC merely copies demonstrated state→action behavior and lacks any reward to judge better-but-undemonstrated actions, so it is capped near the demonstrator. Methods that infer or stitch toward higher return (IRL, RL) are what can exceed the expert."
             },
             {
               "q": "GAIL (Generative Adversarial Imitation Learning) blends imitation and IRL ideas by:",
               "choices": [
-                "Explicitly recovering a reward function, then solving the MDP exactly with value iteration",
-                "Asking an interactive expert to relabel the agent's visited states each round",
                 "Training a discriminator to tell expert from agent trajectories and using its signal as a reward the policy is trained to fool",
+                "Asking an interactive expert to relabel the agent's visited states each round",
+                "Explicitly recovering a reward function, then solving the MDP exactly with value iteration",
                 "Supervised-fitting the expert actions, then fine-tuning with PPO on the true reward"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "GAIL uses a discriminator as a learned reward-like signal that the policy learns to fool, matching expert behavior without explicitly recovering a reward. Explicit reward recovery is classical IRL; relabeling visited states is DAgger."
             },
             {
               "q": "Why is RLHF (RL from human feedback) described as a cousin of inverse RL rather than of behavioral cloning?",
               "choices": [
-                "It learns a reward model from human preference data and then optimizes it, inferring an objective from human behavior",
+                "It searches the environment dynamics to plan optimal responses",
                 "It clones human-written responses token-by-token with supervised learning",
                 "It requires an interactive human to relabel every state the model visits",
-                "It searches the environment dynamics to plan optimal responses"
+                "It learns a reward model from human preference data and then optimizes it, inferring an objective from human behavior"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "RLHF fits a reward model from human preferences and runs RL on it — the IRL-flavored move of inferring an objective from human behavior rather than hand-coding a reward. Cloning responses directly would be the BC analogue."
             },
             {
               "q": "An autonomous-driving demonstration set contains only smooth, lane-centered highway driving — no examples of recovering from drifting toward the shoulder. What is the most likely failure mode of a behavioral-cloning policy, and the underlying cause?",
               "choices": [
                 "It overfits the reward and drives too cautiously; cause is reward mis-specification",
-                "It crashes immediately at the start because it never sees the initial state; cause is poor initialization",
                 "It drives well until a small drift takes it to an unseen near-shoulder state, then acts poorly and drifts further; cause is covariate shift",
+                "It crashes immediately at the start because it never sees the initial state; cause is poor initialization",
                 "It explores the shoulder to gather data; cause is excessive exploration"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The near-shoulder recovery states are absent from training, so once the policy drifts there it has no learned response, acts poorly, and drifts further — the compounding-error cascade of covariate shift. BC has no reward, so reward mis-specification is irrelevant."
             },
             {
               "q": "Which statement most accurately captures a genuine DISADVANTAGE of IRL relative to behavioral cloning?",
               "choices": [
-                "IRL cannot generalize to states outside the demonstration distribution",
                 "IRL is harder and costlier — it solves an RL problem in an inner loop, and the reward is under-determined by behavior",
+                "IRL cannot generalize to states outside the demonstration distribution",
                 "IRL requires an interactive expert that BC does not",
                 "IRL ignores the demonstrations entirely and relies only on a hand-coded reward"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "IRL's price is computational and statistical: it embeds an RL problem in its inner loop and the reward is under-determined (many rewards explain the same behavior). Better off-distribution generalization is an IRL advantage, not a drawback, and it does not need an interactive expert."
             },
             {
               "q": "What is <em>imitation learning</em>?",
               "choices": [
                 "Learning a reward function purely by trial and error",
-                "Learning a policy directly from <em>expert demonstrations</em> (state → action examples) — sidestepping the hard problem of hand-designing a reward that captures what you actually want",
                 "Learning a model of the environment's transition dynamics",
+                "Learning a policy directly from <em>expert demonstrations</em> (state → action examples) — sidestepping the hard problem of hand-designing a reward that captures what you actually want",
                 "Learning purely from a scalar reward signal with no examples"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Sometimes it's far easier to <em>show</em> good behavior than to specify a reward for it. Imitation learning turns expert demonstrations into a policy, avoiding the notoriously hard task of reward design."
             },
             {
@@ -4860,10 +4860,10 @@
               "choices": [
                 "Because IRL uses a larger neural network than BC",
                 "Because IRL needs no demonstrations at all",
-                "Because IRL learns <em>why</em> the expert acts (the objective), which an RL agent can optimize even in novel states the demos never showed — whereas BC's state→action mapping breaks off-distribution",
-                "Because IRL memorizes more of the expert's trajectories"
+                "Because IRL memorizes more of the expert's trajectories",
+                "Because IRL learns <em>why</em> the expert acts (the objective), which an RL agent can optimize even in novel states the demos never showed — whereas BC's state→action mapping breaks off-distribution"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "A learned reward (\"stay centered, avoid collisions, make progress\") is a compact, transferable description of the task that still gives sensible guidance on a brand-new road. Cloned actions, by contrast, are only defined on states resembling the demonstrations."
             }
           ],

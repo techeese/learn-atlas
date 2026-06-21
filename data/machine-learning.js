@@ -33,12 +33,12 @@
             {
               "q": "To classify a new point, 5-NN looks at its 5 nearest neighbors with labels {A, A, B, A, B}. What does it predict?",
               "choices": [
-                "A",
                 "B",
+                "A",
                 "A tie, so it refuses to predict",
                 "The average of A and B"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Majority vote: three A's beat two B's, so the prediction is A. (Using an odd k avoids ties in two-class problems.)"
             },
             {
@@ -57,32 +57,32 @@
               "choices": [
                 "Larger k increases variance and decreases bias",
                 "k has no effect on bias or variance",
-                "Larger k increases both bias and variance",
-                "Larger k decreases variance and increases bias (smoother boundary)"
+                "Larger k decreases variance and increases bias (smoother boundary)",
+                "Larger k increases both bias and variance"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "A larger k averages more neighbors, smoothing the prediction: lower variance but higher bias. Small k is jagged (high variance, low bias)."
             },
             {
               "q": "What is the decision boundary of 1-NN over a set of training points?",
               "choices": [
                 "Always a straight line",
-                "A set of Voronoi cells, one per training point",
+                "Undefined for more than two classes",
                 "A single circle around the mean",
-                "Undefined for more than two classes"
+                "A set of Voronoi cells, one per training point"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "1-NN assigns each region of space to its closest training point, partitioning the plane into Voronoi cells labeled by those points."
             },
             {
               "q": "The \"curse of dimensionality\" hurts kNN because, as dimensions grow,",
               "choices": [
                 "the training step becomes too slow",
-                "the labels become noisier",
                 "all points become roughly equidistant, so \"nearest\" loses meaning",
+                "the labels become noisier",
                 "Euclidean distance can no longer be computed"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "In high dimensions distances concentrate — nearest and farthest neighbors become nearly the same distance — so the notion of a meaningful nearest neighbor breaks down."
             },
             {
@@ -99,12 +99,12 @@
             {
               "q": "What is the main computational drawback of kNN?",
               "choices": [
-                "Training requires expensive matrix inversion",
                 "Prediction is slow because each query compares against many stored points",
+                "Training requires expensive matrix inversion",
                 "It needs enormous amounts of memory during training only",
                 "It cannot be parallelized"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "kNN defers all work to query time: a naive prediction is O(nd), comparing the query against all n training points. Spatial indexes mitigate this."
             }
           ],
@@ -176,32 +176,32 @@
               "choices": [
                 "It averages the predictions of all leaves",
                 "It finds the k nearest training points and votes",
-                "It follows the feature tests from the root down to a leaf and returns that leaf's value",
-                "It multiplies the input by a learned weight vector"
+                "It multiplies the input by a learned weight vector",
+                "It follows the feature tests from the root down to a leaf and returns that leaf's value"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Prediction routes the input through the yes/no tests from root to a leaf; the leaf holds the predicted class or value."
             },
             {
               "q": "At each node, a greedy (CART/ID3) tree learner chooses the split that...",
               "choices": [
-                "most reduces the impurity of the resulting child nodes",
+                "minimizes the depth of the tree",
                 "produces exactly two equal-sized children",
                 "uses the feature with the largest numeric values",
-                "minimizes the depth of the tree"
+                "most reduces the impurity of the resulting child nodes"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Greedy top-down induction picks, at each node, the feature/threshold giving the largest impurity decrease (information gain)."
             },
             {
               "q": "The Gini impurity of a node with class proportions $p_i$ is",
               "choices": [
                 "$\\sum_i p_i \\log_2 p_i$",
-                "$\\max_i p_i$",
+                "$1 - \\sum_i p_i^2$",
                 "$\\sum_i p_i^2$",
-                "$1 - \\sum_i p_i^2$"
+                "$\\max_i p_i$"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Gini is $1 - \\sum_i p_i^2$ — the probability of mislabeling a sample guessed from the node's class frequencies; 0 when pure."
             },
             {
@@ -231,32 +231,32 @@
               "choices": [
                 "always achieve the highest accuracy",
                 "are guaranteed to find the globally optimal model",
-                "require very large datasets to work at all",
-                "are interpretable as if-then rules and need no feature scaling"
+                "are interpretable as if-then rules and need no feature scaling",
+                "require very large datasets to work at all"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Trees read out as transparent rules and split on one feature at a time, so they are scale-invariant and need no standardization — unlike kNN."
             },
             {
               "q": "A key weakness of a single decision tree is that it is",
               "choices": [
                 "unable to handle categorical features",
-                "high-variance — a small change in the data can yield a very different tree",
                 "only usable for regression, not classification",
+                "high-variance — a small change in the data can yield a very different tree",
                 "incapable of modeling feature interactions"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Single trees are unstable/high-variance; small data perturbations can change early splits and reshape the whole tree — which ensembles fix."
             },
             {
               "q": "Finding the globally optimal decision tree is",
               "choices": [
-                "solvable in linear time by sorting the features",
-                "trivial once the data is scaled",
                 "NP-hard, so practical learners use greedy top-down splitting",
+                "trivial once the data is scaled",
+                "solvable in linear time by sorting the features",
                 "only possible with gradient descent"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Optimal tree construction is NP-hard; CART/ID3 are greedy heuristics that take the locally-best split at each node rather than searching all trees."
             }
           ],
@@ -332,34 +332,34 @@
             {
               "q": "What does a linear regression model output?",
               "choices": [
-                "The nearest training label",
-                "A probability between 0 and 1",
                 "A weighted sum of the features plus a bias: $\\hat{y} = w^\\top x + b$",
+                "A probability between 0 and 1",
+                "The nearest training label",
                 "The majority class of the dataset"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Linear regression predicts a continuous value as a weighted sum of the inputs plus an intercept; there is no squashing into [0,1]."
             },
             {
               "q": "Least-squares training chooses the weights that",
               "choices": [
-                "minimize the mean squared residual (MSE)",
-                "maximize the number of points the line passes through exactly",
                 "minimize the largest single residual only",
+                "maximize the number of points the line passes through exactly",
+                "minimize the mean squared residual (MSE)",
                 "set all weights equal"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Ordinary least squares minimizes the average squared difference between predictions and targets — a smooth convex objective."
             },
             {
               "q": "The closed-form 'normal equations' solution for the weights is",
               "choices": [
                 "$w = X^\\top y$",
-                "$w = (X^\\top X)^{-1} X^\\top y$",
                 "$w = X^{-1} y$",
+                "$w = (X^\\top X)^{-1} X^\\top y$",
                 "$w = \\tfrac{1}{n}\\sum_i y_i$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Setting the gradient of the squared error to zero gives $w = (X^\\top X)^{-1} X^\\top y$ — geometrically, the projection of $y$ onto the column space of $X$."
             },
             {
@@ -376,23 +376,23 @@
             {
               "q": "How do you interpret a coefficient $w_j$?",
               "choices": [
-                "The expected change in the prediction per one-unit increase in feature $j$, holding the others fixed",
                 "The probability that feature $j$ is relevant",
+                "The expected change in the prediction per one-unit increase in feature $j$, holding the others fixed",
                 "The correlation between feature $j$ and every other feature",
                 "The number of times feature $j$ appears in the data"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Each weight is the marginal effect of its feature on the prediction, all else equal — which is why linear regression is so interpretable."
             },
             {
               "q": "What does $R^2$ measure?",
               "choices": [
                 "The total number of features used",
-                "The model's training time",
                 "The fraction of the target's variance the model explains",
+                "The model's training time",
                 "The probability the model is correct"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$R^2 = 1 - \\text{SS}_{res}/\\text{SS}_{tot}$ is the proportion of variance explained: 1 is perfect, 0 is no better than predicting the mean."
             },
             {
@@ -409,12 +409,12 @@
             {
               "q": "Saying linear regression is 'linear in the parameters' means you can",
               "choices": [
-                "only ever fit straight lines",
                 "fit nonlinear curves by transforming features (e.g. add $x^2$), still solving a linear problem in $w$",
+                "only ever fit straight lines",
                 "never use more than one feature",
                 "skip the bias term"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The model is linear in the weights, so transformed features (polynomials, logs, interactions) let it fit curves while the optimization stays ordinary least squares."
             }
           ],
@@ -485,11 +485,11 @@
               "q": "What does a logistic regression model output for an input?",
               "choices": [
                 "The nearest class label by distance",
-                "A probability in (0,1) that the input is in the positive class",
+                "The cluster the point belongs to",
                 "An unbounded real-valued score only",
-                "The cluster the point belongs to"
+                "A probability in (0,1) that the input is in the positive class"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Logistic regression passes the linear score through a sigmoid, producing a calibrated probability in (0,1) for the positive class."
             },
             {
@@ -497,76 +497,76 @@
               "choices": [
                 "(0,1) to all real numbers",
                 "integers to integers",
-                "probabilities to log-odds",
-                "any real number to the open interval (0,1)"
+                "any real number to the open interval (0,1)",
+                "probabilities to log-odds"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The sigmoid squashes the whole real line into (0,1): large +z → 1, large −z → 0, z=0 → 0.5."
             },
             {
               "q": "The decision boundary of logistic regression is",
               "choices": [
-                "linear — the hyperplane $w^\\top x + b = 0$ where $\\hat{p}=0.5$",
                 "always a circle",
+                "linear — the hyperplane $w^\\top x + b = 0$ where $\\hat{p}=0.5$",
                 "curved because of the sigmoid",
                 "undefined for probabilities"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The boundary is where the probability is 0.5, i.e. z = w·x + b = 0 — a hyperplane. The sigmoid sets confidence, not the boundary's shape."
             },
             {
               "q": "Logistic regression is trained by minimizing",
               "choices": [
-                "the squared error between probabilities and labels",
-                "the number of misclassified points directly",
                 "the cross-entropy (log) loss",
+                "the number of misclassified points directly",
+                "the squared error between probabilities and labels",
                 "the distance to the nearest neighbor"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Maximum likelihood under a Bernoulli model is equivalent to minimizing cross-entropy / log loss, which is convex in the weights."
             },
             {
               "q": "Why is squared error a poor loss for logistic regression?",
               "choices": [
                 "It cannot be computed for probabilities",
-                "Combined with the sigmoid it is non-convex and gives weak gradients when confidently wrong",
+                "It requires a closed-form solution",
                 "It always predicts the majority class",
-                "It requires a closed-form solution"
+                "Combined with the sigmoid it is non-convex and gives weak gradients when confidently wrong"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Squared-error-plus-sigmoid is non-convex and its gradient vanishes when the model is confidently wrong (saturated sigmoid). Cross-entropy is convex with a strong p−y gradient."
             },
             {
               "q": "How do you interpret a coefficient $w_j$ in logistic regression?",
               "choices": [
-                "It is the predicted probability of feature $j$",
+                "It changes the log-odds; $e^{w_j}$ is the odds multiplier per unit of feature $j$",
                 "It is the Euclidean distance along axis $j$",
                 "It has no interpretation",
-                "It changes the log-odds; $e^{w_j}$ is the odds multiplier per unit of feature $j$"
+                "It is the predicted probability of feature $j$"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "The linear score is the log-odds, so $w_j$ is the change in log-odds per unit feature, and $e^{w_j}$ multiplies the odds (all else fixed)."
             },
             {
               "q": "To classify more than two classes, logistic regression uses",
               "choices": [
-                "softmax (multinomial) regression or one-vs-rest",
-                "a decision tree instead",
                 "k-means clustering",
+                "a decision tree instead",
+                "softmax (multinomial) regression or one-vs-rest",
                 "nothing — it only does binary"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Softmax generalizes the sigmoid to K classes (a distribution over classes); one-vs-rest trains one binary classifier per class. Boundaries stay linear."
             },
             {
               "q": "Logistic regression is mathematically equivalent to",
               "choices": [
                 "a k-nearest-neighbor classifier",
-                "a fully grown decision tree",
                 "a single artificial neuron with a sigmoid activation",
+                "a fully grown decision tree",
                 "an unsupervised clustering method"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "A logistic regression unit computes w·x+b then a sigmoid — exactly one neuron. It is the atom that neural networks stack and add nonlinearities to."
             }
           ],
@@ -638,43 +638,43 @@
               "choices": [
                 "Slow training speed",
                 "Missing data values",
-                "Data that is not yet standardized",
-                "Overfitting — large, unstable weights that fit noise"
+                "Overfitting — large, unstable weights that fit noise",
+                "Data that is not yet standardized"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Regularization penalizes large weights to curb overfitting, trading a little bias for much lower variance and more stable coefficients."
             },
             {
               "q": "Ridge regression adds which penalty to the loss?",
               "choices": [
                 "The number of nonzero weights",
-                "$\\lambda$ times the sum of squared weights (L2)",
+                "The maximum weight value",
                 "$\\lambda$ times the sum of absolute weights",
-                "The maximum weight value"
+                "$\\lambda$ times the sum of squared weights (L2)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Ridge uses the L2 penalty $\\lambda \\sum_j w_j^2$, giving the closed form $(X^\\top X + \\lambda I)^{-1}X^\\top y$ and smooth shrinkage."
             },
             {
               "q": "Lasso (L1 penalty) is notable because it",
               "choices": [
-                "always gives a higher R-squared than ridge",
-                "cannot be used with more than one feature",
                 "drives some weights exactly to zero, performing feature selection",
+                "cannot be used with more than one feature",
+                "always gives a higher R-squared than ridge",
                 "has a simpler closed form than ridge"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The L1 penalty produces exact zeros, yielding a sparse model that automatically selects a subset of features. It has no closed form (corner at 0)."
             },
             {
               "q": "As the regularization strength $\\lambda \\to \\infty$, the weights",
               "choices": [
-                "shrink toward zero, making the model simpler and more biased",
-                "grow without bound",
                 "stay exactly at the least-squares values",
+                "grow without bound",
+                "shrink toward zero, making the model simpler and more biased",
                 "become random"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Larger $\\lambda$ weights the penalty more, forcing weights toward zero; at the extreme the model predicts (near) a constant — maximal bias, minimal variance."
             },
             {
@@ -714,11 +714,11 @@
               "q": "Why must you standardize features before regularizing?",
               "choices": [
                 "Regularization only works on positive numbers",
-                "Standardizing removes the need for a bias term",
                 "The penalty sums over weights, so unscaled features get penalized unequally and arbitrarily",
+                "Standardizing removes the need for a bias term",
                 "It makes the closed form exact"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Because the penalty depends on weight magnitudes, features on different scales are penalized inconsistently; standardizing puts them on equal footing."
             }
           ],
@@ -805,12 +805,12 @@
             {
               "q": "What are the 'support vectors' of an SVM?",
               "choices": [
-                "The training points closest to the boundary, which alone determine it",
+                "The eigenvectors of the kernel matrix",
                 "All the training points equally",
                 "The feature columns of the data matrix",
-                "The eigenvectors of the kernel matrix"
+                "The training points closest to the boundary, which alone determine it"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Only the borderline points (support vectors) define the optimal boundary; points comfortably on the correct side can be removed without changing it — the solution is sparse in the data."
             },
             {
@@ -818,21 +818,21 @@
               "choices": [
                 "the number of features used",
                 "the learning rate of gradient descent",
-                "the dimension of the kernel space",
-                "the trade-off between a wide margin and tolerating misclassifications"
+                "the trade-off between a wide margin and tolerating misclassifications",
+                "the dimension of the kernel space"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Large C punishes margin violations (narrow margin, tight fit, risk of overfit); small C tolerates violations (wider margin, more bias). It's the SVM's regularization knob."
             },
             {
               "q": "What does the kernel trick let an SVM do?",
               "choices": [
-                "Train without any labels",
                 "Compute dot products in a high-dimensional feature space without explicitly forming the features",
+                "Train without any labels",
                 "Guarantee a linear boundary in the original space",
                 "Avoid choosing any hyperparameters"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A kernel returns the inner product in an implicit high-dim space directly, so the SVM gets nonlinear boundaries without ever building the huge feature vectors."
             },
             {
@@ -840,32 +840,32 @@
               "choices": [
                 "one-dimensional",
                 "the same as the input space",
-                "effectively infinite-dimensional",
-                "empty"
+                "empty",
+                "effectively infinite-dimensional"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The RBF kernel implicitly maps to an infinite-dimensional space, which is why it can represent almost any decision boundary; yet each evaluation is just an exponential of a distance."
             },
             {
               "q": "Why does maximizing the margin improve generalization?",
               "choices": [
-                "A wider margin is a lower-complexity (small-weight) solution — built-in regularization",
                 "It increases the number of support vectors",
+                "A wider margin is a lower-complexity (small-weight) solution — built-in regularization",
                 "It memorizes the training set",
                 "It removes the need for labels"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Maximizing the margin minimizes the weight norm (like L2 regularization) — the simplest separator — and structural risk minimization ties wider margins to tighter test-error bounds."
             },
             {
               "q": "Why must features be standardized before training an SVM (especially with RBF)?",
               "choices": [
-                "SVMs can't handle decimals",
+                "Kernels and margins are distance-based, so unscaled large-range features dominate",
                 "To make the labels balanced",
                 "SVMs require integer features",
-                "Kernels and margins are distance-based, so unscaled large-range features dominate"
+                "SVMs can't handle decimals"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Margins and kernels (RBF especially) depend on distances; without scaling, a large-range feature swamps the others — the same scaling lesson as kNN."
             },
             {
@@ -968,34 +968,34 @@
             {
               "q": "Training a Naive Bayes classifier mainly involves",
               "choices": [
-                "counting frequencies to estimate P(class) and P(featureⱼ|class) — no iterative optimization",
                 "gradient descent on a cross-entropy loss",
+                "counting frequencies to estimate P(class) and P(featureⱼ|class) — no iterative optimization",
                 "solving a quadratic program",
                 "building a tree by recursive splitting"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Thanks to the factorization, you just estimate each probability by counting in one pass over the data — no optimization loop."
             },
             {
               "q": "What problem does Laplace (add-one) smoothing solve?",
               "choices": [
-                "Features on different scales",
-                "Too many classes",
                 "A feature value unseen with a class gives probability 0, which zeros the whole product",
+                "Too many classes",
+                "Features on different scales",
                 "Overfitting from too many trees"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Because the class score is a product, a single zero estimate annihilates it. Add-one smoothing ensures no probability is exactly zero."
             },
             {
               "q": "Which Naive Bayes variant is the default for word-count text features?",
               "choices": [
                 "Gaussian Naive Bayes",
-                "Multinomial Naive Bayes",
                 "Bernoulli Naive Bayes",
+                "Multinomial Naive Bayes",
                 "Kernel Naive Bayes"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Multinomial NB models count data (e.g. word frequencies) and is the standard choice for text classification; Bernoulli for binary, Gaussian for continuous."
             },
             {
@@ -1003,32 +1003,32 @@
               "choices": [
                 "It secretly models all correlations",
                 "It uses gradient descent to correct itself",
-                "The assumption is actually usually true",
-                "Classification needs only the correct argmax, not calibrated probabilities"
+                "Classification needs only the correct argmax, not calibrated probabilities",
+                "The assumption is actually usually true"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Double-counting correlated features miscalibrates the probabilities but usually preserves which class scores highest — and the label only depends on that argmax."
             },
             {
               "q": "How do Naive Bayes and logistic regression relate?",
               "choices": [
-                "Naive Bayes is generative (models P(x|y)P(y)); logistic regression is discriminative (models P(y|x) directly)",
+                "Logistic regression is a special kind of decision tree",
                 "They are identical algorithms",
                 "Both are unsupervised",
-                "Logistic regression is a special kind of decision tree"
+                "Naive Bayes is generative (models P(x|y)P(y)); logistic regression is discriminative (models P(y|x) directly)"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Naive Bayes models how data is generated then applies Bayes' rule; logistic regression learns the boundary P(y|x) directly. They're the classic generative/discriminative pair."
             },
             {
               "q": "A key practical strength of Naive Bayes is that it",
               "choices": [
-                "always achieves the lowest possible error",
-                "produces perfectly calibrated probabilities",
                 "is fast, data-thrifty, and works well in high dimensions like text/spam",
+                "produces perfectly calibrated probabilities",
+                "always achieves the lowest possible error",
                 "requires no training data"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "One counting pass makes it extremely fast and effective with little data and many features (text), which is why it's a strong baseline despite poor calibration."
             }
           ],
@@ -1105,11 +1105,11 @@
               "q": "k-Means clustering is what kind of learning?",
               "choices": [
                 "Reinforcement learning",
-                "Supervised regression",
                 "Unsupervised — it finds groups in data with no labels",
+                "Supervised regression",
                 "Semi-supervised ranking"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Clustering is unsupervised: there are no target labels; k-means discovers structure (groups) from the feature geometry alone."
             },
             {
@@ -1127,11 +1127,11 @@
               "q": "What objective does k-means minimize?",
               "choices": [
                 "The margin between clusters",
-                "The within-cluster sum of squared distances (inertia)",
                 "The cross-entropy of the labels",
+                "The within-cluster sum of squared distances (inertia)",
                 "The number of clusters"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "k-means minimizes inertia J = Σ Σ ‖x − μ_c‖² — total squared distance of points to their centroids. Both steps monotonically decrease it."
             },
             {
@@ -1149,33 +1149,33 @@
               "q": "The 'elbow method' is a heuristic for choosing",
               "choices": [
                 "the learning rate",
-                "the distance metric",
                 "k, the number of clusters",
+                "the distance metric",
                 "the random seed"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Plot inertia vs k and look for the 'elbow' where extra clusters stop reducing inertia much — a guide to a sensible number of clusters."
             },
             {
               "q": "A key limitation of k-means is that it assumes clusters are",
               "choices": [
-                "roughly spherical and similar in size (it struggles with non-convex shapes)",
+                "labeled in advance",
                 "always exactly two in number",
                 "linearly separable by a hyperplane",
-                "labeled in advance"
+                "roughly spherical and similar in size (it struggles with non-convex shapes)"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Judging by distance to a center, k-means favors spherical, similar-size clusters and mis-cuts elongated or ring-shaped ones (use DBSCAN/spectral there)."
             },
             {
               "q": "Why should you standardize features before running k-means?",
               "choices": [
-                "k-means requires positive values",
                 "It is distance-based, so a large-range feature would dominate the clustering",
+                "k-means requires positive values",
                 "To reduce the number of clusters",
                 "To make it supervised"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Like kNN and SVMs, k-means uses distances; without scaling, a large-range feature dominates and the clusters reflect that feature alone."
             },
             {
@@ -1183,10 +1183,10 @@
               "choices": [
                 "It requires labels",
                 "It cannot be used for clustering",
-                "It is always faster",
-                "It makes soft, probabilistic cluster assignments (via EM) rather than hard ones"
+                "It makes soft, probabilistic cluster assignments (via EM) rather than hard ones",
+                "It is always faster"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "GMM (fit by EM) gives each point a probability of membership in each Gaussian cluster; k-means is the hard-assignment, spherical-equal-variance special case."
             }
           ],
@@ -1263,22 +1263,22 @@
               "q": "What is the core idea of ensemble methods?",
               "choices": [
                 "Train a single very deep model",
-                "Combine many models so the result beats any individual one",
+                "Use only the most accurate single model",
                 "Remove all but the best feature",
-                "Use only the most accurate single model"
+                "Combine many models so the result beats any individual one"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Ensembles aggregate many models (averaging or voting); if their errors aren't perfectly correlated, the combination is more accurate and stable than any one."
             },
             {
               "q": "Bagging (bootstrap aggregating) reduces error mainly by",
               "choices": [
                 "reducing bias by fitting residuals",
-                "adding more features",
+                "reducing variance — averaging models trained on bootstrap resamples",
                 "pruning the trees",
-                "reducing variance — averaging models trained on bootstrap resamples"
+                "adding more features"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Each model trains on a different resample, so they make different errors; averaging cancels variance. Bagging is ideal for high-variance learners like full trees."
             },
             {
@@ -1295,12 +1295,12 @@
             {
               "q": "How does boosting differ from bagging?",
               "choices": [
-                "It trains all models in parallel on the full data",
-                "It only works for regression",
                 "It trains models sequentially, each correcting the previous ones' mistakes (reducing bias)",
+                "It only works for regression",
+                "It trains all models in parallel on the full data",
                 "It never overfits"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Boosting is sequential: each learner focuses on the errors so far, combining weak learners into a strong one and mainly reducing bias (vs bagging's variance reduction)."
             },
             {
@@ -1319,21 +1319,21 @@
               "choices": [
                 "It increases the bias to compensate",
                 "It removes the need for training data",
-                "Averaging always eliminates error entirely",
-                "Uncorrelated errors partly cancel, so the variance of the average falls with the number of models"
+                "Uncorrelated errors partly cancel, so the variance of the average falls with the number of models",
+                "Averaging always eliminates error entirely"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "For n uncorrelated models of variance σ², the average has variance σ²/n. (Correlation ρ leaves a floor ρσ², which is why random forests decorrelate.)"
             },
             {
               "q": "On typical structured/tabular datasets, which often performs best?",
               "choices": [
-                "Gradient-boosted trees and random forests (often beating deep nets)",
+                "An unregularized deep neural network",
                 "A single k-nearest-neighbor model",
                 "Plain linear regression",
-                "An unregularized deep neural network"
+                "Gradient-boosted trees and random forests (often beating deep nets)"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Tree ensembles, especially gradient boosting (XGBoost/LightGBM), are the state of the art on tabular data and frequently outperform deep learning there."
             },
             {
@@ -1432,55 +1432,55 @@
               "q": "What is the role of the train/validation/test split?",
               "choices": [
                 "All three are used to fit parameters",
-                "Train fits parameters, validation tunes hyperparameters/selects models, test gives a final unbiased estimate (used once)",
+                "Validation is never needed",
                 "Test is used to tune the model",
-                "Validation is never needed"
+                "Train fits parameters, validation tunes hyperparameters/selects models, test gives a final unbiased estimate (used once)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Parameters are fit on train; hyperparameters and model choice on validation; the test set is touched once at the end for an honest performance estimate."
             },
             {
               "q": "How does k-fold cross-validation work?",
               "choices": [
                 "It trains on the test set k times",
-                "It uses only one fixed validation split",
                 "Split into k folds; train on k−1, validate on the held-out fold, rotate, and average the scores",
+                "It uses only one fixed validation split",
                 "It removes k random points and ignores them"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Each fold serves as validation exactly once; averaging the k scores gives a robust estimate while using all data for both training and validation."
             },
             {
               "q": "Why does random search often beat grid search for the same budget?",
               "choices": [
-                "It explores more distinct values of the few hyperparameters that actually matter",
                 "It always finds the global optimum",
+                "It explores more distinct values of the few hyperparameters that actually matter",
                 "It needs no cross-validation",
                 "It only tries one configuration"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Usually only a few hyperparameters matter; random sampling covers more distinct values of those, whereas a grid wastes trials on unimportant ones."
             },
             {
               "q": "On a dataset that is 99% negative, a model reporting 99% accuracy",
               "choices": [
-                "is definitely excellent",
+                "may be useless — it could just always predict 'negative'; check precision/recall",
                 "has perfect recall",
                 "is impossible",
-                "may be useless — it could just always predict 'negative'; check precision/recall"
+                "is definitely excellent"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Accuracy is dominated by the majority class; 'always negative' scores 99% while catching no positives. On imbalanced data, use precision/recall/F1/AUC."
             },
             {
               "q": "Data leakage is",
               "choices": [
-                "when the model trains too slowly",
                 "information from outside the training fold (test data or the target) sneaking into training, inflating the estimate",
+                "when the model trains too slowly",
                 "when you have too little data",
                 "a type of regularization"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Leakage = the model gains access to information unavailable at prediction time (e.g. preprocessing fit on all data, or a target proxy), giving falsely high scores that collapse in production."
             },
             {
@@ -1497,12 +1497,12 @@
             {
               "q": "To tune hyperparameters honestly, you should",
               "choices": [
-                "select on validation/cross-validation and report on a test set touched only once (nested CV if tuning heavily)",
-                "tune directly on the test set to save data",
                 "skip validation and use training accuracy",
+                "tune directly on the test set to save data",
+                "select on validation/cross-validation and report on a test set touched only once (nested CV if tuning heavily)",
                 "pick hyperparameters before seeing any data and never change them"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Choose hyperparameters by CV/validation; the test set is used once for the final estimate. Heavy tuning overfits validation, so nested CV separates choosing from judging."
             }
           ],

@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 605: **Balance MCQ answer positions site-wide** (content quality / test integrity). Correct-answer position was skewed A26/B42/C22/D10 (B exploitable,
+   32 lessons >50% one pos). Reordered choices (correct text unchanged, answer index updated) on 1,843 MCQs; locked 53 whose explanation names a position; per-move
+   correctness assertion. Now exactly 25/25/25/25, 0 skewed lessons. Verified: gate GREEN; headless quiz marks the data-answer correct, kErr=0/errs=0. SW →v546.
    ✅ iter 604: **L1-vs-L2 regularization geometry viz — 102nd widget** (visualizations). ml-reg-viz: loss contours + gold budget region (diamond=L1 / circle=L2);
    numerical boundary solver shows L1 snaps to an axis corner (weight→exactly 0, sparse) while L2 shrinks both. Embedded in ml-regularization §5. ML viz now 9/10
    lessons (naive-bayes left). Verified: gate GREEN (102 widgets); headless L1→(1.00,0.00)/L2→(0.97,0.26), kErr=0/errs=0; screenshot. SW →v545.

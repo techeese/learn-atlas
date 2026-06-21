@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 605 — Balance MCQ answer positions site-wide (content quality / test integrity)
+An audit found the correct-answer **position** was badly skewed across the 2,504 MCQs: **A 26% · B 42% · C 22% · D 10%** — answer B was right 42% of the time and D
+only 10%, so a test-savvy learner could beat the odds by "guessing B," and 32 lessons had >50% of answers at a single position. Fixed it the safe way: for each MCQ,
+**reorder the choices array** so the correct answer lands at a balanced position and update `answer` to match — the *correct choice text is unchanged*, only where it sits.
+Each lesson is balanced around any **locked** MCQs whose explanation names a position (e.g. "Option A is…") — **53 such MCQs were detected and left untouched** so no
+explanation is contradicted. A per-move assertion (`choices[answer] === the original correct text`) guarded every one of the **1,843 reorderings**.
+Result: the global distribution is now **exactly 25.0% / 25.0% / 25.0% / 25.0%** (626 each) and **0 lessons** exceed 50% at one position (was 32).
+Verified: all 9 data files parse; gate ALL GREEN (every answer in range; no dup stems); the in-script correctness assertion passed for all 1,843 moves; **headless** quiz
+smoke on ml-svm — 4 choices render, clicking the data-`answer` choice is marked correct (exactly 1 correct), kErr=0, errs=0. SW cache `atlas-v545` → `atlas-v546`.
+
 ## iter 604 — L1-vs-L2 regularization geometry viz — the 102nd widget (visualizations)
 The famous "why does lasso zero coefficients?" picture, made interactive — the single hardest regularization idea to get from text. **`ml-reg-viz` "L1 vs L2: why lasso
 zeros coefficients"** plots the two-weight plane: sage loss contours around the off-axis best fit, and a gold **budget region** around the origin — a **diamond** for L1

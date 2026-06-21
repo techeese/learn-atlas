@@ -21,56 +21,56 @@
             {
               "q": "In Kolmogorov's framework, why is it useful to model events as *subsets* of the sample space $\\Omega$ rather than as informal verbal descriptions?",
               "choices": [
-                "It guarantees every event has probability exactly $\\tfrac{1}{|\\Omega|}$",
                 "It lets us combine and manipulate events using set operations (union, intersection, complement) with established rules",
+                "It guarantees every event has probability exactly $\\tfrac{1}{|\\Omega|}$",
                 "It removes the need to specify $\\Omega$ in the first place",
                 "It forces all outcomes to be equally likely"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Modeling events as subsets means logical combinations of events become set operations, so all the algebra of sets applies directly. Equal probabilities are a special-case assumption, not a consequence of the set model."
             },
             {
               "q": "For the two-ordered-dice experiment with $|\\Omega| = 36$, let $A$ be the event \"the sum is 7.\" How many outcomes are in $A$?",
               "choices": [
                 "5",
-                "6",
                 "7",
+                "6",
                 "11"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The ordered pairs summing to 7 are $(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)$ — exactly 6 outcomes. The value 11 confuses the number of possible sums with the count of favorable outcomes."
             },
             {
               "q": "A student says, \"For two dice, the sample space is the set of possible sums $\\{2,3,\\dots,12\\}$, so there are 11 equally likely outcomes.\" What is the flaw?",
               "choices": [
                 "The flaw is real: there really are 11 equally likely sums",
-                "Sums are not equally likely; the natural equiprobable space is the 36 ordered pairs",
+                "Sums cannot form a valid sample space at all",
                 "The sample space should have 12 elements, not 11",
-                "Sums cannot form a valid sample space at all"
+                "Sums are not equally likely; the natural equiprobable space is the 36 ordered pairs"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The 11 sums are mutually exclusive and exhaustive, so they form a valid sample space, but they are NOT equally likely (a sum of 7 has 6 ways, a sum of 2 has 1). Equiprobability holds for the 36 ordered pairs, not the sums."
             },
             {
               "q": "Which property must the outcomes of a sample space $\\Omega$ satisfy?",
               "choices": [
                 "They must be equally likely",
-                "They must be mutually exclusive and exhaustive, so exactly one occurs per trial",
+                "They must each be a subset of some larger set",
                 "They must be finite in number",
-                "They must each be a subset of some larger set"
+                "They must be mutually exclusive and exhaustive, so exactly one occurs per trial"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "By definition the outcomes partition every trial: mutually exclusive (no two happen together) and exhaustive (at least one happens), so exactly one occurs. Outcomes need not be equally likely nor finite."
             },
             {
               "q": "Two events $A$ and $B$ are called *mutually exclusive* (disjoint) when:",
               "choices": [
                 "$A \\cup B = \\Omega$",
-                "$A \\cap B = \\varnothing$",
+                "$A \\subseteq B$",
                 "$A = B^c$",
-                "$A \\subseteq B$"
+                "$A \\cap B = \\varnothing$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Mutually exclusive means the events cannot both occur, i.e. they share no outcomes: $A \\cap B = \\varnothing$. The condition $A \\cup B = \\Omega$ describes exhaustive (collectively covering) events, and $A = B^c$ is the stronger 'complementary' relationship."
             },
             {
@@ -88,44 +88,44 @@
               "q": "How many distinct events (subsets, including $\\varnothing$ and $\\Omega$) can be formed from a sample space with $|\\Omega| = 4$?",
               "choices": [
                 "4",
-                "8",
                 "16",
+                "8",
                 "24"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The number of subsets of a set with $n$ elements is $2^n$, so $2^4 = 16$. The value 24 is $4!$ (orderings, not subsets), and 8 would be $2^3$."
             },
             {
               "q": "Which of the following is the correct statement of the three Kolmogorov axioms?",
               "choices": [
-                "$P(A) \\ge 0$; $P(\\Omega) = 1$; for disjoint $A,B$, $P(A \\cup B) = P(A) + P(B)$",
                 "$P(A) > 0$; $P(\\Omega) = 1$; $P(A \\cup B) = P(A) + P(B)$ for all $A,B$",
+                "$P(A) \\ge 0$; $P(\\Omega) = 1$; for disjoint $A,B$, $P(A \\cup B) = P(A) + P(B)$",
                 "$0 \\le P(A) \\le 1$; $P(\\varnothing) = 1$; $P(A \\cap B) = P(A)P(B)$",
                 "$P(A) \\ge 0$; $P(\\Omega) = \\infty$; $P(A \\cup B) = P(A)\\,P(B)$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The axioms are non-negativity ($P(A)\\ge 0$), normalization ($P(\\Omega)=1$), and additivity for disjoint events ($P(A\\cup B)=P(A)+P(B)$). Additivity requires disjointness, $P(A)$ can be 0, and $P(A)P(B)$ describes independence — a separate notion, not an axiom."
             },
             {
               "q": "A student claims $P(A \\cup B) = P(A) + P(B)$ for the events $A=\\{2,4,6\\}$ and $B=\\{4,5,6\\}$ on a fair die, computing $\\tfrac{3}{6}+\\tfrac{3}{6}=1$. Why is this wrong, and what is the correct value?",
               "choices": [
                 "It is correct; $P(A\\cup B)=1$",
-                "Additivity needs disjoint events; here $A\\cap B=\\{4,6\\}$, so $P(A\\cup B)=\\tfrac{4}{6}$",
                 "The correct value is $\\tfrac{6}{6}=1$ because the die has 6 faces",
+                "Additivity needs disjoint events; here $A\\cap B=\\{4,6\\}$, so $P(A\\cup B)=\\tfrac{4}{6}$",
                 "Additivity always holds, so $P(A\\cup B)=\\tfrac{3}{6}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The additivity axiom only applies to disjoint events. Since $A$ and $B$ overlap in $\\{4,6\\}$, we must use inclusion-exclusion: $A\\cup B = \\{2,4,5,6\\}$, giving $P(A\\cup B)=\\tfrac{4}{6}=\\tfrac{2}{3}$, not 1."
             },
             {
               "q": "Using only the axioms, which statement about the complement $A^c$ must hold?",
               "choices": [
-                "$P(A^c) = 1 - P(A)$",
                 "$P(A^c) = P(A)$",
+                "$P(A^c) = 1 - P(A)$",
                 "$P(A^c) = 1 + P(A)$",
                 "$P(A^c) = \\tfrac{1}{P(A)}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Since $A$ and $A^c$ are disjoint with $A \\cup A^c = \\Omega$, additivity and normalization give $P(A)+P(A^c)=P(\\Omega)=1$, hence $P(A^c)=1-P(A)$. This is a derived theorem, not a separate axiom."
             },
             {
@@ -133,10 +133,10 @@
               "choices": [
                 "$\\frac{12}{52}$",
                 "$\\frac{25}{52}$",
-                "$\\frac{22}{52}$",
-                "$\\frac{16}{52}$"
+                "$\\frac{16}{52}$",
+                "$\\frac{22}{52}$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "There are 12 face cards and 13 hearts, overlapping in 3 (J, Q, K of hearts). By inclusion-exclusion: $\\tfrac{12}{52}+\\tfrac{13}{52}-\\tfrac{3}{52}=\\tfrac{22}{52}$. The answer $\\tfrac{25}{52}$ is the common error of forgetting to subtract the overlap."
             },
             {
@@ -153,12 +153,12 @@
             {
               "q": "You roll a fair die twice. Using the complement rule, what is $P(\\text{at least one } 6)$?",
               "choices": [
-                "$\\frac{2}{6} = \\frac{1}{3}$, by adding the chance of a 6 on each roll.",
                 "$1 - \\left(\\frac{5}{6}\\right)^2 = \\frac{11}{36}$ — one minus the probability of \"no 6 on either roll.\"",
+                "$\\frac{2}{6} = \\frac{1}{3}$, by adding the chance of a 6 on each roll.",
                 "$\\left(\\frac{1}{6}\\right)^2 = \\frac{1}{36}$, the chance of a 6 on both rolls.",
                 "$\\frac{6}{36} = \\frac{1}{6}$, since there are 6 faces that could be a 6."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "\"At least one\" is easiest through its complement \"none.\" $P(\\text{no 6 on a roll}) = \\frac{5}{6}$, and the rolls are independent, so $P(\\text{no 6 either roll}) = (5/6)^2 = 25/36$. Thus $P(\\text{at least one } 6) = 1 - 25/36 = 11/36 \\approx 0.306$. (Adding $\\frac16+\\frac16$ double-counts the $(6,6)$ outcome.)"
             },
             {
@@ -166,10 +166,10 @@
               "choices": [
                 "$P(A) \\ge 0$ for every event $A$.",
                 "$P(\\Omega) = 1$.",
-                "For pairwise-disjoint events, the probability of their union equals the sum of their probabilities.",
-                "$P(A^c) = 1 - P(A)$ (the complement rule)."
+                "$P(A^c) = 1 - P(A)$ (the complement rule).",
+                "For pairwise-disjoint events, the probability of their union equals the sum of their probabilities."
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The three axioms are nonnegativity ($P(A)\\ge 0$), normalization ($P(\\Omega)=1$), and countable additivity (disjoint unions add). The complement rule is a *theorem* derived from them: since $A$ and $A^c$ are disjoint and union to $\\Omega$, additivity + normalization give $P(A)+P(A^c)=1$. So too are $P(\\varnothing)=0$ and $0\\le P(A)\\le 1$."
             },
             {
@@ -266,33 +266,33 @@
               "q": "A fair die is rolled. Let $A = \\{\\text{outcome is } 2\\}$ and $B = \\{\\text{outcome is even}\\}$. What is $P(A \\mid B)$?",
               "choices": [
                 "$\\frac{1}{6}$",
-                "$\\frac{1}{3}$",
                 "$\\frac{1}{2}$",
+                "$\\frac{1}{3}$",
                 "$\\frac{2}{3}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$P(A \\cap B) = P(\\{2\\}) = 1/6$ and $P(B) = 3/6 = 1/2$, so $P(A\\mid B) = (1/6)/(1/2) = 1/3$. Conditioning on 'even' restricts the sample space to $\\{2,4,6\\}$, of which one is a 2."
             },
             {
               "q": "In the deck example, a card is drawn and a friend says 'it is black.' Why does the probability it is the ace of spades become $1/26$ rather than staying $1/52$?",
               "choices": [
                 "The information changed which physical card is on top",
-                "Conditioning discards the 26 red outcomes and renormalizes over the 26 black ones",
+                "The deck was reshuffled after the friend peeked",
                 "Black cards are intrinsically more likely to be aces",
-                "The deck was reshuffled after the friend peeked"
+                "Conditioning discards the 26 red outcomes and renormalizes over the 26 black ones"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Conditioning on $B$ throws away the part of the sample space where $B$ is false (the 26 red cards) and renormalizes over the 26 black cards. The card itself did not change; only the information did."
             },
             {
               "q": "Which expression correctly rearranges the definition of conditional probability into the multiplication (chain) rule for $P(A \\cap B)$?",
               "choices": [
-                "$P(A \\cap B) = P(A \\mid B)\\,P(B)$",
                 "$P(A \\cap B) = P(A \\mid B) + P(B)$",
+                "$P(A \\cap B) = P(A \\mid B)\\,P(B)$",
                 "$P(A \\cap B) = \\frac{P(A \\mid B)}{P(B)}$",
                 "$P(A \\cap B) = P(A \\mid B) \\, P(A)$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Multiplying both sides of $P(A\\mid B) = P(A\\cap B)/P(B)$ by $P(B)$ gives $P(A\\cap B) = P(A\\mid B)\\,P(B)$. The version with $P(A)$ would only hold under independence, not in general."
             },
             {
@@ -309,23 +309,23 @@
             {
               "q": "A student says: 'If $A$ and $B$ are mutually exclusive (disjoint) and both have positive probability, then they are independent.' Why is this wrong?",
               "choices": [
-                "Disjoint events satisfy $P(A \\cap B) = P(A)P(B)$ automatically",
                 "Disjoint events have $P(A \\cap B) = 0$, but $P(A)P(B) > 0$, so they cannot be independent",
+                "Disjoint events satisfy $P(A \\cap B) = P(A)P(B)$ automatically",
                 "Mutual exclusivity is the same as independence by definition",
                 "Independence requires $P(A \\cup B) = 1$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "For disjoint events $P(A\\cap B)=0$, yet if both have positive probability then $P(A)P(B)>0$, so $P(A\\cap B)\\ne P(A)P(B)$. In fact disjoint positive-probability events are strongly dependent: knowing $B$ happened guarantees $A$ did not."
             },
             {
               "q": "Bayes' theorem expresses $P(A \\mid B)$ in terms of $P(B \\mid A)$. Which form is correct?",
               "choices": [
-                "$P(A \\mid B) = \\frac{P(B \\mid A)\\,P(A)}{P(B)}$",
+                "$P(A \\mid B) = P(B \\mid A)\\,\\frac{P(B)}{P(A)}$",
                 "$P(A \\mid B) = \\frac{P(B \\mid A)\\,P(B)}{P(A)}$",
                 "$P(A \\mid B) = \\frac{P(B \\mid A)}{P(A)\\,P(B)}$",
-                "$P(A \\mid B) = P(B \\mid A)\\,\\frac{P(B)}{P(A)}$"
+                "$P(A \\mid B) = \\frac{P(B \\mid A)\\,P(A)}{P(B)}$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Bayes' theorem follows from $P(A\\cap B)=P(B\\mid A)P(A)=P(A\\mid B)P(B)$, giving $P(A\\mid B)=P(B\\mid A)P(A)/P(B)$. The prior $P(A)$ is multiplied in the numerator, not divided."
             },
             {
@@ -343,55 +343,55 @@
               "q": "The 'base-rate fallacy' in the disease-testing example refers to which mistake?",
               "choices": [
                 "Confusing the test's sensitivity with its specificity",
-                "Treating $P(D \\mid +)$ as equal to $P(+ \\mid D)$ while ignoring the prior $P(D)$",
                 "Assuming the test is never wrong",
+                "Treating $P(D \\mid +)$ as equal to $P(+ \\mid D)$ while ignoring the prior $P(D)$",
                 "Multiplying instead of adding probabilities"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The fallacy is conflating $P(D\\mid +)$ with $P(+\\mid D)$ and neglecting the low prior $P(D)$. Bayes' theorem shows the prior heavily discounts the posterior when the disease is rare."
             },
             {
               "q": "Using the law of total probability, if $\\{B_1, B_2\\}$ partition the sample space, then $P(A)$ equals:",
               "choices": [
-                "$P(A \\mid B_1) + P(A \\mid B_2)$",
                 "$P(A \\mid B_1)\\,P(B_1) + P(A \\mid B_2)\\,P(B_2)$",
+                "$P(A \\mid B_1) + P(A \\mid B_2)$",
                 "$P(A \\mid B_1)\\,P(A \\mid B_2)$",
                 "$\\frac{P(A \\mid B_1)}{P(B_1)} + \\frac{P(A \\mid B_2)}{P(B_2)}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The law of total probability weights each conditional by the probability of its conditioning event: $P(A)=\\sum_i P(A\\mid B_i)P(B_i)$. Simply adding the conditionals (option 1) forgets the weights and can even exceed 1."
             },
             {
               "q": "It is true that $P(A \\mid B) = 0.9$. A student concludes $P(B \\mid A) = 0.9$ as well. What is the correct relationship?",
               "choices": [
-                "$P(B \\mid A) = P(A \\mid B)$ always",
                 "$P(B \\mid A) = P(A \\mid B)\\,\\frac{P(B)}{P(A)}$",
+                "$P(B \\mid A) = P(A \\mid B)$ always",
                 "$P(B \\mid A) = 1 - P(A \\mid B)$",
                 "$P(B \\mid A) = P(A \\mid B)\\,\\frac{P(A)}{P(B)}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "By Bayes, $P(B\\mid A) = P(A\\mid B)P(B)/P(A)$, so the two conditionals are equal only when $P(A)=P(B)$. Assuming $P(A\\mid B)=P(B\\mid A)$ is the 'confusion of the inverse,' the same error behind the base-rate fallacy."
             },
             {
               "q": "Suppose $P(A) = 0.5$, $P(B) = 0.4$, and $P(A \\cap B) = 0.2$. Are $A$ and $B$ independent?",
               "choices": [
-                "No, because $P(A \\cap B) \\ne P(A) + P(B)$",
                 "Yes, because $P(A)P(B) = 0.2 = P(A \\cap B)$",
+                "No, because $P(A \\cap B) \\ne P(A) + P(B)$",
                 "No, because $P(A) \\ne P(B)$",
                 "Cannot be determined without $P(A \\cup B)$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Independence holds iff $P(A\\cap B)=P(A)P(B)$; here $0.5\\times 0.4 = 0.2$, which matches, so they are independent. Independence does not require equal marginal probabilities."
             },
             {
               "q": "You roll a fair die. Let $C = \\{\\text{outcome} \\le 3\\}$ and $D = \\{\\text{outcome is odd}\\}$. What is $P(D \\mid C)$?",
               "choices": [
                 "$\\frac{1}{2}$",
-                "$\\frac{1}{3}$",
                 "$\\frac{2}{3}$",
+                "$\\frac{1}{3}$",
                 "$\\frac{1}{6}$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Conditioning on $C$ restricts the sample space to $\\{1,2,3\\}$, of which the odd outcomes are $\\{1,3\\}$, giving $2/3$. Equivalently $P(C\\cap D)=P(\\{1,3\\})=2/6$ and $P(C)=3/6$, so $(2/6)/(3/6)=2/3$."
             },
             {
@@ -419,12 +419,12 @@
             {
               "q": "What does the \"naive\" in *naive Bayes* refer to, and why is it computationally convenient?",
               "choices": [
-                "It assumes the features are conditionally independent given the label — so the joint likelihood factors into a product $\\prod_i P(x_i \\mid \\theta)$, which becomes a sum once you take logs.",
+                "It assumes the prior and posterior are identical, so no update is ever needed.",
                 "It assumes every feature is equally likely, so all probabilities are $1/n$.",
                 "It ignores Bayes' theorem entirely and just uses the prior.",
-                "It assumes the prior and posterior are identical, so no update is ever needed."
+                "It assumes the features are conditionally independent given the label — so the joint likelihood factors into a product $\\prod_i P(x_i \\mid \\theta)$, which becomes a sum once you take logs."
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Naive Bayes makes the (often unrealistic, hence \"naive\") assumption that features are conditionally independent given the class label. Independence lets the joint likelihood factor into a product of per-feature terms; taking logs converts that product into a sum, which is what you actually optimize. The same factorization underlies the likelihood of i.i.d. data."
             },
             {
@@ -509,45 +509,45 @@
             {
               "q": "A random variable $X$ is best described as which of the following?",
               "choices": [
-                "A function $X:\\Omega\\to\\mathbb{R}$ that assigns a real number to each outcome",
+                "A subset of the sample space $\\Omega$",
                 "A numerical value chosen at random from $\\mathbb{R}$ each time you look at it",
                 "A probability between 0 and 1 attached to an event",
-                "A subset of the sample space $\\Omega$"
+                "A function $X:\\Omega\\to\\mathbb{R}$ that assigns a real number to each outcome"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Despite its name, a random variable is a deterministic function from the sample space to the reals; the randomness is in which outcome occurs. It is not itself a probability (choice 2) nor an event/subset (choice 3)."
             },
             {
               "q": "For the two-coin-flip example with $X$ counting heads, the notation $\\{X=1\\}$ formally denotes which object?",
               "choices": [
-                "The number 1",
-                "The probability $\\tfrac12$",
                 "The set of outcomes $\\{\\omega : X(\\omega)=1\\} = \\{HT, TH\\}$",
+                "The probability $\\tfrac12$",
+                "The number 1",
                 "The function value $X(HT)$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "A numeric event like $\\{X=1\\}$ is shorthand for the set of sample-space outcomes that $X$ maps to 1, here $\\{HT,TH\\}$. Its probability is $\\tfrac12$, but the event itself is the set, not the number or the probability."
             },
             {
               "q": "Which of these random variables is continuous rather than discrete?",
               "choices": [
                 "The number of defective items in a shipment of 100",
-                "The exact time in seconds until the next customer arrives",
+                "The number of heads in ten coin flips",
                 "The face shown on a rolled die",
-                "The number of heads in ten coin flips"
+                "The exact time in seconds until the next customer arrives"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A waiting time can take any value in an interval of $\\mathbb{R}$, an uncountable continuum, so it is continuous. The other three are counts taking values in a countable (integer) set, hence discrete."
             },
             {
               "q": "A friend claims a function $f$ with $f(x)=2$ on $[0,0.5]$ and $f(x)=0$ elsewhere cannot be a valid PDF because $f(x)=2>1$. What is the correct response?",
               "choices": [
                 "They are right; a PDF can never exceed 1 anywhere",
-                "They are wrong; a density is not a probability, and here the area is $2\\times 0.5 = 1$, so it is valid",
                 "They are right; densities must lie in $[0,1]$ just like probabilities",
+                "They are wrong; a density is not a probability, and here the area is $2\\times 0.5 = 1$, so it is valid",
                 "They are wrong, but only because $f$ should equal exactly 1 on its support"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A density value is not a probability; only areas under it are. Since $\\int f = 2\\times 0.5 = 1$ and $f\\ge 0$, this is a legitimate PDF even though the height exceeds 1. The common misconception is treating density like a bounded probability."
             },
             {
@@ -565,11 +565,11 @@
               "q": "For a continuous random variable $X$, what is $P(X=a)$ for any single fixed value $a$?",
               "choices": [
                 "$f_X(a)$, the density at $a$",
-                "Always exactly 0",
                 "$F_X(a)$, the CDF at $a$",
+                "Always exactly 0",
                 "It depends on how peaked the density is at $a$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A single point has zero width, so $\\int_a^a f_X(x)\\,dx = 0$; hence $P(X=a)=0$ for every $a$, regardless of the density's value or shape there. The density $f_X(a)$ is not a probability."
             },
             {
@@ -577,54 +577,54 @@
               "choices": [
                 "$0.7$",
                 "$0.3$",
-                "$0.4$",
-                "$0.5$"
+                "$0.5$",
+                "$0.4$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The uniform density on $[0,10]$ is $\\tfrac{1}{10}$, so $P(3\\le X\\le 7)=\\int_3^7 \\tfrac{1}{10}\\,dx = \\tfrac{7-3}{10}=0.4$. Equivalently $F_X(7)-F_X(3)=0.7-0.3$."
             },
             {
               "q": "Which property is NOT guaranteed for the CDF $F_X(x)=P(X\\le x)$ of a general random variable?",
               "choices": [
-                "$F_X$ is nondecreasing",
-                "$F_X(-\\infty)=0$ and $F_X(+\\infty)=1$",
                 "$F_X$ is continuous (no jumps) everywhere",
+                "$F_X(-\\infty)=0$ and $F_X(+\\infty)=1$",
+                "$F_X$ is nondecreasing",
                 "$F_X$ is right-continuous everywhere"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Every CDF is nondecreasing, has the correct limits, and is right-continuous, but it need not be continuous: a discrete random variable's CDF is a staircase with jumps. Right-continuity (choice 4) always holds, but full continuity (choice 3) does not."
             },
             {
               "q": "A continuous random variable has CDF $F_X(x)=x^2$ for $0\\le x\\le 1$ (and 0 below, 1 above). What is its density $f_X(x)$ on $(0,1)$?",
               "choices": [
-                "$2x$",
-                "$x^2$",
                 "$\\tfrac{x^3}{3}$",
+                "$x^2$",
+                "$2x$",
                 "$x$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "For a continuous variable the density is the derivative of the CDF: $f_X(x)=F_X'(x)=\\tfrac{d}{dx}x^2=2x$. Differentiating, not integrating, recovers the density from the CDF."
             },
             {
               "q": "For the fair-die variable $X$ with $F_X$ the staircase CDF, which expression correctly gives $P(2 \\le X \\le 4)$ using the CDF?",
               "choices": [
-                "$F_X(4)-F_X(2)$",
                 "$F_X(4)-F_X(1)$",
+                "$F_X(4)-F_X(2)$",
                 "$F_X(4)-F_X(3)$",
                 "$F_X(2)-F_X(4)$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "To include the value 2, you must subtract $F_X$ evaluated just below 2, which for an integer-valued variable is $F_X(1)$: $P(2\\le X\\le 4)=F_X(4)-F_X(1)=\\tfrac46-\\tfrac16=\\tfrac36$. Using $F_X(4)-F_X(2)$ wrongly drops the mass at $x=2$."
             },
             {
               "q": "A Bernoulli($p$) variable has $P(X=1)=p$ and $P(X=0)=1-p$. Using $X^2=X$, what is $\\mathbb{E}[X^2]$?",
               "choices": [
                 "$p^2$",
-                "$p(1-p)$",
                 "$p$",
+                "$p(1-p)$",
                 "$1-p$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Since $0^2=0$ and $1^2=1$, we have $X^2=X$, so $\\mathbb{E}[X^2]=\\mathbb{E}[X]=p$. (This is why $\\text{Var}(X)=p-p^2=p(1-p)$; the tempting $p^2$ confuses $\\mathbb{E}[X^2]$ with $(\\mathbb{E}[X])^2$.)"
             },
             {
@@ -641,34 +641,34 @@
             {
               "q": "For a *continuous* random variable $X$, why does $P(a \\le X \\le b) = P(a < X < b)$?",
               "choices": [
-                "Because the CDF is right-continuous, so the left endpoint is automatically dropped.",
-                "Because continuous variables are always uniform, so every interval has equal probability.",
                 "Because a single point has zero width, so $P(X = a) = P(X = b) = 0$; including or excluding the endpoints adds nothing.",
+                "Because continuous variables are always uniform, so every interval has equal probability.",
+                "Because the CDF is right-continuous, so the left endpoint is automatically dropped.",
                 "It is not true — including the endpoints always makes the probability strictly larger."
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "For a continuous RV, probability is area under the density, and the area over a single point (zero width) is $0$, so $P(X=a)=0$ for every $a$. Adding or removing the endpoints therefore changes nothing: $P(a\\le X\\le b)=P(a<X<b)$. (This is false for *discrete* variables, where individual points carry positive mass.)"
             },
             {
               "q": "A continuous random variable's density satisfies $f_X(x) = 2$ on part of its range. How can a \"probability\" density exceed 1?",
               "choices": [
-                "$f_X(x)$ is a *density*, not a probability — only the *area* $\\int f_X\\,dx$ over an interval is a probability. A density can take any nonnegative value as long as its total area is 1.",
+                "Only discrete distributions allow values above 1; this $f_X$ must therefore be a PMF.",
                 "It cannot; any valid density must satisfy $f_X(x) \\le 1$ everywhere.",
                 "The value 2 means there is a 200% chance, which is rounded down to 100% in practice.",
-                "Only discrete distributions allow values above 1; this $f_X$ must therefore be a PMF."
+                "$f_X(x)$ is a *density*, not a probability — only the *area* $\\int f_X\\,dx$ over an interval is a probability. A density can take any nonnegative value as long as its total area is 1."
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The density is \"probability per unit length,\" not a probability itself. What must lie in $[0,1]$ is the *area* over an interval, and the total area must equal 1 — but the density can rise above 1 over a short interval (e.g. uniform on $[0,0.5]$ has $f=2$). The only requirements are $f_X \\ge 0$ and $\\int f_X\\,dx = 1$."
             },
             {
               "q": "For what constant $c$ is $f(x) = cx$ on $[0, 2]$ (and $0$ elsewhere) a valid probability density?",
               "choices": [
                 "$c = 1$",
-                "$c = 2$",
+                "$c = \\frac{1}{2}$",
                 "$c = \\frac{1}{4}$",
-                "$c = \\frac{1}{2}$"
+                "$c = 2$"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "A density must integrate to 1: $\\int_0^2 cx\\,dx = c\\,\\frac{x^2}{2}\\Big|_0^2 = c\\cdot 2 = 1$, so $c = \\frac{1}{2}$. (Check: $f(x)=x/2$ is nonnegative on $[0,2]$ and its triangle has area $\\tfrac12\\cdot 2\\cdot 1 = 1$.)"
             },
             {
@@ -754,11 +754,11 @@
               "q": "A fair six-sided die has $\\mathbb{E}[X] = 3.5$. A player wins \\$2 for each pip showing. By linearity of expectation, what is the expected winnings $\\mathbb{E}[2X]$?",
               "choices": [
                 "\\$3.5",
-                "\\$7",
                 "\\$12",
+                "\\$7",
                 "\\$21"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\mathbb{E}[2X] = 2\\,\\mathbb{E}[X] = 2(3.5) = 7$. Expectation scales linearly with constant multipliers, so the dollar value is twice the expected pip count."
             },
             {
@@ -775,23 +775,23 @@
             {
               "q": "Why can the expected value $\\mathbb{E}[X]$ of a discrete random variable be a number that $X$ never actually takes?",
               "choices": [
-                "Because $\\mathbb{E}[X]$ is the balance point of the probability mass, which need not coincide with any single outcome",
+                "Because probabilities do not have to sum to $1$",
                 "Because the formula for $\\mathbb{E}[X]$ contains a rounding error",
                 "Because $\\mathbb{E}[X]$ is really the median, not the mean",
-                "Because probabilities do not have to sum to $1$"
+                "Because $\\mathbb{E}[X]$ is the balance point of the probability mass, which need not coincide with any single outcome"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$\\mathbb{E}[X]$ is the center of mass of the distribution; like balancing a ruler, the balance point can fall between the weighted points and need not be an attainable outcome (e.g. $3.5$ for a die)."
             },
             {
               "q": "A continuous random variable has density $f(x) = 2x$ for $x \\in [0,1]$ and $0$ elsewhere. What is $\\mathbb{E}[X] = \\int_0^1 x \\cdot 2x\\,dx$?",
               "choices": [
-                "$\\tfrac12$",
-                "$1$",
                 "$\\tfrac23$",
+                "$1$",
+                "$\\tfrac12$",
                 "$\\tfrac13$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$\\int_0^1 2x^2\\,dx = \\tfrac{2}{3}x^3\\big|_0^1 = \\tfrac23$. The density grows toward $x=1$, so the balance point sits past the midpoint $\\tfrac12$, ruling out that tempting symmetric-looking answer."
             },
             {
@@ -808,111 +808,111 @@
             {
               "q": "Two distributions have the same mean $\\mu = 0$. Distribution A is concentrated near $0$; distribution B has mass spread far out toward $\\pm 100$. What does this tell you about their variances?",
               "choices": [
-                "They must have equal variance since the means are equal",
-                "A has the larger variance",
                 "B has the larger variance",
+                "A has the larger variance",
+                "They must have equal variance since the means are equal",
                 "Variance cannot be compared without knowing the medians"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Variance measures average squared spread about the mean; B's mass sits far from $0$, producing large squared deviations and thus larger variance. Equal means say nothing about spread."
             },
             {
               "q": "For a fair die with $\\mathbb{E}[X]=3.5$, a common error is to compute variance as $\\mathbb{E}[X]^2 = 3.5^2 = 12.25$. Why is this wrong as a formula for $\\mathrm{Var}(X)$?",
               "choices": [
-                "Variance is $\\mathbb{E}[X^2] - (\\mathbb{E}[X])^2$, not $(\\mathbb{E}[X])^2$",
+                "Variance is always negative for a die",
                 "Variance equals $\\mathbb{E}[X]$ for any distribution",
                 "$3.5^2$ should be computed as $7$",
-                "Variance is always negative for a die"
+                "Variance is $\\mathbb{E}[X^2] - (\\mathbb{E}[X])^2$, not $(\\mathbb{E}[X])^2$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Variance is $\\mathrm{Var}(X) = \\mathbb{E}[X^2] - (\\mathbb{E}[X])^2$; squaring the mean alone ignores $\\mathbb{E}[X^2]$. The two quantities differ because $\\mathbb{E}[X^2] \\ge (\\mathbb{E}[X])^2$ by Jensen's inequality."
             },
             {
               "q": "A constant $c$ is added to every outcome of $X$. How do the mean and variance change?",
               "choices": [
-                "Mean increases by $c$; variance increases by $c$",
                 "Mean increases by $c$; variance is unchanged",
+                "Mean increases by $c$; variance increases by $c$",
                 "Mean is unchanged; variance increases by $c^2$",
                 "Both mean and variance are unchanged"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Shifting all values by $c$ slides the balance point: $\\mathbb{E}[X+c]=\\mathbb{E}[X]+c$. But spread about the (also shifted) mean is identical, so $\\mathrm{Var}(X+c)=\\mathrm{Var}(X)$."
             },
             {
               "q": "A random variable $X$ is scaled to $Y = 3X$. If $\\mathrm{Var}(X) = 4$, what is $\\mathrm{Var}(Y)$?",
               "choices": [
                 "$12$",
-                "$7$",
                 "$36$",
+                "$7$",
                 "$4$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Variance scales by the square of the multiplier: $\\mathrm{Var}(3X) = 3^2\\,\\mathrm{Var}(X) = 9 \\cdot 4 = 36$. The tempting $12 = 3\\cdot 4$ forgets that deviations are squared inside the variance."
             },
             {
               "q": "Standard deviation is defined as $\\sigma = \\sqrt{\\mathrm{Var}(X)}$. Why is $\\sigma$ often preferred over variance when reporting spread?",
               "choices": [
                 "Because $\\sigma$ is always smaller than the variance",
-                "Because $\\sigma$ has the same units as $X$, making it directly interpretable",
+                "Because variance can be negative but $\\sigma$ cannot",
                 "Because $\\sigma$ ignores the mean entirely",
-                "Because variance can be negative but $\\sigma$ cannot"
+                "Because $\\sigma$ has the same units as $X$, making it directly interpretable"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Squaring deviations gives variance units of $X$ squared; taking the square root restores the original units, so $\\sigma$ is comparable to the values of $X$ itself. Variance is never negative, so that is not the reason."
             },
             {
               "q": "A right-skewed distribution (a long tail to the right, e.g. household incomes) typically has which ordering of its mean and median?",
               "choices": [
-                "Mean $>$ median, because the long right tail pulls the balance point up",
-                "Mean $<$ median, because the tail lowers the average",
                 "Mean $=$ median, because skew does not affect either",
+                "Mean $<$ median, because the tail lowers the average",
+                "Mean $>$ median, because the long right tail pulls the balance point up",
                 "Mean $=$ mode, regardless of skew"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The mean is the balance point and is dragged toward the long tail, so for right skew the mean exceeds the median. The median, a positional middle, resists the tail's pull."
             },
             {
               "q": "Suppose $\\mathbb{E}[X] = 5$ for some random variable. Which conclusion is justified?",
               "choices": [
                 "At least half of all observations of $X$ equal $5$",
-                "Over many independent trials, the sample average of $X$ tends toward $5$",
                 "The single most likely value of $X$ is $5$",
+                "Over many independent trials, the sample average of $X$ tends toward $5$",
                 "Every observed value of $X$ lies within a small range around $5$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\mathbb{E}[X]$ is the long-run average: across many trials the running mean settles toward $5$. It is neither the median, the mode, nor a guarantee about any individual observation's proximity to the mean."
             },
             {
               "q": "Linearity of expectation says $\\mathbb{E}[X + Y] = \\mathbb{E}[X] + \\mathbb{E}[Y]$. Under what condition on $X$ and $Y$ does this hold?",
               "choices": [
-                "Always — it holds even when $X$ and $Y$ are dependent; no independence assumption is needed.",
                 "Only when $X$ and $Y$ are independent.",
+                "Always — it holds even when $X$ and $Y$ are dependent; no independence assumption is needed.",
                 "Only when $X$ and $Y$ are identically distributed.",
                 "Only when $X$ and $Y$ are uncorrelated."
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Linearity of expectation is unconditional: $\\mathbb{E}[aX+bY]=a\\mathbb{E}[X]+b\\mathbb{E}[Y]$ for *any* $X,Y$, however dependent. (Independence is needed for the expectation of a *product*, $\\mathbb{E}[XY]=\\mathbb{E}[X]\\mathbb{E}[Y]$, and for $\\text{Var}(X+Y)=\\text{Var}(X)+\\text{Var}(Y)$ — but never for the expectation of a sum.) This is why $\\mathbb{E}[\\text{sum of two dice}]=3.5+3.5=7$ needs no joint analysis."
             },
             {
               "q": "You want $\\mathbb{E}[X^2]$ for a fair die ($X \\in \\{1,\\dots,6\\}$). What does the Law of the Unconscious Statistician (LOTUS) let you do?",
               "choices": [
                 "Square the mean: $(\\mathbb{E}[X])^2 = 3.5^2 = 12.25$.",
-                "First derive the full distribution of $Y = X^2$, then average $Y$ — there is no shortcut.",
                 "Push each value through $g(x)=x^2$ and weight by the *original* probabilities: $\\mathbb{E}[X^2]=\\sum_i x_i^2\\,p_i = \\tfrac{1}{6}(1+4+9+16+25+36) = \\tfrac{91}{6} \\approx 15.17$.",
+                "First derive the full distribution of $Y = X^2$, then average $Y$ — there is no shortcut.",
                 "Use $\\mathbb{E}[X^2] = \\mathbb{E}[X]\\cdot\\mathbb{E}[X] = 12.25$, because expectation is multiplicative."
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "LOTUS: $\\mathbb{E}[g(X)] = \\sum_i g(x_i)\\,p_i$ using $X$'s own distribution — no need to find the distribution of $X^2$. So $\\mathbb{E}[X^2] = \\tfrac16(1+4+9+16+25+36)=91/6\\approx 15.17$. Note this is *not* $(\\mathbb{E}[X])^2=12.25$; in general $\\mathbb{E}[g(X)]\\ne g(\\mathbb{E}[X])$ for nonlinear $g$."
             },
             {
               "q": "Temperatures with standard deviation $\\sigma_C = 5$°C are converted to Fahrenheit by $F = 1.8\\,C + 32$. What is the standard deviation in Fahrenheit?",
               "choices": [
-                "$1.8 \\times 5 + 32 = 41$°F.",
                 "$1.8 \\times 5 = 9$°F — the additive $+32$ does not affect spread, and the scale factor multiplies $\\sigma$ by $|1.8|$.",
+                "$1.8 \\times 5 + 32 = 41$°F.",
                 "$1.8^2 \\times 5 = 16.2$°F.",
                 "$5$°F — a linear conversion leaves the standard deviation unchanged."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "For $Y=aX+b$, $\\sigma(Y)=|a|\\,\\sigma(X)$: shifting by $b$ slides the distribution without changing its spread, while scaling by $a$ stretches $\\sigma$ by $|a|$. So $\\sigma_F = 1.8\\times 5 = 9$°F. (The *variance* scales by $a^2=3.24$; the $+32$ never affects spread.)"
             },
             {
@@ -1015,22 +1015,22 @@
               "q": "A student writes that for $X\\sim\\text{Bin}(n,p)$ the variance is $\\sqrt{np(1-p)}$. What did they get wrong?",
               "choices": [
                 "Nothing — that is the correct variance",
-                "$\\sqrt{np(1-p)}$ is the standard deviation; the variance is $np(1-p)$",
+                "The variance is $np(1-p)^2$ because failures are squared",
                 "The variance is $np$, the same as the mean",
-                "The variance is $np(1-p)^2$ because failures are squared"
+                "$\\sqrt{np(1-p)}$ is the standard deviation; the variance is $np(1-p)$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Variance is $np(1-p)$; taking its square root gives the standard deviation $\\sigma=\\sqrt{np(1-p)}$. Mean equals variance only for the Poisson, not the binomial."
             },
             {
               "q": "You draw 5 cards from a standard 52-card deck without replacement and count the aces. Why is the count NOT Binomial?",
               "choices": [
-                "The number of trials is not fixed in advance",
-                "Each draw has more than two outcomes",
                 "The success probability $p$ changes from draw to draw, violating independence and constant $p$",
+                "Each draw has more than two outcomes",
+                "The number of trials is not fixed in advance",
                 "The mean would be negative"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Without replacement, removing a card alters the remaining composition, so $p$ shifts each draw and trials are dependent — that breaks the I and S of BINS, calling for the hypergeometric. $n=5$ is fixed and outcomes are binary (ace / not ace), so those are fine."
             },
             {
@@ -1047,78 +1047,78 @@
             {
               "q": "Two independent counts $X\\sim\\text{Bin}(3,0.4)$ and $Y\\sim\\text{Bin}(5,0.4)$ are added. What is the distribution and mean of $X+Y$?",
               "choices": [
-                "$\\text{Bin}(8,0.4)$ with mean $3.2$",
+                "Not binomial, because two binomials never add to a binomial",
                 "$\\text{Bin}(15,0.4)$ with mean $6$",
                 "$\\text{Bin}(8,0.8)$ with mean $6.4$",
-                "Not binomial, because two binomials never add to a binomial"
+                "$\\text{Bin}(8,0.4)$ with mean $3.2$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Independent binomials with the SAME $p$ add by pooling trials: $\\text{Bin}(n_1+n_2,p)=\\text{Bin}(8,0.4)$, mean $8(0.4)=3.2$. The $p$ values do not add, and $n$ is $3+5=8$, not $3\\times5$."
             },
             {
               "q": "A factory makes items that are defective independently with probability $p=0.02$; a batch has $n=100$ items. What are the mean and standard deviation of the number of defectives?",
               "choices": [
                 "Mean $2$, standard deviation $1.96$",
-                "Mean $2$, standard deviation $1.4$",
                 "Mean $0.02$, standard deviation $0.14$",
+                "Mean $2$, standard deviation $1.4$",
                 "Mean $98$, standard deviation $1.4$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Mean $=np=100(0.02)=2$; variance $=np(1-p)=100(0.02)(0.98)=1.96$, so $\\sigma=\\sqrt{1.96}=1.4$. The tempting $1.96$ is the variance, not the standard deviation."
             },
             {
               "q": "Why does the factor $\\binom{n}{k}$ appear in the Binomial PMF $\\binom{n}{k}p^k(1-p)^{n-k}$?",
               "choices": [
                 "It is the probability of any one sequence with $k$ successes",
-                "It normalizes the probabilities so they exceed $1$",
                 "It counts the number of distinct orderings (which $k$ of the $n$ trials succeed), all sharing the same probability $p^k(1-p)^{n-k}$",
+                "It normalizes the probabilities so they exceed $1$",
                 "It corrects for the trials not being independent"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "A single specific sequence has probability $p^k(1-p)^{n-k}$; the coefficient counts how many such sequences exist, $\\binom{n}{k}$ ways to choose which trials succeed. It is a count of arrangements, not a probability itself."
             },
             {
               "q": "After 6 straight tails on a fair coin, a gambler bets heavily on heads next, reasoning heads is 'overdue.' From the Bernoulli/Binomial viewpoint, what is the flaw?",
               "choices": [
                 "He is right — the long-run frequency must force a head soon",
-                "The next flip's probability of heads rises to compensate, but only slightly",
+                "Each flip is an independent Bernoulli($0.5$); past results do not change $P(\\text{heads})=0.5$ on the next flip",
                 "The flips are not really independent, so the bet is justified",
-                "Each flip is an independent Bernoulli($0.5$); past results do not change $P(\\text{heads})=0.5$ on the next flip"
+                "The next flip's probability of heads rises to compensate, but only slightly"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Independence means the coin has no memory: $P(\\text{heads})=0.5$ regardless of history. The 'due' belief is the gambler's fallacy — long-run frequency convergence does not require short-run compensation."
             },
             {
               "q": "Let $X\\sim\\text{Bin}(9,0.5)$. Because $(n+1)p=10\\cdot0.5=5$ is an integer, what is true about the most likely value(s) of $X$?",
               "choices": [
-                "There are two equally likely modes, at $k=4$ and $k=5$",
-                "There is a unique mode at $k=5$",
                 "Every value is equally likely since $p=0.5$",
+                "There is a unique mode at $k=5$",
+                "There are two equally likely modes, at $k=4$ and $k=5$",
                 "The mode is the mean, $4.5$, which $X$ can attain"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "When $(n+1)p$ is an integer, the PMF ties at $k=(n+1)p-1$ and $k=(n+1)p$, here $k=4$ and $k=5$ (each $\\approx0.246$). The mean $4.5$ is not an attainable value of an integer-valued $X$."
             },
             {
               "q": "Two independent Bernoulli($p$) indicators $X_1,X_2$ are added. For their sum $S=X_1+X_2$, what is $P(S=1)$?",
               "choices": [
-                "$p^2$",
                 "$2p(1-p)$",
+                "$p^2$",
                 "$p(1-p)$",
                 "$2p$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$S\\sim\\text{Bin}(2,p)$, and $P(S=1)=\\binom{2}{1}p(1-p)=2p(1-p)$ — exactly one of the two succeeds, and there are two ways for that to happen. Forgetting the factor of $2$ (the ordering) gives the tempting $p(1-p)$."
             },
             {
               "q": "For $X\\sim\\text{Bin}(10,0.2)$, what is $P(X=0)$?",
               "choices": [
                 "$0.2^{10}$",
-                "$0$, since at least one success is guaranteed",
                 "$(0.8)^{10}\\approx0.107$",
+                "$0$, since at least one success is guaranteed",
                 "$1-0.2=0.8$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Zero successes means all 10 trials fail: $P(X=0)=(1-p)^{10}=(0.8)^{10}\\approx0.107$. The choice $0.2^{10}$ would be the probability of all successes, and nothing forces at least one success."
             },
             {
@@ -1144,13 +1144,13 @@
               "explain": "A Binomial is a sum of $n$ independent Bernoulli($p$) indicators, so $\\mathbb{E}[X]=np=20(0.3)=6$ and (variances add under independence) $\\text{Var}(X)=np(1-p)=20(0.3)(0.7)=4.2$. Choice B confuses variance with standard deviation; A gives the per-trial moments."
             },
             {
-              "answer": 3,
+              "answer": 0,
               "q": "You flip a coin repeatedly and stop as soon as you get your 3rd head, recording the total number of flips. Why is that count NOT Binomial?",
               "choices": [
-                "The trials aren't binary — \"heads/tails\" is two outcomes, which violates the Binary condition.",
+                "The number of trials is not fixed in advance — you stop based on the outcomes (waiting for the 3rd success), so $n$ is random. (This is a negative-binomial count, not Binomial.)",
                 "The trials aren't independent, since later flips depend on earlier ones.",
                 "The success probability $p$ changes from flip to flip.",
-                "The number of trials is not fixed in advance — you stop based on the outcomes (waiting for the 3rd success), so $n$ is random. (This is a negative-binomial count, not Binomial.)"
+                "The trials aren't binary — \"heads/tails\" is two outcomes, which violates the Binary condition."
               ],
               "explain": "Binomial requires the BINS conditions, including a Number of trials fixed ahead of time. Here you keep flipping until the 3rd head, so the trial count is itself random — a stopping rule, not a fixed $n$. That makes it a negative-binomial random variable. (Binary, Independent, and Same-$p$ all still hold for a fair coin.)"
             },
@@ -1166,12 +1166,12 @@
               "explain": "Expectation is linear unconditionally: $\\mathbb{E}[\\sum X_i]=\\sum\\mathbb{E}[X_i]=np$ regardless of dependence. But $\\text{Var}(\\sum X_i)=\\sum\\text{Var}(X_i)$ only when the covariance terms are zero — i.e. when the trials are independent. With independence, $\\text{Var}(X)=np(1-p)$."
             },
             {
-              "answer": 0,
+              "answer": 2,
               "q": "How is the Bernoulli($p$) distribution related to the Binomial?",
               "choices": [
-                "Bernoulli($p$) is exactly $\\text{Bin}(1, p)$ — the single-trial special case; a Binomial($n,p$) is the sum of $n$ independent Bernoulli($p$) trials.",
-                "Bernoulli is the continuous version of the Binomial.",
                 "Bernoulli($p$) equals $\\text{Bin}(p, n)$ with the arguments swapped.",
+                "Bernoulli is the continuous version of the Binomial.",
+                "Bernoulli($p$) is exactly $\\text{Bin}(1, p)$ — the single-trial special case; a Binomial($n,p$) is the sum of $n$ independent Bernoulli($p$) trials.",
                 "They are unrelated — Bernoulli counts failures, Binomial counts successes."
               ],
               "explain": "A Bernoulli trial is one yes/no experiment; summing $n$ independent Bernoulli($p$) indicators gives Binomial($n,p$). So Bernoulli($p$) is precisely the $n=1$ case, $\\text{Bin}(1,p)$, with mean $p$ and variance $p(1-p)$."
@@ -1248,11 +1248,11 @@
               "q": "At the bakery, customers arrive at an average rate of 6 per hour. If arrivals follow a Poisson process, what is the expected number of customers in the next 20 minutes?",
               "choices": [
                 "6",
-                "2",
                 "18",
+                "2",
                 "0.3"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The rate scales with the window: 20 minutes is $1/3$ of an hour, so $\\lambda = 6 \\times \\frac{1}{3} = 2$. The value 6 ignores the shorter window, and 18 wrongly multiplies instead of dividing."
             },
             {
@@ -1260,87 +1260,87 @@
               "choices": [
                 "$1 - 2 = -1$",
                 "$\\frac{2^0}{0!} = 1$",
-                "$e^{-2} \\approx 0.135$",
-                "$\\frac{1}{2} = 0.5$"
+                "$\\frac{1}{2} = 0.5$",
+                "$e^{-2} \\approx 0.135$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "$P(X=0) = \\frac{\\lambda^0 e^{-\\lambda}}{0!} = e^{-2} \\approx 0.135$. Forgetting the $e^{-\\lambda}$ factor (just using $\\lambda^0/0! = 1$) is the classic mistake."
             },
             {
               "q": "For a Poisson random variable $X$ with parameter $\\lambda$, what are its mean and variance?",
               "choices": [
-                "Mean $\\lambda$, variance $\\lambda$",
                 "Mean $\\lambda$, variance $\\lambda^2$",
+                "Mean $\\lambda$, variance $\\lambda$",
                 "Mean $\\lambda$, variance $\\sqrt{\\lambda}$",
                 "Mean $\\lambda$, variance $1$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "A defining property of the Poisson distribution is that its mean and variance are both equal to $\\lambda$. Confusing it with other distributions leads to guessing $\\lambda^2$ or $\\sqrt{\\lambda}$."
             },
             {
               "q": "A help desk receives calls following a Poisson distribution with $\\lambda = 3$ per hour. What is the probability of receiving exactly 2 calls in an hour?",
               "choices": [
                 "$\\frac{3^2}{2!} \\approx 4.5$",
-                "$\\frac{3^2 e^{-3}}{2!} \\approx 0.224$",
+                "$\\frac{2^3 e^{-2}}{3!} \\approx 0.180$",
                 "$e^{-3} \\approx 0.050$",
-                "$\\frac{2^3 e^{-2}}{3!} \\approx 0.180$"
+                "$\\frac{3^2 e^{-3}}{2!} \\approx 0.224$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Plug into the PMF: $P(X=2) = \\frac{3^2 e^{-3}}{2!} = \\frac{9 e^{-3}}{2} \\approx 0.224$. Choice 0 drops the $e^{-\\lambda}$ term (and yields an impossible probability $> 1$); choice 3 swaps the roles of $k$ and $\\lambda$."
             },
             {
               "q": "Why must a valid count from a Poisson distribution be a non-negative integer ($0, 1, 2, \\dots$) even though $\\lambda$ can be a decimal like $2.5$?",
               "choices": [
                 "Because $\\lambda$ is always rounded to an integer before use",
-                "Because you cannot observe a fractional number of discrete events, but the average of those counts can be fractional",
+                "Because the Poisson distribution is continuous, not discrete",
                 "Because the PMF is only defined when $\\lambda$ is an integer",
-                "Because the Poisson distribution is continuous, not discrete"
+                "Because you cannot observe a fractional number of discrete events, but the average of those counts can be fractional"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "You can never count 2.5 customers in a single window, but averaging many windows can give a non-integer mean. $\\lambda$ is the expected value, not a possible outcome, and the distribution is discrete."
             },
             {
               "q": "Emails arrive at $\\lambda = 4$ per hour. Using the recurrence $P(X=k+1) = \\frac{\\lambda}{k+1}P(X=k)$, which count $k$ has the HIGHEST probability (the mode)?",
               "choices": [
                 "$k = 0$",
-                "$k = 3$ and $k = 4$ (tied)",
                 "$k = 4$ only",
+                "$k = 3$ and $k = 4$ (tied)",
                 "$k = 8$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "When $\\lambda$ is an integer, the modes are at $k = \\lambda$ and $k = \\lambda - 1$, which are tied; here that is $k = 3$ and $k = 4$. The ratio $\\frac{\\lambda}{k+1}$ equals 1 exactly when $k+1 = \\lambda$, making those two values equal."
             },
             {
               "q": "Two independent Poisson processes feed one inbox: work emails at $\\lambda_1 = 5$/hour and personal emails at $\\lambda_2 = 3$/hour. What is the distribution of the total number of emails per hour?",
               "choices": [
-                "Poisson with $\\lambda = 8$",
-                "Poisson with $\\lambda = 15$",
                 "Poisson with $\\lambda = \\sqrt{34}$",
+                "Poisson with $\\lambda = 15$",
+                "Poisson with $\\lambda = 8$",
                 "Not Poisson; the sum of two Poissons is never Poisson"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The sum of independent Poisson variables is Poisson with parameter equal to the sum of the rates: $\\lambda = 5 + 3 = 8$. Rates add (not multiply, giving 15), and the sum remains Poisson."
             },
             {
               "q": "A printed page has on average $\\lambda = 0.5$ typos. What is the probability a page has AT LEAST one typo?",
               "choices": [
                 "$0.5$",
-                "$e^{-0.5} \\approx 0.607$",
                 "$1 - e^{-0.5} \\approx 0.393$",
+                "$e^{-0.5} \\approx 0.607$",
                 "$1 - 0.5 = 0.5$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Use the complement: $P(X \\ge 1) = 1 - P(X=0) = 1 - e^{-0.5} \\approx 0.393$. Confusing $\\lambda$ itself with a probability gives the tempting (wrong) answer 0.5."
             },
             {
               "q": "A student computes $P(X=3)$ for $\\lambda = 2$ and gets $1.33$. What is the most likely error?",
               "choices": [
                 "They used the wrong value of $k$",
-                "Nothing — probabilities can exceed 1 for Poisson",
                 "They forgot the $e^{-\\lambda}$ factor, since $\\frac{2^3}{3!} = 1.33$",
+                "Nothing — probabilities can exceed 1 for Poisson",
                 "They should have used $\\lambda = 3$ instead"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$\\frac{2^3}{3!} = \\frac{8}{6} \\approx 1.33$, exactly the PMF without the $e^{-\\lambda}$ multiplier. Any probability above 1 is impossible, signalling the missing decay factor $e^{-2} \\approx 0.135$ that brings it to $\\approx 0.180$."
             },
             {
@@ -1357,33 +1357,33 @@
             {
               "q": "As the rate $\\lambda$ grows large, the Poisson distribution becomes increasingly well-approximated by which distribution?",
               "choices": [
-                "The uniform distribution on $[0, \\lambda]$",
                 "The normal (Gaussian) distribution with mean $\\lambda$ and variance $\\lambda$",
+                "The uniform distribution on $[0, \\lambda]$",
                 "The exponential distribution with rate $\\lambda$",
                 "The Bernoulli distribution"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "For large $\\lambda$, the Poisson distribution approaches a normal distribution with mean $\\lambda$ and variance $\\lambda$ (matching its moments). The exponential describes the waiting time between events, not the count itself."
             },
             {
               "q": "At the bakery, $\\lambda = 6$ customers per hour. Which statement correctly interprets the constant-rate assumption?",
               "choices": [
-                "Exactly 6 customers arrive in every hour-long window",
                 "Customers are equally likely to arrive at any instant, so two disjoint 30-minute windows each have $\\lambda = 3$ on average",
+                "Exactly 6 customers arrive in every hour-long window",
                 "Once 6 customers have arrived, no more can come that hour",
                 "The probability of an arrival doubles after each customer leaves"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A constant rate means arrivals are spread uniformly in expectation, so any 30-minute slice averages $6 \\times \\frac{1}{2} = 3$. The count varies randomly around its mean, so it is not fixed at exactly 6, nor capped, nor dependent on prior arrivals."
             },
             {
-              "answer": 1,
+              "answer": 3,
               "q": "The lesson derives Poisson as a limiting case of the Binomial (the \"law of rare events\"). Which limit produces it?",
               "choices": [
                 "$n \\to \\infty$ with $p$ held fixed, so $np \\to \\infty$.",
-                "$n \\to \\infty$ and $p \\to 0$ together, with the product $np = \\lambda$ held fixed.",
+                "$n \\to 0$ and $p \\to \\infty$ with $n/p$ fixed.",
                 "$p \\to 1$ with $n$ fixed, so successes become certain.",
-                "$n \\to 0$ and $p \\to \\infty$ with $n/p$ fixed."
+                "$n \\to \\infty$ and $p \\to 0$ together, with the product $np = \\lambda$ held fixed."
               ],
               "explain": "Split a window into $n$ tiny slices, each with success probability $p$ and at most one event; the count is $\\text{Bin}(n,p)$. Letting $n\\to\\infty$, $p\\to 0$ with $np=\\lambda$ fixed, $\\binom{n}{k}p^k(1-p)^{n-k}\\to \\frac{\\lambda^k e^{-\\lambda}}{k!}$. Many trials, each rarely succeeding, give Poisson counts."
             },
@@ -1399,13 +1399,13 @@
               "explain": "A defining feature of the Poisson is $\\text{Var}(X)=\\mathbb{E}[X]=\\lambda$ — variance equals mean. If the observed variance greatly exceeds the mean (overdispersion), that assumption is violated and a plain Poisson is a poor fit (a negative-binomial model is a common alternative)."
             },
             {
-              "answer": 3,
+              "answer": 1,
               "q": "For Poisson($\\lambda$), $\\sigma = \\sqrt{\\lambda}$. As $\\lambda$ grows, how does the *relative* spread (coefficient of variation $\\sigma/\\mathbb{E}[X]$) behave?",
               "choices": [
                 "It grows like $\\sqrt{\\lambda}$, so busier systems are proportionally noisier.",
-                "It stays constant at 1, regardless of $\\lambda$.",
+                "It shrinks like $1/\\sqrt{\\lambda}$, so busier systems (large $\\lambda$) are proportionally *more* predictable.",
                 "It grows linearly with $\\lambda$.",
-                "It shrinks like $1/\\sqrt{\\lambda}$, so busier systems (large $\\lambda$) are proportionally *more* predictable."
+                "It stays constant at 1, regardless of $\\lambda$."
               ],
               "explain": "The coefficient of variation is $\\sigma/\\mathbb{E}[X] = \\sqrt{\\lambda}/\\lambda = 1/\\sqrt{\\lambda}$. The absolute spread $\\sqrt{\\lambda}$ grows with $\\lambda$, but relative to the mean it shrinks — a system averaging 10,000 events/day is proportionally far steadier than one averaging 4."
             },
@@ -1503,22 +1503,22 @@
               "q": "A machine produces a defective part independently with probability $0.05$. Let $X$ be the number of parts inspected until the first defective. What is the expected number of parts inspected?",
               "choices": [
                 "$0.05$",
-                "$19$",
                 "$20$",
+                "$19$",
                 "$5$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "For a geometric variable $\\mathbb{E}[X] = 1/p = 1/0.05 = 20$. The tempting answer $19$ is the mean number of failures before the first success ($\\frac{1-p}{p}$), which belongs to the other convention."
             },
             {
               "q": "For $X \\sim \\text{Geometric}(p)$, which expression correctly gives $P(X = k)$ for $k = 1, 2, 3, \\dots$?",
               "choices": [
-                "$p^{k-1}(1-p)$",
+                "$(1-p)^{k-1}\\,p$",
                 "$\\binom{k}{1}p(1-p)^{k-1}$",
                 "$(1-p)^{k}\\,p$",
-                "$(1-p)^{k-1}\\,p$"
+                "$p^{k-1}(1-p)$"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "The first $k-1$ trials must fail (probability $(1-p)^{k-1}$) and the $k$-th must succeed (probability $p$), giving $(1-p)^{k-1}p$. The exponent $k$ instead of $k-1$ would double-count an extra failure."
             },
             {
@@ -1536,11 +1536,11 @@
               "q": "Rolling a fair die for the first six ($p = 1/6$), what is the probability the first six does NOT appear within the first 4 rolls, i.e. $P(X > 4)$?",
               "choices": [
                 "$\\left(\\tfrac{1}{6}\\right)^{4}$",
-                "$\\left(\\tfrac{5}{6}\\right)^{4}$",
+                "$4 \\cdot \\tfrac{5}{6} \\cdot \\tfrac{1}{6}$",
                 "$1 - \\left(\\tfrac{1}{6}\\right)^{4}$",
-                "$4 \\cdot \\tfrac{5}{6} \\cdot \\tfrac{1}{6}$"
+                "$\\left(\\tfrac{5}{6}\\right)^{4}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$P(X > n) = (1-p)^n$, so $P(X>4) = (5/6)^4$ — the event that all four rolls fail to show a six. The option $(1/6)^4$ wrongly uses the success probability for repeated failures."
             },
             {
@@ -1558,44 +1558,44 @@
               "q": "A salesperson closes each call independently with probability $0.3$. Let $Y$ be the number of calls until the SECOND sale. Which distribution does $Y$ follow, and what is $\\mathbb{E}[Y]$?",
               "choices": [
                 "Geometric, with $\\mathbb{E}[Y] = 1/0.3 \\approx 3.33$",
-                "Binomial, with $\\mathbb{E}[Y] = 2 \\cdot 0.3 = 0.6$",
+                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 2/0.3 \\approx 6.67$",
                 "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 1/0.3 \\approx 3.33$",
-                "Negative Binomial ($r=2$), with $\\mathbb{E}[Y] = 2/0.3 \\approx 6.67$"
+                "Binomial, with $\\mathbb{E}[Y] = 2 \\cdot 0.3 = 0.6$"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Waiting for the $r$-th success is Negative Binomial with mean $r/p$; here $2/0.3 \\approx 6.67$. Because $Y$ is the sum of two independent geometric waits, its mean is twice the single-success mean of $3.33$."
             },
             {
               "q": "A free-throw shooter makes each shot independently with probability $0.9$. If $X$ is the number of shots until her first MISS, what is the success probability for the geometric model of $X$?",
               "choices": [
-                "$0.1$, since the event we are waiting for is a miss",
-                "$0.9$, since that is the make probability",
                 "$0.5$, since make and miss must be combined",
+                "$0.9$, since that is the make probability",
+                "$0.1$, since the event we are waiting for is a miss",
                 "$0.81$, the probability of two makes"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The geometric 'success' is whatever event ends the wait — here a MISS, with probability $1 - 0.9 = 0.1$. Using $0.9$ confuses the per-trial outcome we are counting against with the one we are waiting for."
             },
             {
               "q": "For $X \\sim \\text{Geometric}(p)$, what is the CDF $P(X \\le n)$ for a positive integer $n$?",
               "choices": [
                 "$(1-p)^{n}$",
-                "$1 - (1-p)^{n}$",
+                "$1 - p^{n}$",
                 "$n\\,p\\,(1-p)^{n-1}$",
-                "$1 - p^{n}$"
+                "$1 - (1-p)^{n}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Since $P(X > n) = (1-p)^n$, complementing gives $P(X \\le n) = 1 - (1-p)^n$. The bare $(1-p)^n$ is the survival (tail) probability, not the CDF."
             },
             {
               "q": "Which property makes the Geometric distribution UNIQUE among all discrete distributions?",
               "choices": [
                 "It has the largest possible variance for a given mean",
-                "It is the only discrete distribution whose probabilities sum to 1",
                 "It is the only discrete distribution that is memoryless",
+                "It is the only discrete distribution whose probabilities sum to 1",
                 "It is the only discrete distribution defined on the positive integers"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The geometric is the unique discrete memoryless distribution (its continuous analogue is the exponential). All valid PMFs sum to 1, and many distributions live on the positive integers, so those choices are not distinguishing properties."
             },
             {
@@ -1621,44 +1621,44 @@
               "explain": "By memorylessness $P(X > 3+4 \\mid X > 3) = P(X > 4) = (0.75)^4 \\approx 0.316$; equivalently $(0.75)^7 / (0.75)^3 = (0.75)^4$. Using $(0.75)^7$ ignores the conditioning, and $(0.75)^{10}$ wrongly adds the exponents."
             },
             {
-              "answer": 3,
+              "answer": 2,
               "q": "Why is the Geometric distribution called \"geometric\"?",
               "choices": [
                 "Because its PMF graph is a geometric shape (a triangle).",
                 "Because it describes geometric figures like circles and squares.",
-                "Because the mean $1/p$ is the geometric mean of the trials.",
-                "Because its PMF values $(1-p)^{k-1}p$ for $k=1,2,3,\\dots$ form a geometric series (each term a constant ratio $(1-p)$ times the previous), and that series sums to 1."
+                "Because its PMF values $(1-p)^{k-1}p$ for $k=1,2,3,\\dots$ form a geometric series (each term a constant ratio $(1-p)$ times the previous), and that series sums to 1.",
+                "Because the mean $1/p$ is the geometric mean of the trials."
               ],
               "explain": "The probabilities $p, (1-p)p, (1-p)^2 p, \\dots$ are a geometric sequence with common ratio $1-p$. Their sum is $p\\cdot\\frac{1}{1-(1-p)}=1$ (a geometric series), which is exactly why the distribution bears that name."
             },
             {
-              "answer": 2,
+              "answer": 3,
               "q": "A slick way to show $\\mathbb{E}[X]=1/p$ for $X\\sim\\text{Geometric}(p)$ conditions on the first trial. Which equation captures that argument?",
               "choices": [
                 "$\\mathbb{E}[X] = p\\cdot 0 + (1-p)\\cdot 1$, averaging the success and failure values.",
                 "$\\mathbb{E}[X] = \\sum_k k^2 (1-p)^{k-1}p$, the second moment.",
-                "$\\mathbb{E}[X] = p\\cdot 1 + (1-p)(1 + \\mathbb{E}[X])$ — with prob $p$ you finish in 1 trial; with prob $1-p$ you've used 1 trial and start over — which solves to $1/p$.",
-                "$\\mathbb{E}[X] = 1 - (1-p)^{\\mathbb{E}[X]}$, the survival equation."
+                "$\\mathbb{E}[X] = 1 - (1-p)^{\\mathbb{E}[X]}$, the survival equation.",
+                "$\\mathbb{E}[X] = p\\cdot 1 + (1-p)(1 + \\mathbb{E}[X])$ — with prob $p$ you finish in 1 trial; with prob $1-p$ you've used 1 trial and start over — which solves to $1/p$."
               ],
               "explain": "Condition on the first trial: success (prob $p$) finishes in exactly 1 step; failure (prob $1-p$) wastes a step and, by memorylessness, restarts the same wait, contributing $1+\\mathbb{E}[X]$. So $\\mathbb{E}[X]=p(1)+(1-p)(1+\\mathbb{E}[X])$, which solves to $\\mathbb{E}[X]=1/p$."
             },
             {
-              "answer": 0,
+              "answer": 2,
               "q": "A salesperson closes each independent call with probability $p=0.2$. Let $Y$ be the number of calls until the 3rd sale (negative binomial). What is $\\mathbb{E}[Y]$?",
               "choices": [
-                "$r/p = 3/0.2 = 15$ calls, since $Y$ is the sum of 3 independent Geometric($0.2$) waits.",
-                "$1/p = 5$ calls.",
                 "$3 \\times 0.2 = 0.6$ calls.",
+                "$1/p = 5$ calls.",
+                "$r/p = 3/0.2 = 15$ calls, since $Y$ is the sum of 3 independent Geometric($0.2$) waits.",
                 "$3$ calls, one per sale."
               ],
               "explain": "Waiting for the $r$-th success is a sum of $r$ independent geometric waits, each with mean $1/p$, so $\\mathbb{E}[Y]=r/p$. Here $3/0.2=15$ calls on average. ($1/p=5$ is the mean wait for just the first sale.)"
             },
             {
-              "answer": 1,
+              "answer": 0,
               "q": "The Geometric is the unique *discrete* memoryless distribution. What is its *continuous* counterpart?",
               "choices": [
-                "The Normal distribution.",
                 "The Exponential distribution — the unique continuous memoryless distribution, modeling the waiting *time* until a randomly-arriving event.",
+                "The Normal distribution.",
                 "The Uniform distribution.",
                 "The Binomial distribution."
               ],
@@ -1735,45 +1735,45 @@
             {
               "q": "For $X \\sim \\text{Uniform}(2, 8)$, what is the height of the density $f(x)$ on the interval $[2,8]$?",
               "choices": [
-                "$\\frac{1}{6}$",
                 "$\\frac{1}{8}$",
+                "$\\frac{1}{6}$",
                 "$\\frac{1}{10}$",
                 "$\\frac{1}{3}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The density is constant at $\\frac{1}{b-a} = \\frac{1}{8-2} = \\frac{1}{6}$ so the total area equals 1. Using $\\frac{1}{b}$ or $\\frac{1}{a+b}$ ignores that the width is $b-a$."
             },
             {
               "q": "A friend says: 'For a continuous Uniform random variable, $P(X = 5)$ is small but positive because 5 is inside the support.' What is the correct statement?",
               "choices": [
                 "$P(X=5)$ equals the density $f(5)$",
-                "$P(X=5) = 0$ because any single point has probability zero for a continuous variable",
+                "$P(X=5)$ depends on whether 5 is the midpoint",
                 "$P(X=5)$ is positive and equals $\\frac{1}{b-a}$",
-                "$P(X=5)$ depends on whether 5 is the midpoint"
+                "$P(X=5) = 0$ because any single point has probability zero for a continuous variable"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "For any continuous distribution, the probability of an exact single point is zero; probability comes from area over an interval, not height at a point. The density $f(5)$ is not a probability, which is the tempting confusion."
             },
             {
               "q": "For $X \\sim \\text{Uniform}(0, 10)$, what is $P(3 < X < 7)$?",
               "choices": [
-                "$0.3$",
-                "$0.7$",
                 "$0.4$",
+                "$0.7$",
+                "$0.3$",
                 "$0.5$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "For a Uniform, probability is the ratio of lengths: $\\frac{7-3}{10-0} = \\frac{4}{10} = 0.4$. Picking $0.3$ or $0.7$ confuses this with a single one-sided tail like $P(X>7)$."
             },
             {
               "q": "Two Uniform variables have the same midpoint but $X \\sim \\text{Uniform}(4,6)$ and $Y \\sim \\text{Uniform}(0,10)$. How do their variances compare?",
               "choices": [
-                "They are equal because the means are equal",
-                "$\\text{Var}(X) > \\text{Var}(Y)$ because $X$ is more concentrated",
                 "$\\text{Var}(X) < \\text{Var}(Y)$ because $Y$ spans a wider interval",
+                "$\\text{Var}(X) > \\text{Var}(Y)$ because $X$ is more concentrated",
+                "They are equal because the means are equal",
                 "Variance cannot be compared without knowing the densities"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Variance is $\\frac{(b-a)^2}{12}$, which depends only on the width: $X$ gives $\\frac{4}{12}\\approx0.33$ while $Y$ gives $\\frac{100}{12}\\approx8.33$. Equal means do not imply equal spread."
             },
             {
@@ -1790,23 +1790,23 @@
             {
               "q": "Calls arrive at rate $\\lambda = 3$ per hour with interarrival time $T \\sim \\text{Exponential}(3)$. What is $P(T > 1)$ (probability of waiting more than 1 hour)?",
               "choices": [
-                "$e^{-3} \\approx 0.050$",
+                "$e^{-1/3} \\approx 0.717$",
                 "$1 - e^{-3} \\approx 0.950$",
                 "$3e^{-3} \\approx 0.149$",
-                "$e^{-1/3} \\approx 0.717$"
+                "$e^{-3} \\approx 0.050$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The survival function is $P(T>t) = e^{-\\lambda t} = e^{-3 \\cdot 1} = e^{-3} \\approx 0.050$. The answer $1-e^{-3}$ is the CDF $P(T \\le 1)$, the complementary event."
             },
             {
               "q": "A lightbulb with Exponential lifetime has already burned for 1000 hours without failing. What is the distribution of its remaining lifetime?",
               "choices": [
                 "Exponential with a smaller mean, since it is partly used up",
-                "The same Exponential distribution as a brand-new bulb",
+                "Exponential with a larger rate $\\lambda$ because it is aging",
                 "Uniform over the remaining expected hours",
-                "Exponential with a larger rate $\\lambda$ because it is aging"
+                "The same Exponential distribution as a brand-new bulb"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "By memorylessness, $P(T > 1000 + t \\mid T > 1000) = P(T > t)$, so the remaining life has the identical Exponential distribution. The intuition that the bulb is 'partly used up' is exactly what memorylessness contradicts."
             },
             {
@@ -1823,12 +1823,12 @@
             {
               "q": "In a Poisson process of rate $\\lambda$, why does the event 'no arrivals by time $t$' have probability $e^{-\\lambda t}$ both as a Poisson and as an Exponential statement?",
               "choices": [
-                "Because $\\{N(t)=0\\}$ is the same event as $\\{T > t\\}$, where $T$ is the wait to the first arrival",
-                "Because the Poisson mean $\\lambda t$ always equals the Exponential mean $1/\\lambda$",
                 "It is a coincidence specific to $t=1$",
+                "Because the Poisson mean $\\lambda t$ always equals the Exponential mean $1/\\lambda$",
+                "Because $\\{N(t)=0\\}$ is the same event as $\\{T > t\\}$, where $T$ is the wait to the first arrival",
                 "Because the Exponential variance equals the Poisson variance"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "'No event by time $t$' means $N(t)=0$, which is identical to 'the first arrival comes after $t$', i.e. $T>t$; both give $e^{-\\lambda t}$. The agreement is structural, not a coincidence and not about matching moments."
             },
             {
@@ -1846,11 +1846,11 @@
               "q": "A student claims the median of $T \\sim \\text{Exponential}(\\lambda)$ equals its mean $\\frac{1}{\\lambda}$. Why is this wrong?",
               "choices": [
                 "The mean and median are equal for all distributions",
-                "The median is $\\frac{\\ln 2}{\\lambda} \\approx \\frac{0.693}{\\lambda}$, smaller than the mean because the long right tail pulls the mean up",
                 "The median is $\\frac{2}{\\lambda}$, larger than the mean",
+                "The median is $\\frac{\\ln 2}{\\lambda} \\approx \\frac{0.693}{\\lambda}$, smaller than the mean because the long right tail pulls the mean up",
                 "The Exponential has no median because it is continuous"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Solving $1 - e^{-\\lambda m} = 0.5$ gives $m = \\frac{\\ln 2}{\\lambda} \\approx \\frac{0.693}{\\lambda} < \\frac{1}{\\lambda}$. The right-skewed tail makes the mean exceed the median; the mean equals the median only for symmetric distributions."
             },
             {
@@ -1858,10 +1858,10 @@
               "choices": [
                 "$0$",
                 "$\\frac{1}{b-a}$",
-                "$\\frac{1}{2}$",
-                "$1$"
+                "$1$",
+                "$\\frac{1}{2}$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "By symmetry the midpoint is the median, so $F\\left(\\frac{a+b}{2}\\right) = \\frac{(a+b)/2 - a}{b-a} = \\frac{(b-a)/2}{b-a} = \\frac{1}{2}$. The value $\\frac{1}{b-a}$ is the density height, not the accumulated probability."
             },
             {
@@ -1876,13 +1876,13 @@
               "explain": "The continuous Uniform on $[a,b]$ has variance $\\frac{(b-a)^2}{12}$. With $a=0,b=12$: $\\frac{144}{12}=12$. (The mean is $\\frac{a+b}{2}=6$ and the density height is $\\frac{1}{b-a}=\\frac{1}{12}$ — different quantities.)"
             },
             {
-              "answer": 3,
+              "answer": 1,
               "q": "In a Poisson process of rate $\\lambda$, how do the Poisson and Exponential distributions relate?",
               "choices": [
                 "They are the same distribution under two names.",
-                "Poisson measures waiting times; Exponential counts events.",
+                "Poisson counts *how many* events occur in a fixed window (count $\\sim \\text{Poisson}(\\lambda t)$); Exponential measures *how long* between consecutive events (interarrival time $\\sim \\text{Exponential}(\\lambda)$) — two views of one random clock.",
                 "Exponential gives the count and Poisson gives the time, but only when $\\lambda < 1$.",
-                "Poisson counts *how many* events occur in a fixed window (count $\\sim \\text{Poisson}(\\lambda t)$); Exponential measures *how long* between consecutive events (interarrival time $\\sim \\text{Exponential}(\\lambda)$) — two views of one random clock."
+                "Poisson measures waiting times; Exponential counts events."
               ],
               "explain": "A Poisson process has two linked descriptions: the number of events in an interval of length $t$ is $\\text{Poisson}(\\lambda t)$ (how many), and the gap between consecutive events is $\\text{Exponential}(\\lambda)$ (how long). \"No event by time $t$\" ($N(t)=0$) has probability $e^{-\\lambda t}$ — exactly the Exponential survival function — which is how the two connect."
             },
@@ -1898,12 +1898,12 @@
               "explain": "$f(t)=\\lambda e^{-\\lambda t}$ is maximized at $t=0$ (value $\\lambda$) and decreases monotonically. So the most probable outcome is a *short* wait, yet the exponential tail means long waits still happen occasionally — the mean $1/\\lambda$ sits to the right of the (zero) mode."
             },
             {
-              "answer": 2,
+              "answer": 1,
               "q": "Server response time is $T \\sim \\text{Exponential}(\\lambda = 0.5)$ per second. What are its mean and variance?",
               "choices": [
                 "Mean $0.5$, variance $0.25$.",
-                "Mean $2$, variance $2$.",
                 "Mean $\\frac{1}{\\lambda} = 2$ s, variance $\\frac{1}{\\lambda^2} = 4$ s$^2$.",
+                "Mean $2$, variance $2$.",
                 "Mean $0.5$, variance $0.5$."
               ],
               "explain": "For Exponential($\\lambda$), $\\mathbb{E}[T]=1/\\lambda$ and $\\text{Var}(T)=1/\\lambda^2$ (so $\\sigma=1/\\lambda$, equal to the mean). With $\\lambda=0.5$: mean $=2$ s, variance $=1/0.25=4$ s$^2$. Note variance equals mean only for the *Poisson*, not the Exponential."
@@ -1990,34 +1990,34 @@
             {
               "q": "A student claims '$f(\\mu) = 1$ because that's where the curve is tallest, and the total probability is 1.' What is the key error in this reasoning?",
               "choices": [
-                "The curve is actually tallest at the tails, not at $\\mu$",
                 "The peak height $f(\\mu)$ is a density, not a probability, so it can exceed $1$ (e.g. when $\\sigma$ is small)",
+                "The curve is actually tallest at the tails, not at $\\mu$",
                 "The total area is $\\sigma$, not $1$, so the peak must be $\\sigma$",
                 "The peak is always exactly $0.5$ for symmetric distributions"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$f$ is a probability density; only areas under it are probabilities. The peak height $\\frac{1}{\\sigma\\sqrt{2\\pi}}$ grows without bound as $\\sigma\\to 0$, so it can be far larger than $1$."
             },
             {
               "q": "How does the standardization $Z = \\frac{X-\\mu}{\\sigma}$ transform the distribution of $X \\sim N(\\mu, \\sigma^2)$?",
               "choices": [
                 "It makes $Z$ uniform on $[0,1]$",
-                "It gives $Z \\sim N(0, 1)$, the standard normal",
+                "It squares the variable to remove negative values",
                 "It gives $Z \\sim N(\\mu, 1)$, keeping the original mean",
-                "It squares the variable to remove negative values"
+                "It gives $Z \\sim N(0, 1)$, the standard normal"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Subtracting $\\mu$ recenters to mean $0$ and dividing by $\\sigma$ rescales to variance $1$, yielding $Z\\sim N(0,1)$. The mean becomes $0$, not $\\mu$, and the shape stays normal (not uniform)."
             },
             {
               "q": "If $X \\sim N(100, 16)$ (so $\\sigma = 4$), what is the $z$-score of the observation $x = 108$?",
               "choices": [
                 "$8$",
-                "$0.5$",
                 "$2$",
+                "$0.5$",
                 "$1.5$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$z = \\frac{108-100}{4} = \\frac{8}{4} = 2$. The common trap is dividing by $\\sigma^2 = 16$ to get $0.5$, but standardization divides by the standard deviation $\\sigma$, not the variance."
             },
             {
@@ -2056,99 +2056,99 @@
             {
               "q": "The exponent in the normal density contains the term $-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2$. Why does this guarantee the curve is symmetric about $\\mu$?",
               "choices": [
-                "Because $e^{(\\cdot)}$ is an even function for all inputs",
                 "Because the squaring makes the exponent depend only on the distance $|x-\\mu|$, so $x = \\mu+a$ and $x = \\mu-a$ give equal density",
+                "Because $e^{(\\cdot)}$ is an even function for all inputs",
                 "Because $\\sigma$ is always positive",
                 "Because the front constant $\\frac{1}{\\sigma\\sqrt{2\\pi}}$ is symmetric"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Squaring $(x-\\mu)$ erases the sign, so points equidistant from $\\mu$ on either side share the same exponent and hence the same density. Symmetry comes from the squared deviation, not from properties of $e$ or the front constant."
             },
             {
               "q": "Heights are $N(170, 6^2)$ cm. A person with height $z = -1.5$ has what actual height?",
               "choices": [
                 "$179$ cm",
-                "$161$ cm",
                 "$168.5$ cm",
+                "$161$ cm",
                 "$155$ cm"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Inverting standardization: $x = \\mu + z\\sigma = 170 + (-1.5)(6) = 170 - 9 = 161$ cm. The sign of $z$ matters: a negative $z$ is below the mean, so the answer must be less than $170$."
             },
             {
               "q": "Which statement about the standard normal $N(0,1)$ is TRUE?",
               "choices": [
                 "$P(Z = 0) = \\frac{1}{\\sqrt{2\\pi}}$, the peak density",
-                "$P(Z = 0) = 0$ because $Z$ is continuous, even though density is highest there",
+                "$P(Z = 0)$ is undefined",
                 "$P(Z \\le 0) = 0$ since $0$ is the smallest value",
-                "$P(Z = 0)$ is undefined"
+                "$P(Z = 0) = 0$ because $Z$ is continuous, even though density is highest there"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "For any continuous distribution the probability of an exact single value is $0$, regardless of how tall the density is there. The value $\\frac{1}{\\sqrt{2\\pi}}$ is the density $f(0)$, not a probability, and $P(Z\\le 0)=0.5$ by symmetry."
             },
             {
               "q": "Standardizing to $z$-scores is useful primarily because it lets you:",
               "choices": [
-                "Convert any normal distribution to $N(0,1)$ so a single table or formula handles all probability questions",
-                "Turn a skewed distribution into a normal one",
                 "Guarantee all values become positive",
+                "Turn a skewed distribution into a normal one",
+                "Convert any normal distribution to $N(0,1)$ so a single table or formula handles all probability questions",
                 "Change the variance to match the mean"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Standardization maps every $N(\\mu,\\sigma^2)$ onto the same standard curve $N(0,1)$, so one reference suffices for all of them. It does not fix skewness (it preserves shape) nor force positivity ($z$ can be negative)."
             },
             {
               "q": "The lesson teases that the normal distribution arises 'relentlessly' — e.g. for the average of 50 dice rolls. Which principle explains why averages of many independent quantities tend to look normal?",
               "choices": [
                 "The Law of Large Numbers",
-                "The Central Limit Theorem",
                 "Bayes' Theorem",
+                "The Central Limit Theorem",
                 "The Empirical Rule"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The Central Limit Theorem states that sums or averages of many independent random variables approach a normal distribution regardless of the original shape. The Law of Large Numbers concerns the average converging to the mean, not the bell shape of its distribution."
             },
             {
-              "answer": 2,
+              "answer": 1,
               "q": "On the normal density curve, what is special about the points $x = \\mu \\pm \\sigma$?",
               "choices": [
                 "They are where the density equals zero.",
-                "They are the two peaks of a (bimodal) curve.",
                 "They are the *inflection points*, where the curve switches from concave-down (near the peak) to concave-up (out in the tails).",
+                "They are the two peaks of a (bimodal) curve.",
                 "They are where the density equals 1."
               ],
               "explain": "A normal curve has a single peak at $\\mu$; one standard deviation out, at $x=\\mu\\pm\\sigma$, the curvature changes sign — concave-down between them, concave-up beyond. These inflection points are a visual read of $\\sigma$: wider spacing means a larger spread."
             },
             {
-              "answer": 1,
+              "answer": 3,
               "q": "Maria scored 82 on a biology test ($N(70, 6^2)$) and 88 on a chemistry test ($N(80, 10^2)$). Relative to each class, on which did she do better?",
               "choices": [
                 "Chemistry — 88 is a higher raw score than 82.",
-                "Biology — her z-scores are $z_{\\text{bio}}=\\frac{82-70}{6}=2.0$ vs $z_{\\text{chem}}=\\frac{88-80}{10}=0.8$, so biology is further above its mean in standard-deviation units.",
+                "Chemistry — it has the larger standard deviation, so more spread means a better result.",
                 "They are exactly equal, since both are above their class means.",
-                "Chemistry — it has the larger standard deviation, so more spread means a better result."
+                "Biology — her z-scores are $z_{\\text{bio}}=\\frac{82-70}{6}=2.0$ vs $z_{\\text{chem}}=\\frac{88-80}{10}=0.8$, so biology is further above its mean in standard-deviation units."
               ],
               "explain": "Standardizing puts both on one ruler: $z_{\\text{bio}}=12/6=2.0$, $z_{\\text{chem}}=8/10=0.8$. A higher z-score means further above the class average in SD units, so Maria's biology result (2 SD above) is the stronger relative performance — even though its raw score is lower."
             },
             {
-              "answer": 3,
+              "answer": 2,
               "q": "Using the 68–95–99.7 rule, approximately what is $P(Z < -1)$ for the standard normal?",
               "choices": [
                 "$68\\%$, the mass within one standard deviation.",
                 "$32\\%$, the total mass outside $\\pm 1\\sigma$.",
-                "$2.5\\%$.",
-                "About $16\\%$ — outside $\\mu\\pm 1\\sigma$ lies $\\approx 32\\%$, split evenly between the two tails by symmetry."
+                "About $16\\%$ — outside $\\mu\\pm 1\\sigma$ lies $\\approx 32\\%$, split evenly between the two tails by symmetry.",
+                "$2.5\\%$."
               ],
               "explain": "About 68% lies within $|z|\\le 1$, leaving $\\approx 32\\%$ in the two tails combined; by symmetry each tail holds half, $\\approx 16\\%$. So $P(Z<-1)\\approx 0.16$. (The $2.5\\%$ figure is the *two*-sigma tail, $P(Z<-2)$.)"
             },
             {
-              "answer": 0,
+              "answer": 3,
               "q": "Adult heights are $N(170, 10^2)$ cm. Using the empirical rule, roughly what fraction are between 150 cm and 190 cm?",
               "choices": [
-                "About $95\\%$ — those bounds are $z = \\frac{150-170}{10} = -2$ and $z = \\frac{190-170}{10} = +2$, i.e. $\\mu \\pm 2\\sigma$.",
+                "About $50\\%$, since the interval is centered on the mean.",
                 "About $68\\%$, since any symmetric interval captures roughly two-thirds.",
                 "About $99.7\\%$.",
-                "About $50\\%$, since the interval is centered on the mean."
+                "About $95\\%$ — those bounds are $z = \\frac{150-170}{10} = -2$ and $z = \\frac{190-170}{10} = +2$, i.e. $\\mu \\pm 2\\sigma$."
               ],
               "explain": "Standardize the bounds: $150\\to z=-2$ and $190\\to z=+2$, so the interval is exactly $\\mu\\pm 2\\sigma$. The empirical rule puts $\\approx 95\\%$ of a normal distribution within two standard deviations of the mean."
             }
@@ -2233,67 +2233,67 @@
             {
               "q": "A joint PMF table for $X\\in\\{0,1\\}$ and $Y\\in\\{0,1\\}$ has cells $p(0,0)=0.3,\\ p(0,1)=0.1,\\ p(1,0)=0.2$. What must $p(1,1)$ equal for this to be a valid joint PMF?",
               "choices": [
-                "$0.4$",
-                "$0.6$",
                 "$0.5$",
+                "$0.6$",
+                "$0.4$",
                 "It cannot be determined from the information given"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A valid joint PMF must sum to 1, so $p(1,1)=1-(0.3+0.1+0.2)=0.4$. The normalization constraint pins it down exactly."
             },
             {
               "q": "Two students each compute marginals from the same joint table but get different $p_X$ values. Without seeing their work, which mistake is most likely the cause?",
               "choices": [
-                "One summed the joint over the wrong variable (summing across $x$ instead of $y$)",
+                "Marginals require the conditional distribution first, which they skipped",
                 "One forgot that marginals can be negative",
                 "The joint table does not have unique marginals",
-                "Marginals require the conditional distribution first, which they skipped"
+                "One summed the joint over the wrong variable (summing across $x$ instead of $y$)"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$p_X(x)=\\sum_y p_{X,Y}(x,y)$ sums out $Y$; summing out $X$ instead yields $p_Y$, not $p_X$. Marginals are uniquely determined by the joint and never negative, so the only viable error is collapsing the wrong axis."
             },
             {
               "q": "You are told only the two marginals $p_X$ and $p_Y$ (not the joint). What can you conclude about the joint distribution?",
               "choices": [
                 "The joint is uniquely determined as $p_X(x)p_Y(y)$",
-                "The joint must equal the larger of $p_X(x)$ and $p_Y(y)$ in each cell",
                 "Many different joints are consistent with these marginals",
+                "The joint must equal the larger of $p_X(x)$ and $p_Y(y)$ in each cell",
                 "The joint is fully determined only if both marginals are uniform"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Marginals are shadows on each axis; many joints cast the same shadows because the marginals carry no information about co-movement. Writing $p_X(x)p_Y(y)$ assumes independence, which is just one of the many compatible joints."
             },
             {
               "q": "For the joint $p(0,0)=0.4,\\ p(0,1)=0.2,\\ p(1,0)=0.1,\\ p(1,1)=0.3$, what is the conditional probability $P(Y=0\\mid X=1)$?",
               "choices": [
                 "$0.10$",
-                "$0.25$",
                 "$0.50$",
+                "$0.25$",
                 "$0.40$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$p_X(1)=0.1+0.3=0.4$, so $P(Y=0\\mid X=1)=p(1,0)/p_X(1)=0.1/0.4=0.25$. The tempting $0.10$ forgets to renormalize by the marginal."
             },
             {
               "q": "A joint density satisfies $f_{X,Y}(x,y)>0$ exactly on the triangle $\\{0\\le y\\le x\\le 1\\}$ and is $0$ elsewhere. What can you immediately say about $X$ and $Y$?",
               "choices": [
                 "They are independent, since the density is a valid surface",
-                "They cannot be independent, because the support is not a rectangle",
+                "They are independent only if $f_{X,Y}$ is constant on the triangle",
                 "Independence depends on the exact formula, which is not given",
-                "They are independent only if $f_{X,Y}$ is constant on the triangle"
+                "They cannot be independent, because the support is not a rectangle"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The allowed values of $Y$ (namely $0\\le y\\le x$) depend on $X$, so the support is not a product set. Independence forces a rectangular (product-shaped) support, so it fails here regardless of the formula's exact values."
             },
             {
               "q": "For independent random variables, how does the conditional distribution $p_{X\\mid Y}(x\\mid y)$ behave as $y$ changes?",
               "choices": [
                 "It scales up linearly with $y$",
-                "It equals the joint $p_{X,Y}(x,y)$ at every $y$",
                 "It does not depend on $y$ and equals the marginal $p_X(x)$",
+                "It equals the joint $p_{X,Y}(x,y)$ at every $y$",
                 "It becomes uniform over the values of $X$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Independence means $p_{X,Y}(x,y)=p_X(x)p_Y(y)$, so $p_{X\\mid Y}(x\\mid y)=p_X(x)p_Y(y)/p_Y(y)=p_X(x)$ — constant in $y$. Knowing $Y$ tells you nothing new about $X$; it need not be uniform."
             },
             {
@@ -2322,33 +2322,33 @@
               "q": "A continuous joint density is $f_{X,Y}(x,y)=6e^{-2x-3y}$ for $x,y\\ge 0$ and $0$ otherwise. Are $X$ and $Y$ independent?",
               "choices": [
                 "No, because the constant $6$ cannot be split between two marginals",
-                "Yes, because the density factors as $(2e^{-2x})(3e^{-3y})$",
+                "Cannot tell without computing both marginals first",
                 "No, because the exponents differ ($2$ vs $3$)",
-                "Cannot tell without computing both marginals first"
+                "Yes, because the density factors as $(2e^{-2x})(3e^{-3y})$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The density factors into a function of $x$ alone times a function of $y$ alone over a rectangular support: $6e^{-2x-3y}=(2e^{-2x})(3e^{-3y})$, each a valid marginal density. That factorization is exactly independence; differing rates and the constant are no obstacle."
             },
             {
               "q": "From a joint PMF you correctly compute $p_X(2)=0.5$ and $p_{X\\mid Y}(2\\mid 1)=0.5$. With only this information, can you conclude $X$ and $Y$ are independent?",
               "choices": [
                 "Yes — the conditional matches the marginal, so they are independent",
-                "No — independence must hold for every pair of values, not just one",
+                "No — independence can never be checked from conditionals",
                 "Yes — equality at any single point forces independence everywhere",
-                "No — independence can never be checked from conditionals"
+                "No — independence must hold for every pair of values, not just one"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Independence requires $p_{X\\mid Y}(x\\mid y)=p_X(x)$ for all $x$ and all $y$. Agreement at a single $(x,y)$ pair is necessary but far from sufficient; some other cell could still violate the product rule."
             },
             {
               "q": "A six-sided die is rolled. Let $X$ be the number rolled and $Y=1$ if the roll is even, else $Y=0$. What is $p_{X,Y}(3,1)$?",
               "choices": [
-                "$1/12$",
-                "$1/6$",
                 "$0$",
+                "$1/6$",
+                "$1/12$",
                 "$1/2$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$Y=1$ means the roll is even, but $X=3$ is odd, so the event $\\{X=3,\\ Y=1\\}$ is impossible and has probability $0$. The distractor $1/6$ ignores the deterministic link forcing many joint cells to vanish."
             },
             {
@@ -2363,45 +2363,45 @@
               "explain": "Marginalizing means eliminating the unwanted variable: integrating out $y$ sums the density over all $y$-slices and returns a function of $x$ alone, the continuous analogue of summing a row. Integrating over $x$ would instead remove $X$ and give $f_Y(y)$."
             },
             {
-              "answer": 3,
+              "answer": 0,
               "q": "For continuous random variables with joint density $f_{X,Y}(x,y)$, how is $P\\big((X,Y)\\in A\\big)$ obtained, and what must the total be?",
               "choices": [
-                "Sum $f_{X,Y}$ over the points in $A$; the total over all points must equal 1.",
+                "Integrate the density over $A$ — a *volume* under the surface, $\\iint_A f_{X,Y}\\,dx\\,dy$ — and the total volume over the whole plane must equal 1.",
                 "Read $f_{X,Y}$ at the center of $A$; the density there must equal 1.",
                 "Differentiate $f_{X,Y}$ over $A$; the total derivative must equal 1.",
-                "Integrate the density over $A$ — a *volume* under the surface, $\\iint_A f_{X,Y}\\,dx\\,dy$ — and the total volume over the whole plane must equal 1."
+                "Sum $f_{X,Y}$ over the points in $A$; the total over all points must equal 1."
               ],
               "explain": "In the continuous case the joint density is a surface, and probability is the volume beneath it over the region: $P((X,Y)\\in A)=\\iint_A f_{X,Y}\\,dx\\,dy$, with $\\iint_{\\mathbb{R}^2} f_{X,Y}\\,dx\\,dy=1$. (Summing is the discrete analogue; the density itself is not a probability.)"
             },
             {
-              "answer": 1,
+              "answer": 0,
               "q": "What does it take for two random variables to be independent via the factorization $p_{X,Y}(x,y)=p_X(x)\\,p_Y(y)$?",
               "choices": [
-                "The factorization need hold at just one representative pair $(x,y)$.",
                 "The factorization must hold at *every* pair $(x,y)$ — a single cell where $p_{X,Y}(x,y)\\ne p_X(x)p_Y(y)$ breaks independence entirely.",
+                "The factorization need hold at just one representative pair $(x,y)$.",
                 "The factorization must hold on average (summed over all pairs), even if individual cells differ.",
                 "Only the marginals must match; the individual joint values are irrelevant."
               ],
               "explain": "Independence is an all-points condition: the joint must equal the product of marginals for *every* $(x,y)$. Find even one pair where it fails and the variables are dependent — exactly what the worked example showed when $p(0,0)=0.40\\ne p_X(0)p_Y(0)=0.30$."
             },
             {
-              "answer": 2,
+              "answer": 0,
               "q": "A joint PMF has $p(0,0)=0.4,\\ p(0,1)=0.2,\\ p(1,0)=0.1,\\ p(1,1)=0.3$. What is $P(X=1\\mid Y=1)$?",
               "choices": [
-                "$0.3$, the joint probability $p(1,1)$ itself.",
-                "$0.5$, since $Y=1$ has probability $0.5$.",
                 "$0.6$, from $\\frac{p(1,1)}{p_Y(1)} = \\frac{0.3}{0.2+0.3} = \\frac{0.3}{0.5}$.",
+                "$0.5$, since $Y=1$ has probability $0.5$.",
+                "$0.3$, the joint probability $p(1,1)$ itself.",
                 "$0.75$, from $\\frac{p(1,1)}{p_X(1)} = \\frac{0.3}{0.4}$."
               ],
               "explain": "Condition on $Y=1$: slice to that column and renormalize by its total. $p_Y(1)=p(0,1)+p(1,1)=0.2+0.3=0.5$, so $P(X=1\\mid Y=1)=\\frac{p(1,1)}{p_Y(1)}=\\frac{0.3}{0.5}=0.6$. (Dividing by $p_X(1)=0.4$ would instead give $P(Y=1\\mid X=1)$.)"
             },
             {
-              "answer": 0,
+              "answer": 2,
               "q": "The lesson says the \"joint → marginal → conditional\" pipeline underlies probabilistic ML. How does *inference* (predicting a label $y$ from input $x$) fit in?",
               "choices": [
-                "It computes a conditional $p(y\\mid x)$ — slicing the joint at the observed $x$ and renormalizing — which is exactly the conditional-distribution operation.",
-                "It computes a marginal $p(y)$, ignoring $x$ entirely.",
                 "It sums the joint to 1, which directly yields the prediction.",
+                "It computes a marginal $p(y)$, ignoring $x$ entirely.",
+                "It computes a conditional $p(y\\mid x)$ — slicing the joint at the observed $x$ and renormalizing — which is exactly the conditional-distribution operation.",
                 "It requires the marginals only; the joint is never used."
               ],
               "explain": "Predicting $y$ from $x$ means evaluating $p(y\\mid x)=\\frac{p(x,y)}{p(x)}$ — fix the observed $x$ (slice), renormalize over $y$. Generative models learn the joint $p(x,y)$; inference reads a conditional off it. That slice-and-renormalize move is the same one used throughout the lesson."
@@ -2488,12 +2488,12 @@
             {
               "q": "If $Y = aX + b$ with $a>0$ (a perfect increasing linear relationship), what is the correlation $\\rho_{X,Y}$?",
               "choices": [
-                "$a$",
                 "$+1$",
+                "$a$",
                 "$a/\\sigma_X$",
                 "It depends on $b$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A perfect increasing linear relationship gives $\\rho=+1$ regardless of the slope $a$ or intercept $b$, since $\\operatorname{Cov}(X,aX+b)=a\\operatorname{Var}(X)$ and $\\sigma_{aX+b}=a\\sigma_X$, so the ratio is $a\\sigma_X^2/(\\sigma_X \\cdot a\\sigma_X)=1$. The slope cancels out in the normalization, so $\\rho$ is not $a$."
             },
             {
@@ -2544,11 +2544,11 @@
               "q": "Why is correlation often preferred over covariance for comparing the strength of association across different pairs of variables?",
               "choices": [
                 "Correlation can detect nonlinear relationships that covariance misses",
-                "Correlation is unitless and bounded in $[-1,1]$, while covariance has units and an unbounded magnitude",
+                "Covariance can be negative but correlation is always positive",
                 "Correlation is always larger than covariance",
-                "Covariance can be negative but correlation is always positive"
+                "Correlation is unitless and bounded in $[-1,1]$, while covariance has units and an unbounded magnitude"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Dividing covariance by $\\sigma_X\\sigma_Y$ strips the units and confines the value to $[-1,1]$, making magnitudes comparable across problems. Both measure only linear association, and correlation shares the same sign as covariance, so the other options are false."
             },
             {
@@ -2556,10 +2556,10 @@
               "choices": [
                 "$0$",
                 "$\\operatorname{Var}(X)+\\operatorname{Var}(Y)$",
-                "$\\operatorname{Var}(X)$",
-                "$\\operatorname{Var}(X)\\cdot\\operatorname{Var}(Y)$"
+                "$\\operatorname{Var}(X)\\cdot\\operatorname{Var}(Y)$",
+                "$\\operatorname{Var}(X)$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "By bilinearity, $\\operatorname{Cov}(X,X+Y)=\\operatorname{Cov}(X,X)+\\operatorname{Cov}(X,Y)=\\operatorname{Var}(X)+0=\\operatorname{Var}(X)$, since $X$ and $Y$ are independent. It is not zero because $X$ is part of the sum $S$."
             },
             {
@@ -2577,22 +2577,22 @@
               "q": "An analyst finds zero correlation between ice-cream sales and sweater sales and concludes neither influences the other. What is the most important flaw?",
               "choices": [
                 "Correlation of zero proves the variables are independent, so the conclusion is actually correct",
-                "A near-zero correlation can hide a strong nonlinear or seasonally-mediated relationship; $\\rho$ only captures linear association",
                 "Correlation always implies causation, so the analyst reversed the direction",
+                "A near-zero correlation can hide a strong nonlinear or seasonally-mediated relationship; $\\rho$ only captures linear association",
                 "Zero correlation means the covariance is undefined"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Pearson $\\rho$ measures only linear association, so a strong nonlinear or confounded (e.g., seasonal) relationship can still produce $\\rho \\approx 0$. Zero correlation does not establish independence, and covariance is perfectly well-defined when it equals zero."
             },
             {
               "q": "Setting $Y=X$ in the covariance definition shows that covariance generalizes which quantity?",
               "choices": [
                 "The mean $\\mathbb{E}[X]$",
-                "The variance $\\operatorname{Var}(X)$",
+                "The correlation $\\rho_{X,X}$",
                 "The standard deviation $\\sigma_X$",
-                "The correlation $\\rho_{X,X}$"
+                "The variance $\\operatorname{Var}(X)$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$\\operatorname{Cov}(X,X)=\\mathbb{E}[X^2]-(\\mathbb{E}[X])^2=\\operatorname{Var}(X)$, so variance is the special case of covariance with both slots equal. (Note $\\rho_{X,X}=1$ always, which is the normalized version, not what the definition directly yields.)"
             },
             {
@@ -2607,44 +2607,44 @@
               "explain": "The portfolio variance $\\tfrac{\\sigma^2}{2}(1+\\rho)$ is smallest when $\\rho=-1$, giving variance $0$ — the assets perfectly cancel. This is the mathematical heart of diversification: the most negative covariance damps the spread of the sum the most."
             },
             {
-              "answer": 2,
+              "answer": 3,
               "q": "Two variables have $\\operatorname{Cov}(X,Y)=4$, $\\operatorname{Var}(X)=4$, and $\\operatorname{Var}(Y)=25$. What is the correlation $\\rho_{X,Y}$?",
               "choices": [
                 "$4$, the covariance itself.",
                 "$0.16 = \\frac{4}{25}$.",
-                "$0.4$, from $\\rho = \\frac{\\operatorname{Cov}(X,Y)}{\\sigma_X\\,\\sigma_Y} = \\frac{4}{\\sqrt{4}\\,\\sqrt{25}} = \\frac{4}{2\\cdot 5}$.",
-                "$1.0$, since the covariance is positive."
+                "$1.0$, since the covariance is positive.",
+                "$0.4$, from $\\rho = \\frac{\\operatorname{Cov}(X,Y)}{\\sigma_X\\,\\sigma_Y} = \\frac{4}{\\sqrt{4}\\,\\sqrt{25}} = \\frac{4}{2\\cdot 5}$."
               ],
               "explain": "Correlation is covariance divided by both standard deviations: $\\sigma_X=\\sqrt{4}=2$, $\\sigma_Y=\\sqrt{25}=5$, so $\\rho=\\frac{4}{2\\cdot 5}=0.4$. This normalization strips the units and forces $\\rho\\in[-1,1]$, making it comparable across problems."
             },
             {
-              "answer": 0,
+              "answer": 2,
               "q": "If $X$ and $Y$ are independent, what is $\\operatorname{Cov}(X,Y)$, and why?",
               "choices": [
-                "Exactly $0$, because independence gives $\\mathbb{E}[XY]=\\mathbb{E}[X]\\mathbb{E}[Y]$, so $\\operatorname{Cov}(X,Y)=\\mathbb{E}[XY]-\\mathbb{E}[X]\\mathbb{E}[Y]=0$.",
-                "Exactly $1$, the maximum, since independence is the strongest relationship.",
                 "Undefined, because independent variables have no joint distribution.",
+                "Exactly $1$, the maximum, since independence is the strongest relationship.",
+                "Exactly $0$, because independence gives $\\mathbb{E}[XY]=\\mathbb{E}[X]\\mathbb{E}[Y]$, so $\\operatorname{Cov}(X,Y)=\\mathbb{E}[XY]-\\mathbb{E}[X]\\mathbb{E}[Y]=0$.",
                 "Always positive, since independent variables drift the same way."
               ],
               "explain": "Independence implies $\\mathbb{E}[XY]=\\mathbb{E}[X]\\mathbb{E}[Y]$, and the computational formula $\\operatorname{Cov}(X,Y)=\\mathbb{E}[XY]-\\mathbb{E}[X]\\mathbb{E}[Y]$ then gives $0$. So independent variables are always uncorrelated — though, crucially, the converse does not hold."
             },
             {
-              "answer": 3,
+              "answer": 1,
               "q": "Let $X$ be uniform on $\\{-1,0,1\\}$ and $Y=X^2$. Then $Y$ is completely determined by $X$, yet $\\operatorname{Cov}(X,Y)=0$. What does this show?",
               "choices": [
                 "That $X$ and $Y$ are independent after all.",
-                "That the covariance was computed incorrectly — a deterministic relationship must have $\\operatorname{Cov}\\ne 0$.",
+                "That zero covariance/correlation means no *linear* association only — a strong nonlinear (even deterministic) dependence can still give $\\operatorname{Cov}=0$, so uncorrelated does NOT imply independent.",
                 "That correlation can exceed 1 for nonlinear relationships.",
-                "That zero covariance/correlation means no *linear* association only — a strong nonlinear (even deterministic) dependence can still give $\\operatorname{Cov}=0$, so uncorrelated does NOT imply independent."
+                "That the covariance was computed incorrectly — a deterministic relationship must have $\\operatorname{Cov}\\ne 0$."
               ],
               "explain": "Here $\\mathbb{E}[X]=0$ and $\\mathbb{E}[XY]=\\mathbb{E}[X^3]=0$, so $\\operatorname{Cov}(X,Y)=0$ despite $Y=X^2$ being a perfect (nonlinear) function of $X$. Covariance/correlation detect only *linear* co-movement; a U-shaped dependence is invisible to them. Uncorrelated $\\ne$ independent."
             },
             {
-              "answer": 1,
+              "answer": 0,
               "q": "You rescale and shift both variables: $X' = 10X + 3$ and $Y' = 0.5Y - 2$. How does the correlation $\\rho_{X',Y'}$ compare to $\\rho_{X,Y}$?",
               "choices": [
-                "It scales by $10 \\times 0.5 = 5$.",
                 "It is unchanged: $\\rho_{X',Y'} = \\rho_{X,Y}$, because correlation is invariant to positive scaling and any shift (the scale factors cancel between the covariance and the standard deviations).",
+                "It scales by $10 \\times 0.5 = 5$.",
                 "It becomes $0$, since shifting destroys the relationship.",
                 "It flips sign."
               ],
@@ -2722,33 +2722,33 @@
               "q": "For a fixed value $y$, the quantity $\\mathbb{E}[X\\mid Y=y]$ is best described as:",
               "choices": [
                 "A random variable that depends on $Y$",
-                "A single number (the mean of $X$ over cases where $Y=y$)",
+                "A function of $X$ only",
                 "A probability between 0 and 1",
-                "A function of $X$ only"
+                "A single number (the mean of $X$ over cases where $Y=y$)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Once $y$ is fixed, $\\mathbb{E}[X\\mid Y=y]$ is the ordinary mean of $X$ under the conditional distribution $p_{X\\mid Y}(\\cdot\\mid y)$, so it is just a number. It only becomes a random variable when you let $y$ vary and write $\\mathbb{E}[X\\mid Y]$."
             },
             {
               "q": "Why is $\\mathbb{E}[X\\mid Y]$ (with $Y$ left unspecified) considered a random variable?",
               "choices": [
-                "Because $X$ is random and we have not averaged over it",
-                "Because conditional probabilities are always random",
                 "Because it is the function $y\\mapsto\\mathbb{E}[X\\mid Y=y]$ evaluated at the random input $Y$",
+                "Because conditional probabilities are always random",
+                "Because $X$ is random and we have not averaged over it",
                 "Because it equals $\\mathbb{E}[X]$ plus random noise"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$\\mathbb{E}[X\\mid Y]$ is the deterministic function $g(y)=\\mathbb{E}[X\\mid Y=y]$ composed with the random variable $Y$, i.e. $g(Y)$. A function of a random variable is itself random, which is why it has its own distribution and variance."
             },
             {
               "q": "Roll a fair die; let $Y$ be the outcome and $X=1$ if $Y$ is even and $X=0$ otherwise. What is $\\mathbb{E}[X\\mid Y=4]$?",
               "choices": [
-                "$1$",
-                "$\\tfrac{1}{2}$",
                 "$\\tfrac{1}{6}$",
+                "$\\tfrac{1}{2}$",
+                "$1$",
                 "$0$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Given $Y=4$, the value of $X$ is determined: $4$ is even so $X=1$ with certainty, giving $\\mathbb{E}[X\\mid Y=4]=1$. The distractor $\\tfrac12$ confuses the conditional value with the unconditional mean $\\mathbb{E}[X]=\\tfrac12$."
             },
             {
@@ -2765,67 +2765,67 @@
             {
               "q": "You collect data on people; $X$ is weight and $Y$ is height. A friend says 'the best single-number guess of $X$ given that height is $y$ is $\\mathbb{E}[X\\mid Y=y]$.' In what sense is this 'best'?",
               "choices": [
-                "It minimizes the expected squared error among all guesses based on $Y=y$",
                 "It maximizes the probability of being exactly correct",
+                "It minimizes the expected squared error among all guesses based on $Y=y$",
                 "It is the value of $X$ that occurs most often when $Y=y$",
                 "It is the median of $X$ given $Y=y$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The conditional mean is the minimizer of mean squared error: among all functions $g(Y)$, $\\mathbb{E}[X\\mid Y]$ minimizes $\\mathbb{E}[(X-g(Y))^2]$. The mode (most common value) and median answer different optimization problems."
             },
             {
               "q": "A bag has two coins: a fair coin ($p=0.5$) and a biased coin ($p=0.9$), picked at random. Let $Y$ identify which coin, and $X$ the indicator of heads on one flip. Compute $\\mathbb{E}[X\\mid Y=\\text{biased}]$.",
               "choices": [
-                "$0.5$",
-                "$0.7$",
                 "$0.9$",
+                "$0.7$",
+                "$0.5$",
                 "$0.45$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Conditioning on the biased coin fixes the success probability at $0.9$, so $\\mathbb{E}[X\\mid Y=\\text{biased}]=0.9$. The value $0.7$ is the overall average $\\tfrac12(0.5)+\\tfrac12(0.9)$, which answers a different (unconditional) question."
             },
             {
               "q": "Which statement about the function $g(y)=\\mathbb{E}[X\\mid Y=y]$ is correct?",
               "choices": [
-                "It must be a linear function of $y$",
                 "It is a deterministic (non-random) function of $y$",
+                "It must be a linear function of $y$",
                 "It always equals $\\mathbb{E}[X]$",
                 "It must take values in $[0,1]$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "For each fixed $y$, $g(y)$ is computed from the conditional distribution and yields a fixed number, so $g$ is an ordinary deterministic function. It need not be linear, need not equal the marginal mean, and (unless $X$ is an indicator) need not lie in $[0,1]$."
             },
             {
               "q": "In a regression problem we model $\\hat{X}=f(Y)$. Connecting this to conditional expectation, the ideal target that $f$ tries to recover is:",
               "choices": [
                 "The conditional variance $\\mathrm{Var}(X\\mid Y)$",
-                "The conditional expectation $\\mathbb{E}[X\\mid Y]$",
+                "The joint density $f_{X,Y}(x,y)$",
                 "The marginal mean $\\mathbb{E}[X]$",
-                "The joint density $f_{X,Y}(x,y)$"
+                "The conditional expectation $\\mathbb{E}[X\\mid Y]$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Regression seeks the function of the inputs that best predicts the response in squared-error sense, and that optimal function is exactly $\\mathbb{E}[X\\mid Y]$ — which is why the lesson calls conditional expectation the central object of prediction. The conditional variance describes residual spread, not the prediction itself."
             },
             {
               "q": "Let $X$ be continuous with conditional density $f_{X\\mid Y}(x\\mid y)$. The correct formula for $\\mathbb{E}[X\\mid Y=y]$ is:",
               "choices": [
-                "$\\int x\\,f_{X\\mid Y}(x\\mid y)\\,dx$",
-                "$\\sum_y y\\,f_{X\\mid Y}(x\\mid y)$",
                 "$\\int f_{X\\mid Y}(x\\mid y)\\,dx$",
+                "$\\sum_y y\\,f_{X\\mid Y}(x\\mid y)$",
+                "$\\int x\\,f_{X\\mid Y}(x\\mid y)\\,dx$",
                 "$\\int x\\,f_{X,Y}(x,y)\\,dx$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The conditional mean integrates $x$ against the conditional density in $x$: $\\int x\\,f_{X\\mid Y}(x\\mid y)\\,dx$. Integrating the density alone gives $1$, and using the joint density $f_{X,Y}$ instead of the conditional one omits the normalizing factor $1/f_Y(y)$."
             },
             {
               "q": "A student claims: 'Since $\\mathbb{E}[X\\mid Y]$ has a distribution, it must have a larger variance than $X$ itself.' What is the right response?",
               "choices": [
-                "Correct — conditioning always adds variability",
                 "Wrong — $\\mathbb{E}[X\\mid Y]$ is a smoothed/averaged version of $X$ and typically has variance no larger than $X$",
+                "Correct — conditioning always adds variability",
                 "Correct — it is a function of two random variables",
                 "Wrong — $\\mathbb{E}[X\\mid Y]$ is never random, so its variance is zero"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\mathbb{E}[X\\mid Y]$ replaces $X$ by an average within each $Y$-slice, removing within-slice variability; its variance is at most $\\mathrm{Var}(X)$ (equal only in special cases). It is random in general, so its variance is not automatically zero."
             },
             {
@@ -2844,10 +2844,10 @@
               "choices": [
                 "$\\mathbb{E}[X]$",
                 "A constant independent of $Y$",
-                "$h(Y)=X$ itself",
-                "$0$"
+                "$0$",
+                "$h(Y)=X$ itself"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Once $Y$ is known, $X=h(Y)$ is fully determined, so its conditional mean is just $h(Y)$, i.e. $X$ itself. Replacing it with the constant $\\mathbb{E}[X]$ would wrongly discard the information that $Y$ pins $X$ down exactly."
             },
             {
@@ -2873,23 +2873,23 @@
               "explain": "Total variance splits into within-group and between-group pieces: $\\mathbb{E}[\\operatorname{Var}(X\\mid Y)]$ averages the spread inside each $Y$-slice (the part $Y$ can't explain), and $\\operatorname{Var}(\\mathbb{E}[X\\mid Y])$ measures how much the slice-means vary (the part $Y$ does explain). This is the \"explained vs. unexplained variance\" of regression and ANOVA. (Choice B swaps the two.)"
             },
             {
-              "answer": 0,
+              "answer": 2,
               "q": "A hen lays $N\\sim\\text{Poisson}(\\lambda)$ eggs; each hatches independently with probability $p$. Let $X$ be the number that hatch. Using the tower property, what is $\\mathbb{E}[X]$?",
               "choices": [
-                "$p\\lambda$, since $\\mathbb{E}[X\\mid N]=Np$ (the Binomial mean) and $\\mathbb{E}[X]=\\mathbb{E}[Np]=p\\,\\mathbb{E}[N]=p\\lambda$.",
-                "$\\lambda$, the mean number of eggs, ignoring hatching.",
                 "$p$, the hatch probability.",
+                "$\\lambda$, the mean number of eggs, ignoring hatching.",
+                "$p\\lambda$, since $\\mathbb{E}[X\\mid N]=Np$ (the Binomial mean) and $\\mathbb{E}[X]=\\mathbb{E}[Np]=p\\,\\mathbb{E}[N]=p\\lambda$.",
                 "$\\lambda^p$, combining the two parameters."
               ],
               "explain": "Condition on $N$: given $N=n$, $X\\sim\\text{Bin}(n,p)$ so $\\mathbb{E}[X\\mid N]=Np$. The tower property gives $\\mathbb{E}[X]=\\mathbb{E}[\\mathbb{E}[X\\mid N]]=\\mathbb{E}[Np]=p\\,\\mathbb{E}[N]=p\\lambda$. Conditioning turns a daunting double sum into three lines."
             },
             {
-              "answer": 2,
+              "answer": 1,
               "q": "Which of the following are conditional expectations?",
               "choices": [
                 "Neither — they are variances, not expectations.",
-                "Only the regression function $f(x)=\\mathbb{E}[Y\\mid X=x]$; an RL value function is unrelated.",
                 "Both the regression function $f(x)=\\mathbb{E}[Y\\mid X=x]$ (the MSE-optimal predictor) AND the RL value function $V(s)=\\mathbb{E}[\\text{return}\\mid \\text{state}=s]$.",
+                "Only the regression function $f(x)=\\mathbb{E}[Y\\mid X=x]$; an RL value function is unrelated.",
                 "Only the RL value function; regression is a deterministic fit with no expectation."
               ],
               "explain": "Both are conditional expectations. The regression function $\\mathbb{E}[Y\\mid X=x]$ is provably the predictor minimizing mean-squared error, and the value function $V(s)=\\mathbb{E}[\\text{return}\\mid s]$ is the expected return given the state (Bellman equations are tower-property identities). Conditional expectation is the shared backbone of prediction across ML."
@@ -2971,45 +2971,45 @@
             {
               "q": "The Weak Law of Large Numbers states that $P(|\\bar{X}_n - \\mu| > \\varepsilon) \\to 0$ as $n\\to\\infty$. What does the $\\varepsilon$ represent?",
               "choices": [
-                "A fixed tolerance you choose in advance; the claim holds for every such positive margin",
+                "The variance of a single observation $X_i$",
                 "The shrinking error of the sample mean, which goes to zero as $n$ grows",
                 "The probability that the sample mean equals $\\mu$ exactly",
-                "The variance of a single observation $X_i$"
+                "A fixed tolerance you choose in advance; the claim holds for every such positive margin"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$\\varepsilon>0$ is an arbitrary but fixed tolerance held constant as $n\\to\\infty$; the probability of missing $\\mu$ by more than that fixed margin vanishes. Treating $\\varepsilon$ as itself shrinking misreads the statement — it is the probability, not the margin, that goes to zero."
             },
             {
               "q": "For i.i.d. $X_i$ with variance $\\sigma^2$, by what factor does $\\operatorname{Var}(\\bar{X}_n)$ change if you increase the sample size from $n$ to $9n$?",
               "choices": [
-                "It is divided by 3",
                 "It is divided by 9",
+                "It is divided by 3",
                 "It is divided by 81",
                 "It stays the same"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\operatorname{Var}(\\bar{X}_n)=\\sigma^2/n$, so replacing $n$ with $9n$ divides the variance by 9. Dividing by 3 confuses the variance scaling with the standard-error scaling ($\\sigma/\\sqrt{n}$, which would drop by a factor of 3)."
             },
             {
               "q": "A roulette wheel has landed on red 8 times in a row. A gambler reasons that black is now 'due' and bets heavily on black. Which statement correctly diagnoses the error?",
               "choices": [
                 "He is right: the LLN forces the long-run proportions to balance, so black must compensate soon",
-                "He commits the gambler's fallacy; each spin is independent, so the next spin is unaffected by the streak",
+                "He is wrong only because roulette has a house edge, not because of independence",
                 "He is right because the variance of the sample proportion increases after a streak",
-                "He is wrong only because roulette has a house edge, not because of independence"
+                "He commits the gambler's fallacy; each spin is independent, so the next spin is unaffected by the streak"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The LLN dilutes early imbalances with future data rather than cancelling them, and independent spins have no memory, so the streak does not raise the chance of black. The 'balancing' interpretation is exactly the gambler's fallacy the LLN does not support."
             },
             {
               "q": "You use Chebyshev's inequality to bound $P(|\\bar{X}_{100}-\\mu|>0.2)$ for i.i.d. data with $\\sigma^2=4$. What is the bound?",
               "choices": [
-                "$1.00$",
-                "$0.20$",
                 "$0.04$",
+                "$0.20$",
+                "$1.00$",
                 "$0.50$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$\\operatorname{Var}(\\bar{X}_{100})=4/100=0.04$, so the bound is $0.04/0.2^2 = 0.04/0.04 = 1$. Chebyshev gives a vacuous bound of 1 here — a reminder that the bound can be useless for small $n$ even though it still tends to 0 as $n\\to\\infty$."
             },
             {
@@ -3026,110 +3026,110 @@
             {
               "q": "Monte Carlo estimation of an integral has a typical error that scales like $1/\\sqrt{n}$. To reduce your error by a factor of 10, how many times more samples do you need?",
               "choices": [
-                "10 times",
                 "100 times",
+                "10 times",
                 "$\\sqrt{10}\\approx 3.16$ times",
                 "1000 times"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Since error $\\propto 1/\\sqrt{n}$, cutting it tenfold requires $\\sqrt{n}$ to grow tenfold, i.e. $n$ to grow $10^2=100$ times. Answering '10 times' ignores the square root — the hallmark of Monte Carlo's slow convergence."
             },
             {
               "q": "Which condition is part of the standard hypotheses needed for the Chebyshev-based proof of the Weak LLN to apply?",
               "choices": [
-                "The $X_i$ must be normally distributed",
                 "The $X_i$ must have finite variance $\\sigma^2$",
+                "The $X_i$ must be normally distributed",
                 "The sample mean must already be close to $\\mu$",
                 "The $X_i$ must take only the values 0 and 1"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The one-line Chebyshev proof uses $\\operatorname{Var}(\\bar{X}_n)=\\sigma^2/n$, which requires a finite variance. Normality and Bernoulli-valued data are not required — the LLN holds for any i.i.d. sequence with finite variance regardless of distributional shape."
             },
             {
               "q": "What is the key difference between the Strong Law and the Weak Law of Large Numbers?",
               "choices": [
                 "The Strong Law requires a larger sample size to take effect",
-                "The Weak Law applies to discrete variables and the Strong Law to continuous ones",
                 "The Strong Law gives almost-sure convergence (the whole sequence converges with probability 1); the Weak Law gives convergence in probability",
+                "The Weak Law applies to discrete variables and the Strong Law to continuous ones",
                 "The Strong Law converges to $\\mu$ while the Weak Law converges to $\\sigma^2$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The Strong Law says $\\bar{X}_n\\to\\mu$ almost surely, ruling out rare excursions in the limit, while the Weak Law only says $P(|\\bar{X}_n-\\mu|>\\varepsilon)\\to0$. Both converge to the same $\\mu$ and both target the average — the distinction is the mode of convergence, not the limit or the data type."
             },
             {
               "q": "A pollster surveys 1,000 people and gets a proportion estimate; a colleague suggests surveying 4,000 to be more accurate. Approximately how much does quadrupling the sample shrink the standard error of the estimate?",
               "choices": [
                 "By a factor of 4",
-                "By a factor of 2",
+                "Not at all — the spread $\\sigma$ of individual responses is unchanged",
                 "By a factor of 16",
-                "Not at all — the spread $\\sigma$ of individual responses is unchanged"
+                "By a factor of 2"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Standard error is $\\sigma/\\sqrt{n}$, so multiplying $n$ by 4 multiplies $\\sqrt{n}$ by 2 and halves the standard error. The tempting 'factor of 4' confuses the variance reduction ($1/n$) with the standard-error reduction ($1/\\sqrt{n}$)."
             },
             {
               "q": "In stochastic gradient descent, a mini-batch gradient is used in place of the full-dataset gradient. Which principle justifies this substitution?",
               "choices": [
                 "The CLT, because the mini-batch gradient is normally distributed",
-                "The LLN, because the mini-batch gradient is a sample-average estimate of the full gradient that converges to it as batch size grows",
                 "Chebyshev's inequality, because it guarantees the gradient is exactly correct",
+                "The LLN, because the mini-batch gradient is a sample-average estimate of the full gradient that converges to it as batch size grows",
                 "The gambler's fallacy, because successive batches compensate for each other"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A mini-batch averages per-example gradients, making it an unbiased sample-mean estimate of the true expected gradient; the LLN guarantees this average approaches the true gradient as the batch grows. The CLT describes the fluctuation's shape, not why the estimate is valid in the first place."
             },
             {
               "q": "Suppose $X_1, X_2, \\dots$ are i.i.d. with the heavy-tailed Cauchy distribution, which has no finite mean. What does the LLN promise about $\\bar{X}_n$?",
               "choices": [
-                "$\\bar{X}_n$ still converges, but to the median instead of the mean",
-                "$\\bar{X}_n$ converges to 0 because the distribution is symmetric",
                 "The classical LLN gives no guarantee, since its hypotheses (a finite mean) are not met",
+                "$\\bar{X}_n$ converges to 0 because the distribution is symmetric",
+                "$\\bar{X}_n$ still converges, but to the median instead of the mean",
                 "$\\bar{X}_n$ converges, just more slowly than for finite-variance distributions"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The LLN requires a well-defined (finite) mean $\\mu$ for the average to converge to; the Cauchy distribution has none, so the theorem does not apply and $\\bar{X}_n$ in fact does not settle down. Symmetry does not rescue convergence — the sample mean of Cauchy draws is itself Cauchy for every $n$."
             },
             {
               "q": "Which statement best captures the complementary roles of the LLN and the CLT for the sample mean $\\bar{X}_n$?",
               "choices": [
-                "The LLN says $\\bar{X}_n\\to\\mu$; the CLT describes the shape of the residual fluctuation, with $\\sqrt{n}(\\bar{X}_n-\\mu)$ approaching a normal distribution",
-                "The LLN describes the fluctuation's shape; the CLT says where the mean lands",
                 "Both make identical claims, so only one is ever needed",
+                "The LLN describes the fluctuation's shape; the CLT says where the mean lands",
+                "The LLN says $\\bar{X}_n\\to\\mu$; the CLT describes the shape of the residual fluctuation, with $\\sqrt{n}(\\bar{X}_n-\\mu)$ approaching a normal distribution",
                 "The LLN applies for small $n$ and the CLT replaces it once $n$ is large"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The LLN identifies the destination ($\\mu$), while the CLT characterizes the bell-shaped wobble around it via $\\sqrt{n}(\\bar{X}_n-\\mu)\\to N(0,\\sigma^2)$. They answer different questions — 'where' versus 'how it fluctuates' — and neither is a large-$n$ substitute for the other."
             },
             {
-              "answer": 2,
+              "answer": 1,
               "q": "The lesson calls the LLN \"a computational engine\" via Monte Carlo estimation. How does Monte Carlo use the LLN?",
               "choices": [
                 "It solves the integral $\\mathbb{E}[g(X)]$ exactly by symbolic algebra, with the LLN merely checking the answer.",
-                "It requires the population to be normal, then reads $\\mathbb{E}[g(X)]$ off a z-table.",
                 "To estimate a hard-to-compute $\\mathbb{E}[g(X)]$, draw many samples $X_i$ and average: by the LLN, $\\frac1n\\sum_i g(X_i)\\to\\mathbb{E}[g(X)]$.",
+                "It requires the population to be normal, then reads $\\mathbb{E}[g(X)]$ off a z-table.",
                 "It deterministically enumerates every possible outcome and weights each by its probability."
               ],
               "explain": "Monte Carlo turns the LLN into a tool: an intractable expectation (or an integral written as one) is approximated by sampling and averaging, since the sample average of $g(X)$ converges to $\\mathbb{E}[g(X)]$. It is how we estimate $\\pi$ with random darts, price derivatives, and handle Bayesian integrals — with error shrinking like $1/\\sqrt{n}$."
             },
             {
-              "answer": 0,
+              "answer": 1,
               "q": "After 10 heads in a row, why does the LLN NOT imply that extra tails become more likely?",
               "choices": [
-                "The LLN governs the *proportion*, which converges to 0.5 because early imbalances are *diluted* by the growing number of later flips — not *cancelled* by compensating outcomes. The coin has no memory; each flip stays 50/50.",
                 "Because after 10 heads, tails really are \"due\" — the LLN guarantees the count evens out.",
+                "The LLN governs the *proportion*, which converges to 0.5 because early imbalances are *diluted* by the growing number of later flips — not *cancelled* by compensating outcomes. The coin has no memory; each flip stays 50/50.",
                 "Because the LLN only applies to the first 10 flips, after which it stops.",
                 "Because the LLN forces the running counts of heads and tails to become equal."
               ],
               "explain": "The LLN is about the *average/proportion*, not the running count. A surplus of, say, 5 extra heads is a 25% distortion after 20 flips but only 0.05% after 10,000 — the surplus is diluted by the swelling denominator, not erased by extra tails. Expecting \"due\" outcomes is the gambler's fallacy."
             },
             {
-              "answer": 3,
+              "answer": 2,
               "q": "In machine learning, training minimizes the *average* loss over the training set (empirical risk) as a stand-in for the true expected risk. What licenses that substitution?",
               "choices": [
                 "The Central Limit Theorem, which makes the loss exactly normal.",
                 "Nothing — empirical risk and expected risk are unrelated.",
-                "Bias correction, which removes the gap entirely for any sample size.",
-                "The Law of Large Numbers: as the training set grows, the average loss converges to the expected loss, so minimizing the empirical average approximates minimizing the true risk."
+                "The Law of Large Numbers: as the training set grows, the average loss converges to the expected loss, so minimizing the empirical average approximates minimizing the true risk.",
+                "Bias correction, which removes the gap entirely for any sample size."
               ],
               "explain": "Empirical risk is a sample average of the per-example loss; by the LLN it converges to the expected risk as data grows, so minimizing training-set average loss is a sensible proxy for the true objective (and test-set accuracy, also an average, is meaningful). SGD adds that a mini-batch gradient is an unbiased sample-average estimate of the full gradient."
             },
@@ -3215,12 +3215,12 @@
             {
               "q": "A population of incomes has standard deviation $\\sigma = \\$30{,}000$. You take one random sample of $n=900$ people and compute $\\bar{X}=\\$52{,}300$. What is the standard error of this sample mean?",
               "choices": [
-                "$\\$30{,}000$",
                 "$\\$1{,}000$",
+                "$\\$30{,}000$",
                 "$\\$33.33$",
                 "$\\$52{,}300$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\operatorname{SE}=\\sigma/\\sqrt{n}=30{,}000/\\sqrt{900}=30{,}000/30=\\$1{,}000$. The tempting $\\$30{,}000$ is $\\sigma$ itself (the spread of individuals), not the spread of the estimate."
             },
             {
@@ -3271,11 +3271,11 @@
               "q": "A waiting-time population is heavily right-skewed. For which sampling situation is the normal approximation to the distribution of $\\bar{X}_n$ LEAST trustworthy?",
               "choices": [
                 "$n = 200$",
-                "$n = 500$",
                 "$n = 3$",
+                "$n = 500$",
                 "$n = 1000$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The CLT is an asymptotic ($n\\to\\infty$) result; for strongly skewed populations small $n$ leaves the sampling distribution of the mean still visibly skewed. With $n=3$ the approximation is poorest."
             },
             {
@@ -3293,98 +3293,98 @@
               "q": "For i.i.d. $X_1,\\dots,X_n$ with variance $\\sigma^2$, $\\operatorname{Var}(\\bar{X}_n)=\\sigma^2/n$ rather than just $\\sigma^2/n^2 \\cdot n$ being left as cross-terms. Which property kills the covariance cross-terms so that $\\operatorname{Var}(\\sum X_i)=\\sum \\operatorname{Var}(X_i)$?",
               "choices": [
                 "Linearity of expectation alone",
-                "Independence of the $X_i$",
+                "Identical distribution of the $X_i$",
                 "The Central Limit Theorem",
-                "Identical distribution of the $X_i$"
+                "Independence of the $X_i$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Variance of a sum equals the sum of variances only when covariances vanish, which independence guarantees. Linearity of expectation gives the unbiased mean but says nothing about variance; identical distribution alone does not remove dependence."
             },
             {
               "q": "A poll estimates a proportion $p$ from $n = 400$ respondents, where the standard error is $\\sqrt{p(1-p)/n}$. What is the worst-case (largest) standard error?",
               "choices": [
                 "$0.05$",
-                "$0.0025$",
                 "$0.025$",
+                "$0.0025$",
                 "$0.25$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$p(1-p)$ is maximized at $p=0.5$, giving $\\sqrt{0.25/400}=\\sqrt{0.000625}=0.025$. The value $0.25$ is the maximum of $p(1-p)$ itself, not its square root divided by $n$."
             },
             {
               "q": "Two estimators of $\\mu$ are compared. Estimator A is the sample mean $\\bar{X}$; estimator B always returns the value of the first observation $X_1$. Both are unbiased. Why is $\\bar{X}$ preferred?",
               "choices": [
-                "$\\bar{X}$ has variance $\\sigma^2/n$, which shrinks with $n$, while $X_1$ has variance $\\sigma^2$ regardless of $n$",
+                "They are equally good because both are unbiased",
                 "$X_1$ is biased and $\\bar{X}$ is not",
                 "$\\bar{X}$ is biased downward, making it more conservative",
-                "They are equally good because both are unbiased"
+                "$\\bar{X}$ has variance $\\sigma^2/n$, which shrinks with $n$, while $X_1$ has variance $\\sigma^2$ regardless of $n$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Both are unbiased, so the tie-breaker is variance: $\\operatorname{Var}(\\bar{X})=\\sigma^2/n$ decreases with sample size, while $X_1$ ignores all but one data point and keeps variance $\\sigma^2$. Unbiasedness alone does not make an estimator good."
             },
             {
               "q": "The bootstrap is mentioned as a way to approximate a sampling distribution. What problem does it primarily solve?",
               "choices": [
-                "It removes the bias of the sample mean",
                 "It approximates a statistic's sampling distribution when no closed-form formula is available",
+                "It removes the bias of the sample mean",
                 "It makes the population distribution normal",
                 "It eliminates the need for any random sampling"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The bootstrap resamples from the data to empirically build a sampling distribution for statistics (e.g. a median or a model score) that lack a tidy closed-form SE. It does not change bias, normalize the population, or replace sampling."
             },
             {
               "q": "A statistic computed from data (such as $\\bar{X}$) is best described as which of the following?",
               "choices": [
                 "A fixed constant determined entirely by the population",
-                "A random variable whose distribution depends on the random sample drawn",
+                "A deterministic function of $\\mu$ that does not vary across samples",
                 "A parameter of the population, like $\\mu$ or $\\sigma$",
-                "A deterministic function of $\\mu$ that does not vary across samples"
+                "A random variable whose distribution depends on the random sample drawn"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Because the statistic is a function of the random sample, it changes from sample to sample and is itself a random variable with a sampling distribution. Parameters like $\\mu$ are fixed; statistics are not."
             },
             {
-              "answer": 1,
+              "answer": 2,
               "q": "For i.i.d. $X_1,\\dots,X_n$ with mean $\\mu$ and variance $\\sigma^2$, what are the mean and variance of the sample mean $\\bar X_n$?",
               "choices": [
                 "$\\mathbb{E}[\\bar X_n]=n\\mu$ and $\\operatorname{Var}(\\bar X_n)=n\\sigma^2$ (both grow with $n$).",
-                "$\\mathbb{E}[\\bar X_n]=\\mu$ (unbiased) and $\\operatorname{Var}(\\bar X_n)=\\sigma^2/n$ (spread shrinks with $n$).",
                 "$\\mathbb{E}[\\bar X_n]=\\mu$ and $\\operatorname{Var}(\\bar X_n)=\\sigma^2$ (same as a single observation).",
+                "$\\mathbb{E}[\\bar X_n]=\\mu$ (unbiased) and $\\operatorname{Var}(\\bar X_n)=\\sigma^2/n$ (spread shrinks with $n$).",
                 "$\\mathbb{E}[\\bar X_n]=\\mu/n$ and $\\operatorname{Var}(\\bar X_n)=\\sigma^2/n^2$."
               ],
               "explain": "By linearity $\\mathbb{E}[\\bar X_n]=\\frac1n\\sum\\mathbb{E}[X_i]=\\mu$ — the sample mean is unbiased. Independence kills the covariance cross-terms, so $\\operatorname{Var}(\\bar X_n)=\\frac{1}{n^2}\\sum\\operatorname{Var}(X_i)=\\frac{n\\sigma^2}{n^2}=\\sigma^2/n$: centered at the truth, tightening as $n$ grows."
             },
             {
-              "answer": 3,
+              "answer": 0,
               "q": "What does the Central Limit Theorem say about the standardized sample mean $\\frac{\\bar X_n-\\mu}{\\sigma/\\sqrt n}$ as $n\\to\\infty$?",
               "choices": [
-                "It converges to the constant $\\mu$.",
+                "It converges in distribution to $N(0,1)$ — *regardless* of the original population's shape (given finite variance) — so $\\bar X_n\\approx N(\\mu,\\sigma^2/n)$ for large $n$.",
                 "It stays distributed exactly like the original population.",
                 "It converges to $N(0,1)$ only if the original population is itself normal.",
-                "It converges in distribution to $N(0,1)$ — *regardless* of the original population's shape (given finite variance) — so $\\bar X_n\\approx N(\\mu,\\sigma^2/n)$ for large $n$."
+                "It converges to the constant $\\mu$."
               ],
               "explain": "The CLT: $\\frac{\\bar X_n-\\mu}{\\sigma/\\sqrt n}\\xrightarrow{d}N(0,1)$ for i.i.d. data with finite variance, whatever the population's shape — skewed, bimodal, or discrete. Equivalently $\\bar X_n\\approx N(\\mu,\\sigma^2/n)$. This universality is what lets us attach normal-based error bars to almost any average."
             },
             {
-              "answer": 0,
+              "answer": 1,
               "q": "Why does averaging many independent variables converge to a *bell* shape specifically, rather than some other curve?",
               "choices": [
-                "The Gaussian is the *fixed point* of convolution (adding independent variables convolves and smooths their densities, and a sum of Gaussians is Gaussian) — and it is the *maximum-entropy* distribution for a given mean and variance, the least-committal shape a sum of many small effects lands on.",
                 "Because every real-world distribution is secretly normal to begin with.",
+                "The Gaussian is the *fixed point* of convolution (adding independent variables convolves and smooths their densities, and a sum of Gaussians is Gaussian) — and it is the *maximum-entropy* distribution for a given mean and variance, the least-committal shape a sum of many small effects lands on.",
                 "Because the mean of any finite sample is always exactly normal.",
                 "Because the bell is the only curve whose total area equals 1."
               ],
               "explain": "Two complementary reasons: (1) adding independent variables convolves their densities, which blurs sharp features, and the Gaussian is the convolution fixed point — averaging flows toward the one shape it can no longer change; (2) among all distributions with a given mean and variance, the Gaussian has maximum entropy, so a sum that has \"forgotten\" everything but its mean and variance lands there."
             },
             {
-              "answer": 2,
+              "answer": 3,
               "q": "What exactly is the \"sampling distribution\" of the sample mean?",
               "choices": [
                 "The distribution of the raw data points $X_i$ within a single sample.",
                 "The population distribution, simply relabeled.",
-                "The distribution of the *statistic* $\\bar X_n$ itself — the values it takes across all possible samples of size $n$ — i.e. a distribution of *estimates*, not of raw data.",
-                "A fixed number equal to the true mean $\\mu$."
+                "A fixed number equal to the true mean $\\mu$.",
+                "The distribution of the *statistic* $\\bar X_n$ itself — the values it takes across all possible samples of size $n$ — i.e. a distribution of *estimates*, not of raw data."
               ],
               "explain": "Imagine drawing sample after sample, computing $\\bar X_n$ each time, and histogramming those means — that histogram is the sampling distribution. It is a distribution of *estimates* (the statistic varies because the sample is random), and its spread (the standard error) quantifies the uncertainty in a single estimate."
             }
@@ -3459,23 +3459,23 @@
             {
               "q": "A coworker says \"my estimator gave 52.3, so its bias is $52.3 - \\mu$.\" What is the conceptual error?",
               "choices": [
-                "Bias is a property of the estimator's sampling distribution, $\\mathbb{E}[\\hat\\theta]-\\theta$, not the deviation of one particular estimate from the truth",
-                "Bias should be computed as $\\theta - \\mathbb{E}[\\hat\\theta]$, so the sign is flipped",
                 "Bias only applies to biased estimators, and $\\bar X$ is unbiased so it has no bias to compute",
+                "Bias should be computed as $\\theta - \\mathbb{E}[\\hat\\theta]$, so the sign is flipped",
+                "Bias is a property of the estimator's sampling distribution, $\\mathbb{E}[\\hat\\theta]-\\theta$, not the deviation of one particular estimate from the truth",
                 "Nothing is wrong; $52.3 - \\mu$ is exactly the definition of bias for this sample"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Bias is defined via the expectation across all possible samples, $\\operatorname{Bias}(\\hat\\theta)=\\mathbb{E}[\\hat\\theta]-\\theta$; a single estimate's distance from $\\theta$ is just one realization of sampling error, not the bias."
             },
             {
               "q": "An estimator is unbiased exactly when:",
               "choices": [
-                "its variance equals zero",
                 "$\\mathbb{E}[\\hat\\theta]=\\theta$ for the parameter being estimated",
+                "its variance equals zero",
                 "every individual estimate equals $\\theta$",
                 "its bias decreases as the sample size grows"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Unbiasedness means the sampling distribution is centered on the truth, $\\mathbb{E}[\\hat\\theta]=\\theta$. Individual estimates still vary, and zero bias says nothing about variance or sample size."
             },
             {
@@ -3493,11 +3493,11 @@
               "q": "Consider $\\hat\\mu = X_1$, i.e., just use the first observation as your estimate of $\\mu$. Which statement is true?",
               "choices": [
                 "It is biased, because it ignores most of the data",
-                "It is unbiased, since $\\mathbb{E}[X_1]=\\mu$, but it has large variance $\\sigma^2$",
+                "It is biased and inconsistent, so it is useless",
                 "It is both unbiased and minimum-variance among all estimators",
-                "It is biased and inconsistent, so it is useless"
+                "It is unbiased, since $\\mathbb{E}[X_1]=\\mu$, but it has large variance $\\sigma^2$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Since $\\mathbb{E}[X_1]=\\mu$, the single observation is unbiased; ignoring data does not create bias, it just leaves the variance at $\\sigma^2$ instead of shrinking it to $\\sigma^2/n$. Using more data improves variance, not bias here."
             },
             {
@@ -3525,56 +3525,56 @@
             {
               "q": "Which scenario describes a SYSTEMATIC error rather than a variance issue?",
               "choices": [
-                "A scale that always reads 0.5 kg too heavy, so the average reading sits above the true weight no matter how many times you weigh",
+                "An estimator that gives a different value on each new sample",
                 "A scale whose readings jitter randomly above and below the true weight",
                 "An estimator whose estimates spread widely but average to the truth",
-                "An estimator that gives a different value on each new sample"
+                "A scale that always reads 0.5 kg too heavy, so the average reading sits above the true weight no matter how many times you weigh"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "A consistent offset that does not average away is exactly bias — a systematic error in $\\mathbb{E}[\\hat\\theta]-\\theta$. Random jitter that averages to the truth is variance, not bias."
             },
             {
               "q": "Suppose $X_1,\\dots,X_n$ are i.i.d. with variance $\\sigma^2$, and you form $\\hat\\mu = c\\,\\bar X$ for a constant $c$. For what value of $c$ is $\\hat\\mu$ unbiased for $\\mu$ (assume $\\mu\\neq 0$)?",
               "choices": [
-                "$c = 1/n$",
-                "$c = n$",
                 "$c = 1$",
+                "$c = n$",
+                "$c = 1/n$",
                 "$c = \\sigma^2$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$\\mathbb{E}[c\\bar X]=c\\mu$, which equals $\\mu$ (for $\\mu\\neq0$) only when $c=1$. Any other constant scales the expectation away from the target, introducing bias."
             },
             {
               "q": "An estimator $\\hat\\theta_n$ (based on sample size $n$) is called consistent if:",
               "choices": [
                 "it is unbiased for every finite $n$",
-                "$\\hat\\theta_n$ converges in probability to $\\theta$ as $n\\to\\infty$",
+                "it gives the same estimate on every sample",
                 "its variance is constant in $n$",
-                "it gives the same estimate on every sample"
+                "$\\hat\\theta_n$ converges in probability to $\\theta$ as $n\\to\\infty$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Consistency is a large-sample property: $\\hat\\theta_n \\xrightarrow{P} \\theta$ as $n$ grows. Unbiasedness at every $n$ is neither necessary nor sufficient for consistency."
             },
             {
               "q": "A biased estimator has $\\operatorname{Bias}(\\hat\\theta)=0.4$ and $\\operatorname{Var}(\\hat\\theta)=0.09$. What is its mean squared error?",
               "choices": [
-                "$0.49$",
                 "$0.25$",
+                "$0.49$",
                 "$0.13$",
                 "$0.30$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\operatorname{MSE}=\\operatorname{Var}+\\operatorname{Bias}^2 = 0.09 + 0.4^2 = 0.09+0.16 = 0.25$. The tempting $0.49$ wrongly adds the bias itself ($0.4$) instead of its square."
             },
             {
               "q": "Which statement correctly captures the bias-variance trade-off for estimators?",
               "choices": [
                 "An unbiased estimator is always the best choice because zero bias guarantees minimum error",
-                "A slightly biased estimator can have lower MSE than an unbiased one if it has sufficiently smaller variance",
                 "Reducing variance always reduces bias by the same amount",
+                "A slightly biased estimator can have lower MSE than an unbiased one if it has sufficiently smaller variance",
                 "Bias and variance are the same quantity measured on different scales"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Since $\\operatorname{MSE}=\\operatorname{Bias}^2+\\operatorname{Var}$, accepting a little bias to cut variance can lower total error — so unbiasedness is not automatically optimal. Bias and variance are distinct components that can be traded off."
             },
             {
@@ -3589,13 +3589,13 @@
               "explain": "Because $\\operatorname{Var}(\\bar X)=\\sigma^2/n$, the variance is inversely proportional to $n$; quartering it requires $4\\times$ the sample size. Multiplying $n$ by 2 only halves the variance (and the standard error by $\\sqrt2$)."
             },
             {
-              "answer": 3,
+              "answer": 1,
               "q": "The sample variance uses $s^2=\\frac{1}{n-1}\\sum_i (X_i-\\bar X)^2$. Why divide by $n-1$ instead of $n$?",
               "choices": [
                 "It is an arbitrary convention with no real effect.",
-                "Dividing by $n-1$ makes the estimate larger, as a safety margin against outliers.",
+                "Deviations are taken from the *sample* mean $\\bar X$ (fitted to the same data), so they are systematically too small; dividing by $n-1$ — one fewer because a degree of freedom was used estimating $\\bar X$ — corrects this and makes $\\mathbb{E}[s^2]=\\sigma^2$ (unbiased).",
                 "Because there are only $n-1$ data points left after removing the mean.",
-                "Deviations are taken from the *sample* mean $\\bar X$ (fitted to the same data), so they are systematically too small; dividing by $n-1$ — one fewer because a degree of freedom was used estimating $\\bar X$ — corrects this and makes $\\mathbb{E}[s^2]=\\sigma^2$ (unbiased)."
+                "Dividing by $n-1$ makes the estimate larger, as a safety margin against outliers."
               ],
               "explain": "Using $\\bar X$ (not the unknown $\\mu$) shrinks the squared deviations, because $\\bar X$ is the value that minimizes them for this very sample. Dividing by $n-1$ rather than $n$ — \"one degree of freedom used up\" estimating the mean — exactly compensates, giving an unbiased $\\mathbb{E}[s^2]=\\sigma^2$. Dividing by $n$ would underestimate $\\sigma^2$."
             },
@@ -3611,13 +3611,13 @@
               "explain": "$\\operatorname{MSE}=\\operatorname{Var}+\\operatorname{Bias}^2$. A: $1.0+0=1.0$. B: $0.1+0.04=0.14$. The slightly-biased B wins decisively — the rationale behind shrinkage / regularized estimators (e.g. ridge regression): trading a little bias for a large variance cut lowers total error. \"Unbiased\" is not the same as \"best.\""
             },
             {
-              "answer": 2,
+              "answer": 3,
               "q": "What is a sufficient condition for an estimator $\\hat\\theta_n$ to be consistent (converge in probability to $\\theta$)?",
               "choices": [
                 "It is unbiased for every $n$ (zero bias alone guarantees consistency).",
                 "Its variance is constant in $n$.",
-                "Both its bias and its variance go to $0$ as $n\\to\\infty$ — then $\\operatorname{MSE}(\\hat\\theta_n)=\\operatorname{Var}+\\operatorname{Bias}^2\\to 0$, which forces convergence in probability.",
-                "It equals the true $\\theta$ exactly for some finite $n$."
+                "It equals the true $\\theta$ exactly for some finite $n$.",
+                "Both its bias and its variance go to $0$ as $n\\to\\infty$ — then $\\operatorname{MSE}(\\hat\\theta_n)=\\operatorname{Var}+\\operatorname{Bias}^2\\to 0$, which forces convergence in probability."
               ],
               "explain": "If $\\operatorname{Bias}\\to 0$ and $\\operatorname{Var}\\to 0$ then $\\operatorname{MSE}\\to 0$, and MSE-convergence implies convergence in probability — so the estimator is consistent. Unbiasedness alone is not enough (e.g. \"use only $X_1$\" is unbiased but its variance never shrinks, so it is not consistent); the variance must also vanish."
             },
@@ -3714,23 +3714,23 @@
             {
               "q": "A factory's parts have known $\\sigma = 4$ mm. A sample of $n=64$ gives $\\bar{X}=25$ mm. Using $z^{*}=1.96$, what is the 95% confidence interval for the true mean?",
               "choices": [
-                "$[24.02,\\ 25.98]$",
+                "$[23.04,\\ 26.96]$",
                 "$[17.16,\\ 32.84]$",
                 "$[24.51,\\ 25.49]$",
-                "$[23.04,\\ 26.96]$"
+                "$[24.02,\\ 25.98]$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$\\operatorname{SE}=\\sigma/\\sqrt{n}=4/8=0.5$, so the margin is $1.96\\times0.5=0.98$, giving $25\\pm0.98=[24.02,25.98]$. Choice [17.16, 32.84] wrongly uses $\\sigma$ itself instead of the standard error $\\sigma/\\sqrt{n}$."
             },
             {
               "q": "Holding everything else fixed, how does a 99% confidence interval compare to a 95% confidence interval built from the same sample?",
               "choices": [
                 "It is narrower, because higher confidence means a more precise estimate.",
-                "It is wider, because a higher capture rate requires a larger $z^{*}$.",
+                "It is narrower only when $n$ is large.",
                 "It has the same width but is shifted higher.",
-                "It is narrower only when $n$ is large."
+                "It is wider, because a higher capture rate requires a larger $z^{*}$."
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Greater confidence uses a larger critical value ($z^{*}=2.576$ vs $1.96$), enlarging the margin $z^{*}\\sigma/\\sqrt{n}$. The tempting error is to equate 'more confident' with 'more precise'; in fact at fixed $n$ you trade precision for confidence."
             },
             {
@@ -3738,10 +3738,10 @@
               "choices": [
                 "Factor of 2",
                 "Factor of $\\sqrt{2}$",
-                "Factor of 4",
-                "Factor of 8"
+                "Factor of 8",
+                "Factor of 4"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Since $E=z^{*}\\sigma/\\sqrt{n}$, the margin scales as $1/\\sqrt{n}$; halving it requires $\\sqrt{n}$ to double, so $n$ must quadruple. Choosing 'factor of 2' ignores the square-root law."
             },
             {
@@ -3769,12 +3769,12 @@
             {
               "q": "For a fixed sample size $n$ and fixed confidence level, two populations are sampled: population P has SD $\\sigma_P=10$ and population Q has SD $\\sigma_Q=20$. How do the margins of error compare?",
               "choices": [
-                "Q's margin is twice P's, because the margin is proportional to $\\sigma$.",
                 "Q's margin equals P's, because $\\sigma$ cancels out of the formula.",
+                "Q's margin is twice P's, because the margin is proportional to $\\sigma$.",
                 "Q's margin is four times P's, because the margin depends on $\\sigma^2$.",
                 "P's margin is larger, because smaller spread requires a wider interval."
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The margin $E=z^{*}\\sigma/\\sqrt{n}$ is linear in $\\sigma$, so doubling $\\sigma$ doubles the margin. The dependence is on $\\sigma$, not $\\sigma^2$, ruling out the factor-of-four answer."
             },
             {
@@ -3793,21 +3793,21 @@
               "choices": [
                 "Increasing the confidence level from 90% to 99%.",
                 "Sampling from a population with larger variance.",
-                "Collecting more data (increasing $n$).",
-                "Reporting the interval with more decimal places."
+                "Reporting the interval with more decimal places.",
+                "Collecting more data (increasing $n$)."
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "More data shrinks the standard error $\\sigma/\\sqrt{n}$ and thus the margin. Raising the confidence level or sampling a more variable population both widen the interval, and decimal precision in reporting does not change the interval's true width."
             },
             {
               "q": "Two valid 95% confidence intervals for the same fixed parameter, computed from two independent samples, turn out to be disjoint (they do not overlap at all). What does this tell you?",
               "choices": [
-                "One of the procedures is mathematically invalid, since both must contain $\\mu$.",
                 "This can legitimately happen by chance; not every 95% interval captures $\\mu$, and roughly 1 in 20 misses.",
+                "One of the procedures is mathematically invalid, since both must contain $\\mu$.",
                 "It proves the true parameter changed between the two samples.",
                 "It means the confidence level was actually 100% for both."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A 95% procedure misses the fixed parameter about 5% of the time, so two intervals can be disjoint when at least one fails to capture $\\mu$. This is expected variability, not proof of an invalid method or a changing parameter."
             },
             {
@@ -3844,35 +3844,35 @@
               "explain": "The CI is $\\bar X \\pm z^*\\frac{\\sigma}{\\sqrt n}$. The standard error is $\\frac{5}{\\sqrt{100}}=0.5$; for 90% confidence $z^*=1.645$, so the margin is $1.645\\times 0.5\\approx 0.82$, giving $[19.18,20.82]$. (Choice B uses $z^*=1.96$, the 95% value; choice C forgets to divide by $\\sqrt n$.)"
             },
             {
-              "answer": 2,
+              "answer": 1,
               "q": "You increase the sample size $n$ for a 95% confidence interval. What happens to the interval and to its long-run capture rate?",
               "choices": [
                 "Both the width and the capture rate increase.",
-                "The capture rate rises above 95% as $n$ grows.",
                 "The interval gets *narrower* (margin $\\propto 1/\\sqrt n$), but the long-run capture rate stays at 95% — the capture rate is set by the confidence *level*, not by $n$.",
+                "The capture rate rises above 95% as $n$ grows.",
                 "Nothing changes; $n$ affects neither the width nor the capture rate."
               ],
               "explain": "More data shrinks the margin of error $z^*\\sigma/\\sqrt n$, so the interval narrows. But the fraction of such intervals that capture $\\mu$ over many repetitions is fixed by the chosen confidence level (95%), independent of $n$. Bigger samples buy *precision* (tighter bars), not a higher capture rate."
             },
             {
-              "answer": 1,
+              "answer": 0,
               "q": "When the population $\\sigma$ is unknown you use the sample SD $s$, and the confidence interval switches from the normal $z$ to Student's $t$, making it slightly *wider*. Why wider?",
               "choices": [
-                "Because the $t$-distribution has a different mean than the normal.",
                 "Estimating $\\sigma$ with $s$ injects extra uncertainty (you are now estimating two things), so the reference curve has *heavier tails* than the normal — a larger critical value $t^*>z^*$, hence a wider interval.",
+                "Because the $t$-distribution has a different mean than the normal.",
                 "Because $s$ is always larger than $\\sigma$.",
                 "Because the $t$-interval drops the $\\frac{1}{\\sqrt n}$ factor."
               ],
               "explain": "Replacing the true $\\sigma$ with the estimate $s$ adds uncertainty, so the correct reference is Student's $t_{n-1}$ — same bell center but heavier tails — whose critical value $t^*$ exceeds $z^*$, widening $\\bar X\\pm t^*\\frac{s}{\\sqrt n}$. As $n$ grows, $s\\to\\sigma$ and $t\\to$ normal, so the gap vanishes."
             },
             {
-              "answer": 3,
+              "answer": 0,
               "q": "At a *fixed* sample size $n$, can you simultaneously raise the confidence level AND shrink the margin of error?",
               "choices": [
-                "Yes — a higher confidence level automatically gives a tighter interval.",
+                "No — they trade off: higher confidence means a larger $z^*$, which *widens* the margin $z^*\\sigma/\\sqrt n$. To be both more confident and more precise you need more data (larger $n$).",
                 "Yes — the margin of error does not depend on the confidence level.",
                 "No, because raising the confidence level shrinks $\\sigma$.",
-                "No — they trade off: higher confidence means a larger $z^*$, which *widens* the margin $z^*\\sigma/\\sqrt n$. To be both more confident and more precise you need more data (larger $n$)."
+                "Yes — a higher confidence level automatically gives a tighter interval."
               ],
               "explain": "The margin is $z^*\\sigma/\\sqrt n$. At fixed $n$ and $\\sigma$, raising confidence raises $z^*$ (e.g. $1.96\\to 2.576$ going 95%→99%), so the interval widens — you buy confidence with precision. The only way to tighten the interval *and* raise confidence is to collect more data, which shrinks $\\sigma/\\sqrt n$."
             }
@@ -4031,44 +4031,44 @@
               "q": "Two analysts test $H_0:\\mu=\\mu_0$ at $\\alpha=0.05$ (two-sided). Analyst A builds the 95% CI $\\bar X\\pm1.96\\,\\sigma/\\sqrt n$ and checks whether it contains $\\mu_0$; Analyst B checks whether $|z|>1.96$. How do their conclusions relate?",
               "choices": [
                 "They can disagree because the CI and the test use different critical values",
-                "They always agree: B rejects exactly when A's interval excludes $\\mu_0$",
                 "They agree only for one-sided tests",
+                "They always agree: B rejects exactly when A's interval excludes $\\mu_0$",
                 "B is correct; the CI method cannot be used to make a reject decision"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Rejecting means $|\\bar X-\\mu_0|>1.96\\,\\sigma/\\sqrt n$, which is exactly the condition that $\\mu_0$ lies outside the 95% CI. The two procedures are algebraically identical and use the same 1.96, so they never disagree."
             },
             {
               "q": "A test yields $z=1.2$ and the analyst writes: 'We fail to reject $H_0$, which proves there is no effect.' What is the flaw?",
               "choices": [
                 "Nothing — failing to reject is equivalent to proving $H_0$",
-                "Failing to reject means only that the data weren't extreme enough to overturn $H_0$; it is absence of evidence against an effect, not evidence of no effect",
+                "$z=1.2$ always rejects at $\\alpha=0.05$",
                 "The analyst should have rejected $H_0$ because $z>0$",
-                "$z=1.2$ always rejects at $\\alpha=0.05$"
+                "Failing to reject means only that the data weren't extreme enough to overturn $H_0$; it is absence of evidence against an effect, not evidence of no effect"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A non-significant result never proves $H_0$ — the effect could be real but small or the study underpowered. This is the 'absence of evidence is not evidence of absence' fallacy, parallel to 'not guilty' vs 'innocent.'"
             },
             {
               "q": "Why is the test statistic divided by the standard error $\\sigma/\\sqrt n$ rather than just reporting the raw gap $\\bar X-\\mu_0$?",
               "choices": [
-                "To convert the gap into units of sampling variability, so its extremeness can be judged against a known null distribution",
-                "Because dividing by the standard error always makes the statistic equal to 1",
                 "To remove the dependence on $\\bar X$ entirely",
+                "Because dividing by the standard error always makes the statistic equal to 1",
+                "To convert the gap into units of sampling variability, so its extremeness can be judged against a known null distribution",
                 "Because the standard error equals the significance level $\\alpha$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Standardizing expresses how many standard errors the sample sits from $\\mu_0$, putting the gap on a scale whose null distribution (here standard normal) is known. A raw 2 mL gap is meaningless until you know whether that is 0.1 or 4 standard errors away."
             },
             {
               "q": "Holding $\\bar X=502.4$, $\\mu_0=500$, and $\\sigma=5$ fixed, the experimenter increases the sample size $n$. What happens to the magnitude of the test statistic $z$?",
               "choices": [
                 "It stays the same, since $z$ does not depend on $n$",
-                "It increases, because the standard error $\\sigma/\\sqrt n$ shrinks",
                 "It decreases, because larger samples are noisier",
+                "It increases, because the standard error $\\sigma/\\sqrt n$ shrinks",
                 "It becomes negative"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$z=(\\bar X-\\mu_0)/(\\sigma/\\sqrt n)$ has $\\sqrt n$ in the numerator effectively, since the denominator $\\sigma/\\sqrt n$ shrinks as $n$ grows. The same fixed gap becomes more standard errors out, making it easier to exceed the rejection cutoff — the engine behind statistical power."
             },
             {
@@ -4087,10 +4087,10 @@
               "choices": [
                 "The one-sided test has no rejection region, so it can never reject $H_0$",
                 "The one-sided test requires a larger sample to reach the same power",
-                "The one-sided test puts all of $\\alpha$ in one tail, giving more power to detect a decrease — but she must commit to the direction *before* seeing the data, and is blind to an increase",
-                "The one-sided test always produces a smaller p-value regardless of the data"
+                "The one-sided test always produces a smaller p-value regardless of the data",
+                "The one-sided test puts all of $\\alpha$ in one tail, giving more power to detect a decrease — but she must commit to the direction *before* seeing the data, and is blind to an increase"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Concentrating the whole rejection probability $\\alpha$ in a single tail makes a true decrease easier to detect (more power). The price: the direction must be fixed in advance, and the test cannot register an effect in the opposite direction."
             },
             {
@@ -4118,12 +4118,12 @@
             {
               "q": "An education startup claims its app improves test scores. To test this claim fairly, how should the hypotheses be set up, and what can a test conclude?",
               "choices": [
-                "$H_0$: the app gives *no* improvement; $H_1$: the app improves scores. The burden of proof is on the app — we either reject $H_0$ (evidence of improvement) or fail to reject it, but we never *accept* $H_0$ as proven true",
+                "If we fail to reject $H_0$, we have proven the app definitely does nothing",
                 "$H_0$: the app improves scores; $H_1$: no improvement — the startup's claim should be the null since it is what they assert",
                 "$H_0$ and $H_1$ can be assigned either way; the choice has no effect on the conclusion",
-                "If we fail to reject $H_0$, we have proven the app definitely does nothing"
+                "$H_0$: the app gives *no* improvement; $H_1$: the app improves scores. The burden of proof is on the app — we either reject $H_0$ (evidence of improvement) or fail to reject it, but we never *accept* $H_0$ as proven true"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The null is the skeptical \"no effect\" default; the claim being argued for is $H_1$, so the burden of proof falls on the data to overturn $H_0$. A non-significant result is \"not enough evidence,\" never proof that $H_0$ is true."
             }
           ],
@@ -4198,11 +4198,11 @@
               "q": "A researcher reports $p = 0.03$ for a two-sided test. Which statement correctly interprets this number?",
               "choices": [
                 "There is a 3% probability that the null hypothesis is true.",
-                "If $H_0$ were true, there is a 3% probability of observing a test statistic at least as extreme as the one seen.",
                 "There is a 97% probability that the alternative hypothesis is true.",
+                "If $H_0$ were true, there is a 3% probability of observing a test statistic at least as extreme as the one seen.",
                 "The effect observed has a 3% chance of being due to random error in the future."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The p-value is computed assuming $H_0$ is true: it is $P(\\text{statistic at least as extreme}\\mid H_0)$. It is NOT $P(H_0\\mid\\text{data})$, which is the classic inversion-of-conditioning misconception behind choices about 'probability the null is true'."
             },
             {
@@ -4220,66 +4220,66 @@
               "q": "A one-sided test gives a p-value of $0.04$. If the SAME data were analyzed with a two-sided test (symmetric distribution), what would the two-sided p-value be?",
               "choices": [
                 "$0.02$",
-                "$0.04$",
                 "$0.08$",
+                "$0.04$",
                 "$0.96$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "For a symmetric distribution the two-sided p-value sums both tails, doubling the single-tail probability: $2 \\times 0.04 = 0.08$. Halving (to $0.02$) goes the wrong direction — one-sided tests use a single tail and thus give the smaller value."
             },
             {
               "q": "Two studies test the same hypothesis with $\\alpha = 0.05$. Study A reports $p = 0.049$ and Study B reports $p = 0.0001$. What is the most accurate comparison?",
               "choices": [
-                "Both equally reject $H_0$; since both are below $\\alpha$ the evidence is identical.",
                 "Study B provides much stronger evidence against $H_0$ than Study A, even though both reject.",
+                "Both equally reject $H_0$; since both are below $\\alpha$ the evidence is identical.",
                 "Study A is invalid because $p$ is too close to the threshold.",
                 "Study B has a 0.01% chance of being a false positive."
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Reporting $p$ rather than a bare reject/fail decision conveys how surprising the data are; a far smaller $p$ means the data are far more unusual under $H_0$, hence stronger evidence. Treating all $p \\le \\alpha$ as identical throws away exactly the graded information the p-value provides."
             },
             {
               "q": "Why is rejecting $H_0$ when $p \\le \\alpha$ identical to the rejection-region rule?",
               "choices": [
                 "Because the p-value is defined as $\\alpha$ minus the test statistic.",
-                "Because the observed statistic falls in the tail of area $\\alpha$ exactly when its tail-probability $p$ is at most $\\alpha$.",
                 "Because $\\alpha$ is chosen after seeing the p-value to guarantee a match.",
+                "Because the observed statistic falls in the tail of area $\\alpha$ exactly when its tail-probability $p$ is at most $\\alpha$.",
                 "Because both rules ignore the direction of the alternative hypothesis."
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The p-value is the tail-probability beyond the observed statistic; that statistic lands in the rejection region (the tail of area $\\alpha$) precisely when its own tail area $p$ does not exceed $\\alpha$. The threshold $\\alpha$ is fixed in advance, not chosen after seeing $p$."
             },
             {
               "q": "A study finds $p = 0.20$ with $\\alpha = 0.05$ and fails to reject $H_0$. What is the correct conclusion?",
               "choices": [
                 "The null hypothesis is true.",
-                "The probability the null is true is 80%.",
                 "The data are not surprising enough under $H_0$ to provide evidence against it.",
+                "The probability the null is true is 80%.",
                 "The effect size is zero."
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "A large p-value means the observed data would not be unusual if $H_0$ held, so there is insufficient evidence against $H_0$ — this is not the same as proving $H_0$ true. Failing to reject never establishes the null or sets the effect size to exactly zero."
             },
             {
               "q": "Which scenario produces the SMALLEST p-value, holding the test and direction fixed?",
               "choices": [
-                "A test statistic far out in the tail of the null distribution.",
+                "A larger chosen significance level $\\alpha$.",
                 "A test statistic near the center of the null distribution.",
                 "A test statistic exactly at the null's expected value.",
-                "A larger chosen significance level $\\alpha$."
+                "A test statistic far out in the tail of the null distribution."
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The p-value is the tail area beyond the observed statistic, so the farther into the tail the statistic lies, the smaller that area becomes. The choice of $\\alpha$ does not affect $p$ at all — $\\alpha$ is the threshold, not an input to the computation."
             },
             {
               "q": "A team runs 20 independent tests on data where every null hypothesis is actually true, using $\\alpha = 0.05$. About how many 'significant' results ($p \\le 0.05$) should they expect by chance?",
               "choices": [
                 "$0$",
-                "$1$",
                 "$5$",
+                "$1$",
                 "$20$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "When $H_0$ is true, the p-value is uniformly distributed, so each test has a 5% chance of falsely crossing $\\alpha = 0.05$; across 20 tests the expected number of false positives is $20 \\times 0.05 = 1$. Failing to account for this multiplicity is a key driver of the replication crisis the lesson warns about."
             },
             {
@@ -4297,33 +4297,33 @@
               "q": "Reporting the exact p-value instead of just 'reject' or 'fail to reject' is preferred mainly because:",
               "choices": [
                 "It guarantees the result will replicate.",
-                "It lets each reader apply their own threshold and judge how borderline or overwhelming the evidence is.",
+                "It converts the result into the probability that the alternative is correct.",
                 "It eliminates the possibility of a Type I error.",
-                "It converts the result into the probability that the alternative is correct."
+                "It lets each reader apply their own threshold and judge how borderline or overwhelming the evidence is."
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A bare decision hides whether $p$ was $0.049$ or $0.000001$; reporting $p$ preserves that graded information so readers can apply their own $\\alpha$ and gauge how surprising the data are. It does nothing to guarantee replication, remove Type I error, or yield $P(H_1\\mid\\text{data})$."
             },
             {
               "q": "An observed two-sided test gives $|z| = 2.0$ with $P(Z > 2.0) \\approx 0.0228$. At $\\alpha = 0.05$, what is the decision and why?",
               "choices": [
                 "Fail to reject, because $0.0228 > 0.05$ is false but the one-tail value is used.",
-                "Reject, because the two-sided $p \\approx 0.0456 \\le 0.05$.",
+                "Reject, because $|z| = 2.0$ always corresponds to $\\alpha = 0.05$ exactly.",
                 "Fail to reject, because $0.0456$ rounds up to $0.05$.",
-                "Reject, because $|z| = 2.0$ always corresponds to $\\alpha = 0.05$ exactly."
+                "Reject, because the two-sided $p \\approx 0.0456 \\le 0.05$."
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The two-sided p-value is $2(0.0228) = 0.0456$, which is at most $0.05$, so we reject $H_0$. The borderline distractors misuse the single tail or invoke a fixed $z$-$\\alpha$ identity that does not hold ($z=1.96$, not $2.0$, is the exact 5% two-sided cutoff)."
             },
             {
               "q": "Which of the following would NOT, by itself, change the p-value of a fixed test?",
               "choices": [
-                "Switching from a one-sided to a two-sided alternative.",
-                "Collecting more data so the test statistic moves deeper into the tail.",
                 "Choosing a stricter significance level such as $\\alpha = 0.01$ instead of $0.05$.",
+                "Collecting more data so the test statistic moves deeper into the tail.",
+                "Switching from a one-sided to a two-sided alternative.",
                 "Observing a more extreme value of the test statistic."
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The significance level $\\alpha$ is the decision threshold and is not an input to the p-value's computation, so changing it leaves $p$ unchanged (only the reject/fail outcome may change). The other options alter either the tail counted or the observed statistic, both of which directly change $p$."
             },
             {
@@ -4340,23 +4340,23 @@
             {
               "q": "A study reports $p = 0.03$. Which of the following is the *incorrect* interpretation of this p-value?",
               "choices": [
-                "If $H_0$ were true, there would be a 3% chance of observing data at least as extreme as what was seen",
+                "There is a 3% probability that $H_0$ is true",
                 "The result is \"significant\" at $\\alpha = 0.05$ but not at $\\alpha = 0.01$",
                 "The p-value is a statement about the data assuming $H_0$ — not about the probability of any hypothesis",
-                "There is a 3% probability that $H_0$ is true"
+                "If $H_0$ were true, there would be a 3% chance of observing data at least as extreme as what was seen"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "The classic fallacy: $p$ is $P(\\text{data this extreme} \\mid H_0)$, not $P(H_0 \\mid \\text{data})$. The p-value says nothing directly about the probability that $H_0$ is true. The other three statements are all correct."
             },
             {
               "q": "A data scientist runs 20 independent tests, each at $\\alpha = 0.05$, on data where *every* null hypothesis is actually true. About how many \"significant\" results should she expect, and what is the standard fix?",
               "choices": [
                 "0 false positives, because all nulls are true; no correction is needed",
-                "About $20 \\times 0.05 = 1$ false positive on average; correct for multiple comparisons, e.g. use the Bonferroni level $\\alpha/m$",
                 "About 5 false positives; halve the sample size to compensate",
+                "About $20 \\times 0.05 = 1$ false positive on average; correct for multiple comparisons, e.g. use the Bonferroni level $\\alpha/m$",
                 "Exactly 20, since each test is guaranteed to reject"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Each true null still has a 5% chance of a false alarm, so over 20 tests you expect $20 \\times 0.05 = 1$ spurious \"discovery.\" Multiple-comparison corrections (Bonferroni $\\alpha/m$, or FDR control) rein this in."
             },
             {
@@ -4364,10 +4364,10 @@
               "choices": [
                 "$p \\approx 0.08$ (both tails); fail to reject $H_0$",
                 "$p \\approx 0.96$; fail to reject $H_0$",
-                "$p \\approx 0.04$ (single upper tail); since $0.04 \\le 0.05$, reject $H_0$",
-                "$p \\approx 0.50$; the result is inconclusive"
+                "$p \\approx 0.50$; the result is inconclusive",
+                "$p \\approx 0.04$ (single upper tail); since $0.04 \\le 0.05$, reject $H_0$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "For a one-sided (\"greater than\") alternative the p-value is the single upper-tail area $P(Z > 1.75) \\approx 0.04$. Since $0.04 \\le 0.05$, reject $H_0$. (Doubling to $0.08$ would be the two-sided p-value.)"
             }
           ],
@@ -4464,33 +4464,33 @@
               "q": "A drug-safety test treats 'the drug has a dangerous side effect' as the alternative and 'no dangerous effect' as $H_0$. From a patient-safety standpoint, which error is the more serious one to minimize?",
               "choices": [
                 "The Type I error, because falsely claiming a side effect wastes money",
-                "The Type II error, because missing a real danger lets a harmful drug through",
+                "The Type I error, since $\\alpha$ is the only rate we can control",
                 "Neither — both errors are equally costly by definition",
-                "The Type I error, since $\\alpha$ is the only rate we can control"
+                "The Type II error, because missing a real danger lets a harmful drug through"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A Type II error here means failing to detect a genuine danger, allowing a harmful drug to reach patients — the costlier mistake. The point of the 2x2 table is that the two errors have asymmetric consequences, so they are not equally costly."
             },
             {
               "q": "A test has $\\alpha = 0.05$ and is performed on data where, in truth, $H_0$ is correct (there is genuinely no effect). What is the probability the test produces a Type II error?",
               "choices": [
                 "$0.05$",
-                "$0.95$",
+                "$0$",
                 "It equals $\\beta$, which depends on the effect size",
-                "$0$"
+                "$0.95$"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "A Type II error is failing to reject a FALSE $H_0$. If $H_0$ is true, it cannot be falsely retained, so the Type II error probability is exactly $0$; only Type I errors are possible. The tempting distractor 'it equals $\\beta$' ignores that $\\beta$ is only defined when $H_0$ is false."
             },
             {
               "q": "Which of the following changes will, by itself, increase statistical power without changing $\\alpha$?",
               "choices": [
-                "Decreasing the sample size $n$",
                 "Increasing the sample size $n$",
+                "Decreasing the sample size $n$",
                 "Choosing a smaller true effect size to detect",
                 "Increasing the population standard deviation"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Larger $n$ reduces the standard error, separating the sampling distributions under $H_0$ and $H_1$, which lowers $\\beta$ and raises power $1-\\beta$. Smaller effects and larger variance both make detection harder, reducing power."
             },
             {
@@ -4509,32 +4509,32 @@
               "choices": [
                 "$\\alpha + \\beta = 1$ always",
                 "Independent — changing one never affects the other",
-                "A tradeoff — pushing $\\alpha$ down tends to push $\\beta$ up, and vice versa",
-                "Both can be driven to zero simultaneously just by choosing the right cutoff"
+                "Both can be driven to zero simultaneously just by choosing the right cutoff",
+                "A tradeoff — pushing $\\alpha$ down tends to push $\\beta$ up, and vice versa"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "At fixed $n$ and effect size, moving the rejection threshold trades one error for the other: a stricter cutoff cuts false positives but inflates misses. They do not sum to 1, and you cannot zero out both at once without more data."
             },
             {
               "q": "An experiment uses $\\alpha = 0.05$. Out of 100 independent tests run on data where $H_0$ is genuinely true every time, roughly how many false positives (Type I errors) should you expect?",
               "choices": [
                 "About 0, since $H_0$ is true",
-                "About 5",
                 "About 95",
+                "About 5",
                 "Exactly 1"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "By definition $P(\\text{reject} \\mid H_0 \\text{ true}) = \\alpha = 0.05$, so about $5\\%$ of $100$ tests, i.e. roughly $5$, will be false positives. 'About 0' wrongly assumes a true $H_0$ never gets rejected."
             },
             {
               "q": "A team wants to detect a smaller effect than originally planned, while keeping both $\\alpha$ and power $1-\\beta$ at their current levels. What must they do?",
               "choices": [
                 "Lower $\\alpha$ to compensate",
-                "Increase the sample size",
                 "Accept a higher $\\beta$",
+                "Increase the sample size",
                 "Nothing — effect size does not interact with sample size"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Smaller effects are harder to detect, so maintaining the same power requires more data; sample size must increase. Lowering $\\alpha$ would actually hurt power, and effect size, $n$, $\\alpha$, and power are all interlinked."
             },
             {
@@ -4551,67 +4551,67 @@
             {
               "q": "A colleague claims: 'We got $p = 0.20$, so we fail to reject $H_0$. That proves there is no effect.' What is the flaw in this reasoning?",
               "choices": [
-                "There is no flaw; failing to reject $H_0$ does prove it true",
                 "Failing to reject could be a Type II error — a real effect may have been missed, especially with low power",
+                "There is no flaw; failing to reject $H_0$ does prove it true",
                 "A $p$-value of $0.20$ means the effect is 20% likely to be real",
                 "$p = 0.20$ should have led to rejecting $H_0$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Failing to reject $H_0$ is not proof it is true; with low power, a genuine effect can easily be missed (a Type II error). Absence of evidence is not evidence of absence, and a $p$-value is not the probability the effect is real."
             },
             {
               "q": "Two tests are run on the same hypothesis with the same $\\alpha$. Test A uses $n = 50$; Test B uses $n = 500$. Assuming a real effect of the same size exists, which statement is correct?",
               "choices": [
-                "Test B has higher power and thus a smaller $\\beta$",
+                "Test B has a larger Type I error rate because of its larger sample",
                 "Test A has higher power because smaller samples are more sensitive",
                 "Both tests have identical power since $\\alpha$ is the same",
-                "Test B has a larger Type I error rate because of its larger sample"
+                "Test B has higher power and thus a smaller $\\beta$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The larger sample shrinks the standard error and better separates the null and alternative distributions, raising power and lowering $\\beta$. Type I error stays fixed at $\\alpha$ regardless of $n$, so Test B is not more prone to false positives."
             },
             {
               "q": "A disease screening test is framed as $H_0$: the patient is healthy, $H_1$: the patient has the disease. Which choice correctly identifies the Type I and Type II errors?",
               "choices": [
                 "Type I = missing a real disease (telling a sick patient they're healthy); Type II = a false alarm",
-                "Both errors are the same thing under this framing",
+                "Type I = a false positive (telling a healthy patient they're sick — rejecting a true $H_0$); Type II = a false negative (telling a sick patient they're healthy — failing to reject a false $H_0$)",
                 "Type I error has probability $1 - \\alpha$; Type II error has probability $\\beta = $ power",
-                "Type I = a false positive (telling a healthy patient they're sick — rejecting a true $H_0$); Type II = a false negative (telling a sick patient they're healthy — failing to reject a false $H_0$)"
+                "Both errors are the same thing under this framing"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Type I rejects a true $H_0$ — here a healthy patient flagged as sick (false positive, probability $\\alpha$). Type II fails to reject a false $H_0$ — a sick patient cleared (false negative, probability $\\beta$; power $= 1-\\beta$). Choice 0 swaps them."
             },
             {
               "q": "A research field publishes many *underpowered* studies (low power, small samples). Among the statistically significant findings they report, what tends to be true?",
               "choices": [
-                "A disproportionate share of the significant findings are flukes (false positives or inflated effects), and they often fail to replicate",
-                "Low power makes the significant findings *more* reliable, since only the strongest effects survive",
                 "Power has no relationship to replicability",
+                "Low power makes the significant findings *more* reliable, since only the strongest effects survive",
+                "A disproportionate share of the significant findings are flukes (false positives or inflated effects), and they often fail to replicate",
                 "Underpowered studies cannot produce significant findings at all"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "When power is low, true effects are usually missed, so a larger fraction of the \"significant\" results that do get published are false positives or upward-biased (the winner's curse) — which is exactly why they replicate poorly."
             },
             {
               "q": "What is a *power analysis* most commonly used for, and when is it done?",
               "choices": [
                 "After collecting data, to compute the p-value",
-                "After a non-significant result, to prove $H_0$ is true",
                 "Before collecting data, to determine the sample size $n$ needed to achieve a target power (e.g. 80%) for detecting an effect of a given size",
+                "After a non-significant result, to prove $H_0$ is true",
                 "To convert a Type I error into a Type II error"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "A power analysis is a *planning* tool: fix the effect size you care about, the desired power (often 0.80), and $\\alpha$, then solve for the sample size $n$ required — done before any data are collected."
             },
             {
               "q": "Holding the true effect size fixed, which change *increases* the power of a test?",
               "choices": [
                 "Lowering $\\alpha$ from 0.05 to 0.01",
-                "Increasing the sample size $n$, which shrinks the standard error $\\sigma/\\sqrt{n}$",
+                "Reducing the sample size to focus on the cleanest observations",
                 "Increasing the population variance $\\sigma^2$",
-                "Reducing the sample size to focus on the cleanest observations"
+                "Increasing the sample size $n$, which shrinks the standard error $\\sigma/\\sqrt{n}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Power rises when the sampling distributions separate more cleanly. Larger $n$ shrinks the standard error $\\sigma/\\sqrt{n}$, sharpening that separation. Lowering $\\alpha$ shrinks the rejection region and *reduces* power; larger variance also hurts."
             }
           ],
@@ -4685,12 +4685,12 @@
             {
               "q": "A sample of $n=16$ observations is used to test $H_0:\\mu=\\mu_0$ with $\\sigma$ unknown. How many degrees of freedom does the relevant $t$-distribution have?",
               "choices": [
-                "$16$",
                 "$15$",
+                "$16$",
                 "$17$",
                 "$\\sqrt{16}=4$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The one-sample t-statistic uses $n-1$ degrees of freedom because one degree is consumed estimating the mean for $s$; $16-1=15$. Using $n$ itself ignores that lost degree of freedom."
             },
             {
@@ -4708,22 +4708,22 @@
               "q": "Compared with the standard normal distribution, the Student's $t$-distribution has",
               "choices": [
                 "lighter tails, giving smaller critical values",
-                "heavier tails, giving larger critical values",
+                "no tails because it is bounded",
                 "the same tails but a shifted center",
-                "no tails because it is bounded"
+                "heavier tails, giving larger critical values"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Estimating $\\sigma$ with $s$ adds uncertainty, so the $t$-distribution has heavier tails than the normal, making its critical values larger and the test more cautious. Lighter tails would make the test less cautious, which is backwards."
             },
             {
               "q": "As the sample size $n$ grows very large, the $t$-distribution with $n-1$ degrees of freedom",
               "choices": [
-                "develops even heavier tails",
                 "approaches the standard normal distribution",
+                "develops even heavier tails",
                 "becomes uniform",
                 "shifts its mean away from zero"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With more data, $s$ estimates $\\sigma$ more reliably, so the extra uncertainty shrinks and the $t$-distribution converges to the standard normal. Its tails get lighter (closer to normal), not heavier, as df increase."
             },
             {
@@ -4741,44 +4741,44 @@
               "q": "A student computes a t-statistic and gets the same numeric value as a previously computed z-statistic on identical data, yet the t-test fails to reject $H_0$ while the z-test would have rejected it. What explains this?",
               "choices": [
                 "The t-statistic was computed incorrectly; equal statistics must give equal decisions",
-                "The t-test compares against larger critical values, so the same statistic can fall short",
                 "The t-test uses a different sample mean",
+                "The t-test compares against larger critical values, so the same statistic can fall short",
                 "The t-test changes the value of $\\alpha$ automatically"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Even with an identical statistic value, the $t$-distribution's heavier tails mean a larger critical value (or larger p-value), so the same number may not reach significance. The decision differs because of the reference distribution, not the statistic's value."
             },
             {
               "q": "Which scenario most clearly calls for a $t$-test rather than a $z$-test?",
               "choices": [
                 "The population standard deviation $\\sigma$ is known exactly from theory",
-                "You estimate variability from the sample using $s$ because $\\sigma$ is unknown",
+                "The sample size is exactly $n=1$",
                 "You are testing a proportion rather than a mean",
-                "The sample size is exactly $n=1$"
+                "You estimate variability from the sample using $s$ because $\\sigma$ is unknown"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The defining situation for a $t$-test is testing a mean when $\\sigma$ is unknown and must be estimated by $s$. When $\\sigma$ is truly known, the $z$-test is appropriate."
             },
             {
               "q": "Holding everything else fixed, how does decreasing the sample size $n$ (with fewer degrees of freedom) affect the tails of the $t$-distribution used?",
               "choices": [
-                "The tails become heavier",
+                "The distribution becomes the normal exactly",
                 "The tails become lighter",
                 "The tails are unaffected by $n$",
-                "The distribution becomes the normal exactly"
+                "The tails become heavier"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Fewer degrees of freedom mean $s$ is a noisier estimate of $\\sigma$, so the $t$-distribution has heavier tails for small $n$. More data, not less, pushes it toward the lighter-tailed normal."
             },
             {
               "q": "An A/B test on a small pilot ($n=10$) yields $t=2.0$. A colleague says 'that's above 1.96, so reject at $\\alpha=0.05$ (two-sided).' Why is this reasoning flawed?",
               "choices": [
-                "$1.96$ is the $z$ critical value; the correct $t$ critical value for $9$ df is larger than $1.96$",
                 "$t=2.0$ is impossible for such a small sample",
+                "$1.96$ is the $z$ critical value; the correct $t$ critical value for $9$ df is larger than $1.96$",
                 "The two-sided critical value should be $0.05$, not $1.96$",
                 "$t$ statistics cannot be compared to any critical value"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The cutoff $1.96$ comes from the normal; for $9$ degrees of freedom the two-sided $0.05$ $t$-critical value is about $2.26$, so $t=2.0$ does not reach significance. Borrowing the $z$ cutoff understates the threshold for small samples."
             },
             {
@@ -4796,11 +4796,11 @@
               "q": "Two valid 95% confidence intervals for a mean are built from the same data, one using the normal (assuming $\\sigma$ known) and one using the $t$-distribution (using $s$). The $t$-based interval will be",
               "choices": [
                 "narrower than the normal-based interval",
-                "wider than the normal-based interval",
                 "identical in width",
+                "wider than the normal-based interval",
                 "centered at a different point"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The larger $t$ critical value produces a wider interval, reflecting the extra uncertainty from estimating $\\sigma$ — the same reason the $t$ appears in confidence intervals. Both intervals are centered at $\\bar{X}$, so the center is unchanged."
             },
             {
@@ -4818,33 +4818,33 @@
               "q": "Comparing the means of two *independent* groups (sizes $n_1, n_2$; sample SDs $s_1, s_2$), what is the standard error of the difference $\\bar{x}_1 - \\bar{x}_2$?",
               "choices": [
                 "$\\dfrac{s_1 + s_2}{\\sqrt{n_1 + n_2}}$",
-                "$\\sqrt{\\dfrac{s_1^2}{n_1} + \\dfrac{s_2^2}{n_2}}$ — because the groups are independent, their *variances* add",
+                "$\\sqrt{s_1^2 + s_2^2}$, independent of the sample sizes",
                 "$\\dfrac{s_1^2}{n_1} - \\dfrac{s_2^2}{n_2}$",
-                "$\\sqrt{s_1^2 + s_2^2}$, independent of the sample sizes"
+                "$\\sqrt{\\dfrac{s_1^2}{n_1} + \\dfrac{s_2^2}{n_2}}$ — because the groups are independent, their *variances* add"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Variances of independent quantities add, even for a *difference*: $\\operatorname{Var}(\\bar{x}_1 - \\bar{x}_2) = \\sigma_1^2/n_1 + \\sigma_2^2/n_2$. Taking the square root gives the standard error. (Choice 2's subtraction is the classic trap.)"
             },
             {
               "q": "A study measures each subject's cholesterol *before* and *after* a 12-week diet. Which test fits, and why is it usually more powerful here than a two-sample test?",
               "choices": [
                 "A two-sample (independent) t-test, because there are two columns of numbers",
-                "A one-sample $z$-test on the \"after\" values alone",
                 "A *paired* t-test on the within-subject differences — pairing removes between-subject variability, so it detects the diet's effect with more power",
+                "A one-sample $z$-test on the \"after\" values alone",
                 "A chi-squared test, since the data come in pairs"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The two measurements come from the *same* people, so they are correlated, not independent. Working with each subject's before–after difference cancels stable between-person variation, leaving a cleaner signal — hence more power."
             },
             {
               "q": "What are the key assumptions behind the two-sample t-test, and how robust is it?",
               "choices": [
-                "The data should be approximately normal (or $n$ large enough for the CLT) and the observations independent; the test is fairly *robust* to mild non-normality but breaks down with strong skew plus tiny samples, heavy outliers, or dependent observations",
-                "The data must be exactly normal with no exceptions, or the test is completely invalid",
                 "No assumptions are needed; the t-test works for any data",
+                "The data must be exactly normal with no exceptions, or the test is completely invalid",
+                "The data should be approximately normal (or $n$ large enough for the CLT) and the observations independent; the test is fairly *robust* to mild non-normality but breaks down with strong skew plus tiny samples, heavy outliers, or dependent observations",
                 "The two groups must have identical sample sizes and identical means"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Approximate normality (helped by the CLT at larger $n$) and independence are the load-bearing assumptions. The t-test tolerates mild departures, but a combination of strong skew with tiny samples, severe outliers, or correlated data can invalidate it."
             },
             {
@@ -4852,10 +4852,10 @@
               "choices": [
                 "Reject $H_0$, because the interval is mostly positive",
                 "The CI tells you nothing about the hypothesis test; they are unrelated",
-                "Reject $H_0$, because the interval is narrow",
-                "Fail to reject $H_0$: the interval contains 0, so a zero difference is plausible — and a 95% CI excludes the null value exactly when the two-sided $\\alpha = 0.05$ test rejects"
+                "Fail to reject $H_0$: the interval contains 0, so a zero difference is plausible — and a 95% CI excludes the null value exactly when the two-sided $\\alpha = 0.05$ test rejects",
+                "Reject $H_0$, because the interval is narrow"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Test–CI duality: a $100(1-\\alpha)\\%$ CI contains exactly the null values a two-sided level-$\\alpha$ test would fail to reject. Since $[-0.3\\%, +1.5\\%]$ contains $0$, we fail to reject $H_0$ at $\\alpha = 0.05$."
             }
           ],

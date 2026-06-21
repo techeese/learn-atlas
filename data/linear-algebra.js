@@ -21,12 +21,12 @@
             {
               "q": "Given $\\mathbf{u} = (3, -1)$ and $\\mathbf{v} = (-2, 4)$, what is $2\\mathbf{u} + \\mathbf{v}$?",
               "choices": [
-                "$(4, 2)$",
                 "$(1, 3)$",
+                "$(4, 2)$",
                 "$(4, -6)$",
                 "$(8, -4)$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Scale first: $2\\mathbf{u} = (6,-2)$. Then add component-wise: $(6 + (-2),\\, -2 + 4) = (4, 2)$."
             },
             {
@@ -44,33 +44,33 @@
               "q": "A vector is described as 'the same idea in two costumes.' Which statement about the arrow-vs-tuple correspondence is correct?",
               "choices": [
                 "The arrow from $(1,1)$ to $(4,3)$ and the arrow from $(0,0)$ to $(3,2)$ are different vectors because they sit in different places",
-                "A vector's components equal its tip's coordinates only when its tail is at the origin (standard position)",
                 "Two arrows of equal length are always the same vector",
+                "A vector's components equal its tip's coordinates only when its tail is at the origin (standard position)",
                 "Adding a vector in $\\mathbb{R}^2$ to one in $\\mathbb{R}^3$ gives a vector in $\\mathbb{R}^5$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Vectors are position-free displacements; the tuple equals the tip's coordinates precisely in standard position. Equal length alone isn't enough (direction matters), and you can't add vectors of different dimensions."
             },
             {
               "q": "What is $\\mathbf{u} - \\mathbf{v}$ for $\\mathbf{u} = (5, 1)$ and $\\mathbf{v} = (2, 4)$, and what does it represent geometrically?",
               "choices": [
                 "$(7, 5)$; the diagonal of the parallelogram",
-                "$(3, -3)$; the arrow from the tip of $\\mathbf{v}$ to the tip of $\\mathbf{u}$",
                 "$(3, -3)$; the arrow from the tip of $\\mathbf{u}$ to the tip of $\\mathbf{v}$",
+                "$(3, -3)$; the arrow from the tip of $\\mathbf{v}$ to the tip of $\\mathbf{u}$",
                 "$(-3, 3)$; the arrow from the tip of $\\mathbf{v}$ to the tip of $\\mathbf{u}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\mathbf{u} - \\mathbf{v} = (5-2,\\, 1-4) = (3,-3)$. Geometrically it is the displacement from the tip of $\\mathbf{v}$ to the tip of $\\mathbf{u}$ (both in standard position)."
             },
             {
               "q": "An arrow goes from the point $(2, 5)$ to the point $(6, 1)$. Drawn in standard position (tail at the origin), where does its tip land?",
               "choices": [
                 "$(8, 6)$",
-                "$(4, -4)$",
+                "$(-4, 4)$",
                 "$(6, 1)$",
-                "$(-4, 4)$"
+                "$(4, -4)$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A geometric vector encodes displacement, so the vector is (tip - tail) = (6-2, 1-5) = (4, -4), and in standard position its tip lands at those coordinates."
             },
             {
@@ -87,12 +87,12 @@
             {
               "q": "Let $\\mathbf{v} = (2, -3)$. Which statement about $-2\\mathbf{v}$ is correct?",
               "choices": [
-                "It equals $(-4, 6)$ and points in the opposite direction to $\\mathbf{v}$, twice as long",
                 "It equals $(-4, 6)$ and points the same direction as $\\mathbf{v}$, twice as long",
+                "It equals $(-4, 6)$ and points in the opposite direction to $\\mathbf{v}$, twice as long",
                 "It equals $(0, -5)$ because you subtract 2 from each component",
                 "It equals $(-4, -6)$ and has the same length as $\\mathbf{v}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Scalar multiplication scales every component (giving (-4, 6), twice the length), and a negative scalar also reverses the direction."
             },
             {
@@ -131,34 +131,34 @@
             {
               "q": "For $\\mathbf{v} = (4, -3)$, what is the result of the scalar multiplication $\\tfrac{1}{2}\\mathbf{v}$?",
               "choices": [
-                "$(2, -\\tfrac{3}{2})$",
-                "$(2, 3)$",
                 "$(\\tfrac{1}{2}, -\\tfrac{3}{2})$",
+                "$(2, 3)$",
+                "$(2, -\\tfrac{3}{2})$",
                 "$(4.5, -2.5)$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Scalar multiplication scales every component, so $\\tfrac{1}{2}(4,-3) = (2, -\\tfrac{3}{2})$. The distractor $(2,3)$ wrongly drops the negative sign, and $(\\tfrac{1}{2},-\\tfrac{3}{2})$ scales only the second component."
             },
             {
               "q": "Two vectors $\\mathbf{u}$ and $\\mathbf{v}$ in $\\mathbb{R}^2$ are drawn in standard position. The sum $\\mathbf{u} + \\mathbf{v}$ corresponds geometrically to which arrow?",
               "choices": [
-                "The arrow from the tip of $\\mathbf{u}$ to the tip of $\\mathbf{v}$",
                 "The diagonal of the parallelogram spanned by $\\mathbf{u}$ and $\\mathbf{v}$, starting at the origin",
+                "The arrow from the tip of $\\mathbf{u}$ to the tip of $\\mathbf{v}$",
                 "An arrow whose length is always $|\\mathbf{u}| + |\\mathbf{v}|$",
                 "The arrow from the origin to the midpoint between the tips of $\\mathbf{u}$ and $\\mathbf{v}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Adding componentwise places $\\mathbf{v}$'s tail at $\\mathbf{u}$'s tip (head-to-tail), and the resultant is the origin-based diagonal of the parallelogram. The length is only $|\\mathbf{u}|+|\\mathbf{v}|$ when the vectors point the same way, so that choice is generally false; the tip-to-tip arrow is actually the difference, not the sum."
             },
             {
               "q": "In linear algebra, a vector in $\\mathbb{R}^n$ is…",
               "choices": [
-                "a single number",
                 "an ordered list of $n$ numbers — which you can picture as a point, or as an arrow with direction and length",
+                "a single number",
                 "a square grid of numbers",
                 "only an arrow, and only in 2D"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A vector is an ordered $n$-tuple $(v_1,\\dots,v_n)$. Geometrically it's a point in $n$-space or, equivalently, the arrow from the origin to that point. A lone number is a scalar; a grid of numbers is a matrix."
             },
             {
@@ -175,12 +175,12 @@
             {
               "q": "Multiplying a vector by a negative scalar, say $-3\\mathbf{v}$, does what geometrically?",
               "choices": [
-                "Reverses its direction and scales its length by 3",
+                "Changes only its length, never its direction",
                 "Rotates it 90°",
                 "Leaves it unchanged",
-                "Changes only its length, never its direction"
+                "Reverses its direction and scales its length by 3"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "A scalar $c$ scales length by $|c|$; a negative sign flips the arrow to point the opposite way. So $-3\\mathbf{v}$ is three times as long as $\\mathbf{v}$ and points in the opposite direction."
             },
             {
@@ -188,10 +188,10 @@
               "choices": [
                 "Via the dot product",
                 "Only the first component changes",
-                "Component-wise — each coordinate is handled independently",
-                "By matrix multiplication"
+                "By matrix multiplication",
+                "Component-wise — each coordinate is handled independently"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "$(\\mathbf{u}+\\mathbf{v})_i = u_i+v_i$ and $(c\\mathbf{v})_i = c\\,v_i$: you operate on matching coordinates separately. This is why both vectors must have the same number of components to be added."
             }
           ],
@@ -277,11 +277,11 @@
               "q": "For $\\mathbf{u} = (1, 2, 2)$, what is the unit vector $\\hat{\\mathbf{u}}$?",
               "choices": [
                 "$(1, 2, 2)$",
-                "$(\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$",
+                "$(\\tfrac{1}{9}, \\tfrac{2}{9}, \\tfrac{2}{9})$",
                 "$(\\tfrac{1}{5}, \\tfrac{2}{5}, \\tfrac{2}{5})$",
-                "$(\\tfrac{1}{9}, \\tfrac{2}{9}, \\tfrac{2}{9})$"
+                "$(\\tfrac{1}{3}, \\tfrac{2}{3}, \\tfrac{2}{3})$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The norm is $\\sqrt{1+4+4} = \\sqrt{9} = 3$, so normalize by dividing each component by 3, giving $(1/3, 2/3, 2/3)$."
             },
             {
@@ -309,12 +309,12 @@
             {
               "q": "For $\\mathbf{u} = (3, -1, 2)$ and $\\mathbf{v} = (-2, 4, 1)$, what is $\\mathbf{u} \\cdot \\mathbf{v}$?",
               "choices": [
-                "$-8$",
-                "$0$",
                 "$4$",
+                "$0$",
+                "$-8$",
                 "$-12$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Multiply componentwise and sum: $(3)(-2) + (-1)(4) + (2)(1) = -6 - 4 + 2 = -8$."
             },
             {
@@ -322,43 +322,43 @@
               "choices": [
                 "Close to $+1$",
                 "Close to $0$",
-                "Close to $-1$",
-                "Much larger than $1$"
+                "Much larger than $1$",
+                "Close to $-1$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "For unit vectors $\\mathbf{u}\\cdot\\mathbf{v}=\\cos\\theta$, and as $\\theta$ approaches $180^\\circ$ the cosine approaches $-1$."
             },
             {
               "q": "Why does the positive-definite property $\\mathbf{u}\\cdot\\mathbf{u} \\ge 0$ matter for defining the Euclidean norm?",
               "choices": [
                 "It guarantees the dot product is always symmetric",
-                "It ensures $\\sqrt{\\mathbf{u}\\cdot\\mathbf{u}}$ is a real, non-negative number that can serve as a length",
                 "It makes the dot product linear in each argument",
+                "It ensures $\\sqrt{\\mathbf{u}\\cdot\\mathbf{u}}$ is a real, non-negative number that can serve as a length",
                 "It forces every vector to have length exactly $1$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Since $\\mathbf{u}\\cdot\\mathbf{u}\\ge 0$, its square root is a well-defined real non-negative quantity, exactly what a length must be."
             },
             {
               "q": "Given $\\|\\mathbf{u}\\| = 4$, $\\|\\mathbf{v}\\| = 5$, and the angle between them is $60^\\circ$, what is $\\mathbf{u}\\cdot\\mathbf{v}$?",
               "choices": [
-                "$20$",
                 "$10$",
+                "$20$",
                 "$\\frac{1}{2}$",
                 "$10\\sqrt{3}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Using $\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\|\\|\\mathbf{v}\\|\\cos\\theta = 4\\cdot 5\\cdot\\cos 60^\\circ = 20\\cdot\\tfrac{1}{2} = 10$."
             },
             {
               "q": "A student computes $\\mathbf{u}\\cdot\\mathbf{v} = 12$ for two vectors and concludes the angle between them is small. Their classmate computes $\\mathbf{a}\\cdot\\mathbf{b} = 12$ for a different pair and concludes the same. Why can this reasoning be wrong?",
               "choices": [
-                "The dot product is always negative for small angles, so a value of 12 implies a large angle",
-                "The sign of the dot product, not its magnitude, determines the angle, so 12 gives no angle information",
                 "Because $\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\|\\|\\mathbf{v}\\|\\cos\\theta$, a large dot product can come from long vectors at a wide angle, not just a small angle",
+                "The sign of the dot product, not its magnitude, determines the angle, so 12 gives no angle information",
+                "The dot product is always negative for small angles, so a value of 12 implies a large angle",
                 "The dot product can never equal 12 unless the vectors are parallel"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The raw dot product mixes magnitude and angle: $\\mathbf{u}\\cdot\\mathbf{v}=\\|\\mathbf{u}\\|\\|\\mathbf{v}\\|\\cos\\theta$, so a big value can arise from long vectors even at a wide angle. To isolate the angle you must divide out the norms (cosine similarity)."
             },
             {
@@ -375,12 +375,12 @@
             {
               "q": "For $\\mathbf{u} = (2, 1, -2)$ and $\\mathbf{v} = (1, 1, 0)$, what is the cosine of the angle between them?",
               "choices": [
-                "$\\dfrac{3}{\\sqrt{2}}$",
                 "$\\dfrac{3}{3\\sqrt{2}} = \\dfrac{1}{\\sqrt{2}}$",
+                "$\\dfrac{3}{\\sqrt{2}}$",
                 "$\\dfrac{1}{3}$",
                 "$\\dfrac{3}{2\\sqrt{2}}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\mathbf{u}\\cdot\\mathbf{v}=2+1+0=3$, $\\|\\mathbf{u}\\|=\\sqrt{4+1+4}=3$, and $\\|\\mathbf{v}\\|=\\sqrt{2}$, so $\\cos\\theta=\\frac{3}{3\\sqrt{2}}=\\frac{1}{\\sqrt{2}}$. The tempting error is dividing by only one norm (giving $3/\\sqrt{2}$) instead of the product of both magnitudes."
             },
             {
@@ -388,10 +388,10 @@
               "choices": [
                 "$0.50$, because scaling halves the similarity",
                 "$1.98$, because the dot product doubles",
-                "$0.99$, because cosine similarity is invariant to positive scaling",
-                "$0.00$, because the vectors now have different lengths"
+                "$0.00$, because the vectors now have different lengths",
+                "$0.99$, because cosine similarity is invariant to positive scaling"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Cosine similarity normalizes by both magnitudes, so multiplying a vector by a positive scalar cancels out and leaves $\\cos\\theta$ unchanged at $0.99$. The distractor about the dot product doubling is true for the raw dot product but irrelevant here, since the larger norm divides it back out."
             },
             {
@@ -399,21 +399,21 @@
               "choices": [
                 "Take the component-wise vector $(u_1v_1,\\dots,u_nv_n)$",
                 "Multiply the two magnitudes together",
-                "Multiply corresponding components and add them: $u_1v_1+u_2v_2+\\cdots+u_nv_n$",
-                "Keep whichever vector is longer"
+                "Keep whichever vector is longer",
+                "Multiply corresponding components and add them: $u_1v_1+u_2v_2+\\cdots+u_nv_n$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The dot product sums the products of matching components, yielding a single <em>scalar</em>. (Note the component-wise product is a vector, not the dot product, and $\\|\\mathbf{u}\\|\\|\\mathbf{v}\\|$ alone omits the angle factor.)"
             },
             {
               "q": "The norm (length) $\\|\\mathbf{v}\\|$ of a vector equals…",
               "choices": [
-                "$\\sqrt{\\mathbf{v}\\cdot\\mathbf{v}}$",
                 "$\\mathbf{v}\\cdot\\mathbf{v}$",
+                "$\\sqrt{\\mathbf{v}\\cdot\\mathbf{v}}$",
                 "the sum of the components of $\\mathbf{v}$",
                 "$(\\mathbf{v}\\cdot\\mathbf{v})/n$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "$\\mathbf{v}\\cdot\\mathbf{v}=v_1^2+\\cdots+v_n^2$ is the squared length (Pythagoras in $n$ dimensions), so the length itself is its square root, $\\|\\mathbf{v}\\|=\\sqrt{\\mathbf{v}\\cdot\\mathbf{v}}$."
             },
             {
@@ -421,10 +421,10 @@
               "choices": [
                 "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\| / \\|\\mathbf{v}\\|$",
                 "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\|\\,\\|\\mathbf{v}\\|\\sin\\theta$",
-                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\| + \\|\\mathbf{v}\\|$",
-                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\|\\,\\|\\mathbf{v}\\|\\cos\\theta$"
+                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\|\\,\\|\\mathbf{v}\\|\\cos\\theta$",
+                "$\\mathbf{u}\\cdot\\mathbf{v} = \\|\\mathbf{u}\\| + \\|\\mathbf{v}\\|$"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The geometric form $\\mathbf{u}\\cdot\\mathbf{v}=\\|\\mathbf{u}\\|\\|\\mathbf{v}\\|\\cos\\theta$ ties algebra to geometry: it's the basis of cosine similarity, and it's why a dot product of zero means $\\cos\\theta=0$, i.e. perpendicular."
             },
             {
@@ -510,22 +510,22 @@
               "q": "The vectors $v_1=\\begin{bmatrix}1\\\\2\\end{bmatrix}$, $v_2=\\begin{bmatrix}2\\\\4\\end{bmatrix}$, $v_3=\\begin{bmatrix}0\\\\1\\end{bmatrix}$ in $\\mathbb{R}^2$ are:",
               "choices": [
                 "Linearly independent, spanning all of $\\mathbb{R}^2$",
-                "Linearly dependent, but they still span all of $\\mathbb{R}^2$",
+                "Independent, spanning only a line",
                 "Linearly dependent, and they span only a line",
-                "Independent, spanning only a line"
+                "Linearly dependent, but they still span all of $\\mathbb{R}^2$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Three vectors in $\\mathbb{R}^2$ ($k>n$) are always dependent ($v_2=2v_1$). But $v_1$ and $v_3$ are non-parallel, so the rank is 2 and the span is all of $\\mathbb{R}^2$."
             },
             {
               "q": "After row reducing a $4\\times 5$ matrix whose columns are five vectors in $\\mathbb{R}^4$, you find exactly 3 pivots. Which statement is correct?",
               "choices": [
                 "The 5 vectors are independent and span $\\mathbb{R}^4$",
-                "The vectors are dependent; their span is a 3-dimensional subspace and 2 columns are redundant",
+                "The vectors span $\\mathbb{R}^4$ but are dependent",
                 "The vectors are independent but span only a 3-dimensional subspace",
-                "The vectors span $\\mathbb{R}^4$ but are dependent"
+                "The vectors are dependent; their span is a 3-dimensional subspace and 2 columns are redundant"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Rank = 3 < 5 means dependent, with 2 free (redundant) columns. The span has dimension equal to the rank (3), so it is a 3D subspace, not all of $\\mathbb{R}^4$."
             },
             {
@@ -542,56 +542,56 @@
             {
               "q": "In a linear regression feature matrix, one column equals 3 times another column. What is the consequence?",
               "choices": [
-                "Nothing — regression handles it automatically with a unique answer",
                 "The columns are linearly dependent, the matrix is rank-deficient, and the least-squares solution is not unique",
+                "Nothing — regression handles it automatically with a unique answer",
                 "The span of the features increases, improving the fit",
                 "The features become orthogonal"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Perfect collinearity makes the columns dependent (rank-deficient), so the normal-equations matrix is singular and the optimal weights are not unique — hence feature pruning or regularization is needed."
             },
             {
               "q": "Using the 'columns view' of matrix-vector multiplication, what does the product $Ax$ represent?",
               "choices": [
-                "A linear combination of the columns of $A$, with the entries of $x$ as the weights",
                 "A linear combination of the rows of $A$, with the entries of $x$ as the weights",
+                "A linear combination of the columns of $A$, with the entries of $x$ as the weights",
                 "The dot product of every column of $A$ with itself",
                 "The span of the rows of $A$ scaled by $x$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The columns view states $Ax = x_1(\\text{col}_1) + x_2(\\text{col}_2) + \\cdots + x_n(\\text{col}_n)$, a linear combination of $A$'s columns weighted by the entries of $x$."
             },
             {
               "q": "Which of the following is NOT a permitted operation when forming a linear combination of vectors $v_1, \\dots, v_k$?",
               "choices": [
                 "Scaling a vector by a negative number",
-                "Multiplying two of the vectors together component-wise",
+                "Scaling a vector by zero",
                 "Adding two scaled vectors together",
-                "Scaling a vector by zero"
+                "Multiplying two of the vectors together component-wise"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A linear combination only allows scaling each vector by a scalar (including negatives and zero) and adding the results; multiplying two vectors together component-wise is not part of the definition."
             },
             {
               "q": "What is the geometric meaning of $\\operatorname{span}\\{v_1, \\dots, v_k\\}$?",
               "choices": [
                 "The single vector obtained by summing $v_1$ through $v_k$",
-                "The set of all points reachable as linear combinations $c_1 v_1 + \\cdots + c_k v_k$",
                 "The largest vector among $v_1, \\dots, v_k$ by length",
+                "The set of all points reachable as linear combinations $c_1 v_1 + \\cdots + c_k v_k$",
                 "The set of weights $c_1, \\dots, c_k$ used in the combination"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The span is precisely the set of all reachable points, i.e. all linear combinations $c_1 v_1 + \\cdots + c_k v_k$ of the given vectors."
             },
             {
               "q": "A single neuron computes $w_1 x_1 + w_2 x_2 + \\cdots + w_n x_n + b$ before applying a nonlinearity. In the language of this lesson, the weights $w_i$ play the role of which quantity?",
               "choices": [
                 "The vectors $v_i$ being combined",
-                "The scalar coefficients $c_i$ in a linear combination",
                 "The dimension $n$ of the space",
+                "The scalar coefficients $c_i$ in a linear combination",
                 "The nonlinearity applied after the combination"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The pre-activation is a linear combination of the inputs $x_i$, so the weights $w_i$ are exactly the scalar coefficients $c_i$ (with $b$ as an added bias)."
             },
             {
@@ -619,45 +619,45 @@
             {
               "q": "The set $\\{v_1,v_2,v_3\\}$ in $\\mathbb{R}^3$ is linearly dependent. Which conclusion is guaranteed to be correct?",
               "choices": [
-                "The span $\\operatorname{span}\\{v_1,v_2,v_3\\}$ must be all of $\\mathbb{R}^3$",
                 "At least one of the vectors can be removed without changing the span of the set",
+                "The span $\\operatorname{span}\\{v_1,v_2,v_3\\}$ must be all of $\\mathbb{R}^3$",
                 "Every one of the vectors is a scalar multiple of $v_1$",
                 "At least one of the three vectors must be the zero vector"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Dependence means some vector is a linear combination of the others, i.e. it is redundant; removing that redundant vector leaves the span unchanged. The span need not be all of $\\mathbb{R}^3$ (the vectors could all lie in a plane), the vectors need not be scalar multiples of $v_1$, and none of them has to be the zero vector (e.g. $v_1=v_2=v_3=\\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix}$ vs. dependent but nonzero sets)."
             },
             {
               "q": "The set $\\{v_1,v_2\\}$ in $\\mathbb{R}^3$ is linearly independent. A friend claims this means $\\operatorname{span}\\{v_1,v_2\\}=\\mathbb{R}^3$. What is the correct response?",
               "choices": [
                 "Correct, two independent vectors always span $\\mathbb{R}^3$",
-                "Wrong; the span is a plane through the origin, a 2-dimensional subspace, not all of $\\mathbb{R}^3$",
+                "Correct, because independence guarantees full coverage of the space",
                 "Wrong; the span is just the line through $v_1$",
-                "Correct, because independence guarantees full coverage of the space"
+                "Wrong; the span is a plane through the origin, a 2-dimensional subspace, not all of $\\mathbb{R}^3$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Two independent vectors span a 2-dimensional plane through the origin; reaching all of $\\mathbb{R}^3$ requires 3 independent vectors. Confusing 'independent' with 'spanning the whole space' is the common misconception here."
             },
             {
               "q": "A <em>linear combination</em> of vectors $v_1,\\dots,v_k$ is…",
               "choices": [
-                "whichever of them is longest",
+                "any sum of scalar multiples of them, $c_1 v_1 + c_2 v_2 + \\cdots + c_k v_k$",
                 "the dot product of all of them",
                 "the product of the vectors",
-                "any sum of scalar multiples of them, $c_1 v_1 + c_2 v_2 + \\cdots + c_k v_k$"
+                "whichever of them is longest"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Scale each vector by some number and add the results — that's a linear combination. The set of <em>all</em> such combinations is the span, and these are the only operations a vector space is built from."
             },
             {
               "q": "A set of vectors is linearly <em>dependent</em> when…",
               "choices": [
                 "all of them are mutually orthogonal",
-                "at least one of them can be written as a linear combination of the others (equivalently, some nontrivial combination equals $\\mathbf{0}$)",
                 "they all have unit length",
+                "at least one of them can be written as a linear combination of the others (equivalently, some nontrivial combination equals $\\mathbf{0}$)",
                 "there are fewer of them than the dimension"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Dependence means redundancy: one vector adds no new direction because it's reachable from the rest. Equivalently $c_1v_1+\\cdots+c_kv_k=\\mathbf{0}$ has a solution with not all $c_i=0$."
             },
             {
@@ -674,12 +674,12 @@
             {
               "q": "A set of vectors <em>spans</em> $\\mathbb{R}^n$ when…",
               "choices": [
-                "every vector in $\\mathbb{R}^n$ can be written as some linear combination of them",
                 "they are all linearly independent",
+                "every vector in $\\mathbb{R}^n$ can be written as some linear combination of them",
                 "there are exactly $n$ of them",
                 "they are mutually orthogonal"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Spanning is about reach: the vectors' linear combinations cover all of $\\mathbb{R}^n$, leaving no vector out. (You may need more than $n$ vectors to span if some are redundant; independence is a separate property.)"
             }
           ],
@@ -755,21 +755,21 @@
               "choices": [
                 "$S$ is a basis of $\\mathbb{R}^5$",
                 "$S$ spans $\\mathbb{R}^5$ but is not independent",
-                "$S$ is not a basis of $\\mathbb{R}^5$ because it cannot span",
-                "$S$ has too many vectors to be independent"
+                "$S$ has too many vectors to be independent",
+                "$S$ is not a basis of $\\mathbb{R}^5$ because it cannot span"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "A basis of $\\mathbb{R}^5$ needs exactly $5$ vectors. With only $4$, $S$ cannot span $\\mathbb{R}^5$, so despite being independent it is not a basis."
             },
             {
               "q": "Which property is the precise reason a basis gives every vector $x$ a UNIQUE coordinate vector $[x]_B$?",
               "choices": [
-                "Spanning alone guarantees uniqueness",
                 "Linear independence forces any two representations of $x$ to be identical",
+                "Spanning alone guarantees uniqueness",
                 "Orthogonality of the basis vectors",
                 "The basis vectors all have length 1"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "If $\\sum c_i v_i = \\sum d_i v_i$ then $\\sum (c_i-d_i)v_i = 0$, and independence forces every $c_i = d_i$. Spanning only gives existence, not uniqueness."
             },
             {
@@ -787,22 +787,22 @@
               "q": "Let $B=(v_1,v_2)$ with $v_1=\\begin{bmatrix}2\\\\0\\end{bmatrix}$, $v_2=\\begin{bmatrix}0\\\\3\\end{bmatrix}$. What is $[x]_B$ for $x=\\begin{bmatrix}6\\\\3\\end{bmatrix}$?",
               "choices": [
                 "$\\begin{bmatrix}6\\\\3\\end{bmatrix}$",
-                "$\\begin{bmatrix}3\\\\1\\end{bmatrix}$",
+                "$\\begin{bmatrix}1\\\\3\\end{bmatrix}$",
                 "$\\begin{bmatrix}12\\\\9\\end{bmatrix}$",
-                "$\\begin{bmatrix}1\\\\3\\end{bmatrix}$"
+                "$\\begin{bmatrix}3\\\\1\\end{bmatrix}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "We need $c_1\\cdot 2 = 6$ and $c_2\\cdot 3 = 3$, so $c_1=3$, $c_2=1$. The coordinates differ from the standard-coordinate entries $(6,3)$ because $B$ is not the standard basis."
             },
             {
               "q": "Let $A$ be the matrix whose columns are the vectors of an ordered basis $B=(v_1,\\dots,v_n)$ of $\\mathbb{R}^n$. Which formula recovers the coordinate vector $[x]_B$ from the standard-coordinate vector $x$?",
               "choices": [
-                "$[x]_B = A x$",
                 "$[x]_B = A^{-1} x$",
+                "$[x]_B = A x$",
                 "$[x]_B = A^{\\top} x$",
                 "$[x]_B = x$ always"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The columns of $A$ convert $B$-coordinates back to standard ones via $x = A[x]_B$, so inverting gives $[x]_B = A^{-1}x$; $[x]_B = x$ holds only when $A=I$, i.e. the standard basis."
             },
             {
@@ -851,44 +851,44 @@
               "q": "Let $B=(v_1,v_2)$ be an ordered basis of $\\mathbb{R}^2$ with $v_1=\\begin{bmatrix}1\\\\1\\end{bmatrix}$, $v_2=\\begin{bmatrix}1\\\\-1\\end{bmatrix}$. What is the coordinate vector $[x]_B$ for $x=\\begin{bmatrix}4\\\\2\\end{bmatrix}$?",
               "choices": [
                 "$\\begin{bmatrix}4\\\\2\\end{bmatrix}$",
-                "$\\begin{bmatrix}3\\\\1\\end{bmatrix}$",
+                "$\\begin{bmatrix}1\\\\3\\end{bmatrix}$",
                 "$\\begin{bmatrix}2\\\\2\\end{bmatrix}$",
-                "$\\begin{bmatrix}1\\\\3\\end{bmatrix}$"
+                "$\\begin{bmatrix}3\\\\1\\end{bmatrix}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Solve $c_1 v_1 + c_2 v_2 = x$: $c_1+c_2=4$ and $c_1-c_2=2$ give $c_1=3,\\ c_2=1$. The distractor $\\begin{bmatrix}4\\\\2\\end{bmatrix}$ wrongly assumes the standard-coordinate entries are the $B$-coordinates."
             },
             {
               "q": "A student claims: 'The set $\\{v_1, v_2, v_3\\}$ in $\\mathbb{R}^3$ is linearly independent, so it must be a basis of $\\mathbb{R}^3$.' Is the reasoning sound, and why?",
               "choices": [
                 "No — independence alone never implies spanning, regardless of how many vectors there are",
-                "Yes — but only because the number of vectors ($3$) equals $\\dim \\mathbb{R}^3 = 3$",
                 "Yes — any linearly independent set is automatically a basis of its containing space",
+                "Yes — but only because the number of vectors ($3$) equals $\\dim \\mathbb{R}^3 = 3$",
                 "No — you also need to check the vectors are nonzero"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "In an $n$-dimensional space, an independent set of exactly $n$ vectors is automatically a basis (independence forces spanning here). The reasoning works, but the crucial reason is the count matching the dimension, not independence by itself."
             },
             {
               "q": "Consider the subspace $W = \\{(a, b, a+b) : a, b \\in \\mathbb{R}\\} \\subseteq \\mathbb{R}^3$. What is $\\dim W$?",
               "choices": [
-                "$3$, because the vectors live in $\\mathbb{R}^3$",
-                "$1$, because there is one defining equation $a+b$",
                 "$2$, because two free parameters $a,b$ each contribute an independent basis vector",
+                "$1$, because there is one defining equation $a+b$",
+                "$3$, because the vectors live in $\\mathbb{R}^3$",
                 "$0$, because $W$ is not all of $\\mathbb{R}^3$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "$W$ is spanned by $\\{(1,0,1),(0,1,1)\\}$ (set $a=1,b=0$ then $a=0,b=1$), which are independent, so $\\dim W = 2$. The dimension counts free parameters, not the ambient space $\\mathbb{R}^3$."
             },
             {
               "q": "A <em>basis</em> of a vector space is a set of vectors that is…",
               "choices": [
-                "both linearly independent and spans the space",
+                "orthogonal and unit-length",
                 "linearly independent (spanning isn't required)",
                 "spanning (independence isn't required)",
-                "orthogonal and unit-length"
+                "both linearly independent and spans the space"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "A basis is the 'just right' set: independent (no redundancy) <em>and</em> spanning (reaches everything). Orthonormal bases (orthogonal + unit length) are a convenient special case, not a requirement."
             },
             {
@@ -905,12 +905,12 @@
             {
               "q": "What is the standard basis of $\\mathbb{R}^3$?",
               "choices": [
-                "Any three vectors at all",
                 "The unit axis vectors $(1,0,0),\\,(0,1,0),\\,(0,0,1)$",
+                "Any three vectors at all",
                 "The single vector $(1,1,1)$",
                 "The zero vector $(0,0,0)$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The standard basis $\\{\\mathbf{e}_1,\\mathbf{e}_2,\\mathbf{e}_3\\}$ points one unit along each axis; a vector's ordinary coordinates $(x,y,z)$ are exactly its coefficients in this basis. The zero vector can never be in any basis (it's dependent)."
             },
             {
@@ -918,10 +918,10 @@
               "choices": [
                 "$n$ is the maximum allowed length of a vector",
                 "There isn't enough memory to store them",
-                "Basis vectors must be orthogonal",
-                "Any $n+1$ vectors in $\\mathbb{R}^n$ are necessarily linearly dependent, so they can't all be independent basis vectors"
+                "Any $n+1$ vectors in $\\mathbb{R}^n$ are necessarily linearly dependent, so they can't all be independent basis vectors",
+                "Basis vectors must be orthogonal"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Independence caps out at $n$ vectors in $\\mathbb{R}^n$ — a $(n{+}1)$th vector must be a combination of the others. Since a basis must be independent, it can have at most $n$ vectors (and at least $n$ to span), so exactly $n$."
             }
           ],
@@ -1002,22 +1002,22 @@
               "q": "A linear map $T:\\mathbb{R}^2 \\to \\mathbb{R}^2$ satisfies $T\\begin{bmatrix}1\\\\0\\end{bmatrix} = \\begin{bmatrix}3\\\\1\\end{bmatrix}$ and $T\\begin{bmatrix}0\\\\1\\end{bmatrix} = \\begin{bmatrix}-2\\\\4\\end{bmatrix}$. What is the matrix of $T$?",
               "choices": [
                 "$\\begin{bmatrix}3 & 1\\\\-2 & 4\\end{bmatrix}$",
-                "$\\begin{bmatrix}3 & -2\\\\1 & 4\\end{bmatrix}$",
                 "$\\begin{bmatrix}1 & -2\\\\3 & 4\\end{bmatrix}$",
+                "$\\begin{bmatrix}3 & -2\\\\1 & 4\\end{bmatrix}$",
                 "$\\begin{bmatrix}1 & 0\\\\0 & 1\\end{bmatrix}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The images of the basis vectors are the columns of the matrix, in order: $T(\\mathbf{e}_1) = (3,1)$ is column 1 and $T(\\mathbf{e}_2) = (-2,4)$ is column 2, giving $\\begin{bmatrix}3 & -2\\\\1 & 4\\end{bmatrix}$. The common mistake is to place the images as rows, which gives choice 1, $\\begin{bmatrix}3 & 1\\\\-2 & 4\\end{bmatrix}$."
             },
             {
               "q": "Which transformation is NOT linear?",
               "choices": [
-                "Rotation by $30^\\circ$ about the origin",
                 "The map $\\mathbf{x} \\mapsto \\mathbf{x} + \\begin{bmatrix}1\\\\1\\end{bmatrix}$ (translation)",
+                "Rotation by $30^\\circ$ about the origin",
                 "Projection onto the $x$-axis",
                 "Reflection across the line $y = x$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Translation moves the origin: $T(\\mathbf{0}) = \\begin{bmatrix}1\\\\1\\end{bmatrix} \\ne \\mathbf{0}$, so it fails linearity. It is affine, not linear, which is why neural layers need a separate bias term."
             },
             {
@@ -1025,65 +1025,65 @@
               "choices": [
                 "Preserves area and orientation",
                 "Rotates space without distortion",
-                "Collapses the plane onto a line (or point), losing information and becoming non-invertible",
-                "Doubles every area"
+                "Doubles every area",
+                "Collapses the plane onto a line (or point), losing information and becoming non-invertible"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Determinant is the signed area-scaling factor; a value of $0$ means area is crushed to zero, so the plane collapses to a lower dimension and the map cannot be inverted (it is singular)."
             },
             {
               "q": "You want to 'first rotate by $\\theta$, then scale by $S$.' Which product applied to $\\mathbf{x}$ does this?",
               "choices": [
-                "$(SR)\\mathbf{x}$",
                 "$(RS)\\mathbf{x}$",
+                "$(SR)\\mathbf{x}$",
                 "$(R + S)\\mathbf{x}$",
                 "$(RS^{\\top})\\mathbf{x}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The first transform applied sits on the right (closest to $\\mathbf{x}$): rotate first means $R\\mathbf{x}$, then scale gives $S(R\\mathbf{x}) = (SR)\\mathbf{x}$. Order matters because matrix multiplication is not commutative."
             },
             {
               "q": "A matrix $A$ defines the map $T_A(\\mathbf{x}) = A\\mathbf{x}$. If $A$ is a $2 \\times 3$ matrix, what are the input and output spaces of $T_A$?",
               "choices": [
                 "Input $\\mathbb{R}^2$, output $\\mathbb{R}^3$",
-                "Input $\\mathbb{R}^3$, output $\\mathbb{R}^2$",
                 "Input $\\mathbb{R}^3$, output $\\mathbb{R}^3$",
+                "Input $\\mathbb{R}^3$, output $\\mathbb{R}^2$",
                 "Input $\\mathbb{R}^2$, output $\\mathbb{R}^2$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The number of columns (3) is the input dimension and the number of rows (2) is the output dimension, so $T_A : \\mathbb{R}^3 \\to \\mathbb{R}^2$."
             },
             {
               "q": "In a neural network layer $\\mathbf{h} = W\\mathbf{x} + \\mathbf{b}$, why is a separate bias term $\\mathbf{b}$ needed instead of folding it into the matrix $W$?",
               "choices": [
                 "Because matrix multiplication is not associative",
-                "Because a linear map must fix the origin, so the constant shift cannot come from $W$ alone",
                 "Because $W$ must always be square to be invertible",
+                "Because a linear map must fix the origin, so the constant shift cannot come from $W$ alone",
                 "Because the bias makes training faster but is mathematically redundant"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A linear map sends $\\mathbf{0}$ to $\\mathbf{0}$, so any nonzero shift must be added separately as the affine bias $\\mathbf{b}$."
             },
             {
               "q": "Suppose $T$ is linear and you know $T(\\mathbf{u}) = \\mathbf{p}$ and $T(\\mathbf{v}) = \\mathbf{q}$. What is $T(3\\mathbf{u} - 2\\mathbf{v})$?",
               "choices": [
-                "$3\\mathbf{p} - 2\\mathbf{q}$",
                 "$\\mathbf{p} - \\mathbf{q}$",
+                "$3\\mathbf{p} - 2\\mathbf{q}$",
                 "$6\\mathbf{p}\\mathbf{q}$",
                 "$3\\mathbf{q} - 2\\mathbf{p}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Linearity preserves linear combinations, so $T(3\\mathbf{u} - 2\\mathbf{v}) = 3T(\\mathbf{u}) - 2T(\\mathbf{v}) = 3\\mathbf{p} - 2\\mathbf{q}$."
             },
             {
               "q": "A linear transformation is applied to an evenly-spaced square grid drawn on the plane. Which outcome is impossible for a linear map?",
               "choices": [
-                "The grid lines become parallel but tilted",
-                "The grid is uniformly stretched into rectangles",
                 "The grid lines bend into curves",
+                "The grid is uniformly stretched into rectangles",
+                "The grid lines become parallel but tilted",
                 "The grid is collapsed onto a single line"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Linear maps send straight lines to straight lines and keep grid lines evenly spaced, so they can stretch, shear, or collapse the grid but never bend it into curves."
             },
             {
@@ -1102,32 +1102,32 @@
               "choices": [
                 "$1$",
                 "$5$",
-                "$6$",
-                "$25$"
+                "$25$",
+                "$6$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "A diagonal matrix stretches $x$ by $2$ and $y$ by $3$, turning the unit square into a $2\\times 3$ rectangle of area $6 = |\\det A|$. Answer $5$ wrongly adds the scale factors instead of multiplying them."
             },
             {
               "q": "A classmate claims that any function $f:\\mathbb{R} \\to \\mathbb{R}$ of the form $f(x) = mx + b$ is linear because 'its graph is a straight line.' For the matrix-transformation notion of linearity, when is this actually a linear map?",
               "choices": [
                 "Always, since straight-line graphs define linear functions",
-                "Only when $b = 0$, because linearity requires $f(0)=0$ and $f(cx)=cf(x)$",
+                "Only when $m$ and $b$ are both integers",
                 "Only when $m = 1$, since the slope must be the identity",
-                "Only when $m$ and $b$ are both integers"
+                "Only when $b = 0$, because linearity requires $f(0)=0$ and $f(cx)=cf(x)$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Linear maps must satisfy $f(\\mathbf{0})=\\mathbf{0}$ and preserve scaling/addition; $f(x)=mx+b$ with $b\\neq 0$ fails since $f(0)=b\\neq 0$ (it is affine, not linear). The 'straight line' intuition conflates affine functions with linear ones."
             },
             {
               "q": "You have two linear maps $T_A, T_B : \\mathbb{R}^2 \\to \\mathbb{R}^2$ and you want the single map that applies $B$ first, then $A$. Which statement is correct?",
               "choices": [
-                "The composite is $T_{A+B}$, since applying both means adding the matrices",
-                "The composite is $T_{BA}$, with $B$ written on the left because it acts first",
                 "The composite is $T_{AB}$, computed as the matrix product $AB$, and in general $AB \\neq BA$",
+                "The composite is $T_{BA}$, with $B$ written on the left because it acts first",
+                "The composite is $T_{A+B}$, since applying both means adding the matrices",
                 "The composite is $T_{AB}$ and equals $T_{BA}$, since matrix multiplication is commutative"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Apply $B$ first then $A$ means $A(B\\mathbf{x}) = (AB)\\mathbf{x}$, so the composite matrix is $AB$ with the first-applied map on the right; matrix multiplication is generally not commutative, so order matters."
             },
             {
@@ -1146,32 +1146,32 @@
               "choices": [
                 "$\\begin{bmatrix} -1 & 0 \\\\ 0 & 1 \\end{bmatrix}$",
                 "$\\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}$",
-                "$\\begin{bmatrix} 1 & 0 \\\\ 0 & -1 \\end{bmatrix}$",
-                "$\\begin{bmatrix} -1 & 0 \\\\ 0 & -1 \\end{bmatrix}$"
+                "$\\begin{bmatrix} -1 & 0 \\\\ 0 & -1 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 1 & 0 \\\\ 0 & -1 \\end{bmatrix}$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Reflecting across the $x$-axis sends $\\begin{bmatrix}x\\\\y\\end{bmatrix}\\mapsto\\begin{bmatrix}x\\\\-y\\end{bmatrix}$. Reading off the images of the basis vectors, $\\mathbf{e}_1\\mapsto\\mathbf{e}_1$ and $\\mathbf{e}_2\\mapsto-\\mathbf{e}_2$, giving columns $\\begin{bmatrix}1\\\\0\\end{bmatrix}$ and $\\begin{bmatrix}0\\\\-1\\end{bmatrix}$. $\\begin{bmatrix}-1&0\\\\0&1\\end{bmatrix}$ reflects across the $y$-axis; $\\begin{bmatrix}-1&0\\\\0&-1\\end{bmatrix}$ is a $180^\\circ$ rotation."
             },
             {
               "q": "Which property must hold for $\\textbf{every}$ linear transformation $T$?",
               "choices": [
-                "$T(\\mathbf{0})=\\mathbf{0}$ — it must send the zero vector to the zero vector",
-                "$T$ must be invertible",
                 "$T$ must preserve the length of every vector",
+                "$T$ must be invertible",
+                "$T(\\mathbf{0})=\\mathbf{0}$ — it must send the zero vector to the zero vector",
                 "$T$ must map the unit square to another square"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Linearity requires $T(c\\mathbf{x})=cT(\\mathbf{x})$; taking $c=0$ forces $T(\\mathbf{0})=\\mathbf{0}$, so a linear map always fixes the origin. This is exactly why a translation $\\mathbf{x}\\mapsto\\mathbf{x}+\\mathbf{b}$ (with $\\mathbf{b}\\neq\\mathbf{0}$) is $\\textit{not}$ linear. Invertibility, length-preservation, and square-preservation hold only for special maps, not all linear ones."
             },
             {
               "q": "What does the matrix $\\begin{bmatrix} 1 & k \\\\ 0 & 1 \\end{bmatrix}$ (with $k\\neq 0$) do to the plane?",
               "choices": [
                 "Scales every vector by the factor $k$",
-                "Rotates the plane by an angle of $k$ radians",
+                "Shears horizontally — slides points sideways by an amount proportional to their height $y$, leaving the $x$-axis fixed",
                 "Reflects vectors across the line $y=kx$",
-                "Shears horizontally — slides points sideways by an amount proportional to their height $y$, leaving the $x$-axis fixed"
+                "Rotates the plane by an angle of $k$ radians"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "Applying it gives $\\begin{bmatrix}x+ky\\\\y\\end{bmatrix}$: the $y$-coordinate is unchanged while $x$ is shifted by $ky$. Points on the $x$-axis ($y=0$) stay put, and points higher up slide farther — a horizontal shear. Its determinant is $1$, so it preserves area even though it distorts shapes."
             }
           ],
@@ -1245,34 +1245,34 @@
             {
               "q": "If $A$ is a $4 \\times 2$ matrix and $B$ is a $2 \\times 5$ matrix, which products are defined and what are their shapes?",
               "choices": [
-                "$AB$ is $4 \\times 5$; $BA$ is undefined",
                 "$AB$ is $2 \\times 2$; $BA$ is $5 \\times 4$",
+                "$AB$ is $4 \\times 5$; $BA$ is undefined",
                 "Both $AB$ and $BA$ are $4 \\times 5$",
                 "$AB$ is undefined; $BA$ is $5 \\times 4$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "For $AB$ the inner dimensions match ($2=2$), giving the outer shape $4\\times5$. For $BA$ the inner dimensions are $5$ and $4$, which disagree, so $BA$ is undefined."
             },
             {
               "q": "In the product $AB\\mathbf{x}$, in what order do the transformations act on the vector $\\mathbf{x}$?",
               "choices": [
                 "$A$ acts first, then $B$",
-                "$B$ acts first, then $A$",
                 "They act simultaneously and order is irrelevant",
+                "$B$ acts first, then $A$",
                 "It depends on whether the matrices are square"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "By definition $(AB)\\mathbf{x} = A(B\\mathbf{x})$: the matrix nearest the vector applies first, so $B$ acts then $A$ — the same backwards order as function composition $f\\circ g$."
             },
             {
               "q": "Why is the $j$-th column of $AB$ equal to $A$ times the $j$-th column of $B$?",
               "choices": [
                 "Because matrix multiplication is commutative",
-                "Because the columns of any matrix are its action on the standard basis vectors, and $(AB)\\mathbf{e}_j = A(B\\mathbf{e}_j)$",
                 "Because $A$ and $B$ must be square for the product to exist",
+                "Because the columns of any matrix are its action on the standard basis vectors, and $(AB)\\mathbf{e}_j = A(B\\mathbf{e}_j)$",
                 "It is a coincidence that only holds for the identity matrix"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Column $j$ of any matrix $M$ is $M\\mathbf{e}_j$. So column $j$ of $AB$ is $(AB)\\mathbf{e}_j = A(B\\mathbf{e}_j) = A(\\text{col}_j\\text{ of }B)$, which is exactly the composition principle."
             },
             {
@@ -1330,11 +1330,11 @@
               "q": "You apply a 90-degree rotation $R$ and then a horizontal shear $S$ to vectors in $\\mathbb{R}^2$. Which single matrix represents 'first rotate, then shear'?",
               "choices": [
                 "$RS$",
-                "$SR$",
+                "$S - R$",
                 "$R + S$",
-                "$S - R$"
+                "$SR$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Composition reads right-to-left: 'first rotate, then shear' means $\\mathbf{x} \\mapsto S(R\\mathbf{x}) = (SR)\\mathbf{x}$, so the matrix is $SR$. Writing $RS$ is the classic order mistake (it would shear first, then rotate)."
             },
             {
@@ -1352,22 +1352,22 @@
               "q": "Let $A = \\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\end{bmatrix}$ (a shear) and $D = \\begin{bmatrix} 2 & 0 \\\\ 0 & 1 \\end{bmatrix}$. Using composition, what is $AD$ (apply $D$ first, then $A$)?",
               "choices": [
                 "$\\begin{bmatrix} 2 & 0 \\\\ 0 & 1 \\end{bmatrix}$",
-                "$\\begin{bmatrix} 2 & 2 \\\\ 0 & 1 \\end{bmatrix}$",
                 "$\\begin{bmatrix} 2 & 1 \\\\ 0 & 1 \\end{bmatrix}$",
+                "$\\begin{bmatrix} 2 & 2 \\\\ 0 & 1 \\end{bmatrix}$",
                 "$\\begin{bmatrix} 3 & 1 \\\\ 0 & 1 \\end{bmatrix}$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The columns of $AD$ are $A$ applied to the columns of $D$: $A\\begin{bmatrix}2\\\\0\\end{bmatrix}=\\begin{bmatrix}2\\\\0\\end{bmatrix}$ and $A\\begin{bmatrix}0\\\\1\\end{bmatrix}=\\begin{bmatrix}1\\\\1\\end{bmatrix}$. (Note $DA$ would give the different matrix $\\begin{bmatrix}2&2\\\\0&1\\end{bmatrix}$, showing order matters.)"
             },
             {
               "q": "Why does multiplying any matrix $A$ by the identity matrix $I$ give back $A$ (i.e. $AI = IA = A$)?",
               "choices": [
-                "Because $I$ is the linear map that leaves every vector unchanged, so composing with it changes nothing",
-                "Because $I$ has determinant $1$, which preserves the entries of $A$",
                 "Because $I$ is symmetric and symmetric matrices act as multiplicative units",
+                "Because $I$ has determinant $1$, which preserves the entries of $A$",
+                "Because $I$ is the linear map that leaves every vector unchanged, so composing with it changes nothing",
                 "Because the rows of $I$ are orthonormal, which cancels the rows of $A$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The identity matrix represents the do-nothing transformation (each $\\mathbf{e}_i \\mapsto \\mathbf{e}_i$), and composing any map with the identity leaves it unchanged. The determinant or symmetry facts are true of $I$ but are not the reason it acts as a multiplicative identity."
             },
             {
@@ -1375,10 +1375,10 @@
               "choices": [
                 "$A^{\\mathsf{T}}B^{\\mathsf{T}}$",
                 "$AB$ — transposing a product changes nothing",
-                "$B^{\\mathsf{T}}A^{\\mathsf{T}}$",
-                "$(BA)^{\\mathsf{T}}$"
+                "$(BA)^{\\mathsf{T}}$",
+                "$B^{\\mathsf{T}}A^{\\mathsf{T}}$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Transposing a product reverses the order: $(AB)^{\\mathsf{T}}=B^{\\mathsf{T}}A^{\\mathsf{T}}$. The flip is forced by the dimensions — if $A$ is $m\\times n$ and $B$ is $n\\times p$, then $A^{\\mathsf{T}}B^{\\mathsf{T}}$ ($n\\times m$ times $p\\times n$) isn't even defined, whereas $B^{\\mathsf{T}}A^{\\mathsf{T}}$ ($p\\times n$ times $n\\times m$) is."
             },
             {
@@ -1396,22 +1396,22 @@
               "q": "For the power $A^2 = A\\,A$ to make sense, what must be true of $A$?",
               "choices": [
                 "$A$ must be a single row or column vector",
-                "$A$ must be square (same number of rows as columns)",
+                "Any matrix $A$ works — just square each entry",
                 "$A$ must be invertible",
-                "Any matrix $A$ works — just square each entry"
+                "$A$ must be square (same number of rows as columns)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$A^2=A\\,A$ needs the number of columns of the left $A$ to equal the number of rows of the right $A$, i.e. $A$ is $n\\times n$. A non-square matrix cannot be multiplied by itself. (Squaring each entry would be the entrywise/Hadamard square $A\\circ A$, an unrelated operation.) Invertibility is not required."
             },
             {
               "q": "Suppose the product $AB$ is the zero matrix. Does it follow that $A=0$ or $B=0$?",
               "choices": [
-                "No — there exist nonzero matrices whose product is the zero matrix",
-                "Yes, always — just as with real numbers, a zero product needs a zero factor",
                 "Yes, but only when $A$ and $B$ are both square",
+                "Yes, always — just as with real numbers, a zero product needs a zero factor",
+                "No — there exist nonzero matrices whose product is the zero matrix",
                 "Only if $A$ and $B$ commute"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Matrices have zero divisors. For instance $\\begin{bmatrix}1&0\\\\0&0\\end{bmatrix}\\begin{bmatrix}0&0\\\\0&1\\end{bmatrix}=\\begin{bmatrix}0&0\\\\0&0\\end{bmatrix}$, yet neither factor is zero. So the familiar 'a product is zero only if a factor is zero' rule from real numbers $\\textit{fails}$ for matrices — regardless of whether they are square or commute."
             }
           ],
@@ -1486,66 +1486,66 @@
               "q": "An augmented matrix $[A\\mid\\mathbf{b}]$ for a system in 4 unknowns reduces to RREF with exactly 3 pivots, none of which is in the last (augmented) column. What is the solution set?",
               "choices": [
                 "No solution (inconsistent)",
-                "Exactly one solution",
                 "Infinitely many solutions, with 1 free variable",
+                "Exactly one solution",
                 "Infinitely many solutions, with 3 free variables"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "No pivot in the augmented column means consistent. With 4 unknowns and 3 pivot columns among them, there are 4 - 3 = 1 free variables, giving infinitely many solutions."
             },
             {
               "q": "Which statement is NOT equivalent to '$A$ is an invertible $n\\times n$ matrix'?",
               "choices": [
-                "$\\det(A) \\neq 0$",
+                "$A$ has more rows than columns",
                 "The columns of $A$ are linearly independent",
                 "$A\\mathbf{x}=\\mathbf{0}$ has only the trivial solution",
-                "$A$ has more rows than columns"
+                "$\\det(A) \\neq 0$"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "Invertibility requires $A$ to be square; 'more rows than columns' contradicts that. The other three are all standard equivalent characterizations from the Invertible Matrix Theorem."
             },
             {
               "q": "For $A=\\begin{bmatrix}3 & 6\\\\1 & 2\\end{bmatrix}$, what can you conclude?",
               "choices": [
-                "$A^{-1} = \\frac{1}{0}\\begin{bmatrix}2 & -6\\\\-1 & 3\\end{bmatrix}$, so the inverse is large",
                 "$A$ is singular because $\\det A = 3\\cdot2 - 6\\cdot1 = 0$",
+                "$A^{-1} = \\frac{1}{0}\\begin{bmatrix}2 & -6\\\\-1 & 3\\end{bmatrix}$, so the inverse is large",
                 "$A$ is invertible because its entries are all nonzero",
                 "$A^{-1} = \\begin{bmatrix}2 & -6\\\\-1 & 3\\end{bmatrix}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The determinant is $ad-bc = 6-6 = 0$, so $A$ is singular and has no inverse (its second column is twice the first, i.e. dependent columns)."
             },
             {
               "q": "Why is solving $A\\mathbf{x}=\\mathbf{b}$ via $\\mathbf{x}=A^{-1}\\mathbf{b}$ generally discouraged in numerical practice?",
               "choices": [
-                "It gives the wrong answer",
-                "It only works for symmetric matrices",
                 "It costs more work, is less numerically stable, and destroys sparsity compared to factor-and-substitute",
+                "It only works for symmetric matrices",
+                "It gives the wrong answer",
                 "Inverses do not exist for most square matrices"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Explicit inversion is roughly 3x the cost of one elimination, amplifies rounding error, and fills in zeros; factorizations (LU, QR, Cholesky) solve more accurately and can be reused across right-hand sides."
             },
             {
               "q": "Under the column picture, the statement \"$A\\mathbf{x}=\\mathbf{b}$ has at least one solution\" is exactly equivalent to which condition?",
               "choices": [
-                "$\\mathbf{b}$ lies in the column space (span of the columns) of $A$",
-                "The columns of $A$ are linearly independent",
                 "$A$ is a square matrix",
+                "The columns of $A$ are linearly independent",
+                "$\\mathbf{b}$ lies in the column space (span of the columns) of $A$",
                 "Every row of $A$ contains a pivot after elimination"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "In the column picture, $A\\mathbf{x}$ is a linear combination of $A$'s columns, so the system is solvable exactly when $\\mathbf{b}$ can be written as such a combination, i.e. $\\mathbf{b}$ lies in the column space. Independent columns concern uniqueness, squareness is irrelevant, and 'a pivot in every row' guarantees solvability for every $\\mathbf{b}$ (a stronger condition), not equivalence for a particular $\\mathbf{b}$."
             },
             {
               "q": "Two students each correctly reduce the same matrix $A$ to row echelon form but get visibly different REFs. What is the best explanation?",
               "choices": [
                 "At least one of them made an arithmetic error, since the result is determined",
-                "REF is not unique, so different valid pivot/elimination choices give different REFs — but RREF would be identical",
+                "REF is unique but RREF is not, so they should compare RREFs to find the mistake",
                 "They must have started from different matrices",
-                "REF is unique but RREF is not, so they should compare RREFs to find the mistake"
+                "REF is not unique, so different valid pivot/elimination choices give different REFs — but RREF would be identical"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "RREF is unique for a given matrix while REF is not, so two correct reductions can yield different REFs from different valid choices; reducing all the way to RREF would give identical results."
             },
             {
@@ -1553,43 +1553,43 @@
               "choices": [
                 "Swapping two rows",
                 "Scaling a row by a nonzero constant",
-                "Scaling a row by zero",
-                "Adding a multiple of one row to another row"
+                "Adding a multiple of one row to another row",
+                "Scaling a row by zero"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The three elementary row operations are row swaps, scaling by a nonzero constant ($c\\neq 0$), and adding a multiple of one row to another; each is reversible and preserves the solution set. Scaling by zero is not allowed because it is not reversible and destroys an equation, in general changing the solution set."
             },
             {
               "q": "After reducing $[A\\mid\\mathbf{b}]$, a column of $A$ contains no pivot. What does that column's variable become?",
               "choices": [
                 "A basic variable, fixed by the pivot in its column",
-                "A free variable, signaling the solution (if any exists) is not unique",
                 "An inconsistent variable, meaning no solution exists",
+                "A free variable, signaling the solution (if any exists) is not unique",
                 "A leading variable that must equal a corresponding entry of $\\mathbf{b}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Pivot columns correspond to basic variables; a non-pivot column corresponds to a free variable, so any solution that exists is not unique. (A non-pivot column does not by itself signal inconsistency — that comes from a pivot in the augmented column.)"
             },
             {
               "q": "A system $A\\mathbf{x}=\\mathbf{b}$ has $A$ a $3\\times 5$ matrix. A student claims that because there are more unknowns than equations, the system must have infinitely many solutions. What is the correct assessment?",
               "choices": [
                 "Correct: with $5>3$, free variables guarantee infinitely many solutions",
-                "Wrong: such a system can be inconsistent (no solutions) if $\\mathbf{b}$ is not in the column space",
                 "Wrong: a $3\\times 5$ system always has a unique solution because rank is at most 3",
+                "Wrong: such a system can be inconsistent (no solutions) if $\\mathbf{b}$ is not in the column space",
                 "Correct, but only when $A$ has rank exactly 3"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Having more unknowns than equations means a solution, if it exists, is non-unique — but existence is a separate question. If $\\mathbf{b}\\notin\\operatorname{Col}(A)$ the system is inconsistent, so 'infinitely many' is not guaranteed. The student conflates uniqueness with existence."
             },
             {
               "q": "Using the column picture, solve $A\\mathbf{x}=\\mathbf{b}$ for $A=\\begin{bmatrix}1 & 0\\\\0 & 1\\\\1 & 1\\end{bmatrix}$ and $\\mathbf{b}=\\begin{bmatrix}2\\\\3\\\\6\\end{bmatrix}$. Which is true?",
               "choices": [
-                "$\\mathbf{x}=\\begin{bmatrix}2\\\\3\\end{bmatrix}$ is the unique solution",
-                "$\\mathbf{x}=\\begin{bmatrix}2\\\\3\\end{bmatrix}$ solves it but solutions are not unique",
                 "The system is inconsistent: $\\mathbf{b}$ is not in the column space",
+                "$\\mathbf{x}=\\begin{bmatrix}2\\\\3\\end{bmatrix}$ solves it but solutions are not unique",
+                "$\\mathbf{x}=\\begin{bmatrix}2\\\\3\\end{bmatrix}$ is the unique solution",
                 "Every vector $\\mathbf{x}\\in\\mathbb{R}^2$ is a solution"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The first two rows force $x_1=2,\\ x_2=3$, but then row three gives $x_1+x_2=5\\neq 6$, so $\\mathbf{b}$ cannot be written as a combination of the two columns. The tempting answer $(2,3)$ satisfies two equations but fails the third, so $\\mathbf{b}\\notin\\operatorname{Col}(A)$."
             },
             {
@@ -1628,12 +1628,12 @@
             {
               "q": "If $A$ and $B$ are invertible $n\\times n$ matrices, what is $(AB)^{-1}$?",
               "choices": [
-                "$B^{-1}A^{-1}$",
                 "$A^{-1}B^{-1}$",
+                "$B^{-1}A^{-1}$",
                 "$A^{-1}B$",
                 "$\\frac{1}{AB}$ — the entrywise reciprocal of $AB$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Undoing $AB$ means reversing the last operation first: $(AB)^{-1}=B^{-1}A^{-1}$ (the 'socks and shoes' rule). Check: $(AB)(B^{-1}A^{-1})=A(BB^{-1})A^{-1}=AIA^{-1}=I$. The form $A^{-1}B^{-1}$ works only in the special case $AB=BA$, and a matrix inverse is never an entrywise reciprocal."
             },
             {
@@ -1641,21 +1641,21 @@
               "choices": [
                 "Any nonnegative whole number, depending on the equations",
                 "Exactly $0$ or exactly $1$ — never more",
-                "Exactly $0$, exactly $1$, or infinitely many — but never a finite number greater than one",
-                "Always exactly one, as long as $A$ is square"
+                "Always exactly one, as long as $A$ is square",
+                "Exactly $0$, exactly $1$, or infinitely many — but never a finite number greater than one"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "If a linear system had two distinct solutions $\\mathbf{x}_1\\neq\\mathbf{x}_2$, then every point on the line $\\mathbf{x}_1+t(\\mathbf{x}_2-\\mathbf{x}_1)$ would also satisfy it — instantly giving infinitely many. So the only possibilities are none (inconsistent), exactly one (unique), or infinitely many. A square $A$ guarantees uniqueness only when it is invertible."
             },
             {
               "q": "Which statement about the homogeneous system $A\\mathbf{x}=\\mathbf{0}$ is always true?",
               "choices": [
                 "It may be inconsistent (have no solution) when $A$ is not square",
-                "It is always consistent, because $\\mathbf{x}=\\mathbf{0}$ is always a solution",
                 "It always has exactly one solution",
+                "It is always consistent, because $\\mathbf{x}=\\mathbf{0}$ is always a solution",
                 "It has a nonzero solution for every matrix $A$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Setting $\\mathbf{x}=\\mathbf{0}$ gives $A\\mathbf{0}=\\mathbf{0}$, so the trivial solution always works — a homogeneous system is $\\textit{never}$ inconsistent. Whether it has $\\textit{other}$ (nonzero) solutions depends on $A$: a free column (e.g. more unknowns than pivots) yields infinitely many, while a pivot in every column leaves only the trivial solution."
             }
           ],
@@ -1736,11 +1736,11 @@
               "q": "Let $A$ be a $5 \\times 8$ matrix with $\\operatorname{rank}(A) = 3$. What is the dimension of the null space $N(A)$?",
               "choices": [
                 "2",
-                "5",
                 "3",
+                "5",
                 "8"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Nullity $= n - r$ where $n$ is the number of columns. Here $n = 8$ and $r = 3$, so nullity $= 8 - 3 = 5$. (The distractor 2 = m - r is the dimension of the left null space, not the null space.)"
             },
             {
@@ -1748,21 +1748,21 @@
               "choices": [
                 "The nonzero rows of $R$",
                 "The pivot columns of $R$",
-                "The pivot columns of the original matrix $A$",
-                "All columns of $A$"
+                "All columns of $A$",
+                "The pivot columns of the original matrix $A$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Row operations change the column space, so the pivot columns of R do NOT span C(A). You must select the corresponding pivot columns from the original A. (The nonzero rows of R give the row space, not the column space.)"
             },
             {
               "q": "For an $m \\times n$ matrix $A$, the system $Ax = b$ has a unique solution for every $b \\in \\mathbb{R}^m$ exactly when:",
               "choices": [
                 "$A$ has full column rank, $r = n$",
-                "$A$ is square ($m = n$) and invertible",
+                "The null space is the entire space $\\mathbb{R}^n$",
                 "$A$ has full row rank, $r = m$",
-                "The null space is the entire space $\\mathbb{R}^n$"
+                "$A$ is square ($m = n$) and invertible"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Existence for every b needs full row rank (onto); uniqueness needs full column rank (one-to-one). Both at once force r = m = n, i.e. a square invertible matrix. Full column rank alone gives uniqueness but not existence for every b."
             },
             {
@@ -1780,22 +1780,22 @@
               "q": "A particular solution to $Ax = b$ is $x_p$, and the null space $N(A)$ is two-dimensional. Which statement best describes the complete solution set of $Ax = b$?",
               "choices": [
                 "The single point $x_p$, since a particular solution is unique",
-                "All vectors of the form $x_p + n$ where $n \\in N(A)$ — a 2-dimensional plane shifted off the origin",
+                "There is no solution because the null space is nontrivial",
                 "The 2-dimensional subspace $N(A)$ itself",
-                "There is no solution because the null space is nontrivial"
+                "All vectors of the form $x_p + n$ where $n \\in N(A)$ — a 2-dimensional plane shifted off the origin"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The complete solution set is the shifted subspace $x_p + N(A)$; with a 2-dimensional null space it is a 2-dimensional affine plane (not a subspace, since it does not pass through the origin unless $b=0$)."
             },
             {
               "q": "For the worked $3\\times4$ matrix in the lesson, the left null space is spanned by $(-1,-1,1)$. What does this vector directly encode about $A$?",
               "choices": [
-                "A linear dependence among the rows of $A$: namely row 3 = row 1 + row 2",
                 "A linear dependence among the columns of $A$",
+                "A linear dependence among the rows of $A$: namely row 3 = row 1 + row 2",
                 "A particular solution of $Ax = b$",
                 "The direction of largest stretching by $A$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The left null space satisfies $A^\\top y = 0$, i.e. $y^\\top A = 0$, so its vectors record the linear dependencies among the rows of $A$ — here $-\\text{row}_1 - \\text{row}_2 + \\text{row}_3 = 0$, equivalently row 3 = row 1 + row 2."
             },
             {
@@ -1834,12 +1834,12 @@
             {
               "q": "Vector $u$ lies in the row space of $A$ and vector $v$ lies in the null space of $A$, where $A$ is a real $m \\times n$ matrix. What must be true of $u^\\top v$?",
               "choices": [
-                "$u^\\top v = 0$, because the row space and null space are orthogonal complements in $\\mathbb{R}^n$",
                 "$u^\\top v = 1$, because the subspaces share a normalized basis vector",
+                "$u^\\top v = 0$, because the row space and null space are orthogonal complements in $\\mathbb{R}^n$",
                 "$u^\\top v$ can be any real number, since the two subspaces overlap",
                 "$u^\\top v = \\|u\\|\\,\\|v\\|$, because the vectors are parallel"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Every null-space vector $v$ satisfies $Av=0$, meaning it is orthogonal to each row of $A$ and hence to the entire row space; the row space and null space are orthogonal complements in $\\mathbb{R}^n$, so $u^\\top v = 0$."
             },
             {
@@ -1847,32 +1847,32 @@
               "choices": [
                 "$0$, since the rows are nonzero",
                 "$3$, since there are 3 columns",
-                "$1$, since the rank is 2",
-                "$2$, since the rank is 1"
+                "$2$, since the rank is 1",
+                "$1$, since the rank is 2"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Row 2 is twice row 1, so $\\operatorname{rank}(A)=1$. With $n=3$ columns, rank-nullity gives $\\dim N(A) = 3 - 1 = 2$. The tempting answer 1 wrongly assumes rank 2 from the two rows."
             },
             {
               "q": "A student claims: 'Since $A$ is $4 \\times 6$ and its column space is all of $\\mathbb{R}^4$, the equation $Ax = b$ has a unique solution for every $b$.' What is the flaw?",
               "choices": [
-                "The column space cannot be all of $\\mathbb{R}^4$ for a $4 \\times 6$ matrix",
                 "Solutions exist for every $b$, but they are not unique because $\\dim N(A) = 2 > 0$",
+                "The column space cannot be all of $\\mathbb{R}^4$ for a $4 \\times 6$ matrix",
                 "No solution exists for any $b$ because the matrix is not square",
                 "The claim is correct: full column space guarantees a unique solution"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Spanning $\\mathbb{R}^4$ means $\\operatorname{rank}(A)=4$, so a solution exists for every $b$ (existence). But $\\dim N(A)=6-4=2>0$, so any particular solution can be shifted by null-space vectors, making solutions non-unique. Existence (surjective) and uniqueness (injective) are separate conditions."
             },
             {
               "q": "The rank–nullity theorem says that for any $m \\times n$ matrix $A$, $\\operatorname{rank}(A) + \\dim N(A)$ equals:",
               "choices": [
                 "$m$ — the number of rows",
-                "$n$ — the number of columns",
                 "$m + n$",
+                "$n$ — the number of columns",
                 "$\\min(m, n)$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Each of the $n$ columns is either a pivot column (contributing to the rank, i.e. to $\\dim C(A)$) or a free column (contributing a basis vector of the null space). The two counts therefore partition the $n$ columns: $\\operatorname{rank}(A) + \\dim N(A) = n$. It is the number of columns, not rows."
             },
             {
@@ -1880,32 +1880,32 @@
               "choices": [
                 "The number of rows of $A$",
                 "The number of free variables in $Ax = \\mathbf{0}$",
-                "The number of zero rows in the RREF of $A$",
-                "The number of pivot positions in any echelon form of $A$"
+                "The number of pivot positions in any echelon form of $A$",
+                "The number of zero rows in the RREF of $A$"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Rank is the number of pivots (leading entries) after reducing $A$ to echelon form — equivalently $\\dim C(A) = \\dim C(A^\\top)$. The number of free variables is the *nullity* (a tempting trap), not the rank; the number of rows is only an upper bound; and zero rows in the RREF count the deficiency $m - \\operatorname{rank}$, not the rank."
             },
             {
               "q": "For an $m \\times n$ matrix $A$, which spaces contain the column space and the null space?",
               "choices": [
-                "$C(A) \\subseteq \\mathbb{R}^m$ and $N(A) \\subseteq \\mathbb{R}^n$",
+                "Both are subspaces of $\\mathbb{R}^m$",
                 "$C(A) \\subseteq \\mathbb{R}^n$ and $N(A) \\subseteq \\mathbb{R}^m$",
                 "Both are subspaces of $\\mathbb{R}^n$",
-                "Both are subspaces of $\\mathbb{R}^m$"
+                "$C(A) \\subseteq \\mathbb{R}^m$ and $N(A) \\subseteq \\mathbb{R}^n$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Each column of $A$ is a vector with $m$ entries, so $C(A) \\subseteq \\mathbb{R}^m$. The null space holds the *inputs* $x$ satisfying $Ax = \\mathbf{0}$, and $x \\in \\mathbb{R}^n$, so $N(A) \\subseteq \\mathbb{R}^n$. Swapping which space lives in which dimension is one of the most common errors in the subject."
             },
             {
               "q": "An $m \\times n$ matrix $A$ has full column rank ($\\operatorname{rank}(A) = n$). Which statement must be true?",
               "choices": [
-                "$A$ is invertible",
-                "$C(A) = \\mathbb{R}^m$",
                 "$N(A) = \\{\\mathbf{0}\\}$ — the columns are linearly independent",
+                "$C(A) = \\mathbb{R}^m$",
+                "$A$ is invertible",
                 "$\\dim N(A) = n$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "By rank–nullity, $\\dim N(A) = n - \\operatorname{rank}(A) = 0$, so $N(A) = \\{\\mathbf{0}\\}$ and $Ax = \\mathbf{0}$ forces $x = \\mathbf{0}$ — i.e. the columns are linearly independent. $A$ is invertible only if it is also *square*; $C(A) = \\mathbb{R}^m$ describes full *row* rank; and $\\dim N(A) = n$ would mean rank $0$."
             }
           ],
@@ -1979,23 +1979,23 @@
             {
               "q": "A $3\\times 3$ matrix $A$ has $\\det(A) = -2$. Which statement is correct?",
               "choices": [
-                "$A$ is not invertible because the determinant is negative",
                 "$A$ is invertible; it scales volume by a factor of 2 and reverses orientation",
+                "$A$ is not invertible because the determinant is negative",
                 "$A$ is invertible; it scales volume by a factor of $-2$ and preserves orientation",
                 "$A$ has linearly dependent columns"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Nonzero determinant means invertible. The magnitude $|-2|=2$ is the volume-scaling factor, and the negative sign means orientation is reversed. Volume scaling is always reported as a nonnegative magnitude."
             },
             {
               "q": "If $A$ and $B$ are $n\\times n$ with $\\det(A)=3$ and $\\det(B)=5$, what is $\\det(A^{-1}B)$?",
               "choices": [
-                "$15$",
                 "$5/3$",
+                "$15$",
                 "$3/5$",
                 "$8$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\det(A^{-1}B) = \\det(A^{-1})\\det(B) = \\tfrac{1}{\\det(A)}\\det(B) = \\tfrac{1}{3}\\cdot 5 = 5/3$, using multiplicativity and $\\det(A^{-1})=1/\\det(A)$."
             },
             {
@@ -2013,22 +2013,22 @@
               "q": "Which of these does NOT generally hold for square matrices $A,B$?",
               "choices": [
                 "$\\det(AB)=\\det(A)\\det(B)$",
-                "$\\det(A^\\top)=\\det(A)$",
                 "$\\det(A+B)=\\det(A)+\\det(B)$",
+                "$\\det(A^\\top)=\\det(A)$",
                 "$\\det(A^{-1})=1/\\det(A)$ when $A$ is invertible"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "The determinant is multiplicative but not additive: $\\det(A+B)\\neq\\det(A)+\\det(B)$ in general. The other three identities are standard and always hold."
             },
             {
               "q": "A linear map $A$ on $\\mathbb{R}^3$ has $\\det(A) = 4$. If you apply $A$ to a solid region of volume 5, what is the volume of the image, and is orientation preserved?",
               "choices": [
-                "Volume 20, orientation preserved",
+                "Volume 1.25, orientation reversed",
                 "Volume 20, orientation reversed",
                 "Volume 9, orientation preserved",
-                "Volume 1.25, orientation reversed"
+                "Volume 20, orientation preserved"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Volume scales by $|\\det(A)| = 4$ giving $5 \\times 4 = 20$, and since $\\det(A) > 0$ orientation is preserved."
             },
             {
@@ -2045,67 +2045,67 @@
             {
               "q": "The columns of a $4\\times 4$ matrix $A$ are linearly dependent. Which statement must be true?",
               "choices": [
-                "$\\det(A) = 0$ and the 4D unit cube maps to a region of zero 4-volume",
+                "$A$ is invertible but has $\\operatorname{rank}(A) = 4$",
                 "$\\det(A) < 0$ because orientation is reversed",
                 "$\\det(A) = 1$ since dependent columns still span $\\mathbb{R}^4$",
-                "$A$ is invertible but has $\\operatorname{rank}(A) = 4$"
+                "$\\det(A) = 0$ and the 4D unit cube maps to a region of zero 4-volume"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Linearly dependent columns collapse space into a lower-dimensional subspace, so the image has zero volume and $\\det(A) = 0$."
             },
             {
               "q": "A 2D transformation maps the unit square to a parallelogram of area 3, and sweeping from the first column of $A$ to the second is the shorter way clockwise. What is $\\det(A)$?",
               "choices": [
                 "$3$",
-                "$-3$",
                 "$0$",
+                "$-3$",
                 "$\\tfrac{1}{3}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The magnitude of the determinant equals the area (3), and a clockwise sweep indicates reversed orientation, giving a negative sign: $\\det(A) = -3$."
             },
             {
               "q": "Let $A$ be a $3\\times 3$ matrix with $\\det(A) = 4$. What is $\\det(2A)$, where $2A$ scales every entry of $A$ by $2$?",
               "choices": [
                 "$8$",
-                "$32$",
                 "$64$",
+                "$32$",
                 "$16$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Scaling an $n\\times n$ matrix by $c$ scales each of its $n$ column vectors by $c$, so volume scales by $c^n$: $\\det(cA)=c^n\\det(A)$. Here $2^3\\cdot 4 = 32$. The tempting answer $8$ comes from wrongly treating it as $2\\det(A)$, forgetting that all three dimensions stretch."
             },
             {
               "q": "What is the determinant of $A=\\begin{bmatrix}5 & 2 \\\\ 6 & 3\\end{bmatrix}$, and is the unit square's orientation preserved by $A$?",
               "choices": [
-                "$3$, orientation preserved",
-                "$27$, orientation preserved",
                 "$3$, orientation reversed",
+                "$27$, orientation preserved",
+                "$3$, orientation preserved",
                 "$-3$, orientation reversed"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "For a $2\\times 2$ matrix $\\det = ad-bc = 5\\cdot 3 - 2\\cdot 6 = 15-12 = 3$. Since $\\det>0$, orientation is preserved. The determinant is the difference of the two cross-products, not a product of diagonal entries, so values like $27$ do not correspond to any valid computation here."
             },
             {
               "q": "A matrix $B$ is upper-triangular with diagonal entries $4,\\,0,\\,-7$ (and arbitrary nonzero entries above the diagonal). What can you conclude about $B$?",
               "choices": [
-                "$\\det(B) = -28$, so $B$ is invertible",
-                "$\\det(B)$ depends on the entries above the diagonal, so it cannot be determined",
                 "$\\det(B) = 0$, so $B$ is not invertible and collapses volume to zero",
+                "$\\det(B)$ depends on the entries above the diagonal, so it cannot be determined",
+                "$\\det(B) = -28$, so $B$ is invertible",
                 "$\\det(B) = 11$, so $B$ preserves orientation"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The determinant of a triangular matrix is the product of its diagonal entries: $4\\cdot 0\\cdot(-7)=0$, regardless of off-diagonal values. A zero determinant means $B$ squashes 3D volume to zero (its columns are linearly dependent), so $B$ is singular. Entries above the diagonal never affect a triangular determinant."
             },
             {
               "q": "A student claims: 'Transposing a matrix swaps its rows and columns, which flips orientation, so $\\det(A^{\\top}) = -\\det(A)$ for every square $A$.' Is this correct?",
               "choices": [
-                "Correct, because transposing reflects the matrix across its diagonal",
                 "Incorrect — in fact $\\det(A^{\\top}) = \\det(A)$ always",
+                "Correct, because transposing reflects the matrix across its diagonal",
                 "Correct only when $A$ is $2\\times 2$",
                 "Incorrect — actually $\\det(A^{\\top}) = 1/\\det(A)$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Transposing never changes the determinant: $\\det(A^{\\top})=\\det(A)$ for every square matrix. Reflecting the array across its main diagonal is not a geometric reflection of the transformation's output, so it does not flip the sign; the reciprocal rule applies to the inverse $A^{-1}$, not the transpose."
             },
             {
@@ -2113,21 +2113,21 @@
               "choices": [
                 "$1$",
                 "$-5$",
-                "$-6$",
-                "$5$"
+                "$5$",
+                "$-6$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The determinant is multiplicative: $\\det(AB) = \\det(A)\\det(B) = 3 \\times (-2) = -6$. There is no analogous rule for sums — $\\det(A+B)$ is generally *not* $\\det A + \\det B$. Geometrically, applying $B$ then $A$ scales volume by $|{-2}|$ and then by $3$, and the lone negative sign flips orientation once."
             },
             {
               "q": "A square matrix $A$ is invertible if and only if:",
               "choices": [
-                "$\\det(A) \\neq 0$",
+                "$\\det(A) > 0$",
                 "$\\det(A) = 0$",
                 "$\\det(A) = 1$",
-                "$\\det(A) > 0$"
+                "$\\det(A) \\neq 0$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "$\\det(A) = 0$ exactly when $A$ collapses space to a lower dimension (dependent columns, a nontrivial null space), so $A$ is invertible iff $\\det(A) \\neq 0$. The *sign* of a nonzero determinant only encodes orientation (a negative determinant is still invertible), and its *magnitude* need not be $1$."
             },
             {
@@ -2135,10 +2135,10 @@
               "choices": [
                 "$1$",
                 "Equal to the product of its diagonal entries",
-                "Undefined",
-                "$0$"
+                "$0$",
+                "Undefined"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Two identical rows are linearly dependent, so the matrix is singular and $\\det = 0$ (it squashes space flat — zero volume). Equivalently, subtracting one identical row from the other creates a zero row, which forces the determinant to $0$. The same holds for two identical columns."
             },
             {
@@ -2229,67 +2229,67 @@
             {
               "q": "For $A = \\begin{bmatrix} 2 & 1 \\\\ 1 & 2 \\end{bmatrix}$ you find candidate eigenvalues $\\lambda = 1$ and $\\lambda = 3$. Which single fact most quickly confirms this is consistent?",
               "choices": [
-                "$1 + 3 = 4 = \\operatorname{tr}(A)$ and $1 \\cdot 3 = 3 = \\det(A)$",
-                "Both eigenvalues are positive, so $A$ is invertible",
                 "The eigenvectors are orthogonal",
+                "Both eigenvalues are positive, so $A$ is invertible",
+                "$1 + 3 = 4 = \\operatorname{tr}(A)$ and $1 \\cdot 3 = 3 = \\det(A)$",
                 "$A$ is symmetric, so the eigenvalues must be 1 and 3"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The sum of eigenvalues equals the trace and the product equals the determinant; both hold ($4$ and $3$), giving an instant consistency check. The other statements are true or true-ish but do not verify the specific values."
             },
             {
               "q": "A real $2\\times 2$ matrix has $\\det(A - \\lambda I) = 0$ at $\\lambda = 0$ (with the other eigenvalue nonzero). What does $\\lambda = 0$ tell you?",
               "choices": [
                 "$A$ is the zero matrix",
-                "$A$ is singular (non-invertible) and has a nontrivial null space",
+                "$A$ must be symmetric",
                 "$A$ rotates every vector by 90 degrees",
-                "$A$ must be symmetric"
+                "$A$ is singular (non-invertible) and has a nontrivial null space"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "An eigenvalue of $0$ means some nonzero vector maps to $0$, so $A$ has a nontrivial kernel and $\\det A = \\prod \\lambda_i = 0$, i.e. $A$ is singular. It need not be the zero matrix."
             },
             {
               "q": "Which statement about the eigenvectors of $A = \\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\end{bmatrix}$ is correct?",
               "choices": [
-                "It has two independent eigenvectors, one per repeated root",
-                "It is symmetric, so its eigenvectors are orthogonal",
                 "It has the repeated eigenvalue $\\lambda = 1$ but only a one-dimensional eigenspace (it is defective)",
+                "It is symmetric, so its eigenvectors are orthogonal",
+                "It has two independent eigenvectors, one per repeated root",
                 "Its eigenvalues are $1$ and $-1$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "This shear is triangular, so $\\lambda = 1$ with algebraic multiplicity 2, but solving $(A - I)v = 0$ gives only the line spanned by $\\begin{bmatrix}1\\\\0\\end{bmatrix}$ (geometric multiplicity 1), making it defective and non-diagonalizable."
             },
             {
               "q": "Why do practitioners prefer NumPy's $\\texttt{eigh}$ over $\\texttt{eig}$ for a covariance matrix?",
               "choices": [
-                "$\\texttt{eigh}$ works for non-square matrices",
                 "Covariance matrices are symmetric, so $\\texttt{eigh}$ returns real eigenvalues and orthonormal eigenvectors more accurately and quickly",
+                "$\\texttt{eigh}$ works for non-square matrices",
                 "$\\texttt{eig}$ cannot compute eigenvectors",
                 "$\\texttt{eigh}$ guarantees all eigenvalues are exactly 1"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "A covariance matrix is symmetric, and $\\texttt{eigh}$ exploits that to return sorted real eigenvalues with orthonormal eigenvectors (the spectral theorem guarantees these), which is exactly what PCA needs."
             },
             {
               "q": "Suppose $Av = \\lambda v$ for a nonzero vector $v$. Which of the following is also guaranteed to be an eigenvector of $A$ with the same eigenvalue $\\lambda$?",
               "choices": [
-                "$3v$",
                 "$v + w$ for an arbitrary nonzero vector $w$",
+                "$3v$",
                 "The zero vector $0$",
                 "$Av$ only if $\\lambda = 1$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Since $A(cv) = \\lambda(cv)$ for any scalar $c \\neq 0$, every nonzero multiple of $v$ (like $3v$) lies on the same invariant eigenline and shares the eigenvalue $\\lambda$."
             },
             {
               "q": "Why does the lesson insist on $v \\neq 0$ in the definition $Av = \\lambda v$?",
               "choices": [
                 "Because the zero vector cannot be normalized to unit length",
-                "Because $A \\cdot 0 = \\lambda \\cdot 0$ holds for every $\\lambda$, so $0$ carries no information about any specific eigenvalue",
+                "Because $(A - \\lambda I)$ would become invertible",
                 "Because eigenvalues must be nonzero",
-                "Because $(A - \\lambda I)$ would become invertible"
+                "Because $A \\cdot 0 = \\lambda \\cdot 0$ holds for every $\\lambda$, so $0$ carries no information about any specific eigenvalue"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The equation $A \\cdot 0 = \\lambda \\cdot 0$ is trivially true for every scalar $\\lambda$, so allowing $v = 0$ would make every number an 'eigenvalue' and tell us nothing."
             },
             {
@@ -2306,34 +2306,34 @@
             {
               "q": "The lesson derives that eigenvalues satisfy $\\det(A - \\lambda I) = 0$. What is the key reason this determinant condition is required?",
               "choices": [
-                "A nonzero vector $v$ with $(A - \\lambda I)v = 0$ exists only if $A - \\lambda I$ is not invertible, which forces its determinant to vanish",
-                "Invertible matrices always have determinant zero",
                 "The determinant of $A$ itself must equal $\\lambda$",
+                "Invertible matrices always have determinant zero",
+                "A nonzero vector $v$ with $(A - \\lambda I)v = 0$ exists only if $A - \\lambda I$ is not invertible, which forces its determinant to vanish",
                 "It guarantees the eigenvectors are automatically unit vectors"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A nontrivial null-space vector for $A - \\lambda I$ exists exactly when that matrix is singular (non-invertible), and a matrix is singular precisely when its determinant is zero."
             },
             {
               "q": "For the rotation matrix $A = \\begin{bmatrix} 0 & -1 \\\\ 1 & 0 \\end{bmatrix}$ (a $90^\\circ$ rotation), what is true about its real eigenvectors?",
               "choices": [
-                "There are none, because every nonzero vector is rotated off its own line",
-                "Every vector is an eigenvector with eigenvalue $1$",
                 "The vector $\\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix}$ is an eigenvector with eigenvalue $0$",
+                "Every vector is an eigenvector with eigenvalue $1$",
+                "There are none, because every nonzero vector is rotated off its own line",
                 "The eigenvectors are $\\begin{bmatrix} 1 \\\\ 1 \\end{bmatrix}$ and $\\begin{bmatrix} 1 \\\\ -1 \\end{bmatrix}$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "A $90^\\circ$ rotation turns every nonzero vector to a new line, so no real vector satisfies $Av = \\lambda v$; its eigenvalues are complex ($\\pm i$). The distractors wrongly assume a real eigenvector survives, but no real direction is preserved under this rotation."
             },
             {
               "q": "You compute $\\det(A - \\lambda I) = (\\lambda - 4)^2 = 0$ for a $2\\times 2$ matrix $A$, giving the repeated eigenvalue $\\lambda = 4$. Which conclusion is justified?",
               "choices": [
                 "$A$ must be the diagonal matrix $4I$ since $\\lambda = 4$ is the only eigenvalue",
-                "$\\lambda = 4$ is the only eigenvalue, but $A$ need not have two independent eigenvectors for it",
                 "$A$ is automatically guaranteed two independent eigenvectors because it is $2\\times 2$",
+                "$\\lambda = 4$ is the only eigenvalue, but $A$ need not have two independent eigenvectors for it",
                 "The repeated root means $\\det(A) = 0$, so $A$ is not invertible"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A repeated eigenvalue pins down the only scaling factor but says nothing about how many independent eigendirections exist; a matrix like $\\begin{bmatrix} 4 & 1 \\\\ 0 & 4 \\end{bmatrix}$ has $\\lambda = 4$ twice yet only one eigenvector line. The tempting answer that $A = 4I$ or that two eigenvectors are guaranteed ignores this defective case; and $\\det(A) = 16 \\neq 0$."
             },
             {
@@ -2352,43 +2352,43 @@
               "choices": [
                 "$10\\,v$, since each application of $A$ adds $\\lambda$",
                 "$5\\,Av$, which cannot be simplified further",
-                "$25\\,v$, since $v$ is an eigenvector of $A^2$ with eigenvalue $\\lambda^2$",
-                "$v$, because applying $A$ twice returns the original direction and length"
+                "$v$, because applying $A$ twice returns the original direction and length",
+                "$25\\,v$, since $v$ is an eigenvector of $A^2$ with eigenvalue $\\lambda^2$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Apply $A$ twice along the eigendirection: $A(Av) = A(5v) = 5(Av) = 5 \\cdot 5 v = 25 v$, so $v$ is an eigenvector of $A^2$ with eigenvalue $\\lambda^2 = 25$. The tempting $10v$ wrongly adds eigenvalues instead of multiplying them."
             },
             {
               "q": "A $2\\times 2$ matrix has eigenvalues $3$ and $5$. What are its determinant and trace?",
               "choices": [
-                "$\\det = 8,\\ \\operatorname{tr} = 15$",
-                "$\\det = 15,\\ \\operatorname{tr} = 15$",
                 "$\\det = 15,\\ \\operatorname{tr} = 8$",
+                "$\\det = 15,\\ \\operatorname{tr} = 15$",
+                "$\\det = 8,\\ \\operatorname{tr} = 15$",
                 "$\\det = 8,\\ \\operatorname{tr} = 8$"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The determinant is the *product* of the eigenvalues ($3 \\times 5 = 15$) and the trace is their *sum* ($3 + 5 = 8$) — both hold for every square matrix. They give a quick check: for a $2\\times 2$ you can read off $\\operatorname{tr}$ and $\\det$ and solve $\\lambda^2 - \\operatorname{tr}\\,\\lambda + \\det = 0$."
             },
             {
               "q": "What are the eigenvalues of a triangular matrix (upper or lower)?",
               "choices": [
-                "Its diagonal entries",
+                "Always all zero",
                 "You must solve the full characteristic polynomial; they are not obvious",
                 "The sum of each row",
-                "Always all zero"
+                "Its diagonal entries"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "For a triangular matrix, $\\det(A - \\lambda I)$ is the product of the diagonal entries of $A - \\lambda I$, i.e. $\\prod_i (a_{ii} - \\lambda)$, whose roots are exactly the diagonal entries $a_{ii}$. (A diagonal matrix is the special case.) This is why reducing a matrix to triangular form makes its spectrum free to read off."
             },
             {
               "q": "If $A$ is invertible with $Av = \\lambda v$ ($v \\neq 0$), what is the corresponding eigenvalue of $A^{-1}$?",
               "choices": [
-                "$\\lambda$",
+                "$1/\\lambda$",
                 "$-\\lambda$",
                 "$\\lambda^2$",
-                "$1/\\lambda$"
+                "$\\lambda$"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "From $Av = \\lambda v$, apply $A^{-1}$ to both sides: $v = \\lambda\\, A^{-1} v$, so $A^{-1} v = \\tfrac{1}{\\lambda} v$ — the same eigenvector $v$ with the reciprocal eigenvalue. Note $\\lambda \\neq 0$ because $A$ is invertible (a zero eigenvalue would make $A$ singular)."
             },
             {
@@ -2484,12 +2484,12 @@
             {
               "q": "A $4\\times 4$ matrix has characteristic polynomial $(\\lambda-2)^3(\\lambda-5)$, and the eigenspace for $\\lambda=2$ is 2-dimensional. Is it diagonalizable?",
               "choices": [
-                "Yes, because it has a repeated eigenvalue",
-                "Yes, because eigenvalue 5 is simple",
                 "No, because the geometric multiplicity of $\\lambda=2$ (2) is less than its algebraic multiplicity (3)",
+                "Yes, because eigenvalue 5 is simple",
+                "Yes, because it has a repeated eigenvalue",
                 "Cannot be determined without the entries"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Diagonalizability requires geometric = algebraic multiplicity for every eigenvalue. Here $\\lambda=2$ has $a=3$ but $g=2$, so it is defective: only 3 independent eigenvectors total, not 4."
             },
             {
@@ -2506,23 +2506,23 @@
             {
               "q": "Which statement about a real symmetric matrix $A = A^\\top$ is guaranteed?",
               "choices": [
-                "It may be defective if it has repeated eigenvalues",
                 "It is diagonalizable by an orthogonal matrix, $A = QDQ^\\top$ with $Q^\\top Q = I$",
+                "It may be defective if it has repeated eigenvalues",
                 "Its eigenvalues are always positive",
                 "It is diagonalizable only if all eigenvalues are distinct"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The spectral theorem guarantees every real symmetric matrix has an orthonormal eigenbasis, so $A=QDQ^\\top$, even with repeated eigenvalues. Eigenvalues are real but not necessarily positive (that is positive-definiteness)."
             },
             {
               "q": "A $3\\times 3$ matrix has eigenvalue $\\lambda = 4$ with algebraic multiplicity 2, but the eigenspace for $\\lambda = 4$ is only 1-dimensional (the third eigenvalue is distinct). Is $A$ diagonalizable?",
               "choices": [
-                "No, because it cannot produce 3 linearly independent eigenvectors",
-                "Yes, because every $3\\times 3$ matrix with 2 distinct eigenvalues is diagonalizable",
                 "Yes, because the algebraic multiplicities add up to 3",
+                "Yes, because every $3\\times 3$ matrix with 2 distinct eigenvalues is diagonalizable",
+                "No, because it cannot produce 3 linearly independent eigenvectors",
                 "It is impossible to tell without knowing the entries of $A$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "With only 1 eigenvector from the repeated eigenvalue (geometric multiplicity 1 < algebraic multiplicity 2) plus 1 from the distinct eigenvalue, you get just 2 independent eigenvectors, so $P$ cannot be a $3\\times 3$ invertible matrix and $A$ is not diagonalizable."
             },
             {
@@ -2539,12 +2539,12 @@
             {
               "q": "Suppose $A = PDP^{-1}$. Swapping the order of two columns of $P$ (say columns 1 and 2) while leaving $D$ unchanged generally produces a matrix that:",
               "choices": [
-                "No longer equals $A$, because column $j$ of $P$ must match the eigenvalue in position $(j,j)$ of $D$",
-                "Still equals $A$, since reordering eigenvectors never matters",
                 "Equals $A^{-1}$ instead of $A$",
+                "Still equals $A$, since reordering eigenvectors never matters",
+                "No longer equals $A$, because column $j$ of $P$ must match the eigenvalue in position $(j,j)$ of $D$",
                 "Equals $A^\\top$, the transpose of the original"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "The pairing between each eigenvector column of $P$ and its eigenvalue in the matching diagonal slot of $D$ is essential. If you also permute $D$'s diagonal the same way you recover $A$, but reordering $P$'s columns alone breaks the pairing and gives a different matrix."
             },
             {
@@ -2561,56 +2561,56 @@
             {
               "q": "Let $A = PDP^{-1}$ with $D = \\begin{pmatrix} 3 & 0 \\\\ 0 & -1 \\end{pmatrix}$ and $P = \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix}$ (so the eigenvectors are $v_1 = (1,1)$ and $v_2 = (1,-1)$). If $x_0 = v_1 + 2v_2$, what is $A^3 x_0$?",
               "choices": [
-                "$27\\,v_1 - 2\\,v_2$",
+                "$27\\,v_1 - 16\\,v_2$",
                 "$27\\,v_1 + 2\\,v_2$",
                 "$3\\,v_1 - 8\\,v_2$",
-                "$27\\,v_1 - 16\\,v_2$"
+                "$27\\,v_1 - 2\\,v_2$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Write $x_0$ in the eigenbasis; $A^3$ scales each eigenvector component by $\\lambda^3$. So $A^3 x_0 = 3^3 v_1 + 2(-1)^3 v_2 = 27 v_1 - 2 v_2$. The distractor $27v_1+2v_2$ forgets that $(-1)^3=-1$."
             },
             {
               "q": "A student claims: \"Any $n\\times n$ matrix with $n$ distinct eigenvalues, AND any matrix with a repeated eigenvalue, both fail to be diagonalizable unless they are symmetric.\" Which single statement is actually correct?",
               "choices": [
                 "A matrix is diagonalizable only when it is symmetric",
-                "Having a repeated eigenvalue forces a matrix to be non-diagonalizable",
                 "$n$ distinct eigenvalues guarantees diagonalizability, while a repeated eigenvalue may or may not be diagonalizable",
+                "Having a repeated eigenvalue forces a matrix to be non-diagonalizable",
                 "Distinct eigenvalues prevent diagonalization because the eigenvectors are not orthogonal"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "$n$ distinct eigenvalues yield $n$ linearly independent eigenvectors, which is sufficient for diagonalizability. A repeated eigenvalue is not fatal (e.g. the identity is diagonal yet has repeated eigenvalues); it only fails when geometric multiplicity is less than algebraic multiplicity. Symmetry is sufficient but never necessary."
             },
             {
               "q": "Suppose $A = PDP^{-1}$ is diagonalizable. What is the relationship between the trace of $A$ and the diagonal entries of $D$?",
               "choices": [
                 "$\\operatorname{tr}(A)$ equals the product of the diagonal entries of $D$",
-                "$\\operatorname{tr}(A)$ equals the sum of the diagonal entries of $D$ (the sum of eigenvalues)",
+                "$\\operatorname{tr}(A)$ equals the trace of $P$ plus the trace of $D$",
                 "$\\operatorname{tr}(A)$ depends on $P$ and cannot be read off from $D$",
-                "$\\operatorname{tr}(A)$ equals the trace of $P$ plus the trace of $D$"
+                "$\\operatorname{tr}(A)$ equals the sum of the diagonal entries of $D$ (the sum of eigenvalues)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Trace is invariant under similarity because $\\operatorname{tr}(PDP^{-1}) = \\operatorname{tr}(DP^{-1}P) = \\operatorname{tr}(D)$, so it equals the sum of eigenvalues. The product of diagonal entries gives the determinant, not the trace, which is the tempting mix-up."
             },
             {
               "q": "For the recurrence $x_{k+1} = Ax_k$ with $A$ diagonalizable and a dominant eigenvalue $\\lambda_1$ satisfying $|\\lambda_1| > |\\lambda_j|$ for all $j \\neq 1$, what does the direction of $x_k$ approach as $k \\to \\infty$ (for generic $x_0$)?",
               "choices": [
                 "It rotates through all the eigenvector directions in turn",
-                "It aligns with the eigenvector $v_1$ associated with $\\lambda_1$",
+                "It aligns with the eigenvector having the smallest $|\\lambda_j|$",
                 "It converges to the zero vector regardless of $\\lambda_1$",
-                "It aligns with the eigenvector having the smallest $|\\lambda_j|$"
+                "It aligns with the eigenvector $v_1$ associated with $\\lambda_1$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "In the eigenbasis, $x_k = \\sum c_j \\lambda_j^k v_j$; dividing by $\\lambda_1^k$, every term except the $v_1$ term shrinks since $|\\lambda_j/\\lambda_1| < 1$, so the direction aligns with $v_1$. The magnitude may grow, decay, or stay fixed depending on $|\\lambda_1|$, but the direction is governed by the dominant eigenvector, not the smallest one."
             },
             {
               "q": "An $n \\times n$ matrix is diagonalizable if and only if:",
               "choices": [
                 "it has $n$ distinct eigenvalues",
-                "it has $n$ linearly independent eigenvectors",
                 "it is invertible",
+                "it has $n$ linearly independent eigenvectors",
                 "it is symmetric"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Diagonalizability means you can fill the columns of $P$ with a full set of $n$ linearly independent eigenvectors. Having $n$ *distinct* eigenvalues is *sufficient* but not *necessary* (the identity has one repeated eigenvalue yet is already diagonal); invertibility is unrelated (a matrix can be invertible yet defective); symmetry is sufficient but far from necessary."
             },
             {
@@ -2627,12 +2627,12 @@
             {
               "q": "$A = PDP^{-1}$ means $A$ is *similar* to the diagonal matrix $D$. What must $A$ and $D$ share?",
               "choices": [
-                "The same eigenvalues (and hence the same trace and determinant)",
                 "The same eigenvectors",
+                "The same eigenvalues (and hence the same trace and determinant)",
                 "The same individual entries",
                 "Nothing in general"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Similar matrices represent the same linear map in different bases, so they share eigenvalues, characteristic polynomial, trace, determinant, and rank. They do *not* share eigenvectors — the change of basis $P$ moves them: $D$'s eigenvectors are the standard basis vectors, while $A$'s are the columns of $P$."
             },
             {
@@ -2729,22 +2729,22 @@
               "q": "For a real symmetric matrix, which decomposition is always available with $Q$ orthogonal ($Q^TQ=I$)?",
               "choices": [
                 "$A = Q\\Lambda Q^{-1}$ where $Q$ may be non-orthogonal",
-                "$A = Q\\Lambda Q^T$ with $\\Lambda$ real diagonal",
+                "$A = QR$ with $R$ upper triangular only",
                 "$A = Q\\Lambda Q^T$ but $\\Lambda$ may be complex",
-                "$A = QR$ with $R$ upper triangular only"
+                "$A = Q\\Lambda Q^T$ with $\\Lambda$ real diagonal"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The spectral theorem gives orthogonal diagonalization $A=Q\\Lambda Q^T$ with real eigenvalues, so $Q^{-1}=Q^T$. The eigenvalues of a real symmetric matrix are always real, ruling out complex $\\Lambda$."
             },
             {
               "q": "Why is every covariance matrix $\\Sigma = \\mathbb{E}[(x-\\mu)(x-\\mu)^T]$ guaranteed to be positive semidefinite?",
               "choices": [
-                "Because all its entries are nonnegative",
                 "Because $a^T\\Sigma a = \\operatorname{Var}(a^Tx) \\ge 0$ for every $a$",
+                "Because all its entries are nonnegative",
                 "Because it is square and symmetric",
                 "Because its determinant is always positive"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "For any direction $a$, $a^T\\Sigma a$ equals the variance of the scalar projection $a^Tx$, which can never be negative; hence PSD. Symmetry alone does not imply PSD, and covariance matrices can have zero eigenvalues (so determinant need not be positive)."
             },
             {
@@ -2772,23 +2772,23 @@
             {
               "q": "For a real symmetric matrix $A$, the lesson notes that orthogonal diagonalization $A = Q\\Lambda Q^T$ is computationally nicer than general diagonalization $A = P\\Lambda P^{-1}$. Why?",
               "choices": [
-                "Because $Q$ is orthogonal, $P^{-1}$ is just $Q^T$, so no matrix inverse needs to be computed",
                 "Because $\\Lambda$ becomes the identity matrix, eliminating eigenvalues",
+                "Because $Q$ is orthogonal, $P^{-1}$ is just $Q^T$, so no matrix inverse needs to be computed",
                 "Because $Q$ is triangular, making the product trivial",
                 "Because the eigenvalues of $Q$ are all 1, so $Q$ can be dropped"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Orthogonality gives $Q^TQ = I$, hence $Q^{-1} = Q^T$, replacing an expensive inverse with a cheap transpose."
             },
             {
               "q": "The proof that a real symmetric matrix has real eigenvalues relies on the quantity $\\bar v^T v$. Which property of $\\bar v^T v$ is the crucial step that lets us conclude $\\lambda = \\bar\\lambda$?",
               "choices": [
-                "$\\bar v^T v = \\sum_i |v_i|^2 > 0$ for $v \\neq 0$, so it can be divided out",
                 "$\\bar v^T v$ equals zero, forcing the eigenvalue to vanish",
+                "$\\bar v^T v = \\sum_i |v_i|^2 > 0$ for $v \\neq 0$, so it can be divided out",
                 "$\\bar v^T v$ is purely imaginary, canceling the imaginary part of $\\lambda$",
                 "$\\bar v^T v$ equals $\\lambda$, so it directly gives the eigenvalue"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "From $(\\lambda - \\bar\\lambda)\\,\\bar v^T v = 0$ and $\\bar v^T v = \\sum_i|v_i|^2 > 0$, we can divide to force $\\lambda = \\bar\\lambda$, i.e. $\\lambda$ is real."
             },
             {
@@ -2805,12 +2805,12 @@
             {
               "q": "Let $A$ be a $2\\times 2$ symmetric matrix with orthonormal eigenvectors $q_1 = \\frac{1}{\\sqrt2}(1,1)^T$ and $q_2 = \\frac{1}{\\sqrt2}(1,-1)^T$, with eigenvalues $\\lambda_1 = 3$ and $\\lambda_2 = 1$. What is $A$?",
               "choices": [
-                "$\\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$",
                 "$\\begin{pmatrix} 3 & 0 \\\\ 0 & 1 \\end{pmatrix}$",
+                "$\\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$",
                 "$\\begin{pmatrix} 2 & 2 \\\\ 2 & 2 \\end{pmatrix}$",
                 "$\\begin{pmatrix} 4 & 1 \\\\ 1 & 4 \\end{pmatrix}$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Using $A = \\sum_i \\lambda_i q_i q_i^T = 3\\cdot\\frac12\\begin{pmatrix}1&1\\\\1&1\\end{pmatrix} + 1\\cdot\\frac12\\begin{pmatrix}1&-1\\\\-1&1\\end{pmatrix} = \\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$. Option (b) is the eigenvalue matrix $\\Lambda$ in the eigenbasis, not $A$ in the standard basis; the eigenvectors are not the standard axes, so $A$ is not diagonal."
             },
             {
@@ -2818,10 +2818,10 @@
               "choices": [
                 "The student is right; with a repeated eigenvalue the matrix may be defective and lack a full orthonormal eigenbasis",
                 "Repeated eigenvalues force the matrix to be a scalar multiple of $I$, so any basis trivially works",
-                "Within the repeated eigenspace you can always *choose* an orthonormal basis (e.g. via Gram-Schmidt), so $A$ still has $n$ orthonormal eigenvectors",
-                "Orthogonality genuinely fails for repeated eigenvalues, so $A=Q\\Lambda Q^T$ does not hold here"
+                "Orthogonality genuinely fails for repeated eigenvalues, so $A=Q\\Lambda Q^T$ does not hold here",
+                "Within the repeated eigenspace you can always *choose* an orthonormal basis (e.g. via Gram-Schmidt), so $A$ still has $n$ orthonormal eigenvectors"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The Spectral Theorem guarantees a full orthonormal eigenbasis even with repeated eigenvalues: eigenvectors from distinct eigenvalues are automatically orthogonal, and within a degenerate eigenspace any basis can be orthonormalized. The matrix is never defective, so $A=Q\\Lambda Q^T$ always holds; option (b) wrongly assumes degeneracy implies $A=4I$."
             },
             {
@@ -2838,12 +2838,12 @@
             {
               "q": "The Gram matrix $G = X^T X$ (for any real matrix $X$) is symmetric. Which statement about its eigenvalues is guaranteed?",
               "choices": [
-                "All eigenvalues are strictly positive, so $G$ is always invertible",
                 "All eigenvalues are $\\geq 0$, because $v^T G v = \\|Xv\\|^2 \\geq 0$ for all $v$",
+                "All eigenvalues are strictly positive, so $G$ is always invertible",
                 "Eigenvalues can be negative if $X$ has more columns than rows",
                 "The eigenvalues are exactly the squared entries of $X$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "For any $v$, $v^T G v = v^T X^T X v = \\|Xv\\|^2 \\geq 0$, so $G$ is positive semidefinite and all eigenvalues are nonnegative. They need not be strictly positive: if $X$ has a nontrivial null space (e.g. more columns than rows), $G$ is singular with a zero eigenvalue, which is why option (a) is wrong."
             },
             {
@@ -2861,22 +2861,22 @@
               "q": "A symmetric matrix is *positive definite* if and only if:",
               "choices": [
                 "its determinant is positive",
-                "all of its eigenvalues are positive",
                 "all of its entries are positive",
+                "all of its eigenvalues are positive",
                 "it is invertible"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Positive definiteness ($x^\\top A x > 0$ for every $x \\neq 0$) is equivalent to *every* eigenvalue being positive. A positive determinant only makes the *product* of eigenvalues positive (two negative eigenvalues give a positive determinant but an indefinite matrix); positive entries is neither necessary nor sufficient; and invertibility only rules out a zero eigenvalue, not negative ones."
             },
             {
               "q": "For a symmetric matrix $A$, the maximum of the quadratic form $x^\\top A x$ over all *unit* vectors ($\\|x\\| = 1$) equals:",
               "choices": [
-                "the largest eigenvalue of $A$",
-                "the trace of $A$",
                 "the determinant of $A$",
+                "the trace of $A$",
+                "the largest eigenvalue of $A$",
                 "the largest entry of $A$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Writing $x$ in the orthonormal eigenbasis gives $x^\\top A x = \\sum_i \\lambda_i c_i^2$ with $\\sum_i c_i^2 = 1$ — a weighted average of the eigenvalues. It is largest ($=\\lambda_{\\max}$) when all the weight sits on the top eigenvector, and smallest ($=\\lambda_{\\min}$) on the bottom one. This Rayleigh-quotient fact is the basis of PCA: the top eigenvector maximizes variance."
             },
             {
@@ -2884,10 +2884,10 @@
               "choices": [
                 "$\\lambda$",
                 "$c\\lambda$",
-                "$\\lambda + c$",
-                "$\\lambda + c$, but with a different eigenvector"
+                "$\\lambda + c$, but with a different eigenvector",
+                "$\\lambda + c$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "$(A + cI)v = Av + cv = \\lambda v + cv = (\\lambda + c)v$ — the eigenvector $v$ is unchanged and the eigenvalue shifts by $c$. This 'spectral shift' is why adding $\\lambda I$ (ridge / Tikhonov regularization) to a symmetric matrix lifts every eigenvalue, turning a singular or indefinite matrix into a positive-definite one."
             }
           ],
@@ -2969,10 +2969,10 @@
               "choices": [
                 "$Q^{-1} = Q^\\top$",
                 "$\\|Qx\\| = \\|x\\|$ for all $x$",
-                "Every eigenvalue of $Q$ satisfies $|\\lambda| = 1$",
-                "$\\det Q$ can be any nonzero real number"
+                "$\\det Q$ can be any nonzero real number",
+                "Every eigenvalue of $Q$ satisfies $|\\lambda| = 1$"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "Orthogonal matrices have $\\det Q = \\pm 1$ only, since they preserve volume up to a reflection. The other three are all true consequences of $Q^\\top Q = I$."
             },
             {
@@ -2990,22 +2990,22 @@
               "q": "In the QR factorization $A = QR$ produced by Gram-Schmidt, why is $R$ upper triangular?",
               "choices": [
                 "Because $Q$ is orthogonal, its inverse forces triangularity",
-                "Because $a_j$ is a combination of only $q_1,\\dots,q_j$ (the ones produced up to step $j$)",
+                "Because normalization always zeroes out the lower triangle",
                 "Because $A$ was assumed to be upper triangular to begin with",
-                "Because normalization always zeroes out the lower triangle"
+                "Because $a_j$ is a combination of only $q_1,\\dots,q_j$ (the ones produced up to step $j$)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Each input column $a_j$ lies in the span of the orthonormal vectors built so far, $q_1,\\dots,q_j$, so its expansion has no $q_i$ component for $i>j$ — exactly the upper-triangular pattern."
             },
             {
               "q": "Why do numerical least-squares solvers prefer solving $R\\hat{x} = Q^\\top b$ (via QR) over the normal equations $A^\\top A\\,\\hat{x} = A^\\top b$?",
               "choices": [
-                "QR is the only method that gives an exact answer",
                 "Forming $A^\\top A$ squares the condition number, amplifying error, while QR avoids it",
+                "QR is the only method that gives an exact answer",
                 "The normal equations have no solution when columns are independent",
                 "$Q^\\top b$ is cheaper to compute than $A^\\top b$, dominating the cost"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$A^\\top A$ has condition number $\\kappa(A)^2$, which can be disastrous for ill-conditioned $A$; QR works with $R$ directly and keeps the conditioning at $\\kappa(A)$."
             },
             {
@@ -3023,77 +3023,77 @@
               "q": "The lesson proves a nonzero orthogonal set is automatically linearly independent. In the proof, after assuming $\\sum_i c_i q_i = 0$ and dotting with $q_j$, what equation forces $c_j = 0$?",
               "choices": [
                 "$c_j \\langle q_j, q_j \\rangle^{1/2} = 0$",
-                "$c_j \\|q_j\\|^2 = 0$ with $q_j \\ne 0$",
+                "$c_j + \\sum_{i \\ne j} c_i = 0$",
                 "$\\sum_i c_i = 0$ and all $c_i$ equal",
-                "$c_j + \\sum_{i \\ne j} c_i = 0$"
+                "$c_j \\|q_j\\|^2 = 0$ with $q_j \\ne 0$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Dotting $\\sum_i c_i q_i=0$ with $q_j$ gives $\\sum_i c_i\\langle q_j,q_i\\rangle=0$. Every cross term $\\langle q_j,q_i\\rangle$ vanishes for $i\\ne j$, leaving $c_j\\|q_j\\|^2=0$; since $q_j\\ne 0$ we have $\\|q_j\\|^2>0$, so $c_j=0$."
             },
             {
               "q": "An orthogonal set has $\\langle q_i, q_j \\rangle = 0$ for $i \\ne j$. What ADDITIONAL condition upgrades it to orthonormal, captured by writing $\\langle q_i, q_j \\rangle = \\delta_{ij}$?",
               "choices": [
                 "The vectors must also span $\\mathbb{R}^n$",
-                "Each vector must have unit length, $\\|q_i\\| = 1$",
+                "There must be exactly $n$ of them",
                 "The vectors must be sorted by increasing norm",
-                "There must be exactly $n$ of them"
+                "Each vector must have unit length, $\\|q_i\\| = 1$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Orthogonality already gives the off-diagonal $0$. The extra requirement is unit length, $\\|q_i\\|=1$, equivalently $\\langle q_i,q_i\\rangle=1$, which fills in the diagonal so that $\\langle q_i,q_j\\rangle=\\delta_{ij}$."
             },
             {
               "q": "In the expansion $x = \\sum_i \\langle q_i, x\\rangle\\, q_i$ over an orthonormal basis, how should the single term $\\langle q_i, x\\rangle\\, q_i$ be interpreted geometrically?",
               "choices": [
                 "The reflection of $x$ across the hyperplane orthogonal to $q_i$",
-                "The projection of $x$ onto the line spanned by $q_i$",
                 "The component of $x$ removed by Gram-Schmidt",
+                "The projection of $x$ onto the line spanned by $q_i$",
                 "The rejection of $x$ from all other axes simultaneously"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The scalar $\\langle q_i, x\\rangle$ times the unit vector $q_i$ is exactly the orthogonal projection of $x$ onto the line through $q_i$, so the full expansion writes $x$ as a sum of its one-dimensional projections onto the basis axes."
             },
             {
               "q": "Apply one step of Gram-Schmidt to $a_1 = \\begin{bmatrix}3\\\\4\\end{bmatrix}$ and $a_2 = \\begin{bmatrix}1\\\\0\\end{bmatrix}$. After normalizing $a_1$ to get $q_1 = \\tfrac{1}{5}\\begin{bmatrix}3\\\\4\\end{bmatrix}$, what is the component of $a_2$ orthogonal to $q_1$ (before normalizing)?",
               "choices": [
                 "$\\begin{bmatrix}1\\\\0\\end{bmatrix}$",
-                "$\\begin{bmatrix}0.64\\\\-0.48\\end{bmatrix}$",
                 "$\\tfrac{3}{5}\\begin{bmatrix}3\\\\4\\end{bmatrix}$",
+                "$\\begin{bmatrix}0.64\\\\-0.48\\end{bmatrix}$",
                 "$\\begin{bmatrix}-0.48\\\\0.64\\end{bmatrix}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Subtract the projection: $\\langle q_1, a_2\\rangle = \\tfrac{3}{5}$, so $a_2 - \\langle q_1,a_2\\rangle q_1 = \\begin{bmatrix}1\\\\0\\end{bmatrix} - \\tfrac{3}{5}\\cdot\\tfrac{1}{5}\\begin{bmatrix}3\\\\4\\end{bmatrix} = \\begin{bmatrix}1\\\\0\\end{bmatrix} - \\tfrac{3}{25}\\begin{bmatrix}3\\\\4\\end{bmatrix} = \\begin{bmatrix}0.64\\\\-0.48\\end{bmatrix}$. Choice index 0 is the unchanged $a_2$; choice index 2 forgets the $\\tfrac{1}{5}$ normalization factor (the true projection is $\\tfrac{3}{5}q_1=\\begin{bmatrix}0.36\\\\0.48\\end{bmatrix}$, not $\\tfrac{3}{5}a_1$); choice index 3 has the components swapped with wrong signs."
             },
             {
               "q": "A common claim: 'Gram-Schmidt orthogonalizes any list of vectors, so it can convert a basis of $\\mathbb{R}^n$ from any starting list.' What is the key catch that makes this overstated?",
               "choices": [
-                "It only works if the original vectors are already unit length",
                 "The input vectors must be linearly independent, or a step produces a zero residual vector that cannot be normalized",
+                "It only works if the original vectors are already unit length",
                 "It requires the vectors to be pairwise orthogonal to begin with",
                 "It produces an orthogonal but never an orthonormal set"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "If $a_k$ lies in the span of earlier vectors, subtracting its projections leaves the zero vector, which has no unit-length direction, so Gram-Schmidt breaks. Linear independence is exactly the condition that prevents this; unit length and prior orthogonality are not required inputs."
             },
             {
               "q": "Let $Q$ be an $m \\times n$ matrix ($m > n$) with orthonormal columns. Which identity holds in general?",
               "choices": [
-                "$QQ^\\top = I_m$ and $Q^\\top Q = I_n$",
                 "$Q^\\top Q = I_n$, but $QQ^\\top$ is generally not $I_m$",
+                "$QQ^\\top = I_m$ and $Q^\\top Q = I_n$",
                 "$QQ^\\top = I_m$, but $Q^\\top Q$ is generally not $I_n$",
                 "$Q^{-1} = Q^\\top$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$Q^\\top Q = I_n$ always holds because the columns are orthonormal. But $QQ^\\top$ is the projection onto the $n$-dimensional column space, not all of $\\mathbb{R}^m$; equality $QQ^\\top=I_m$ and the inverse formula require a square $Q$."
             },
             {
               "q": "You want to find the orthogonal projection of $b$ onto the subspace spanned by an orthonormal set $\\{q_1, q_2\\}$. Which formula gives that projection?",
               "choices": [
-                "$\\langle q_1, b\\rangle\\, q_1 + \\langle q_2, b\\rangle\\, q_2$",
-                "$\\frac{\\langle q_1, b\\rangle}{\\langle q_1, q_1\\rangle} q_1 + \\frac{\\langle q_2, b\\rangle}{\\langle q_2, q_2\\rangle} q_2$ with both denominators recomputed each time",
                 "$\\langle b, b\\rangle\\,(q_1 + q_2)$",
+                "$\\frac{\\langle q_1, b\\rangle}{\\langle q_1, q_1\\rangle} q_1 + \\frac{\\langle q_2, b\\rangle}{\\langle q_2, q_2\\rangle} q_2$ with both denominators recomputed each time",
+                "$\\langle q_1, b\\rangle\\, q_1 + \\langle q_2, b\\rangle\\, q_2$",
                 "$(q_1^\\top q_2)\\, b$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "For an orthonormal set the projection is the sum of independent one-dimensional projections $\\sum_i \\langle q_i, b\\rangle q_i$. Choice index 1 is the general (non-orthonormal) formula, but here every denominator $\\langle q_i,q_i\\rangle = 1$, so the division is redundant; orthonormality is exactly what removes it."
             },
             {
@@ -3110,34 +3110,34 @@
             {
               "q": "What does the Gram–Schmidt process take in, and what does it produce?",
               "choices": [
-                "Any list of vectors; it returns their eigenvectors",
-                "A square matrix; it returns the matrix's inverse",
                 "A linearly independent set; it returns an orthonormal set spanning the same subspace",
+                "A square matrix; it returns the matrix's inverse",
+                "Any list of vectors; it returns their eigenvectors",
                 "An orthonormal set; it returns a diagonal matrix"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Gram–Schmidt converts a linearly independent set (e.g. a basis) into an orthonormal set spanning exactly the same subspace — it subtracts off each new vector's components along the directions already fixed, then normalizes. Fed a *dependent* set, it produces a zero vector at the redundant step, which is how it detects dependence."
             },
             {
               "q": "To turn a nonzero vector $v$ into a unit vector pointing the same direction, you:",
               "choices": [
                 "subtract its mean from every entry",
-                "divide by its largest entry",
+                "divide it by its norm, $v / \\|v\\|$",
                 "square each entry",
-                "divide it by its norm, $v / \\|v\\|$"
+                "divide by its largest entry"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "A unit vector has length $1$, so you rescale $v$ by the reciprocal of its length: $\\hat v = v / \\|v\\|$, which preserves the direction and makes $\\|\\hat v\\| = 1$. This 'normalize' step is exactly what Gram–Schmidt does after making each vector orthogonal to the previous ones."
             },
             {
               "q": "The determinant of a square orthogonal matrix $Q$ (orthonormal columns) is always:",
               "choices": [
-                "$\\pm 1$",
+                "the product of the column norms",
                 "$1$",
                 "$0$",
-                "the product of the column norms"
+                "$\\pm 1$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "From $Q^\\top Q = I$ we get $\\det(Q^\\top Q) = \\det(Q)^2 = \\det(I) = 1$, so $\\det(Q) = \\pm 1$. The sign distinguishes a pure rotation ($+1$) from a rotation-with-reflection ($-1$). The column norms are each $1$, so their product is $1$ — but that does not pin down the sign of the determinant."
             }
           ],
@@ -3223,22 +3223,22 @@
               "q": "Which pair of properties characterizes an orthogonal projection matrix $P$?",
               "choices": [
                 "Invertible and symmetric",
-                "Idempotent ($P^2=P$) and symmetric ($P^{\\top}=P$)",
+                "Symmetric and trace equal to its number of rows",
                 "Orthogonal ($P^{\\top}P=I$) and idempotent",
-                "Symmetric and trace equal to its number of rows"
+                "Idempotent ($P^2=P$) and symmetric ($P^{\\top}=P$)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Orthogonal projectors are exactly the symmetric idempotent matrices. They are NOT orthogonal matrices (those preserve length); a projector with rank < m has eigenvalue 0 and is singular."
             },
             {
               "q": "In the best-fit line example, the residual vector $e = b - A\\hat{x}$ satisfies which condition?",
               "choices": [
                 "$e = 0$",
-                "$A^{\\top}e = 0$ (e is orthogonal to the column space of A)",
+                "$\\lVert e \\rVert = \\lVert b \\rVert$",
                 "$Ae = 0$ (e is in the null space of A)",
-                "$\\lVert e \\rVert = \\lVert b \\rVert$"
+                "$A^{\\top}e = 0$ (e is orthogonal to the column space of A)"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Optimality means the error is perpendicular to the column space, which is precisely $A^\\top e = 0$ — equivalently, $e$ lies in the left null space $\\mathcal{N}(A^\\top)$."
             },
             {
@@ -3255,89 +3255,89 @@
             {
               "q": "For an orthogonal projector $P$ onto $\\mathcal{C}(A)$, what does the matrix $I - P$ do?",
               "choices": [
-                "It inverts the projection, recovering the original $b$ from $Pb$",
                 "It projects onto the orthogonal complement $\\mathcal{C}(A)^{\\perp}$, producing the residual $e = (I-P)b$",
+                "It inverts the projection, recovering the original $b$ from $Pb$",
                 "It projects onto $\\mathcal{C}(A)$ a second time, doubling the shadow",
                 "It rotates $b$ by 90 degrees within the column space"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$I-P$ is itself a projector (symmetric and idempotent) onto the orthogonal complement, the left null space $\\mathcal{N}(A^{\\top})$, and $(I-P)b$ is exactly the residual $e$."
             },
             {
               "q": "An orthogonal projector $P$ projects onto an $n$-dimensional subspace of $\\mathbb{R}^m$. What are its eigenvalues and what is $\\text{trace}(P)$?",
               "choices": [
                 "Eigenvalues are all $1$; $\\text{trace}(P) = m$",
-                "Eigenvalues are $0$ and $1$; $\\text{trace}(P) = n$",
                 "Eigenvalues are $\\pm 1$; $\\text{trace}(P) = 0$",
+                "Eigenvalues are $0$ and $1$; $\\text{trace}(P) = n$",
                 "Eigenvalues are $0$ and $1$; $\\text{trace}(P) = m - n$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A projector has only eigenvalues $0$ (on the complement) and $1$ (on the subspace), and $\\text{trace}(P) = \\text{rank}(P) = n$, the dimension projected onto (the 'effective degrees of freedom' of the hat matrix)."
             },
             {
               "q": "In the worked best-fit-line example, the residual vector came out to $e = [-1/6,\\ 2/6,\\ -1/6]^{\\top}$, whose entries sum to zero. Which design choice guarantees this 'residuals sum to zero' property?",
               "choices": [
-                "Including a column of ones (an intercept) in $A$, which forces $\\mathbf{1}^{\\top} e = 0$",
-                "Having exactly three data points, one more than the number of parameters",
                 "Using QR factorization instead of the normal equations to solve",
+                "Having exactly three data points, one more than the number of parameters",
+                "Including a column of ones (an intercept) in $A$, which forces $\\mathbf{1}^{\\top} e = 0$",
                 "The data points being equally spaced in $t$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Orthogonality $A^{\\top}e=0$ applied to the all-ones intercept column gives $\\mathbf{1}^{\\top}e=0$, so the residuals sum to zero whenever the model includes an intercept; drop it and the guarantee is lost."
             },
             {
               "q": "Suppose the features of $A$ are collinear, so $A$ lacks full column rank and $A^{\\top}A$ is singular. Which statement is correct?",
               "choices": [
                 "The least-squares problem has a unique solution given by $(A^{\\top}A)^{-1}A^{\\top}b$ as usual",
-                "There is no vector in $\\mathcal{C}(A)$ closest to $b$, so least squares is undefined",
                 "There are infinitely many least-squares solutions; the pseudoinverse picks the minimum-norm one, and ridge regression's $(A^{\\top}A + \\lambda I)^{-1}$ restores invertibility",
+                "There is no vector in $\\mathcal{C}(A)$ closest to $b$, so least squares is undefined",
                 "The projection $p = Pb$ no longer exists because $P$ requires $A^{\\top}A$ to be invertible"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Rank deficiency makes $A^{\\top}A$ singular and the solution non-unique; the Moore-Penrose pseudoinverse selects the minimum-norm $\\hat{x}$, while adding $\\lambda I$ (ridge) makes the system invertible again. The projection $p=Pb$ itself still exists and is unique."
             },
             {
               "q": "For a tall matrix $A\\in\\mathbb{R}^{m\\times n}$ with full column rank, which formula gives the orthogonal projection matrix $P$ that maps any $b$ to its projection $\\hat{p}=A\\hat{x}$ onto $\\mathcal{C}(A)$?",
               "choices": [
-                "$P = A(A^{\\top}A)^{-1}A^{\\top}$",
+                "$P = A^{\\top}A$",
                 "$P = (A^{\\top}A)^{-1}A^{\\top}$",
                 "$P = A^{\\top}(AA^{\\top})^{-1}A$",
-                "$P = A^{\\top}A$"
+                "$P = A(A^{\\top}A)^{-1}A^{\\top}$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "From the normal equations $\\hat{x}=(A^{\\top}A)^{-1}A^{\\top}b$ and $\\hat{p}=A\\hat{x}$, so $\\hat{p}=A(A^{\\top}A)^{-1}A^{\\top}b$, giving $P=A(A^{\\top}A)^{-1}A^{\\top}$. Choice 1 is the formula for $\\hat{x}$ (it maps $b$ to coefficients, not to a vector in $\\mathbb{R}^m$), and choice 2 has the wrong inverse since $AA^{\\top}$ is $m\\times m$ and singular here."
             },
             {
               "q": "Project $b=\\begin{bmatrix}1\\\\1\\\\1\\end{bmatrix}$ onto the line spanned by $a=\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$. What is the projection $\\hat{p}=\\dfrac{a^{\\top}b}{a^{\\top}a}\\,a$?",
               "choices": [
                 "$\\begin{bmatrix}1\\\\1\\\\1\\end{bmatrix}$",
-                "$\\dfrac{5}{9}\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$",
+                "$\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$",
                 "$\\dfrac{5}{3}\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$",
-                "$\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$"
+                "$\\dfrac{5}{9}\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Here $a^{\\top}b = 1+2+2 = 5$ and $a^{\\top}a = 1+4+4 = 9$, so the scalar is $5/9$ and $\\hat{p}=\\frac{5}{9}a$. Choice 3 wrongly divides by $\\|a\\|=3$ instead of $a^{\\top}a=9$, giving $5/3$, and choice 4 mistakes the projection for $a$ itself."
             },
             {
               "q": "A student claims that the least-squares solution $\\hat{x}$ to $Ax=b$ is the orthogonal projection of $b$ onto the column space of $A$. What is wrong with this statement?",
               "choices": [
-                "Nothing is wrong; $\\hat{x}$ is exactly that projection",
                 "$\\hat{x}$ is the coefficient vector in $\\mathbb{R}^n$; the projection is $A\\hat{x}\\in\\mathbb{R}^m$",
+                "Nothing is wrong; $\\hat{x}$ is exactly that projection",
                 "$\\hat{x}$ projects $b$ onto the row space, not the column space",
                 "$\\hat{x}$ is the residual $b-A\\hat{x}$, which is orthogonal to $\\mathcal{C}(A)$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The projection of $b$ onto $\\mathcal{C}(A)$ is the vector $\\hat{p}=A\\hat{x}\\in\\mathbb{R}^m$; $\\hat{x}\\in\\mathbb{R}^n$ holds the coordinates of that projection in the basis given by the columns of $A$. Conflating the coefficient vector with the projected vector confuses two objects living in different spaces."
             },
             {
               "q": "Suppose $b$ already lies in the column space of $A$ (the system $Ax=b$ is consistent). What happens to the least-squares machinery in this case?",
               "choices": [
-                "The normal equations become singular and have no solution",
                 "The projection $A\\hat{x}=b$, the residual $e=0$, and $\\hat{x}$ is an exact solution of $Ax=b$",
+                "The normal equations become singular and have no solution",
                 "The residual $e$ equals $b$ because nothing is projected away",
                 "Least squares cannot be applied; it requires an inconsistent system"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Projecting a vector that is already in the subspace returns the vector itself, so $A\\hat{x}=b$ and $e=b-A\\hat{x}=0$, meaning $\\hat{x}$ exactly solves $Ax=b$. Least squares strictly generalizes exact solving: it reduces to it whenever $b\\in\\mathcal{C}(A)$."
             },
             {
@@ -3367,10 +3367,10 @@
               "choices": [
                 "the longest vector in $S$",
                 "the average of $S$'s basis vectors",
-                "$b$ reflected across $S$",
-                "the point of $S$ closest to $b$"
+                "the point of $S$ closest to $b$",
+                "$b$ reflected across $S$"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The projection $\\hat b \\in S$ is the unique point of $S$ nearest to $b$; the error $b - \\hat b$ is orthogonal to all of $S$, which is exactly the condition that minimizes the distance. This is why least squares — projecting $b$ onto the column space of $A$ — gives the best achievable fit."
             },
             {
@@ -3461,45 +3461,45 @@
             {
               "q": "For an $m \\times n$ matrix $A$ with SVD $A = U\\Sigma V^{\\mathsf{T}}$, how is the rank of $A$ determined?",
               "choices": [
-                "The number of nonzero diagonal entries of $\\Sigma$ (nonzero singular values)",
                 "The number of nonzero entries in $U$",
+                "The number of nonzero diagonal entries of $\\Sigma$ (nonzero singular values)",
                 "The larger of $m$ and $n$",
                 "The number of negative singular values"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Rank equals the count of nonzero singular values. The zero singular values correspond to input directions sent to zero, which span the null space; singular values are never negative."
             },
             {
               "q": "How are the singular values $\\sigma_i$ of $A$ related to the eigenvalues $\\lambda_i$ of $A^{\\mathsf{T}}A$?",
               "choices": [
                 "$\\sigma_i = \\lambda_i$",
-                "$\\sigma_i = \\sqrt{\\lambda_i}$",
                 "$\\sigma_i = \\lambda_i^2$",
+                "$\\sigma_i = \\sqrt{\\lambda_i}$",
                 "$\\sigma_i = 1/\\lambda_i$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Since $A^{\\mathsf{T}}A = V(\\Sigma^{\\mathsf{T}}\\Sigma)V^{\\mathsf{T}}$, the eigenvalues of $A^{\\mathsf{T}}A$ are $\\sigma_i^2$, which are non-negative; hence $\\sigma_i = \\sqrt{\\lambda_i}$."
             },
             {
               "q": "Which statement about the geometric action of $A = U\\Sigma V^{\\mathsf{T}}$ on the unit sphere is correct?",
               "choices": [
                 "$A$ maps the unit sphere to a sphere of a different radius",
-                "$A$ maps the unit sphere to an ellipsoid whose semi-axis lengths are the singular values and whose axis directions are the left singular vectors $u_i$",
                 "$A$ maps the unit sphere to a parallelepiped",
+                "$A$ maps the unit sphere to an ellipsoid whose semi-axis lengths are the singular values and whose axis directions are the left singular vectors $u_i$",
                 "$A$ maps the unit sphere to an ellipsoid whose axes are the eigenvectors of $A$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Because $U,V$ are rigid rotations and only $\\Sigma$ stretches, the image is an ellipsoid with semi-axes of length $\\sigma_i$ pointing along the left singular vectors $u_i$."
             },
             {
               "q": "When do the SVD and the eigen-decomposition of a square matrix $A$ coincide (same orthonormal vectors, $\\sigma_i = \\lambda_i$)?",
               "choices": [
-                "For any invertible matrix",
-                "For any symmetric matrix",
                 "For a symmetric positive semidefinite matrix",
+                "For any symmetric matrix",
+                "For any invertible matrix",
                 "Never, they are unrelated"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "If $A$ is symmetric PSD its eigenvalues are non-negative and its eigenvectors orthonormal, so $U = V$ and $\\sigma_i = \\lambda_i$. A merely symmetric (indefinite) matrix gives $\\sigma_i = |\\lambda_i|$ with sign absorbed into $U$ vs $V$."
             },
             {
@@ -3516,56 +3516,56 @@
             {
               "q": "Multiplying $A = U\\Sigma V^{\\mathsf{T}}$ on the right by $V$ and reading column by column yields which defining relation for singular vectors?",
               "choices": [
-                "$A v_i = \\sigma_i u_i$",
                 "$A u_i = \\sigma_i v_i$",
+                "$A v_i = \\sigma_i u_i$",
                 "$A v_i = \\lambda_i v_i$",
                 "$U^{\\mathsf{T}} v_i = \\sigma_i u_i$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Because $V^{\\mathsf{T}}V = I$, multiplying on the right by $V$ gives $AV = U\\Sigma$; reading column by column produces $A v_i = \\sigma_i u_i$, mapping the orthonormal input direction $v_i$ to the orthonormal output direction $u_i$ scaled by $\\sigma_i$."
             },
             {
               "q": "According to the lesson, what key conceptual difference distinguishes singular vectors from eigenvectors?",
               "choices": [
-                "Singular vectors live in two spaces ($v_i$ in input $\\mathbb{R}^n$, $u_i$ in output $\\mathbb{R}^m$), while eigenvectors live in one space with input and output aligned",
+                "Eigenvectors map input directions to different output directions, while singular vectors keep them aligned",
                 "Singular vectors only exist for diagonalizable matrices, whereas eigenvectors exist for all matrices",
                 "Singular vectors are never orthonormal, whereas eigenvectors always are",
-                "Eigenvectors map input directions to different output directions, while singular vectors keep them aligned"
+                "Singular vectors live in two spaces ($v_i$ in input $\\mathbb{R}^n$, $u_i$ in output $\\mathbb{R}^m$), while eigenvectors live in one space with input and output aligned"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The lesson contrasts eigenvectors ($Av = \\lambda v$, one space, input and output aligned) with singular vectors, which connect orthonormal input directions in $\\mathbb{R}^n$ to orthonormal output directions in $\\mathbb{R}^m$ via $Av_i = \\sigma_i u_i$. This two-space nature is why SVD survives when eigen-decomposition fails."
             },
             {
               "q": "What does it mean for $U$ and $V$ to be orthogonal, and why does the lesson emphasize this property?",
               "choices": [
-                "$U^{\\mathsf{T}}U = I$ and $V^{\\mathsf{T}}V = I$, meaning their columns form orthonormal bases — the source of nearly all of the SVD's power",
+                "$U$ and $V$ commute with $A$, which is what allows any matrix to be factored",
                 "$U + U^{\\mathsf{T}} = I$ and $V + V^{\\mathsf{T}} = I$, ensuring the singular values are positive",
                 "Their columns are mutually perpendicular but not unit length, which guarantees $\\Sigma$ is square",
-                "$U$ and $V$ commute with $A$, which is what allows any matrix to be factored"
+                "$U^{\\mathsf{T}}U = I$ and $V^{\\mathsf{T}}V = I$, meaning their columns form orthonormal bases — the source of nearly all of the SVD's power"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "The lesson defines orthogonal as $U^{\\mathsf{T}}U = I$ and $V^{\\mathsf{T}}V = I$ (columns form an orthonormal basis) and identifies that orthogonality as the source of nearly all of the SVD's power, since it makes the factorization a numerically stable rotate-stretch-rotate."
             },
             {
               "q": "Let $A$ be a $4 \\times 3$ matrix of rank $2$ with singular values $\\sigma_1 = 5,\\ \\sigma_2 = 3,\\ \\sigma_3 = 0$. What is the best rank-1 approximation error $\\|A - A_1\\|_2$ in the spectral (operator-2) norm, where $A_1$ keeps only the largest singular value?",
               "choices": [
                 "$5$, the largest singular value",
-                "$3$, the second singular value $\\sigma_2$",
                 "$\\sqrt{5^2 + 3^2} = \\sqrt{34}$",
+                "$3$, the second singular value $\\sigma_2$",
                 "$0$, since the rank is exactly $2$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "By the Eckart-Young theorem, truncating the SVD after $k$ terms gives the best rank-$k$ approximation, and the spectral-norm error equals the first discarded singular value $\\sigma_{k+1}$. For $k=1$ that is $\\sigma_2 = 3$; choosing $\\sigma_1=5$ confuses the kept value with the error."
             },
             {
               "q": "A student claims: \"Since $A = U\\Sigma V^{\\mathsf{T}}$ and the entries of $\\Sigma$ can be negative or positive like ordinary eigenvalues, the sign of a singular value tells you the orientation of the mapping.\" What is wrong with this reasoning?",
               "choices": [
-                "Singular values are by definition non-negative ($\\sigma_i \\ge 0$); orientation is carried by $U$ and $V$, not by the signs of $\\Sigma$",
                 "Nothing is wrong; singular values inherit the signs of the eigenvalues of $A$",
+                "Singular values are by definition non-negative ($\\sigma_i \\ge 0$); orientation is carried by $U$ and $V$, not by the signs of $\\Sigma$",
                 "Singular values must be strictly positive, so $A$ can never be rank-deficient",
                 "The signs live in $\\Sigma$, but only for square $A$; for rectangular $A$ they live in $U$"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The SVD is constructed so that all $\\sigma_i \\ge 0$ — any sign or reflection is absorbed into the orthogonal factors $U$ and $V$. This is a key difference from eigenvalues, which can be negative or complex; zero singular values are allowed and signal rank deficiency."
             },
             {
@@ -3595,32 +3595,32 @@
               "choices": [
                 "Only square matrices",
                 "Only symmetric matrices",
-                "Every real $m\\times n$ matrix — any shape, any rank",
-                "Only invertible matrices"
+                "Only invertible matrices",
+                "Every real $m\\times n$ matrix — any shape, any rank"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "Unlike the eigen-decomposition (which needs a square, essentially diagonalizable matrix), the SVD exists for *every* real matrix — rectangular or square, full-rank or rank-deficient. This universality is exactly why the SVD is the workhorse decomposition for data, which is almost never square or symmetric."
             },
             {
               "q": "The largest singular value $\\sigma_1$ of $A$ equals:",
               "choices": [
                 "the trace of $A$",
-                "the spectral norm $\\|A\\|_2 = \\max_{\\|x\\|=1}\\|Ax\\|$ — the largest factor by which $A$ stretches any vector",
                 "the determinant of $A$",
+                "the spectral norm $\\|A\\|_2 = \\max_{\\|x\\|=1}\\|Ax\\|$ — the largest factor by which $A$ stretches any vector",
                 "the Frobenius norm $\\|A\\|_F$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Geometrically $A$ maps the unit sphere to an ellipsoid whose semi-axis lengths are the singular values; the longest is $\\sigma_1$, the maximum stretch — which is the definition of the spectral (operator-2) norm $\\|A\\|_2$. The Frobenius norm combines *all* the singular values, $\\|A\\|_F = \\sqrt{\\sum_i \\sigma_i^2}$, so it equals $\\sigma_1$ only for a rank-1 matrix."
             },
             {
               "q": "The right singular vectors of $A$ (the columns of $V$) are the eigenvectors of which matrix?",
               "choices": [
                 "$A$ itself",
-                "$A^{-1}$",
+                "$A^\\top A$",
                 "$A + A^\\top$",
-                "$A^\\top A$"
+                "$A^{-1}$"
               ],
-              "answer": 3,
+              "answer": 1,
               "explain": "From $A = U\\Sigma V^\\top$, $A^\\top A = V\\Sigma^\\top U^\\top U\\Sigma V^\\top = V(\\Sigma^\\top\\Sigma)V^\\top$, an eigen-decomposition: the columns of $V$ are eigenvectors of $A^\\top A$ with eigenvalues $\\sigma_i^2$. Symmetrically, the left singular vectors (columns of $U$) are eigenvectors of $AA^\\top$. This is the standard route to actually computing an SVD."
             },
             {
@@ -3727,23 +3727,23 @@
             {
               "q": "Why do practitioners compute PCA via the SVD of the centered data matrix rather than eigendecomposing the covariance $C=\\tilde{X}^\\top\\tilde{X}/(n-1)$?",
               "choices": [
-                "The SVD gives different principal directions that fit the data better",
                 "Forming $C$ squares the condition number and loses numerical precision, while SVD on $\\tilde{X}$ is more stable",
+                "The SVD gives different principal directions that fit the data better",
                 "The covariance matrix does not have real eigenvalues",
                 "Only the SVD can center the data automatically"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Both routes yield the same directions ($W=V$), but explicitly forming $\\tilde X^\\top \\tilde X$ squares the condition number; SVD on $\\tilde X$ avoids that and supports cheap truncated/randomized variants."
             },
             {
               "q": "The Moore–Penrose pseudoinverse $A^{+}=V\\Sigma^{+}U^\\top$ is built by, for the diagonal of $\\Sigma^{+}$:",
               "choices": [
-                "Reciprocating every diagonal entry of $\\Sigma$, including zeros",
                 "Reciprocating only the nonzero singular values and leaving structural zeros as zeros",
+                "Reciprocating every diagonal entry of $\\Sigma$, including zeros",
                 "Negating each singular value",
                 "Squaring each singular value"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "$\\Sigma^{+}$ inverts the nonzero $\\sigma_i$ and keeps zeros as zeros; reciprocating zeros would be undefined and is the typical wrong answer."
             },
             {
@@ -3806,10 +3806,10 @@
               "choices": [
                 "Nothing is wrong; the right singular vectors of $X$ are always the principal components regardless of centering",
                 "PCA must be run on $X^\\top$ instead, because principal components are the left singular vectors",
-                "Without first subtracting the column means, the leading direction is pulled toward the data's mean offset rather than the true direction of spread",
-                "Raw data must first be made full rank by adding a small multiple of the identity, otherwise the SVD does not exist"
+                "Raw data must first be made full rank by adding a small multiple of the identity, otherwise the SVD does not exist",
+                "Without first subtracting the column means, the leading direction is pulled toward the data's mean offset rather than the true direction of spread"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "PCA finds directions of maximum variance, which is defined about the mean; on un-centered data the top singular direction tends to point at the overall offset of the cloud from the origin, not its actual spread. The SVD exists for any matrix (so D is false), and centering is the missing, essential step."
             },
             {
@@ -3827,22 +3827,22 @@
               "q": "The pseudoinverse solution $x^{+}=A^{+}b$ to a least-squares problem is famous for being well-behaved. Suppose $A$ has a tiny nonzero singular value $\\sigma_r=10^{-8}$. What practical issue does this raise, and how is it usually handled?",
               "choices": [
                 "The tiny $\\sigma_r$ makes $A^{+}$ undefined, so the problem has no least-squares solution at all",
-                "$\\Sigma^{+}$ inverts it to $10^{8}$, hugely amplifying noise in that direction; truncating (treating it as zero) gives a stabler low-rank pseudoinverse",
+                "Nothing special happens; small singular values shrink the solution, making $x^{+}$ more stable, not less",
                 "The tiny $\\sigma_r$ is automatically ignored because the pseudoinverse only uses the largest singular value",
-                "Nothing special happens; small singular values shrink the solution, making $x^{+}$ more stable, not less"
+                "$\\Sigma^{+}$ inverts it to $10^{8}$, hugely amplifying noise in that direction; truncating (treating it as zero) gives a stabler low-rank pseudoinverse"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$\\Sigma^{+}$ replaces each nonzero $\\sigma_i$ with $1/\\sigma_i$, so $\\sigma_r=10^{-8}$ becomes $10^{8}$ and any noise along $u_r$ is amplified enormously. The standard fix (truncated SVD / regularization) drops or damps such tiny singular values, trading a little bias for far less variance."
             },
             {
               "q": "Before running PCA on a data matrix, what preprocessing step is essential?",
               "choices": [
                 "Sort the rows by magnitude",
-                "Center the data — subtract each feature's mean so every column has mean zero",
+                "Invert the matrix",
                 "Make the matrix square by padding with zeros",
-                "Invert the matrix"
+                "Center the data — subtract each feature's mean so every column has mean zero"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "PCA finds directions of maximum *variance*, and variance is measured about the mean — so you must first center each feature (subtract its mean). Skipping this makes the first 'principal component' chase the direction to the data's center of mass rather than the direction of spread. (Features on very different scales are often standardized too, but centering is the non-negotiable step.)"
             },
             {
@@ -3859,12 +3859,12 @@
             {
               "q": "To reduce $d$-dimensional data to $k$ dimensions ($k < d$) with PCA, you:",
               "choices": [
-                "project each data point onto the top $k$ principal components",
-                "delete the last $k$ original features",
                 "round every value to $k$ significant digits",
+                "delete the last $k$ original features",
+                "project each data point onto the top $k$ principal components",
                 "keep only $k$ of the data points"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Dimensionality reduction projects each (centered) point onto the subspace spanned by the top $k$ principal components, replacing its $d$ coordinates with $k$ coordinates in that subspace — keeping as much variance as possible for $k$ dimensions. Deleting raw features throws away information blindly; PCA instead builds $k$ informative combined directions."
             },
             {
@@ -3956,22 +3956,22 @@
               "q": "For $\\mathbf{f}:\\mathbb{R}^n\\to\\mathbb{R}^m$, what is the shape of the Jacobian $J$, and what does its $i$-th row represent?",
               "choices": [
                 "$n\\times m$; row $i$ is the sensitivity to input $x_i$",
-                "$m\\times n$; row $i$ is the gradient (transposed) of output component $f_i$",
                 "$m\\times n$; row $i$ collects the partials with respect to a single input $x_i$",
+                "$m\\times n$; row $i$ is the gradient (transposed) of output component $f_i$",
                 "$n\\times n$; row $i$ is the $i$-th second derivative of $f$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The Jacobian is $m\\times n$ with $J_{ij}=\\partial f_i/\\partial x_j$, so each row $i$ runs over all inputs and is exactly the gradient of one output $f_i$. Columns (not rows) hold the sensitivities to a single input."
             },
             {
               "q": "Let $f(\\mathbf{x})=x_1^2 x_2 + x_3$. In the denominator-layout convention used here, what is $\\nabla f$ at $\\mathbf{x}=(2,3,5)$?",
               "choices": [
-                "$(12,\\ 4,\\ 1)^\\top$, a column 3-vector",
-                "$(12,\\ 4,\\ 1)$, a row 3-vector",
                 "$(4,\\ 12,\\ 1)^\\top$, a column 3-vector",
+                "$(12,\\ 4,\\ 1)$, a row 3-vector",
+                "$(12,\\ 4,\\ 1)^\\top$, a column 3-vector",
                 "$(12,\\ 4,\\ 5)^\\top$, a column 3-vector"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Partials are $\\partial f/\\partial x_1=2x_1x_2=12$, $\\partial f/\\partial x_2=x_1^2=4$, $\\partial f/\\partial x_3=1$; in denominator layout the gradient is a column vector shaped like $\\mathbf{x}$. The row-vector option is numerator layout, and $5$ would wrongly plug $x_3$ into a partial that equals $1$."
             },
             {
@@ -4000,22 +4000,22 @@
               "q": "Which statement about the direction of the gradient $\\nabla f$ of a scalar function is correct?",
               "choices": [
                 "It points along the level set (contour) where $f$ stays constant",
-                "It points in the direction of steepest increase of $f$, and $-\\nabla f$ is the descent direction",
+                "It points in the direction of steepest decrease of $f$",
                 "It always points toward the global minimum of $f$",
-                "It points in the direction of steepest decrease of $f$"
+                "It points in the direction of steepest increase of $f$, and $-\\nabla f$ is the descent direction"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The gradient points in the direction of steepest increase, so gradient descent moves along $-\\nabla f$. It is orthogonal to level sets (not along them), and it indicates a local steepest direction, not a global beeline to the minimum."
             },
             {
               "q": "For a twice-continuously-differentiable $f:\\mathbb{R}^n\\to\\mathbb{R}$, the Hessian $H$ is best described as which of the following?",
               "choices": [
-                "The $m\\times n$ Jacobian of $f$ itself",
+                "The $n\\times n$ Jacobian of the gradient map $\\nabla f$, symmetric because mixed partials commute",
                 "A generally non-symmetric $n\\times n$ matrix of mixed partials",
                 "The transpose of the gradient, an $n\\times1$ column",
-                "The $n\\times n$ Jacobian of the gradient map $\\nabla f$, symmetric because mixed partials commute"
+                "The $m\\times n$ Jacobian of $f$ itself"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "$H_{ij}=\\partial^2 f/\\partial x_i\\partial x_j$ is the Jacobian of the gradient $\\nabla f:\\mathbb{R}^n\\to\\mathbb{R}^n$, and for $C^2$ functions Clairaut's theorem makes mixed partials equal, so $H$ is symmetric. It is $n\\times n$ (not $m\\times n$) and is a matrix, not a transposed gradient."
             },
             {
@@ -4032,12 +4032,12 @@
             {
               "q": "A scalar loss is differentiated to give a $1\\times n$ row vector, but the optimizer expects an $n\\times1$ column matching the parameter $\\mathbf{x}\\in\\mathbb{R}^n$. What is actually wrong, and what is the fix?",
               "choices": [
-                "Nothing computational is wrong; both are valid derivatives differing by a layout convention, so transpose to denominator layout",
                 "The derivative is numerically wrong and must be recomputed from scratch",
+                "Nothing computational is wrong; both are valid derivatives differing by a layout convention, so transpose to denominator layout",
                 "The parameter must be reshaped to a row to match the derivative",
                 "A row and a column of the same length cannot be related, so the formula is invalid"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The $1\\times n$ row is the numerator-layout derivative (the scalar's Jacobian) and the $n\\times1$ column is the denominator-layout gradient; they hold the same numbers and differ only by a transpose. The fix is a single transpose, which is why this silent layout mismatch is the most common matrix-calculus bug."
             },
             {
@@ -4054,34 +4054,34 @@
             {
               "q": "A teammate claims the gradient of $\\lVert A\\mathbf{x}-\\mathbf{b}\\rVert^2$ is $2A(A\\mathbf{x}-\\mathbf{b})$ with $A\\in\\mathbb{R}^{5\\times3}$. Using only shape reasoning, what is the verdict?",
               "choices": [
-                "Correct: $A$ times the residual gives the gradient",
                 "Wrong: $A$ ($5\\times3$) times a $5\\times1$ residual is undefined; it must be $2A^\\top(A\\mathbf{x}-\\mathbf{b})$, a $3\\times1$ vector",
+                "Correct: $A$ times the residual gives the gradient",
                 "Wrong: the gradient should be a $5\\times1$ vector, so use $A$ but transpose the residual",
                 "Correct in shape but the constant should be $1$, not $2$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "The residual $A\\mathbf{x}-\\mathbf{b}$ is $5\\times1$, and $A$ ($5\\times3$) cannot left-multiply a $5\\times1$ vector (inner dims $3\\neq5$). The gradient must be $n\\times1=3\\times1$ like $\\mathbf{x}$, which only $A^\\top$ ($3\\times5$) times the residual produces, forcing the transpose."
             },
             {
               "q": "For a scalar $C^2$ function, $f$ is convex if and only if which condition on the Hessian holds everywhere?",
               "choices": [
-                "$H$ is positive semidefinite everywhere",
                 "$\\det H>0$ everywhere",
+                "$H$ is positive semidefinite everywhere",
                 "$H$ is invertible everywhere",
                 "$H$ has all positive diagonal entries everywhere"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "Convexity of a $C^2$ function is equivalent to its Hessian being positive semidefinite at every point. A positive determinant or positive diagonal does not guarantee PSD-ness (e.g. a $2\\times2$ matrix can have positive diagonal yet a negative eigenvalue), and invertibility is unrelated to the sign of the eigenvalues."
             },
             {
               "q": "Which characterization correctly distinguishes the gradient, the Jacobian, and the Hessian for the same scalar $f:\\mathbb{R}^n\\to\\mathbb{R}$?",
               "choices": [
-                "Gradient: $n\\times1$ first partials; Jacobian (of $f$): $1\\times n$ row of first partials; Hessian: $n\\times n$ second partials",
+                "All three are $n\\times1$ column vectors of partials",
                 "Gradient: $1\\times n$ row; Jacobian: $n\\times n$; Hessian: $n\\times1$",
                 "Gradient: $n\\times n$; Jacobian: $n\\times1$; Hessian: $1\\times n$",
-                "All three are $n\\times1$ column vectors of partials"
+                "Gradient: $n\\times1$ first partials; Jacobian (of $f$): $1\\times n$ row of first partials; Hessian: $n\\times n$ second partials"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "For a scalar $f$ the denominator-layout gradient is the $n\\times1$ column of first partials, the Jacobian of $f$ is its $1\\times n$ transpose, and the Hessian is the $n\\times n$ matrix of second partials (the Jacobian of $\\nabla f$). The other options scramble these distinct shapes."
             },
             {
@@ -4099,33 +4099,33 @@
               "q": "At a local minimum of a smooth scalar function $f$, the gradient $\\nabla f$ equals:",
               "choices": [
                 "the largest eigenvalue of the Hessian",
-                "the zero vector $\\mathbf{0}$",
+                "undefined",
                 "a unit vector pointing uphill",
-                "undefined"
+                "the zero vector $\\mathbf{0}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "A necessary first-order condition for an interior local minimum (indeed any critical point) is $\\nabla f = \\mathbf{0}$ — there is no downhill direction left to move. Whether such a point is a minimum, maximum, or saddle is then decided by the Hessian's eigenvalues."
             },
             {
               "q": "What is the Jacobian of the linear map $\\mathbf{f}(\\mathbf{x}) = A\\mathbf{x}$?",
               "choices": [
-                "$A$ itself (a constant matrix)",
-                "$A^\\top$",
                 "$\\mathbf{x}$",
+                "$A^\\top$",
+                "$A$ itself (a constant matrix)",
                 "the identity matrix $I$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "Each output is $f_i(\\mathbf{x}) = \\sum_j A_{ij} x_j$, so $\\partial f_i/\\partial x_j = A_{ij}$ — the Jacobian is exactly $A$, and it is constant (independent of $\\mathbf{x}$) because the map is linear. This is the workhorse fact behind differentiating linear layers."
             },
             {
               "q": "For a unit vector $\\mathbf{u}$, the dot product $\\nabla f \\cdot \\mathbf{u}$ gives:",
               "choices": [
-                "the Hessian of $f$ in direction $\\mathbf{u}$",
-                "the maximum value of $f$",
                 "the directional derivative — the instantaneous rate of change of $f$ along $\\mathbf{u}$",
+                "the maximum value of $f$",
+                "the Hessian of $f$ in direction $\\mathbf{u}$",
                 "the length of the gradient"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "The directional derivative is $D_\\mathbf{u} f = \\nabla f \\cdot \\mathbf{u}$. It is largest when $\\mathbf{u}$ aligns with $\\nabla f$ (giving $\\|\\nabla f\\|$), which is precisely why the gradient is the direction of steepest ascent."
             }
           ],
@@ -4200,11 +4200,11 @@
               "q": "For a general (not necessarily symmetric) matrix $A$, what is $\\nabla_\\mathbf{x}(\\mathbf{x}^\\top A\\,\\mathbf{x})$?",
               "choices": [
                 "$2A\\,\\mathbf{x}$",
-                "$(A+A^\\top)\\,\\mathbf{x}$",
                 "$A\\,\\mathbf{x}$",
+                "$(A+A^\\top)\\,\\mathbf{x}$",
                 "$A^\\top A\\,\\mathbf{x}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "The general quadratic-form identity is $(A+A^\\top)\\mathbf{x}$. The tempting $2A\\mathbf{x}$ is only valid when $A$ is symmetric (so that $A^\\top=A$); applying it to a non-symmetric $A$ is the most common error here."
             },
             {
@@ -4212,21 +4212,21 @@
               "choices": [
                 "$2A(A\\mathbf{x}-\\mathbf{b})$",
                 "$2(A\\mathbf{x}-\\mathbf{b})^\\top A$",
-                "$2A^\\top(A\\mathbf{x}-\\mathbf{b})$",
-                "$2A^\\top A\\,\\mathbf{x}$"
+                "$2A^\\top A\\,\\mathbf{x}$",
+                "$2A^\\top(A\\mathbf{x}-\\mathbf{b})$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "$A^\\top$ ($2\\times4$) times the $4\\times1$ residual gives a $2\\times1$ gradient matching $\\mathbf{x}$. The choice $2A(A\\mathbf{x}-\\mathbf{b})$ multiplies a $4\\times2$ by a $4\\times1$ — undefined; and $2A^\\top A\\mathbf{x}$ drops the $-A^\\top\\mathbf{b}$ term."
             },
             {
               "q": "With $A$ symmetric, the gradient of $f(\\mathbf{x})=\\tfrac12\\mathbf{x}^\\top A\\,\\mathbf{x}-\\mathbf{b}^\\top\\mathbf{x}$ is set to zero. What is the stationary point $\\mathbf{x}^\\star$?",
               "choices": [
-                "$\\mathbf{x}^\\star=A^{-1}\\mathbf{b}$",
-                "$\\mathbf{x}^\\star=2A^{-1}\\mathbf{b}$",
                 "$\\mathbf{x}^\\star=\\tfrac12 A^{-1}\\mathbf{b}$",
+                "$\\mathbf{x}^\\star=2A^{-1}\\mathbf{b}$",
+                "$\\mathbf{x}^\\star=A^{-1}\\mathbf{b}$",
                 "$\\mathbf{x}^\\star=(A+A^\\top)^{-1}\\mathbf{b}$"
               ],
-              "answer": 0,
+              "answer": 2,
               "explain": "$\\nabla f=\\tfrac12\\cdot2A\\mathbf{x}-\\mathbf{b}=A\\mathbf{x}-\\mathbf{b}$; setting to zero gives $\\mathbf{x}^\\star=A^{-1}\\mathbf{b}$. The $\\tfrac12$ exactly cancels the factor of 2 from the quadratic-form derivative, so no stray $2$ or $\\tfrac12$ survives."
             },
             {
@@ -4244,33 +4244,33 @@
               "q": "For a scalar loss $L=g(\\mathbf{f}(\\mathbf{x}))$ with $J_\\mathbf{f}$ the Jacobian of $\\mathbf{f}$, the denominator-layout gradient is $\\nabla_\\mathbf{x}L=J_\\mathbf{f}^\\top\\,\\nabla_\\mathbf{f}L$. Why does the transpose appear?",
               "choices": [
                 "Because matrix multiplication is commutative for Jacobians",
-                "Because pulling a gradient back through a map multiplies by that map's Jacobian-transpose",
+                "Because $J_\\mathbf{f}$ is always orthogonal, so $J_\\mathbf{f}^\\top=J_\\mathbf{f}^{-1}$",
                 "Because the loss is a vector that must be reshaped",
-                "Because $J_\\mathbf{f}$ is always orthogonal, so $J_\\mathbf{f}^\\top=J_\\mathbf{f}^{-1}$"
+                "Because pulling a gradient back through a map multiplies by that map's Jacobian-transpose"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "In denominator layout, gradients flow backward through a map by multiplying by the transpose of its Jacobian, which also makes the shapes line up. Jacobians are not generally commutative or orthogonal, so those options are false."
             },
             {
               "q": "The normal equations for $\\min_\\mathbf{x}\\lVert A\\mathbf{x}-\\mathbf{b}\\rVert^2$ are obtained by setting the gradient to zero. Which statement is correct?",
               "choices": [
                 "$A\\mathbf{x}=\\mathbf{b}$, solvable whenever $A$ is tall",
-                "$A^\\top A\\,\\mathbf{x}=A^\\top\\mathbf{b}$, with solution $\\mathbf{x}=(A^\\top A)^{-1}A^\\top\\mathbf{b}$ when $A^\\top A$ is invertible",
                 "$A A^\\top\\mathbf{x}=A\\mathbf{b}$, with solution $\\mathbf{x}=(AA^\\top)^{-1}A\\mathbf{b}$",
+                "$A^\\top A\\,\\mathbf{x}=A^\\top\\mathbf{b}$, with solution $\\mathbf{x}=(A^\\top A)^{-1}A^\\top\\mathbf{b}$ when $A^\\top A$ is invertible",
                 "$A^\\top A\\,\\mathbf{x}=\\mathbf{b}$, with solution $\\mathbf{x}=(A^\\top A)^{-1}\\mathbf{b}$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "Setting $2A^\\top(A\\mathbf{x}-\\mathbf{b})=\\mathbf{0}$ gives $A^\\top A\\mathbf{x}=A^\\top\\mathbf{b}$. The right-hand side must be $A^\\top\\mathbf{b}$ (an $n\\times1$ vector), not $\\mathbf{b}$; $A\\mathbf{x}=\\mathbf{b}$ generally has no exact solution for overdetermined systems."
             },
             {
               "q": "Let $f(\\mathbf{x})=\\mathbf{a}^\\top\\mathbf{x}+\\mathbf{x}^\\top B\\,\\mathbf{x}$ where $B$ is symmetric. What is $\\nabla_\\mathbf{x}f$?",
               "choices": [
-                "$\\mathbf{a}+B\\,\\mathbf{x}$",
                 "$\\mathbf{a}+2B\\,\\mathbf{x}$",
+                "$\\mathbf{a}+B\\,\\mathbf{x}$",
                 "$\\mathbf{a}^\\top+2B\\,\\mathbf{x}$",
                 "$\\mathbf{a}^\\top+B\\,\\mathbf{x}$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Term by term: $\\nabla(\\mathbf{a}^\\top\\mathbf{x})=\\mathbf{a}$ and $\\nabla(\\mathbf{x}^\\top B\\mathbf{x})=2B\\mathbf{x}$ since $B$ is symmetric, giving $\\mathbf{a}+2B\\mathbf{x}$. Forgetting the factor of 2 (option 1) or writing the linear term as the row $\\mathbf{a}^\\top$ instead of the column gradient $\\mathbf{a}$ (options 3 and 4) are the common slips."
             },
             {
@@ -4310,11 +4310,11 @@
               "q": "For the ridge objective $f(\\mathbf{x})=\\lVert A\\mathbf{x}-\\mathbf{b}\\rVert^2+\\lambda\\lVert\\mathbf{x}\\rVert^2$ with $\\lambda>0$, what is the closed-form minimizer?",
               "choices": [
                 "$\\mathbf{x}=(A^\\top A)^{-1}A^\\top\\mathbf{b}$",
-                "$\\mathbf{x}=(A^\\top A+\\lambda I)^{-1}A^\\top\\mathbf{b}$",
+                "$\\mathbf{x}=(A^\\top A)^{-1}(A^\\top\\mathbf{b}+\\lambda\\mathbf{x})$",
                 "$\\mathbf{x}=(A^\\top A+\\lambda I)^{-1}\\mathbf{b}$",
-                "$\\mathbf{x}=(A^\\top A)^{-1}(A^\\top\\mathbf{b}+\\lambda\\mathbf{x})$"
+                "$\\mathbf{x}=(A^\\top A+\\lambda I)^{-1}A^\\top\\mathbf{b}$"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "$\\nabla f=2A^\\top(A\\mathbf{x}-\\mathbf{b})+2\\lambda\\mathbf{x}=\\mathbf{0}$ gives $(A^\\top A+\\lambda I)\\mathbf{x}=A^\\top\\mathbf{b}$, so $\\mathbf{x}=(A^\\top A+\\lambda I)^{-1}A^\\top\\mathbf{b}$. The $\\lambda I$ term must be inside the inverse, and the right side stays $A^\\top\\mathbf{b}$ (option 3 wrongly drops the $A^\\top$)."
             },
             {
@@ -4331,34 +4331,34 @@
             {
               "q": "The gradient is a linear operator. For scalars $\\alpha,\\beta$, $\\nabla(\\alpha f + \\beta g)$ equals:",
               "choices": [
-                "$\\alpha\\beta\\,\\nabla f\\,\\nabla g$",
-                "$\\nabla f \\cdot \\nabla g$",
                 "$\\alpha\\,\\nabla f + \\beta\\,\\nabla g$",
+                "$\\nabla f \\cdot \\nabla g$",
+                "$\\alpha\\beta\\,\\nabla f\\,\\nabla g$",
                 "$\\alpha\\,\\nabla f$ only"
               ],
-              "answer": 2,
+              "answer": 0,
               "explain": "Differentiation is linear, so $\\nabla(\\alpha f + \\beta g) = \\alpha\\nabla f + \\beta\\nabla g$. This is exactly what lets you differentiate a regularized loss term by term: $\\nabla(\\text{data loss} + \\lambda\\,\\text{penalty}) = \\nabla(\\text{data loss}) + \\lambda\\,\\nabla(\\text{penalty})$."
             },
             {
               "q": "For $\\mathbf{x}\\neq\\mathbf{0}$, the gradient of the Euclidean norm $f(\\mathbf{x}) = \\|\\mathbf{x}\\|_2$ (not squared) is:",
               "choices": [
-                "$\\dfrac{\\mathbf{x}}{\\|\\mathbf{x}\\|}$",
+                "$\\|\\mathbf{x}\\|$",
                 "$2\\mathbf{x}$",
                 "$\\mathbf{x}$",
-                "$\\|\\mathbf{x}\\|$"
+                "$\\dfrac{\\mathbf{x}}{\\|\\mathbf{x}\\|}$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Since $\\|\\mathbf{x}\\| = \\sqrt{\\mathbf{x}^\\top\\mathbf{x}}$, the chain rule gives $\\nabla\\|\\mathbf{x}\\| = \\dfrac{\\mathbf{x}}{\\|\\mathbf{x}\\|}$ — a *unit* vector pointing radially outward (undefined at the origin). Contrast this with the *squared* norm, whose gradient is the cleaner $2\\mathbf{x}$; confusing the two is a classic mistake."
             },
             {
               "q": "The gradient of the squared norm $f(\\mathbf{x}) = \\mathbf{x}^\\top\\mathbf{x} = \\|\\mathbf{x}\\|^2$ is:",
               "choices": [
-                "$\\mathbf{x}$",
+                "$2\\mathbf{x}$",
                 "$\\mathbf{x}^\\top\\mathbf{x}$",
                 "$\\tfrac12\\mathbf{x}$",
-                "$2\\mathbf{x}$"
+                "$\\mathbf{x}$"
               ],
-              "answer": 3,
+              "answer": 0,
               "explain": "$\\|\\mathbf{x}\\|^2 = \\sum_i x_i^2$, so $\\partial/\\partial x_i = 2x_i$, giving $\\nabla = 2\\mathbf{x}$ — the matrix-calculus analogue of $\\tfrac{d}{dx}x^2 = 2x$. (The shifted version $\\|\\mathbf{x}-\\mathbf{c}\\|^2$ has gradient $2(\\mathbf{x}-\\mathbf{c})$.) It is far simpler than the gradient of the *non-squared* norm — a reason squared losses are so common."
             },
             {
@@ -4443,12 +4443,12 @@
             {
               "q": "For a linear layer $\\mathbf{z}=W\\mathbf{x}+\\mathbf{b}$, the forward pass multiplies the input by $W$. What operation does the backward pass apply to the upstream gradient $\\boldsymbol{\\delta}=\\partial L/\\partial\\mathbf{z}$ to get $\\partial L/\\partial\\mathbf{x}$?",
               "choices": [
-                "Multiply by $W^{-1}$",
                 "Multiply by $W^\\top$",
+                "Multiply by $W^{-1}$",
                 "Multiply by $W$ again",
                 "Multiply by $WW^\\top$"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "Pulling a gradient backward through the linear map $\\mathbf{x}\\mapsto W\\mathbf{x}$ multiplies by the map's Jacobian-transpose, giving $\\partial L/\\partial\\mathbf{x}=W^\\top\\boldsymbol{\\delta}$. $W^{-1}$ is wrong (and often doesn't exist for non-square $W$); the transpose, not the inverse, is what the chain rule produces."
             },
             {
@@ -4465,23 +4465,23 @@
             {
               "q": "Why does backpropagation traverse the network right-to-left (from loss to input) rather than left-to-right?",
               "choices": [
-                "Because the loss is a scalar, so starting there keeps every intermediate a cheap vector instead of a large matrix",
                 "Because matrix multiplication is only associative in the backward direction",
+                "Because the loss is a scalar, so starting there keeps every intermediate a cheap vector instead of a large matrix",
                 "Because the inputs are unknown until the forward pass completes",
                 "Because $W^\\top$ can only be formed after the final layer"
               ],
-              "answer": 0,
+              "answer": 1,
               "explain": "The full Jacobian is a product of per-layer Jacobians; starting from the scalar loss end means each step is matrix-times-vector (cheap), whereas left-to-right would multiply big matrices together. Associativity holds in both orders — the choice of order is about cost, not legality."
             },
             {
               "q": "For an elementwise activation $\\mathbf{a}=\\sigma(\\mathbf{z})$, the local Jacobian $\\partial\\mathbf{a}/\\partial\\mathbf{z}$ is diagonal. What does its backward step do to an upstream gradient $\\mathbf{g}=\\partial L/\\partial\\mathbf{a}$?",
               "choices": [
                 "A full matrix-vector multiply $J\\mathbf{g}$ with dense $J$",
-                "An elementwise (Hadamard) multiply by $\\sigma'(\\mathbf{z})$",
                 "Multiplication by $\\sigma'(\\mathbf{z})^\\top$ as a row vector",
+                "An elementwise (Hadamard) multiply by $\\sigma'(\\mathbf{z})$",
                 "Summation of $\\mathbf{g}$ scaled by $\\sigma'(\\mathbf{z})$"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "A diagonal Jacobian means each output depends only on the matching input, so $\\partial L/\\partial\\mathbf{z}=\\sigma'(\\mathbf{z})\\odot\\mathbf{g}$ — a cheap elementwise multiply. Treating it as a dense matrix multiply wastes computation and obscures that the off-diagonal terms are zero."
             },
             {
@@ -4489,10 +4489,10 @@
               "choices": [
                 "$\\partial L/\\partial\\mathbf{b}=\\boldsymbol{\\delta}$",
                 "$\\partial L/\\partial\\mathbf{x}=W^\\top\\boldsymbol{\\delta}$",
-                "$\\partial L/\\partial W=\\boldsymbol{\\delta}\\mathbf{x}^\\top$",
-                "$\\boldsymbol{\\delta}=\\partial L/\\partial\\mathbf{z}$"
+                "$\\boldsymbol{\\delta}=\\partial L/\\partial\\mathbf{z}$",
+                "$\\partial L/\\partial W=\\boldsymbol{\\delta}\\mathbf{x}^\\top$"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "The weight gradient is the outer product $\\boldsymbol{\\delta}\\mathbf{x}^\\top$, which needs the layer's input $\\mathbf{x}$ at backward time — so $\\mathbf{x}$ must be cached from the forward pass. The bias gradient and input gradient don't require $\\mathbf{x}$, so they aren't what drives the memory cost."
             },
             {
@@ -4510,22 +4510,22 @@
               "q": "A student writes the weight gradient as $\\partial L/\\partial W=\\mathbf{x}\\,\\boldsymbol{\\delta}^\\top$ instead of $\\boldsymbol{\\delta}\\,\\mathbf{x}^\\top$ (with $W$ being $m\\times n$). What goes wrong?",
               "choices": [
                 "Nothing — outer products are symmetric, so both give the same matrix",
-                "It produces an $n\\times m$ matrix, the transpose of the correct gradient",
                 "It produces a scalar instead of a matrix",
+                "It produces an $n\\times m$ matrix, the transpose of the correct gradient",
                 "It is correct only if $\\sigma$ is the identity"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "$\\mathbf{x}\\,\\boldsymbol{\\delta}^\\top$ is $(n\\times1)(1\\times m)=n\\times m$, the transpose of the correct $m\\times n$ gradient — a classic shape bug. Outer products are not symmetric: $\\boldsymbol{\\delta}\\mathbf{x}^\\top\\neq\\mathbf{x}\\boldsymbol{\\delta}^\\top$ unless the matrix is symmetric."
             },
             {
               "q": "Why are exploding or vanishing gradients fundamentally a consequence of matrix calculus in deep networks?",
               "choices": [
                 "Because the activation $\\sigma$ adds noise that compounds across layers",
-                "Because $\\partial L/\\partial\\mathbf{x}$ chained across layers is a product of many $W^\\top$ (and $\\sigma'$) factors, whose magnitudes multiply",
+                "Because the loss is a scalar and scalars overflow easily",
                 "Because the bias gradients accumulate additively through the network",
-                "Because the loss is a scalar and scalars overflow easily"
+                "Because $\\partial L/\\partial\\mathbf{x}$ chained across layers is a product of many $W^\\top$ (and $\\sigma'$) factors, whose magnitudes multiply"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "The input gradient at an early layer is a long product of Jacobian factors $W^\\top$ and diagonal $\\sigma'$ terms; if these factors have norms consistently above or below 1, the product grows or shrinks exponentially with depth. It is the multiplicative chaining of Jacobians, not noise or additive bias terms, that causes the problem."
             },
             {
@@ -4542,23 +4542,23 @@
             {
               "q": "Computing the full input-to-loss Jacobian by multiplying per-layer Jacobians left-to-right (forward-mode style) is wasteful for training a network with scalar loss. Why?",
               "choices": [
-                "Forward-mode gives the wrong gradient values for non-square layers",
                 "It would multiply large matrix-by-matrix products, when the scalar output means a vector-by-matrix sweep from the loss end suffices",
+                "Forward-mode gives the wrong gradient values for non-square layers",
                 "Left-to-right multiplication is not associative for rectangular matrices",
                 "It cannot handle the elementwise activation Jacobians"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "With a single scalar output, reverse-mode (right-to-left) keeps every intermediate a vector, so each step is matrix-times-vector; forward-mode would build and multiply full Jacobian matrices, which is far costlier. Both modes give identical correct results by associativity — the difference is purely computational cost."
             },
             {
               "q": "In denominator (gradient) layout used here, the upstream gradient $\\boldsymbol{\\delta}=\\partial L/\\partial\\mathbf{z}$ is shaped like which quantity?",
               "choices": [
-                "Like $\\mathbf{z}$ (a column vector, $m\\times1$)",
+                "Like the scalar $L$ (just a number)",
                 "Like $W$ (an $m\\times n$ matrix)",
                 "Like $\\mathbf{x}$ (a column vector, $n\\times1$)",
-                "Like the scalar $L$ (just a number)"
+                "Like $\\mathbf{z}$ (a column vector, $m\\times1$)"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "In denominator layout the gradient of a scalar with respect to a vector has the same shape as that vector, so $\\partial L/\\partial\\mathbf{z}$ is $m\\times1$ like $\\mathbf{z}$. This is why $W^\\top\\boldsymbol{\\delta}$ ($n\\times m$ times $m\\times1$) correctly produces an $n\\times1$ gradient for $\\mathbf{x}$."
             },
             {
@@ -4588,32 +4588,32 @@
               "choices": [
                 "Forward computes the gradients; backward computes the loss",
                 "Both compute the loss",
-                "Both compute the gradients",
-                "Forward computes the output and loss; backward computes the gradients of the loss w.r.t. the parameters"
+                "Forward computes the output and loss; backward computes the gradients of the loss w.r.t. the parameters",
+                "Both compute the gradients"
               ],
-              "answer": 3,
+              "answer": 2,
               "explain": "The forward pass runs the inputs through the layers to produce the prediction and the scalar loss (caching activations along the way). The backward pass then propagates $\\partial L/\\partial(\\cdot)$ back through those layers to obtain every parameter's gradient, which the optimizer uses to update the weights."
             },
             {
               "q": "Once backprop has produced the weight gradient $\\partial L/\\partial W$, a vanilla gradient-descent step updates the weights by:",
               "choices": [
                 "$W \\leftarrow W + \\eta\\,\\partial L/\\partial W$",
-                "$W \\leftarrow W \\,\\cdot\\, \\partial L/\\partial W$",
                 "$W \\leftarrow W - \\eta\\,\\partial L/\\partial W$",
+                "$W \\leftarrow W \\,\\cdot\\, \\partial L/\\partial W$",
                 "$W \\leftarrow \\partial L/\\partial W$"
               ],
-              "answer": 2,
+              "answer": 1,
               "explain": "Gradient descent steps *against* the gradient to reduce the loss: $W \\leftarrow W - \\eta\\,\\partial L/\\partial W$, where $\\eta$ is the learning rate. Adding the gradient would increase the loss; the other forms are not descent steps at all. This is the bridge from backprop's output to actual learning."
             },
             {
               "q": "Backpropagation begins the backward pass from:",
               "choices": [
-                "the scalar loss $L$, seeded with $\\partial L/\\partial L = 1$",
+                "the single largest activation in the network",
                 "the input vector $\\mathbf{x}$",
                 "the first layer's weights",
-                "the single largest activation in the network"
+                "the scalar loss $L$, seeded with $\\partial L/\\partial L = 1$"
               ],
-              "answer": 0,
+              "answer": 3,
               "explain": "Reverse-mode differentiation needs a *scalar* output to differentiate; training uses the loss $L$, and the recursion is seeded with the trivial $\\partial L/\\partial L = 1$, after which the chain rule pushes gradients backward toward the inputs. This is why the loss must collapse to a single number before you can backpropagate."
             }
           ],
