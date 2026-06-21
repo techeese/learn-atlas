@@ -287,5 +287,9 @@ window.GLOSSARY = [
   { term: "UMAP", topic: "machine-learning", def: "A nonlinear visualization method like t-SNE but faster and preserving more global structure; embeds high-dimensional data into 2–3D to explore cluster structure." },
   { term: "Whitening", topic: "machine-learning", def: "A preprocessing step (often via PCA) that decorrelates features and rescales each to unit variance, leaving inputs uncorrelated and equally scaled." },
   { term: "Explained variance ratio", topic: "machine-learning", def: "A principal component's eigenvalue divided by the total of all eigenvalues — the fraction of the data's variance that component captures; used to choose how many components to keep." },
-  { term: "Manifold", topic: "machine-learning", def: "A lower-dimensional surface that high-dimensional data lies near; dimensionality reduction recovers coordinates on it (the \"manifold hypothesis\")." }
+  { term: "Manifold", topic: "machine-learning", def: "A lower-dimensional surface that high-dimensional data lies near; dimensionality reduction recovers coordinates on it (the \"manifold hypothesis\")." },
+  { term: "Graph Neural Network (GNN)", topic: "deep-learning", def: "A neural network for graph-structured data (nodes + edges): each layer updates a node's features by aggregating its neighbors' (message passing). Powers molecules, recommendation, and knowledge graphs." },
+  { term: "Message passing", topic: "deep-learning", def: "The core GNN operation: each node updates its representation by aggregating (sum/mean/max) its neighbors' features and transforming the result; $k$ layers reach the $k$-hop neighborhood." },
+  { term: "Over-smoothing", topic: "deep-learning", def: "The failure mode of deep GNNs: repeated message passing diffuses features until all nodes converge to the same vector, erasing distinctions — which is why GNNs stay shallow (2–4 layers)." },
+  { term: "Graph attention (GAT)", topic: "deep-learning", def: "A GNN that learns per-neighbor attention weights instead of uniform averaging — self-attention restricted to the graph's edges, so more relevant neighbors count more." }
 ];

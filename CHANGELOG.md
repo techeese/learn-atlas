@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 730 — Step-back sweep (clean) + GNN glossary terms (step-back / reference)
+Step-back at ~12 iters since the last sweep. **Full 178-lesson regression sweep**: errs=0, no KaTeX errors, bad=none, Knowledge Map 830 nodes — the 5-lesson modern arc (MoE/SSM/ViT/DR/GNN) introduced
+**zero regressions**.
+**Ship:** completed the GNN lesson's glossary integration. Added **4 terms**: Graph Neural Network (GNN), Message passing, Over-smoothing, Graph attention (GAT). Glossary **273 → 277**.
+Verified: glossary parses; gate ALL GREEN; full sweep clean; **headless** — all 4 render on `#/glossary` (4/4), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v666` → `atlas-v667`.
+
 ## iter 729 — NEW viz: GNN message passing & over-smoothing (visualizations)
 Gave the new GNN lesson its visual. Built the **126th widget, `dl-gnn-message-passing`**: a 6-node graph where each message-passing layer replaces every node's value with the mean of itself + its
 neighbors. A layers slider shows information spreading along edges (nodes blend toward their neighborhood) and then **over-smoothing** — by ~8 layers every node collapses to the same value (spread → 0).
