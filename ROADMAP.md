@@ -190,7 +190,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    headless "Question 1 of 16" kErr=0/errs=0. SW →v550.
    ✅ iter 610: **MCQ batch 3 — it-mutual-information 8→16**. ✅ iter 611: **batch 4 — it-source-coding 8→16** (numeric + concept, 4/4/4/4, headless 16, kErr=0/errs=0, SW →v552).
    ✅ iter 612: **batch 5 — it-channel-capacity 8→16**. ✅ iter 613: **batch 6 — it-differential-entropy 8→16** (numeric 2.05/−1/1, 4/4/4/4, headless 16, kErr=0/errs=0, SW →v554).
-   ⏳ MCQ runway (6 of 17 done): remaining at 8 MCQs — IT: information-in-ml (capstone); ML: all 10.
+   ✅ iter 614: **batch 7 — it-information-in-ml 8→16; IT MCQ-COMPLETE** (all 7 IT lessons at 16; 4/4/4/4; headless 16; SW →v555).
+   ⏳ MCQ runway (7 of 17 done): remaining at 8 MCQs — ML: all 10 (knn, decision-trees, linear-regression, logistic-regression, regularization, svm, naive-bayes,
+   kmeans, ensembles, model-selection). One lesson/iter, hand-verify every answer key, de-skew new 8 to 2/2/2/2.
    One lesson/iter, hand-verify every answer key (gate can't catch a wrong key), de-skew new 8 to 2/2/2/2.
    ✅ iter 606: **Naive Bayes spam viz — 103rd widget; ML viz COMPLETE** (visualizations). ml-nb-viz: spam filter as evidence on a log-odds line — each word shifts
    odds by its likelihood ratio (multiply = add shifts under naive independence); toggle words, live P(spam) verdict. Embedded in ml-naive-bayes. All 10 ML lessons now

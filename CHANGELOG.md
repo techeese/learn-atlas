@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 614 — MCQ top-up runway, batch 7: it-information-in-ml 8 → 16; INFORMATION THEORY now MCQ-complete (content / assessment)
+Seventh batch. Added **8 new MCQs to the IT capstone `it-information-in-ml`** (now 16), distinct from the existing eight: numeric perplexity (`CE=3 bits → 8`), numeric VAE
+KL (`μ=0,σ=1 → 0`), perplexity as effective branching factor, RLHF-without-KL → reward hacking, MDL's `L(model)` = a complexity penalty (= regularization), Gaussian weight
+prior ↔ L2 penalty, nats use `ln`, and why cross-entropy beats squared error for classification (MLE + clean `q−p` gradient). Key assertion confirmed each correct
+choice; balanced → **4/4/4/4**. **All 7 Information Theory lessons are now at 16 MCQs — the topic's MCQ top-up is complete** (verified: 0 IT lessons off 16).
+Verified: data parses; gate ALL GREEN; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v554` → `atlas-v555`. Runway: **7 of 17**
+(IT done; the 10 ML lessons remain).
+
 ## iter 613 — MCQ top-up runway, batch 6: it-differential-entropy 8 → 16 (content / assessment)
 Sixth batch. Added **8 new MCQs to `it-differential-entropy`** (now 16), distinct from the existing eight: numeric Gaussian `σ=1 → 2.05` bits, Uniform[0,0.5] `→ −1` bit
 and Uniform[0,2] `→ 1` bit, exponential as the fixed-mean max-entropy distribution, uniform as the bounded-interval max-entropy, `h` depends on `σ` not `μ`, why a density

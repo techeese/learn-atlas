@@ -1600,6 +1600,94 @@
               ],
               "answer": 0,
               "explain": "$-\\frac{1}{N}\\sum\\log q(y_n|x_n)$ is both the average cross-entropy and the negative average log-likelihood."
+            },
+            {
+              "q": "A language model with a cross-entropy of 3 bits/token has a perplexity of:",
+              "choices": [
+                "$8$",
+                "$3$",
+                "$6$",
+                "$2$"
+              ],
+              "answer": 0,
+              "explain": "Perplexity $=2^{H}=2^{3}=8$ — as uncertain as guessing uniformly among 8 equally-likely tokens."
+            },
+            {
+              "q": "The VAE KL term $\\tfrac12(\\mu^2+\\sigma^2-1-\\ln\\sigma^2)$ for $\\mu=0,\\sigma=1$ equals:",
+              "choices": [
+                "$0.5$",
+                "$0$",
+                "$1$",
+                "$2$"
+              ],
+              "answer": 1,
+              "explain": "$\\tfrac12(0+1-1-\\ln 1)=0$: the posterior already equals the standard-normal prior, so no penalty."
+            },
+            {
+              "q": "Perplexity can be read as:",
+              "choices": [
+                "The parameter count",
+                "The model's accuracy",
+                "The effective number of equally-likely next choices",
+                "The training-set size"
+              ],
+              "answer": 2,
+              "explain": "$2^{H}$ is the \"effective branching factor\" — how many equally-likely options the model is effectively choosing among."
+            },
+            {
+              "q": "Removing the KL penalty entirely from RLHF tends to cause:",
+              "choices": [
+                "A smaller model",
+                "Faster convergence with no downside",
+                "A guaranteed drop in reward",
+                "Reward hacking — the policy drifts into gibberish that games the reward"
+              ],
+              "answer": 3,
+              "explain": "The KL leash keeps the policy near the trusted reference; without it, the policy over-optimizes a proxy reward into degenerate text."
+            },
+            {
+              "q": "In MDL, the model-description term $L(\\text{model})$ acts as:",
+              "choices": [
+                "A complexity penalty on the model (i.e. regularization)",
+                "The size of the training data",
+                "The learning rate",
+                "The number of epochs"
+              ],
+              "answer": 0,
+              "explain": "Total bits $=L(\\text{model})+L(\\text{data}\\mid\\text{model})$; the first term penalizes complexity, exactly like a regularizer."
+            },
+            {
+              "q": "A Gaussian prior on the weights corresponds, in MAP/MDL terms, to:",
+              "choices": [
+                "An L1 (lasso) penalty",
+                "An L2 (ridge) penalty on the weights",
+                "Dropout",
+                "Early stopping"
+              ],
+              "answer": 1,
+              "explain": "The negative log of a Gaussian prior is quadratic in the weights — an L2 penalty; a Laplace prior gives L1."
+            },
+            {
+              "q": "Cross-entropy is measured in nats when computed with:",
+              "choices": [
+                "Base-10 logs",
+                "Base-2 logs",
+                "The natural logarithm ($\\ln$)",
+                "No logarithm at all"
+              ],
+              "answer": 2,
+              "explain": "Natural logs give nats (the default unit in ML); base-2 logs give bits."
+            },
+            {
+              "q": "Why is cross-entropy preferred over squared error for classification?",
+              "choices": [
+                "It caps the loss at 1",
+                "It is faster to compute",
+                "It needs no labels",
+                "It is maximum likelihood, with a clean $q-p$ gradient and a harsh penalty for confident mistakes"
+              ],
+              "answer": 3,
+              "explain": "Cross-entropy is the MLE objective; its softmax gradient is $q-p$, and $-\\log q(\\text{true})\\to\\infty$ punishes confident errors far more than bounded squared error."
             }
           ],
           "flashcards": [
