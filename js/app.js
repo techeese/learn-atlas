@@ -396,7 +396,7 @@
     ov.innerHTML = `<div class="intro-card">
       <div class="intro-eyebrow">Welcome to your codex</div>
       <h2 class="intro-title">Atlas</h2>
-      <p class="intro-sub">A personal home for linear algebra, calculus, algorithms, deep learning, reinforcement learning, LLMs & probability/statistics — built to make hard ideas <em>click</em> and <em>stick</em>.</p>
+      <p class="intro-sub">A personal home for the math and ideas behind modern AI — linear algebra, calculus, probability &amp; statistics, algorithms, machine learning, deep learning, reinforcement learning, LLMs &amp; information theory — built to make hard ideas <em>click</em> and <em>stick</em>.</p>
       <div class="intro-grid">
         <div class="intro-item"><span>📖</span><b>Learn</b><small>${nLessons} lessons across ${nTopics} subjects — rendered math, worked examples${nViz ? ` & ${nViz} interactive visualizations` : ""}.</small></div>
         <div class="intro-item"><span>📝</span><b>Master</b><small>Spawn tests in <b>Mastery mode</b>, then <b>redeem every wrong answer</b> until it sticks.</small></div>
@@ -1957,7 +1957,7 @@
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Glossary</div>
       <div class="page-head reveal"><div class="eyebrow">${g.length} key terms</div><h2>The <em>Glossary</em></h2>
-      <p>Fast, plain-language definitions of the core concepts across all seven subjects. Search, filter by topic, or skim to refresh — and <b>click any term to open the lesson that teaches it</b>.</p></div>
+      <p>Fast, plain-language definitions of the core concepts across every subject. Search, filter by topic, or skim to refresh — and <b>click any term to open the lesson that teaches it</b>.</p></div>
       <input class="gloss-search" id="gloss-search" placeholder="Search terms…" aria-label="Search glossary">
       <div class="lab-topics" role="group" aria-label="Filter glossary by topic">
         <button class="lab-tbtn active" data-t="all" aria-pressed="true">All topics</button>

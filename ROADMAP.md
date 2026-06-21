@@ -182,6 +182,10 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 584: **Fix stale topic enumerations after the 9th pillar** (UI/UX/SEO/docs). Updated index.html meta + manifest descriptions, the intro-overlay
+   subtitle, the glossary copy ("every subject", number-free), and README headline (subjects list + counts: 164 lessons/2496 MCQ/969 cards/492 hw/493 ex/97 viz/
+   189 gloss/60 ach) — all now reflect all 9 topics (were stuck at the original ~6). Verified: app.js/manifest valid; gate GREEN; headless intro mentions Info
+   Theory + glossary says "every subject", kErr=0/errs=0. SW →v525.
    ✅ iter 583: **Information Theory COMPLETE — capstone "Information in ML"** (content/depth). it-information-in-ml (cross-entropy loss/KL regularizer/MI
    objectives/perplexity/MDL; full parity: VAE-KL code→0.50 + 3 dd + 8 MCQ 2/2/2/2 + 5 cards + 3 ex + 3 hw). The 9th topic is now a full 6-module curriculum
    (Entropy→Cross-Entropy&KL→Mutual Info→Source Coding→Channel Capacity→Info in ML) + viz + integration. Verified: gate GREEN (9 topics·164 lessons·117 code);

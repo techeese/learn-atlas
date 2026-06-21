@@ -2,6 +2,18 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 584 — Fix stale topic enumerations after the 9th pillar (UI/UX · SEO · docs)
+Adding Probability & Statistics, Machine Learning, and Information Theory over time left several places still advertising only the original ~6 topics — a real
+accuracy/SEO gap on the live site. Refreshed them all to the full nine:
+- **index.html `<meta description>`** and **manifest.webmanifest** — the SEO/PWA descriptions now list all nine subjects (was the original 6), so search results
+  and the installed-app blurb are accurate.
+- **Intro/welcome overlay copy** (app.js) — the subtitle now spans "linear algebra … machine learning, deep learning, RL, LLMs & information theory" (was 7 of 9).
+- **Glossary page copy** — "across all seven subjects" → "across every subject" (number-free, so it can't go stale again).
+- **README** — headline subject list + counts brought current: **164 lessons · 2,496 MCQs · 969 flashcards · 492 homework · 493 examples · 97 viz · 189 glossary
+  · 60 achievements**, "seven topics/subjects" → nine, "every lesson carries 3 deeper dives."
+Verified: `node -e new Function` on app.js + `JSON.parse` on the manifest both clean; gate ALL GREEN; **headless** — the intro overlay now mentions Information
+Theory and the glossary says "every subject", **kErr=0, errs=0**. SW cache `atlas-v524` → `atlas-v525`.
+
 ## iter 583 — Information Theory COMPLETE: the capstone, Information in ML (content / depth)
 Sixth and final IT lesson — **Information Theory in Machine Learning** (capstone module "Information in Machine Learning") — collecting every thread: cross-entropy
 as the default loss (= MLE = min KL), KL as the regularizer (VAEs, RLHF, variational inference), mutual information as the objective (trees, feature selection,
