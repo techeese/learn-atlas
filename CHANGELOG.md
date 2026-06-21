@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 718 — Step-back sweep (clean) + ViT/CLIP glossary terms (step-back / reference)
+Step-back at ~10 iters since the last sweep. **Full 176-lesson regression sweep**: errs=0, no KaTeX errors, bad=none, Knowledge Map 818 nodes — the recent MoE/SSM/ViT additions introduced **zero
+regressions**.
+**Ship:** completed the ViT lesson's glossary integration (its vocabulary powers inline tooltips). Added **5 terms**: Vision Transformer (ViT), Patch embedding, CLIP, Multimodal model, [CLS] token.
+Glossary **263 → 268**.
+Verified: glossary parses; gate ALL GREEN; full sweep clean; **headless** — all 5 render on `#/glossary` (5/5), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v654` → `atlas-v655`.
+
 ## iter 717 — ViT lesson MCQ top-up 8 → 16 (content / assessment)
 Brought `dl-vision-transformers` to the 16-MCQ standard. Added **8 new MCQs**: patch embedding (linear projection), first-layer global context, the `O(n²)` attention cost, CLIP zero-shot via text
 prompts, the `p×p×3` patch-vector dimension, windowed/hierarchical ViTs (Swin), pretraining-beats-CNN, and "the encoder is a standard transformer." Balanced → **4/4/4/4**. Lesson now at full parity (176 lessons all at standard).
