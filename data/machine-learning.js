@@ -2082,6 +2082,94 @@
               ],
               "answer": 2,
               "explain": "Boosting keeps cutting training error and can start fitting noise; shrinkage, shallow trees, subsampling, and early stopping keep it from overfitting."
+            },
+            {
+              "q": "Averaging $n$ independent models, each with variance $\\sigma^2$, gives a combined variance of:",
+              "choices": [
+                "$\\sigma^2/n$",
+                "$\\sigma^2$",
+                "$n\\,\\sigma^2$",
+                "$\\sigma^2 n^2$"
+              ],
+              "answer": 0,
+              "explain": "Variance of an average of $n$ i.i.d. terms is $\\sigma^2/n$ — the core reason bagging cuts variance (only fully if the models are independent)."
+            },
+            {
+              "q": "Bagging trains each base model on:",
+              "choices": [
+                "The full dataset, unchanged",
+                "A bootstrap resample (drawn with replacement)",
+                "A single random feature",
+                "The test set"
+              ],
+              "answer": 1,
+              "explain": "Each model sees a different resample, so their errors differ and averaging cancels noise."
+            },
+            {
+              "q": "A \"weak learner\" (used in boosting) is a model that:",
+              "choices": [
+                "Is a deep neural network",
+                "Always achieves 100% accuracy",
+                "Does only slightly better than random guessing (e.g. a shallow stump)",
+                "Ignores the labels"
+              ],
+              "answer": 2,
+              "explain": "Boosting combines many such weak learners, each correcting the last, into a strong one."
+            },
+            {
+              "q": "Out-of-bag (OOB) samples in a random forest provide:",
+              "choices": [
+                "Feature scaling",
+                "Extra training data",
+                "The final prediction",
+                "A built-in validation error estimate (no separate holdout needed)"
+              ],
+              "answer": 3,
+              "explain": "Each tree skips ~1/3 of points (its OOB set); aggregating predictions on those gives an unbiased error estimate for free."
+            },
+            {
+              "q": "Boosting primarily reduces:",
+              "choices": [
+                "Bias — by sequentially correcting earlier errors",
+                "Variance only",
+                "Neither bias nor variance",
+                "The number of features"
+              ],
+              "answer": 0,
+              "explain": "Stacking weak (high-bias) learners that each fix residual mistakes drives bias down; bagging instead targets variance."
+            },
+            {
+              "q": "AdaBoost adapts to the previous round by:",
+              "choices": [
+                "Discarding the misclassified points",
+                "Up-weighting the misclassified points so the next learner focuses on them",
+                "Weighting all points equally forever",
+                "Setting the learning rate to 0"
+              ],
+              "answer": 1,
+              "explain": "Raising the weight of hard examples forces successive learners to attend to them."
+            },
+            {
+              "q": "Decorrelating the base models matters because:",
+              "choices": [
+                "It increases bias",
+                "It speeds up training",
+                "Correlated models' errors don't cancel, limiting variance reduction",
+                "It is required for boosting"
+              ],
+              "answer": 2,
+              "explain": "Averaging helps most when errors are independent; identical trees would just repeat the same mistakes."
+            },
+            {
+              "q": "Stacking (stacked generalization) combines base models by:",
+              "choices": [
+                "Pruning the weakest model",
+                "Averaging their input features",
+                "Bagging the labels",
+                "Training a meta-model on the base models' predictions"
+              ],
+              "answer": 3,
+              "explain": "A second-level learner learns how best to blend the base predictions, often beating a simple average."
             }
           ],
           "flashcards": [

@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 623 — MCQ top-up runway, batch 16: ml-ensembles 8 → 16 (content / assessment)
+Sixteenth batch. Added **8 new MCQs to `ml-ensembles`** (now 16), distinct from the existing eight: the `σ²/n` variance-of-an-average formula, bagging = bootstrap resampling,
+the weak-learner definition, OOB as a built-in validation estimate, boosting reduces bias, AdaBoost up-weighting, why decorrelation matters, and stacking via a meta-model. Key
+assertion confirmed each correct choice; balanced → **4/4/4/4**.
+Verified: data parses; gate ALL GREEN; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v563` → `atlas-v564`. Runway: **16 of 17** (ML 9/10 — only model-selection left).
+
 ## iter 622 — MCQ top-up runway, batch 15: ml-kmeans 8 → 16 (content / assessment)
 Fifteenth batch. Added **8 new MCQs to `ml-kmeans`** (now 16), distinct from the existing eight: a worked 1-D convergence example, assign=nearest-centroid, update=cluster-mean,
 local-optimum convergence, inertia decreasing monotonically with `k`, the `O(nkd)` per-iteration cost, the numeric-features/k-modes requirement, and centroids being means (not
