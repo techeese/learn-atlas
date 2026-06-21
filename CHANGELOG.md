@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 709 — Fix stale "6 paths" on the Knowledge Map (bug / UI)
+A fresh-eyes visual review of the dashboard, Knowledge Map, and lessons (all otherwise polished) caught a real **stale-count bug**: the Knowledge Map header hardcoded "*N concepts · **6 paths**
+radiating outward*" — but the site has grown to **9 topics** (the original 6 + Machine Learning, Information Theory… 9 courses). The concept count was dynamic; the path count was a frozen literal `6`,
+wrong since the 8th/9th topics landed. Changed it to `${C().length}` so it tracks the live course count. Now reads "174 concepts · 9 paths radiating outward".
+Verified: app.js parses; gate ALL GREEN; **headless** — map eyebrow shows concepts=174, paths=9, kErr=0, errs=0. SW cache `atlas-v645` → `atlas-v646`.
+
 ## iter 708 — Step-back sweep (clean) + prune the bloated ROADMAP to a live queue (workflow / step-back)
 Step-back at ~8 iters since the last sweep. **Full 174-lesson regression sweep**: errs=0, no KaTeX errors, bad=none, Knowledge Map 810 nodes — the recent changes (duality/proximal/by-parts/bc-compounding
 viz, glossary, prereqs, references, deep-dives) introduced **zero regressions**. Also verified: all 122 viz embedded (0 orphaned), prereq graph well-connected, 80 recent MCQ answers correct (iter 706).

@@ -2238,7 +2238,7 @@
     app.innerHTML = `
     <div class="view" style="max-width:none">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Knowledge Map</div>
-      <div class="page-head reveal"><div class="eyebrow">${nodes.length} concepts · 6 paths radiating outward</div><h2>Knowledge <em>Constellation</em></h2>
+      <div class="page-head reveal"><div class="eyebrow">${nodes.length} concepts · ${C().length} paths radiating outward</div><h2>Knowledge <em>Constellation</em></h2>
       <p>Each subject branches out from the core — foundations near the centre, mastery toward the rim. Hover (or focus) a star to trace what it depends on; click or press Enter to open it. <span class="map-kbd-hint">Keyboard: Tab into the map, then arrow keys to move between concepts.</span></p></div>
       <div class="map-legend reveal">${legend}<span class="map-caption" id="map-caption">Hover or focus a concept…</span></div>
       <div class="map-scroll reveal" id="map-scroll"><svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" class="map-svg" role="application" aria-label="Knowledge constellation of ${nodes.length} concepts. Tab to enter, then use arrow keys to move between concepts and Enter to open one.">${sectors}${rings}${edges}${hub}${circles}${labels}</svg></div>
