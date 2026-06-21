@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 611 — MCQ top-up runway, batch 4: it-source-coding 8 → 16 (content / assessment)
+Fourth batch. Added **8 new MCQs to `it-source-coding`** (now 16), distinct from the existing eight: numeric dyadic expected length (`1.75` bits), optimal length for
+`p=1/8` (`3` bits), fixed-length cost for 4 symbols (`2` bits), the `H ≤ L < H+1` Huffman bound, variable-length/Morse intuition, why a prefix violation isn't uniquely
+decodable, block coding → `H`, and arithmetic coding as a single fraction in `[0,1)`. Inequalities written with `\le`/`\lt` (no bare-`<` hazard); in-script key
+assertion confirmed each correct choice; balanced → combined **4/4/4/4**.
+Verified: data parses; gate ALL GREEN (render-lint clean); **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v551` → `atlas-v552`. Runway: **4 of 17**.
+
 ## iter 610 — MCQ top-up runway, batch 3: it-mutual-information 8 → 16 (content / assessment)
 Third batch. Added **8 new MCQs to `it-mutual-information`** (now 16), distinct from the existing eight: numeric `I = H(X)−H(X|Y) = 0.4`, `Y` determines `X` ⇒ `I=H(X)`,
 MI as the KL `D(p(x,y)‖p(x)p(y))`, the entropy chain rule `H(X,Y)=H(X)+H(Y|X)`, conditioning never raises entropy (`H(X|Y)≤H(X)`), independence ⇒ `H(X|Y)=H(X)`, `I≥0`,

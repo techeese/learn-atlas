@@ -1012,6 +1012,94 @@
               ],
               "answer": 2,
               "explain": "A prefix code with those lengths exists iff the inequality holds; short codewords cost more of the tree."
+            },
+            {
+              "q": "For probabilities $[0.5,\\,0.25,\\,0.125,\\,0.125]$, a Huffman code's expected length is:",
+              "choices": [
+                "$1.75$ bits",
+                "$2.0$ bits",
+                "$1.0$ bit",
+                "$1.5$ bits"
+              ],
+              "answer": 0,
+              "explain": "Codeword lengths $1,2,3,3$ give $0.5(1)+0.25(2)+0.125(3)+0.125(3)=1.75$ bits — equal to the entropy for this dyadic source."
+            },
+            {
+              "q": "The optimal codeword length for a symbol of probability $1/8$ is:",
+              "choices": [
+                "$8$ bits",
+                "$3$ bits",
+                "$1/8$ bit",
+                "$2$ bits"
+              ],
+              "answer": 1,
+              "explain": "$-\\log_2(1/8)=3$ bits — the symbol's self-information."
+            },
+            {
+              "q": "A fixed-length code for 4 distinct symbols uses how many bits per symbol?",
+              "choices": [
+                "$1$ bit",
+                "$4$ bits",
+                "$2$ bits",
+                "$8$ bits"
+              ],
+              "answer": 2,
+              "explain": "$\\lceil\\log_2 4\\rceil=2$ bits, regardless of how skewed the probabilities are — which is why variable-length codes can do better."
+            },
+            {
+              "q": "For a non-dyadic source, a Huffman code's expected length $L$ satisfies:",
+              "choices": [
+                "$L \\gt H+1$",
+                "$L \\lt H$",
+                "$L = 2H$",
+                "$H \\le L \\lt H+1$"
+              ],
+              "answer": 3,
+              "explain": "Huffman is optimal among prefix codes: never below the entropy floor, and always within 1 bit of it."
+            },
+            {
+              "q": "Variable-length codes (like Morse, giving \"E\" a single dot) save bits by:",
+              "choices": [
+                "Giving frequent symbols shorter codewords",
+                "Using the same length for every symbol",
+                "Adding redundancy to every symbol",
+                "Ignoring the symbol probabilities"
+              ],
+              "answer": 0,
+              "explain": "Matching code length to frequency — short codes for common symbols, longer for rare — is exactly what drives expected length down toward the entropy."
+            },
+            {
+              "q": "A code in which one codeword is a prefix of another is:",
+              "choices": [
+                "Always optimal",
+                "Not uniquely decodable — a stream can be ambiguous",
+                "Guaranteed to be shorter",
+                "Required by Huffman coding"
+              ],
+              "answer": 1,
+              "explain": "If \"0\" is a prefix of \"01\", the decoder cannot tell where the first symbol ends. Prefix-free codes forbid this so a stream decodes unambiguously."
+            },
+            {
+              "q": "Encoding long blocks of symbols at once lets the per-symbol rate approach:",
+              "choices": [
+                "Twice the entropy",
+                "Zero",
+                "The entropy $H$",
+                "The fixed-length rate"
+              ],
+              "answer": 2,
+              "explain": "Block (and arithmetic) coding amortizes the rounding loss, driving the average per-symbol length down to $H$ as the block grows."
+            },
+            {
+              "q": "Arithmetic coding represents an entire message as:",
+              "choices": [
+                "A fixed-length block",
+                "A binary tree",
+                "Exactly one bit per symbol",
+                "A single number (a fraction) in $[0,1)$"
+              ],
+              "answer": 3,
+              "explain": "It narrows an interval in $[0,1)$ as each symbol arrives, emitting one fraction for the whole message — sidestepping Huffman's whole-bit rounding."
             }
           ],
           "flashcards": [
