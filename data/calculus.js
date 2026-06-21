@@ -6241,6 +6241,94 @@
               ],
               "answer": 3,
               "explain": "Zero price means no pressure: slack, non-binding."
+            },
+            {
+              "q": "For \"minimize $f(x)$ subject to $g_i(x)\\le 0$\", the Lagrangian is:",
+              "choices": [
+                "$f(x)+\\sum_i\\lambda_i g_i(x)$ with $\\lambda_i\\ge 0$",
+                "$f(x)-\\sum_i\\lambda_i g_i(x)$ with $\\lambda_i$ free",
+                "$\\sum_i\\lambda_i g_i(x)$ only",
+                "$f(x)\\cdot\\prod_i g_i(x)$"
+              ],
+              "answer": 0,
+              "explain": "Add each constraint times a nonnegative multiplier to the objective."
+            },
+            {
+              "q": "The KKT <b>stationarity</b> condition is:",
+              "choices": [
+                "$\\lambda^\\star=0$",
+                "$\\nabla_x L(x^\\star,\\lambda^\\star)=0$",
+                "$g(x^\\star)=0$",
+                "$f(x^\\star)=0$"
+              ],
+              "answer": 1,
+              "explain": "The Lagrangian's gradient in x vanishes at the optimum."
+            },
+            {
+              "q": "Slater's condition, which guarantees strong duality for convex problems, requires:",
+              "choices": [
+                "A bounded objective",
+                "A unique optimum",
+                "A strictly feasible point (some $x$ with every $g_i(x)\\lt 0$)",
+                "Linear constraints only"
+              ],
+              "answer": 2,
+              "explain": "Strict feasibility is the standard constraint qualification."
+            },
+            {
+              "q": "The dual problem is:",
+              "choices": [
+                "Maximize $f(x)$ over $x$",
+                "Minimize $g(\\lambda,\\nu)$ over all $\\lambda$",
+                "Minimize $f(x)$ over $x$",
+                "Maximize $g(\\lambda,\\nu)$ over $\\lambda\\ge 0$ — a concave maximization"
+              ],
+              "answer": 3,
+              "explain": "Maximize the (concave) dual function subject to nonnegative inequality multipliers."
+            },
+            {
+              "q": "In an SVM, the points with a nonzero dual multiplier $\\alpha_i\\gt 0$ are:",
+              "choices": [
+                "The support vectors (active-constraint points on the margin)",
+                "The misclassified points only",
+                "Every training point",
+                "The points farthest from the boundary"
+              ],
+              "answer": 0,
+              "explain": "Complementary slackness: nonzero multiplier ⇔ active margin constraint."
+            },
+            {
+              "q": "A practical reason to solve the dual instead of the primal is that the dual is:",
+              "choices": [
+                "Always linear",
+                "Always concave, so its maximization is well-behaved even if the primal is not convex",
+                "Always smaller by exactly one variable",
+                "Independent of the constraints"
+              ],
+              "answer": 1,
+              "explain": "Concavity of the dual makes it tractable regardless of the primal."
+            },
+            {
+              "q": "The multiplier $\\lambda_i^\\star$ acts as a \"shadow price,\" meaning it measures:",
+              "choices": [
+                "The value of the objective at zero",
+                "The number of constraints",
+                "How much the optimum improves per unit relaxation of constraint $i$",
+                "The size of the feasible set"
+              ],
+              "answer": 2,
+              "explain": "The multiplier is the sensitivity of the optimum to the constraint bound."
+            },
+            {
+              "q": "For a convex problem satisfying strong duality, the KKT conditions are:",
+              "choices": [
+                "Irrelevant to optimality",
+                "Necessary but never sufficient",
+                "Sufficient but never necessary",
+                "Necessary and sufficient for optimality"
+              ],
+              "answer": 3,
+              "explain": "Under convexity + strong duality, KKT exactly characterizes the optimum."
             }
           ],
           "flashcards": [

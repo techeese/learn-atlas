@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 694 — Duality lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `c-duality-kkt` to the 16-MCQ standard (gate parity-warning had flagged it). Added **8 new MCQs**: the Lagrangian form, KKT stationarity, Slater as the constraint qualification, the dual
+problem (concave maximization), SVM support vectors via complementary slackness, why the dual is tractable (always concave), the shadow-price reading of a multiplier, and KKT being necessary &
+sufficient under convexity + strong duality. Balanced → **4/4/4/4**. The lesson is now at full parity.
+Verified: data parses; gate ALL GREEN with **no parity warning**; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v631` → `atlas-v632`.
+
 ## iter 693 — NEW lesson: Lagrangian Duality & the KKT Conditions (content)
 Filled a genuine, high-value gap: the site taught Lagrange multipliers but only *glimpsed* KKT and merely name-dropped **Lagrangian duality** — yet duality is core to ML (the SVM dual, the kernel
 trick, regularization-as-constraint). Added `c-duality-kkt` "Lagrangian Duality & the KKT Conditions" to calculus M7 "Convex & Constrained Optimization": 8 sections (the dual function · weak
