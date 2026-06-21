@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 691 — Hard-concept explanation: why attention divides by √dₖ (content / understandability)
+A broad audit first confirmed the site is healthy (scripts already `defer`; achievements/daily-picks are dynamic, not stale; gamification comprehensive; hard concepts all carry 3 deep-dives) —
+no bug found. Then, per the owner's standing "hard-concept extra explanations" direction, filled a genuine conceptual gap: the attention lesson explained the **O(L²) compute** scaling but never
+the **√dₖ softmax scaling**. Added a 4th deep-dive to `dl-attention-mechanism` — "why divide by $\sqrt{d_k}$": the dot product of two $d_k$-dim vectors has variance $d_k$, so unscaled scores
+saturate softmax and kill its gradient; dividing by $\sqrt{d_k}$ restores ~unit variance — the reason it's *scaled* dot-product attention.
+Verified: data parses; gate ALL GREEN; **headless** — 4 deep-dives render and the √dₖ math typesets when expanded (kErr=0, rawDollar=0), errs=0. SW cache `atlas-v628` → `atlas-v629`.
+
 ## iter 690 — Audit (clean) + causal-dag viz: active-state buttons (accessibility / UI-UX)
 Step-back audit found the site healthy: achievement unlock logic is **dynamic** (`window.COURSES.every(...)`, not hardcoded to a stale topic count — the `>=6` guard is a harmless lower bound); the
 hero/meta copy correctly lists all 9 subjects (the grep "eight" hits were `h·eight·t`); and the new causal lesson + `causal-dag` viz pass the mobile gate (canvas scales to 426px at the 500px
