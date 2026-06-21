@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 639 — Finish LA viz coverage via cross-topic curation → 18/19 (visualizations / curation)
+The LA "matrix-calculus" lessons I'd flagged as needing new builds actually have strong **cross-topic** matches (backprop/chain-rule viz already exist). Embedded: **`la-vector-add`**
+→ `la-basis-dimension` at "Coordinates: turning a vector into a list of numbers" (coordinates = combination weights in a basis); **`calc-chain`** → `la-gradients-jacobians` at "where
+calculus meets linear algebra"; **`dl-backprop-graph`** → `la-matrix-calculus-backprop` at "The chain rule as a product of Jacobians" (backprop *is* exactly that). LA viz coverage
+**15/19 → 18/19** — only the reference-style `la-matrix-derivative-identities` (an identities table, no natural single viz) remains.
+Verified: gate ALL GREEN; **headless** — all three lessons hydrate their embedded canvas (kErr=0 each), including the cross-topic calc & DL widgets inside LA lessons; errs=0. SW cache `atlas-v579` → `atlas-v580`.
+
 ## iter 638 — Linear Algebra viz coverage: cross-embed widgets into 5 no-viz lessons (visualizations / curation)
 Continued viz curation for Linear Algebra (was 10/19), pairing each no-viz lesson with its canonical existing visual at the right heading: **`la-vector-add`** → `la-span-independence`
 at "Span: the Set of All Reachable Points" (span = all linear combinations); **`la-linear-transform`** → `la-matrix-multiplication` at "Composition" (matrix product = composing maps);

@@ -214,7 +214,8 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    Prereq-graph: foundations (LA/calc/algos) intentionally have no upstream edges; downstream topics (DL/ML/LLM/IT) well-connected; PS/IT now connected. Graph is in good shape.
    ✅ iter 637: **LLM viz curation** — cross-embedded llm-decoding/cross-entropy/attention/embeddings + cross-topic rl-ppo-clip into 5 no-viz LLM lessons (10/19→15/19). Verified headless canvases hydrate, gate GREEN, SW →v578.
    ✅ iter 638: **LA viz curation** — vector-add/linear-transform/determinant/svd/eigen into 5 no-viz LA lessons (10/19→15/19). Verified headless hydrate, gate GREEN, SW →v579.
-   ⏳ Viz-curation frontier remaining: RL 6, LLM 4, LA 4 (matrix-calculus/backprop — need a NEW viz, no existing fit), algos ~9, calc ~8, DL ~5. Match existing viz to each no-viz lesson's intro heading; build new where no fit exists.
+   ✅ iter 639: **finished LA viz via cross-topic curation** — la-vector-add/calc-chain/dl-backprop-graph into 3 lessons (15/19→18/19; only ref-style la-matrix-derivative-identities left). Verified headless hydrate, gate GREEN, SW →v580.
+   ⏳ Viz-curation frontier remaining: RL 6, LLM 4, LA 1 (ref-style, skip), algos ~9, calc ~8, DL ~5. Cross-topic matches are fair game (e.g. dl-backprop/calc-chain/rl-ppo into other topics). Match existing viz to each no-viz lesson's intro heading.
    ★ The big remaining levers genuinely need OWNER STEER: (1) a 10th topic, (2) the lazy-load-data performance refactor.
    NEXT: PS lessons still lacking viz: sample-spaces, random-variables, expectation-variance, sampling-distributions; big levers are a 10th topic or the staged
    lazy-load-data perf project (owner steer). Keep varying lanes.
