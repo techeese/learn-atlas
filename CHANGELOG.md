@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 723 — Hard-concept: why distances concentrate in high dimensions (content / understandability)
+A fresh-eyes visual review (Library page) found it polished, and confirmed Library references are comprehensive per topic — no gaps. Then filled a genuine *conceptual* gap: the DR lesson stated the curse
+of dimensionality (distances become uninformative) but never explained the startling *why*. Added a 4th deep-dive to `ml-dimensionality-reduction` — "why distances concentrate in high dimensions":
+as $d$ grows, the nearest/farthest distance ratio → 1 (everything becomes ~equidistant) because a distance is a sum of $d$ coordinate contributions whose relative spread shrinks like $1/\sqrt{d}$ — which
+is exactly why k-NN/clustering/density estimates degrade and why reducing dimensions first helps.
+Verified: data parses; gate ALL GREEN; **headless** — 4 deep-dives render, the math typesets when expanded (kErr=0, rawDollar=0), errs=0. SW cache `atlas-v659` → `atlas-v660`.
+
 ## iter 722 — Glossary: dimensionality-reduction terms (reference)
 Confirmed learning paths are derived dynamically (new lessons auto-integrate — no staleness), then completed the DR lesson's glossary integration. Added **5 terms**: t-SNE, UMAP, Whitening, Explained
 variance ratio, Manifold (PCA, curse-of-dimensionality, dimensionality-reduction were already present). Glossary **268 → 273**.
