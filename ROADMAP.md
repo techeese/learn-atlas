@@ -182,6 +182,9 @@ The owner reviewed the mature site and set the next arc. Rotate across these (bi
    each showing upstream×local (incl. ∂L/∂z₁=∂L/∂a₁·σ′(z₁)); σ↔ReLU toggle shows vanishing vs gating. Embedded in dl-backpropagation;
    viz-complete →88. Verified: gate GREEN; headless lab route errs=0/canvas, steps 0→fwd4→back4 (8/8), toggle+reset work; lesson route
    2 canvases hydrate, kErr=0; screenshot eyeballed. SW →v366.
+   ✅ iter 579: **Interactive binary-entropy viz** (visualizations). 97th widget it-entropy-viz: H(p) curve peaking at 1 bit (p=0.5), draggable p + coin bars;
+   the one foundational entropy viz the catalog lacked. Embedded in it-entropy. Verified: gate GREEN (97 widgets); headless H(0.5)=1.000/H(0.1)=0.469, kErr=0/errs=0;
+   screenshot. SW →v519.
    ✅ iter 578: **Information Theory module 3 — Mutual Information** (content/depth). it-mutual-information (joint/conditional entropy, I(X;Y), MI vs correlation;
    full parity: MI code→0.28 + 3 dd + 8 MCQ 2/2/2/2 + 5 cards + 3 ex + 3 hw). Verified: gate GREEN (9 topics·161 lessons·110 code); headless nDD=3, code 0.28,
    kErr=0/errs=0. SW →v518. IT now 3 lessons; modules 4–6 queued (source coding, channel capacity, info in ML).

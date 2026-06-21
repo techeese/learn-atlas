@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 579 — Interactive binary-entropy viz for the new pillar (visualizations)
+The **97th widget, `it-entropy-viz` "Binary entropy: uncertainty peaks in the middle."** Drag a coin's bias `p` and watch the curve
+`H(p)=−p log₂ p −(1−p) log₂(1−p)`: it rises to a maximum of exactly **1 bit** at a fair coin (`p=0.5`, maximal uncertainty) and falls to **0** at the certain
+extremes (`p=0` or `1`). A moving dot + guide lines + live heads/tails bars make the central intuition of information theory tangible. It's the one foundational
+IT viz the catalog lacked (the existing entropy-related widgets are all *cross*-entropy); embedded in the Entropy lesson at "Maximum and minimum uncertainty."
+Verified: gate ALL GREEN (now **97 widgets**); **headless** — Lab canvas hydrates, the readout gives **H(0.5)=1.000** and **H(0.1)=0.469** (matching the math),
+the lesson's inline canvas hydrates, **kErr=0, errs=0**; screenshot shows the curve, dot, and coin bars. SW cache `atlas-v518` → `atlas-v519`.
+
 ## iter 578 — Information Theory module 3: Mutual Information (content / depth)
 Third IT lesson — **Mutual Information: Shared Uncertainty** (new module "Joint Information and Dependence"). Full parity: 8-section lecture (joint &
 conditional entropy + chain rule, `I(X;Y)=H(X)−H(X|Y)=H(X)+H(Y)−H(X,Y)`, MI as `D_KL(p(x,y)‖p(x)p(y))` so it's 0 iff independent, MI vs correlation), a

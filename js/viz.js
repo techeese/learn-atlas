@@ -5342,4 +5342,54 @@
     build(); draw();
   });
 
+
+  /* ========================================================
+     97. Binary entropy: uncertainty peaks in the middle (Information Theory)
+     ======================================================== */
+  register({ id: 'it-entropy-viz', topic: 'information-theory', title: 'Binary entropy: uncertainty peaks in the middle', blurb: 'The entropy of a coin with bias p. Drag p and watch the curve H(p) = -p log2 p - (1-p) log2(1-p): it rises to a maximum of exactly 1 bit at a fair coin (p = 0.5, maximal uncertainty) and falls to 0 at the certain extremes (p = 0 or 1). The whole of information theory starts here.' },
+  function (root) {
+    const W = 540, H = 360, padL = 46, padR = 16, padT = 18, padB = 34;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let p = 0.5;
+    const log2 = x => Math.log(x) / Math.log(2);
+    const Hb = q => (q <= 0 || q >= 1) ? 0 : -(q * log2(q) + (1 - q) * log2(1 - q));
+    function draw() {
+      const P_ = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = P_.bg; ctx.fillRect(0, 0, W, H);
+      const X = v => padL + v * (W - padL - padR), Y = v => (H - padB) - v * (H - padT - padB);
+      // axes
+      ctx.strokeStyle = P_.line; ctx.lineWidth = 1; ctx.beginPath();
+      ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(1), Y(0)); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(0), Y(1.05)); ctx.stroke();
+      ctx.fillStyle = P_.ink_mute || P_.line; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('0', X(0), Y(0) + 16); ctx.fillText('0.5', X(0.5), Y(0) + 16); ctx.fillText('1', X(1), Y(0) + 16);
+      ctx.fillText('p (probability of heads)', X(0.5), H - 6);
+      ctx.textAlign = 'right'; ctx.fillText('1 bit', X(0) - 6, Y(1) + 4); ctx.fillText('0', X(0) - 6, Y(0) + 4);
+      // gridline at H=1
+      ctx.strokeStyle = P_.line; ctx.globalAlpha = 0.4; ctx.setLineDash([3, 4]); ctx.beginPath(); ctx.moveTo(X(0), Y(1)); ctx.lineTo(X(1), Y(1)); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      // the binary entropy curve
+      ctx.strokeStyle = P_.sage; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i <= 240; i++) { const q = i / 240; const px = X(q), py = Y(Hb(q)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke();
+      // guide lines + dot at current p
+      const hp = Hb(p);
+      ctx.strokeStyle = P_.gold; ctx.globalAlpha = 0.55; ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+      ctx.beginPath(); ctx.moveTo(X(p), Y(0)); ctx.lineTo(X(p), Y(hp)); ctx.lineTo(X(0), Y(hp)); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      ctx.fillStyle = P_.gold; ctx.strokeStyle = P_.ink; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X(p), Y(hp), 6, 0, 7); ctx.fill(); ctx.stroke();
+      // little coin distribution bars (top-right)
+      const bx = X(1) - 92, by = padT + 6, bw = 34, bh = 54;
+      [['heads', p, P_.gold], ['tails', 1 - p, P_.sage]].forEach((d, k) => {
+        const x0 = bx + k * (bw + 12); ctx.fillStyle = P_.line; ctx.globalAlpha = 0.3; ctx.fillRect(x0, by, bw, bh); ctx.globalAlpha = 1;
+        ctx.fillStyle = d[2]; ctx.fillRect(x0, by + bh * (1 - d[1]), bw, bh * d[1]);
+        ctx.fillStyle = P_.ink_mute || P_.line; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.fillText(d[1].toFixed(2), x0 + bw / 2, by + bh + 12);
+      });
+      const verdict = hp > 0.95 ? 'maximally uncertain (a fair coin)' : hp < 0.15 ? 'nearly certain — little information per flip' : 'partly predictable';
+      info.innerHTML = 'p = <b>' + p.toFixed(2) + '</b> &middot; entropy H(p) = <b style="color:' + P_.gold + '">' + hp.toFixed(3) + '</b> bits &middot; ' + verdict + '.<br>Entropy is the average surprise per flip. It is largest (1 bit) at p = 0.5 where the coin is hardest to predict, and drops to 0 as p approaches 0 or 1, where the outcome is certain and a flip tells you nothing.';
+    }
+    slider(ctl, { label: 'bias p (heads)', min: 0.01, max: 0.99, step: 0.01, value: p, fmt: v => v.toFixed(2), onInput: v => { p = v; draw(); } });
+    button(ctl, '⏮ fair coin', function () { p = 0.5; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Binary entropy visualizer: the curve H(p) = -p log2 p - (1-p) log2(1-p) plotted against the coin bias p. A draggable point shows the current entropy; it peaks at exactly 1 bit when p = 0.5 (a fair coin, maximal uncertainty) and falls to 0 at p = 0 or p = 1 (a certain outcome). Two bars show the current heads/tails probabilities.');
+    draw();
+  });
+
 })();
