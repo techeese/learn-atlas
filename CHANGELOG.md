@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 708 — Step-back sweep (clean) + prune the bloated ROADMAP to a live queue (workflow / step-back)
+Step-back at ~8 iters since the last sweep. **Full 174-lesson regression sweep**: errs=0, no KaTeX errors, bad=none, Knowledge Map 810 nodes — the recent changes (duality/proximal/by-parts/bc-compounding
+viz, glossary, prereqs, references, deep-dives) introduced **zero regressions**. Also verified: all 122 viz embedded (0 orphaned), prereq graph well-connected, 80 recent MCQ answers correct (iter 706).
+**Ship (workflow / loop maintenance):** the loop reads `ROADMAP.md` first every iteration (Step 0), but it had bloated to **2348 lines** — a giant per-iteration ✅ log that buried the actual live queue.
+Pruned it to **78 lines**: a concise current-state + standing owner directive + completed-arcs summary + live queue, while **preserving verbatim** every durable section — the Improvement compass, Cadence,
+and all the critical Notes/discoveries LANDMINES (KaTeX envs, `<`-in-math, `\$` money, byte-stable injection, git hygiene, etc.). Full per-iteration history remains in this CHANGELOG. Zero site risk — ROADMAP
+is docs only (not a served asset, not in sw.js), so no SW bump.
+Verified: pruned ROADMAP retains all 6 durable-section markers; full sweep clean. No data/asset change.
+
 ## iter 707 — Hard-concept: the bias–variance decomposition (content / understandability)
 Found a genuine treatment gap: bias-variance is discussed across ~8 lessons and has a viz (`ml-bias-variance-viz`, embedded in `ml-model-selection`) and a U-curve diagnosis section — but the formal
 *decomposition* lived only in Deep Learning. Added a 4th deep-dive to `ml-model-selection` — "the bias–variance decomposition": $\mathbb E[(y-\hat f)^2]=\text{bias}^2+\text{variance}+\sigma^2$, naming
