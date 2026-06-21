@@ -8,7 +8,7 @@ move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration hi
 
 ## Current state (iter 708, 2026-06-22)
 **9 topics · 177 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 124 visualizations (all embedded) · 268 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
-- ✅ iter 721: `ml-dimensionality-reduction` topped to 16 MCQ + prereq edge → la-low-rank-pca/la-eigenvalues. Fully integrated; ML Unsupervised module now complete (clustering + dim-reduction). 177 lessons all at standard.
+- ✅ iter 721: `ml-dimensionality-reduction` topped to 16 MCQ + prereq edge. ✅ iter 722: +5 DR glossary terms (t-SNE, UMAP, whitening, explained-variance, manifold; glossary 268→273). DR lesson fully integrated across every surface. NOTE: learning paths are derived dynamically (new lessons auto-integrate — no curation needed).
 - ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ. ✅ iter 719: **NEW viz dl-vit-patchify** (124th — image→patches→tokens; DL viz 23/23). Recent current-gap fills (iters 711–719): MoE (lesson+viz), SSM/Mamba (deep-dive), ViT/multimodal (lesson+viz) — all fully built & integrated.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
 `node gate.js` is ALL GREEN and machine-checks content-parity (warns on any lesson below the standard). Last full 174-lesson regression sweep: iter 708, errs=0/bad=none.

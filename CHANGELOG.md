@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 722 — Glossary: dimensionality-reduction terms (reference)
+Confirmed learning paths are derived dynamically (new lessons auto-integrate — no staleness), then completed the DR lesson's glossary integration. Added **5 terms**: t-SNE, UMAP, Whitening, Explained
+variance ratio, Manifold (PCA, curse-of-dimensionality, dimensionality-reduction were already present). Glossary **268 → 273**.
+Verified: glossary parses; gate ALL GREEN; **headless** — all 5 render on `#/glossary` (5/5), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v658` → `atlas-v659`.
+
 ## iter 721 — Dimensionality-reduction lesson: MCQ top-up 8 → 16 + prereq edge (content / structure)
 Finished integrating the new dimensionality-reduction lesson. **MCQ top-up:** added 8 distinct MCQs (PC1 = max-variance direction, orthogonal components, PCA via SVD, whitening, UMAP-vs-t-SNE, PCA's
 linear limitation, explained-variance ratio, PCA's reusable/invertible transform vs t-SNE) → **4/4/4/4**, full parity. **Knowledge Map:** added the accurate prereq edge **`ml-dimensionality-reduction →
