@@ -5236,6 +5236,162 @@
               "solution": "Prior precision $1/\\sigma_0^2$ is large when $\\sigma_0^2$ is small, so in $1/\\sigma_n^2=1/\\sigma_0^2+n/\\sigma^2$ the prior term dominates until $n$ is large. A tight prior demands a lot of data to be moved; a vague (large-variance) prior yields quickly."
             }
           ]
+        },
+        {
+          "id": "ps-bayesian-decisions",
+          "title": "From Posterior to Decisions: Estimates, Intervals & Prediction",
+          "minutes": 15,
+          "content": "<h3>1. The posterior is the answer — now summarize it</h3>\n<p>Bayesian inference delivers a whole distribution, the posterior $p(\\theta\\mid D)$. That is the complete answer, but to act we often need to compress it: a single estimate, an interval, or a prediction about new data. Each summary answers a different question — and which one is \"right\" depends on what it will cost you to be wrong.</p>\n<h3>2. Point estimates and the loss they minimize</h3>\n<p>Three natural point estimates fall out of three loss functions:</p>\n<ul><li><b>Posterior mean</b> — minimizes expected <em>squared</em> error $(\\hat\\theta-\\theta)^2$.</li>\n<li><b>Posterior median</b> — minimizes expected <em>absolute</em> error $|\\hat\\theta-\\theta|$ (robust to skew).</li>\n<li><b>Posterior mode (MAP)</b> — minimizes expected <em>0–1</em> loss (right/wrong).</li></ul>\n<p>So choosing an estimator is really choosing a loss. For a symmetric posterior the three coincide; for a skewed one they differ, and you should pick the loss that matches your problem.</p>\n<h3>3. Credible intervals: equal-tailed vs HPD</h3>\n<p>A 95% credible interval holds 95% of the posterior mass. Two common choices: the <b>equal-tailed</b> interval cuts 2.5% from each side; the <b>highest-posterior-density (HPD)</b> interval is the <em>shortest</em> interval with 95% mass — every point inside is more probable than any point outside. For a symmetric posterior they agree; for a skewed one the HPD is tighter and never includes a low-density region.</p>\n<h3>4. The posterior predictive distribution</h3>\n<p>To predict new data $x_{\\text{new}}$ — not the parameter — average the likelihood over the posterior:</p>\n<p>$$p(x_{\\text{new}}\\mid D)=\\int p(x_{\\text{new}}\\mid\\theta)\\,p(\\theta\\mid D)\\,d\\theta.$$</p>\n<p>This is not \"plug in the best $\\theta$\": it integrates over <em>all</em> plausible $\\theta$, so it honestly carries parameter uncertainty into the prediction (wider, better-calibrated than a plug-in).</p>\n<h3>5. A worked prediction (Beta–Binomial)</h3>\n<p>With a uniform prior $\\mathrm{Beta}(1,1)$ and $7$ heads in $10$ flips, the posterior is $\\mathrm{Beta}(8,4)$. The probability the <em>next</em> flip is heads is the posterior mean:</p>\n<p>$$P(\\text{next}=H\\mid D)=\\frac{\\alpha+k}{\\alpha+\\beta+n}=\\frac{8}{12}\\approx 0.667.$$</p>\n<p>This is Laplace's <b>rule of succession</b> $\\frac{k+1}{n+2}$ — note it never predicts a flat $0$ or $1$, because the posterior keeps some belief on every $\\theta$.</p>\n<h3>6. Bayesian decision theory</h3>\n<p>To <em>act</em>, pick the action $a$ that minimizes <b>expected posterior loss</b>:</p>\n<p>$$a^\\star=\\arg\\min_a\\;\\mathbb E_{\\theta\\mid D}\\big[L(a,\\theta)\\big]=\\arg\\min_a\\int L(a,\\theta)\\,p(\\theta\\mid D)\\,d\\theta.$$</p>\n<p>This single rule unifies the estimators above (each is the optimal action under its loss) and extends to real decisions — treat or not, buy or sell — by weighting every outcome by how probable the posterior says it is.</p>\n<h3>7. Credible vs confidence: a last contrast</h3>\n<p>A Bayesian 95% credible interval says \"given the data, 95% probability $\\theta$ is in here.\" A frequentist 95% confidence interval says \"95% of such intervals, over many repetitions, would cover the fixed true $\\theta$\" — a statement about the procedure, not this interval. The simulation below shows confidence-interval coverage; the Bayesian version trades the need for a prior for the directly interpretable probability statement.</p>\n<div data-viz=\"ps-ci-coverage\"></div>\n<h3>8. Why this matters</h3>\n<p>Posterior predictive checks validate models; expected-loss decisions drive Bayesian optimization, A/B testing, and bandits; credible intervals report honest uncertainty. The recurring theme: keep the whole posterior as long as you can, and collapse it to a number only at the last moment, using the loss that matches your real goal.</p>",
+          "mcq": [
+            {
+              "q": "The posterior mean is the point estimate that minimizes expected:",
+              "choices": [
+                "Squared error",
+                "Absolute error",
+                "0–1 loss",
+                "Prior variance"
+              ],
+              "answer": 0,
+              "explain": "Mean ↔ squared error; median ↔ absolute error; mode/MAP ↔ 0–1 loss."
+            },
+            {
+              "q": "The highest-posterior-density (HPD) credible interval is:",
+              "choices": [
+                "Always symmetric about the mean",
+                "The shortest interval containing the target probability mass",
+                "The interval cutting equal tails",
+                "The same as a confidence interval"
+              ],
+              "answer": 1,
+              "explain": "Every point inside an HPD interval is denser than any point outside, making it the shortest such interval."
+            },
+            {
+              "q": "The posterior predictive distribution $p(x_{\\text{new}}\\mid D)$ is obtained by:",
+              "choices": [
+                "Taking the prior mean",
+                "Plugging the MAP estimate into the likelihood",
+                "Averaging the likelihood over the posterior of $\\theta$",
+                "Maximizing the likelihood"
+              ],
+              "answer": 2,
+              "explain": "$\\int p(x_{\\text{new}}\\mid\\theta)p(\\theta\\mid D)\\,d\\theta$ integrates over parameter uncertainty rather than fixing one $\\theta$."
+            },
+            {
+              "q": "With a uniform prior and $k$ successes in $n$ trials, the probability the next trial succeeds is:",
+              "choices": [
+                "Exactly 1 if $k\\gt 0$",
+                "$\\frac{k}{n}$",
+                "$\\frac{k}{n+1}$",
+                "$\\frac{k+1}{n+2}$ (Laplace's rule of succession)"
+              ],
+              "answer": 3,
+              "explain": "Posterior $\\mathrm{Beta}(1+k,1+n-k)$ has mean $\\frac{k+1}{n+2}$, the predictive success probability."
+            },
+            {
+              "q": "A Bayesian decision chooses the action that minimizes:",
+              "choices": [
+                "Expected posterior loss $\\mathbb E_{\\theta\\mid D}[L(a,\\theta)]$",
+                "The prior variance",
+                "The likelihood",
+                "The number of parameters"
+              ],
+              "answer": 0,
+              "explain": "Bayesian decision theory weights each outcome's loss by its posterior probability and picks the smallest expected loss."
+            },
+            {
+              "q": "Compared with plugging in a point estimate, the posterior predictive is:",
+              "choices": [
+                "Always narrower",
+                "Wider, because it includes uncertainty about $\\theta$",
+                "Identical",
+                "Undefined"
+              ],
+              "answer": 1,
+              "explain": "Integrating over the posterior adds parameter uncertainty to the sampling noise, widening and better-calibrating the prediction."
+            },
+            {
+              "q": "For a strongly right-skewed posterior, the mean, median, and mode:",
+              "choices": [
+                "Are all undefined",
+                "Are always equal",
+                "Differ, so the choice of estimator matters",
+                "Equal the prior mean"
+              ],
+              "answer": 2,
+              "explain": "Only for symmetric posteriors do the three coincide; under skew they separate and the loss function decides which to use."
+            },
+            {
+              "q": "A 95% credible interval (unlike a confidence interval) lets you say:",
+              "choices": [
+                "The prior was uniform",
+                "95% of repeated intervals cover $\\theta$",
+                "The estimate is unbiased",
+                "There is a 95% posterior probability $\\theta$ lies in it"
+              ],
+              "answer": 3,
+              "explain": "Credible intervals make a direct probability statement about $\\theta$ given the data; confidence intervals describe the long-run procedure."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Which estimator minimizes expected squared error?",
+              "back": "The posterior mean. (Median minimizes absolute error; mode/MAP minimizes 0–1 loss.)"
+            },
+            {
+              "front": "Equal-tailed vs HPD credible interval",
+              "back": "Equal-tailed cuts equal probability from each side; HPD is the shortest interval with the target mass (every inside point denser than any outside). They agree for symmetric posteriors."
+            },
+            {
+              "front": "Posterior predictive distribution",
+              "back": "$p(x_{\\text{new}}\\mid D)=\\int p(x_{\\text{new}}\\mid\\theta)p(\\theta\\mid D)\\,d\\theta$ — predict new data by averaging the likelihood over the posterior, carrying parameter uncertainty."
+            },
+            {
+              "front": "Laplace's rule of succession",
+              "back": "With a uniform prior, $P(\\text{next success})=\\frac{k+1}{n+2}$ — never exactly 0 or 1."
+            },
+            {
+              "front": "Bayesian decision rule",
+              "back": "Choose the action minimizing expected posterior loss $\\mathbb E_{\\theta\\mid D}[L(a,\\theta)]$."
+            },
+            {
+              "front": "Why is the predictive better than plug-in?",
+              "back": "It integrates over all plausible $\\theta$ instead of a single best estimate, so it includes parameter uncertainty and is better calibrated (wider)."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "A posterior over a coin's bias is $\\mathrm{Beta}(8,4)$. What is the probability the next two flips are both heads? (Assume conditional independence given $\\theta$, and use the predictive.)",
+              "hint": "For Beta, $P(\\text{HH})=\\frac{(\\alpha)(\\alpha+1)}{(\\alpha+\\beta)(\\alpha+\\beta+1)}$, or update after the first head then predict the second.",
+              "solution": "First head: predictive $\\frac{8}{12}$. Update to $\\mathrm{Beta}(9,4)$; second head predictive $\\frac{9}{13}$. So $P(\\text{HH})=\\frac{8}{12}\\cdot\\frac{9}{13}=\\frac{72}{156}\\approx 0.462$. (Plugging the point estimate $0.667^2\\approx 0.444$ understates it, because it ignores that two heads make high-$\\theta$ values more likely.)"
+            },
+            {
+              "prompt": "Your posterior for a quantity is right-skewed. Which point estimate would you report if large over-estimates and under-estimates cost you equally in absolute dollars?",
+              "hint": "Match the loss to the cost.",
+              "solution": "Absolute-error loss is minimized by the posterior median, so report the median. The mean would be pulled up by the skew; the mode could sit far from the bulk of the mass."
+            },
+            {
+              "prompt": "Explain in one or two sentences why a posterior predictive interval is wider than a \"plug in the MLE\" prediction interval.",
+              "hint": "What uncertainty does each include?",
+              "solution": "The plug-in interval uses a single estimated $\\theta$ and so reflects only sampling noise; the posterior predictive averages over the whole posterior, adding the uncertainty <em>about</em> $\\theta$ itself, which widens (and better calibrates) the interval."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Three estimates of one posterior",
+              "body": "A posterior is $\\mathrm{Beta}(8,4)$ (mean $0.667$, mode $0.7$, median $\\approx 0.68$). Which to report?",
+              "solution": "If squared error matters, report the mean $0.667$; for absolute error, the median $\\approx 0.68$; for \"most probable single value\", the mode/MAP $0.7$. They are close here because Beta(8,4) is only mildly skewed; for a strongly skewed posterior the choice matters."
+            },
+            {
+              "title": "Predicting the next observation",
+              "body": "Uniform prior, 3 heads in 3 flips. What is $P(\\text{next}=H)$?",
+              "solution": "Posterior $\\mathrm{Beta}(1+3,1+0)=\\mathrm{Beta}(4,1)$; predictive $\\frac{4}{5}=0.8$ (Laplace: $\\frac{3+1}{3+2}=0.8$). Not $1.0$ — three heads is strong but not conclusive evidence, so the prediction stays short of certainty."
+            },
+            {
+              "title": "A decision under expected loss",
+              "body": "Should you ship a feature if the posterior probability it helps is $0.7$, shipping a harmful feature costs 10 and withholding a helpful one costs 3?",
+              "solution": "Expected loss of shipping $=0.3\\times 10=3.0$; of withholding $=0.7\\times 3=2.1$. Withholding has lower expected loss, so — despite \"probably helps\" — the asymmetric costs say don't ship. Decision theory, not just the point estimate, drives the call."
+            }
+          ]
         }
       ]
     }

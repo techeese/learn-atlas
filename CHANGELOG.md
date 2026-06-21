@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 654 — Bayesian Inference module: lesson 3 "From Posterior to Decisions" (content)
+Module 6 lesson 3, **`ps-bayesian-decisions` "From Posterior to Decisions: Estimates, Intervals & Prediction"**: 8 sections (summarizing the posterior · point estimates and the
+loss each minimizes — **mean↔squared, median↔absolute, MAP↔0–1** · equal-tailed vs HPD credible intervals · the posterior predictive · a worked Beta–Binomial prediction (Laplace's
+rule of succession, `8/12`) · Bayesian decision theory / expected loss · credible-vs-confidence contrast · why it matters), the `ps-ci-coverage` viz embedded, **3 examples · 3 homework
+· 6 flashcards · 8 MCQs** (2/2/2/2, keys asserted). Predictive math re-derived (Beta(8,4) → next-head 0.667 = mean = Laplace). Site now **168 lessons**; Module 6 has 3 lessons.
+Verified: data parses; gate ALL GREEN; **headless** — lecture renders 22 KaTeX, 0 errors, rawDollar=0; ps-ci-coverage hydrates; quiz "Question 1 of 8", 4 choices, qKErr=0; errs=0. SW cache `atlas-v593` → `atlas-v594`.
+
 ## iter 653 — Bayesian Inference module: lesson 2 "Conjugate Priors" (content)
 Continued **PS → Module 6: Bayesian Inference** (content-first; MCQ top-ups batched later). Added lesson 2, **`ps-conjugate-priors` "Conjugate Priors: Updates Without Integrals"**:
 8 sections (the integral conjugacy avoids · the conjugate idea · Beta–Binomial · **Gaussian–Gaussian precision-weighted averaging** · Gamma–Poisson · why conjugacy = the
