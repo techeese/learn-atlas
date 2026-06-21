@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 671 — Bayesian module: deep-dives — ps-computational-bayes → MODULE 6 AT FULL PARITY (content / understandability)
+Final deep-dive top-up. Added 3 to `ps-computational-bayes`: **smarter samplers** (Gibbs sampling; Hamiltonian Monte Carlo, the engine behind Stan), **the two directions of KL**
+(VI minimizes the mode-seeking reverse KL → under-confident), and **the reparameterization trick** (`z=μ+σε` → low-variance ELBO gradients → variational autoencoders). 
+**All 4 Bayesian lessons now have 3 deep-dives** — so Module 6 "Bayesian Inference" matches the site standard on **every dimension**: 8-section content · 16 MCQ · 3 examples · 3 homework ·
+6 flashcards · embedded viz · hands-on code · prereq edges · **3 deep-dives**.
+Verified: data parses; gate ALL GREEN; confirmed all 4 lessons at 3 deep-dives; **headless** — 3 `details.deep-dive` render, expanded math renders (kErr=0, rawDollar=0), ps-lln hydrates, errs=0. SW cache `atlas-v609` → `atlas-v610`.
+
 ## iter 670 — Bayesian module: deep-dives — ps-bayesian-decisions (content / understandability)
 Added 3 deep-dives to `ps-bayesian-decisions`: **why each estimator minimizes its loss** (mean↔squared via the vanishing derivative, median↔absolute, mode↔0–1), **HPD vs equal-tailed
 intervals** (HPD shortest but can be disjoint for multimodal posteriors; equal-tailed reparametrization-invariant), and **the expected value of information** (decision theory extended to
