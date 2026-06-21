@@ -6483,4 +6483,69 @@
     draw();
   });
 
+
+  /* ========================================================
+     119. Causal DAGs: fork, chain, collider & d-separation (Probability & Statistics)
+     ======================================================== */
+  register({ id: 'causal-dag', topic: 'probability-statistics', title: 'Causal graphs: when conditioning helps or hurts', blurb: 'The three building blocks of every causal diagram. A FORK (Z causes both X and Y) makes X and Y correlate with no causal link — conditioning on the confounder Z removes the spurious tie. A CHAIN (X→Z→Y) carries a real effect — conditioning on the mediator Z blocks it. A COLLIDER (X→Z←Y) leaves X and Y independent — but conditioning on Z (or its descendant) INDUCES a spurious association. Pick a structure and toggle "condition on Z" to see the path open or close.' },
+  function (root) {
+    const W = 540, H = 300;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let kind = 'fork', cond = false;
+    const NODES = {
+      fork:     { Z: [270, 70], X: [130, 220], Y: [410, 220], edges: [['Z', 'X'], ['Z', 'Y']] },
+      chain:    { X: [110, 150], Z: [270, 150], Y: [430, 150], edges: [['X', 'Z'], ['Z', 'Y']] },
+      collider: { Z: [270, 70], X: [130, 220], Y: [410, 220], edges: [['X', 'Z'], ['Y', 'Z']] }
+    };
+    function arrow(a, b, col) {
+      const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, r = 26;
+      const x0 = a[0] + ux * r, y0 = a[1] + uy * r, x1 = b[0] - ux * r, y1 = b[1] - uy * r;
+      ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+      const ah = 9, ang = Math.atan2(uy, ux);
+      ctx.beginPath(); ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 - ah * Math.cos(ang - 0.4), y1 - ah * Math.sin(ang - 0.4));
+      ctx.lineTo(x1 - ah * Math.cos(ang + 0.4), y1 - ah * Math.sin(ang + 0.4));
+      ctx.closePath(); ctx.fill();
+    }
+    function node(pos, label, fill, stroke) {
+      ctx.fillStyle = fill; ctx.strokeStyle = stroke; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.arc(pos[0], pos[1], 26, 0, 7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = stroke; ctx.font = 'bold 18px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(label, pos[0], pos[1] + 1);
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const G = NODES[kind];
+      // status: are X and Y associated (given current conditioning)?
+      let assoc, msg;
+      if (kind === 'fork') { assoc = !cond; msg = cond ? 'Conditioning on the confounder Z BLOCKS the backdoor path → X ⊥ Y. This is how adjustment removes confounding.' : 'Z is a common cause, so X and Y correlate with NO causal link (confounded).'; }
+      else if (kind === 'chain') { assoc = !cond; msg = cond ? 'Z is a mediator; conditioning on it BLOCKS the causal path → X ⊥ Y given Z. You just removed the effect you wanted.' : 'The effect of X flows through Z to Y — a genuine causal association.'; }
+      else { assoc = cond; msg = cond ? 'Conditioning on the collider Z OPENS a non-causal path → a SPURIOUS association appears (collider/selection bias).' : 'Z is a common effect; the path is naturally blocked → X ⊥ Y (do not condition on Z).'; }
+      // optional spurious/active link between X and Y
+      if (assoc) {
+        ctx.strokeStyle = (kind === 'chain') ? p.sage : p.rust; ctx.globalAlpha = 0.5; ctx.setLineDash([4, 4]); ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(G.X[0] + 24, G.X[1] + 14); ctx.quadraticCurveTo((G.X[0] + G.Y[0]) / 2, H - 20, G.Y[0] - 24, G.Y[1] + 14); ctx.stroke();
+        ctx.setLineDash([]); ctx.globalAlpha = 1;
+      }
+      G.edges.forEach(([a, b]) => arrow(G[a], G[b], p.line));
+      // conditioning box on Z
+      if (cond) { ctx.strokeStyle = p.gold; ctx.lineWidth = 2.5; ctx.setLineDash([5, 3]); ctx.strokeRect(G.Z[0] - 34, G.Z[1] - 34, 68, 68); ctx.setLineDash([]); }
+      node(G.X, 'X', p.panel, p.ink);
+      node(G.Y, 'Y', p.panel, p.ink);
+      node(G.Z, 'Z', cond ? p.gold : p.panel, cond ? p.bg : p.ink);
+      const col = assoc ? (kind === 'chain' ? p.sage : p.rust) : p.mute;
+      info.innerHTML = '<b>' + kind.toUpperCase() + '</b> &middot; Z ' + (cond ? '<b style="color:' + p.gold + '">conditioned</b>' : 'free') + ' &middot; X and Y are <b style="color:' + col + '">' + (assoc ? 'ASSOCIATED' : 'INDEPENDENT') + '</b>. ' + msg;
+    }
+    button(ctl, 'Fork (confounder)', () => { kind = 'fork'; draw(); });
+    button(ctl, 'Chain (mediator)', () => { kind = 'chain'; draw(); });
+    button(ctl, 'Collider', () => { kind = 'collider'; draw(); });
+    button(ctl, 'Toggle condition on Z', () => { cond = !cond; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Causal-graph visualizer with three selectable structures over variables X, Y, Z. Fork: Z points to both X and Y (a confounder) — X and Y are associated until you condition on Z, which blocks the path. Chain: X to Z to Y (Z a mediator) — associated until conditioning on Z blocks the causal path. Collider: X and Y both point into Z — X and Y are independent until conditioning on Z opens a spurious association. A toggle conditions on Z (drawn as a gold box) and the readout reports whether X and Y are associated or independent.');
+    draw();
+  });
+
 })();

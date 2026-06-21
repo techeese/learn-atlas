@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 683 — NEW viz: causal DAGs — fork, chain, collider & d-separation (visualizations)
+Built the **119th widget, `causal-dag` "Causal graphs: when conditioning helps or hurts"** — the keystone picture of causal inference. Pick **fork** (confounder Z→X, Z→Y), **chain** (mediator
+X→Z→Y), or **collider** (X→Z←Y), and toggle "condition on Z" to watch the path between X and Y open or close: conditioning *removes* a fork's spurious tie, *blocks* a chain's real effect, and —
+counterintuitively — *induces* a spurious association at a collider (selection/collider bias). Embedded in `ps-causation-confounding` §2, deepening the causal thread started in iter 679.
+Verified: gate ALL GREEN (now **119 widgets**); **headless** — Lab hydrates; collider is INDEPENDENT when free and ASSOCIATED when conditioned (the key d-separation result); kErr=0, errs=0;
+screenshot shows the gold conditioning box on Z. SW cache `atlas-v620` → `atlas-v621`.
+
 ## iter 682 — Model-based RL lesson: cross-embed the gridworld planning viz (visualizations / curation)
 `rl-model-based` ("Model-Based RL & Planning") had no viz, yet its core is *planning* — running value iteration on a (learned) model to extract a policy, which is exactly what `rl-gridworld`
 shows. Cross-embedded **`rl-gridworld`** at §4 "Planning: turning a model into a policy". RL viz coverage **15/20 → 16/20**.
