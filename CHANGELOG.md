@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 663 — Bayesian module: Monte Carlo code exercise (examples / understandability)
+Second Bayesian code exercise, in `ps-computational-bayes`: a deterministic **Monte Carlo** summary from a fixed sample array — posterior mean ≈ 0.560 and `P(θ>0.6) ≈ 0.40` (a
+probability as a fraction of samples), reinforcing the lesson's "sample, don't integrate" theme. Deterministic on purpose (no `Math.random`) so the gate can execute and check it. Site
+code-exercises **120 → 121**.
+Verified: data parses; gate ALL GREEN and ran the exercise (121 total); **headless** — lesson renders the code runner, ps-lln viz still hydrates, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v602` → `atlas-v603`. (Queued: ps-conjugate-priors, ps-bayesian-decisions code exercises.)
+
 ## iter 662 — Bayesian module: hands-on code exercise (examples / understandability)
 Closed a parity gap — 15/24 PS lessons had a runnable code exercise but the 4 new Bayesian lessons had none. Added a **"Code it: a Bayesian update"** exercise to `ps-bayesian-inference`:
 a short JavaScript Beta–Binomial update (prior Beta(2,2) + 7 heads/10 → posterior Beta(9,5), mean 0.643, vs flat-prior MLE 0.700) that the learner can run and tweak. The gate executes
