@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 571 — More hands-on code: determinant · exponential CDF · empirical risk (new functionality / code)
+Three more runnable exercises in previously code-free lessons, each matching its content:
+- **la-matrices-as-transformations** → **2×2 determinant** `ad−bc` → `10` (the factor by which the transformation scales areas).
+- **ps-uniform-exponential** → **exponential CDF** `1−e^{−λt}` for λ=0.5, t=2 → `0.632`.
+- **dl-ml-recap-and-the-learning-problem** → **accuracy / empirical risk**: fraction of predictions matching labels → `0.50`.
+Loops written with `>=` (no `<`); guard scoped to the inserted block.
+Verified: `node gate.js` **runs all three** → **107 code-exercises verified** (was 104), ALL GREEN; **headless** — each playground hydrates, Run yields the matching
+output (all OK), errs=0. SW cache `atlas-v510` → `atlas-v511`.
+
 ## iter 570 — Step-back: full 8-topic audit (clean) + three more third dives (content / depth)
 **Round-number step-back.** Two health audits, both clean:
 - **Runtime kErr+route sweep**: all **158 lessons** (every example revealed, every dd opened) → errs=0, kErr=0, 0 bad; all **133 non-lesson routes** (incl. 8
