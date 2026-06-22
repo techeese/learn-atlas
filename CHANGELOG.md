@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 798 — Hard-concept: the convolution theorem & FFT-fast convolution (content)
+Explored a bold "11th topic" move and did the due diligence first: causal inference is already covered (`ps-causation-confounding`, `ps-causal-graphs`), but **Fourier/signal-processing** (convolution theorem, sampling/Nyquist)
+and **game theory** are genuine gaps. Rather than unilaterally commit the loop to a large, scope-debatable new pillar, shipped a *contained* piece of that gap: a 4th deep-dive in `dl-convolution-operation` on the
+**convolution theorem** — convolution in space = pointwise multiplication in frequency ($\mathcal{F}\{f*g\}=\mathcal{F}\{f\}\cdot\mathcal{F}\{g\}$), so an FFT convolves in $O(n\log n)$ instead of $O(nk)$; why CNNs' tiny 3×3 kernels
+still use direct convolution; and the punchline that a conv kernel *is* a frequency filter. Genuinely advanced content that connects DL convolution, the FFT, and signal processing.
+Verified: data parses + round-trips; gate ALL GREEN (incl. proseInMath on the Fourier math); **headless** — 4 deep-dives render, theorem/frequency/complexity text present, 143 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v731` → `atlas-v732`.
+
 ## iter 797 — Cross-link: CLIP ↔ the contrastive-learning lesson (understandability)
 Non-code lane for range. Confirmed multimodal LLMs are already covered (`dl-vision-transformers` has a "how a multimodal LLM sees" deep-dive + "CLIP's contrastive objective") and that lesson completion already has a full
 juice flow (completion stamp + XP/unlock toasts + module/topic confetti). Then improved the knowledge graph: the "CLIP's contrastive objective" deep-dive described the loss but didn't link to the dedicated contrastive-learning
