@@ -108,6 +108,94 @@
               ],
               "answer": 3,
               "explain": "Forecast = future from past."
+            },
+            {
+              "q": "How does a \"cyclic\" component differ from a seasonal one?",
+              "choices": [
+                "A cycle has no fixed period; seasonality repeats on a known fixed period",
+                "A cycle repeats exactly every 12 months",
+                "They are identical",
+                "A cycle is pure noise"
+              ],
+              "answer": 0,
+              "explain": "Cyclic = swings with no fixed period (e.g. business cycles)."
+            },
+            {
+              "q": "The residual (noise) component is:",
+              "choices": [
+                "The long-term direction",
+                "What remains after the trend and seasonality are removed",
+                "The repeating seasonal pattern",
+                "The first value of the series"
+              ],
+              "answer": 1,
+              "explain": "Residual = leftover after structure is removed."
+            },
+            {
+              "q": "Taking the logarithm of a series is useful because it:",
+              "choices": [
+                "Adds a trend",
+                "Removes all noise",
+                "Turns a multiplicative series into an additive one",
+                "Shuffles the time order"
+              ],
+              "answer": 2,
+              "explain": "log of a product is a sum → multiplicative becomes additive."
+            },
+            {
+              "q": "Differencing a series ($y_t - y_{t-1}$) is mainly used to:",
+              "choices": [
+                "Reverse the time order",
+                "Add seasonality",
+                "Increase the noise",
+                "Remove a trend and move toward stationarity"
+              ],
+              "answer": 3,
+              "explain": "First differences strip a linear trend."
+            },
+            {
+              "q": "A stationary time series is one whose:",
+              "choices": [
+                "Statistical properties (mean, variance, autocorrelation) don't change over time",
+                "Values are all equal",
+                "Trend grows forever",
+                "Points are independent"
+              ],
+              "answer": 0,
+              "explain": "Stationary = time-invariant statistics."
+            },
+            {
+              "q": "Forward-chaining (rolling-origin) validation always:",
+              "choices": [
+                "Shuffles points into random folds",
+                "Tests on a period that comes after the training window",
+                "Tests on the earliest data",
+                "Ignores the time order"
+              ],
+              "answer": 1,
+              "explain": "The test point is strictly in the future of the train window."
+            },
+            {
+              "q": "The autocorrelation function (ACF) measures:",
+              "choices": [
+                "The number of data points",
+                "The average value of the series",
+                "The correlation of a series with lagged copies of itself",
+                "The trend slope"
+              ],
+              "answer": 2,
+              "explain": "ACF at lag k = correlation with the series shifted by k."
+            },
+            {
+              "q": "A window-$w$ moving average of a length-$n$ series produces:",
+              "choices": [
+                "A single number",
+                "More points than the input",
+                "Exactly $n$ points always",
+                "Fewer points than the input (it loses points at the edges)"
+              ],
+              "answer": 3,
+              "explain": "A window of w yields n − w + 1 outputs."
             }
           ],
           "flashcards": [

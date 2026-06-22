@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 760 — Time Series lesson 1 MCQ top-up 8 → 16 (content / assessment)
+Brought the 10th topic's first lesson `ts-what-is-a-time-series` to the 16-MCQ standard. Added **8 new MCQs**: cyclic-vs-seasonal (no fixed period), the residual component, the log transform (multiplicative→additive),
+differencing (remove a trend), stationarity, forward-chaining validation, the ACF, and moving-average output length. Balanced → **4/4/4/4**. The lesson is now at full parity.
+Verified: data parses + round-trips; gate ALL GREEN with **no parity warning**; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v693` → `atlas-v694`.
+
 ## iter 759 — NEW TOPIC (10th): Time Series & Forecasting — phase 1 (content / new pillar)
 Made the bold move the mission calls for and the owner directive pre-blesses (new topics welcome; additive/reversible): started a **10th topic, Time Series & Forecasting** — the genuinely-absent, distinct pillar that
 bridges Probability/Statistics and the sequence models in DL/LLMs. **Phase 1:** the topic skeleton (`data/time-series.js`, icon ∿, terracotta) + Module 1 "Foundations of Time Series" + the first lesson fully built —
