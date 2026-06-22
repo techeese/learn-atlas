@@ -11,6 +11,8 @@
 
   // Level thresholds: total XP needed to *reach* a level (index = level-1).
   // Quadratic-ish curve, named after scholarly ranks.
+  // NOTE: the index.html pre-hydrate script mirrors this curve (and the flame tiers) to paint the level
+  // badge before the deferred scripts boot — keep the two arrays in sync if you add/rename a rank.
   const LEVELS = [
     { t: 0,    name: "Novice" },
     { t: 150,  name: "Apprentice" },

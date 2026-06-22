@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 785 — Close out the pre-hydrate/store.js mirror: verify level badge, sync-note the LEVELS curve (correctness hardening)
+Follow-up to the iter-784 streak bug (same class: the index.html pre-hydrate duplicates store.js logic to paint the header before the deferred scripts boot). Audited the **level/XP badge** half of the mirror: the pre-hydrate
+`LEVELS` array matches `store.js` **exactly** (0 Novice … 8500 Polymath) and the first paint is correct — verified isolated at xp=5000 → **ring 8, "Master", "5,000 XP · 1,200 to Luminary"**, matching `levelInfo()`. No drift, no
+sibling flash bug. Added a reciprocal sync-note to `store.js`'s `LEVELS` (mirroring the one added to `touchStreak`) so a future rank add/rename updates both copies. The pre-hydrate↔store.js mirror is now fully verified and documented across streak + level + flame.
+Verified: store.js parses; gate ALL GREEN; level-badge first-paint correct (isolated); all-routes smoke errs=0 (ring=8, streak=3). SW cache `atlas-v718` → `atlas-v719`.
+
 ## iter 784 — BUGFIX: streak header flashed a stale/broken count on reopen (owner bug report)
 **Owner-reported:** the N-day streak display rendered wrong. Root cause found via seeded saves: the **index.html pre-hydrate** script (which paints the header before the ~6MB deferred scripts boot) showed the *saved*
 `s.streak` verbatim — so reopening after a missed day flashed the **stale, now-broken streak with an over-hot flame** (proven: a 5-day-old streak of 30 painted as `30` / `blazing`) for up to a second before `touchStreak`
