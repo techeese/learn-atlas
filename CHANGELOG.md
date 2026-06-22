@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 750 — Step-back sweep + FIX a sparse hole in the glossary + gate hardening (step-back / bug / workflow)
+Step-back at iter 750. **Full 179-lesson regression sweep**: errs=0, no KaTeX errors, Knowledge Map 837 nodes — confirms the iter-746 math-normalizer rewrite is clean across the whole corpus. (Two lessons flag rawDollar>4
+in the sweep heuristic — l-prompting & ps-expectation-variance — but those are the known *legitimate* escaped-money `\$` lessons confirmed clean at iter 732, not garble; gate's proseInMath would catch real garble.)
+**Bug (broken wins):** a stray double comma `},,` after the "Marginal likelihood" entry (from an earlier append) left a **sparse hole** at `GLOSSARY[230]` — an `undefined` slot that `.forEach` silently *skips* (so the gate's
+missing-term check never saw it) but `.map`/index/`.find` access hits, which would break the inline-tooltip builder. Fixed the double comma (array now 287 dense entries, 0 holes).
+**Gate hardening:** added a sparse-hole check to gate.js (a `for`-loop with `i in gloss`, which catches what `forEach` can't). Negative control: reintroducing `,,` now fails the gate (`hole at index 230`); restored → green.
+Verified: glossary + gate parse; gate ALL GREEN; full sweep clean; **headless** — the entries flanking the former hole (Marginal likelihood, Confounder) render, kErr=0, errs=0. SW cache `atlas-v686` → `atlas-v687` (glossary.js is served).
+
 ## iter 749 — Hard-concept: the lottery ticket hypothesis (content / understandability)
 Verified the recent viz pass the **true-390px mobile gate** (double-descent — the densest-label one — scales cleanly, no overflow) — no fix needed. Then completed the "over-parameterization surprises" trilogy: with
 double descent (iters 741-742) and grokking (745) already in place, added a 5th deep-dive to `dl-overfitting-and-regularization` on the **lottery ticket hypothesis** — a dense network contains a sparse "winning ticket"

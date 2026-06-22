@@ -181,8 +181,12 @@ C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
 // glossary: render-hazard lint every definition + flag duplicate terms (the inline-tooltip source of truth)
 const gloss = global.window.GLOSSARY || [];
 const gseen = {};
+// sparse-hole check (iter 750): a stray double comma ",," in an array literal leaves an undefined slot that
+// .forEach SKIPS (so the missing-term check below never sees it) but .map/index access hits — breaking tooltips.
+// A plain for-loop with "i in" catches the hole that forEach can't.
+for (let i = 0; i < gloss.length; i++) if (!(i in gloss)) errors.push("glossary array has a hole at index " + i + " — a stray ',,' in data/glossary.js");
 gloss.forEach((t, i) => {
-  if (!t || !t.term || !t.def) { errors.push("glossary entry missing term/def: #" + i); return; }
+  if (!t || !t.term || !t.def) { errors.push("glossary entry missing term/def: #" + i + " (" + JSON.stringify(t) + ")"); return; }
   const k = String(t.term).toLowerCase();
   if (gseen[k]) errors.push("duplicate glossary term: " + t.term); else gseen[k] = 1;
   checkRender(t.def, "glossary['" + t.term + "'].def");
