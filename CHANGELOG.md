@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 753 — Glossary: pruning/weight-decay/lottery-ticket terms + RESCUE the iter-752 SW bump (reference / bug)
+Confirmed the CLT is already richly covered (ps-clt viz in two lessons + multiple deep-dives) — foundations are as deep as the modern content. Then completed the iter-749 lottery-ticket deep-dive's glossary integration:
+added **Lottery ticket hypothesis, Pruning, Weight decay** (glossary **287 → 290**), now powering tooltips across the regularization lessons.
+**Bug (broken wins):** discovered via `git log -- sw.js` that **iter 752's SW bump never made it into its commit** — the playground.js change (new ML/IT examples) shipped under unchanged `CACHE=atlas-v687`, so cached PWA users
+were still being served the *old* playground. Bumping to **v688** here re-fetches all assets, belatedly delivering the iter-752 playground examples AND this iter's glossary terms to returning users.
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 terms render (3/3), kErr=0, rawDollar=0, errs=0; and `git show --stat` confirmed sw.js is in this commit (the check that would have caught 752).
+
 ## iter 752 — Playground: examples for the two uncovered topics (examples)
 A fresh-eyes review of the Code Playground found it polished (clear Pyodide/network expectations, JS runs offline, editor + Run/Copy) — no bug. But its 16 examples spanned only 7 of 9 topics: **machine-learning and
 information-theory had none** (the apparent "duplicates" were just language-paired Python/JS versions, not real dups). Added two self-contained Python examples — a **k-NN classifier** (ML; majority-vote over nearest points →
