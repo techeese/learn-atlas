@@ -7363,4 +7363,49 @@
     draw();
   });
 
+
+  /* ========================================================
+     137. Rolling-origin backtesting: train on past, test on next (Time Series)
+     ======================================================== */
+  register({ id: 'ts-backtesting', topic: 'time-series', title: 'Rolling-origin backtesting', blurb: 'You cannot shuffle a time series, so cross-validation has to respect the clock. Rolling-origin backtesting trains on the past (sage), forecasts the window that immediately follows (gold), then rolls the cut-point forward and repeats — each row is one train/test split, and every test window sits in the future of its training data. Toggle between an expanding window (training set keeps growing) and a sliding window (fixed size, forgetting old data when the process drifts). Averaging the gold-window errors gives an honest estimate of forecast skill.' },
+  function (root) {
+    const W = 540, H = 300, padL = 14, padR = 14, padT = 18, padB = 30, rowGap = 8;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const N = 24, H_ = 3, K = 5, firstCut = 9;   // series length, horizon, splits, first cut-point
+    let expanding = true;
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const gridW = W - padL - padR, gridH = H - padT - padB;
+      const rowH = (gridH - rowGap * (K - 1)) / K, unit = gridW / N;
+      const win = firstCut;   // sliding-window train width
+      ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace');
+      for (let i = 0; i < K; i++) {
+        const y = padT + i * (rowH + rowGap);
+        const cut = firstCut + i * H_;            // train ends here
+        const valEnd = Math.min(cut + H_, N);
+        const trainStart = expanding ? 0 : Math.max(0, cut - win);
+        // baseline faint track
+        ctx.fillStyle = 'rgba(150,136,113,0.13)'; ctx.fillRect(padL, y + rowH / 2 - 2, gridW, 4);
+        // train segment (sage)
+        ctx.fillStyle = 'rgba(136,163,122,0.5)'; ctx.fillRect(padL + trainStart * unit, y + 1, (cut - trainStart) * unit - 1, rowH - 2);
+        // validation window (gold)
+        ctx.fillStyle = p.gold; ctx.fillRect(padL + cut * unit, y + 1, (valEnd - cut) * unit - 1, rowH - 2);
+        ctx.fillStyle = p.mute; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText('split ' + (i + 1), padL + valEnd * unit + 6, y + rowH / 2);
+      }
+      // time axis arrow
+      ctx.strokeStyle = p.line; ctx.fillStyle = p.mute; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.beginPath(); ctx.moveTo(padL, H - padB + 10); ctx.lineTo(padL + gridW * 0.6, H - padB + 10); ctx.stroke();
+      ctx.fillText('time →', padL, H - 8);
+      info.innerHTML = '<b style="color:' + (expanding ? p.gold : p.mute) + '">' + (expanding ? 'Expanding' : 'Sliding') + ' window</b> · <span style="color:' + p.sage + '">sage</span> = train (past), <span style="color:' + p.gold + '">gold</span> = forecast & test (next). ' +
+        'The cut-point rolls forward each split; every test window is strictly in the <em>future</em> of its training data — ' + (expanding ? 'and the training set keeps growing.' : 'with a fixed-width window that forgets old data.');
+    }
+    button(ctl, 'Toggle expanding / sliding', () => { expanding = !expanding; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Rolling-origin backtesting diagram: five stacked train/test splits on a left-to-right time axis. In each split the training portion (sage) covers the past up to a cut-point and the test window (gold) is the segment immediately after; the cut-point rolls forward each split so every test window lies in the future of its training data. A button toggles between an expanding training window that grows and a fixed-width sliding window.');
+    draw();
+  });
+
 })();

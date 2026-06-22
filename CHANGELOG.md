@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 789 — NEW viz: rolling-origin backtesting (visualizations)
+The visual companion to iter-788's deep-dive (and the time-respecting counterpart to iter-787's k-fold viz): the **137th widget, `ts-backtesting`**. Five stacked train/test splits on a left-to-right time axis — training on the
+past (sage), forecasting the window immediately after (gold), with the cut-point rolling forward each split so every test window sits strictly in the *future* of its training data. A button toggles **expanding** (training set grows)
+vs **sliding** (fixed width, forgets old data on drift). Embedded in section 6 "Backtesting: rolling-origin evaluation" of `ts-forecast-evaluation`. Deterministic. Now the evaluation arc is fully visual: ROC (786) → k-fold CV (787) → rolling-origin (789).
+Verified: gate ALL GREEN (now **137 widgets**); **headless** — Lab hydrates, readout reads "Expanding window" and toggles to "Sliding window", kErr=0, errs=0; screenshot shows the staircase of train/test windows marching forward in time. SW cache `atlas-v722` → `atlas-v723`.
+
 ## iter 788 — Hard-concept: why you can't k-fold a time series (content / understandability)
 Rotated off viz. Confirmed the Glossary UX is already strong (search + topic-filter chips + clickable terms + Visualize chips). Then a genuine cross-topic deepening that builds on iter-787's CV viz: `ts-forecast-evaluation`
 mentioned k-fold but had no dedicated treatment of *why* standard cross-validation breaks on time series. Added a 4th deep-dive — **rolling-origin backtesting**: shuffling or training on the future is leakage (the glowing CV
