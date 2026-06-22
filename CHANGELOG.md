@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 754 — ROADMAP de-duplication (workflow / loop maintenance)
+Step-6 loop maintenance (flagged at iter 753): the ROADMAP had ballooned to **321 lines** because the entire section block (Current state → … → Backlog) was **duplicated 5×** — and the copies had diverged/interleaved
+(a botched concatenation; one boundary even split mid-line). Reconstructed a single clean **80-line** live queue: refreshed the Current-state to iter-753 reality (179 lessons · 129 viz · 290 glossary · last sweep iter 750),
+folded the recent arcs (modern-AI stack, over-parameterization trilogy, gate hardening) into "Completed arcs", trimmed stale ✅ queue lines (they live in CHANGELOG), and preserved every **binding** section verbatim
+(OWNER DIRECTIVE, Improvement compass, Cadence, Backlog, LANDMINES) — updating the landmines to fold in the iter-732 proseInMath, iter-750/751 sparse-hole, and iter-753 SW-bump-verification lessons.
+Verified: 9 section headers each appear exactly once; 1 current-state line; all binding sections present; `node gate.js` ALL GREEN (ROADMAP isn't gate-validated or served — no cache bump). Only ROADMAP.md changed.
+
 ## iter 753 — Glossary: pruning/weight-decay/lottery-ticket terms + RESCUE the iter-752 SW bump (reference / bug)
 Confirmed the CLT is already richly covered (ps-clt viz in two lessons + multiple deep-dives) — foundations are as deep as the modern content. Then completed the iter-749 lottery-ticket deep-dive's glossary integration:
 added **Lottery ticket hypothesis, Pruning, Weight decay** (glossary **287 → 290**), now powering tooltips across the regularization lessons.
