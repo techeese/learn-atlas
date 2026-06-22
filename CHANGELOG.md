@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 740 — Step-back sweep (clean) + SSL glossary terms (step-back / reference)
+Step-back at ~10 iters since the last sweep. **Full 179-lesson regression sweep**: errs=0, no KaTeX errors, bad=none, Knowledge Map 837 nodes — the SSL lesson + reparameterization/contrastive viz introduced **zero
+regressions**.
+**Ship:** completed the SSL lesson's glossary integration. Added **5 terms**: Self-supervised learning (SSL), Contrastive learning, InfoNCE, Pretext task, Representation collapse (CLIP already existed from the
+iter-718 ViT/CLIP set). Glossary **279 → 284**.
+Verified: glossary parses; gate ALL GREEN (incl. proseInMath on the $\tau$-bearing InfoNCE def); full sweep clean; **headless** — all 6 SSL terms render on `#/glossary` (6/6), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v676` → `atlas-v677`.
+
 ## iter 739 — NEW viz: contrastive learning clusters an embedding space (visualizations)
 Completed the SSL lesson's visual. Built the **128th widget, `dl-contrastive`**: 6 items × 2 views (positive pairs, colour-coded) in a 2-D embedding space with a training-steps slider. At step 0 it's a random
 jumble; dragging the slider applies the contrastive force — positives pull together, different items push apart — so same-colour points collapse into tight clusters (avg positive distance 1.25 → 0.01) while the
