@@ -7268,4 +7268,50 @@
     draw();
   });
 
+
+  /* ========================================================
+     135. ROC curve & AUC: sweep the threshold (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-roc', topic: 'machine-learning', title: 'ROC curve & AUC: the threshold-free score', blurb: 'A classifier outputs scores; you pick a threshold to call something positive. The ROC curve plots the true-positive rate against the false-positive rate as that threshold sweeps from strict to lenient. "Class separation" sets how distinguishable the two classes are: at 0 the classes overlap completely and the curve collapses to the diagonal (a coin flip, AUC 0.5); push it up and the curve bows toward the top-left corner (a perfect classifier, AUC 1). AUC — the area under the curve — summarises every threshold at once. The dot is your current operating point.' },
+  function (root) {
+    const W = 540, H = 330, padL = 46, padR = 16, padT = 16, padB = 40;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let d = 1.4, thr = 0.7;   // class separation, threshold (0..1 normalized across the score range)
+    function erf(x) { const s = x < 0 ? -1 : 1; x = Math.abs(x); const p = 0.3275911, t = 1 / (1 + p * x); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
+    const Phi = x => 0.5 * (1 + erf(x / Math.SQRT2));
+    const TPR = t => 1 - Phi(t - d), FPR = t => 1 - Phi(t);   // neg ~ N(0,1), pos ~ N(d,1)
+    const LO = -4, HI = 7, tAt = u => LO + (HI - LO) * (1 - u);   // u in [0,1] → threshold (u=1 strict/high t? invert so dot moves intuitively)
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const plotW = W - padL - padR, plotH = H - padT - padB;
+      const X = fpr => padL + fpr * plotW, Y = tpr => padT + (1 - tpr) * plotH;
+      // axes
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.strokeRect(padL, padT, plotW, plotH);
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace');
+      ctx.textAlign = 'center'; ctx.fillText('False-positive rate →', padL + plotW / 2, H - 12);
+      ctx.save(); ctx.translate(13, padT + plotH / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('True-positive rate →', 0, 0); ctx.restore();
+      // diagonal = random classifier
+      ctx.strokeStyle = p.mute; ctx.setLineDash([5, 4]); ctx.globalAlpha = .7; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(1), Y(1)); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      // ROC curve + AUC shading + AUC (trapezoid)
+      const pts = []; for (let tt = HI; tt >= LO; tt -= 0.04) pts.push([FPR(tt), TPR(tt)]);
+      ctx.fillStyle = 'rgba(224,164,88,0.13)'; ctx.beginPath(); ctx.moveTo(X(0), Y(0));
+      pts.forEach(q => ctx.lineTo(X(q[0]), Y(q[1]))); ctx.lineTo(X(1), Y(0)); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.4; ctx.beginPath(); pts.forEach((q, i) => { const x = X(q[0]), y = Y(q[1]); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke();
+      let auc = 0; for (let i = 1; i < pts.length; i++) auc += (pts[i][0] - pts[i - 1][0]) * (pts[i][1] + pts[i - 1][1]) / 2;
+      // operating point
+      const t0 = tAt(thr), fx = FPR(t0), ty = TPR(t0);
+      ctx.fillStyle = p.rust; ctx.strokeStyle = p.bg; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(fx), Y(ty), 6, 0, 7); ctx.fill(); ctx.stroke();
+      const quality = auc >= 0.9 ? 'excellent' : auc >= 0.8 ? 'good' : auc >= 0.7 ? 'fair' : auc >= 0.6 ? 'poor' : 'near-random';
+      info.innerHTML = 'AUC = <b style="color:' + p.gold + '">' + auc.toFixed(3) + '</b> (<b>' + quality + '</b>) · operating point: TPR <b style="color:' + p.rust + '">' + ty.toFixed(2) + '</b>, FPR <b style="color:' + p.rust + '">' + fx.toFixed(2) + '</b>. ' +
+        (d < 0.1 ? 'The classes fully overlap — the curve <em>is</em> the diagonal; no threshold beats a coin flip.' : 'Slide the threshold to trade recall (TPR) against false alarms (FPR); raise separation to bow the curve toward the corner.');
+    }
+    slider(ctl, { label: 'class separation', min: 0, max: 3, step: 0.05, value: d, fmt: v => v.toFixed(2), onInput: v => { d = v; draw(); } });
+    slider(ctl, { label: 'threshold (operating point)', min: 0, max: 1, step: 0.01, value: thr, fmt: v => v.toFixed(2), onInput: v => { thr = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'ROC curve explorer: true-positive rate versus false-positive rate as a decision threshold sweeps, for two Gaussian class-score distributions. A class-separation slider controls overlap — at 0 the curve is the diagonal (AUC 0.5, random); higher separation bows it toward the top-left corner (AUC toward 1). A threshold slider marks the current operating point on the curve, and AUC (area under the curve) is reported.');
+    draw();
+  });
+
 })();

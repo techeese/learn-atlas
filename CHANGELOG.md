@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 786 — NEW viz: ROC curve & AUC (visualizations)
+Back to the content rotation. Filled a genuine gap (audited the catalog: ROC, confusion matrix, cross-validation were missing) with the **135th widget, `ml-roc`**: an interactive ROC explorer. A "class separation"
+slider sets how distinguishable the two Gaussian score distributions are — at 0 the curve collapses to the diagonal (AUC 0.5, a coin flip), and raising it bows the curve toward the top-left corner (AUC → 1); a threshold
+slider marks the operating point (TPR/FPR) on the curve. AUC is shaded and reported with a quality label. Embedded in the "precision, recall, and the ROC curve" deep-dive of `ml-model-selection`. Deterministic (analytic Gaussian CDF via an erf approximation).
+Verified: AUC re-derived in Node (trapezoid == closed-form Φ(d/√2): 0.5, 0.76, 0.92, 0.98); gate ALL GREEN (now **135 widgets**); **headless** — Lab + lesson hydrate, AUC tracks separation 0.500 → 0.983, kErr=0, errs=0; screenshot shows the bowed curve + shaded AUC + diagonal. SW cache `atlas-v719` → `atlas-v720`.
+
 ## iter 785 — Close out the pre-hydrate/store.js mirror: verify level badge, sync-note the LEVELS curve (correctness hardening)
 Follow-up to the iter-784 streak bug (same class: the index.html pre-hydrate duplicates store.js logic to paint the header before the deferred scripts boot). Audited the **level/XP badge** half of the mirror: the pre-hydrate
 `LEVELS` array matches `store.js` **exactly** (0 Novice … 8500 Polymath) and the first paint is correct — verified isolated at xp=5000 → **ring 8, "Master", "5,000 XP · 1,200 to Luminary"**, matching `levelInfo()`. No drift, no
