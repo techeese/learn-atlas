@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 767 — ARIMA lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `ts-arima` to the 16-MCQ standard. Added **8 new MCQs**: ACF-cutoff→MA(q), φ=1 random walk, residuals=white noise, AIC/BIC order selection, SARIMA seasonal terms, auto.arima, the ARIMA-MA vs smoothing-MA
+distinction, and AR(2). Balanced → **4/4/4/4**. All four Time Series lessons now at full parity.
+Verified: data parses + round-trips; gate ALL GREEN with **no parity warning**; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v700` → `atlas-v701`.
+
 ## iter 766 — NEW lesson: ARIMA (Time Series #4) (content)
 The centerpiece classical model — `ts-arima` "ARIMA: Autoregression, Integration & Moving Averages" (Module 2): 8 sections (one model/three ideas · AR(p) regress on past values · MA(q) regress on past errors · ARMA ·
 the I/differencing · AR(1) in action · choosing p,d,q via Box–Jenkins/ACF/PACF/AIC · SARIMA & where ARIMA fits vs deep), a runnable **AR(1) code exercise** (mean-reverting → 10,8,6.8,6.08,5.65), 3 deep-dives (AR-vs-MA &

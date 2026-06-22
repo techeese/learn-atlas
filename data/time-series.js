@@ -846,6 +846,94 @@
               ],
               "answer": 3,
               "explain": "Global/covariate-rich problems suit deep forecasters."
+            },
+            {
+              "q": "A sharp cutoff in the ACF at lag q (with a tailing PACF) suggests:",
+              "choices": [
+                "An MA(q) term",
+                "An AR(q) term",
+                "More differencing is needed",
+                "A deterministic trend"
+              ],
+              "answer": 0,
+              "explain": "ACF cutoff → MA order; PACF cutoff → AR order."
+            },
+            {
+              "q": "An AR(1) with $\\phi = 1$ is:",
+              "choices": [
+                "Strongly mean-reverting",
+                "A random walk — non-stationary, with a unit root",
+                "Pure white noise",
+                "A seasonal model"
+              ],
+              "answer": 1,
+              "explain": "phi=1 is the unit-root boundary."
+            },
+            {
+              "q": "After fitting a good ARIMA model, the residuals should look like:",
+              "choices": [
+                "A perfect sine wave",
+                "A strong trend",
+                "White noise (no remaining autocorrelation)",
+                "The original series"
+              ],
+              "answer": 2,
+              "explain": "Good fit → residuals are unpredictable."
+            },
+            {
+              "q": "AIC and BIC are used in ARIMA to:",
+              "choices": [
+                "Compute the forecast errors",
+                "Difference the series",
+                "Remove seasonality",
+                "Select model orders by balancing fit against complexity"
+              ],
+              "answer": 3,
+              "explain": "Information criteria penalize extra parameters."
+            },
+            {
+              "q": "SARIMA extends ARIMA by adding:",
+              "choices": [
+                "Seasonal AR, I, and MA terms at the seasonal lag",
+                "A neural network",
+                "A second difference always",
+                "External weather data"
+              ],
+              "answer": 0,
+              "explain": "SARIMA = seasonal ARIMA."
+            },
+            {
+              "q": "The function $\\texttt{auto.arima}$ chooses orders by:",
+              "choices": [
+                "Picking p=d=q=1 always",
+                "Searching over (p, d, q) and minimizing an information criterion (AICc)",
+                "Using the largest possible orders",
+                "Random guessing"
+              ],
+              "answer": 1,
+              "explain": "Automated Box-Jenkins via AICc search."
+            },
+            {
+              "q": "The \"moving average\" in ARIMA differs from a smoothing moving average because it averages:",
+              "choices": [
+                "The seasonal indices",
+                "Past raw values, not errors",
+                "Past forecast errors, not past raw values",
+                "Nothing — they are the same"
+              ],
+              "answer": 2,
+              "explain": "ARIMA's MA term uses error shocks."
+            },
+            {
+              "q": "An AR(2) model predicts the next value from:",
+              "choices": [
+                "The mean and variance only",
+                "The previous two forecast errors",
+                "Two seasonal cycles",
+                "The previous two values of the series"
+              ],
+              "answer": 3,
+              "explain": "AR(2): two autoregressive lags."
             }
           ],
           "flashcards": [
