@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 746 — Faster boot: batch the math normalizer's plain-char copy (performance)
+`normalizeMath()` runs once at boot and escapes `<`/`\$` across the whole corpus (23,581 strings, ~2.6MB) to keep math/money render-safe before any innerHTML — a real first-paint cost (~105ms cold in Node). It's a
+deliberate eager invariant (search/glossary/daily-picks assume pre-normalized content), so lazifying is off the table. Instead, optimized `escapeMathLt` itself: the inner loop copied non-math text **one char at a time**
+(`out += ch`); now it copies each run of plain chars up to the next `$`/`\` in a single `slice`. **Byte-identical output** (verified: 0 mismatches across all 23,581 strings vs the old implementation) — pure speedup, ~40%
+on the math pass (22.6 → 13.5 ms/pass in Node steady-state). Zero behavior change to the render-safety logic.
+Verified: app.js parses; gate ALL GREEN; old-vs-new output identical on the corpus; **headless regression** — math renders on every route (la-eigenvalues 164 KaTeX, glossary 300, …), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v682` → `atlas-v683`.
+
 ## iter 745 — Hard-concept: grokking (delayed generalization) (content / understandability)
 A fresh-eyes review of the cheatsheet found it excellent (Print/Save PDF, rich Q&A cards, math renders, auto-includes new lessons' flashcards) — no bug. Then filled a genuine modern gap: **grokking** (a network
 memorizes immediately but suddenly generalizes thousands of steps later, under weight decay) was uncovered anywhere. Added a deep-dive to `dl-overfitting-and-regularization` — the companion to its double-descent

@@ -41,7 +41,11 @@
         if (closed < 0) { out += s.slice(i); break; } // unbalanced — leave the remainder as-is
         out += delim + math.replace(/</g, "&lt;") + delim;
         i = closed + delim.length;
-      } else { out += ch; i++; }
+      } else {
+        // copy a whole run of plain chars (up to the next $ or \) in one slice — same output, far fewer concats
+        let k = i + 1; while (k < n && s[k] !== "$" && s[k] !== "\\") k++;
+        out += s.slice(i, k); i = k;
+      }
     }
     return out;
   }
