@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 745 — Hard-concept: grokking (delayed generalization) (content / understandability)
+A fresh-eyes review of the cheatsheet found it excellent (Print/Save PDF, rich Q&A cards, math renders, auto-includes new lessons' flashcards) — no bug. Then filled a genuine modern gap: **grokking** (a network
+memorizes immediately but suddenly generalizes thousands of steps later, under weight decay) was uncovered anywhere. Added a deep-dive to `dl-overfitting-and-regularization` — the companion to its double-descent
+discussion: both show that *what happens after you fit the data* (and which fitting solution the optimizer drifts to) can matter more than the fit, and that regularization shapes *which* solution you land on.
+Verified: data parses; gate ALL GREEN (incl. proseInMath); **headless** — 4 deep-dives render, grokking text present when expanded (kErr=0, rawDollar=0), errs=0. SW cache `atlas-v681` → `atlas-v682`.
+
 ## iter 744 — Spawn-a-Test: smart scope default fixes the first-run dead-end (UX)
 A fresh-eyes review of the test flow found it robust (2864-question bank, mastery mode, empty-scope Start correctly disabled) — but a **brand-new user hit a dead-end**: the scope `<select>` always defaulted to its first
 option, "Only lessons I've completed (0)", so with 0 completions the readout showed "0 questions" and Start was disabled on first visit. Fixed: the default now adapts — a user with **no completed lessons** lands on
