@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 861 — Deepen Game Theory: Bayesian games & signaling (content)
+Filled another distinct, uncovered GT branch (verified Bayesian-games/incomplete-info absent; causal inference is already its own pair of stats lessons). Added a deep-dive to `gt-mixed-zero-sum` (its 4th): when you don't know others'
+payoffs, model the private information as a **type** $\theta_i$ with a common prior; a **Bayesian Nash equilibrium** has every type best-respond against beliefs about others' types. The second-price auction *is* a Bayesian game (a bidder's
+value is their type) — cross-linked to `gt-foundations`. Plus **signaling** (Spence): costly, type-dependent actions credibly reveal hidden information (education, warranties) while cheap talk is ignored.
+Verified: g()-guarded; function-replacer inject (backslash-safe), `\theta` intact, no control chars, no leakage, parses; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, Bayesian/type/signal + cross-link present, 12 KaTeX, kErr=0, errs=0. SW cache `atlas-v794` → `atlas-v795`.
+
 ## iter 860 — Step-back: kErr-aware sweep (clean) + NEW Shapley viz (step-back / visualizations)
 Step-back at ~10 iters. **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 850, specifically validating the Shapley deep-dive/code (the injection that
 nearly corrupted the file via `$'`-substitution, now confirmed clean).
