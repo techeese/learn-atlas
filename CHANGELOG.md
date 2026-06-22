@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 770 — Step-back sweep (clean) + Time Series glossary terms (step-back / reference)
+Step-back, overdue at 20 iters since the last sweep (the entire 10th topic landed in between). **Full 184-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **862 nodes** —
+the new Time Series topic (5 lessons + decomposition viz) and everything else integrate with **zero regressions**.
+**Ship:** completed the Time Series topic's glossary integration. Added **6 terms**: Stationarity (time series), Autocorrelation (ACF), ARIMA, Exponential smoothing, Backtesting, Seasonality — now powering inline tooltips
+across the five TS lessons. Glossary **293 → 299** (0 holes).
+Verified: glossary parses; gate ALL GREEN (incl. proseInMath + sparse-hole checks); full sweep clean; **headless** — all 6 render on `#/glossary` (6/6), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v703` → `atlas-v704`.
+
 ## iter 769 — Forecast-evaluation lesson MCQ top-up 8 → 16 (content / assessment)
 Brought `ts-forecast-evaluation` to the 16-MCQ standard. Added **8 new MCQs**: k-fold temporal leakage, RMSE ≥ MAE, skill score, MAPE-undefined-at-zero, interval sharpness, the seasonal-naive baseline, centered-feature
 leakage, and the pinball loss. Balanced → **4/4/4/4**. All **five** Time Series lessons now at full parity — the entire classical track is complete and standard-compliant.
