@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 775 — Map verified at 10 topics + cross-link RNNs → forecasting (understandability)
+Rotated off Time Series. Verified the **Knowledge Map renders cleanly at 10 topics** — "185 concepts · 10 paths radiating outward" (dynamic counts correct), a rich but uncrowded constellation, all 10 topics in the
+sidebar; no bug. Then a genuine cross-topic connection: the Time Series capstone already prereqs *into* the DL sequence models, but there was no link *back* — so DL learners couldn't discover forecasting as an application of
+RNNs. Added a see-also in `dl-rnn-lstm-gru` §1 → `ts-deep-forecasting` ("these sequence models are a foundation of modern time-series forecasting"), completing the bidirectional connection.
+Verified: data parses; gate ALL GREEN (dangling-link lint confirms the target resolves); **headless** — map renders at 10 topics, the see-also link surfaces and points to the forecasting lesson, kErr=0, errs=0; map screenshot reviewed. SW cache `atlas-v708` → `atlas-v709`.
+
 ## iter 774 — NEW viz: AR(1) process explorer (visualizations)
 Strengthened the (viz-light) 10th topic with the **132nd widget, `ts-ar-process`**: an AR(1) explorer where a single φ slider switches the whole regime — 0<φ<1 mean-reverts (stationary), φ=1 becomes a random walk
 (unit root, non-stationary), |φ|>1 explodes (auto-scaled so you see it run off), and negative φ oscillates/flips sign — all on the same fixed noise. Directly illustrates ARIMA's AR section and the |φ|<1 stationarity
