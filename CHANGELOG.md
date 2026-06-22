@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 781 — New TS viz pass mobile gate + cross-link SAEs → autoencoders (mobile check / understandability)
+Verified the three new Time Series viz at **true 390px** (iframe-wrapped) — the densest, the 4-panel decomposition, renders cleanly: all panels labeled/legible, sliders usable, no overflow; the single-panel AR and
+exponential-smoothing viz are simpler still. Mobile gate passes — no fix needed. Then a genuine cross-link: the iter-779 SAE deep-dive introduces sparse autoencoders without connecting them to the autoencoder the learner
+already met — added an inline link, "An SAE is exactly an [autoencoder] — same encode/decode, with sparsity doing the work," → `dl-autoencoders-vae`. Connects new advanced material to prior knowledge.
+Verified: data parses; gate ALL GREEN (dangling-link lint confirms the target resolves); **headless** — the link renders and points to the autoencoder lesson, kErr=0, errs=0; mobile screenshot reviewed. SW cache `atlas-v714` → `atlas-v715`.
+
 ## iter 780 — Step-back sweep (clean) + interpretability glossary terms (step-back / reference)
 Step-back at ~10 iters. **Full 185-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **868 nodes** — zero regressions since iter 770 (the TS deep-forecasting lesson, 2 new
 viz, and many deep-dives/glossary all clean).
