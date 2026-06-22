@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 800 — Milestone step-back: clean sweep + Fourier glossary terms (step-back / reference)
+**Iteration 800.** Step-back at ~10 iters. **Full 185-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **868 nodes** — zero regressions since iter 790 (the convolution-theorem
+deep-dive, four new code exercises spanning algorithms/probability/ML/calculus/linear-algebra, the Library search+filter UX, and the eval cross-links all clean).
+**Ship:** completed the iter-798 convolution-theorem integration with **2 glossary terms** — Fourier transform and Convolution theorem ($\mathcal{F}\{f*g\}=\mathcal{F}\{f\}\cdot\mathcal{F}\{g\}$) — now powering tooltips. Glossary **307 → 309** (0 holes).
+Milestone state: **10 topics · 185 lessons · 137 visualizations · 309 glossary terms · 144 code exercises · 64 filterable library resources**, every lesson at full content-parity, the whole corpus regression-clean.
+Verified: glossary parses; gate ALL GREEN; full sweep clean; **headless** — both terms render on `#/glossary` (2/2), 317 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v733` → `atlas-v734`.
+
 ## iter 799 — NEW code exercise: test linear independence in code (examples / hands-on)
 Added a runnable exercise to `la-span-independence` (linear algebra — a fresh topic for hands-on), which had none. Since determinants come 6 lessons later, it avoids that forward-reference and uses the lesson's own level: two
 vectors are dependent iff one is a scalar multiple of the other, checked by cross-multiplying ($u_0 v_1 = u_1 v_0$, no division) — which (a nice foreshadow) is exactly the 2×2 determinant. Output: `[2,1] & [4,2] -> dependent;
