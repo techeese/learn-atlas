@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 848 — Deepen Game Theory: mechanism design & the second-price auction (content)
+Expanded the thinnest topic into a major applied branch it was missing. Added a deep-dive to `gt-foundations` (its 4th): in a **first-price** auction you shade your bid below your value $v$; in a **Vickrey (second-price)** auction —
+highest bidder wins but pays the *second* bid — bidding your true value becomes a **dominant strategy**, the exact concept the lesson opens with. That's **mechanism design**: engineer the rules so self-interest reveals the truth and the item
+goes to whoever values it most. Its generalizations (VCG, GSP) run Google/Meta ad auctions and spectrum auctions — game theory shifting from *describing* behavior to *designing* it.
+Verified: g()-guarded; injected via encoded raw-replace into the push-wrapper file (backslash-safe, unique anchor, no leakage — per the [[atlas-pushwrapper-injection]] memory); LaTeX intact, no control chars; gate ALL GREEN; **headless** — 4 deep-dives, Vickrey/second-price/mechanism-design/dominant-strategy all present, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v781` → `atlas-v782`.
+
 ## iter 847 — Dashboard audited (excellent) + forecast glossary terms (UX check / reference)
 Investigated the dashboard for the "want to come back" dimension: it's excellent — stats, today's XP goal, streak strip, three rotating "of the day" picks, a **"Keep it fresh" fading-concepts strip** (spacing-effect nudge via
 `fadingConcepts()`), bookmarks, and a nearest-achievement nudge. The retention machinery is thoroughly built (nothing to fix). Then completed the iter-846 forecast-cone with **3 glossary terms** — Prediction interval, Forecast horizon,
