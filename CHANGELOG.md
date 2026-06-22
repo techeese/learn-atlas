@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 810 — Step-back sweep (clean) + Game Theory glossary terms (step-back / reference)
+Step-back at ~10 iters. **Full 186-lesson regression sweep across all 11 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **874 nodes** — zero regressions since iter 800, validating the entire new Game Theory topic
+(lesson + Nash viz + 16 MCQ) and all integration.
+**Ship:** Game Theory had no glossary terms — added **6 core terms**: Nash equilibrium, Dominant strategy, Zero-sum game, Prisoner's Dilemma, Mixed strategy, Pareto optimality — now powering tooltips across the topic. Glossary **312 → 318** (0 holes).
+Verified: glossary parses; gate ALL GREEN; full sweep clean; **headless** — all 6 render on `#/glossary` (6/6), kErr=0, errs=0. SW cache `atlas-v743` → `atlas-v744`.
+
 ## iter 809 — Game Theory build-out: gt-foundations to full 16-MCQ parity (content / assessment)
 Brought the new topic's first lesson to the 16-MCQ standard. Added **8 new MCQs**: best response, iterated elimination of dominated strategies, Matching-Pennies→mixed-strategy, zero-sum definition, mechanism design, repeated-game
 cooperation, dominated strategy, and Stag-Hunt coordination. Balanced → **4/4/4/4**. `gt-foundations` is now at full content-parity (gate reports no parity warning).
