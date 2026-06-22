@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 799 — NEW code exercise: test linear independence in code (examples / hands-on)
+Added a runnable exercise to `la-span-independence` (linear algebra — a fresh topic for hands-on), which had none. Since determinants come 6 lessons later, it avoids that forward-reference and uses the lesson's own level: two
+vectors are dependent iff one is a scalar multiple of the other, checked by cross-multiplying ($u_0 v_1 = u_1 v_0$, no division) — which (a nice foreshadow) is exactly the 2×2 determinant. Output: `[2,1] & [4,2] -> dependent;
+[2,1] & [4,3] -> independent`. Placed in section 3 "Linear Independence vs. Dependence".
+Verified: data parses + round-trips; `<`→`&lt;` and `&`→`&amp;` escaped in the code (innerHTML-safe; confirmed the `&` decodes to a literal `&` in the browser, not "&amp;"); **gate ALL GREEN — code-exercises verified**; **headless** — Run executes, output exactly right, no literal entities, kErr=0, errs=0. SW cache `atlas-v732` → `atlas-v733`.
+
 ## iter 798 — Hard-concept: the convolution theorem & FFT-fast convolution (content)
 Explored a bold "11th topic" move and did the due diligence first: causal inference is already covered (`ps-causation-confounding`, `ps-causal-graphs`), but **Fourier/signal-processing** (convolution theorem, sampling/Nyquist)
 and **game theory** are genuine gaps. Rather than unilaterally commit the loop to a large, scope-debatable new pillar, shipped a *contained* piece of that gap: a 4th deep-dive in `dl-convolution-operation` on the
