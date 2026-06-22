@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 859 — NEW code exercise: compute a Shapley value (examples / hands-on)
+Made the iter-857 Shapley concept tangible with a runnable demo (gt-repeated-cooperation's 2nd code exercise), right after the deep-dive. A 3-player game (singletons 0, pairs 70–90, grand coalition 120): averaging each player's
+marginal contribution over all 6 join orders yields **Shapley values: [45, 40, 35]** (summing to 120 — efficiency). Turns the abstract averaging formula into something you run.
+Verified: computation re-derived in Node; injected via **function replacer** (per the new `$'`-substitution memory) into the push-wrapper file, no leakage; `<=`→`&lt;=` escaped (decode confirmed); **gate ALL GREEN — code-exercises verified (now 159)**; **headless** — Run executes, output exactly right, kErr=0, errs=0. SW cache `atlas-v792` → `atlas-v793`.
+
 ## iter 858 — Glossary: cooperative-game terms (reference)
 Completed the iter-857 Shapley thread with **3 glossary terms** — **Shapley value** ($v(S\cup\{i\})-v(S)$ averaged over join orders), **Cooperative game**, and **SHAP** (tagged machine-learning — the GT→XAI bridge). Glossary **346 → 349** (0 holes).
 Verified: glossary parses with `\cup` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 339 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v791` → `atlas-v792`.
