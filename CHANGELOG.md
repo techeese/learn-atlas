@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 854 — Wire batch norm ↔ weight initialization (understandability)
+Content gap-hunting is exhausted (even RoPE, MoE, flash-attention have dedicated LLM lessons), so I strengthened the cross-topic web. Batch normalization and weight initialization are **complementary cures for the same instability** —
+unstable signal/gradient flow through depth — so I added a **bidirectional cross-link**: `dl-dropout-and-normalization` ↔ `dl-initialization-and-vanishing-gradients`. Init sets well-scaled signals *before* training; BN re-standardizes
+them *during* it (a third remedy alongside the lesson's gradient-clipping and residual-connection remedies).
+Verified: byte-stable JSON re-serialize (both links present, both resolve); gate ALL GREEN (internal-links lint); **headless** — each lesson's `.see-also` link renders with the right text ("weight initialization" / "batch and layer normalization"), errs=0. SW cache `atlas-v787` → `atlas-v788`.
+
 ## iter 853 — Glossary: training-technique terms (reference)
 Audited the normalization/training-technique vocabulary: batch norm, layer norm, dropout, weight decay, gradient clipping were already defined, but three common, taught-but-undefined terms were missing. Added **Internal covariate
 shift** (the drift BN fixes — completing the iter-851 BN viz thread), **Early stopping**, and **Data augmentation**. Glossary **343 → 346** (0 holes).
