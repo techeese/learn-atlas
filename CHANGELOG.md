@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 765 — Exponential-smoothing lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `ts-exponential-smoothing` to the 16-MCQ standard. Added **8 new MCQs**: the naive forecast, moving-average equal weights, SES weights summing to 1, flat multi-step forecast, Holt–Winters multiplicative,
+beating the baseline, the ETS acronym (Error/Trend/Seasonal), and SES ≡ ARIMA(0,1,1). Balanced → **4/4/4/4**. All three Time Series lessons now at full parity.
+Verified: data parses + round-trips; gate ALL GREEN with **no parity warning**; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v698` → `atlas-v699`.
+
 ## iter 764 — NEW lesson + module: Moving Averages & Exponential Smoothing (Time Series #3) (content)
 Third Time Series lesson, opening a **new Module 2 "Classical Forecasting"** — `ts-exponential-smoothing`: 8 sections (baseline forecasts naive/mean/drift · moving average as a forecast · simple exponential
 smoothing (SES) · computing SES · the α responsiveness dial · Holt's trend method · Holt–Winters seasonality · when to use ETS), a runnable **SES code exercise** (α=0.5 → 10,11,12,12,13.5), 3 deep-dives (geometric/exponential

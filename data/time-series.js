@@ -602,6 +602,94 @@
               ],
               "answer": 3,
               "explain": "ETS = strong, cheap baseline."
+            },
+            {
+              "q": "The \"naive\" forecast predicts that the next value:",
+              "choices": [
+                "Equals the most recent observation",
+                "Equals the overall average",
+                "Is a random number",
+                "Is always zero"
+              ],
+              "answer": 0,
+              "explain": "Naive: y-hat = y_t."
+            },
+            {
+              "q": "Compared with simple exponential smoothing, a plain moving average:",
+              "choices": [
+                "Weights recent points exponentially more",
+                "Weights all points in its window equally",
+                "Ignores recent points",
+                "Has infinite memory"
+              ],
+              "answer": 1,
+              "explain": "MA = equal weights in a hard window."
+            },
+            {
+              "q": "In simple exponential smoothing, the weights on all past observations:",
+              "choices": [
+                "Grow without bound",
+                "Sum to 0",
+                "Sum to 1",
+                "Are all equal"
+              ],
+              "answer": 2,
+              "explain": "alpha*sum (1-alpha)^j = 1."
+            },
+            {
+              "q": "An h-step-ahead forecast from plain SES is:",
+              "choices": [
+                "Different and random each step",
+                "A steadily rising line",
+                "A repeating seasonal curve",
+                "The same value for every horizon (a flat line)"
+              ],
+              "answer": 3,
+              "explain": "SES has no trend/season → flat multi-step forecast."
+            },
+            {
+              "q": "Use the multiplicative form of Holt–Winters when the seasonal swings:",
+              "choices": [
+                "Grow in proportion to the level",
+                "Stay a constant size",
+                "Disappear entirely",
+                "Are random noise"
+              ],
+              "answer": 0,
+              "explain": "Growing swings → multiplicative (or model the log)."
+            },
+            {
+              "q": "If a complex model cannot beat the naive or mean baseline, you should:",
+              "choices": [
+                "Deploy the complex model anyway",
+                "Prefer the simple baseline",
+                "Add more parameters",
+                "Shuffle the data"
+              ],
+              "answer": 1,
+              "explain": "Baselines are the bar; don't ship a model that loses to them."
+            },
+            {
+              "q": "In the ETS family, \"ETS\" stands for:",
+              "choices": [
+                "Exponential Time Series",
+                "Estimate, Test, Smooth",
+                "Error, Trend, Seasonal",
+                "Extended Trend System"
+              ],
+              "answer": 2,
+              "explain": "ETS = Error, Trend, Seasonal state-space models."
+            },
+            {
+              "q": "Simple exponential smoothing is the optimal forecast for which model?",
+              "choices": [
+                "A linear regression on time",
+                "ARIMA(1, 0, 0)",
+                "A pure seasonal model",
+                "ARIMA(0, 1, 1)"
+              ],
+              "answer": 3,
+              "explain": "SES ≡ ARIMA(0,1,1)."
             }
           ],
           "flashcards": [
