@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 747 — Glossary: modern-generalization terms (reference)
+A fresh-eyes review of the Placement flow (hub + a topic diagnostic) found it polished — all 9 topics, math renders, keyboard hints (1-4 answer · ↵ next), progress tracker — no bug. Then completed the
+iters 741-745 modern-generalization arc's glossary integration. Added **4 terms**: Double descent, Interpolation threshold, Grokking, Implicit regularization — now powering inline tooltips wherever they appear
+across `ml-model-selection` and `dl-overfitting-and-regularization`. Glossary **284 → 288**.
+Verified: glossary parses; gate ALL GREEN (incl. proseInMath); **headless** — all 4 render on `#/glossary` (4/4), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v683` → `atlas-v684`.
+
 ## iter 746 — Faster boot: batch the math normalizer's plain-char copy (performance)
 `normalizeMath()` runs once at boot and escapes `<`/`\$` across the whole corpus (23,581 strings, ~2.6MB) to keep math/money render-safe before any innerHTML — a real first-paint cost (~105ms cold in Node). It's a
 deliberate eager invariant (search/glossary/daily-picks assume pre-normalized content), so lazifying is off the table. Instead, optimized `escapeMathLt` itself: the inner loop copied non-math text **one char at a time**
