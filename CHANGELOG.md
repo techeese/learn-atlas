@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 809 — Game Theory build-out: gt-foundations to full 16-MCQ parity (content / assessment)
+Brought the new topic's first lesson to the 16-MCQ standard. Added **8 new MCQs**: best response, iterated elimination of dominated strategies, Matching-Pennies→mixed-strategy, zero-sum definition, mechanism design, repeated-game
+cooperation, dominated strategy, and Stag-Hunt coordination. Balanced → **4/4/4/4**. `gt-foundations` is now at full content-parity (gate reports no parity warning).
+Verified: data parses + round-trips; gate ALL GREEN with no parity note; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v742` → `atlas-v743`.
+
 ## iter 808 — Game Theory build-out: 2×2 Nash-equilibrium explorer viz (visualizations)
 Building out the new 11th topic (no owner steer to remove it). Added the **140th widget, `gt-nash-2x2`** — the foundational game-theory viz: a 2×2 payoff grid that highlights best responses (row's in sage, column's in violet)
 and outlines Nash-equilibrium cells in gold. A "Next game" button cycles four classics, making the differences vivid: **Prisoner's Dilemma** (1 Nash), **Stag Hunt** & **Chicken** (2 each), **Matching Pennies** (0 pure — needs

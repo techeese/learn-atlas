@@ -103,6 +103,94 @@
               ],
               "answer": 3,
               "explain": "Generator vs discriminator is a minimax game."
+            },
+            {
+              "q": "A \"best response\" is:",
+              "choices": [
+                "The strategy that maximizes your payoff given what the others are doing",
+                "The strategy that helps the other player most",
+                "Always a dominant strategy",
+                "A randomly chosen strategy"
+              ],
+              "answer": 0,
+              "explain": "Best response = optimal reply to fixed opponent play."
+            },
+            {
+              "q": "Iterated elimination of dominated strategies works by:",
+              "choices": [
+                "Adding new strategies each round",
+                "Repeatedly deleting strategies no one would ever play, then re-examining what's left",
+                "Picking the highest single payoff in the matrix",
+                "Randomizing over all strategies"
+              ],
+              "answer": 1,
+              "explain": "Delete dominated options and re-solve the smaller game."
+            },
+            {
+              "q": "Matching Pennies has no pure-strategy Nash equilibrium, so its only equilibrium is:",
+              "choices": [
+                "Whatever the first mover picks",
+                "Both players choosing Heads",
+                "A mixed strategy — randomizing 50/50",
+                "There is no equilibrium at all"
+              ],
+              "answer": 2,
+              "explain": "Zero-sum with no pure NE → mix 50/50."
+            },
+            {
+              "q": "A game is \"zero-sum\" when:",
+              "choices": [
+                "Players cooperate fully",
+                "Both players always get zero",
+                "The payoffs are all positive",
+                "One player's gain is exactly the other's loss"
+              ],
+              "answer": 3,
+              "explain": "Zero-sum: payoffs sum to a constant; pure conflict."
+            },
+            {
+              "q": "Mechanism design is best described as:",
+              "choices": [
+                "Designing the rules and payoffs so the desired outcome becomes an equilibrium",
+                "Finding the Nash equilibrium of a fixed game",
+                "Eliminating dominated strategies",
+                "Playing the same game repeatedly"
+              ],
+              "answer": 0,
+              "explain": "Game theory run backwards: design incentives."
+            },
+            {
+              "q": "In a repeated Prisoner's Dilemma, cooperation can become stable because:",
+              "choices": [
+                "Players forget the past each round",
+                "Future punishment for defecting can outweigh the one-time gain",
+                "Defection stops being possible",
+                "The payoffs become zero-sum"
+              ],
+              "answer": 1,
+              "explain": "Reputation/retaliation makes cooperation a best response."
+            },
+            {
+              "q": "A \"dominated\" strategy is one that:",
+              "choices": [
+                "Is the Nash equilibrium",
+                "Always wins",
+                "Is never the best choice, whatever the opponent does — so a rational player avoids it",
+                "Must be played with positive probability"
+              ],
+              "answer": 2,
+              "explain": "Dominated = beaten in every column; never rational to play."
+            },
+            {
+              "q": "Stag Hunt has two pure Nash equilibria (Stag,Stag) and (Hare,Hare). This captures:",
+              "choices": [
+                "A zero-sum game",
+                "Pure conflict with no cooperation",
+                "A game with a single dominant strategy",
+                "A coordination problem — the better outcome needs mutual trust, the safe one doesn't"
+              ],
+              "answer": 3,
+              "explain": "Coordination: payoff-dominant vs risk-dominant equilibria."
             }
           ],
           "flashcards": [
