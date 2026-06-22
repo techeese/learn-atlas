@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 795 — Cross-link: regularization penalties ARE vector norms (understandability)
+Rotated off code exercises for range. Audited several candidate gaps and confirmed they're already covered (batch-norm's "why" debate has a dedicated deep-dive; determinant-as-area, the multi-armed bandit, etc. all have viz)
+and that there's no *safe* small perf win (the ~7.2MB of data is genuinely needed and the SW caches it after first visit). Then extended iter-794: grounded ML regularization in its linear-algebra foundation with a see-also in
+`ml-regularization` §2 — the penalty $\Omega(w)$ is just a <a>vector norm</a> of the weights (ridge = squared $\ell_2$, lasso = $\ell_1$); "regularization is, literally, keep the weight vector short" → `la-dot-product-norms`. A learner who just computed L1/L2 now sees they're the norms from LA.
+Verified: data parses + round-trips; gate ALL GREEN (internal-links lint confirms the cross-link resolves); **headless** — the see-also renders and points to the norms lesson, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v728` → `atlas-v729`.
+
 ## iter 794 — NEW code exercise: feel L1 vs L2 by computing both (examples / hands-on)
 Confirmed RL viz is already complete (10 widgets incl. `rl-bandit` for explore-exploit), then added a runnable exercise to `ml-regularization`, which had none. The learner computes both penalties on a weight vector with one
 large value — L1 sums |w| (6.60), L2 sums w² (14.26) — and the comment makes the squaring vivid: the weight 3 adds 3 to L1 but **9** to L2, which is *why* L2 shrinks large weights while L1 zeros small ones. Placed in section 5
