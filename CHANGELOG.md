@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 879 — Glossary: LLM-inference-systems terms (reference)
+Completed the iter-878 inference thread with **3 glossary terms** — **Memory-bound (vs compute-bound)**, **Arithmetic intensity**, and **Speculative decoding** (KV cache & quantization were already defined). Glossary **361 → 364** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v812` → `atlas-v813`.
+
 ## iter 878 — NEW code exercise: why LLM decode is memory-bound (examples / hands-on)
 Firmly varied off cross-links to a code exercise. Added a runnable demo to `l-inference-efficiency`, which had none, in its "Why decode is memory-bandwidth bound" section: decoding a token reads every weight, so throughput ≈ bandwidth ÷
 weight-bytes. For a 7B model on a 1000 GB/s GPU → **FP16: ~71 tok/s, int8: ~143 tok/s (quantization ~2x)** — making concrete why decode is bandwidth-bound and why quantization roughly doubles speed.
