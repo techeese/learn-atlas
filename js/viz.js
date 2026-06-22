@@ -6936,4 +6936,64 @@
     draw();
   });
 
+
+  /* ========================================================
+     128. Contrastive learning: pull together, push apart (Deep Learning)
+     ======================================================== */
+  register({ id: 'dl-contrastive', topic: 'deep-learning', title: 'Contrastive learning: pull together, push apart', blurb: 'Six items, each with two "views" (a positive pair, same colour). At step 0 the embedding space is a random jumble. Drag the training slider: the contrastive objective pulls each positive pair together and pushes different items apart, so same-colour points collapse into tight clusters while the clusters themselves spread out — structure learned with no labels, just the pull/push of positives and negatives.' },
+  function (root) {
+    const W = 540, H = 320, pad = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const ITEMS = 6, SEED = 7;
+    let steps = 0;
+    function prng(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function run(n) {
+      const r = prng(SEED); let P = [];
+      for (let i = 0; i < ITEMS; i++) for (let v = 0; v < 2; v++) P.push({ x: r() * 2 - 1, y: r() * 2 - 1, item: i });
+      for (let s = 0; s < n; s++) {
+        const np = P.map(p => ({ x: p.x, y: p.y, item: p.item }));
+        for (let i = 0; i < P.length; i++) {
+          for (let j = 0; j < P.length; j++) {
+            if (j === i) continue;
+            const dx = P[j].x - P[i].x, dy = P[j].y - P[i].y, d = Math.hypot(dx, dy) + 1e-6;
+            if (P[j].item === P[i].item) { np[i].x += 0.08 * dx; np[i].y += 0.08 * dy; }
+            else { const f = Math.min(0.06 / (d * d), 0.05); np[i].x -= f * dx / d; np[i].y -= f * dy / d; }
+          }
+          np[i].x = Math.max(-1.4, Math.min(1.4, np[i].x)); np[i].y = Math.max(-1.4, Math.min(1.4, np[i].y));
+        }
+        P = np;
+      }
+      return P;
+    }
+    function metrics(P) {
+      let pos = 0, pn = 0, cross = 0, cn = 0;
+      for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const d = Math.hypot(P[i].x - P[j].x, P[i].y - P[j].y); if (P[i].item === P[j].item) { pos += d; pn++; } else { cross += d; cn++; } }
+      return { posD: pos / pn, crossD: cross / cn };
+    }
+    const col = i => 'hsl(' + (i * 60) + ',62%,62%)';
+    function mapX(x) { return pad + (x + 1.5) / 3 * (W - 2 * pad); }
+    function mapY(y) { return pad + (y + 1.5) / 3 * (H - 2 * pad); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const pts = run(steps);
+      // positive-pair connectors
+      for (let i = 0; i < ITEMS; i++) {
+        const a = pts[i * 2], b = pts[i * 2 + 1];
+        ctx.strokeStyle = col(i); ctx.globalAlpha = 0.35; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(mapX(a.x), mapY(a.y)); ctx.lineTo(mapX(b.x), mapY(b.y)); ctx.stroke(); ctx.globalAlpha = 1;
+      }
+      // points
+      pts.forEach(pt => { ctx.fillStyle = col(pt.item); ctx.beginPath(); ctx.arc(mapX(pt.x), mapY(pt.y), 7, 0, 7); ctx.fill(); ctx.strokeStyle = p.bg; ctx.lineWidth = 1.5; ctx.stroke(); });
+      const m = metrics(pts);
+      info.innerHTML = 'training steps = <b>' + steps + '</b> · avg positive-pair distance = <b style="color:' + p.sage + '">' + m.posD.toFixed(2) + '</b> (want small) · avg cross distance = <b style="color:' + p.gold + '">' + m.crossD.toFixed(2) + '</b> (want large). ' +
+        (steps === 0 ? 'Step 0: a random jumble — same-colour views are scattered.' : m.posD < 0.3 ? 'Converged: each colour has collapsed to a tight cluster, well separated from the rest — a useful representation, learned with no labels.' : 'Positives are pulling together; different items are pushing apart.');
+    }
+    slider(ctl, { label: 'training steps', min: 0, max: 40, step: 1, value: steps, fmt: v => String(v), onInput: v => { steps = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Contrastive-learning visualizer: twelve points (six coloured items, each a positive pair joined by a faint line) in a 2-D embedding space, with a training-steps slider. At step 0 the points are randomly scattered; as steps increase, each positive pair is pulled together and different items are pushed apart, so the average positive-pair distance shrinks toward zero and the average cross-item distance grows — the colours resolve into tight, well-separated clusters, a representation learned without labels.');
+    draw();
+  });
+
 })();

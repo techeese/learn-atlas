@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 739 — NEW viz: contrastive learning clusters an embedding space (visualizations)
+Completed the SSL lesson's visual. Built the **128th widget, `dl-contrastive`**: 6 items × 2 views (positive pairs, colour-coded) in a 2-D embedding space with a training-steps slider. At step 0 it's a random
+jumble; dragging the slider applies the contrastive force — positives pull together, different items push apart — so same-colour points collapse into tight clusters (avg positive distance 1.25 → 0.01) while the
+clusters spread (avg cross distance grows). Makes "pull together / push apart" and *why negatives prevent collapse* tangible. Embedded at §3 of `dl-self-supervised-contrastive`. Deterministic (seeded).
+Verified: force dynamics re-derived in Node (pos 1.25→0.01, cross 1.02→2.53); gate ALL GREEN (now **128 widgets**); **headless** — Lab + lesson hydrate, positives cluster with steps, "Converged" message fires; kErr=0, errs=0; screenshot shows coloured clusters + pair connectors. SW cache `atlas-v675` → `atlas-v676`.
+
 ## iter 738 — SSL lesson MCQ top-up 8 → 16 (content / assessment)
 Brought `dl-self-supervised-contrastive` to the 16-MCQ standard. Added **8 new MCQs**: CLIP zero-shot classification, BYOL/DINO anti-collapse (momentum encoder + stop-gradients), MAE's mask-and-reconstruct
 pretext, why bigger batches help (more negatives), the pretext task's true goal (the representation), cosine similarity as the InfoNCE score, fine-tuning after pretraining, and InfoNCE ↔ mutual-information.
