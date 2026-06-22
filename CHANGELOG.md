@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 791 — NEW code exercise: count the work behind Big-O (examples / hands-on)
+Rotated to a fresh topic (algorithms) and a fresh lane. Confirmed the algorithms topic is content-complete (23 lessons, every concept has a dedicated lesson), then audited code-exercise coverage (138/185 lessons have one)
+and added a runnable exercise to the **first** algorithms lesson, `a-asymptotic-analysis`, which had none. The learner hand-runs a nested loop whose inner counter starts at `i`, counts the iterations (the triangular number
+5+4+3+2+1 = 15), and sees firsthand why that grows like $n^2/2$ → $\Theta(n^2)$ rather than $\Theta(n)$. Placed in the "how to read code and extract a tight Θ bound" section, turning an abstract bound into something you execute.
+Verified: data parses + round-trips; `<` escaped to `&lt;` in the code (innerHTML-safe); **gate ALL GREEN — "code-exercises verified"** (it executes the snippet and confirms output = 15); **headless** — exercise renders, Run button executes, output shows 15, kErr=0, errs=0. SW cache `atlas-v724` → `atlas-v725`.
+
 ## iter 790 — Step-back sweep (clean) + reciprocal eval cross-link (step-back / understandability)
 Step-back at ~10 iters. **Full 185-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **868 nodes** — zero regressions since iter 780, validating the streak/pre-hydrate fix
 (784-785) and the four new viz (superposition, ROC, k-fold CV, backtesting). Confirmed the eval-arc glossary is already complete (ROC/AUC, Cross-validation, Backtesting, Precision & recall all present).
