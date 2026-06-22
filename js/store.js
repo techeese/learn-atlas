@@ -541,7 +541,7 @@
       c.reps += 1;
       if (c.reps === 1) c.interval = grade === 3 ? 2 : 1;
       else if (c.reps === 2) c.interval = grade === 3 ? 5 : 3;
-      else c.interval = Math.round(c.interval * c.ease);
+      else c.interval = Math.round(c.interval * (grade === 1 ? 1.2 : grade === 3 ? c.ease * 1.3 : c.ease));   // hard grows slowly, good at ease, easy gets a bonus
       c.ease = Math.min(3.0, Math.max(1.3, c.ease + (grade === 3 ? 0.15 : grade === 1 ? -0.15 : 0)));
     }
     c.due = Date.now() + c.interval * 86400000;
@@ -561,7 +561,8 @@
     const reps = num(c.reps) + 1;
     if (reps === 1) return grade === 3 ? 2 : 1;
     if (reps === 2) return grade === 3 ? 5 : 3;
-    return Math.max(1, Math.round(num(c.interval) * num(c.ease || 2.5)));
+    const e = num(c.ease || 2.5);
+    return Math.max(1, Math.round(num(c.interval) * (grade === 1 ? 1.2 : grade === 3 ? e * 1.3 : e)));   // mirrors gradeCard: hard 1.2x, good ease, easy ease*1.3
   }
   function cardDue(cardId) {
     const c = state.cards[cardId];

@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 844 — Fix SRS grade differentiation: Hard/Good/Easy now schedule apart (retention / remember-longer)
+Turned to the neglected "remember longer" dimension. The spaced-repetition scheduler (SM-2 lite in store.js) had a real weakness: at mature reps (≥3), **Hard and Good produced the *identical* next interval** (`interval×ease`) — the
+three grades barely differed, so honest grading did little. Fixed `gradeCard` (and its mirror `projectInterval`) so **Hard grows slowly (×1.2), Good at ease, Easy gets a ×1.3 bonus** — standard SM-2 behavior. On a mature card (interval 8d): Hard→**10d**, Good→**20d**, Easy→**26d** (previously all ~20d). The grade buttons already display these projected intervals, so the difference is visible at the point of grading.
+Verified: store.js syntax ok; intervals re-derived in Node (Hard 10 < Good 20 < Easy 26; was equal); gate ALL GREEN; **headless** — review loads, 4 grade buttons render with interval labels (new card: soon/1d/1d/2d, early-rep values unchanged), grading advances the card, errs=0. SW cache `atlas-v777` → `atlas-v778`.
+
 ## iter 843 — Wire bisection ↔ binary search across topics (understandability)
 Confirmed condition number is already deeply covered (κ=λmax/λmin + two GD deep-dives), then made the iter-842 bridge explicit with a **bidirectional cross-link**: `c-continuity` (calculus, bisection/IVT) ↔ `a-binary-search`
 (algorithms). Bisection *is* binary search run on a continuous function instead of a sorted array — the same halving, one continuous and one discrete. Strengthens the cross-topic web a learner navigates by.
