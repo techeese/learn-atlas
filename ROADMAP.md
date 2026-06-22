@@ -7,7 +7,7 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
 ## Current state (iter 708, 2026-06-22)
-**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 277 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
+**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 279 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
 - ✅ iter 721: `ml-dimensionality-reduction` topped to 16 MCQ + prereq edge. ✅ iter 722: +5 DR glossary terms (t-SNE, UMAP, whitening, explained-variance, manifold; glossary 268→273). DR lesson fully integrated across every surface. NOTE: learning paths are derived dynamically (new lessons auto-integrate — no curation needed).
 - ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ. ✅ iter 719: **NEW viz dl-vit-patchify** (124th — image→patches→tokens; DL viz 23/23). Recent current-gap fills (iters 711–719): MoE (lesson+viz), SSM/Mamba (deep-dive), ViT/multimodal (lesson+viz) — all fully built & integrated.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
@@ -67,7 +67,7 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
 ## Current state (iter 708, 2026-06-22)
-**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 277 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
+**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 279 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
 - ✅ iter 721: `ml-dimensionality-reduction` topped to 16 MCQ + prereq edge. ✅ iter 722: +5 DR glossary terms (t-SNE, UMAP, whitening, explained-variance, manifold; glossary 268→273). DR lesson fully integrated across every surface. NOTE: learning paths are derived dynamically (new lessons auto-integrate — no curation needed).
 - ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ. ✅ iter 719: **NEW viz dl-vit-patchify** (124th — image→patches→tokens; DL viz 23/23). Recent current-gap fills (iters 711–719): MoE (lesson+viz), SSM/Mamba (deep-dive), ViT/multimodal (lesson+viz) — all fully built & integrated.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
@@ -126,7 +126,7 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
 ## Current state (iter 708, 2026-06-22)
-**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 277 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
+**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 279 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
 - ✅ iter 721: `ml-dimensionality-reduction` topped to 16 MCQ + prereq edge. ✅ iter 722: +5 DR glossary terms (t-SNE, UMAP, whitening, explained-variance, manifold; glossary 268→273). DR lesson fully integrated across every surface. NOTE: learning paths are derived dynamically (new lessons auto-integrate — no curation needed).
 - ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ. ✅ iter 719: **NEW viz dl-vit-patchify** (124th — image→patches→tokens; DL viz 23/23). Recent current-gap fills (iters 711–719): MoE (lesson+viz), SSM/Mamba (deep-dive), ViT/multimodal (lesson+viz) — all fully built & integrated.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
@@ -185,7 +185,7 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
 ## Current state (iter 708, 2026-06-22)
-**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 277 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
+**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 279 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
 - ✅ iter 721: `ml-dimensionality-reduction` topped to 16 MCQ + prereq edge. ✅ iter 722: +5 DR glossary terms (t-SNE, UMAP, whitening, explained-variance, manifold; glossary 268→273). DR lesson fully integrated across every surface. NOTE: learning paths are derived dynamically (new lessons auto-integrate — no curation needed).
 - ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ. ✅ iter 719: **NEW viz dl-vit-patchify** (124th — image→patches→tokens; DL viz 23/23). Recent current-gap fills (iters 711–719): MoE (lesson+viz), SSM/Mamba (deep-dive), ViT/multimodal (lesson+viz) — all fully built & integrated.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
@@ -244,7 +244,7 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
 ## Current state (iter 708, 2026-06-22)
-**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 277 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
+**9 topics · 178 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 127 visualizations (all embedded) · 279 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full sweep: iter 718 (errs=0/bad=none).
 - ✅ iter 721: `ml-dimensionality-reduction` topped to 16 MCQ + prereq edge. ✅ iter 722: +5 DR glossary terms (t-SNE, UMAP, whitening, explained-variance, manifold; glossary 268→273). DR lesson fully integrated across every surface. NOTE: learning paths are derived dynamically (new lessons auto-integrate — no curation needed).
 - ✅ iter 717: `dl-vision-transformers` topped to 16 MCQ. ✅ iter 719: **NEW viz dl-vit-patchify** (124th — image→patches→tokens; DL viz 23/23). Recent current-gap fills (iters 711–719): MoE (lesson+viz), SSM/Mamba (deep-dive), ViT/multimodal (lesson+viz) — all fully built & integrated.
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.

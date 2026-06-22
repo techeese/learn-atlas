@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 736 — Glossary: reparameterization trick + latent variable (reference)
+Completed the VAE/reparameterization integration. The glossary already had Autoencoder/VAE, ELBO, and Variational inference, but was missing two terms central to that lesson: **Reparameterization trick**
+($z=\mu+\sigma\varepsilon$ with $\varepsilon$ fixed, so gradients flow) and **Latent variable** ($z$, the hidden code). Added both (topic: deep-learning); glossary **277 → 279**. These now power inline hover-tooltips wherever the terms appear.
+Verified: glossary parses; gate ALL GREEN (the math-bearing reparameterization def passes the render lints); **headless** — both render on `#/glossary` (2/2), 299 KaTeX spans, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v672` → `atlas-v673`.
+
 ## iter 735 — NEW viz: the reparameterization trick (visualizations)
 The VAE lesson explained the reparameterization trick in text + a deep-dive but its only embedded viz was KL-divergence — the trick itself (one of DL's hardest, most *visual* ideas) had none. Built the **127th widget,
 `dl-reparameterization`**: a top axis of fixed noise ε ~ N(0,1) and a bottom axis of z = μ + σ·ε under a N(μ,σ²) curve, with μ and σ sliders. Sliding μ shifts every z point together; sliding σ spreads them — while the
