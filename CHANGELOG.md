@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 752 — Playground: examples for the two uncovered topics (examples)
+A fresh-eyes review of the Code Playground found it polished (clear Pyodide/network expectations, JS runs offline, editor + Run/Copy) — no bug. But its 16 examples spanned only 7 of 9 topics: **machine-learning and
+information-theory had none** (the apparent "duplicates" were just language-paired Python/JS versions, not real dups). Added two self-contained Python examples — a **k-NN classifier** (ML; majority-vote over nearest points →
+A/B clusters) and **Shannon entropy** (IT; H of fair coin/certain/uniform → 1.0/0.0/2.0 bits). Playground now covers **all 9 topics**.
+Verified: both snippets run under python3 (correct outputs); playground.js parses; gate ALL GREEN; **headless** — both appear in the example dropdown on `#/playground`, errs=0. SW cache `atlas-v687` → `atlas-v688` (playground.js is served).
+
 ## iter 751 — Gate: extend the sparse-hole check to ALL data arrays (workflow / gates)
 Followed up the iter-750 glossary-hole fix by (1) auditing every other data array for the same double-comma bug and (2) generalizing the gate's defense. **Audit:** scanned COURSES (modules · lessons · mcq · choices ·
 flashcards · examples · homework), REFERENCES, and PREREQS for sparse holes — **none found** (the glossary one was isolated). **Gate:** replaced iter-750's glossary-only for-loop with a reusable `noHoles(arr, where)` helper
