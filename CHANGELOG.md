@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 833 — Glossary: concentration-inequality terms (reference)
+Completed the iter-832 deep-dive's glossary integration. Added **Markov's**, **Chebyshev's**, and **Hoeffding's** inequalities — the tail-bound hierarchy (mean → +variance → exponential) — with their formulas, now in tooltips
+across LLN/PAC/UCB. Glossary **329 → 332** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 330 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v766` → `atlas-v767`.
+
 ## iter 832 — Hard-concept: concentration inequalities (Markov→Chebyshev→Hoeffding) (content)
 Filled a foundational gap: Chebyshev appears in the LLN proof, but the **concentration-inequality family** wasn't taught as a concept. Added a deep-dive to `ps-law-of-large-numbers`: **Markov** ($P(X\ge a)\le\mathbb{E}[X]/a$, mean
 only) → **Chebyshev** ($P(|X-\mu|\ge k\sigma)\le 1/k^2$, +variance, proves the weak LLN) → **Hoeffding** ($P(|\bar X-\mu|\ge\epsilon)\le 2e^{-2n\epsilon^2/(b-a)^2}$, exponential). Each step buys a tighter bound for one more assumption. The exponential
