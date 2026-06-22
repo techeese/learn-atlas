@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 855 — NEW code exercise: numerical integration (trapezoidal rule) (examples / hands-on)
+Added a runnable exercise to `c-integration-techniques`, which had none — framed as the escape hatch when analytic techniques fail (e.g. $\int e^{-x^2}dx$ has no closed form). The **trapezoidal rule** sums thin trapezoids to
+approximate $\int_0^1 x^2\,dx$ → **integral ~ 0.3333** (exact 1/3). Complements the lesson's u-substitution and by-parts with the universal numerical fallback.
+Verified: trapezoid sum re-derived in Node (=0.3333); `<=`→`&lt;=` escaped (decode confirmed, no literals); **gate ALL GREEN — code-exercises verified (now 158)**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v788` → `atlas-v789`.
+
 ## iter 854 — Wire batch norm ↔ weight initialization (understandability)
 Content gap-hunting is exhausted (even RoPE, MoE, flash-attention have dedicated LLM lessons), so I strengthened the cross-topic web. Batch normalization and weight initialization are **complementary cures for the same instability** —
 unstable signal/gradient flow through depth — so I added a **bidirectional cross-link**: `dl-dropout-and-normalization` ↔ `dl-initialization-and-vanishing-gradients`. Init sets well-scaled signals *before* training; BN re-standardizes
