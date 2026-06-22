@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 874 — Glossary: power-iteration / PageRank terms (reference)
+Completed the iter-873 thread (varying off two code iters). Added **Power iteration**, **PageRank** (tagged algorithms — the Markov-chain / dominant-eigenvector ranking), and **Spectral radius** (the largest |eigenvalue|, governing
+matrix-power growth/decay). Glossary **358 → 361** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 341 KaTeX, kErr=0, errs=0. SW cache `atlas-v807` → `atlas-v808`.
+
 ## iter 873 — NEW code exercise: power iteration → the dominant eigenvector (examples / hands-on)
 Audited lesson completeness (all ≥3 deep-dives/6 cards — uniform floor, no thin outliers), then added a 2nd, *distinct* code exercise to `la-eigenvalues-eigenvectors` (the existing one solves the characteristic equation analytically). **Power
 iteration** — repeatedly apply A and renormalize — converges to the dominant eigenvector → **eigenvalue ~ 3.00, eigenvector ~ [0.71, 0.71]**, exactly how Google's PageRank computes its ranking vector. Placed in "Computing in Practice".
