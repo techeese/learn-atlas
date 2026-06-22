@@ -88,6 +88,10 @@ window.PREREQS = {
   "ts-forecast-evaluation": [
     "ml-model-selection"
   ],
+  "ts-deep-forecasting": [
+    "dl-rnn-lstm-gru",
+    "dl-transformer-architecture"
+  ],
   "dl-gans": [
     "it-cross-entropy-kl"
   ],

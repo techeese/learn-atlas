@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 771 — NEW lesson + module: Deep Learning for Forecasting (Time Series #6, capstone) (content)
+Opened **Module 3 "Modern & Deep Forecasting"** with `ts-deep-forecasting` — the capstone that bridges Time Series back to the DL/LLM topics: 8 sections (where classical methods run out · global models/cross-learning ·
+forecasting as supervised learning · building lag features · sequence architectures RNN/TCN/transformer/SSM · probabilistic forecasting · time-series foundation models (Chronos/TimeGPT) · deep-vs-classical trade-off), a
+runnable **lag-feature code exercise** (series → supervised rows), 3 deep-dives (global-vs-local · "are transformers effective?"/DLinear · foundation models & zero-shot), 6 cards, 3 examples, 3 homework, 8 MCQs (2/2/2/2).
+Cross-topic prereqs **→ dl-rnn-lstm-gru, dl-transformer-architecture**. Site **10 topics · 185 lessons**; Time Series now **6 lessons across 3 modules** — a complete classical→modern arc.
+Verified: data parses + round-trips; gate ALL GREEN (185 lessons; expected 8/16 parity warn); **headless** — 3 deep-dives + lag-feature runner, prereq link surfaces, quiz "Question 1 of 8", kErr=0, errs=0. SW cache `atlas-v704` → `atlas-v705`.
+
 ## iter 770 — Step-back sweep (clean) + Time Series glossary terms (step-back / reference)
 Step-back, overdue at 20 iters since the last sweep (the entire 10th topic landed in between). **Full 184-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **862 nodes** —
 the new Time Series topic (5 lessons + decomposition viz) and everything else integrate with **zero regressions**.

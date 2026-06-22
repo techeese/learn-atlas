@@ -1242,6 +1242,168 @@
           ]
         }
       ]
+    },
+    {
+      "id": "ts-modern",
+      "title": "Modern & Deep Forecasting",
+      "lessons": [
+        {
+          "id": "ts-deep-forecasting",
+          "title": "Deep Learning for Forecasting",
+          "minutes": 17,
+          "content": "<h3>1. The hook: where classical methods run out</h3>\n<p>ARIMA and exponential smoothing are superb on a single, regular series. But modern problems break their assumptions: you have <em>thousands</em> of related series (every product in every store), rich <b>covariates</b> (price, promotions, weather), and <b>nonlinear</b> dynamics a linear model can't capture. Fitting one ARIMA per series ignores everything they share. This is where deep learning takes over.</p>\n<h3>2. Global models: learn across series</h3>\n<p>The key shift is the <b>global model</b>: a single network trained on <em>all</em> the series at once, instead of one local model per series. It learns patterns common across them (a weekly rhythm, a holiday bump) and shares statistical strength — so it forecasts a brand-new or short series far better than a model that only saw that series. Cross-learning is the deep forecaster's superpower.</p>\n<h3>3. Forecasting as supervised learning</h3>\n<p>To use any ML model, reframe the series as a supervised problem: slide a window and turn \"past → next\" into <b>(features, target)</b> rows. The features are <b>lags</b> (recent values) plus calendar features (day-of-week, month) and covariates; the target is the next value (or the next $h$ values). Get the framing right — no future leakage — and the whole ML toolbox applies.</p>\n<h3>4. Building lag features</h3>\n<p>The simplest framing uses the previous values as features. Turn a series into supervised rows of [lag-2, lag-1, target]:</p>\n<div data-code=\"javascript\" data-expected=\"[[10,12,14],[12,14,13],[14,13,16]]\">// Reframe a series as supervised (features -> target) rows using a window of 2 lags\nconst y = [10, 12, 14, 13, 16];\nconst rows = [];\nfor (let t = 2; t < y.length; t++) rows.push([y[t - 2], y[t - 1], y[t]]);  // [lag2, lag1, target]\nconsole.log(JSON.stringify(rows));\n// Each row: predict the last number from the two before it -- now any regressor can learn it.</div>\n<h3>5. Sequence architectures</h3>\n<p>Once it's a sequence-learning problem, the architectures from Deep Learning apply directly. <b>RNN/LSTM/GRU</b>: process the series step by step with a hidden state (the original deep forecasters, e.g. DeepAR). <b>Temporal CNNs</b> (dilated/causal convolutions, TCN/WaveNet): a wide receptive field, fast and parallel. <b>Transformers</b>: attention over the history (Informer, Temporal Fusion Transformer). <b>State-space models</b> (S4/Mamba): linear-time long-range memory — a natural fit for long series.</p>\n<h3>6. Probabilistic forecasting</h3>\n<p>Decisions need uncertainty, so deep forecasters usually output a <em>distribution</em>, not a point: predict the parameters of a distribution, or a set of <b>quantiles</b> trained with the pinball loss (from the evaluation lesson). A calibrated 10th–90th-percentile band is far more useful for planning than a single line — it tells you the risk, not just the guess.</p>\n<h3>7. Foundation models for time series</h3>\n<p>The newest shift mirrors LLMs: <b>foundation models</b> pretrained on enormous, diverse collections of series (TimeGPT, Chronos, Moirai, TimesFM) that <b>zero-shot forecast</b> a series they've never seen — no fitting required, just feed the history. Chronos even <em>tokenizes</em> values and reuses a language-model architecture. It is early days, but the \"pretrain once, forecast anything\" paradigm has arrived for time series.</p>\n<h3>8. Deep vs classical: the honest trade-off</h3>\n<p>Deep models win when you have <em>many</em> series, rich covariates, nonlinearity, and enough data; they cost compute, tuning, and interpretability. Classical models (ARIMA, ETS) win on a single regular series, small data, and when you need transparent coefficients and instant intervals — and they remain shockingly hard to beat there. The professional move is to <b>always benchmark the deep model against a strong classical baseline</b>; surprisingly often, the simple one wins.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: global vs local models — why pooling series helps</summary>\n<p>A <b>local</b> model fits each series independently (one ARIMA per product); a <b>global</b> model fits one set of parameters across all series. Global wins for the same reason multi-task learning does: short or noisy series <em>borrow strength</em> from the crowd, the model learns shared structure (seasonality, holiday effects) once instead of re-estimating it thousands of times, and a brand-new series with little history can be forecast immediately from learned patterns. The risk is that genuinely heterogeneous series get averaged into a bland compromise — mitigated by giving the model <b>series-identifying covariates</b> (an embedding per series, static features) so it can specialize. Modern libraries (e.g. global gradient-boosted trees on lag features, or DeepAR) are global by default for exactly this reason.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: are transformers actually best for forecasting?</summary>\n<p>Not automatically. A well-known result (\"Are Transformers Effective for Time Series Forecasting?\") showed that a one-layer <b>linear</b> model (DLinear) — decompose into trend + seasonal, then a linear map — <em>beat</em> several elaborate transformer forecasters on standard long-horizon benchmarks. The lessons: attention's permutation-invariance fights against the strict ordering that <em>is</em> the signal in a time series (hence heavy positional engineering), and many \"transformer wins\" came from the surrounding pipeline (normalization, decomposition, patching) more than the attention itself. Patch-based designs (PatchTST) and the foundation models later restored transformers' strength — but the episode is a permanent reminder to benchmark against simple linear and classical baselines before believing a complex model.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: foundation models and zero-shot forecasting</summary>\n<p>Borrowing the LLM playbook, time-series <b>foundation models</b> are pretrained once on millions of series spanning many domains, then forecast an unseen series <b>zero-shot</b> — you supply only its history, no per-series fitting. <b>Chronos</b> quantizes real values into a fixed vocabulary of tokens and trains a standard language-model architecture to predict the next token, literally treating forecasting as language modeling; <b>TimesFM</b>, <b>Moirai</b>, and <b>TimeGPT</b> take related routes. The appeal is obvious — instant forecasts with no training, strong on cold-start series — and the open question is the same as for LLMs: how far does scale generalize, and when does a small model fit to <em>your</em> data still win? Often, a tuned local model on rich in-domain data still edges out the zero-shot giant — for now.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "Deep forecasters tend to beat ARIMA/ETS when you have:",
+              "choices": [
+                "Many related series, rich covariates, and nonlinear dynamics",
+                "A single short, regular series",
+                "No data at all",
+                "Only a linear trend"
+              ],
+              "answer": 0,
+              "explain": "Scale + covariates + nonlinearity favour deep."
+            },
+            {
+              "q": "A \"global\" forecasting model:",
+              "choices": [
+                "Fits one separate model per series",
+                "Is trained on all the series at once, sharing learned structure",
+                "Only works on a single series",
+                "Ignores the data"
+              ],
+              "answer": 1,
+              "explain": "Global = cross-learning across series."
+            },
+            {
+              "q": "To apply an ML/DL regressor to a series, you first:",
+              "choices": [
+                "Remove the time index",
+                "Shuffle all the points",
+                "Reframe it as supervised (features, target) rows using lags",
+                "Average everything"
+              ],
+              "answer": 2,
+              "explain": "Lag-window framing turns it supervised."
+            },
+            {
+              "q": "Which architecture gives linear-time long-range memory, a natural fit for long series?",
+              "choices": [
+                "A decision stump",
+                "A plain feedforward MLP",
+                "k-nearest neighbors",
+                "State-space models (S4 / Mamba)"
+              ],
+              "answer": 3,
+              "explain": "SSMs scale linearly with sequence length."
+            },
+            {
+              "q": "Probabilistic forecasting means the model outputs:",
+              "choices": [
+                "A distribution or quantiles, not just a single point",
+                "Only the maximum value",
+                "The training error",
+                "A class label"
+              ],
+              "answer": 0,
+              "explain": "Predict uncertainty (quantiles via pinball loss)."
+            },
+            {
+              "q": "A time-series \"foundation model\" (e.g. Chronos, TimeGPT):",
+              "choices": [
+                "Must be retrained from scratch per series",
+                "Is pretrained on many series and can zero-shot forecast unseen ones",
+                "Only does classification",
+                "Requires no data ever"
+              ],
+              "answer": 1,
+              "explain": "Pretrain once, zero-shot forecast."
+            },
+            {
+              "q": "The \"Are Transformers Effective…?\" result showed that for many benchmarks:",
+              "choices": [
+                "Linear models cannot forecast at all",
+                "Transformers always win by a wide margin",
+                "A simple linear model (DLinear) could beat elaborate transformer forecasters",
+                "Seasonality is irrelevant"
+              ],
+              "answer": 2,
+              "explain": "Strong linear/classical baselines matter."
+            },
+            {
+              "q": "Before deploying a deep forecaster, you should always:",
+              "choices": [
+                "Use random k-fold",
+                "Trust it because it is complex",
+                "Skip evaluation",
+                "Benchmark it against a strong classical baseline (naive/ETS/ARIMA)"
+              ],
+              "answer": 3,
+              "explain": "The simple baseline often wins; always compare."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "When do deep forecasters beat classical methods (ARIMA/ETS)?",
+              "back": "When you have <em>many</em> related series, rich covariates (price/weather), nonlinear dynamics, and enough data. Classical still wins on a single regular series with small data."
+            },
+            {
+              "front": "Global vs local forecasting model",
+              "back": "<b>Local</b>: one model per series (e.g. an ARIMA each). <b>Global</b>: one model trained across all series, sharing structure (cross-learning) — far better for short/new series."
+            },
+            {
+              "front": "Forecasting as supervised learning",
+              "back": "Slide a window to make (features, target) rows: features are <b>lags</b> + calendar/covariates, target is the next value(s). No future leakage → the whole ML toolbox applies."
+            },
+            {
+              "front": "Sequence architectures for forecasting",
+              "back": "RNN/LSTM/GRU (step-by-step, DeepAR), temporal CNN/TCN (dilated causal convs), transformers (Informer/TFT, PatchTST), and state-space models (S4/Mamba) for long-range memory."
+            },
+            {
+              "front": "Probabilistic forecasting",
+              "back": "Output a <em>distribution</em>, not a point — predict distribution parameters or quantiles (trained with the pinball loss). A calibrated band gives risk, not just a guess."
+            },
+            {
+              "front": "Time-series foundation models",
+              "back": "Models pretrained on huge, diverse series collections (TimeGPT, Chronos, TimesFM, Moirai) that <b>zero-shot forecast</b> unseen series with no fitting. Chronos tokenizes values and reuses an LM architecture."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "Turn the series [5, 7, 6, 9] into supervised (features, target) rows using a window of 2 lags.",
+              "hint": "Each row: [value two ago, value one ago, current].",
+              "solution": "Rows: from index 2 → [5, 7, 6] (predict 6 from 5,7), index 3 → [7, 6, 9] (predict 9 from 7,6). So [[5,7,6],[7,6,9]] — two rows of [lag2, lag1, target]. A window of 2 over 4 points yields 2 rows."
+            },
+            {
+              "prompt": "You must forecast daily sales for 20,000 products, each with a short history but shared seasonal patterns and price/promo covariates. Local ARIMA or a global deep model — and why?",
+              "hint": "What do short series and shared structure favour?",
+              "solution": "A <b>global deep model</b>. Fitting 20,000 separate ARIMAs wastes the shared structure and fails on the short histories (too little data each); ARIMA also can't naturally use the price/promo covariates. A single global network learns the common seasonality once, borrows strength across products, and ingests covariates — exactly the regime where deep forecasting shines."
+            },
+            {
+              "prompt": "A teammate proposes a fancy transformer for a single, clean monthly series. What's your advice?",
+              "hint": "Recall the linear-baseline result.",
+              "solution": "Push back and benchmark first. On a single regular series, a strong classical baseline (ARIMA/ETS) — or even a simple linear model like DLinear — often matches or beats an elaborate transformer, with far less compute and full interpretability. Only adopt the transformer if it demonstrably beats those baselines on a proper rolling-origin backtest."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Designing a demand forecaster",
+              "body": "A retailer wants probabilistic weekly demand forecasts for thousands of SKUs with promotions and holidays. Sketch the approach.",
+              "solution": "Use a <b>global</b> model trained across all SKUs. Frame as supervised learning with lag features + calendar features (week-of-year, holidays) + promo covariates, and a per-SKU embedding so the model can specialize. Train it to output <b>quantiles</b> (pinball loss) for probabilistic forecasts. Architecture: a global gradient-boosted tree on engineered features is a strong, cheap start; escalate to DeepAR/TFT if it pays off. Always backtest against seasonal-naive and ETS baselines."
+            },
+            {
+              "title": "Cold-start forecasting",
+              "body": "You launch a new product with only three weeks of sales. How can you forecast it at all?",
+              "solution": "A local model can't — three points isn't enough. A <b>global</b> model already trained on similar products can forecast it immediately by applying learned patterns (category seasonality, launch curves), conditioned on the new product's static features (category, price tier). A time-series <b>foundation model</b> could even zero-shot it. This cold-start ability is a core reason to go global/pretrained."
+            },
+            {
+              "title": "Interpreting a benchmark",
+              "body": "Your transformer gets RMSE 95 on a single series; seasonal-naive gets 92. What do you conclude?",
+              "solution": "The transformer is <em>worse</em> than seasonal-naive (higher RMSE), so it has negative skill — it's not learning anything useful here and shouldn't be deployed. Either the series is too simple/short for a deep model, the pipeline is mis-specified, or a classical method is the right tool. The baseline did its job: it caught a model that looked sophisticated but underperformed."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
