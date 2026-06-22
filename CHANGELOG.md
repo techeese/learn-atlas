@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 806 — Hard-concept: the AEP & typical set (content)
+Audited Information Theory (already comprehensive: entropy, KL, mutual info, source coding, channel capacity, rate-distortion) and found one genuine gap — the **Asymptotic Equipartition Property**. Added a 4th deep-dive to
+`it-source-coding`: the AEP is the law of large numbers for information — the per-symbol surprise $-\frac1n\log_2 p(x_1,\dots,x_n)\to H$, so a typical length-$n$ sequence has probability $\approx 2^{-nH}$ and there are only about
+$2^{nH}$ of them (the **typical set**). That's *why* you can compress to $H$ bits/symbol (index the typical set, drop the rest), and the same counting proves the **channel coding theorem** (cross-linked to `it-channel-capacity`) — the
+single engine behind both of Shannon's great limits. Confirmed the ⌘K palette already indexes lessons + viz + glossary + references (no gap there).
+Verified: data parses + round-trips; gate ALL GREEN (internal-links lint confirms the cross-link; proseInMath on the AEP math); **headless** — 4 deep-dives render, typical-set/equipartition text + cross-link present, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v739` → `atlas-v740`.
+
 ## iter 805 — Glossary: learning-theory terms (reference)
 Completed the PAC/VC thread's integration (deep-dive 803 + viz 804) on the glossary surface. Added **3 tightly-linked terms** — PAC learning ($\le\epsilon$ error w.p. $\ge 1-\delta$), VC dimension (largest shatterable set →
 sample complexity), and Shattering (realizing every $+/-$ labeling) — now powering tooltips wherever they appear. Glossary **309 → 312** (0 holes).
