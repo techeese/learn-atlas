@@ -7314,4 +7314,53 @@
     draw();
   });
 
+
+  /* ========================================================
+     136. k-fold cross-validation: every point validates once (Machine Learning)
+     ======================================================== */
+  register({ id: 'ml-cross-validation', topic: 'machine-learning', title: 'k-fold cross-validation', blurb: 'A single train/validation split wastes data and gives a noisy estimate that depends on which rows landed in validation. k-fold cross-validation splits the data into k equal parts and trains k times — each fold takes a turn as the validation set (gold) while the other k−1 train (sage). Every point is validated exactly once; averaging the k scores gives a far more stable estimate, and their spread tells you how sensitive the model is to the split. Slide k to see the trade-off: more folds ⇒ more training data per run (less bias) but more runs and higher-variance individual estimates.' },
+  function (root) {
+    const W = 540, H = 320, padL = 14, padT = 16, padB = 30, rowGap = 6, scoreW = 132;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let K = 5;
+    function prng(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const gridW = W - padL - scoreW - padL, gridH = H - padT - padB;
+      const rowH = (gridH - rowGap * (K - 1)) / K, cellW = gridW / K;
+      ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace');
+      const r = prng(7 + K), scores = [];
+      for (let i = 0; i < K; i++) {
+        const y = padT + i * (rowH + rowGap);
+        for (let j = 0; j < K; j++) {
+          const x = padL + j * cellW, isVal = j === i;
+          ctx.fillStyle = isVal ? p.gold : 'rgba(136,163,122,0.32)';
+          ctx.fillRect(x + 1, y, cellW - 2, rowH);
+        }
+        // per-fold synthetic validation score (seeded), shown as a mini bar + number
+        const sc = 0.78 + r() * 0.16; scores.push(sc);
+        const bx = padL + gridW + padL, bw = scoreW - padL - 36;
+        ctx.fillStyle = p.line; ctx.fillRect(bx, y + rowH / 2 - 4, bw, 8);
+        ctx.fillStyle = p.sage; ctx.fillRect(bx, y + rowH / 2 - 4, bw * ((sc - 0.7) / 0.3), 8);
+        ctx.fillStyle = p.soft; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText((sc * 100).toFixed(0) + '%', bx + bw + 6, y + rowH / 2);
+      }
+      // header labels
+      ctx.fillStyle = p.mute; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.fillText('each row = one training run', padL, H - 12);
+      ctx.textAlign = 'left'; ctx.fillText('val score', padL + gridW + padL, H - 12);
+      const mean = scores.reduce((a, b) => a + b, 0) / K;
+      const sd = Math.sqrt(scores.reduce((a, b) => a + (b - mean) * (b - mean), 0) / K);
+      info.innerHTML = '<b>k = ' + K + '</b> · <span style="color:' + p.gold + '">gold</span> = validation fold, <span style="color:' + p.sage + '">sage</span> = training. ' +
+        'CV score = <b style="color:' + p.sage + '">' + (mean * 100).toFixed(1) + '%</b> ± ' + (sd * 100).toFixed(1) + '% (mean over ' + K + ' folds). ' +
+        'Every point validates exactly once; the spread is your estimate’s uncertainty.';
+    }
+    slider(ctl, { label: 'k (number of folds)', min: 3, max: 10, step: 1, value: K, fmt: v => String(v), onInput: v => { K = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'k-fold cross-validation diagram: k rows, each a training run, with the dataset split into k cells across. In row i the i-th cell is the validation fold (gold) and the rest are training (sage), so every point is validated exactly once. Each row shows a synthetic validation score, and the mean plus or minus standard deviation across folds is the cross-validation estimate. A slider sets k from 3 to 10.');
+    draw();
+  });
+
 })();

@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 787 — NEW viz: k-fold cross-validation (visualizations)
+Confirmed the alternative lanes were already complete before choosing: content is exhaustive (ml-kmeans already covers GMM/EM; ml-model-selection has nested-CV + 5 deep-dives), keyboard shortcuts are wired *and*
+documented, and viz a11y is handled **systemically** — `register()` already wraps every widget to auto-apply `role=img` + an `aria-label` from title/blurb to any unlabeled canvas (verified at runtime on the old `la-eigen`). So
+the genuine highest-value work was the last eval-viz gap (anti-monotony "biggest value" exception): the **136th widget, `ml-cross-validation`**. It shows k rows (one training run each), the dataset split into k cells, with the
+validation fold (gold) rotating down the diagonal so every point validates exactly once; per-fold synthetic scores and the **CV mean ± std** make the variance tangible. A k slider (3–10) shows the bias/variance trade-off.
+Embedded in section 3 "Cross-validation" of `ml-model-selection` (now paired with the ROC viz from iter 786). Deterministic (seeded scores).
+Verified: gate ALL GREEN (now **136 widgets**); **headless** — k slider 3↔10 redraws, CV score present, kErr=0, errs=0; screenshot shows the diagonal gold validation pattern + per-fold bars. SW cache `atlas-v720` → `atlas-v721`.
+
 ## iter 786 — NEW viz: ROC curve & AUC (visualizations)
 Back to the content rotation. Filled a genuine gap (audited the catalog: ROC, confusion matrix, cross-validation were missing) with the **135th widget, `ml-roc`**: an interactive ROC explorer. A "class separation"
 slider sets how distinguishable the two Gaussian score distributions are — at 0 the curve collapses to the diagonal (AUC 0.5, a coin flip), and raising it bows the curve toward the top-left corner (AUC → 1); a threshold
