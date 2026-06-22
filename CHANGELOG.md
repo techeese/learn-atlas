@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 758 — Cross-link the over-parameterization trilogy (understandability)
+Verified accessibility is thorough *and correct* — route-focus already moves to the new view's heading on navigation (`activeElement=H2`), with `:focus-visible` outlines for keyboard tabbing but the programmatic
+route-focus outline suppressed (no stray ring). Confirmed RL is exhaustive too (20 lessons incl. offline/imitation/model-based; deadly-triad deep-dives present). The autonomous gap-hunt is genuinely exhausted.
+Genuine understandability win: the over-parameterization trilogy lived in two lessons with no link between them — added **bidirectional "See also" links**: `ml-model-selection`'s double-descent deep-dive ↔
+`dl-overfitting-and-regularization`'s grokking + lottery-ticket deep-dives, so a learner on either finds the others (same surprise, three angles).
+Verified: data parses; gate ALL GREEN (the dangling-lesson-link lint confirms both targets resolve); **headless** — both links render and point to the right lessons, kErr=0, errs=0. SW cache `atlas-v691` → `atlas-v692`.
+
 ## iter 757 — Glossary: agent terms (reference)
 Completed the agent arc's integration (deep-dive iter 755 + viz iter 756 + glossary now). The glossary had RAG but none of the agent vocabulary — added **AI agent, ReAct, Tool use (function calling)**, now powering
 inline tooltips wherever they appear in `l-rag-and-tools`. Glossary **290 → 293** (0 holes).
