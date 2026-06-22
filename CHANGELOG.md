@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 857 — Deepen Game Theory: cooperative games & the Shapley value (content)
+Filled a genuinely distinct, uncovered GT branch (verified Shapley/cooperative-games/SHAP were all absent). Added a deep-dive to `gt-repeated-cooperation` (its 5th): cooperative games split a coalition's joint payoff $v(S)$; the
+**Shapley value** $\phi_i$ pays each player their average marginal contribution $v(S\cup\{i\})-v(S)$ over all join orders — the unique split satisfying efficiency/symmetry/null-player/additivity. The payoff: **SHAP** in explainable AI *is* this — features are players, the prediction is the payoff — cross-linked to `ml-ensembles`.
+**Caught a real corruption bug:** `String.replace(anchor, str)` interprets `$'`/`$&`/`$n` specials, and my `player $i$'s` (containing `$'`) made `.replace` dump the file tail mid-string. Fixed with a **function replacer**; saved the gotcha to [[atlas-pushwrapper-injection]].
+Verified: g()-guarded; `\cup`/`\phi` intact, no control chars, no leakage, parses; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, Shapley/cooperative/SHAP + ml link present, 30 KaTeX, kErr=0, errs=0. SW cache `atlas-v790` → `atlas-v791`.
+
 ## iter 856 — Wire Huffman: source coding ↔ greedy algorithms (understandability)
 Confirmed every topic's viz is comprehensive too (IT and RL both fully covered), so I kept strengthening the cross-topic web with a genuinely dual-identity concept: **Huffman coding** lives in both `it-source-coding` (optimal prefix
 codes approaching the entropy limit) and `a-greedy` (the textbook greedy algorithm, proved optimal by an exchange argument). Added a **bidirectional cross-link** so a learner meeting it in one lens can jump to the other.
