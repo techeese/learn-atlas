@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 761 — NEW viz: time-series decomposition (visualizations)
+Built the 10th topic's first visual — the **131st widget, `ts-decomposition`**: the canonical 4-panel plot (Observed · Trend · Seasonal · Residual) where the three lower components sum point-by-point to the observed
+series on top. Sliders for trend slope, seasonal amplitude, and noise level move all panels in lockstep — making "a series = trend + seasonality + noise" tangible. Embedded at §3 (decomposition) of `ts-what-is-a-time-series`. Deterministic (seeded noise).
+Verified: viz.js parses; gate ALL GREEN (now **131 widgets**); **headless** — Lab + lesson hydrate, 3 sliders update the readout (amplitude/slope), lesson renders 1 canvas, kErr=0, errs=0; screenshot shows the four stacked panels. SW cache `atlas-v694` → `atlas-v695`.
+
 ## iter 760 — Time Series lesson 1 MCQ top-up 8 → 16 (content / assessment)
 Brought the 10th topic's first lesson `ts-what-is-a-time-series` to the 16-MCQ standard. Added **8 new MCQs**: cyclic-vs-seasonal (no fixed period), the residual component, the log transform (multiplicative→additive),
 differencing (remove a trend), stationarity, forward-chaining validation, the ACF, and moving-average output length. Balanced → **4/4/4/4**. The lesson is now at full parity.

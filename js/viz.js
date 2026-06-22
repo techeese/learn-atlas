@@ -7093,4 +7093,60 @@
     render();
   });
 
+
+  /* ========================================================
+     131. Time-series decomposition: observed = trend + seasonal + residual (Time Series)
+     ======================================================== */
+  register({ id: 'ts-decomposition', topic: 'time-series', title: 'Decomposition: observed = trend + seasonal + residual', blurb: 'Every classical time series is read as a sum of parts: a slow Trend, a repeating Seasonal pattern, and leftover Residual noise. The top panel is what you observe; the three below are the hidden pieces that add up to it. Slide the trend slope, the seasonal amplitude, and the noise level and watch the observed series — and its decomposition — change in lockstep.' },
+  function (root) {
+    const W = 540, H = 330, padL = 76, padR = 12, padT = 12, gap = 8;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const N = 60, PERIOD = 12;
+    let slope = 0.18, amp = 6, noiseAmp = 2;
+    function prng(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function series() {
+      const r = prng(20240617), trend = [], seasonal = [], residual = [], observed = [];
+      for (let t = 0; t < N; t++) {
+        trend.push(5 + slope * t);
+        seasonal.push(amp * Math.sin(2 * Math.PI * t / PERIOD));
+        residual.push(noiseAmp * (r() * 2 - 1));
+        observed.push(trend[t] + seasonal[t] + residual[t]);
+      }
+      return { observed, trend, seasonal, residual };
+    }
+    function drawPanel(vals, label, col, y0, h) {
+      const p = P();
+      let lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals); if (hi - lo < 1e-6) { hi = lo + 1; lo -= 1; }
+      const pad = (hi - lo) * 0.12; lo -= pad; hi += pad;
+      const plotW = W - padL - padR;
+      const X = i => padL + i / (N - 1) * plotW;
+      const Y = v => y0 + h - (v - lo) / (hi - lo) * h;
+      // baseline at 0 if in range
+      if (lo < 0 && hi > 0) { ctx.strokeStyle = p.line; ctx.globalAlpha = 0.5; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke(); ctx.globalAlpha = 1; }
+      ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.beginPath();
+      vals.forEach((v, i) => { const x = X(i), yy = Y(v); if (i === 0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy); });
+      ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = col; ctx.fillText(label, padL - 8, y0 + h / 2);
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const s = series();
+      const panelH = (H - padT - 3 * gap) / 4;
+      drawPanel(s.observed, 'Observed', p.ink, padT, panelH);
+      drawPanel(s.trend, 'Trend', p.gold, padT + (panelH + gap), panelH);
+      drawPanel(s.seasonal, 'Seasonal', p.sage, padT + 2 * (panelH + gap), panelH);
+      drawPanel(s.residual, 'Residual', p.rust, padT + 3 * (panelH + gap), panelH);
+      info.innerHTML = '<b style="color:' + p.ink + '">Observed</b> = <b style="color:' + p.gold + '">Trend</b> + <b style="color:' + p.sage + '">Seasonal</b> + <b style="color:' + p.rust + '">Residual</b> &middot; trend slope ' + slope.toFixed(2) + ', seasonal amplitude ' + amp.toFixed(0) + ', noise ' + noiseAmp.toFixed(1) + '. The three lower panels add up, point by point, to the top one.';
+    }
+    slider(ctl, { label: 'trend slope', min: 0, max: 0.5, step: 0.01, value: slope, fmt: v => v.toFixed(2), onInput: v => { slope = v; draw(); } });
+    slider(ctl, { label: 'seasonal amplitude', min: 0, max: 12, step: 0.5, value: amp, fmt: v => v.toFixed(0), onInput: v => { amp = v; draw(); } });
+    slider(ctl, { label: 'noise level', min: 0, max: 6, step: 0.5, value: noiseAmp, fmt: v => v.toFixed(1), onInput: v => { noiseAmp = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Time-series decomposition visualizer: four stacked panels — Observed on top, then Trend, Seasonal, and Residual below. The observed series is the point-by-point sum of the three components. Sliders for trend slope, seasonal amplitude, and noise level change all panels together.');
+    draw();
+  });
+
 })();
