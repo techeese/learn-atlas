@@ -49,11 +49,32 @@ function rawMarkdown(s) { const t = stripCodeMath(s); return /\*\*[^*\n]{1,80}\*
 // aligned/gathered — but NOT the [pbBvV]smallmatrix family or the starred matrix*/cases* variants (those need
 // mathtools). Denylist exactly those (verified zero matches across the corpus). Fix: \left(\begin{smallmatrix}…\right).
 const UNSUPPORTED_KATEX_ENV = /\\begin\{(?:[pbBvV]smallmatrix|(?:matrix|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|smallmatrix|cases)\*)\}/;
+// iter 200/731 money-&-prose-in-math garble: a bare "$" in prose mis-pairs with the next "$", rendering the
+// text between as italic "math". It's VALID math, so kErr AND dollarOdd both stay green (even # of $) — only a
+// screenshot, the runtime audit, or this lint catches it (the iter-731 l-prompting "$1.20. Mai buys…$5 bill"
+// shipped past every other check). Detect inline/display math whose content — after dropping escaped \$ money,
+// \text{…}/\mathrm{…} (legit English in math), LaTeX commands, and _subscripts — still reads as prose: 3+ words
+// incl. 2+ common stopwords. Money MUST be written \$ (skipped here). Verified zero corpus false positives;
+// catches the real l-prompting bug, clears escaped-money/\text{}/cases/dim-tuples. Always write money as \$.
+const PROSE_WORDS = new Set("the and are with that this from but was were has have had its his her our you your can all any each how does much will would they them then than".split(" "));
+function proseInMath(s) {
+  const cleaned = String(s).replace(/<pre[\s\S]*?<\/pre>/gi, " ").replace(/<code[\s\S]*?<\/code>/gi, " ").replace(/\\\$/g, " ");
+  const segs = cleaned.match(/\$\$[\s\S]*?\$\$|\$[^$\n]*?\$/g) || [];
+  for (const seg of segs) {
+    const inner = seg.replace(/^\$\$?/, "").replace(/\$\$?$/, "")
+      .replace(/\\(?:text|textbf|textit|textrm|textsf|texttt|mathrm|mathbf|mathsf|operatorname|mbox|hbox)\s*\{[^{}]*\}/g, " ")
+      .replace(/\\begin\{[^}]*\}|\\end\{[^}]*\}/g, " ").replace(/\\[a-zA-Z]+/g, " ").replace(/_\{?[a-z]+\}?/gi, " ");
+    const words = (inner.match(/[A-Za-z]{3,}/g) || []).map(w => w.toLowerCase());
+    if (words.length >= 3 && words.filter(w => PROSE_WORDS.has(w)).length >= 2) return inner.trim().slice(0, 60);
+  }
+  return null;
+}
 function checkRender(s, where) {
   if (typeof s !== "string" || !s) return;
   if (dollarOdd(s)) errors.push("unbalanced / unescaped $ (write a literal money $ as \\$): " + where);
   if (rawMarkdown(s)) errors.push("raw markdown ** or __ won't render via innerHTML (use <strong>/<em>): " + where);
   if (UNSUPPORTED_KATEX_ENV.test(s)) errors.push("unsupported KaTeX env (mathtools, not in this build — use \\left(\\begin{smallmatrix}…\\right)): " + where);
+  { const pim = proseInMath(s); if (pim) errors.push("prose rendered as math — a bare $ near prose mis-paired (write money as \\$, close math tightly): \"" + pim + "\" in " + where); }
 }
 // unbalanced HTML tags render silently-wrong: an unclosed <details>/<b>/<div> (e.g. from a bad byte-stable
 // injection) swallows or mis-styles the rest of the lesson. Count opens vs closes for these paired tags on

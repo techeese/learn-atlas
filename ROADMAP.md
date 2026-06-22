@@ -58,7 +58,7 @@ First-load path is optimized: all data/logic scripts are `defer` (parallel fetch
 - Step back every ~10 iterations (full 174-lesson regression sweep); is the site measurably better, any compass area neglected?
 
 ## Backlog (ideas — mine these; add as you discover more)
-- **Runtime money-garble audit.** Bare-`# Atlas — Roadmap
+- ✅ iter 732: money/prose-in-math garble is now caught by gate.js (`proseInMath` lint) AND was audited clean across 178 lessons at runtime. The iter-200/731 class is closed (lint + clean corpus).
 
 **North star:** the best *personal* learning site ever — for one motivated self-learner studying
 the math and ideas behind modern AI. Optimize for: understanding faster, remembering longer, and *wanting* to come back.

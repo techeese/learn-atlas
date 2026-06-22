@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 732 — Runtime money-garble audit (clean) + permanent gate lint (workflow / gates)
+Followed up the iter-731 money-garble fix by (1) auditing the whole site for the bug class and (2) making the gate catch it forever.
+**Audit:** headless-loaded all 178 lessons, scanned every `.katex` span for collapsed prose (long letter-runs containing English words). After filtering false positives (legit `\text{}` multi-word spans, `\Longleftrightarrow`-type
+symbol names, `\begin{cases}` text), **zero genuine garbles remain** — the iter-731 l-prompting fix was the only live instance; the class is eradicated.
+**Gate lint (`proseInMath` in gate.js):** the iter-200 garble (bare `$` in prose mis-pairing with the next `$`) is *valid* math, so `kErr` AND the `$`-parity check both stay green — it shipped past everything until a screenshot caught it.
+The new lint extracts each `$…$`/`$$…$$`, drops escaped `\$` money + `\text{}`/commands/subscripts, and flags any remainder that still reads as prose (3+ words incl. 2+ stopwords). Money must be written `\$`.
+Verified: gate.js parses; **ALL GREEN on the current corpus (zero false positives)**; tuned against known-good patterns (escaped money, `\text{}`, cases, `(H_{out},W_{out},C_{out})` dim-tuples — all clear) and a known-bad (the exact l-prompting string — caught); **negative control**: planting a garble makes the gate `FAIL (1)`, reverting restores `ALL GREEN`. No served asset changed (gate.js isn't in `sw.js`), so no cache bump.
+
 ## iter 731 — FIX money-garble in the CoT lesson + reasoning-models deep-dive (bug / content)
 **Bug (broken wins):** the prompting/CoT lesson's worked-example question had bare-`$` money in prose — "...for $1.20. Mai buys 7 pencils and pays with a $5 bill..." — and KaTeX mis-paired the two `$`, rendering
 "1.20. Mai buys 7 pencils and pays with a" as **garbled italic math** (spaces collapsed). It raised **no** gate/kErr error (valid math), exactly the iter-200 money landmine. Fixed by escaping the prose money to
