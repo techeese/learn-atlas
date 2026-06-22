@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 731 — FIX money-garble in the CoT lesson + reasoning-models deep-dive (bug / content)
+**Bug (broken wins):** the prompting/CoT lesson's worked-example question had bare-`$` money in prose — "...for $1.20. Mai buys 7 pencils and pays with a $5 bill..." — and KaTeX mis-paired the two `$`, rendering
+"1.20. Mai buys 7 pencils and pays with a" as **garbled italic math** (spaces collapsed). It raised **no** gate/kErr error (valid math), exactly the iter-200 money landmine. Fixed by escaping the prose money to
+`\$` (the boot normalizer renders `\$`→ literal `$`); the code-block copies (KaTeX skips `<code>`) and the legitimate `$…$` arithmetic in the solution were left untouched. DOM-confirmed: the em text's spaces are
+restored (was "Maibuys7pencils", now "Mai buys 7 pencils").
+**Content:** added a 4th deep-dive to the same lesson — **"from prompted chain-of-thought to reasoning models"** (o1/o3, DeepSeek-R1: RL-trained reasoning + the new *test-time compute* scaling axis + self-consistency), the defining 2024-25 LLM development, absent until now.
+Verified: data parses; gate ALL GREEN; **headless** — money no longer in a garbled KaTeX span (spaces restored), 4 deep-dives, reasoning-models text present, kErr=0, errs=0. SW cache `atlas-v667` → `atlas-v669`.
+NOTE: bare-`$` money in prose is a latent class the gate can't catch (even-`$` "valid" garble); a static scan is too noisy (legit math starts with digits too) — queued a **runtime money-garble audit** (flag `.katex` spans containing 3+ English words) in the backlog.
+
 ## iter 730 — Step-back sweep (clean) + GNN glossary terms (step-back / reference)
 Step-back at ~12 iters since the last sweep. **Full 178-lesson regression sweep**: errs=0, no KaTeX errors, bad=none, Knowledge Map 830 nodes — the 5-lesson modern arc (MoE/SSM/ViT/DR/GNN) introduced
 **zero regressions**.
