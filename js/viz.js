@@ -7191,4 +7191,45 @@
     draw();
   });
 
+
+  /* ========================================================
+     133. Exponential smoothing: the alpha responsiveness dial (Time Series)
+     ======================================================== */
+  register({ id: 'ts-exp-smoothing', topic: 'time-series', title: 'Exponential smoothing: the α dial', blurb: 'Simple exponential smoothing tracks a noisy series with one knob, α. The dim line is the raw data (it jumps to a new level partway through); the bold line is the smoothed forecast. Slide α: near 0 it is silky-smooth but sluggish — it lags the level shift; near 1 it snaps to every wiggle, catching the shift instantly but echoing the noise. The art is the trade-off in between.' },
+  function (root) {
+    const W = 540, H = 300, padL = 30, padR = 14, padT = 16, padB = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const N = 64, STEP = 30;
+    let alpha = 0.3;
+    function prng(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function data() { const r = prng(42), y = []; for (let t = 0; t < N; t++) y.push((t < STEP ? 10 : 16) + (r() * 2 - 1) * 1.5); return y; }
+    function smooth(y) { const s = [y[0]]; for (let t = 1; t < N; t++) s.push(alpha * y[t] + (1 - alpha) * s[t - 1]); return s; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const y = data(), s = smooth(y);
+      let lo = Math.min.apply(null, y), hi = Math.max.apply(null, y); const pad = (hi - lo) * 0.12; lo -= pad; hi += pad;
+      const plotW = W - padL - padR, plotH = H - padT - padB;
+      const X = i => padL + i / (N - 1) * plotW, Y = v => padT + (1 - (v - lo) / (hi - lo)) * plotH;
+      // step marker
+      ctx.strokeStyle = p.line; ctx.setLineDash([3, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(STEP), padT); ctx.lineTo(X(STEP), H - padB); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.fillText('level shift', X(STEP), padT + 9);
+      // raw data (dim)
+      ctx.strokeStyle = p.mute; ctx.globalAlpha = 0.5; ctx.lineWidth = 1; ctx.beginPath(); y.forEach((v, i) => { const x = X(i), yy = Y(v); i ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy); }); ctx.stroke();
+      ctx.fillStyle = p.mute; y.forEach((v, i) => { ctx.beginPath(); ctx.arc(X(i), Y(v), 1.6, 0, 7); ctx.fill(); }); ctx.globalAlpha = 1;
+      // smoothed (bold)
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.4; ctx.beginPath(); s.forEach((v, i) => { const x = X(i), yy = Y(v); i ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy); }); ctx.stroke();
+      info.innerHTML = 'α = <b style="color:' + p.gold + '">' + alpha.toFixed(2) + '</b> · ' +
+        (alpha < 0.2 ? 'very smooth but <b>laggy</b> — it crawls toward the new level long after the shift.'
+          : alpha > 0.7 ? 'very <b>responsive</b> — it snaps to the shift fast but echoes the noise.'
+          : 'a balance — fairly smooth, yet it tracks the level shift within a few steps.') +
+        ' <span style="color:' + p.mute + '">(dim = raw data, bold = smoothed)</span>';
+    }
+    slider(ctl, { label: 'α (smoothing)', min: 0.02, max: 1, step: 0.02, value: alpha, fmt: v => v.toFixed(2), onInput: v => { alpha = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Exponential-smoothing explorer: a dim raw series that steps from one level to a higher one partway through, with a bold smoothed line and an alpha slider. Small alpha gives a smooth but laggy line that catches the level shift slowly; large alpha gives a responsive but noisy line that snaps to the shift quickly.');
+    draw();
+  });
+
 })();

@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 776 — Achievements verified at 10 topics + NEW viz: exponential-smoothing α dial (gamification check / visualizations)
+First confirmed the 10th topic didn't break gamification: **all achievement logic is dynamic** (`window.COURSES.every(...)`, count thresholds) — no hardcoded topic count, so "all-topics"/"atlas-complete" correctly scaled to 10
+topics with zero stale-count bugs. Then filled a real gap: the `ts-exponential-smoothing` lesson had **no viz** despite its core "α dial" being highly visual. Built the **133rd widget, `ts-exp-smoothing`**: a noisy series with a
+mid-series level shift, overlaid with the SES line; an α slider shows the trade-off — near 0 it's smooth but laggy (crawls to the new level), near 1 it snaps to the shift but echoes the noise. Embedded at §5 of the lesson. Deterministic.
+Verified: SES step-tracking re-derived in Node (post-step value 14.79→16.59→17.03 as α 0.1→0.5→0.9); gate ALL GREEN (now **133 widgets**); **headless** — Lab + lesson hydrate, α slider flips the "laggy"/"responsive" readout, kErr=0, errs=0; screenshot shows raw-vs-smoothed. SW cache `atlas-v709` → `atlas-v710`.
+
 ## iter 775 — Map verified at 10 topics + cross-link RNNs → forecasting (understandability)
 Rotated off Time Series. Verified the **Knowledge Map renders cleanly at 10 topics** — "185 concepts · 10 paths radiating outward" (dynamic counts correct), a rich but uncrowded constellation, all 10 topics in the
 sidebar; no bug. Then a genuine cross-topic connection: the Time Series capstone already prereqs *into* the DL sequence models, but there was no link *back* — so DL learners couldn't discover forecasting as an application of
