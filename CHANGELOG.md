@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 872 — NEW code exercise: the limit definition of e (examples / hands-on)
+Rotated off the stats thread. Added a runnable exercise to `c-limits-intuition`, which had none, in its "Reading a limit from a table" section — exactly what it does: compute $(1+\tfrac1n)^n$ for growing $n$ and watch it march toward
+$e$ → **2.000 -> 2.594 -> 2.717 -> 2.718**. Makes "read a limit from the numbers" something you run, with the most famous limit there is.
+Verified: re-derived in Node; data parses + round-trips; **gate ALL GREEN — code-exercises verified (now 162)**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v805` → `atlas-v806`.
+
 ## iter 871 — NEW viz: Gaussian process regression with uncertainty bands (visualizations)
 Gave the iter-868 GP thread its iconic visual — the **151st widget, `ps-gaussian-process`**, embedded after the GP deep-dive: real GP regression (RBF kernel, small kernel-matrix solve in JS) over 5 data points. The violet posterior mean
 threads the data and the ±2σ band **pinches to ~0 at each observed point and balloons in the gaps and beyond** — "a model that knows what it doesn't know." Slide the lengthscale ℓ: short → wiggly/locally-cautious, long → smooth/confident.
