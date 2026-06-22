@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 839 — Deepen the thinnest topic: evolutionary game theory / ESS (content)
+Game Theory is the thinnest topic (3 lessons), so I deepened it. Added an evolutionary-game-theory deep-dive to `gt-repeated-cooperation` (its 4th): from rational players to a **population** where payoff = fitness; an
+**evolutionarily stable strategy (ESS)** is a Nash equilibrium no rare mutant can invade; the **replicator equation** $\dot{x}_i = x_i\,(f_i - \bar f)$ grows whatever beats the population average; **Hawk–Dove**'s ESS is a *mixed*
+population — a mixed equilibrium reached by selection, not reasoning (cross-linked to `gt-mixed-zero-sum`), the bridge from game theory to biology and self-play league training.
+**Caught a real bug:** my first inject mangled the LaTeX (kErr=2 in headless) — the encoded raw-replace into push-wrapper data files (game-theory.js) escaped quotes/newlines but **not backslashes**, so `\dot`/`\bar`/`\,` became backspace/`d`/`,` when the JS string parsed. Fixed the encoder to double backslashes first; re-verified kErr=0.
+Verified: g()-guarded; parses with `\dot`/`\bar` intact (no control chars); gate ALL GREEN (internal-links lint confirms the cross-link); **headless** — 4 deep-dives, ESS/replicator/Hawk-Dove + cross-link present, 24 KaTeX, **kErr=0**, rawDollar=0, errs=0. SW cache `atlas-v772` → `atlas-v773`.
+
 ## iter 838 — NEW code exercise: N-queens by backtracking (examples / hands-on)
 Added a runnable exercise to `a-backtracking-branch-bound` (algorithms), which had none — the canonical backtracking demo. Depth-first search with feasibility pruning places queens row by row, abandoning any partial board that
 already conflicts, and counts every solution → **8-queens solutions: 92**. Placed at the end of the "depth-first search with feasibility pruning" section.
