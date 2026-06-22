@@ -6,9 +6,9 @@ the math and ideas behind modern AI. Optimize for: understanding faster, remembe
 The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live queue**: done items
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
-## Current state (iter 759, 2026-06-22)
+## Current state (iter 883, 2026-06-23)
 **11 topics · 188 lessons · 152 visualizations · 367 glossary terms · 164 code exercises** (Game Theory fully built out: 3 lessons + deep-dives on mechanism design/auctions, evolutionary GT/ESS, cooperative games/Shapley, and Bayesian games/signaling — integrated with viz, glossary, code, refs, prereqs)
-Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
+Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory · Time Series & Forecasting · Game Theory.
 `node gate.js` is ALL GREEN; it machine-checks data + render-hazards (proseInMath money-garble lint, sparse-array holes, unbalanced tags/`$`, unsupported KaTeX envs), runs every JS code-exercise, and warns on any lesson below content-parity.
 Every major UI flow (dashboard · daily review · spawn-a-test · library · cheatsheet · placement · playground · knowledge map) has been fresh-eyes screenshot-reviewed (iters 733–752) and is polished; bugs found were fixed (test first-run dead-end iter 744; quiz-accuracy "—" iter 733; deep-dive title-case iter 734).
 
@@ -28,12 +28,13 @@ Owner steers by *reacting* to the live site. Key past steers (detail in `CHANGEL
 - **Content sweeps (long done):** worked examples (all lessons), 16 MCQ/lesson, 3 deep-dives/lesson, embedded code exercises, viz frontier (129 widgets), cross-topic prereq graph, inline glossary tooltips, a11y (ARIA/reduced-motion/high-contrast/keyboard), activity heatmap, Daily Mix, Knowledge Map, search, notes, bookmarks, placement, playground (all 9 topics), 63 achievements.
 
 ## Now / live queue
-- **⏳ Time Series & Forecasting (10th topic, started iter 759) — phase 1 shipped (1 lesson). QUEUE:** then lessons — ACF/PACF, moving averages & exponential smoothing, ARIMA, forecast evaluation/backtesting, features for ML forecasting, deep forecasters (RNN/TCN/SSM/transformer). Build out like prior topic arcs (lesson → 16 MCQ → viz → glossary/prereqs/refs).
-- **Maturity plateau:** the autonomous high-value backlog is largely exhausted — every major area is comprehensive, current, deeply-explained, and fully integrated (verified by repeated full sweeps + surface reviews). Recent iterations = fine-grained, genuinely-additive polish, rotating the compass.
-- **Owner-steer big levers (the real next jumps):** (1) a brand-new **10th topic** (everything in-scope is currently covered, so this needs owner appetite — see Backlog candidates); (2) the **lazy-load data perf refactor** (see Backlog) — high-risk, LOW real urgency (the SW caches everything for the single repeat learner), so deferred pending owner steer.
+- **✅ Time Series & Forecasting (10th topic) — DONE:** 6 lessons (what-is-a-TS, stationarity & differencing, moving averages & exponential smoothing, ARIMA, forecast evaluation/backtesting, deep forecasting) + viz (decomposition, AR process, exp-smoothing, ACF, forecast cone, backtesting), glossary, prereqs, refs.
+- **✅ Game Theory (11th topic) — DONE:** 3 lessons (foundations, mixed/zero-sum, repeated games & cooperation) deeply built out with deep-dives on mechanism design/auctions, evolutionary GT/ESS, cooperative games/Shapley→SHAP, and Bayesian games/signaling; viz (Nash 2×2, minimax, IPD, replicator, Shapley), glossary, code, refs, cross-links to GANs/RL self-play/ML interpretability.
+- **Maturity plateau (deep):** the autonomous high-value backlog is exhausted — every major area is comprehensive, current, deeply-explained, fully integrated, and regression-clean (verified by repeated kErr-aware full sweeps). Recent iterations = fine-grained genuinely-additive polish (occasional real concept gap — e.g. Gaussian processes, adversarial examples, the bootstrap — plus the cross-topic web: KL, kernels, MLE, PCA, explore-exploit threaded across topics), rotating the compass.
+- **Owner-steer big levers (the real next jumps):** (1) a brand-new **12th topic** (everything in-scope is currently covered, so this needs owner appetite — see Backlog candidates); (2) the **lazy-load data perf refactor** (see Backlog) — high-risk, LOW real urgency (the SW caches everything for the single repeat learner), so deferred pending owner steer.
 
 ## Perf notes
-First-load path is optimized: all data/logic scripts are `defer`; fonts via `<link>`; `preconnect` to jsdelivr + Google Fonts. The 9 topic data files (~7MB) are parsed eagerly; Pages gzips them so the real cost is parse/execute, paid only on first visit (SW caches after). The boot math-normalizer is batched (iter 746). Lazy-loading per-topic content is the big swing but RISKY — see Backlog.
+First-load path is optimized: all data/logic scripts are `defer`; fonts via `<link>`; `preconnect` to jsdelivr + Google Fonts. The 11 topic data files (~7MB) are parsed eagerly; Pages gzips them so the real cost is parse/execute, paid only on first visit (SW caches after). The boot math-normalizer is batched (iter 746). Lazy-loading per-topic content is the big swing but RISKY — see Backlog.
 
 ## Improvement compass — rotate; broken always wins; biggest value first
 1. **Content details** — depth, accuracy, missing sub-topics, new lessons/modules, worked examples.
@@ -56,7 +57,7 @@ First-load path is optimized: all data/logic scripts are `defer`; fonts via `<li
 - Step back every ~10 iterations (full all-lessons regression sweep); is the site measurably better, any compass area neglected?
 
 ## Backlog (ideas — mine these; add as you discover more)
-- **(big but risky) Lazy-load topic data.** The 9 `data/*.js` files (~7MB) all load eagerly via `<script defer>`. The dashboard/search/glossary/prereqs only need course+lesson *metadata* (id/title/icon/color/blurb/minutes/module structure), not the heavy per-lesson `content`/`mcq`/etc. A real first-load win would split each topic into a tiny manifest (eager) + heavy content (lazy per-topic on first lesson open). Sizable architecture change — the app assumes `window.COURSES` is fully populated synchronously everywhere (gate.js, search, prereqs, glossary, map, daily picks) — so do it as a carefully-staged phase with its own gate, NOT a casual iteration. LOW urgency (SW caches for the repeat user); owner-steer.
+- **(big but risky) Lazy-load topic data.** The 11 `data/*.js` files (~7MB) all load eagerly via `<script defer>`. The dashboard/search/glossary/prereqs only need course+lesson *metadata* (id/title/icon/color/blurb/minutes/module structure), not the heavy per-lesson `content`/`mcq`/etc. A real first-load win would split each topic into a tiny manifest (eager) + heavy content (lazy per-topic on first lesson open). Sizable architecture change — the app assumes `window.COURSES` is fully populated synchronously everywhere (gate.js, search, prereqs, glossary, map, daily picks) — so do it as a carefully-staged phase with its own gate, NOT a casual iteration. LOW urgency (SW caches for the repeat user); owner-steer.
 - AI tutor / infinite practice (opt-in, bring-your-own Claude API key). [owner deferred]
 - Per-concept difficulty rating + adaptive question selection in tests.
 - Recency/mastery-weighted search ranking in ⌘K (fuzzy already done).

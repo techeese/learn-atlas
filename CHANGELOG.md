@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 883 — Freshen the ROADMAP (live queue) — accuracy (workflow / dev-flow)
+The ROADMAP is the loop's first-read orientation doc, and (per the iter-882 flag) it had drifted: header said *(iter 759)*; the topic list named only 9 topics (missing Time Series & Game Theory); the "Now / live queue" still described Time Series as "started iter 759 — 1 lesson, QUEUE" though it's 6 lessons done, and never mentioned Game Theory; perf-notes/backlog said "9 data files" (now 11).
+Fixed all: header → iter 883; topic list → all 11; live-queue → both new topics marked DONE with their actual build-out, plateau note refreshed (GP/adversarial/bootstrap gaps + cross-topic web), and the "next big topic" lever renumbered 10th→12th; data-file count 9→11 in two places.
+Verified: gate ALL GREEN; ROADMAP is not a served asset, so no SW bump (stays `atlas-v815`). No code/data touched.
+
 ## iter 882 — Glossary: adversarial-ML terms (reference)
 Completed the iter-881 thread with **3 glossary terms** — **Adversarial example**, **Fast Gradient Sign Method (FGSM)** ($x'=x+\epsilon\,\mathrm{sign}(\nabla_x J)$), and **Adversarial training**. Glossary **364 → 367** (0 holes).
 Verified: glossary parses with `\nabla` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 343 KaTeX, kErr=0, errs=0. SW cache `atlas-v814` → `atlas-v815`.
