@@ -5170,6 +5170,162 @@
               "solution": "A transformer does message passing on the <em>complete</em> graph over tokens: every token is connected to every other, and self-attention computes a learned, content-based weight for each \"edge\". So a transformer is a GNN whose graph is fully connected and whose aggregation is attention — which is why long sequences are costly (all pairs) and why sparse/graph-structured attention is an active area."
             }
           ]
+        },
+        {
+          "id": "dl-self-supervised-contrastive",
+          "title": "Self-Supervised & Contrastive Learning",
+          "minutes": 16,
+          "content": "<h3>1. The hook: labels are scarce, raw data is abundant</h3>\n<p>Supervised learning needs labels, and labels are expensive — someone has to annotate every image or sentence. But the internet has billions of <em>unlabelled</em> images, documents, and videos. <b>Self-supervised learning (SSL)</b> turns that raw data into its own supervision: invent a task whose \"labels\" come for free from the data, learn rich representations from it, then fine-tune on a small labelled set. It is how almost every modern foundation model is pre-trained.</p>\n<h3>2. Self-supervision: invent the labels from the data</h3>\n<p>The trick is a <b>pretext task</b> — a puzzle the data answers itself. Mask a word and predict it (BERT). Predict the next token (GPT). Mask image patches and reconstruct them (MAE). Decide whether two crops come from the same image. None needs a human label; the supervision is carved out of the input. The point isn't the puzzle — it's the <em>representation</em> the network must build to solve it.</p>\n<h3>3. Contrastive learning: pull together, push apart</h3>\n<p>The most influential SSL family is <b>contrastive learning</b>. Form a <b>positive pair</b> (two views of the same thing) and treat everything else in the batch as <b>negatives</b>. Train the encoder so positives land close in embedding space and negatives land far apart. The geometry does the work: similar things cluster, dissimilar things spread, all without a single label.</p>\n<h3>4. The InfoNCE objective</h3>\n<p>Concretely, score each pair by similarity (usually cosine), divide by a <b>temperature</b> $\\tau$, and apply a softmax — the loss is just cross-entropy that says \"the positive should win against all negatives\": $\\mathcal{L} = -\\log \\dfrac{e^{\\,s_+/\\tau}}{e^{\\,s_+/\\tau} + \\sum_k e^{\\,s_k^-/\\tau}}$. Run one anchor against 1 positive and 3 negatives:</p>\n<div data-code=\"javascript\" data-expected=\"P(positive) = 0.996\nInfoNCE loss = 0.004\">// Contrastive (InfoNCE) loss: one anchor vs 1 positive + 3 negatives.\nconst sim = [0.9, 0.2, 0.1, 0.3];   // cosine similarities: [positive, neg, neg, neg]\nconst t = 0.1;                       // temperature\nconst exps = sim.map(s => Math.exp(s / t));\nconst Z = exps.reduce((a, b) => a + b, 0);\nconst pPos = exps[0] / Z;            // softmax mass on the positive\nconst loss = +(-Math.log(pPos)).toFixed(3);\nconsole.log(\"P(positive) = \" + pPos.toFixed(3));\nconsole.log(\"InfoNCE loss = \" + loss);\n// The positive's high similarity wins the softmax, so the loss is tiny.</div>\n<h3>5. SimCLR: augmentations make the positive pair</h3>\n<p>Where do two views of \"the same thing\" come from? <b>SimCLR</b> takes one image and applies two random augmentations — crop, colour-jitter, blur — to get two correlated views; that's the positive pair, every other image in the batch is a negative. The encoder must learn features invariant to those nuisances (a cat is a cat, cropped or recoloured), which turn out to be exactly the semantic features useful downstream. Bigger batches give more negatives and train better.</p>\n<h3>6. CLIP: contrastive across modalities</h3>\n<p><b>CLIP</b> applies the same idea across <em>two</em> modalities: encode a batch of images and their captions, and make each image embedding match its <em>own</em> caption (positive) against all other captions (negatives), and vice-versa. The result is a shared image-text space where \"a photo of a dog\" sits near pictures of dogs — enabling zero-shot classification (score an image against text prompts) and powering text-to-image systems.</p>\n<h3>7. Beyond negatives: masked and non-contrastive SSL</h3>\n<p>Contrastive learning needs many negatives, which is awkward. Two alternatives dominate now. <b>Masked modelling</b> (MAE for images, BERT for text) hides part of the input and reconstructs it — no negatives at all. <b>Non-contrastive</b> methods (BYOL, DINO) keep only positive pairs and avoid the trivial \"map everything to one point\" collapse with architectural tricks (a momentum/target encoder, stop-gradients, centering). All three families chase the same prize: representations learned without labels.</p>\n<h3>8. Why this matters</h3>\n<p>Self-supervised pre-training is the engine of the foundation-model era: GPT, BERT, CLIP, DINO, and MAE are all SSL. It decouples learning useful structure (cheap, from oceans of raw data) from task-specific fine-tuning (a little labelled data), and produces embeddings that transfer across tasks — the practical reason a single pre-trained model can be adapted to so many problems.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why negatives matter — and representation collapse</summary>\n<p>Pull positives together and there is a trivial cheat: map <em>every</em> input to the same vector — then all positives coincide and the loss is minimised, but the representation is useless. <b>Negatives are the repulsive force that prevents this collapse</b>: pushing different items apart forces the encoder to actually distinguish them, so it must encode real content. That is why contrastive methods want many negatives (large batches, or a memory bank as in MoCo). Non-contrastive methods (BYOL, DINO) drop negatives but must reintroduce an anti-collapse mechanism — a momentum target encoder, a stop-gradient, or feature centering — or they too collapse.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: InfoNCE is a lower bound on mutual information</summary>\n<p>The name InfoNCE is short for \"Info Noise-Contrastive Estimation,\" and it is not just an analogy: minimising the InfoNCE loss <em>maximises a lower bound on the mutual information</em> between the two views, $I(\\text{view}_1; \\text{view}_2)$. Intuitively, the model is squeezing out exactly the information the two views <em>share</em> (the underlying object) while discarding view-specific nuisance (the particular crop or colour). The temperature $\\tau$ tunes how sharply the softmax concentrates on the hardest negatives — small $\\tau$ focuses on the most confusable items, which empirically sharpens the learned features.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: contrastive vs masked — two routes to the same goal</summary>\n<p><b>Contrastive</b> (SimCLR, CLIP, MoCo) learns by <em>comparison</em>: it needs augmentations to define positive pairs and many negatives, and tends to produce strongly <em>linearly separable</em> global features — great for retrieval and zero-shot. <b>Masked</b> (BERT, MAE) learns by <em>reconstruction</em>: hide and predict, no negatives or augmentations needed, and it tends to learn fine-grained local features that shine after fine-tuning. Vision has largely shifted toward masked autoencoding for its simplicity and scalability, while contrastive remains dominant for multimodal alignment (CLIP). They are complementary, and hybrids exist.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "Self-supervised learning gets its training signal from:",
+              "choices": [
+                "A pretext task whose labels come free from the raw data itself",
+                "Human annotators labelling every example",
+                "A reward from an environment",
+                "Random noise"
+              ],
+              "answer": 0,
+              "explain": "SSL invents labels from the data (mask-and-predict, etc.)."
+            },
+            {
+              "q": "In contrastive learning, a \"positive pair\" is:",
+              "choices": [
+                "Two unrelated items",
+                "Two views of the same underlying item",
+                "A correctly-labelled example",
+                "The two highest-loss samples"
+              ],
+              "answer": 1,
+              "explain": "Positives = two views of the same thing; everything else is negative."
+            },
+            {
+              "q": "The InfoNCE loss is essentially:",
+              "choices": [
+                "A policy-gradient update",
+                "Mean squared error on pixels",
+                "A softmax cross-entropy that makes the positive win over the negatives",
+                "The determinant of the embeddings"
+              ],
+              "answer": 2,
+              "explain": "InfoNCE = cross-entropy over similarities / temperature."
+            },
+            {
+              "q": "How does SimCLR create its positive pairs?",
+              "choices": [
+                "Two copies of the label",
+                "Two images of different classes",
+                "An image and its filename",
+                "Two random augmentations (crop/colour/blur) of the same image"
+              ],
+              "answer": 3,
+              "explain": "Augmentations of one image form the positive pair."
+            },
+            {
+              "q": "CLIP learns by contrasting:",
+              "choices": [
+                "Images against their text captions, in a shared embedding space",
+                "Pixels against random noise",
+                "Layers against each other",
+                "Train loss against test loss"
+              ],
+              "answer": 0,
+              "explain": "CLIP aligns image and text embeddings contrastively."
+            },
+            {
+              "q": "Negatives in contrastive learning are needed to:",
+              "choices": [
+                "Speed up the optimizer",
+                "Prevent representation collapse (everything mapping to one vector)",
+                "Label the data",
+                "Reduce the embedding dimension"
+              ],
+              "answer": 1,
+              "explain": "The repulsive force stops the trivial constant solution."
+            },
+            {
+              "q": "A self-supervised method that uses NO negatives is:",
+              "choices": [
+                "InfoNCE with a memory bank",
+                "SimCLR",
+                "Masked autoencoding (e.g. MAE, BERT) — hide and reconstruct",
+                "Triplet loss"
+              ],
+              "answer": 2,
+              "explain": "Masked modelling reconstructs hidden input; no negatives."
+            },
+            {
+              "q": "The temperature $\\tau$ in the InfoNCE loss controls:",
+              "choices": [
+                "The batch size",
+                "The learning rate",
+                "The number of layers",
+                "How sharply the softmax focuses on the hardest negatives"
+              ],
+              "answer": 3,
+              "explain": "Small temperature sharpens focus on confusable negatives."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Self-supervised learning (SSL)",
+              "back": "Learning from unlabelled data by inventing a <em>pretext task</em> whose labels come free from the data itself (mask-and-predict, next-token, same-image?), then fine-tuning on a little labelled data."
+            },
+            {
+              "front": "Contrastive learning",
+              "back": "Train an encoder so <b>positive pairs</b> (two views of the same item) land close in embedding space and <b>negatives</b> (everything else) land far apart — clustering by similarity without labels."
+            },
+            {
+              "front": "InfoNCE loss",
+              "back": "A softmax cross-entropy over similarities (scaled by temperature $\\tau$) that makes the positive win against the negatives; minimising it maximises a lower bound on the mutual information between views."
+            },
+            {
+              "front": "How does SimCLR build a positive pair?",
+              "back": "Two random augmentations (crop, colour-jitter, blur) of the <em>same</em> image; every other image in the batch is a negative. The encoder learns features invariant to those nuisances."
+            },
+            {
+              "front": "What does CLIP contrast?",
+              "back": "Images against text captions: each image must match its own caption (positive) vs all other captions (negatives), learning a shared image-text space — enabling zero-shot classification."
+            },
+            {
+              "front": "Representation collapse",
+              "back": "The trivial cheat where an encoder maps everything to one vector. Negatives (or anti-collapse tricks like BYOL/DINO's momentum encoder and stop-gradient) prevent it."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "Why can self-supervised learning use far more data than supervised learning?",
+              "hint": "What does each need?",
+              "solution": "Supervised learning needs human-annotated labels, which are expensive and scarce, so it is bottlenecked by labelling effort. Self-supervised learning manufactures its \"labels\" from the raw input itself (mask a word, augment an image), so it can train on essentially unlimited unlabelled data — the entire web — and only needs a small labelled set for the final fine-tuning step."
+            },
+            {
+              "prompt": "In contrastive learning, what goes wrong if you only pull positives together and never push negatives apart?",
+              "hint": "Is there a trivial solution?",
+              "solution": "The encoder can minimise the loss by mapping <em>every</em> input to the same constant vector — then all positives coincide perfectly, but the representation carries no information (representation collapse). Negatives provide the repulsive force that forces the encoder to keep distinct inputs apart, so it must encode real, discriminative content. Non-contrastive methods avoid negatives but must add another anti-collapse mechanism."
+            },
+            {
+              "prompt": "CLIP is trained only to match images with captions. Why can it then classify images into categories it never saw as labels?",
+              "hint": "What space did it learn?",
+              "solution": "CLIP learns a shared embedding space where an image sits near the text that describes it. To classify, you don't need trained class labels — you write candidate text prompts (\"a photo of a {cat, dog, car}\"), embed them, and pick the one whose embedding is closest to the image's. Because any category can be expressed as text, CLIP does <b>zero-shot</b> classification over arbitrary, never-trained label sets."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Designing a pretext task",
+              "body": "You have millions of unlabelled product photos and want good embeddings for search. Sketch a self-supervised approach.",
+              "solution": "Use SimCLR-style contrastive learning: for each photo, make two augmented views (random crop, colour-jitter, blur) as a positive pair; all other photos in the batch are negatives. Train the encoder with InfoNCE so the two views of a product embed close together and different products spread apart. The resulting embeddings cluster visually-similar products, giving you a search index — and you only needed labels (if at all) for a tiny evaluation set."
+            },
+            {
+              "title": "Reading a temperature",
+              "body": "Two contrastive runs use $\\tau = 0.5$ vs $\\tau = 0.05$. How does the smaller temperature change training?",
+              "solution": "Temperature scales the similarities before the softmax. A small $\\tau = 0.05$ sharpens the distribution, so the loss concentrates on the <em>hardest</em> negatives (those most similar to the anchor) — the model is pushed to separate confusable items, which usually sharpens features but can be unstable. A larger $\\tau = 0.5$ softens the softmax, treating all negatives more equally and training more gently. Temperature is a key, sensitive hyperparameter in contrastive learning."
+            },
+            {
+              "title": "Contrastive or masked?",
+              "body": "You want a single vision encoder you'll mostly <em>fine-tune</em> on downstream tasks, with minimal engineering. Which SSL family?",
+              "solution": "Masked autoencoding (MAE): hide a large fraction of image patches and reconstruct them. It needs no augmentation pipeline and no negatives (so no large-batch or memory-bank machinery), which makes it simple and scalable, and its fine-grained reconstructed features tend to excel after fine-tuning. Contrastive/CLIP would be the choice instead if you needed strong zero-shot or multimodal (image-text) alignment without fine-tuning."
+            }
+          ]
         }
       ]
     },

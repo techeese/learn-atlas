@@ -74,6 +74,11 @@ window.PREREQS = {
     "a-graph-representations-traversal",
     "dl-the-artificial-neuron-and-mlp"
   ],
+  "dl-self-supervised-contrastive": [
+    "it-cross-entropy-kl",
+    "dl-embeddings-and-tokenization",
+    "la-dot-product-norms"
+  ],
   "dl-gans": [
     "it-cross-entropy-kl"
   ],

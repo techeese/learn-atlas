@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 737 — NEW lesson: Self-Supervised & Contrastive Learning (content)
+Filled a major modern paradigm that was only *mentioned* across pretraining lessons, never taught. Added `dl-self-supervised-contrastive` "Self-Supervised & Contrastive Learning" to DL M6: 8 sections
+(why labels are scarce · pretext tasks · pull-together/push-apart · the InfoNCE objective · SimCLR augmentations · CLIP cross-modal · masked & non-contrastive (MAE/BYOL/DINO) · why it matters), a runnable
+**InfoNCE code exercise** (anchor vs 1 positive + 3 negatives → P(positive)=0.996, loss=0.004), **3 deep-dives** (why negatives prevent collapse · InfoNCE = a mutual-information lower bound · contrastive vs masked),
+6 flashcards, 3 examples, 3 homework, 8 MCQs (2/2/2/2). Wired the cross-topic prereq edge **→ it-cross-entropy-kl, dl-embeddings-and-tokenization, la-dot-product-norms** (InfoNCE is softmax cross-entropy over cosine
+similarities). Site **179 lessons**; DL M6 now 6 lessons.
+Verified: InfoNCE math re-derived in Node; gate ALL GREEN (ran the code; prereqs resolve; my authoring guard now also runs the iter-732 `proseInMath` check, and it caught a raw `&` in a flashcard pre-commit — fixed to "and"); **headless** — 11 KaTeX/0 errors/rawDollar=0, 3 deep-dives + code runner, prereq link surfaces, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v673` → `atlas-v674`.
+
 ## iter 736 — Glossary: reparameterization trick + latent variable (reference)
 Completed the VAE/reparameterization integration. The glossary already had Autoencoder/VAE, ELBO, and Variational inference, but was missing two terms central to that lesson: **Reparameterization trick**
 ($z=\mu+\sigma\varepsilon$ with $\varepsilon$ fixed, so gradients flow) and **Latent variable** ($z$, the hidden code). Added both (topic: deep-learning); glossary **277 → 279**. These now power inline hover-tooltips wherever the terms appear.
