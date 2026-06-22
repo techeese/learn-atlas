@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 828 — NEW code exercise: scaling laws & diminishing returns (examples / hands-on)
+Confirmed softmax-temperature is already visualized (`llm-decoding`), then added a runnable exercise to `l-scaling-laws`, which had none. With a fitted power law $L(N)=a\,N^{-\alpha}+c$, the learner computes the predicted loss and
+then at 10× the parameters: **loss(N)=1.699, loss(10N)=1.600** — a tiny drop that never crosses the *irreducible* floor c=1.5, making the diminishing-returns / predictable-extrapolation story concrete. Placed in "The power-law form" section.
+Verified: data parses + round-trips; **gate ALL GREEN — code-exercises verified**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v761` → `atlas-v762`.
+
 ## iter 827 — Glossary: knowledge-distillation terms (reference)
 Completed the iter-826 deep-dive's glossary integration. Added **Knowledge distillation** (small student matches a teacher's soft probabilities → compact models like DistilBERT) and **Dark knowledge** (the info in the wrong-class
 probabilities that soft targets transfer). Glossary **325 → 327** (0 holes).
