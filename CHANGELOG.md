@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 841 — NEW viz: replicator dynamics converging to the ESS (visualizations)
+Completed the evolutionary-GT thread (839 deep-dive, 840 glossary) with its visual — the **146th widget, `gt-replicator`**, embedded after the ESS deep-dive in `gt-repeated-cooperation`: the Hawk–Dove hawk-fraction over generations under the
+replicator equation (V=2, C=4). Faint curves start from many hawk fractions and a bold slider-driven curve from your own — **all converge to the same ESS p* = V/C = 0.5**, the mixed Nash equilibrium reached by selection, not reasoning. Deterministic.
+Verified: dynamics re-derived in Node (p0=0.1 and 0.9 both → 0.5); gate ALL GREEN (now **146 widgets**); **headless** — converges to 50% ESS from both high and low starts, kErr=0, errs=0; screenshot shows the trajectory descending to the ESS line. SW cache `atlas-v774` → `atlas-v775`.
+
 ## iter 840 — Step-back: kErr-aware full sweep (clean) + evolutionary-GT glossary (step-back / reference)
 Step-back at ~10 iters, **upgraded after the iter-839 finding that KaTeX render errors slip past the gate**. Ran a **kErr-aware 188-lesson sweep** across all 11 topics — now counting `.katex-error` per lesson, not just JS errors:
 **errs=0, kErrLessons=NONE, mapNodes=883**. This proves the *entire* corpus is KaTeX-render-clean, not merely hazard-lint-clean — the strongest regression check yet, and confirmation no other render error hides past `ALL GREEN`.

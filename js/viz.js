@@ -7799,4 +7799,48 @@
     draw();
   });
 
+
+  /* ========================================================
+     146. Replicator dynamics: a population converging to the ESS (game theory)
+     ======================================================== */
+  register({ id: 'gt-replicator', topic: 'game-theory', title: 'Replicator dynamics → the ESS', blurb: 'Evolutionary game theory replaces rational players with a population. In the Hawk–Dove game (resource value V=2, fight cost C=4), the share of hawks rises whenever hawks out-earn the population average and falls when they under-earn — the replicator equation. Faint curves start from many different hawk fractions; slide your own start (bold). No matter where you begin, the population converges to the same evolutionarily stable strategy at p* = V/C = 0.5: a stable MIX of hawks and doves, the mixed Nash equilibrium found by selection rather than reasoning.' },
+  function (root) {
+    const W = 520, H = 300, padL = 38, padR = 14, padT = 16, padB = 30;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const V = 2, C = 4, ESS = V / C, STEPS = 70, dt = 0.3;
+    let p0 = 0.85;
+    function traj(start) { let p = start; const out = [p]; for (let i = 0; i < STEPS; i++) { const fH = p * (V - C) / 2 + (1 - p) * V, fD = (1 - p) * V / 2; p += dt * p * (1 - p) * (fH - fD); out.push(p); } return out; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const plotW = W - padL - padR, plotH = H - padT - padB, x0 = padL, y0 = padT;
+      const X = t => x0 + t / STEPS * plotW, Y = v => y0 + (1 - v) * plotH;
+      // axes
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y0 + plotH); ctx.lineTo(x0 + plotW, y0 + plotH); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [0, 0.5, 1].forEach(v => ctx.fillText(v.toFixed(1), x0 - 4, Y(v) + 3));
+      // ESS line
+      ctx.strokeStyle = p.soft; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(x0, Y(ESS)); ctx.lineTo(x0 + plotW, Y(ESS)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.soft; ctx.textAlign = 'left'; ctx.fillText('ESS  p* = V/C = 0.5', x0 + 6, Y(ESS) - 4);
+      // faint trajectories from many starts
+      [0.05, 0.25, 0.55, 0.75, 0.95].forEach(s => {
+        const tr = traj(s); ctx.strokeStyle = 'rgba(150,136,113,0.33)'; ctx.beginPath();
+        tr.forEach((v, t) => t ? ctx.lineTo(X(t), Y(v)) : ctx.moveTo(X(t), Y(v))); ctx.stroke();
+      });
+      // bold slider trajectory
+      const tb = traj(p0); ctx.strokeStyle = p.gold; ctx.lineWidth = 2; ctx.beginPath();
+      tb.forEach((v, t) => t ? ctx.lineTo(X(t), Y(v)) : ctx.moveTo(X(t), Y(v))); ctx.stroke(); ctx.lineWidth = 1;
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(X(0), Y(p0), 3.5, 0, 7); ctx.fill();
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText('generations →', x0 + plotW / 2, y0 + plotH + 16);
+      const end = tb[tb.length - 1];
+      info.innerHTML = 'start = <b style="color:' + p.gold + '">' + (p0 * 100).toFixed(0) + '% hawks</b> → after ' + STEPS + ' generations the population sits at <b>' + (end * 100).toFixed(0) + '% hawks</b>, the ESS p* = V/C = 0.5. ' +
+        'Every faint start lands there too: an all-dove world is invaded by hawks, an all-hawk world by doves, and selection settles on the stable mix.';
+    }
+    slider(ctl, { label: 'initial hawk fraction', min: 0.02, max: 0.98, step: 0.02, value: p0, fmt: v => (v * 100).toFixed(0) + '%', onInput: v => { p0 = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Replicator dynamics for the Hawk-Dove game. The chart plots the fraction of hawks in a population over generations, with a dashed line marking the evolutionarily stable strategy at p* = V/C = 0.5. Faint curves start from hawk fractions of 5, 25, 55, 75 and 95 percent and all converge to 0.5; a bold gold curve starts from a slider-controlled fraction and also converges to 0.5. The lesson: regardless of the starting mix, selection drives the population to the same stable mix of hawks and doves, the mixed Nash equilibrium reached without any reasoning.');
+    draw();
+  });
+
 })();
