@@ -1340,6 +1340,94 @@
               ],
               "answer": 3,
               "explain": "The simple baseline often wins; always compare."
+            },
+            {
+              "q": "DeepAR, a classic deep forecaster, is built on:",
+              "choices": [
+                "An RNN/LSTM that outputs a probabilistic forecast, trained globally",
+                "A decision tree per series",
+                "Plain linear regression on time",
+                "A convolutional image classifier"
+              ],
+              "answer": 0,
+              "explain": "DeepAR = global autoregressive RNN with a probability output."
+            },
+            {
+              "q": "A Temporal Convolutional Network (TCN) processes a series using:",
+              "choices": [
+                "Random shuffling of the points",
+                "Dilated causal convolutions for a wide receptive field",
+                "A single dense layer",
+                "Seasonal differencing only"
+              ],
+              "answer": 1,
+              "explain": "TCN/WaveNet use dilated causal convs."
+            },
+            {
+              "q": "In forecasting, a \"covariate\" is:",
+              "choices": [
+                "The series' own mean",
+                "The forecast error",
+                "External information such as price, weather, or holidays",
+                "A random seed"
+              ],
+              "answer": 2,
+              "explain": "Covariates = auxiliary predictors."
+            },
+            {
+              "q": "Quantile (probabilistic) forecasts are typically trained with:",
+              "choices": [
+                "No loss at all",
+                "Mean squared error only",
+                "Cross-entropy on classes",
+                "The pinball (quantile) loss"
+              ],
+              "answer": 3,
+              "explain": "Pinball loss scores each quantile."
+            },
+            {
+              "q": "The Chronos foundation model forecasts by:",
+              "choices": [
+                "Tokenizing the values and reusing a language-model architecture",
+                "Fitting a separate ARIMA per series",
+                "Differencing until stationary",
+                "Averaging the last three points"
+              ],
+              "answer": 0,
+              "explain": "Chronos = values-as-tokens + LM."
+            },
+            {
+              "q": "When engineering lag features for a forecaster, you must never:",
+              "choices": [
+                "Use the previous value",
+                "Use values from the future of the point being predicted",
+                "Add a day-of-week feature",
+                "Normalize the inputs"
+              ],
+              "answer": 1,
+              "explain": "Future-using features leak."
+            },
+            {
+              "q": "A brand-new product with only a few data points is best forecast by:",
+              "choices": [
+                "The naive forecast only",
+                "Its own local ARIMA",
+                "A global or pretrained model that borrows structure from other series",
+                "Ignoring it"
+              ],
+              "answer": 2,
+              "explain": "Cold-start needs cross-learning/pretraining."
+            },
+            {
+              "q": "PatchTST and similar patch-based transformers improve forecasting by:",
+              "choices": [
+                "Forecasting only the mean",
+                "Removing attention entirely",
+                "Using one value per token always",
+                "Splitting the series into patches treated as tokens"
+              ],
+              "answer": 3,
+              "explain": "Patching = sub-series segments as tokens."
             }
           ],
           "flashcards": [

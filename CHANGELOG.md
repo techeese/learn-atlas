@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 772 — Deep-forecasting lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `ts-deep-forecasting` to the 16-MCQ standard. Added **8 new MCQs**: DeepAR/RNN, TCN dilated causal convolutions, covariates, the pinball loss, Chronos tokenizing values, lag-feature leakage, cold-start via
+global/pretrained models, and PatchTST patching. Balanced → **4/4/4/4**. **All six Time Series lessons are now at full parity** — the entire 10th topic is complete and standard-compliant across all three modules.
+Verified: data parses + round-trips; gate ALL GREEN with **no parity warning anywhere** (every one of the 185 lessons now meets the standard); **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v705` → `atlas-v706`.
+
 ## iter 771 — NEW lesson + module: Deep Learning for Forecasting (Time Series #6, capstone) (content)
 Opened **Module 3 "Modern & Deep Forecasting"** with `ts-deep-forecasting` — the capstone that bridges Time Series back to the DL/LLM topics: 8 sections (where classical methods run out · global models/cross-learning ·
 forecasting as supervised learning · building lag features · sequence architectures RNN/TCN/transformer/SSM · probabilistic forecasting · time-series foundation models (Chronos/TimeGPT) · deep-vs-classical trade-off), a
