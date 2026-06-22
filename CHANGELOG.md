@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 820 — Step-back sweep (clean) + Game Theory glossary completion (step-back / reference)
+Step-back at ~10 iters. **Full 188-lesson regression sweep across all 11 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **883 nodes** — zero regressions since iter 810, validating the whole Game Theory build-out
+(lessons 2-3, 3 viz, MCQ tops, refs, cross-links).
+**Ship:** completed the GT glossary with the concepts from lessons 2-3 — **5 terms**: Minimax theorem ($\max\min=\min\max$), Best response, Tit-for-tat, Grim trigger, Folk theorem. Glossary **318 → 323** (0 holes); Game Theory now has 11 glossary terms.
+Verified: glossary parses; gate ALL GREEN; full sweep clean; **headless** — all 5 render on `#/glossary` (5/5), 321 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v753` → `atlas-v754`.
+
 ## iter 819 — Map verified at 11 topics + wire RL self-play → Game Theory (UX check / understandability)
 Visually verified the Knowledge Map at 11 topics (first check since 10): renders cleanly — "**188 concepts · 11 paths radiating outward**", a dense but well-organized constellation, no crowding; the new topic integrates beautifully
 on the signature view. Then continued wiring Game Theory into the graph (GANs↔GT done iter 818): added a see-also in `rl-connections-frontiers` (self-play / AlphaZero) → `gt-mixed-zero-sum` — "self-play works because a two-player
