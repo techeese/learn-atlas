@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 827 — Glossary: knowledge-distillation terms (reference)
+Completed the iter-826 deep-dive's glossary integration. Added **Knowledge distillation** (small student matches a teacher's soft probabilities → compact models like DistilBERT) and **Dark knowledge** (the info in the wrong-class
+probabilities that soft targets transfer). Glossary **325 → 327** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v760` → `atlas-v761`.
+
 ## iter 826 — Hard-concept: knowledge distillation (content)
 Audited deployment/eval concepts (calibration, quantization, pruning all covered substantively) and found **knowledge distillation** only mentioned in passing. Added a dedicated deep-dive to `dl-loss-functions` (building on its
 cross-entropy/KL and label-smoothing dives): train a small **student** on the **teacher's soft probabilities**, not the hard label — those soft targets carry "**dark knowledge**" (the relative probabilities among wrong classes encode
