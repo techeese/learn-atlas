@@ -88,5 +88,10 @@ window.REFERENCES = {
     { title: "Forecasting: Principles and Practice (3rd ed.)", by: "Rob J Hyndman & George Athanasopoulos", kind: "book", url: "https://otexts.com/fpp3/", note: "The free, definitive online textbook — decomposition, ETS, ARIMA, evaluation, and modern methods, with code. Start here." },
     { title: "Are Transformers Effective for Time Series Forecasting?", by: "Zeng et al. (AAAI 2023)", kind: "paper", url: "https://arxiv.org/abs/2205.13504", note: "The DLinear paper — a one-layer linear model beats elaborate transformer forecasters; a reminder to always benchmark simple baselines." },
     { title: "Chronos: Learning the Language of Time Series", by: "Ansari et al. (Amazon)", kind: "paper", url: "https://arxiv.org/abs/2403.07815", note: "A time-series foundation model that tokenizes values and reuses an LLM architecture for zero-shot forecasting." }
+  ],
+  "game-theory": [
+    { title: "The Evolution of Trust", by: "Nicky Case", kind: "article", url: "https://ncase.me/trust/", note: "A gorgeous interactive that plays out the iterated Prisoner's Dilemma — watch cooperation, betrayal, and tit-for-tat emerge. The best intuition-builder for repeated games." },
+    { title: "Game Theory 101", by: "William Spaniel", kind: "course", url: "https://gametheory101.com/", note: "A free, friendly course (book + videos) from dominance and Nash equilibria through mixed strategies — start here for the mechanics." },
+    { title: "Algorithmic Game Theory", by: "Nisan, Roughgarden, Tardos & Vazirani", kind: "book", url: "https://www.cs.cmu.edu/~sandholm/cs15-892F13/algorithmic-game-theory.pdf", note: "The free, definitive text where game theory meets CS/AI: mechanism design, auctions, and the price of anarchy." }
   ]
 };

@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 813 — Game Theory build-out: Library references (reference)
+Put Game Theory on the Library surface (it had no curated resources). Added a **"Game Theory" topic** with 3 hand-picked resources spanning intuition → mechanics → AI: **Nicky Case's "The Evolution of Trust"** (the superb
+interactive iterated-Prisoner's-Dilemma sandbox), **William Spaniel's "Game Theory 101"** (free course on dominance/Nash/mixed strategies), and **"Algorithmic Game Theory"** (Nisan et al. — the free CS/AI text on mechanism design,
+auctions, price of anarchy). REFERENCES now spans **12 topic keys**; the Library's search + topic-filter pick them up automatically.
+Verified: references.js parses; gate ALL GREEN; **headless** — all 3 render under a Game Theory Library section with its filter chip (3/3), kErr=0, errs=0. SW cache `atlas-v746` → `atlas-v747`.
+
 ## iter 812 — Game Theory build-out: minimax / mixed-strategy crossing viz (visualizations)
 Added the **141st widget, `gt-minimax-lines`** — the classic minimax picture, the visual companion to lesson 2's code exercise. For a 2×2 zero-sum game, two lines show the row player's payoff if the column player picks column 0
 (sage) or column 1 (violet); the minimizing column player always takes the **lower envelope** (gold), and its **peak sits exactly where the lines cross** — the minimax mixing probability (p* = 0.33) and the game's value (1.00). A p
