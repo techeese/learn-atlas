@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 829 — Cheatsheet verified at 11 topics + wire compression techniques (UX check / understandability)
+Verified a surface I hadn't checked for the new topics — the **cheatsheet**: `#/cheatsheet/game-theory` renders cleanly (all 18 flashcards from the 3 lessons in a grid, Print/Save-PDF), errs=0 across new and old topics; the
+shorter length just reflects fewer lessons. The 11th topic is now confirmed on *every* surface. Then a genuine cross-link tying the model-compression toolkit together: added a see-also in `l-inference-efficiency` (quantization) →
+`dl-loss-functions` — "quantization shrinks an existing model; knowledge distillation trains a smaller student to mimic it — the other main route to a cheaper model to serve."
+Verified: data parses + round-trips; gate ALL GREEN (internal-links lint confirms the cross-link); **headless** — cheatsheet renders for new topics (screenshot reviewed), the see-also resolves to the distillation lesson, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v762` → `atlas-v763`.
+
 ## iter 828 — NEW code exercise: scaling laws & diminishing returns (examples / hands-on)
 Confirmed softmax-temperature is already visualized (`llm-decoding`), then added a runnable exercise to `l-scaling-laws`, which had none. With a fitted power law $L(N)=a\,N^{-\alpha}+c$, the learner computes the predicted loss and
 then at 10× the parameters: **loss(N)=1.699, loss(10N)=1.600** — a tiny drop that never crosses the *irreducible* floor c=1.5, making the diminishing-returns / predictable-extrapolation story concrete. Placed in "The power-law form" section.
