@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 834 — NEW code exercise: probability by counting (examples / hands-on)
+Added a runnable exercise to `ps-sample-spaces-events` (the foundational probability lesson), which had none. The learner enumerates all 36 equally-likely rolls of two dice and counts those summing to 7 →
+**P(sum=7) = 6/36 = 0.167** — making "probability = favorable ÷ total" something you compute rather than assert. Placed in section 5 "Equally likely outcomes and counting".
+Verified: data parses + round-trips; `<=`→`&lt;=` escaped (decode confirmed, no literal entities); **gate ALL GREEN — code-exercises verified**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v767` → `atlas-v768`.
+
 ## iter 833 — Glossary: concentration-inequality terms (reference)
 Completed the iter-832 deep-dive's glossary integration. Added **Markov's**, **Chebyshev's**, and **Hoeffding's** inequalities — the tail-bound hierarchy (mean → +variance → exponential) — with their formulas, now in tooltips
 across LLN/PAC/UCB. Glossary **329 → 332** (0 holes).
