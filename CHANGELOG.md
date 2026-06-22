@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 818 — Wire GANs ↔ Game Theory bidirectionally (understandability)
+Rotated off Game Theory (topic complete). The GT lessons reference `dl-gans` three times, but GANs never linked back — so DL learners couldn't discover that GANs *are* the minimax game GT formalizes. Added a see-also in `dl-gans`
+§2 (The two players) → `gt-mixed-zero-sum`: "this generator-vs-discriminator setup is exactly a two-player zero-sum (minimax) game — the game-theory lesson explains why training chases a saddle point, hence GAN instability."
+Now the new 11th topic is wired into the existing graph from both directions.
+Verified: data parses + round-trips; gate ALL GREEN (internal-links lint confirms the cross-link resolves); **headless** — the see-also renders and points to the minimax lesson, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v751` → `atlas-v752`.
+
 ## iter 817 — Game Theory build-out: lesson 3 to full 16-MCQ parity — topic complete (content / assessment)
 Brought `gt-repeated-cooperation` to the 16-MCQ standard. Added **8 new MCQs**: one-shot vs iterated, Always-Cooperate's weakness, IPD strategy-as-rule, Axelrod's "nice" trait, the δ ≥ 0.5 discount threshold, forgiveness fixing
 noise (tit-for-two-tats), multi-agent-RL social dilemmas, and reputation systems. Balanced → **4/4/4/4**. 🎉 **All three Game Theory lessons are now at full parity — the 11th topic is complete**, and the gate reports zero parity warnings across all 188 lessons.
