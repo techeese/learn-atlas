@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 759 — NEW TOPIC (10th): Time Series & Forecasting — phase 1 (content / new pillar)
+Made the bold move the mission calls for and the owner directive pre-blesses (new topics welcome; additive/reversible): started a **10th topic, Time Series & Forecasting** — the genuinely-absent, distinct pillar that
+bridges Probability/Statistics and the sequence models in DL/LLMs. **Phase 1:** the topic skeleton (`data/time-series.js`, icon ∿, terracotta) + Module 1 "Foundations of Time Series" + the first lesson fully built —
+**`ts-what-is-a-time-series`** "What Is a Time Series? Trend, Seasonality & Forecasting": 8 sections (data-with-a-clock · the four components · additive/multiplicative decomposition · moving-average smoothing · the
+forecasting task · why time series isn't i.i.d. · stationarity preview · applications + bridge to RNN/SSM/transformers), a runnable **moving-average code exercise** (→ 11,12,13,14,15), 3 deep-dives (additive-vs-multiplicative
+log trick · never-shuffle/forward-chaining CV · autocorrelation & the ACF), 6 cards, 3 examples, 3 homework, 8 MCQs (2/2/2/2). Wired into index.html, gate.js TOPICS, SW. Site is now **10 topics · 180 lessons**.
+Verified: data parses + round-trips; gate ALL GREEN (180 lessons; expected 8/16 parity warning — top-up queued); **headless** — 10 topics load, lesson renders (28 KaTeX, 3 deep-dives, code runner, quiz "Question 1 of 8"), topic appears in nav, and course/map/cheatsheet/placement/lab all render with the new topic; kErr=0, rawDollar=0, errs=0; screenshot of the course page confirms full integration. SW cache `atlas-v692` → `atlas-v693`.
+
 ## iter 758 — Cross-link the over-parameterization trilogy (understandability)
 Verified accessibility is thorough *and correct* — route-focus already moves to the new view's heading on navigation (`activeElement=H2`), with `:focus-visible` outlines for keyboard tabbing but the programmatic
 route-focus outline suppressed (no stray ring). Confirmed RL is exhaustive too (20 lessons incl. offline/imitation/model-based; deadly-triad deep-dives present). The autonomous gap-hunt is genuinely exhausted.

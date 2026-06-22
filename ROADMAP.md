@@ -6,8 +6,8 @@ the math and ideas behind modern AI. Optimize for: understanding faster, remembe
 The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live queue**: done items
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
-## Current state (iter 753, 2026-06-22)
-**9 topics · 179 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 130 visualizations (all embedded) · 293 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full regression sweep: **iter 750 (179 lessons, errs=0/bad=none, map 837 nodes).**
+## Current state (iter 759, 2026-06-22)
+**10 topics · 180 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 130 visualizations (all embedded) · 293 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full regression sweep: **iter 750 (179 lessons, errs=0/bad=none, map 837 nodes).**
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
 `node gate.js` is ALL GREEN; it machine-checks data + render-hazards (proseInMath money-garble lint, sparse-array holes, unbalanced tags/`$`, unsupported KaTeX envs), runs every JS code-exercise, and warns on any lesson below content-parity.
 Every major UI flow (dashboard · daily review · spawn-a-test · library · cheatsheet · placement · playground · knowledge map) has been fresh-eyes screenshot-reviewed (iters 733–752) and is polished; bugs found were fixed (test first-run dead-end iter 744; quiz-accuracy "—" iter 733; deep-dive title-case iter 734).
@@ -28,6 +28,7 @@ Owner steers by *reacting* to the live site. Key past steers (detail in `CHANGEL
 - **Content sweeps (long done):** worked examples (all lessons), 16 MCQ/lesson, 3 deep-dives/lesson, embedded code exercises, viz frontier (129 widgets), cross-topic prereq graph, inline glossary tooltips, a11y (ARIA/reduced-motion/high-contrast/keyboard), activity heatmap, Daily Mix, Knowledge Map, search, notes, bookmarks, placement, playground (all 9 topics), 63 achievements.
 
 ## Now / live queue
+- **⏳ Time Series & Forecasting (10th topic, started iter 759) — phase 1 shipped (1 lesson). QUEUE:** top `ts-what-is-a-time-series` 8→16 MCQ; add a decomposition viz (signal = trend + seasonality + noise); then lessons — stationarity & differencing, ACF/PACF, moving averages & exponential smoothing, ARIMA, forecast evaluation/backtesting, features for ML forecasting, deep forecasters (RNN/TCN/SSM/transformer). Build out like prior topic arcs (lesson → 16 MCQ → viz → glossary/prereqs/refs).
 - **Maturity plateau:** the autonomous high-value backlog is largely exhausted — every major area is comprehensive, current, deeply-explained, and fully integrated (verified by repeated full sweeps + surface reviews). Recent iterations = fine-grained, genuinely-additive polish, rotating the compass.
 - **Owner-steer big levers (the real next jumps):** (1) a brand-new **10th topic** (everything in-scope is currently covered, so this needs owner appetite — see Backlog candidates); (2) the **lazy-load data perf refactor** (see Backlog) — high-risk, LOW real urgency (the SW caches everything for the single repeat learner), so deferred pending owner steer.
 
