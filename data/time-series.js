@@ -1090,6 +1090,94 @@
               ],
               "answer": 3,
               "explain": "Coverage first, then sharpness."
+            },
+            {
+              "q": "Random k-fold cross-validation is wrong for time series because it causes:",
+              "choices": [
+                "Temporal leakage — training on future points to predict past ones",
+                "Too few folds",
+                "Overly wide intervals",
+                "A scale-dependent metric"
+              ],
+              "answer": 0,
+              "explain": "Shuffling lets the model peek at the future."
+            },
+            {
+              "q": "For the same forecasts, RMSE is:",
+              "choices": [
+                "Always less than MAE",
+                "Always greater than or equal to MAE",
+                "Always equal to MAE",
+                "Unrelated to MAE"
+              ],
+              "answer": 1,
+              "explain": "Squaring then rooting gives RMSE ≥ MAE."
+            },
+            {
+              "q": "A skill score of $1 - \\text{error}_{\\text{model}}/\\text{error}_{\\text{baseline}}$ that is positive means the model:",
+              "choices": [
+                "Has zero error",
+                "Lost to the baseline",
+                "Beat the baseline",
+                "Is non-stationary"
+              ],
+              "answer": 2,
+              "explain": "Positive skill = lower error than baseline."
+            },
+            {
+              "q": "MAPE becomes undefined or explodes when:",
+              "choices": [
+                "There is a trend",
+                "The forecast is perfect",
+                "The series is long",
+                "An actual value is zero (or near zero)"
+              ],
+              "answer": 3,
+              "explain": "Dividing by a near-zero actual blows up."
+            },
+            {
+              "q": "Among well-calibrated prediction intervals, the better one is:",
+              "choices": [
+                "Sharper — narrower, given it still covers correctly",
+                "Wider, regardless of coverage",
+                "The one ignoring the data",
+                "Always the widest possible"
+              ],
+              "answer": 0,
+              "explain": "Coverage first, then sharpness (narrowness)."
+            },
+            {
+              "q": "A \"seasonal-naive\" baseline forecasts the next value as:",
+              "choices": [
+                "The overall mean",
+                "The value from one full season ago",
+                "Zero",
+                "A random number"
+              ],
+              "answer": 1,
+              "explain": "Seasonal-naive: y_hat = y_{t-m}."
+            },
+            {
+              "q": "Using a centered rolling-mean feature (averaging points on both sides) in a forecaster is forbidden because it:",
+              "choices": [
+                "Removes the trend",
+                "Is too slow to compute",
+                "Uses future data the model wouldn't have at prediction time",
+                "Adds seasonality"
+              ],
+              "answer": 2,
+              "explain": "Centered windows peek ahead = leakage."
+            },
+            {
+              "q": "The pinball (quantile) loss is used to score:",
+              "choices": [
+                "The number of parameters",
+                "Only point forecasts",
+                "The training time",
+                "Quantile / interval forecasts (the predictive distribution)"
+              ],
+              "answer": 3,
+              "explain": "Pinball loss scores quantile forecasts."
             }
           ],
           "flashcards": [

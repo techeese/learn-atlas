@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 769 — Forecast-evaluation lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `ts-forecast-evaluation` to the 16-MCQ standard. Added **8 new MCQs**: k-fold temporal leakage, RMSE ≥ MAE, skill score, MAPE-undefined-at-zero, interval sharpness, the seasonal-naive baseline, centered-feature
+leakage, and the pinball loss. Balanced → **4/4/4/4**. All **five** Time Series lessons now at full parity — the entire classical track is complete and standard-compliant.
+Verified: data parses + round-trips; gate ALL GREEN with **no parity warning**; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v702` → `atlas-v703`.
+
 ## iter 768 — NEW lesson: Forecast Evaluation & Backtesting (Time Series #5) (content)
 Completed Module 2 with `ts-forecast-evaluation` "Forecast Evaluation & Backtesting": 8 sections (evaluate on the future · the time-respecting split · scale-dependent MAE/RMSE · computing them · percentage/scaled metrics
 MAPE/MASE · rolling-origin backtesting · always beat a baseline · prediction intervals: calibration & sharpness), a runnable **MAE/RMSE code exercise** (→ MAE 1.50, RMSE 1.73, showing RMSE penalizes the outlier), 3
