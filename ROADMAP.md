@@ -53,7 +53,7 @@ First-load path is optimized: all data/logic scripts are `defer`; fonts via `<li
 - Don't pick the **same compass area two iterations running** unless it's broken or owner-asked.
 - Prefer the **biggest-value** move; a bold swing (new pillar, overhaul) beats a tidy tweak when warranted.
 - **Broken always wins**: a real bug / console error / broken render preempts everything.
-- Step back every ~10 iterations (full 179-lesson regression sweep); is the site measurably better, any compass area neglected?
+- Step back every ~10 iterations (full all-lessons regression sweep); is the site measurably better, any compass area neglected?
 
 ## Backlog (ideas — mine these; add as you discover more)
 - **(big but risky) Lazy-load topic data.** The 9 `data/*.js` files (~7MB) all load eagerly via `<script defer>`. The dashboard/search/glossary/prereqs only need course+lesson *metadata* (id/title/icon/color/blurb/minutes/module structure), not the heavy per-lesson `content`/`mcq`/etc. A real first-load win would split each topic into a tiny manifest (eager) + heavy content (lazy per-topic on first lesson open). Sizable architecture change — the app assumes `window.COURSES` is fully populated synchronously everywhere (gate.js, search, prereqs, glossary, map, daily picks) — so do it as a carefully-staged phase with its own gate, NOT a casual iteration. LOW urgency (SW caches for the repeat user); owner-steer.
