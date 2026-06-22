@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 840 — Step-back: kErr-aware full sweep (clean) + evolutionary-GT glossary (step-back / reference)
+Step-back at ~10 iters, **upgraded after the iter-839 finding that KaTeX render errors slip past the gate**. Ran a **kErr-aware 188-lesson sweep** across all 11 topics — now counting `.katex-error` per lesson, not just JS errors:
+**errs=0, kErrLessons=NONE, mapNodes=883**. This proves the *entire* corpus is KaTeX-render-clean, not merely hazard-lint-clean — the strongest regression check yet, and confirmation no other render error hides past `ALL GREEN`.
+**Ship:** completed the iter-839 ESS integration with **3 glossary terms** — Evolutionarily stable strategy (ESS), Replicator dynamics ($\dot{x}_i = x_i\,(f_i - \bar f)$), and Hawk–Dove game. Glossary **334 → 337** (0 holes).
+Verified: glossary parses with `\dot` intact (JSON-form escaping); gate ALL GREEN; full kErr-aware sweep clean; **headless** — all 3 render on `#/glossary` (3/3), 335 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v773` → `atlas-v774`.
+
 ## iter 839 — Deepen the thinnest topic: evolutionary game theory / ESS (content)
 Game Theory is the thinnest topic (3 lessons), so I deepened it. Added an evolutionary-game-theory deep-dive to `gt-repeated-cooperation` (its 4th): from rational players to a **population** where payoff = fitness; an
 **evolutionarily stable strategy (ESS)** is a Nash equilibrium no rare mutant can invade; the **replicator equation** $\dot{x}_i = x_i\,(f_i - \bar f)$ grows whatever beats the population average; **Hawk–Dove**'s ESS is a *mixed*
