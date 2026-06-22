@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 803 — Hard-concept: PAC learning & VC dimension (content)
+Varied off hands-on exercises. Audited learning theory: bias-variance, generalization bounds, no-free-lunch, and bootstrap are all covered, but **PAC learning** was a genuine MISS (VC dimension only got passing mentions).
+Added a 4th deep-dive to `dl-ml-recap-and-the-learning-problem` — it builds straight on the lesson's "generalization gap" and "no free lunch" dives: a class is **PAC-learnable** if a finite sample makes error $\leq\epsilon$ with
+probability $\geq 1-\delta$ ("probably approximately correct"); the **sample complexity** $m=O((d_{VC}+\ln(1/\delta))/\epsilon)$ scales with **VC dimension** (capacity); and the twist that deep nets' huge VC makes classical PAC
+bounds *vacuous*, linking to the over-parameterization puzzle behind **double descent** (`ml-model-selection`). The theoretical backbone of "why learning works," and why it isn't the whole story for deep nets.
+Verified: data parses + round-trips; gate ALL GREEN (internal-links lint confirms the double-descent cross-link; proseInMath on the PAC math); **headless** — 4 deep-dives render, PAC/VC/sample-complexity text + cross-link present, 124 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v736` → `atlas-v737`.
+
 ## iter 802 — NEW code exercise: UCB picks the under-explored arm (examples / hands-on)
 First RL hands-on exercise (its core return/value lessons already had code; conceptual ones didn't). `rl-exploration` had a "UCB by hand" worked example but no runnable version — added one. The learner computes the UCB score
 $\bar{x}_i + c\sqrt{\ln t / n_i}$ for three arms and sees **arm 1 win despite a middling mean (0.6)** because, with only 2 pulls, its exploration bonus is large — the exploration/exploitation trade-off made concrete. Output:
