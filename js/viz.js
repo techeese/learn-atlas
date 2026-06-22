@@ -7232,4 +7232,40 @@
     draw();
   });
 
+
+  /* ========================================================
+     134. Superposition: packing more features than dimensions (LLM / interpretability)
+     ======================================================== */
+  register({ id: 'dl-superposition', topic: 'llm', title: 'Superposition: more features than dimensions', blurb: 'A 2-D activation space can hold exactly 2 features cleanly — as perpendicular (orthogonal) directions with zero interference. Ask it to store more and they must squeeze together, overlapping as near-but-not-quite-orthogonal directions. Slide the number of features: at 2 there is no interference; beyond that the best the model can do is spread them evenly, and the unavoidable overlap (the largest pairwise cosine) climbs. Networks tolerate this because real features rarely fire at once — that is superposition.' },
+  function (root) {
+    const W = 540, H = 320, R = 116;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let N = 5;
+    const cx = W / 2, cy = H / 2 + 6;
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // axes (the 2 clean dimensions)
+      ctx.strokeStyle = p.line; ctx.globalAlpha = 0.5; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx - R - 14, cy); ctx.lineTo(cx + R + 14, cy); ctx.moveTo(cx, cy - R - 14); ctx.lineTo(cx, cy + R + 14); ctx.stroke(); ctx.globalAlpha = 1;
+      const interference = Math.cos(Math.PI / N);
+      // feature vectors spread evenly over a half-turn (180/N apart)
+      const col = N <= 2 ? p.sage : interference < 0.7 ? p.gold : p.rust;
+      for (let k = 0; k < N; k++) {
+        const ang = k * Math.PI / N;  // 0..pi
+        const x = cx + R * Math.cos(ang), y = cy - R * Math.sin(ang);
+        ctx.strokeStyle = col; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y); ctx.stroke();
+        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fill();
+        ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('f' + (k + 1), cx + (R + 14) * Math.cos(ang), cy - (R + 14) * Math.sin(ang));
+      }
+      info.innerHTML = '<b>' + N + '</b> features in <b>2</b> dimensions · max interference (largest pairwise cosine) = <b style="color:' + col + '">' + interference.toFixed(2) + '</b>. ' +
+        (N <= 2 ? 'They fit perfectly — orthogonal, zero overlap.' : 'No way to keep them all orthogonal in 2-D, so they overlap; the more features, the worse the interference — tolerated only because features are <em>sparse</em> (rarely active together).');
+    }
+    slider(ctl, { label: 'number of features', min: 2, max: 12, step: 1, value: N, fmt: v => String(v), onInput: v => { N = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Superposition visualizer: a 2-D plane with N feature directions drawn from the origin, spread evenly. At N=2 they are orthogonal with zero interference; as N increases beyond 2 the directions crowd together and the maximum pairwise cosine (interference) rises toward 1, illustrating how a network packs more features than dimensions by tolerating overlap, which works because features are sparse.');
+    draw();
+  });
+
 })();

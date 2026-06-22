@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 782 — NEW viz: superposition (more features than dimensions) (visualizations)
+Gave the cutting-edge interpretability concept from iter 779 its visual — the **134th widget, `dl-superposition`**: a 2-D plane with N feature directions from the origin. At N=2 they sit orthogonal with zero interference
+(they fit cleanly); slide N up and they must crowd together, the largest pairwise cosine (interference) climbing 0 → 0.97 — exactly why a network packs more features than dimensions, tolerated because features are sparse.
+Embedded *inside* the superposition deep-dive in `l-safety-and-frontier`, color-coded by interference level. Deterministic.
+Verified: interference model re-derived in Node (cos(π/N): N=2→0, N=12→0.97); gate ALL GREEN (now **134 widgets**); **headless** — Lab + lesson hydrate, interference rises 0.00→0.97 with the slider, the "orthogonal, zero overlap" note fires at N=2, viz mounts inside the deep-dive, kErr=0, errs=0; screenshot shows the feature vectors. SW cache `atlas-v715` → `atlas-v716`.
+
 ## iter 781 — New TS viz pass mobile gate + cross-link SAEs → autoencoders (mobile check / understandability)
 Verified the three new Time Series viz at **true 390px** (iframe-wrapped) — the densest, the 4-panel decomposition, renders cleanly: all panels labeled/legible, sliders usable, no overflow; the single-panel AR and
 exponential-smoothing viz are simpler still. Mobile gate passes — no fix needed. Then a genuine cross-link: the iter-779 SAE deep-dive introduces sparse autoencoders without connecting them to the autoencoder the learner
