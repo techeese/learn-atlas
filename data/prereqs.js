@@ -79,6 +79,9 @@ window.PREREQS = {
     "dl-embeddings-and-tokenization",
     "la-dot-product-norms"
   ],
+  "ts-stationarity": [
+    "ps-expectation-variance"
+  ],
   "dl-gans": [
     "it-cross-entropy-kl"
   ],

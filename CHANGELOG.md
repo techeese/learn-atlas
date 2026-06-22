@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 762 — NEW lesson: Stationarity & Differencing (Time Series #2) (content)
+Second Time Series lesson — `ts-stationarity` "Stationarity & Differencing", in Module 1: 8 sections (why methods need stability · what stationarity means · why non-stationarity breaks things/spurious regression ·
+differencing removes a trend · seasonal differencing · variance stabilization via log/Box–Cox · testing/ADF & unit roots · the "d" in ARIMA), a runnable **differencing code exercise** (linear trend → constant 2,2,2,2,2),
+3 deep-dives (strict vs weak stationarity · unit roots & the random walk · don't over-difference), 6 cards, 3 examples, 3 homework, 8 MCQs (2/2/2/2). Cross-topic prereq edge **→ ps-expectation-variance** (stationarity is
+defined via mean/variance/autocovariance). Site **10 topics · 181 lessons**; Time Series now 2 lessons.
+Verified: data parses + round-trips; gate ALL GREEN (181 lessons; expected 8/16 parity warn — top-up queued); **headless** — 18 KaTeX/0 errors/rawDollar=0, 3 deep-dives + code runner, prereq link surfaces, quiz "Question 1 of 8"; errs=0. SW cache `atlas-v695` → `atlas-v696`.
+
 ## iter 761 — NEW viz: time-series decomposition (visualizations)
 Built the 10th topic's first visual — the **131st widget, `ts-decomposition`**: the canonical 4-panel plot (Observed · Trend · Seasonal · Residual) where the three lower components sum point-by-point to the observed
 series on top. Sliders for trend slope, seasonal amplitude, and noise level move all panels in lockstep — making "a series = trend + seasonality + noise" tangible. Embedded at §3 (decomposition) of `ts-what-is-a-time-series`. Deterministic (seeded noise).

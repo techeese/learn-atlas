@@ -258,6 +258,162 @@
               "solution": "A weekly seasonality: each day is most similar to the same weekday a week earlier (and two weeks, three weeks…). You'd build that 7-day period into the model — e.g., seasonal differencing at lag 7, or a weekly seasonal term — rather than treating the data as if every day were exchangeable."
             }
           ]
+        },
+        {
+          "id": "ts-stationarity",
+          "title": "Stationarity & Differencing",
+          "minutes": 16,
+          "content": "<h3>1. The hook: methods want a stable world</h3>\n<p>Most classical forecasting tools assume the series isn't a moving target — that the way it behaves <em>this</em> year is the way it behaved last year. That property is <b>stationarity</b>. A trending or seasonal series breaks it, and fitting a model to a non-stationary series gives unstable, often spurious results. So the classical workflow is: transform the series toward stationarity, model the stable remainder, then invert the transforms to forecast.</p>\n<h3>2. What stationarity means</h3>\n<p>A series is (weakly) <b>stationary</b> if its first two moments are constant over time: a constant <b>mean</b> (no trend), a constant <b>variance</b> (no growing swings), and an <b>autocovariance</b> that depends only on the lag $k$, not on <em>when</em> you look. Intuitively: slide a window along the series and the statistics you measure don't change. White noise is the simplest stationary series; a trending sales curve is not.</p>\n<h3>3. Why non-stationarity breaks things</h3>\n<p>If the mean drifts, \"the average\" is meaningless — it depends on the window. Worse, two unrelated trending series can show a high correlation purely because both rise over time: a <b>spurious regression</b>. Estimates of variance and autocorrelation become unstable, confidence intervals are wrong, and a model tuned on one stretch fails on the next. Stationarity is what makes the past a reliable guide to the future.</p>\n<h3>4. Differencing removes a trend</h3>\n<p>The workhorse fix is <b>differencing</b>: replace the series with its step-to-step changes, $\\nabla y_t = y_t - y_{t-1}$. A linear trend becomes a constant; a constant becomes zero. Difference a perfectly linear series and watch the trend vanish:</p>\n<div data-code=\"javascript\" data-expected=\"2, 2, 2, 2, 2\">// First differencing: y[t] - y[t-1] turns a trend into a (stationary) constant\nconst y = [10, 12, 14, 16, 18, 20];   // a perfectly linear upward trend\nconst diff = [];\nfor (let i = 1; i < y.length; i++) diff.push(y[i] - y[i - 1]);\nconsole.log(diff.join(\", \"));\n// The rising trend is gone; the differenced series is flat (constant mean).</div>\n<h3>5. Seasonal differencing</h3>\n<p>A repeating seasonal pattern of period $m$ is removed by <b>seasonal differencing</b>: $y_t - y_{t-m}$ (e.g. subtract last year's same month, $m=12$). This cancels the seasonal term the way ordinary differencing cancels a trend. Many real series need both — one ordinary difference for the trend and one seasonal difference for the season.</p>\n<h3>6. Stabilizing the variance</h3>\n<p>Differencing fixes a drifting <em>mean</em>, but not a drifting <em>variance</em> (swings that grow with the level). For that, transform before differencing: a <b>log</b> (or the more general Box–Cox) shrinks large values more than small ones, turning multiplicative, fanning-out behaviour into something roughly additive with constant spread. Log first, then difference.</p>\n<h3>7. Testing for stationarity</h3>\n<p>Eyeballing a plot of the rolling mean and rolling variance is the first check — flat lines suggest stationarity. The formal tool is the <b>Augmented Dickey–Fuller (ADF) test</b>, which tests for a <b>unit root</b> (the signature of a random-walk-like non-stationary series); rejecting its null is evidence the series is stationary. The point isn't the test statistic — it's deciding how many differences the series needs.</p>\n<h3>8. Putting it together: the \"d\" in ARIMA</h3>\n<p>This is exactly the integrated part of <b>ARIMA(p, d, q)</b>: $d$ is the number of differences applied to make the series stationary before an ARMA model is fit, and the forecast is then \"un-differenced\" (cumulatively summed) back to the original scale. Get $d$ right — usually 0, 1, or 2 — and the rest of the modelling stands on solid ground. We build ARIMA itself in a later lesson.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: strict vs weak (covariance) stationarity</summary>\n<p><b>Strict</b> stationarity demands that the <em>entire</em> joint distribution of any block of points is unchanged when you shift it in time — a very strong condition. In practice we almost always use <b>weak</b> (or covariance) stationarity, which only constrains the first two moments: constant mean, constant (finite) variance, and an autocovariance $\\gamma(k)$ that depends solely on the lag $k$. For a Gaussian process the two notions coincide (a Gaussian is fully described by its mean and covariance), which is one reason weak stationarity is the working definition: it is exactly what the classical linear methods (AR, MA, ARMA) actually require.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: unit roots and the random walk</summary>\n<p>The canonical non-stationary series is the <b>random walk</b> $y_t = y_{t-1} + \\varepsilon_t$. Its variance grows without bound ($\\text{Var}(y_t) = t\\,\\sigma^2$), so it has no fixed level — it wanders. In the model $y_t = \\phi\\,y_{t-1} + \\varepsilon_t$, stationarity requires $|\\phi| < 1$; the random walk sits exactly at $\\phi = 1$, the <b>unit root</b>, on the boundary. The beautiful part: one difference of a random walk, $y_t - y_{t-1} = \\varepsilon_t$, is pure white noise — perfectly stationary. That is why \"difference once\" so often works: it removes a single unit root.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: don't over-difference</summary>\n<p>Differencing is not free — each difference throws away a data point and injects new autocorrelation. <b>Over-differencing</b> (differencing an already-stationary series) is a real mistake: it inflates the variance and creates artificial negative autocorrelation at lag 1 (an unnecessary MA term), making the model harder to fit and the forecasts noisier. The discipline is to use the <em>smallest</em> $d$ that achieves stationarity — check after each difference (plot, ADF) and stop as soon as the trend is gone. Usually $d \\le 2$; needing more is a sign something else (like a missed log transform) is wrong.</p>\n</details>",
+          "mcq": [
+            {
+              "q": "A (weakly) stationary time series has:",
+              "choices": [
+                "Constant mean and variance, with autocovariance depending only on the lag",
+                "A steadily rising mean",
+                "Variance that grows with time",
+                "A different distribution at every point"
+              ],
+              "answer": 0,
+              "explain": "Stationary = time-invariant first two moments."
+            },
+            {
+              "q": "First differencing ($y_t - y_{t-1}$) is used to:",
+              "choices": [
+                "Stabilize a growing variance",
+                "Remove a trend (turn a non-constant mean into a constant)",
+                "Add seasonality",
+                "Reverse time"
+              ],
+              "answer": 1,
+              "explain": "Differencing kills a trend."
+            },
+            {
+              "q": "A drifting (non-constant) variance is best handled by:",
+              "choices": [
+                "Shuffling the data",
+                "Ordinary differencing",
+                "A log or Box–Cox transform",
+                "Adding a trend"
+              ],
+              "answer": 2,
+              "explain": "Log stabilizes variance; differencing fixes the mean."
+            },
+            {
+              "q": "\"Spurious regression\" refers to:",
+              "choices": [
+                "A perfectly stationary series",
+                "A model with too few parameters",
+                "Differencing twice",
+                "Two unrelated trending series appearing correlated just because both rise over time"
+              ],
+              "answer": 3,
+              "explain": "Shared trends fake a correlation."
+            },
+            {
+              "q": "Seasonal differencing is:",
+              "choices": [
+                "Subtracting the value one full period ago, $y_t - y_{t-m}$",
+                "Subtracting the previous value, $y_t - y_{t-1}$",
+                "Taking a log",
+                "Averaging a window"
+              ],
+              "answer": 0,
+              "explain": "Seasonal difference cancels a period-m pattern."
+            },
+            {
+              "q": "The \"d\" in ARIMA(p, d, q) is:",
+              "choices": [
+                "The number of autoregressive lags",
+                "The number of differences applied to reach stationarity",
+                "The forecast horizon",
+                "The seasonal period"
+              ],
+              "answer": 1,
+              "explain": "d = order of integration (differencing)."
+            },
+            {
+              "q": "A random walk $y_t = y_{t-1} + \\varepsilon_t$ is non-stationary because:",
+              "choices": [
+                "It repeats every period",
+                "Its mean is exactly zero",
+                "Its variance grows without bound and it has no fixed level (a unit root)",
+                "It has no noise"
+              ],
+              "answer": 2,
+              "explain": "Unit root at phi=1; variance = t·sigma^2."
+            },
+            {
+              "q": "Over-differencing an already-stationary series:",
+              "choices": [
+                "Has no effect",
+                "Always improves the forecast",
+                "Removes seasonality for free",
+                "Inflates the variance and injects artificial negative lag-1 autocorrelation"
+              ],
+              "answer": 3,
+              "explain": "Use the smallest d; extra differences hurt."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "(Weak) stationarity",
+              "back": "A series whose mean and variance are constant over time and whose autocovariance depends only on the lag $k$ (not on when you look). The working assumption of classical methods."
+            },
+            {
+              "front": "Why does non-stationarity matter?",
+              "back": "A drifting mean makes \"the average\" window-dependent and causes <b>spurious regression</b> (unrelated trending series look correlated); estimates and intervals become unreliable."
+            },
+            {
+              "front": "Differencing",
+              "back": "Replace the series with step-to-step changes $\\nabla y_t = y_t - y_{t-1}$. It turns a linear trend into a constant — the standard route to a stationary mean."
+            },
+            {
+              "front": "Seasonal differencing",
+              "back": "$y_t - y_{t-m}$: subtract the value one full period ago (e.g. $m=12$ months) to cancel a repeating seasonal pattern. Often combined with an ordinary difference."
+            },
+            {
+              "front": "What does a log transform fix?",
+              "back": "A drifting <em>variance</em> (swings growing with the level). Log/Box–Cox stabilizes the spread; differencing then fixes the drifting mean. Log first, then difference."
+            },
+            {
+              "front": "The \"d\" in ARIMA(p, d, q)",
+              "back": "The number of differences applied to make the series stationary before fitting ARMA; forecasts are un-differenced (cumulatively summed) back. A unit root needs $d=1$; use the smallest $d$ that works."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "First-difference the series [5, 8, 9, 7, 10]. What do you get, and how many values?",
+              "hint": "Subtract each value from the next.",
+              "solution": "Differences: 8−5=3, 9−8=1, 7−9=−2, 10−7=3 → [3, 1, −2, 3]. Four values from five inputs (differencing loses one point). The clear upward drift of the original is replaced by changes centred near zero — closer to stationary."
+            },
+            {
+              "prompt": "A series shows a clear upward trend AND seasonal swings that get larger every year. In what order would you apply log, ordinary differencing, and seasonal differencing?",
+              "hint": "Variance first, then mean.",
+              "solution": "Take the <b>log</b> first to tame the growing (multiplicative) seasonal swings — that stabilizes the variance. Then apply a <b>seasonal difference</b> ($y_t - y_{t-m}$) to remove the repeating pattern and an <b>ordinary difference</b> ($y_t - y_{t-1}$) to remove the remaining trend. Variance stabilization precedes differencing because differencing doesn't fix a fanning-out spread."
+            },
+            {
+              "prompt": "Why is using the <em>smallest</em> number of differences important?",
+              "hint": "What does an extra difference cost?",
+              "solution": "Each difference discards a data point and adds autocorrelation; <b>over-differencing</b> an already-stationary series inflates the variance and injects artificial negative lag-1 autocorrelation, forcing an unnecessary MA term and producing noisier forecasts. Use the smallest $d$ (check with a plot/ADF after each step) that removes the trend — usually 0, 1, or 2."
+            }
+          ],
+          "examples": [
+            {
+              "title": "Spotting a non-stationary series",
+              "body": "A plot of monthly revenue rises steadily and its month-to-month swings grow over the years. Is it stationary, and what would you do?",
+              "solution": "Not stationary on either count: the mean trends up (non-constant mean) and the variance grows (non-constant variance). Stabilize the variance with a <b>log</b>, then take a <b>first difference</b> to remove the trend. Re-plot the rolling mean/variance (or run ADF) to confirm the transformed series looks flat before modelling it."
+            },
+            {
+              "title": "Differencing a random walk",
+              "body": "Stock-price-like data follows $y_t = y_{t-1} + \\varepsilon_t$. Why can't you model the level directly, and what's the fix?",
+              "solution": "A random walk has a unit root: its variance grows with $t$ and it has no fixed level, so it's non-stationary and direct modelling gives spurious fits. One first difference, $y_t - y_{t-1} = \\varepsilon_t$, yields white noise — stationary. You model the (stationary) differences/returns, then cumulate back to forecast the level."
+            },
+            {
+              "title": "Choosing d",
+              "body": "After one difference the series looks flat with no trend; after a second difference the lag-1 autocorrelation turns sharply negative. What does that tell you about d?",
+              "solution": "One difference was enough — the flat, trend-free look after $d=1$ signals stationarity. The sharp negative lag-1 autocorrelation after the <em>second</em> difference is the classic fingerprint of <b>over-differencing</b>, so use $d=1$, not 2."
+            }
+          ]
         }
       ]
     }
