@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 842 — NEW code exercise: bisection root-finding (IVT in action) (examples / hands-on)
+Added a runnable exercise to `c-continuity` (calculus), which had none, in its "prove a root exists, then trap it" section. The IVT only *promises* a root; bisection finds it — since $f(x)=x^2-2$ is negative at 1 and positive at 2,
+repeatedly halving the bracket converges to **root ~ 1.4142** ($\sqrt 2$). Turns the existence theorem into a constructive algorithm and bridges calculus → the binary-search idea in algorithms.
+Verified: bisection re-derived in Node (=1.4142); `<`/`>`/`<=`→entities escaped (decode confirmed, no literals); **gate ALL GREEN — code-exercises verified (now 154)**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v775` → `atlas-v776`.
+
 ## iter 841 — NEW viz: replicator dynamics converging to the ESS (visualizations)
 Completed the evolutionary-GT thread (839 deep-dive, 840 glossary) with its visual — the **146th widget, `gt-replicator`**, embedded after the ESS deep-dive in `gt-repeated-cooperation`: the Hawk–Dove hawk-fraction over generations under the
 replicator equation (V=2, C=4). Faint curves start from many hawk fractions and a bold slider-driven curve from your own — **all converge to the same ESS p* = V/C = 0.5**, the mixed Nash equilibrium reached by selection, not reasoning. Deterministic.
