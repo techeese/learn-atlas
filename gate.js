@@ -92,6 +92,18 @@ function tagBalance(s, where) {
     if (open !== close) errors.push("unbalanced <" + tag + "> in " + where + " (" + open + " open / " + close + " close)");
   }
 }
+// sparse-array holes (iter 750/751): a stray double comma ",," in any data-file array literal leaves an
+// undefined slot. .forEach/.map skip holes silently (so per-element lints never see them) but index/.find
+// access hits undefined and breaks rendering. A plain for-loop with "i in" is the only thing that catches it.
+// Audit every data array, not just the glossary (the hole could appear in any append).
+function noHoles(arr, where) { if (!Array.isArray(arr)) return; for (let i = 0; i < arr.length; i++) if (!(i in arr)) errors.push("array hole at " + where + "[" + i + "] — a stray ',,' in a data file"); }
+noHoles(C, "COURSES");
+C.forEach((c, ci) => { noHoles(c.modules, (c.id || ci) + ".modules"); (c.modules || []).forEach((m, mi) => {
+  noHoles(m.lessons, (c.id || ci) + ".modules[" + mi + "].lessons");
+  (m.lessons || []).forEach(l => { noHoles(l.mcq, l.id + ".mcq"); (l.mcq || []).forEach((q, qi) => { if (q) noHoles(q.choices, l.id + ".mcq[" + qi + "].choices"); }); noHoles(l.flashcards, l.id + ".flashcards"); noHoles(l.examples, l.id + ".examples"); noHoles(l.homework, l.id + ".homework"); });
+}); });
+Object.entries(global.window.REFERENCES || {}).forEach(([k, v]) => noHoles(v, "REFERENCES." + k));
+Object.entries(global.window.PREREQS || {}).forEach(([k, v]) => noHoles(v, "PREREQS." + k));
 C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
   lessons++; if (ids.has(l.id)) errors.push("duplicate lesson id: " + l.id); ids.add(l.id); topicOf[l.id] = c.id;
   const ansPos = {}, stems = {};
@@ -181,10 +193,7 @@ C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
 // glossary: render-hazard lint every definition + flag duplicate terms (the inline-tooltip source of truth)
 const gloss = global.window.GLOSSARY || [];
 const gseen = {};
-// sparse-hole check (iter 750): a stray double comma ",," in an array literal leaves an undefined slot that
-// .forEach SKIPS (so the missing-term check below never sees it) but .map/index access hits — breaking tooltips.
-// A plain for-loop with "i in" catches the hole that forEach can't.
-for (let i = 0; i < gloss.length; i++) if (!(i in gloss)) errors.push("glossary array has a hole at index " + i + " — a stray ',,' in data/glossary.js");
+noHoles(gloss, "GLOSSARY");   // see noHoles above — catches double-comma holes forEach would skip
 gloss.forEach((t, i) => {
   if (!t || !t.term || !t.def) { errors.push("glossary entry missing term/def: #" + i + " (" + JSON.stringify(t) + ")"); return; }
   const k = String(t.term).toLowerCase();

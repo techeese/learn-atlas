@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 751 — Gate: extend the sparse-hole check to ALL data arrays (workflow / gates)
+Followed up the iter-750 glossary-hole fix by (1) auditing every other data array for the same double-comma bug and (2) generalizing the gate's defense. **Audit:** scanned COURSES (modules · lessons · mcq · choices ·
+flashcards · examples · homework), REFERENCES, and PREREQS for sparse holes — **none found** (the glossary one was isolated). **Gate:** replaced iter-750's glossary-only for-loop with a reusable `noHoles(arr, where)` helper
+and applied it across all those arrays, so a stray `,,` anywhere now fails the gate with a precise path. Negative controls confirm it fires: a hole in PREREQS → `PREREQS.ml-knn[0]`; in an mcq choices array →
+`dl-ml-recap….mcq[0].choices[1]`; both restored → green. gate.js isn't served (no cache bump).
+Verified: gate.js parses; ALL GREEN on current data; negative controls fail-then-restore as expected; data files byte-identical (only gate.js changed).
+
 ## iter 750 — Step-back sweep + FIX a sparse hole in the glossary + gate hardening (step-back / bug / workflow)
 Step-back at iter 750. **Full 179-lesson regression sweep**: errs=0, no KaTeX errors, Knowledge Map 837 nodes — confirms the iter-746 math-normalizer rewrite is clean across the whole corpus. (Two lessons flag rawDollar>4
 in the sweep heuristic — l-prompting & ps-expectation-variance — but those are the known *legitimate* escaped-money `\$` lessons confirmed clean at iter 732, not garble; gate's proseInMath would catch real garble.)
