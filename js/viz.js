@@ -8087,4 +8087,50 @@
     draw();
   });
 
+
+  /* ========================================================
+     152. Power iteration: a vector converging to the dominant eigenvector (linear algebra)
+     ======================================================== */
+  register({ id: 'la-power-iteration', topic: 'linear-algebra', title: 'Power iteration converging to the dominant eigenvector', blurb: 'Why does repeatedly multiplying by a matrix and renormalizing find its dominant eigenvector? Because every vector is a blend of eigenvectors, and each step scales each component by its eigenvalue — so the largest eigenvalue’s direction grows fastest and quickly dominates. Here A = [[2,1],[1,2]] has eigenvectors along 45° (eigenvalue 3) and −45° (eigenvalue 1). Slide the iteration count: the gold vector starts off-axis and swings, step by step, onto the 45° dominant eigendirection — no matter where it began. This is exactly the loop behind PageRank.' },
+  function (root) {
+    const W = 480, H = 320, cx = 240, cy = 160, R = 120;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const A = [[2, 1], [1, 2]];
+    let K = 3;
+    function mul(v) { return [A[0][0] * v[0] + A[0][1] * v[1], A[1][0] * v[0] + A[1][1] * v[1]]; }
+    function norm(v) { const n = Math.hypot(v[0], v[1]); return [v[0] / n, v[1] / n]; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const PX = x => cx + x * R, PY = y => cy - y * R;
+      // unit circle + axes
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx - R - 14, cy); ctx.lineTo(cx + R + 14, cy); ctx.moveTo(cx, cy - R - 14); ctx.lineTo(cx, cy + R + 14); ctx.stroke();
+      // eigendirection lines: (1,1)/sqrt2 dominant, (1,-1)/sqrt2 subordinate
+      const e1 = norm([1, 1]), e2 = norm([1, -1]);
+      ctx.strokeStyle = p.sage; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(PX(-e1[0]), PY(-e1[1])); ctx.lineTo(PX(e1[0]), PY(e1[1])); ctx.stroke();
+      ctx.strokeStyle = p.mute; ctx.beginPath(); ctx.moveTo(PX(-e2[0]), PY(-e2[1])); ctx.lineTo(PX(e2[0]), PY(e2[1])); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.sage; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('λ=3 (dominant)', PX(e1[0]) + 4, PY(e1[1]) - 4);
+      ctx.fillStyle = p.mute; ctx.fillText('λ=1', PX(e2[0]) + 4, PY(e2[1]) + 12);
+      // trail of v_0..v_K
+      let v = norm([Math.cos(0.3), Math.sin(0.3)]);
+      const trail = [v];
+      for (let k = 0; k < K; k++) { v = norm(mul(v)); trail.push(v); }
+      trail.forEach((t, i) => { if (i === trail.length - 1) return; ctx.fillStyle = 'rgba(150,136,113,0.45)'; ctx.beginPath(); ctx.arc(PX(t[0]), PY(t[1]), 3, 0, 7); ctx.fill(); });
+      // current vector (gold arrow)
+      const vc = trail[trail.length - 1];
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(PX(vc[0]), PY(vc[1])); ctx.stroke(); ctx.lineWidth = 1;
+      ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(PX(vc[0]), PY(vc[1]), 4, 0, 7); ctx.fill();
+      const angle = Math.atan2(vc[1], vc[0]) * 180 / Math.PI;
+      info.innerHTML = 'after <b style="color:' + p.gold + '">' + K + '</b> iteration' + (K === 1 ? '' : 's') + ', the vector points at <b>' + angle.toFixed(1) + '°</b> — ' +
+        (K === 0 ? 'the off-axis start (17°).' : Math.abs(angle - 45) < 0.5 ? 'locked onto the 45° dominant eigendirection.' : 'swinging toward the 45° dominant eigendirection.') +
+        ' Each step multiplies the λ=3 component by 3 and the λ=1 component by 1, so the dominant direction wins.';
+    }
+    slider(ctl, { label: 'iterations k', min: 0, max: 12, step: 1, value: K, fmt: v => v.toFixed(0), onInput: v => { K = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Power iteration on the matrix [[2,1],[1,2]], whose eigenvectors lie along 45 degrees (eigenvalue 3) and minus 45 degrees (eigenvalue 1), drawn as dashed lines on a unit circle. A gold unit vector starts off-axis at 17 degrees; a slider advances the iteration count, and after each multiply-and-renormalize step the vector swings closer to the 45-degree dominant eigendirection, reaching it within a few steps regardless of the start, which is the mechanism behind power iteration and PageRank.');
+    draw();
+  });
+
 })();

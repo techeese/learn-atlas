@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 875 — NEW viz: power iteration converging to the dominant eigenvector (visualizations)
+Capped the power-iteration thread (873 code, 874 glossary) with its visual — the **152nd widget, `la-power-iteration`** in `la-eigenvalues-eigenvectors`: a unit circle with A=[[2,1],[1,2]]'s eigendirections (45° λ=3, −45° λ=1); slide
+the iteration count and the gold vector swings from an off-axis start (17°) onto the **45° dominant eigendirection**, with a trail showing each step. The *visual proof* of why power iteration works (the λ=3 component outgrows the λ=1 one) — distinct from the existing static eigen viz.
+Verified: convergence re-derived in Node (17°→35°→44°→45°); gate ALL GREEN (now **152 widgets**); **headless** — off-axis at k=0, "locked onto 45°" at k=12, kErr=0, errs=0; screenshot shows the vector on the dominant eigendirection with its trail. SW cache `atlas-v808` → `atlas-v809`.
+
 ## iter 874 — Glossary: power-iteration / PageRank terms (reference)
 Completed the iter-873 thread (varying off two code iters). Added **Power iteration**, **PageRank** (tagged algorithms — the Markov-chain / dominant-eigenvector ranking), and **Spectral radius** (the largest |eigenvalue|, governing
 matrix-power growth/decay). Glossary **358 → 361** (0 holes).
