@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 780 — Step-back sweep (clean) + interpretability glossary terms (step-back / reference)
+Step-back at ~10 iters. **Full 185-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **868 nodes** — zero regressions since iter 770 (the TS deep-forecasting lesson, 2 new
+viz, and many deep-dives/glossary all clean).
+**Ship:** completed the iter-779 interpretability deep-dive's glossary integration. Added **4 terms**: Mechanistic interpretability, Superposition, Sparse autoencoder (SAE), Polysemantic / monosemantic — now powering
+tooltips in the LLM safety/frontier lesson. Glossary **301 → 305** (0 holes).
+Verified: glossary parses; gate ALL GREEN (incl. proseInMath + sparse-hole checks); full sweep clean; **headless** — all 4 render on `#/glossary` (4/4), kErr=0, errs=0. SW cache `atlas-v713` → `atlas-v714`.
+
 ## iter 779 — Dashboard verified at 10 topics + hard-concept: superposition & SAEs (UX check / content)
 A fresh-eyes review of the seeded returning-learner dashboard at 10 topics confirmed it's polished — "34/185 lessons · 84% quiz accuracy" (the iter-733 "—"/% fix and iter-734 title-case fix both holding), sensible
 recommendations, all 10 topics in the sidebar; no bug. Then filled a genuine current gap: **superposition** and **sparse autoencoders** (the core of modern mechanistic interpretability) were uncovered. Added a 4th deep-dive
