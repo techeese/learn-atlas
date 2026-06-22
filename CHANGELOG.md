@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 866 — Glossary: sampling & resampling terms (reference)
+Completed the iter-865 bootstrap thread and filled a foundational miss: **Sampling distribution** wasn't even a glossary term (only "Nucleus sampling" matched). Added **Sampling distribution**, **Resampling**, and **Percentile**.
+Glossary **352 → 355** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v799` → `atlas-v800`.
+
 ## iter 865 — NEW viz: the bootstrap (resampling → confidence interval) (visualizations) — 150th widget
 Filled a real stats gap — bootstrap is taught in 3 lessons but had no dedicated viz. Added the **150th widget, `ps-bootstrap`**, in `ps-sampling-distributions`: resample one fixed 15-point sample with replacement, recompute the mean, repeat;
 the histogram of bootstrap means with its middle-95% shaded is a confidence interval with **no formula and no normality assumption** (sample mean 8.60 → 95% CI ≈ [5.9, 11.8]). Slide B — few resamples jitter, thousands settle into a smooth, stable estimate. Deterministic (seeded).
