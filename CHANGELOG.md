@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 757 — Glossary: agent terms (reference)
+Completed the agent arc's integration (deep-dive iter 755 + viz iter 756 + glossary now). The glossary had RAG but none of the agent vocabulary — added **AI agent, ReAct, Tool use (function calling)**, now powering
+inline tooltips wherever they appear in `l-rag-and-tools`. Glossary **290 → 293** (0 holes).
+Verified: glossary parses; gate ALL GREEN (incl. proseInMath + sparse-hole checks); **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v690` → `atlas-v691`.
+
 ## iter 756 — NEW viz: the ReAct agent loop, step by step (visualizations)
 Made iter-755's agent deep-dive interactive. Built the **130th widget, `llm-react-loop`** (a DOM step-through, not canvas): click "Next step" to watch an agent solve "France's population, doubled" — Thought → Action
 (search) → Observation → Thought → Action (calculator) → Observation → Answer, with colour-coded step cards (Thought/Action/Observation/Answer) making the reason-act-observe **loop** and its two tool calls concrete.
