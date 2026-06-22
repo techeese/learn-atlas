@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 835 — Hard-concept: the data processing inequality (content)
+Filled a fundamental IT gap: the **data processing inequality** (Fano, info bottleneck, and sufficient statistics were covered, but the DPI underlying them wasn't). Added a deep-dive to `it-mutual-information`: for a Markov chain
+$X\to Y\to Z$, $I(X;Z)\le I(X;Y)$ — no processing of $Y$ can recover more information about $X$ than $Y$ already carries; information only *decreases* along a chain. So feature engineering can't *add* information, only repackage it;
+equality holds iff the step is a **sufficient statistic**. It's the backbone of the **information bottleneck** (cross-linked) and the reason "is the signal even in the data?" precedes "is my model good enough?"
+Verified: data parses + round-trips; gate ALL GREEN (internal-links lint confirms the cross-link; proseInMath on the MI math); **headless** — 4 deep-dives, DPI/Markov/sufficient-statistic + cross-link present, 79 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v768` → `atlas-v769`.
+
 ## iter 834 — NEW code exercise: probability by counting (examples / hands-on)
 Added a runnable exercise to `ps-sample-spaces-events` (the foundational probability lesson), which had none. The learner enumerates all 36 equally-likely rolls of two dice and counts those summing to 7 →
 **P(sum=7) = 6/36 = 0.167** — making "probability = favorable ÷ total" something you compute rather than assert. Placed in section 5 "Equally likely outcomes and counting".
