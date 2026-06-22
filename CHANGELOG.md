@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 817 — Game Theory build-out: lesson 3 to full 16-MCQ parity — topic complete (content / assessment)
+Brought `gt-repeated-cooperation` to the 16-MCQ standard. Added **8 new MCQs**: one-shot vs iterated, Always-Cooperate's weakness, IPD strategy-as-rule, Axelrod's "nice" trait, the δ ≥ 0.5 discount threshold, forgiveness fixing
+noise (tit-for-two-tats), multi-agent-RL social dilemmas, and reputation systems. Balanced → **4/4/4/4**. 🎉 **All three Game Theory lessons are now at full parity — the 11th topic is complete**, and the gate reports zero parity warnings across all 188 lessons.
+Verified: data parses + round-trips; gate ALL GREEN, no parity note anywhere; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v750` → `atlas-v751`.
+
 ## iter 816 — Game Theory build-out: iterated-PD match visualizer (visualizations)
 Added the **142nd widget, `gt-ipd-match`** — the capstone viz for lesson 3. Pick two strategies (Tit-for-Tat, Always Defect, Always Cooperate, Grim Trigger) via cycle buttons and watch eight rounds play out as a move grid
 (green = cooperate, red = defect) with running scores. The contrast is vivid: two nice strategies cooperate throughout (24/24), Always-Cooperate is exploited 0-vs-40 by Always-Defect, while Tit-for-Tat/Grim take one hit from a

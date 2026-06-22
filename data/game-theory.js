@@ -597,6 +597,94 @@
               ],
               "answer": 3,
               "explain": "Pure reciprocity echoes mistakes; forgiveness fixes it."
+            },
+            {
+              "q": "Why is \"Always Defect\" rational in a one-shot PD but often poor in the iterated game?",
+              "choices": [
+                "In repeated play, defecting triggers lasting retaliation that outweighs the one-time gain",
+                "Defection becomes impossible after round one",
+                "The payoffs change between rounds",
+                "The opponent disappears"
+              ],
+              "answer": 0,
+              "explain": "Future punishment changes the calculus."
+            },
+            {
+              "q": "\"Always Cooperate\" is a weak strategy because it:",
+              "choices": [
+                "Never cooperates",
+                "Is ruthlessly exploited by defectors (it never retaliates)",
+                "Can't be programmed",
+                "Always wins head-to-head"
+              ],
+              "answer": 1,
+              "explain": "No retaliation → exploitable."
+            },
+            {
+              "q": "In the iterated Prisoner's Dilemma, a \"strategy\" is:",
+              "choices": [
+                "The opponent's payoff",
+                "A single fixed move",
+                "A rule mapping the history of play to the next move",
+                "A random coin flip each round"
+              ],
+              "answer": 2,
+              "explain": "History-dependent rule, not one move."
+            },
+            {
+              "q": "Axelrod said tit-for-tat is \"nice,\" meaning it:",
+              "choices": [
+                "Plays randomly",
+                "Always forgives instantly",
+                "Cooperates only at the end",
+                "Never defects first"
+              ],
+              "answer": 3,
+              "explain": "Nice = never the first to defect."
+            },
+            {
+              "q": "For PD payoffs T=5, R=3, P=1, grim-trigger cooperation holds when the discount factor δ is at least:",
+              "choices": [
+                "0.5",
+                "0.1",
+                "0.9",
+                "0.0"
+              ],
+              "answer": 0,
+              "explain": "(T−R)/(T−P) = 2/4 = 0.5."
+            },
+            {
+              "q": "Adding noise (accidental moves), the fix that restores cooperation between reciprocators is:",
+              "choices": [
+                "Harsher, permanent punishment",
+                "Forgiveness — e.g. tit-for-two-tats or generous tit-for-tat",
+                "Always defecting",
+                "Ignoring the opponent"
+              ],
+              "answer": 1,
+              "explain": "Forgiveness breaks the retaliation echo."
+            },
+            {
+              "q": "In multi-agent reinforcement learning, repeated social dilemmas matter because:",
+              "choices": [
+                "Rewards never depend on other agents",
+                "There is only ever one agent",
+                "Learned policies must navigate cooperation vs defection over many interactions",
+                "Games are always one-shot"
+              ],
+              "answer": 2,
+              "explain": "Sequential social dilemmas = repeated games among learners."
+            },
+            {
+              "q": "A reputation system on a marketplace sustains honesty by:",
+              "choices": [
+                "Hiding past behavior",
+                "Removing all penalties",
+                "Making the game one-shot",
+                "Making a one-time cheat punishable by all future counterparties (lengthening the shadow of the future)"
+              ],
+              "answer": 3,
+              "explain": "Reputation = community-wide future punishment."
             }
           ],
           "flashcards": [
