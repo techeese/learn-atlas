@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 852 — NEW code exercise: coordinates in a non-standard basis (examples / hands-on)
+Filled the last linear-algebra lesson without code — `la-basis-dimension`. In its worked-example section the learner solves $B\mathbf c=\mathbf v$ by Cramer's rule to express $\mathbf v=(5,6)$ in the basis $(1,1),(1,-1)$ →
+**coordinates: [5.5, -0.5]** (i.e. $5.5\,\mathbf b_1 - 0.5\,\mathbf b_2 = \mathbf v$). Makes "a vector is just a list of numbers *relative to a basis*" something you compute. Linear algebra is now 100% code-covered.
+Verified: coordinates re-derived in Node; data parses + round-trips (linear-algebra.js is JSON-form); **gate ALL GREEN — code-exercises verified (now 157)**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v785` → `atlas-v786`.
+
 ## iter 851 — NEW viz: batch normalization standardizes a layer's inputs (visualizations)
 Filled a real DL gap — dropout and signal-propagation had viz, but **batch norm had none** despite being one of the most important training tricks. Added the **148th widget, `dl-batchnorm`**, in `dl-dropout-and-normalization`'s
 Batch-Norm section (alongside the dropout viz): two sliders set the incoming activation mean and spread; the faint raw histogram lurches around but the gold batch-normed histogram **stays locked at N(0,1)** — the cure for internal
