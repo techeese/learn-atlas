@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 845 — NEW code exercise: the geometric distribution (examples / hands-on)
+Confirmed the RL concept set (deadly triad, GAE, reward shaping, credit assignment) is fully covered, and that the mastery-decay model is well-designed (left untouched). Then filled a confirmed gap: `ps-geometric-waiting` had no code.
+The learner computes the mean wait $\mathbb{E}[K]=1/p$ and the PMF $P(K=k)=(1-p)^{k-1}p$ for $p=0.25$ → **E[wait]=4.0, P(K=3)=0.141** — turning the two headline formulas into something you run. Placed at the end of "the mean" section.
+Verified: data parses + round-trips; **gate ALL GREEN — code-exercises verified (now 155)**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v778` → `atlas-v779`.
+
 ## iter 844 — Fix SRS grade differentiation: Hard/Good/Easy now schedule apart (retention / remember-longer)
 Turned to the neglected "remember longer" dimension. The spaced-repetition scheduler (SM-2 lite in store.js) had a real weakness: at mature reps (≥3), **Hard and Good produced the *identical* next interval** (`interval×ease`) — the
 three grades barely differed, so honest grading did little. Fixed `gradeCard` (and its mirror `projectInterval`) so **Hard grows slowly (×1.2), Good at ease, Easy gets a ×1.3 bonus** — standard SM-2 behavior. On a mature card (interval 8d): Hard→**10d**, Good→**20d**, Easy→**26d** (previously all ~20d). The grade buttons already display these projected intervals, so the difference is visible at the point of grading.
