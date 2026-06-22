@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 811 — Game Theory build-out: lesson 2 — Mixed Strategies & Zero-Sum Games (content)
+Added the topic's **2nd lesson, `gt-mixed-zero-sum` "Mixed Strategies and Zero-Sum Games"**: 8 sections (when pure strategies fail · mixed strategies · the indifference principle · computing a 2×2 mixed equilibrium · zero-sum
+& the value of a game · von Neumann's minimax theorem · from minimax to AI · summary), a runnable **mixed-equilibrium code exercise** (solve the indifference equation → p = 0.33), 3 deep-dives (why you mix to make the *opponent*
+indifferent · maximin/security strategies · why GAN training inherits minimax instability), 6 cards, 3 examples, 3 homework, 8 MCQs (top to 16 later). Cross-links to `gt-foundations` (Matching Pennies) and `dl-gans` (minimax);
+prereq edge → gt-foundations. Site now **11 topics · 187 lessons**.
+Verified: data parses + round-trips; gate ALL GREEN (expected 8/16 parity note); **headless** — 3 deep-dives, both cross-links resolve, code runs (p = 0.33), 9 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v744` → `atlas-v745`.
+
 ## iter 810 — Step-back sweep (clean) + Game Theory glossary terms (step-back / reference)
 Step-back at ~10 iters. **Full 186-lesson regression sweep across all 11 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **874 nodes** — zero regressions since iter 800, validating the entire new Game Theory topic
 (lesson + Nash viz + 16 MCQ) and all integration.

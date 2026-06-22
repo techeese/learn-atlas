@@ -253,6 +253,162 @@
               "solution": "Add a <b>binding penalty</b> for defecting (arming). If the penalty for breaking the treaty is large enough, the payoff for \"arm while the other disarms\" drops below the payoff for \"both disarm,\" so disarming becomes a best response and (disarm, disarm) becomes the Nash equilibrium. This is <b>mechanism design</b> in miniature: you don't change the players' rationality, you change the <em>payoffs</em> so the stable outcome is also the good one. Repetition and reputation can achieve the same effect without an external enforcer."
             }
           ]
+        },
+        {
+          "id": "gt-mixed-zero-sum",
+          "title": "Mixed Strategies and Zero-Sum Games",
+          "minutes": 17,
+          "content": "<h3>1. When pure strategies fail</h3>\n<p>Some games have no equilibrium in <em>pure</em> (deterministic) strategies. In rock-paper-scissors, any fixed choice you always make is instantly exploitable — always-rock loses to always-paper. <a href=\"#/lesson/game-theory/gt-foundations\" data-route>Matching Pennies</a> is the same: whatever you reliably do, the opponent reads and beats. There is no \"no-regret\" deterministic profile, so Nash equilibrium seems to fail — until we let players randomize.</p>\n<h3>2. Mixed strategies</h3>\n<p>A <b>mixed strategy</b> is a probability distribution over your options — play rock, paper, and scissors each with probability $\\tfrac13$. Now there is nothing to read: your move is random. A <em>pure</em> strategy is just the special case of a mixed strategy that puts all its weight on one option. Allowing mixing is what rescues the theory.</p>\n<h3>3. The indifference principle</h3>\n<p>Here is the key idea. At a mixed-strategy Nash equilibrium, each player chooses their mixing probabilities so as to make the <em>opponent indifferent</em> among the strategies the opponent actually uses. Why? If the opponent were <em>not</em> indifferent — if one of their options paid more — they would shift all their weight onto it, and your mix would no longer be a best response. Equilibrium mixing is precisely the mix that removes the opponent's incentive to deviate. (Counter-intuitively, you pick your probabilities to balance <em>their</em> payoffs, not your own.)</p>\n<h3>4. Computing a 2×2 mixed equilibrium</h3>\n<p>Apply the indifference principle to a $2\\times2$ game: the row player mixes row 0 with probability $p$, and we choose $p$ so the column player gets the same expected payoff from either column. That's one linear equation in $p$. For symmetric games like rock-paper-scissors it gives the uniform mix; for skewed payoffs it tilts. Solve it directly:</p>\n<div data-code=\"javascript\" data-expected=\"p = 0.33\">// 2x2 zero-sum: row's payoff matrix A. Find the row player's mixing probability p\n// (weight on row 0) that makes the COLUMN player indifferent between its two columns.\nconst A = [[3, -1], [0, 2]];\n// indifference: p*A[0][0] + (1-p)*A[1][0] = p*A[0][1] + (1-p)*A[1][1]\nconst num = A[1][1] - A[1][0];\nconst den = (A[0][0] - A[1][0]) - (A[0][1] - A[1][1]);\nconst p = num / den;\nconsole.log(\"p = \" + p.toFixed(2));   // row 0 with prob ~1/3</div>\n<h3>5. Zero-sum games and the value</h3>\n<p>A game is <b>zero-sum</b> when one player's gain is exactly the other's loss — pure conflict, no room for mutual benefit. Such games have a single number, the <b>value</b>: what the row player can guarantee to win (and the column player can hold them to) under optimal play. Rock-paper-scissors has value 0 — fair. Skewed zero-sum games have a non-zero value captured entirely by the optimal mixed strategies.</p>\n<h3>6. The minimax theorem</h3>\n<p>Von Neumann's <b>minimax theorem</b> (1928) is the cornerstone: in any finite two-player zero-sum game, $\\max_{x}\\min_{y} = \\min_{y}\\max_{x}$ — the most you can guarantee by maximizing your worst case equals the least your opponent can hold you to. That common number <em>is</em> the value, and the strategies that achieve it are the equilibrium mixes. It means \"play to protect your worst case\" and \"exploit the opponent optimally\" coincide. This is why two-player zero-sum games are cleanly solvable.</p>\n<h3>7. From minimax to AI</h3>\n<p>Minimax runs straight through AI. A <a href=\"#/lesson/deep-learning/dl-gans\" data-route>GAN</a> is a minimax game — the generator minimizes what the discriminator maximizes — which is exactly why GAN training is unstable (it chases a saddle point, not a minimum). <b>Self-play</b> (AlphaZero) and classic game-tree <b>minimax search</b> rest on the same theorem. And <b>adversarial robustness</b> is a minimax problem: minimize the loss the worst-case attacker can maximize. Thinking in min-max is a core AI skill.</p>\n<h3>8. Summary</h3>\n<p>When no pure equilibrium exists, players <b>mix</b>; the equilibrium mix makes the opponent indifferent. Zero-sum games have a single <b>value</b>, guaranteed by von Neumann's <b>minimax theorem</b> — the backbone of GANs, self-play, and adversarial robustness.</p>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why you mix to make the OPPONENT indifferent</summary>\n<p>It feels backwards to choose your probabilities to balance the other player's payoffs, but it is forced. Suppose at a candidate equilibrium your opponent strictly preferred column A over column B. Then they would play A with probability 1 — a pure best response — and against that pure choice your own mix is almost certainly <em>not</em> optimal, so you'd deviate too, and nothing is stable. The only way both players can be mixing in equilibrium is if each is <em>indifferent</em> among the options they mix over (every used option earns the same expected payoff). So the equilibrium condition becomes: set your probabilities to equalize the opponent's expected payoffs across their strategies. That single requirement, written out, is the linear equation you solve.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: maximin and the security strategy</summary>\n<p>A cautious player can ask: \"what is the best payoff I can <em>guarantee</em>, regardless of what the opponent does?\" Maximizing your worst-case outcome gives your <b>maximin</b> (security) value, and the strategy achieving it is your <b>security strategy</b>. In a general game maximin can be less than your equilibrium payoff (caution costs you). The beauty of the minimax theorem is that in two-player <em>zero-sum</em> games they coincide: your security strategy <em>is</em> your equilibrium strategy, and the maximin value equals the game's value. Pessimism and optimal play agree exactly — which is special to zero-sum and breaks once interests aren't purely opposed.</p>\n</details>\n<details class=\"deep-dive\">\n<summary>Deeper dive: why GAN training inherits minimax instability</summary>\n<p>Ordinary deep learning <em>descends</em> to a minimum of one loss; a <a href=\"#/lesson/deep-learning/dl-gans\" data-route>GAN</a> instead seeks a <b>saddle point</b> of a minimax objective — a point that's a minimum for the generator and a maximum for the discriminator simultaneously. Gradient descent-ascent on such objectives can <em>orbit</em> the equilibrium rather than converge (think of the rotational dynamics around a saddle), producing the oscillation, mode collapse, and fragility GANs are infamous for. It is the practical price of playing a game instead of minimizing a function — and why much GAN research is really about stabilizing minimax optimization (gradient penalties, two-timescale updates, spectral normalization).</p>\n</details>",
+          "mcq": [
+            {
+              "q": "Rock-paper-scissors has no pure-strategy Nash equilibrium because:",
+              "choices": [
+                "Any deterministic choice can be exploited by the opponent's counter",
+                "The payoffs are all zero",
+                "There are three players",
+                "It is not a zero-sum game"
+              ],
+              "answer": 0,
+              "explain": "Determinism is readable and beatable; you must randomize."
+            },
+            {
+              "q": "A mixed strategy is:",
+              "choices": [
+                "Playing the same move every time",
+                "A probability distribution over your available choices",
+                "Copying the opponent",
+                "The opponent's payoff"
+              ],
+              "answer": 1,
+              "explain": "Mixed = randomized; pure is the all-weight-on-one special case."
+            },
+            {
+              "q": "At a mixed-strategy Nash equilibrium, each player mixes so as to:",
+              "choices": [
+                "Always play their dominant strategy",
+                "Maximize their own single-round payoff greedily",
+                "Make the opponent indifferent among the strategies they use",
+                "Copy the opponent's last move"
+              ],
+              "answer": 2,
+              "explain": "The indifference principle — remove the opponent's incentive to deviate."
+            },
+            {
+              "q": "A zero-sum game is one where:",
+              "choices": [
+                "There is no equilibrium",
+                "Both players can win together",
+                "Payoffs are always positive",
+                "One player's gain is exactly the other's loss"
+              ],
+              "answer": 3,
+              "explain": "Pure conflict; payoffs sum to a constant."
+            },
+            {
+              "q": "The \"value\" of a zero-sum game is:",
+              "choices": [
+                "What the row player can guarantee, and the column player can hold them to, under optimal play",
+                "The sum of all payoffs in the matrix",
+                "Always zero",
+                "The number of strategies"
+              ],
+              "answer": 0,
+              "explain": "A single number achieved by the optimal mixes."
+            },
+            {
+              "q": "Von Neumann's minimax theorem states that in a two-player zero-sum game:",
+              "choices": [
+                "the first player always wins",
+                "max-min equals min-max — your guaranteed value equals what the opponent can hold you to",
+                "there is never an equilibrium",
+                "mixing is never needed"
+              ],
+              "answer": 1,
+              "explain": "max min = min max defines the value."
+            },
+            {
+              "q": "Why is GAN training notoriously unstable?",
+              "choices": [
+                "It uses no gradients",
+                "It has no loss function",
+                "It seeks a saddle point of a minimax objective, not a minimum, so it can oscillate",
+                "The generator and discriminator cooperate"
+              ],
+              "answer": 2,
+              "explain": "Saddle-point/minimax dynamics → orbiting, mode collapse."
+            },
+            {
+              "q": "In a two-player zero-sum game, your maximin (security) strategy:",
+              "choices": [
+                "Is a pure strategy only",
+                "Is always worse than equilibrium",
+                "Requires knowing the opponent's mix in advance",
+                "Coincides with your Nash equilibrium strategy (by the minimax theorem)"
+              ],
+              "answer": 3,
+              "explain": "Zero-sum: caution and optimal play agree."
+            }
+          ],
+          "flashcards": [
+            {
+              "front": "Why can't rock-paper-scissors have a pure-strategy Nash equilibrium?",
+              "back": "Any deterministic choice is exploitable — if you always play X, the opponent best-responds with the counter and you always lose. No pure profile is stable; the equilibrium must be mixed."
+            },
+            {
+              "front": "Mixed strategy",
+              "back": "A probability distribution over your options (e.g. each of rock/paper/scissors with probability $\\tfrac13$). A pure strategy is the special case that puts all weight on one option."
+            },
+            {
+              "front": "The indifference principle",
+              "back": "At a mixed Nash equilibrium, each player mixes so as to make the <em>opponent</em> indifferent among the strategies they use — otherwise the opponent would shift all weight to a better option and exploit you."
+            },
+            {
+              "front": "Zero-sum game and its value",
+              "back": "One player's gain is exactly the other's loss. The game has a single <b>value</b>: what the row player can guarantee and the column player can hold them to under optimal (mixed) play."
+            },
+            {
+              "front": "The minimax theorem (von Neumann)",
+              "back": "In any finite two-player zero-sum game, $\\max\\min = \\min\\max$. Maximizing your worst case equals the least the opponent can hold you to — that common number is the value."
+            },
+            {
+              "front": "Why is GAN training unstable?",
+              "back": "A GAN seeks a <em>saddle point</em> of a minimax objective (min for generator, max for discriminator), not a minimum. Gradient descent-ascent can orbit rather than converge — hence oscillation and mode collapse."
+            }
+          ],
+          "homework": [
+            {
+              "prompt": "In Matching Pennies (you win if the coins match, opponent wins if they differ), what is your equilibrium mixed strategy, and why exactly 50/50?",
+              "hint": "Use the indifference principle on the opponent.",
+              "solution": "Play Heads and Tails each with probability $\\tfrac12$. By the indifference principle, you choose your mix so the opponent is indifferent between their options. If you played Heads more than half the time, the opponent would always pick the action that exploits Heads; only 50/50 makes both of the opponent's choices equally good, removing any exploit. (By symmetry the opponent also mixes 50/50, and the game's value is 0 — fair.)"
+            },
+            {
+              "prompt": "For the zero-sum game with row payoffs A = [[2, 0], [0, 1]], find the row player's mixing probability p on row 0 that makes the column player indifferent.",
+              "hint": "Set p·A[0][0]+(1−p)·A[1][0] = p·A[0][1]+(1−p)·A[1][1] and solve.",
+              "solution": "Indifference: $p\\cdot2 + (1-p)\\cdot0 = p\\cdot0 + (1-p)\\cdot1$, i.e. $2p = 1-p$, so $3p = 1$ and $p = \\tfrac13$. The row player plays row 0 with probability $\\tfrac13$ and row 1 with probability $\\tfrac23$. (Using the formula: $p=(A_{11}-A_{10})/(A_{00}-A_{10}-A_{01}+A_{11}) = (1-0)/(2-0-0+1)=1/3$.)"
+            },
+            {
+              "prompt": "Explain why, in a two-player zero-sum game, \"play to protect your worst case\" gives the same strategy as \"play the Nash equilibrium.\"",
+              "hint": "This is the content of the minimax theorem.",
+              "solution": "That equivalence is exactly von Neumann's minimax theorem: $\\max\\min = \\min\\max$. The left side is the maximin (security) value — the best you can guarantee against a worst-case opponent. The right side is what an optimal opponent can hold you to. Because they're equal in zero-sum games, the cautious security strategy and the equilibrium strategy coincide and both achieve the game's value. (This breaks in non-zero-sum games, where caution can cost you relative to equilibrium.)"
+            }
+          ],
+          "examples": [
+            {
+              "title": "Solving rock-paper-scissors",
+              "body": "Why is the unique Nash equilibrium of rock-paper-scissors to play each option with probability one-third?",
+              "solution": "By symmetry and the indifference principle. If you played any option more than $\\tfrac13$ of the time, the opponent could shift weight to its counter and profit, so your mix wouldn't be a best response. The only mix that makes the opponent indifferent among rock, paper, and scissors (each yielding expected payoff 0 against you) is the uniform $(\\tfrac13,\\tfrac13,\\tfrac13)$. Both players mix uniformly, the value is 0, and neither can be exploited."
+            },
+            {
+              "title": "Spotting a zero-sum structure",
+              "body": "A generator and a discriminator in a GAN: in what sense is their interaction zero-sum, and what does the minimax theorem promise?",
+              "solution": "In the idealized GAN objective, the discriminator's gain (correctly classifying real vs fake) is the generator's loss and vice versa — pure opposition, hence zero-sum (minimax). The minimax theorem promises such a game has a well-defined value and equilibrium; at the ideal equilibrium the generator's distribution matches the data and the discriminator is reduced to guessing. In practice the networks are non-convex so we only approximate it — and the saddle-point geometry is why training oscillates."
+            },
+            {
+              "title": "Caution vs exploitation",
+              "body": "A poker-like zero-sum game: a player wonders whether to play a defensive \"minimize my worst case\" strategy or an aggressive \"exploit the opponent\" one. What does theory say?",
+              "solution": "In a two-player zero-sum game they are the <em>same</em> strategy. By the minimax theorem the maximin (worst-case-protecting) strategy equals the equilibrium (optimally-exploiting) strategy and both secure the game's value. So a player using the equilibrium mix is simultaneously maximally safe and optimally exploitative against a rational opponent. (Against a <em>predictably irrational</em> opponent you could deviate to exploit mistakes — at the cost of exposing yourself if you misread them.)"
+            }
+          ]
         }
       ]
     }

@@ -92,6 +92,9 @@ window.PREREQS = {
     "dl-rnn-lstm-gru",
     "dl-transformer-architecture"
   ],
+  "gt-mixed-zero-sum": [
+    "gt-foundations"
+  ],
   "dl-gans": [
     "it-cross-entropy-kl"
   ],
