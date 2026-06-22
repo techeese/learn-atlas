@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 850 — Step-back: kErr-aware sweep (clean) + mechanism-design glossary (step-back / reference)
+Step-back at ~10 iters. **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — entire corpus KaTeX-render-clean, zero regressions since iter 840, validating the recent push-wrapper
+injections (ACF, replicator, ESS, mechanism-design, Vickrey) that the byte-stable path can't guard.
+**Ship:** completed the iter-848/849 mechanism-design thread with **3 glossary terms** — Mechanism design, Vickrey auction (second-price), Incentive compatibility. Glossary **340 → 343** (0 holes).
+Verified: glossary parses; gate ALL GREEN; full kErr-aware sweep clean; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v783` → `atlas-v784`.
+
 ## iter 849 — NEW code exercise: a second-price (Vickrey) auction (examples / hands-on)
 Completed the iter-848 mechanism-design deep-dive with a runnable demo (gt-foundations' 2nd code exercise), placed right after it. Three sealed bids [50, 80, 65]: the top bid wins but pays the runner-up's bid, and surplus is value − price →
 **winner: bidder 1, pays 65, surplus 15**. Makes the second-price rule concrete — the learner can change bids and watch that overbidding/underbidding never helps (truthfulness is dominant).
