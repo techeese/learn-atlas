@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 821 — NEW code exercise: watch gradient descent converge geometrically (examples / hands-on)
+Rotated off Game Theory. Added a runnable exercise to `c-gradient-descent-convergence` (calculus), which had none. Minimizing $f(x)=x^2$ from $x=10$ with step size $0.1$, each update multiplies $x$ by $1-2\eta=0.8$ — the learner
+watches `x: 10 -> 8 -> 6.4 -> 5.12 -> 4.096 -> 3.277` shrink by a constant factor every step, which *is* linear (geometric) convergence. Placed in section 5 "Strong convexity gives speed", turning the convergence-rate theory into something you run.
+Verified: data parses + round-trips; `<` escaped in the loop; **gate ALL GREEN — code-exercises verified**; **headless** — Run executes, output exactly right, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v754` → `atlas-v755`.
+
 ## iter 820 — Step-back sweep (clean) + Game Theory glossary completion (step-back / reference)
 Step-back at ~10 iters. **Full 188-lesson regression sweep across all 11 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **883 nodes** — zero regressions since iter 810, validating the whole Game Theory build-out
 (lessons 2-3, 3 viz, MCQ tops, refs, cross-links).
