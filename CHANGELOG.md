@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 790 — Step-back sweep (clean) + reciprocal eval cross-link (step-back / understandability)
+Step-back at ~10 iters. **Full 185-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **868 nodes** — zero regressions since iter 780, validating the streak/pre-hydrate fix
+(784-785) and the four new viz (superposition, ROC, k-fold CV, backtesting). Confirmed the eval-arc glossary is already complete (ROC/AUC, Cross-validation, Backtesting, Precision & recall all present).
+**Ship:** completed the bidirectional eval cross-link. Iter 788 linked time-series → ML (k-fold); added the reciprocal **ML → time-series** see-also in `ml-model-selection`'s cross-validation section: "k-fold assumes the rows
+are exchangeable; for time-ordered data use rolling-origin backtesting" → `ts-forecast-evaluation`. The ML and Time-Series evaluation threads now reference each other both ways.
+Verified: data parses + round-trips; gate ALL GREEN (dangling-link lint confirms the cross-link resolves); full sweep clean; **headless** — the see-also renders and points to the backtesting lesson, kErr=0, errs=0. SW cache `atlas-v723` → `atlas-v724`.
+
 ## iter 789 — NEW viz: rolling-origin backtesting (visualizations)
 The visual companion to iter-788's deep-dive (and the time-respecting counterpart to iter-787's k-fold viz): the **137th widget, `ts-backtesting`**. Five stacked train/test splits on a left-to-right time axis — training on the
 past (sage), forecasting the window immediately after (gold), with the cut-point rolling forward each split so every test window sits strictly in the *future* of its training data. A button toggles **expanding** (training set grows)

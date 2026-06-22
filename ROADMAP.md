@@ -7,7 +7,7 @@ The autonomous loop (`/improve-atlas`) reads this file first. Keep it the **live
 move to CHANGELOG and out; new ideas land in the Backlog. (Full per-iteration history lives in `CHANGELOG.md`.)
 
 ## Current state (iter 759, 2026-06-22)
-**10 topics · 185 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 137 visualizations (all embedded) · 307 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full regression sweep: **iter 780 (185 lessons, 10 topics, errs=0/bad=none, map 868 nodes)**
+**10 topics · 185 lessons (all at the 16 MCQ / 6 cards / 3 examples / 3 homework / 3 deep-dives standard) · 137 visualizations (all embedded) · 307 glossary terms · cross-topic prereq graph · Library references · code exercises.** Last full regression sweep: **iter 790 (185 lessons, 10 topics, errs=0/bad=none, map 868 nodes)**
 Topics: Linear Algebra · Calculus · Algorithms · Deep Learning · Reinforcement Learning · LLMs · Probability & Statistics · Machine Learning · Information Theory.
 `node gate.js` is ALL GREEN; it machine-checks data + render-hazards (proseInMath money-garble lint, sparse-array holes, unbalanced tags/`$`, unsupported KaTeX envs), runs every JS code-exercise, and warns on any lesson below content-parity.
 Every major UI flow (dashboard · daily review · spawn-a-test · library · cheatsheet · placement · playground · knowledge map) has been fresh-eyes screenshot-reviewed (iters 733–752) and is polished; bugs found were fixed (test first-run dead-end iter 744; quiz-accuracy "—" iter 733; deep-dive title-case iter 734).
