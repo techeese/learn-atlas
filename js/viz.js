@@ -7843,4 +7843,56 @@
     draw();
   });
 
+
+  /* ========================================================
+     147. Forecast uncertainty cone: bounded vs unbounded (time series)
+     ======================================================== */
+  register({ id: 'ts-forecast-cone', topic: 'time-series', title: 'The forecast uncertainty cone', blurb: 'Every forecast comes with a widening cone of uncertainty. For an AR(1) process the point forecast decays toward the mean as φ^h, and the 95% interval grows with the horizon. Slide φ: a mean-reverting process (φ well below 1) has a cone that quickly plateaus — uncertainty is BOUNDED, you can forecast far ahead with stable error bars. Push φ toward 1 (a random walk) and the cone never stops widening — uncertainty grows like √h without limit, so long-range forecasts are essentially worthless. Persistence decides whether the future is foreseeable.' },
+  function (root) {
+    const W = 520, H = 300, padL = 30, padR = 12, padT = 14, padB = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const H0 = 38, FH = 34, sigma = 1, YMAX = 12;
+    let phi = 0.8;
+    function prng(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function gauss(r) { const u1 = Math.max(r(), 1e-9), u2 = r(); return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); }
+    function fcSD(h) { return phi >= 0.999 ? sigma * Math.sqrt(h) : sigma * Math.sqrt((1 - Math.pow(phi, 2 * h)) / (1 - phi * phi)); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // build history with the SAME phi so the seam is continuous
+      const r = prng(7), hist = [0]; for (let t = 1; t < H0; t++) hist.push(phi * hist[t - 1] + gauss(r));
+      const last = hist[H0 - 1];
+      const plotW = W - padL - padR, plotH = H - padT - padB, x0 = padL, total = H0 + FH;
+      const X = t => x0 + t / (total - 1) * plotW, Y = v => padT + (1 - (v + YMAX) / (2 * YMAX)) * plotH;
+      // zero line
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(x0, Y(0)); ctx.lineTo(x0 + plotW, Y(0)); ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [YMAX, 0, -YMAX].forEach(v => ctx.fillText(v, x0 - 3, Y(v) + 3));
+      // forecast cone (shaded), point forecast f(h)=last*phi^h
+      ctx.fillStyle = 'rgba(224,164,88,0.18)'; ctx.beginPath();
+      for (let h = 0; h <= FH; h++) { const f = last * Math.pow(phi, h), hi = f + 1.96 * fcSD(h); ctx.lineTo(X(H0 - 1 + h), Y(hi)); }
+      for (let h = FH; h >= 0; h--) { const f = last * Math.pow(phi, h), lo = f - 1.96 * fcSD(h); ctx.lineTo(X(H0 - 1 + h), Y(lo)); }
+      ctx.closePath(); ctx.fill();
+      // point forecast (dashed)
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]); ctx.beginPath();
+      for (let h = 0; h <= FH; h++) { const f = last * Math.pow(phi, h); h ? ctx.lineTo(X(H0 - 1 + h), Y(f)) : ctx.moveTo(X(H0 - 1 + h), Y(f)); } ctx.stroke(); ctx.setLineDash([]);
+      // history (solid)
+      ctx.strokeStyle = p.soft; ctx.lineWidth = 1.5; ctx.beginPath();
+      hist.forEach((v, t) => t ? ctx.lineTo(X(t), Y(v)) : ctx.moveTo(X(t), Y(v))); ctx.stroke(); ctx.lineWidth = 1;
+      // "now" divider
+      ctx.strokeStyle = 'rgba(150,136,113,0.4)'; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(X(H0 - 1), padT); ctx.lineTo(X(H0 - 1), padT + plotH); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText('now', X(H0 - 1), padT + plotH + 14);
+      const endSD = fcSD(FH), plateau = phi >= 0.999 ? Infinity : sigma / Math.sqrt(1 - phi * phi);
+      info.innerHTML = 'φ = <b style="color:' + p.gold + '">' + phi.toFixed(2) + '</b>. ' +
+        (phi >= 0.999 ? 'Random walk: the cone widens as √h and <b>never</b> stops — long-range forecasts are worthless.' :
+         phi > 0.9 ? 'Highly persistent: the cone widens slowly toward a wide but <b>bounded</b> plateau (±' + (1.96 * plateau).toFixed(1) + ').' :
+         'Mean-reverting: the cone plateaus fast at ±' + (1.96 * plateau).toFixed(1) + ' — uncertainty is <b>bounded</b>, the future stays foreseeable.');
+    }
+    slider(ctl, { label: 'persistence φ', min: 0.5, max: 1, step: 0.02, value: phi, fmt: v => v.toFixed(2), onInput: v => { phi = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Forecast uncertainty cone for an AR(1) process. The chart shows a history line up to "now", then a dashed point forecast decaying toward the mean and a shaded 95-percent prediction band fanning out to the right. A slider sets the persistence phi. For phi well below 1 the band plateaus quickly at a bounded width; as phi approaches 1 the band widens slowly toward a large bounded plateau; at phi equal to 1 (a random walk) the band widens without limit as the square root of the horizon, meaning long-range forecasts carry unbounded uncertainty.');
+    draw();
+  });
+
 })();

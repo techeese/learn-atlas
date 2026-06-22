@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 846 — NEW viz: the forecast uncertainty cone (visualizations)
+Filled the iconic time-series gap — no forecast-uncertainty viz existed. Added the **147th widget, `ts-forecast-cone`**, in `ts-arima` section 6 (pairing with the AR(1)-process viz): an AR(1) history, a point forecast decaying as φ^h, and a
+95% prediction band fanning out. Slide φ — **mean-reverting (φ<1) → the cone plateaus, uncertainty is BOUNDED; random walk (φ=1) → it widens as √h forever, UNBOUNDED**. Persistence decides whether the future is foreseeable. Deterministic.
+**Caught a placement bug:** my first raw-anchor `<h3>7.…` matched the *first* such heading in the multi-lesson file (a different lesson), so the viz landed in the wrong lesson — verification caught it (`ts-arima has cone: false`). Reverted and re-anchored on the full unique heading text `<h3>7. Choosing p, d, q</h3>`.
+Verified: variance re-derived in Node (φ=0.5 plateaus at SD 1.15; φ=1 → √h); placement confirmed (in ts-arima, no leakage); gate ALL GREEN (now **147 widgets**); **headless** — bounded at φ=0.5, unbounded at φ=1, kErr=0, errs=0; screenshot shows the fanning cone. SW cache `atlas-v779` → `atlas-v780`.
+
 ## iter 845 — NEW code exercise: the geometric distribution (examples / hands-on)
 Confirmed the RL concept set (deadly triad, GAE, reward shaping, credit assignment) is fully covered, and that the mastery-decay model is well-designed (left untouched). Then filled a confirmed gap: `ps-geometric-waiting` had no code.
 The learner computes the mean wait $\mathbb{E}[K]=1/p$ and the PMF $P(K=k)=(1-p)^{k-1}p$ for $p=0.25$ → **E[wait]=4.0, P(K=3)=0.141** — turning the two headline formulas into something you run. Placed at the end of "the mean" section.
