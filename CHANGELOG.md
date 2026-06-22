@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 856 — Wire Huffman: source coding ↔ greedy algorithms (understandability)
+Confirmed every topic's viz is comprehensive too (IT and RL both fully covered), so I kept strengthening the cross-topic web with a genuinely dual-identity concept: **Huffman coding** lives in both `it-source-coding` (optimal prefix
+codes approaching the entropy limit) and `a-greedy` (the textbook greedy algorithm, proved optimal by an exchange argument). Added a **bidirectional cross-link** so a learner meeting it in one lens can jump to the other.
+Verified: both push-wrapper files, encoded raw-replace with **unique** anchors (the IT "6. Compute it yourself" heading recurs 5× — avoided it, used a unique sentence instead, per the [[atlas-pushwrapper-injection]] memory); no control chars; gate ALL GREEN (internal-links lint); **headless** — both `.see-also` links render ("Greedy Algorithms" / "Source Coding"), errs=0. SW cache `atlas-v789` → `atlas-v790`.
+
 ## iter 855 — NEW code exercise: numerical integration (trapezoidal rule) (examples / hands-on)
 Added a runnable exercise to `c-integration-techniques`, which had none — framed as the escape hatch when analytic techniques fail (e.g. $\int e^{-x^2}dx$ has no closed form). The **trapezoidal rule** sums thin trapezoids to
 approximate $\int_0^1 x^2\,dx$ → **integral ~ 0.3333** (exact 1/3). Complements the lesson's u-substitution and by-parts with the universal numerical fallback.
