@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 741 — Hard-concept: double descent in model selection (content / understandability)
+Confirmed the resume/last-lesson feature is already well-built (dashboard "Continue" card, mid-lesson offer). Then filled a genuine *conceptual* gap: `ml-model-selection` teaches the classic bias-variance
+U-curve (and has a bias-variance-decomposition deep-dive) but never mentions **double descent** — the modern phenomenon where, past the interpolation threshold, test error descends *again*, so an over-parameterized
+model can beat the classic sweet spot. (It was discussed in DL lessons but absent from the ML lesson that owns the U-curve.) Added a 5th deep-dive there: the interpolation threshold, the second descent, the optimizer's
+implicit bias toward smooth low-norm interpolants, and the practical twist that a *bigger* model can cure overfitting — refining, not refuting, bias-variance.
+Verified: data parses; gate ALL GREEN (incl. proseInMath); **headless** — 5 deep-dives render, double-descent text present when expanded (kErr=0, rawDollar=0), errs=0. SW cache `atlas-v677` → `atlas-v678`.
+
 ## iter 740 — Step-back sweep (clean) + SSL glossary terms (step-back / reference)
 Step-back at ~10 iters since the last sweep. **Full 179-lesson regression sweep**: errs=0, no KaTeX errors, bad=none, Knowledge Map 837 nodes — the SSL lesson + reparameterization/contrastive viz introduced **zero
 regressions**.
