@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 788 — Hard-concept: why you can't k-fold a time series (content / understandability)
+Rotated off viz. Confirmed the Glossary UX is already strong (search + topic-filter chips + clickable terms + Visualize chips). Then a genuine cross-topic deepening that builds on iter-787's CV viz: `ts-forecast-evaluation`
+mentioned k-fold but had no dedicated treatment of *why* standard cross-validation breaks on time series. Added a 4th deep-dive — **rolling-origin backtesting**: shuffling or training on the future is leakage (the glowing CV
+score that collapses in production); the fix is to always train on the past and validate on the next window, rolling the cut-point forward (expanding vs sliding window); it's still cross-validation, but every split respects the
+arrow of time. Cross-linked to `ml-model-selection` (the k-fold lesson), tying the time-series and ML evaluation threads together.
+Verified: data parses + round-trips; gate ALL GREEN (dangling-link lint confirms the cross-link resolves); **headless** — 4 deep-dives render, rolling-origin content + cross-link present, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v721` → `atlas-v722`.
+
 ## iter 787 — NEW viz: k-fold cross-validation (visualizations)
 Confirmed the alternative lanes were already complete before choosing: content is exhaustive (ml-kmeans already covers GMM/EM; ml-model-selection has nested-CV + 5 deep-dives), keyboard shortcuts are wired *and*
 documented, and viz a11y is handled **systemically** — `register()` already wraps every widget to auto-apply `role=img` + an `aria-label` from title/blurb to any unlabeled canvas (verified at runtime on the old `la-eigen`). So
