@@ -7504,4 +7504,52 @@
     rebuild();
   });
 
+
+  /* ========================================================
+     140. 2x2 game / Nash equilibrium explorer (Game Theory)
+     ======================================================== */
+  register({ id: 'gt-nash-2x2', topic: 'game-theory', title: '2×2 games: best responses & Nash equilibria', blurb: 'Every 2-player, 2-strategy game fits in a 2×2 grid; each cell shows (row payoff, column payoff). A payoff is highlighted when it is a best response — the row player’s best reply to that column (sage), or the column player’s best reply to that row (violet). A cell where BOTH are best responses is a Nash equilibrium (gold). Cycle the classic games: the Prisoner’s Dilemma has one Nash equilibrium, Stag Hunt and Chicken have two, and Matching Pennies has none in pure strategies — proof that some games need randomization.' },
+  function (root) {
+    const W = 460, H = 320, cell = 116, gx = (W - 2 * cell) / 2 + 24, gy = 70;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const GAMES = [
+      { name: "Prisoner’s Dilemma", rl: ["Silent", "Confess"], cl: ["Silent", "Confess"], R: [[-1, -10], [0, -5]], C: [[-1, 0], [-10, -5]], note: "One Nash equilibrium (Confess, Confess) — worse for both than mutual silence." },
+      { name: "Stag Hunt", rl: ["Stag", "Hare"], cl: ["Stag", "Hare"], R: [[4, 0], [3, 3]], C: [[4, 3], [0, 3]], note: "Two Nash equilibria — coordinating on Stag is better, but Hare is the safe one." },
+      { name: "Chicken", rl: ["Swerve", "Straight"], cl: ["Swerve", "Straight"], R: [[0, -1], [1, -10]], C: [[0, 1], [-1, -10]], note: "Two Nash equilibria, both off-diagonal: one swerves, the other goes straight." },
+      { name: "Matching Pennies", rl: ["Heads", "Tails"], cl: ["Heads", "Tails"], R: [[1, -1], [-1, 1]], C: [[-1, 1], [1, -1]], note: "Zero-sum, NO pure Nash equilibrium — the only equilibrium is mixing 50/50." }
+    ];
+    let gi = 0;
+    function draw() {
+      const p = P(), G = GAMES[gi]; ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.font = '12px ' + (cssVar('--font-mono') || 'monospace'); ctx.textBaseline = 'middle';
+      // column headers
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center';
+      ctx.fillText('Column player', gx + cell, gy - 30);
+      for (let cc = 0; cc < 2; cc++) ctx.fillText(G.cl[cc], gx + cc * cell + cell / 2, gy - 12);
+      // row header (rotated label)
+      ctx.save(); ctx.translate(gx - 34, gy + cell); ctx.rotate(-Math.PI / 2); ctx.fillText('Row player', 0, 0); ctx.restore();
+      for (let r = 0; r < 2; r++) { ctx.textAlign = 'right'; ctx.fillText(G.rl[r], gx - 8, gy + r * cell + cell / 2); }
+      for (let r = 0; r < 2; r++) for (let cc = 0; cc < 2; cc++) {
+        const x = gx + cc * cell, y = gy + r * cell;
+        const rowBest = G.R[r][cc] >= G.R[1 - r][cc], colBest = G.C[r][cc] >= G.C[r][1 - cc], nash = rowBest && colBest;
+        ctx.fillStyle = nash ? 'rgba(224,164,88,0.16)' : p.panel; ctx.fillRect(x, y, cell - 4, cell - 4);
+        ctx.strokeStyle = nash ? p.gold : p.line; ctx.lineWidth = nash ? 2.5 : 1; ctx.strokeRect(x, y, cell - 4, cell - 4);
+        ctx.textAlign = 'center'; ctx.font = 'bold 15px ' + (cssVar('--font-mono') || 'monospace');
+        ctx.fillStyle = rowBest ? p.sage : p.soft; ctx.fillText(G.R[r][cc], x + (cell - 4) / 2 - 16, y + (cell - 4) / 2);
+        ctx.fillStyle = p.mute; ctx.fillText(',', x + (cell - 4) / 2, y + (cell - 4) / 2);
+        ctx.fillStyle = colBest ? p.violet : p.soft; ctx.fillText(G.C[r][cc], x + (cell - 4) / 2 + 16, y + (cell - 4) / 2);
+        if (nash) { ctx.fillStyle = p.gold; ctx.font = '9px ' + (cssVar('--font-mono') || 'monospace'); ctx.fillText('NASH', x + (cell - 4) / 2, y + cell - 18); }
+      }
+      let count = 0; for (let r = 0; r < 2; r++) for (let cc = 0; cc < 2; cc++) if (G.R[r][cc] >= G.R[1 - r][cc] && G.C[r][cc] >= G.C[r][1 - cc]) count++;
+      info.innerHTML = '<b>' + G.name + '</b> · <span style="color:' + p.sage + '">sage</span> = row’s best reply, <span style="color:' + p.violet + '">violet</span> = column’s best reply, <span style="color:' + p.gold + '">gold</span> = Nash (both). ' +
+        '<b>' + (count || 'No') + '</b> pure Nash equilibri' + (count === 1 ? 'um' : 'a') + '. ' + G.note;
+    }
+    button(ctl, 'Next game →', () => { gi = (gi + 1) % GAMES.length; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'A 2x2 game payoff grid showing best responses and Nash equilibria. Each cell shows the row and column players’ payoffs; a payoff is highlighted when it is that player’s best response, and a cell where both are best responses is a Nash equilibrium outlined in gold. A button cycles classic games: Prisoner’s Dilemma (one equilibrium), Stag Hunt and Chicken (two each), and Matching Pennies (no pure equilibrium).');
+    draw();
+  });
+
 })();

@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 808 — Game Theory build-out: 2×2 Nash-equilibrium explorer viz (visualizations)
+Building out the new 11th topic (no owner steer to remove it). Added the **140th widget, `gt-nash-2x2`** — the foundational game-theory viz: a 2×2 payoff grid that highlights best responses (row's in sage, column's in violet)
+and outlines Nash-equilibrium cells in gold. A "Next game" button cycles four classics, making the differences vivid: **Prisoner's Dilemma** (1 Nash), **Stag Hunt** & **Chicken** (2 each), **Matching Pennies** (0 pure — needs
+mixed strategies). Embedded in `gt-foundations` §5 (Nash equilibrium), directly illustrating dominance + best-response + equilibrium from the lesson. Deterministic.
+Verified: Nash logic re-derived in Node (PD→1, Stag Hunt→2, Chicken→2, Matching Pennies→0); gate ALL GREEN (now **140 widgets**); **headless** — all four games cycle with correct Nash readouts, kErr=0, errs=0; screenshot shows the labeled grid. SW cache `atlas-v741` → `atlas-v742`.
+
 ## iter 807 — NEW TOPIC (11th): Game Theory (new topic / content)
 The bold pre-blessed move (directive #4, additive/reversible). After exhausting the genuine concept gaps within the 10 topics, launched the **11th topic — Game Theory** (icon ♟, color #6b8e8e): genuinely AI-relevant — GANs as a
 minimax game, multi-agent RL, adversarial robustness, mechanism design/auctions, and alignment as a principal–agent game. Green first phase = one complete, fully-integrated lesson, **`gt-foundations` "Games, Strategies, and
