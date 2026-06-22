@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 763 — Stationarity lesson MCQ top-up 8 → 16 (content / assessment)
+Brought `ts-stationarity` to the 16-MCQ standard. Added **8 new MCQs**: autocovariance-depends-on-lag, white noise, the ADF/unit-root test, transform order (log before differencing), differencing length (one fewer
+value), trend ⇒ non-stationary, un-differencing (cumulative sum), and why AR/MA/ARMA require stationarity. Balanced → **4/4/4/4**. Both Time Series lessons now at full parity.
+Verified: data parses + round-trips; gate ALL GREEN with **no parity warning**; **headless** quiz "Question 1 of 16", 4 choices, kErr=0, errs=0. SW cache `atlas-v696` → `atlas-v697`.
+
 ## iter 762 — NEW lesson: Stationarity & Differencing (Time Series #2) (content)
 Second Time Series lesson — `ts-stationarity` "Stationarity & Differencing", in Module 1: 8 sections (why methods need stability · what stationarity means · why non-stationarity breaks things/spurious regression ·
 differencing removes a trend · seasonal differencing · variance stabilization via log/Box–Cox · testing/ADF & unit roots · the "d" in ARIMA), a runnable **differencing code exercise** (linear trend → constant 2,2,2,2,2),

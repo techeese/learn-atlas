@@ -352,6 +352,94 @@
               ],
               "answer": 3,
               "explain": "Use the smallest d; extra differences hurt."
+            },
+            {
+              "q": "For a stationary series, the autocovariance between two points depends on:",
+              "choices": [
+                "Only the lag (the gap) between them, not the absolute time",
+                "The absolute time you look",
+                "The number of points",
+                "Nothing — it is always zero"
+              ],
+              "answer": 0,
+              "explain": "Stationary autocovariance is a function of lag k alone."
+            },
+            {
+              "q": "White noise is:",
+              "choices": [
+                "A strongly trending series",
+                "A stationary series with zero autocorrelation at every nonzero lag",
+                "A perfectly seasonal series",
+                "A non-stationary random walk"
+              ],
+              "answer": 1,
+              "explain": "White noise: constant mean/variance, no autocorrelation."
+            },
+            {
+              "q": "The Augmented Dickey–Fuller (ADF) test checks for:",
+              "choices": [
+                "The number of MCQ",
+                "Seasonality only",
+                "A unit root (the signature of a non-stationary, random-walk-like series)",
+                "The forecast horizon"
+              ],
+              "answer": 2,
+              "explain": "ADF tests the unit-root null."
+            },
+            {
+              "q": "A series with both a growing variance and an upward trend is made stationary by:",
+              "choices": [
+                "Doing nothing",
+                "Differencing first, then logging",
+                "Shuffling, then averaging",
+                "Taking a log first, then differencing"
+              ],
+              "answer": 3,
+              "explain": "Stabilize variance (log) before fixing the mean (difference)."
+            },
+            {
+              "q": "First-differencing a series of length $n$ produces:",
+              "choices": [
+                "One fewer value than the input",
+                "One more value than the input",
+                "Exactly $n$ values",
+                "A single value"
+              ],
+              "answer": 0,
+              "explain": "y_t - y_{t-1} is undefined at t=1, losing one point."
+            },
+            {
+              "q": "A series with a clear, persistent upward trend is:",
+              "choices": [
+                "Stationary, because it's smooth",
+                "Non-stationary, because its mean changes over time",
+                "White noise",
+                "Always seasonal"
+              ],
+              "answer": 1,
+              "explain": "A trend = non-constant mean = non-stationary."
+            },
+            {
+              "q": "After forecasting the differenced (stationary) series, to return to the original scale you:",
+              "choices": [
+                "Multiply by the variance",
+                "Take another difference",
+                "Cumulatively sum (un-difference) the forecasts",
+                "Discard them"
+              ],
+              "answer": 2,
+              "explain": "Integrate back: the I in ARIMA."
+            },
+            {
+              "q": "Classical AR/MA/ARMA models require stationarity because:",
+              "choices": [
+                "They forbid any noise",
+                "They need exactly 100 data points",
+                "They cannot use addition",
+                "They assume the series' statistical relationships stay constant over time"
+              ],
+              "answer": 3,
+              "explain": "Fixed coefficients only make sense if the process is time-invariant."
             }
           ],
           "flashcards": [
