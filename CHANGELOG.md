@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 849 — NEW code exercise: a second-price (Vickrey) auction (examples / hands-on)
+Completed the iter-848 mechanism-design deep-dive with a runnable demo (gt-foundations' 2nd code exercise), placed right after it. Three sealed bids [50, 80, 65]: the top bid wins but pays the runner-up's bid, and surplus is value − price →
+**winner: bidder 1, pays 65, surplus 15**. Makes the second-price rule concrete — the learner can change bids and watch that overbidding/underbidding never helps (truthfulness is dominant).
+Verified: code re-derived in Node (=surplus 15); injected via encoded raw-replace (push-wrapper, no leakage), `<`/`>`→entities escaped (decode confirmed, no literals); **gate ALL GREEN — code-exercises verified (now 156)**; **headless** — Run executes, output exactly right, kErr=0, errs=0. SW cache `atlas-v782` → `atlas-v783`.
+
 ## iter 848 — Deepen Game Theory: mechanism design & the second-price auction (content)
 Expanded the thinnest topic into a major applied branch it was missing. Added a deep-dive to `gt-foundations` (its 4th): in a **first-price** auction you shade your bid below your value $v$; in a **Vickrey (second-price)** auction —
 highest bidder wins but pays the *second* bid — bidding your true value becomes a **dominant strategy**, the exact concept the lesson opens with. That's **mechanism design**: engineer the rules so self-interest reveals the truth and the item
