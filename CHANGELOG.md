@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 792 — NEW code exercise: watch the Law of Large Numbers converge (examples / hands-on)
+Continued the hands-on vein from iter 791 (best-value lane repeat): added a runnable exercise to `ps-law-of-large-numbers`, which had a viz but no code. The learner computes the sample mean of fair-die rolls after 4
+vs 16 draws — the few-roll average lands far off (**1.50**) while the many-roll average sits right on the true mean (**3.50**), making "averages converge to the expectation" something you execute, not just read. Placed in
+section 6 "Monte Carlo: turning the LLN into a tool". Deterministic (fixed roll sequence).
+Verified: data parses + round-trips; `<` escaped to `&lt;`; **gate ALL GREEN, stable across 9 runs** (the one-off "FAIL (3)" earlier was a stdout/stderr interleaving artifact from the gate's child-process code runner during a piped read — not a real failure; 141 code-exercises now verified); **headless** — Run executes, output shows "N=4: 1.50, N=16: 3.50", kErr=0, rawDollar=0, errs=0. SW cache `atlas-v725` → `atlas-v726`.
+
 ## iter 791 — NEW code exercise: count the work behind Big-O (examples / hands-on)
 Rotated to a fresh topic (algorithms) and a fresh lane. Confirmed the algorithms topic is content-complete (23 lessons, every concept has a dedicated lesson), then audited code-exercise coverage (138/185 lessons have one)
 and added a runnable exercise to the **first** algorithms lesson, `a-asymptotic-analysis`, which had none. The learner hand-runs a nested loop whose inner counter starts at `i`, counts the iterations (the triangular number
