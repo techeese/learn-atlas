@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 843 — Wire bisection ↔ binary search across topics (understandability)
+Confirmed condition number is already deeply covered (κ=λmax/λmin + two GD deep-dives), then made the iter-842 bridge explicit with a **bidirectional cross-link**: `c-continuity` (calculus, bisection/IVT) ↔ `a-binary-search`
+(algorithms). Bisection *is* binary search run on a continuous function instead of a sorted array — the same halving, one continuous and one discrete. Strengthens the cross-topic web a learner navigates by.
+Verified: calc edited via byte-stable JSON re-serialize, algo via encoded raw replace (no control chars — per the push-wrapper memory); gate ALL GREEN (internal-links lint confirms both); **headless** — both directions resolve (c-continuity → "binary search", a-binary-search → "bisection"), errs=0. SW cache `atlas-v776` → `atlas-v777`.
+
 ## iter 842 — NEW code exercise: bisection root-finding (IVT in action) (examples / hands-on)
 Added a runnable exercise to `c-continuity` (calculus), which had none, in its "prove a root exists, then trap it" section. The IVT only *promises* a root; bisection finds it — since $f(x)=x^2-2$ is negative at 1 and positive at 2,
 repeatedly halving the bracket converges to **root ~ 1.4142** ($\sqrt 2$). Turns the existence theorem into a constructive algorithm and bridges calculus → the binary-search idea in algorithms.
