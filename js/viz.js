@@ -7408,4 +7408,44 @@
     draw();
   });
 
+
+  /* ========================================================
+     138. Fourier synthesis: a square wave from sine harmonics (signal processing)
+     ======================================================== */
+  register({ id: 'dl-fourier-synthesis', topic: 'deep-learning', title: 'Fourier synthesis: building a square wave from sines', blurb: 'The headline of Fourier analysis: ANY periodic signal is a sum of pure sine waves. Here the flat-topped square wave is rebuilt from odd harmonics — sin(x) + ⅓sin(3x) + ⅕sin(5x) + … Slide the number of harmonics: one sine is a crude bump, but each one you add sharpens the corners and flattens the top, closing in on the square. The stubborn overshoot at the jumps that never quite goes away is the famous Gibbs phenomenon. This decomposition into frequencies is exactly what makes the convolution theorem (and signal processing) work.' },
+  function (root) {
+    const W = 540, H = 300, padL = 14, padR = 14, padT = 16, padB = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let N = 4;   // number of odd harmonics
+    function partial(x) { let s = 0; for (let i = 0; i < N; i++) { const k = 2 * i + 1; s += Math.sin(k * x) / k; } return (4 / Math.PI) * s; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const plotW = W - padL - padR, plotH = H - padT - padB, mid = padT + plotH / 2;
+      const yScale = plotH / 2 / 1.35;   // leave headroom for the Gibbs overshoot (~1.18)
+      const X = t => padL + (t / (2 * Math.PI)) * plotW;   // t in [0, 2pi]
+      const Y = v => mid - v * yScale;
+      // zero axis
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, mid); ctx.lineTo(W - padR, mid); ctx.stroke();
+      // target square wave (faint dashed)
+      ctx.strokeStyle = p.mute; ctx.globalAlpha = 0.6; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.4; ctx.beginPath();
+      const sq = t => (Math.sin(t) >= 0 ? 1 : -1);
+      let prev = null;
+      for (let px = 0; px <= plotW; px++) { const t = (px / plotW) * 2 * Math.PI, v = sq(t); const x = padL + px, y = Y(v); if (prev !== null && prev !== v) { ctx.lineTo(x, Y(prev)); } prev === null ? ctx.moveTo(x, y) : ctx.lineTo(x, y); prev = v; }
+      ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+      // partial sum (bold gold)
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.4; ctx.beginPath();
+      for (let px = 0; px <= plotW; px++) { const t = (px / plotW) * 2 * Math.PI, x = padL + px, y = Y(partial(t)); px === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); }
+      ctx.stroke();
+      const orders = []; for (let i = 0; i < Math.min(N, 4); i++) orders.push((i === 0 ? '' : (i === 1 ? '⅓' : i === 2 ? '⅕' : '⅐')) + 'sin(' + (2 * i + 1) + 'x)');
+      info.innerHTML = '<b>' + N + '</b> harmonic' + (N > 1 ? 's' : '') + ': <span style="color:' + p.gold + '">' + orders.join(' + ') + (N > 4 ? ' + …' : '') + '</span>. ' +
+        (N === 1 ? 'One sine — a smooth bump, nothing like a square yet.' : N < 6 ? 'The corners are sharpening and the top is flattening.' : 'Close to square — note the persistent <em>Gibbs</em> overshoot spikes at each jump.');
+    }
+    slider(ctl, { label: 'number of harmonics', min: 1, max: 15, step: 1, value: N, fmt: v => String(v), onInput: v => { N = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Fourier synthesis: a dashed target square wave with a bold partial sum of odd sine harmonics (sin x + one-third sin 3x + one-fifth sin 5x and so on). A slider sets the number of harmonics from 1 to 15; with one harmonic the sum is a smooth bump, and as harmonics are added the sum sharpens toward the square wave, leaving a persistent overshoot at the jumps known as the Gibbs phenomenon.');
+    draw();
+  });
+
 })();

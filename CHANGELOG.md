@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 801 — NEW viz: Fourier synthesis (a square wave from sine harmonics) (visualizations)
+Gave the Fourier thread (convolution theorem 798, glossary 800) its visual — the **138th widget, `dl-fourier-synthesis`**: the classic demonstration that any periodic signal is a sum of pure sines. A flat-topped square wave is
+rebuilt from odd harmonics (sin x + ⅓sin 3x + ⅕sin 5x + …); a slider adds harmonics — one sine is a crude bump, more sharpen the corners and flatten the top toward the square, and the persistent edge spikes are the **Gibbs
+phenomenon**. Embedded *inside* the convolution-theorem deep-dive in `dl-convolution-operation`, right where it claims "every signal is a sum of sine waves." Deterministic.
+Verified: partial-sum convergence re-derived in Node (f(π/2): 1.273 → 0.974 with Gibbs ripple as harmonics grow); gate ALL GREEN (now **138 widgets**); **headless** — Lab + lesson hydrate (lesson now 2 canvases), the readout reads "One sine" at N=1 and flags "Gibbs" at N=12, kErr=0, errs=0; screenshot shows the partial sum tracking the dashed square. SW cache `atlas-v734` → `atlas-v735`.
+
 ## iter 800 — Milestone step-back: clean sweep + Fourier glossary terms (step-back / reference)
 **Iteration 800.** Step-back at ~10 iters. **Full 185-lesson regression sweep across all 10 topics**: errs=0, no KaTeX errors, bad=none, Knowledge Map **868 nodes** — zero regressions since iter 790 (the convolution-theorem
 deep-dive, four new code exercises spanning algorithms/probability/ML/calculus/linear-algebra, the Library search+filter UX, and the eval cross-links all clean).
