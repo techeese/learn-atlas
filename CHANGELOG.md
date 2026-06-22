@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 880 — Step-back: kErr-aware sweep (clean) + fix stale ROADMAP state line (step-back / docs)
+Step-back at ~10 iters. **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 870.
+**Ship:** the sweep surfaced stale docs — the ROADMAP current-state line read "**146** code exercises" (actual **164** — I'd been updating viz/glossary counts but not code) and described Game Theory as "1 lesson, build-out queued" (it's now 3 lessons + deep-dives on mechanism design, evolutionary GT/ESS, cooperative games/Shapley, and Bayesian games). Corrected both to reflect reality.
+Verified: actual counts re-derived in Node (164 code, 152 viz, 364 glossary, 188 lessons); gate ALL GREEN; full kErr-aware sweep clean. ROADMAP is not a served asset, so no SW bump needed (stays `atlas-v813`).
+
 ## iter 879 — Glossary: LLM-inference-systems terms (reference)
 Completed the iter-878 inference thread with **3 glossary terms** — **Memory-bound (vs compute-bound)**, **Arithmetic intensity**, and **Speculative decoding** (KV cache & quantization were already defined). Glossary **361 → 364** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v812` → `atlas-v813`.
