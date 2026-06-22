@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 836 — Glossary: data-processing-inequality terms (reference)
+Completed the iter-835 deep-dive's glossary integration. Added **Data processing inequality** ($I(X;Z)\le I(X;Y)$ along a Markov chain) and **Sufficient statistic** (retains all the data's information; achieves DPI equality), now
+in tooltips across the IT lessons. Glossary **332 → 334** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 334 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v769` → `atlas-v770`.
+
 ## iter 835 — Hard-concept: the data processing inequality (content)
 Filled a fundamental IT gap: the **data processing inequality** (Fano, info bottleneck, and sufficient statistics were covered, but the DPI underlying them wasn't). Added a deep-dive to `it-mutual-information`: for a Markov chain
 $X\to Y\to Z$, $I(X;Z)\le I(X;Y)$ — no processing of $Y$ can recover more information about $X$ than $Y$ already carries; information only *decreases* along a chain. So feature engineering can't *add* information, only repackage it;
