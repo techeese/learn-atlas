@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 976 — Code: forward-mode autodiff with dual numbers (examples)
+Made the iter-975 autodiff dive runnable — a code exercise in `c-chain-rule`: a **dual number** pairs each value with its derivative, and overloaded `mul`/`add` carry the chain rule automatically. Differentiates f(x)=x²+3x at x=2 → **f(2) = 10, f'(2) = 7** (matches exact 2x+3) with no symbolic math. Completes the thread (content 975 + code 976).
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 190)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v907` → `atlas-v908`.
+
 ## iter 975 — Hard-concept: forward vs reverse-mode autodiff (content)
 Rotated to calculus and crystallized the deepest "why" behind backprop. Autodiff was mentioned and forward/reverse named, but no dive explained the tradeoff. Added one to `c-chain-rule` (its 4th): **forward mode** cost scales with #inputs (derivative of all outputs w.r.t. one input per sweep); **reverse mode** cost scales with #outputs (derivative of one output w.r.t. all inputs).
 ML lives at the extreme — one scalar loss, millions of params — so reverse mode (backprop, cross-linked) gets *every* gradient in one backward pass; forward mode would need one sweep per parameter. That asymmetry is why every DL framework uses reverse-mode autodiff.
