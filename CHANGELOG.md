@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1100 — Step-back (clean) + code: LASSO coordinate descent (step-back / examples)
+Milestone iteration. Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1090.
+**Ship:** varied the format to a code exercise (last code iter 1070) completing the iter-1096 coordinate-descent thread — runnable in `c-multivariable-optimization`: LASSO by coordinate descent on an orthogonal design, each update a soft-threshold of the least-squares value → **OLS [8,1,4] becomes LASSO(λ=2) [6,0,2]** (the weak coefficient snaps to exactly 0, the strong ones shrink by λ). Sparsity made concrete.
+**Self-caught:** kept the output separator a space (not `->`) to pass the no-`<`/`>` code guard.
+Verified: re-derived in Node; byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 196)**; full sweep clean; **headless** — Run executes, `[6,0,2]` shown, entities decoded, kErr=0, errs=0. SW cache `atlas-v1031` → `atlas-v1032`.
+
 ## iter 1099 — Glossary: tensor-decomposition terms (reference)
 Completed the iter-1098 thread with **3 glossary terms** — **CP decomposition (CANDECOMP/PARAFAC)**, **Tucker decomposition**, and **Outer product** (Tensor already present). Glossary **555 → 558** (0 holes).
 Verified: glossary parses with `\mathcal`/`\circ`/`\top` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 560 KaTeX, kErr=0, errs=0. SW cache `atlas-v1030` → `atlas-v1031`.
