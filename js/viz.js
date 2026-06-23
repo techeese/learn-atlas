@@ -8633,4 +8633,45 @@
     draw();
   });
 
+
+  /* ========================================================
+     165. Phase portrait of x' = Ax: the matrix exponential as a flow (linear algebra)
+     ======================================================== */
+  register({ id: 'la-phase-portrait', topic: 'linear-algebra', title: 'Phase portrait: the matrix exponential as flow', blurb: 'For a 2D linear system x′ = Ax the solution is x(t) = e^{At}x(0) — and with eigenvalues α ± βi each trajectory is a logarithmic spiral: radius scales as e^{αt}, angle advances by βt. Drag α (the real part) through zero and watch stability flip: α < 0 spirals every path into the origin (stable), α = 0 gives closed orbits (a center), α > 0 spirals them outward (unstable). β just sets how fast they rotate. The eigenvalues’ real part literally is the fate of the system.' },
+  function (root) {
+    const W = 360, H = 360, pad = 10;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let alpha = -0.4, beta = 1.4;
+    const cx = W / 2, cy = H / 2, R = (Math.min(W, H) / 2) - pad, scale = R / 1.05;
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(cx, pad); ctx.lineTo(cx, H - pad); ctx.moveTo(pad, cy); ctx.lineTo(W - pad, cy); ctx.stroke();
+      const T = 18, dt = 0.06, r0 = 0.82;
+      for (let k = 0; k < 8; k++) {
+        const th0 = k / 8 * 2 * Math.PI;
+        ctx.strokeStyle = 'rgba(160,140,210,0.7)'; ctx.beginPath(); let started = false;
+        for (let t = 0; t <= T; t += dt) {
+          const rr = Math.exp(alpha * t) * r0; if (rr > 1.05 || rr < 0.004) break;
+          const ang = th0 + beta * t, x = rr * Math.cos(ang), y = rr * Math.sin(ang);
+          const px = cx + x * scale, py = cy - y * scale;
+          if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+        // start dot
+        ctx.fillStyle = p.gold; ctx.beginPath(); ctx.arc(cx + r0 * Math.cos(th0) * scale, cy - r0 * Math.sin(th0) * scale, 2.5, 0, 2 * Math.PI); ctx.fill();
+      }
+      // origin
+      ctx.fillStyle = p.sage; ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, 2 * Math.PI); ctx.fill();
+      const kind = Math.abs(alpha) < 0.02 ? 'a <b>center</b> — closed orbits (marginally stable)' : (alpha < 0 ? '<b style="color:' + p.sage + '">stable</b> — every path spirals into the origin' : '<b style="color:' + p.gold + '">unstable</b> — paths spiral outward');
+      info.innerHTML = 'eigenvalues = <b>' + alpha.toFixed(2) + ' ± ' + beta.toFixed(2) + 'i</b>. Real part ' + (alpha < 0 ? '&lt; 0' : alpha > 0 ? '&gt; 0' : '= 0') + ' → ' + kind + '. Radius grows as e<sup>αt</sup>; β sets the spin.';
+    }
+    slider(ctl, { label: 'α (real part)', min: -0.8, max: 0.8, step: 0.05, value: alpha, fmt: v => v.toFixed(2), onInput: v => { alpha = v; draw(); } });
+    slider(controls(root), { label: 'β (rotation)', min: 0.2, max: 3, step: 0.1, value: beta, fmt: v => v.toFixed(1), onInput: v => { beta = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Phase portrait of a two-dimensional linear system x prime equals A x with eigenvalues alpha plus or minus beta i. Eight trajectories spiral from gold start dots. When alpha is negative they spiral inward to the origin (stable); at alpha zero they form closed loops (a center); when alpha is positive they spiral outward (unstable). The alpha slider is the real part controlling stability, beta the rotation rate.');
+    draw();
+  });
+
 })();

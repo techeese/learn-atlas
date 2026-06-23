@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 973 — NEW viz: phase portrait of x′=Ax (visualizations)
+Gave the iter-972 matrix-exponential dive its visual — the **165th widget, `la-phase-portrait`** in `la-diagonalization`: a 2D linear system with eigenvalues α±βi, drawn via the exact $x(t)=e^{At}x_0$ (a log-spiral, radius $e^{\alpha t}$, angle $\beta t$). Drag α through zero and stability flips live: **α<0 spirals in (stable), α=0 closed orbits (center), α>0 spirals out (unstable)**; β sets the spin. The eigenvalue's real part *is* the system's fate.
+Verified: trajectory radius re-derived in Node (e^{αt}); gate ALL GREEN (now **165 widgets**); **headless** — lab mounts, 2 sliders, stable/center/unstable labels flip correctly with α, kErr=0, errs=0; screenshot shows 8 spirals winding into the origin. SW cache `atlas-v904` → `atlas-v905`.
+
 ## iter 972 — Hard-concept: the matrix exponential (content)
 Rotated the compass to linear algebra and caught a teach-gap: the matrix exponential was name-dropped via its formula in `la-diagonalization` but never *taught* (the lesson didn't even mention ODEs). Added a deep-dive (its 4th): $e^{At}=I+At+\frac{(At)^2}{2!}+\cdots = P\,e^{Dt}\,P^{-1}$ — and why it matters: it solves $\dot{x}=Ax$ as $x(t)=e^{At}x(0)$,
 with eigenvalues running stability (decays iff all have negative real part; complex → oscillation). The continuous-time sibling of $A^n$; the engine of continuous-time Markov chains and neural ODEs.
