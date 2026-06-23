@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1023 — Hard-concept: energy-based models (content)
+Rotated to deep learning and filled a genuine gap (GNNs, contrastive, flows already have homes; neural ODEs also surfaced). Added a deep-dive to `dl-diffusion-models` (its 5th): an **energy-based model** sets $p_\theta(x)=e^{-E_\theta(x)}/Z_\theta$ — the **Gibbs** form (cross-linked to entropy/max-entropy) with total architectural freedom. The intractable **partition function** $Z$ is dodged by **contrastive divergence** (down on data, up on samples) or **score matching** ($\nabla_x\log p=-\nabla_x E$, no $Z$) — the latter being exactly what diffusion models do.
+**Self-caught:** first draft self-linked "diffusion model" within its own lesson → switched to plain text, keeping the it-entropy cross-link.
+Verified: g()-guarded (proseInMath on the density/score math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, EBM/partition-function/contrastive-divergence/score-matching + cross-link, 65 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v954` → `atlas-v955`.
+
 ## iter 1022 — Glossary: hierarchical-RL terms (reference)
 Completed the iter-1021 thread with **2 glossary terms** — **Hierarchical reinforcement learning** and **Option (reinforcement learning)**. Glossary **466 → 468** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v953` → `atlas-v954`.
