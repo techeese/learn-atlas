@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1009 — Hard-concept: anomaly detection (content)
+Rotated to machine learning and filled a genuine gap: anomaly/outlier detection was absent. Added a deep-dive to `ml-ensembles` (its 4th): model "normal," score the misfit — **Isolation Forest** (short isolation path = outlier), **density-based** (low-likelihood under a GMM/KDE; LOF), **one-class SVM** (tight boundary), and **autoencoder reconstruction error** in high dimensions. Cross-linked to GMM and autoencoders; covers the imbalance / no-labels / threshold challenges.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, anomaly/Isolation-Forest/one-class-SVM/reconstruction + both cross-links, entities decoded, kErr=0, errs=0. SW cache `atlas-v940` → `atlas-v941`.
+
 ## iter 1008 — NEW viz: SGD noise ball — constant vs decaying step (visualizations)
 Gave the iter-1002 Robbins-Monro dive its visual — the **168th widget, `c-sgd-noise-ball`** in `c-gradient-descent-convergence`: SGD on a noisy quadratic, distance-to-optimum on a log axis. The **constant** step plunges then rattles forever on a noise floor ≈ its step size; the **decaying** step (0.9/t) keeps descending below it. The Σaₜ²<∞ condition made visible. Slider raises/lowers the constant plateau; reseed button.
 Verified: dynamics re-derived in Node; gate ALL GREEN (now **168 widgets**); **headless** — lab mounts, constant-final tracks the step size (0.193 at a=0.25, 0.036 at a=0.02) and always sits above the decaying run (0.016), kErr=0, errs=0; screenshot shows the gold noise floor vs the sage descent. SW cache `atlas-v939` → `atlas-v940`.
