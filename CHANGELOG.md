@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 985 — Glossary: Bloom filter & probabilistic data structures (reference)
+Completed the iter-983/984 Bloom thread with **2 glossary terms** — **Bloom filter** and **Probabilistic data structure** (the umbrella: Bloom, HyperLogLog, Count-Min sketch, MinHash/LSH). Glossary **429 → 431** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v916` → `atlas-v917`.
+
 ## iter 984 — Code: a Bloom filter in a handful of lines (examples)
 Made the iter-983 Bloom dive runnable — a code exercise in `a-hash-tables`: a 32-bit array + 3 hashes, `add` flips bits, `has` checks them. Inserts {cat,dog,fish} then queries → **cat? true, dog? true, bird? false** — members never miss, the absent key caught by a still-0 bit. Completes the thread (content 983 + code 984).
 **Self-caught:** first draft used a `for (i<s.length)` loop — the `<` tripped my no-`<`-in-code guard; rewrote with `.split("").forEach`.
