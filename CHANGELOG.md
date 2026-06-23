@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 918 — Code-parity backlog: Newton's method for optimization (examples / content-parity)
+Back to the code backlog (fresh topic — calculus). Added a code exercise to `c-optimization` (had none), in its "set the derivative to zero" section: **Newton's method** minimizing $f(x)=e^x-2x$ by solving $f'(x)=0$ with the
+second derivative → **min at x = 0.6931 (ln 2 = 0.6931)** — quadratic convergence to the true minimum. Backlog now 21 lessons.
+Verified: re-derived in Node; byte-stable JSON inject with `<`→`&lt;` HTML-escaping (the comment uses `x <- x`); **gate ALL GREEN — code-exercises verified (now 172)**; **headless** — Run executes, output exactly right, entities decoded (no literal `&lt;`), kErr=0, errs=0. SW cache `atlas-v849` → `atlas-v850`.
+
 ## iter 917 — Hard-concept: Kolmogorov complexity (content)
 Varied off the code backlog (3 iters) to fill a genuine foundational IT gap. Added a deep-dive to `it-source-coding` (its 5th): **Kolmogorov complexity** $K(x)$ — the length of the shortest program that prints $x$ — the
 information in a *single* object, complementing Shannon's average view. Structure = compressibility, so *random means incompressible* ($K\approx$ length); averaged over a source $E[K(x)]\approx H$; it grounds Occam's razor / MDL; and it's **uncomputable** — the ideal yardstick real compressors (gzip, LLMs) only approximate.
