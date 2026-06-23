@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 896 — NEW code exercise: the Viterbi algorithm (examples / hands-on)
+Capped the HMM thread (894 deep-dive, 895 glossary) with a runnable **Viterbi** decoder, placed *inside* the HMM deep-dive in `ml-naive-bayes` so it sits with the concept. On a tiny health HMM (hidden Healthy/Fever, observing
+normal/cold/dizzy), Viterbi's DP recovers the most likely hidden path → **Most likely path: Healthy then Healthy then Fever**. The deep-dive's "Viterbi = DP with max" is now something you run.
+**Note:** first code exercise nested in a `<details>` — confirmed it renders, runs, and the gate counts it. HTML-escaped (`>`→`&gt;`) per the code-block convention; output separator " then " avoids `>`.
+Verified: re-derived in Node; byte-stable inject; **gate ALL GREEN — code-exercises verified (now 167)**; **headless** — deep-dive expands, Run executes, output exactly right, entities decoded (no literal `&gt;`), kErr=0, errs=0. SW cache `atlas-v827` → `atlas-v828`.
+
 ## iter 895 — Glossary: HMM terms (reference)
 Completed the iter-894 thread with **3 glossary terms** — **Hidden Markov Model (HMM)**, **Viterbi algorithm**, and **Baum–Welch algorithm**. Glossary **370 → 373** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v826` → `atlas-v827`.
