@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 899 — Glossary: differentiable-discrete-sampling terms (reference)
+Completed the iter-897/898 thread with **2 glossary terms** — **Gumbel-softmax (concrete distribution)** and **Straight-through estimator**. Glossary **373 → 375** (0 holes).
+Verified: glossary parses with `\tau` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 349 KaTeX, kErr=0, errs=0. SW cache `atlas-v830` → `atlas-v831`.
+
 ## iter 898 — NEW viz: Gumbel-softmax temperature dial (visualizations)
 Gave the iter-897 deep-dive its visual — the **155th widget, `dl-gumbel-softmax`** in `dl-autoencoders-vae`: 4-category bars of $y=\text{softmax}((\log\pi+g)/\tau)$ with a temperature slider and a "resample noise" button. Slide τ down →
 the bars **snap toward one-hot** (one weight ≈ 0.98); slide up → they **flatten toward uniform** (≈ 0.25 each). The note adapts (one-hot / soft stand-in / heavily-smoothed). The abstract "temperature interpolates discrete↔continuous" is now a dial you turn.
