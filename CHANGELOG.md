@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1011 — Hard-concept: attention sinks (content)
+Rotated to LLMs and filled a genuine gap (induction heads, prompt injection, RLAIF all already taught first). Added a deep-dive to `l-inference-efficiency` (its 4th): softmax attention must sum to 1, so models dump excess attention onto the first token — an **attention sink**. Why it matters for streaming: naive KV-cache eviction drops the sinks and collapses quality; **StreamingLLM** keeps the first few sink tokens + a recent window for stable infinite-length context. Notes the "off-by-one"/$+1$-softmax fix (cross-linked to self-attention/KV cache).
+Verified: g()-guarded (proseInMath on the +1 math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, attention-sink/StreamingLLM/sum-to-1/off-by-one + cross-link, 118 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v942` → `atlas-v943`.
+
 ## iter 1010 — Step-back (clean) + glossary: anomaly-detection terms (step-back / reference)
 Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1000.
 **Ship:** completed the iter-1009 thread with **2 glossary terms** — **Anomaly detection** and **Isolation Forest**. Glossary **453 → 455** (0 holes).
