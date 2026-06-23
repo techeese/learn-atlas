@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1089 — Hard-concept: error-correcting codes (content)
+Rotated to information theory and filled a gap (ECC was only name-dropped, no dive; Rényi entropy also surfaced). Added a deep-dive to `it-channel-capacity` (its 4th): **error-correcting codes** — the constructive side of the channel theorem. Rate $R=k/n$, minimum distance $d$ → detect $d-1$, correct $\lfloor(d-1)/2\rfloor$ (decode to nearest codeword); parity ($d{=}2$), Hamming(7,4) ($d{=}3$), Reed-Solomon (bursts), LDPC/turbo (capacity-approaching, belief-propagation). The exact complement of **source coding** (cross-linked): compression removes redundancy to the entropy floor, channel coding adds it to the capacity ceiling.
+Verified: g()-guarded (proseInMath on the rate/distance math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, ECC/Hamming/Reed-Solomon/LDPC + cross-link, 62 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1020` → `atlas-v1021`.
+
 ## iter 1088 — Glossary: wavelet & time-frequency terms (reference)
 Completed the iter-1087 thread with **3 glossary terms** — **Wavelet transform**, **Multi-resolution analysis**, and **Short-time Fourier transform (STFT)**. Glossary **541 → 544** (0 holes).
 Verified: glossary parses with `\psi` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 550 KaTeX, kErr=0, errs=0. SW cache `atlas-v1019` → `atlas-v1020`.
