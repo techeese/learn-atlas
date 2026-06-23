@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1071 — Hard-concept: consistent hashing (content)
+Rotated to algorithms and filled a genuine gap (max-flow, bipartite matching, rolling hash all already present). Added a deep-dive to `a-hash-tables` (its 5th): **consistent hashing** — hashing $\bmod N$ remaps almost every key when $N$ changes; instead hash keys *and* servers onto a ring ($[0,2^{32})$), so a membership change moves only ~$K/N$ keys. **Virtual nodes** even out arc sizes and scatter a failed node's load. The backbone of Dynamo/Cassandra/memcached/CDN routing; cross-linked to randomized hashing.
+Verified: g()-guarded (proseInMath, bmod-aware); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, consistent-hashing/virtual-nodes/ring/Cassandra + cross-link, 232 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1002` → `atlas-v1003`.
+
 ## iter 1070 — Step-back (clean) + code: Kelly growth rate (step-back / examples)
 Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1060.
 **Ship:** varied the format to a code exercise (last code iter 1051) completing the iter-1069 Kelly thread — runnable in `it-mutual-information`: `growth(f)=p·log(1+f)+(1−p)·log(1−f)` for three stakes → **f=0.20 (Kelly) : 0.0201 highest; f=0.40 : −0.0024 (over-betting into negative growth)**. Makes "bet Kelly, not more" concrete.
