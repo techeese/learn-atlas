@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 952 — Wire Granger causality → interventional causal tools: TS → stats (understandability)
+Threaded the iter-951 Granger dive into the causal-inference module: its closing line ("far below the interventional tools — RCTs, instruments, regression discontinuity") now links **regression discontinuity** to `ps-causal-estimation`. Makes the
+causal-ladder framing navigable — a learner can jump from the weakest (predictive) notion of causality straight to the interventional machinery that licenses real "what if" claims.
+Verified: push-wrapper function-replacer + enc (no control chars); gate ALL GREEN (internal-links lint); **headless** — link renders as "regression discontinuity", kErr=0, errs=0. SW cache `atlas-v883` → `atlas-v884`.
+
 ## iter 951 — Hard-concept: Granger causality (content)
 Rotated to a fresh topic (time series) and filled a genuine gap. Added a deep-dive to `ts-arima` (its 5th): **Granger causality** — X Granger-causes Y if X's past improves the forecast of Y beyond Y's own past (tested via a
 vector-autoregression). The crucial caveat: it's **predictive, not interventional** — a common cause or leading indicator gives Granger causality with no real causation (a rooster's crow "Granger-causes" sunrise). Framed as the weakest, data-only rung of the causal ladder, below RCTs/IV/RD.
