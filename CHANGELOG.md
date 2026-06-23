@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 991 — Hard-concept: the delta method (content)
+Rotated to statistics and filled a genuine gap (confirmed Mamba/MoE/beam-search etc. all covered first). Added a deep-dive to `ps-point-estimation` (its 5th): the **delta method** — the variance/asymptotic normality of a transformed estimator via one-term Taylor expansion, $\operatorname{Var}(g(\hat\theta))\approx[g'(\theta)]^2\operatorname{Var}(\hat\theta)$ (and $\sqrt{n}(g(\hat\theta)-g(\theta))\to\mathcal{N}(0,[g']^2\sigma^2)$).
+Framed as **local linearization** (cross-linked to calculus): a linear map scales variance by the slope squared; multivariate $\nabla g^\top\Sigma\nabla g$; falls back to the bootstrap when $g$ curves sharply.
+Verified: g()-guarded (proseInMath on the Taylor/variance math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, delta-method/slope-squared/asymptotically-normal/bootstrap + cross-link, 90 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v922` → `atlas-v923`.
+
 ## iter 990 — Step-back (clean) + NEW viz: the periodogram (step-back / visualizations)
 Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE** (confirms the 979/980 literal-`\n` bugfix holds site-wide), mapNodes=883 — zero regressions since iter 970.
 **Ship:** completed the spectral thread (988 content + 989 glossary + **990 viz**) — the **167th widget, `ts-periodogram`** in `ts-arima`: a noisy series (one sinusoid buried in noise) over its periodogram, which shows a single sharp peak at the hidden frequency. Drag the cycle count / reseed noise and the peak tracks the true frequency. Periodicity invisible in time, unmistakable in frequency.
