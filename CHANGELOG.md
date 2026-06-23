@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 936 — Glossary: distribution-distance terms (reference)
+Completed the iter-935 thread (and the JS/Wasserstein dive) with **4 glossary terms** — **Total variation distance**, **Pinsker's inequality**, **Wasserstein distance**, and **Jensen-Shannon divergence** (the last two taught but never defined). Glossary **393 → 397** (0 holes).
+Verified: glossary parses with `\sqrt`/`\mathrm` intact (JSON-form); gate ALL GREEN; **headless** — all 4 render on `#/glossary` (4/4), 362 KaTeX, kErr=0, errs=0. SW cache `atlas-v867` → `atlas-v868`.
+
 ## iter 935 — Hard-concept: total variation distance & Pinsker's inequality (content)
 Varied off the code backlog to fill a genuine IT gap. Added a deep-dive to `it-cross-entropy-kl` (its 4th, beside the JS/Wasserstein dive): **total variation distance** $\mathrm{TV}(p,q)=\tfrac12\sum_x|p(x)-q(x)|$ — the
 simplest, most operational distance (largest probability gap on any event) — and **Pinsker's inequality** $\mathrm{TV}\le\sqrt{\tfrac12\mathrm{KL}}$, the bridge that shows *why* minimizing KL works: small KL forces genuine indistinguishability. Completes the distance family (KL · JS · Wasserstein · TV).
