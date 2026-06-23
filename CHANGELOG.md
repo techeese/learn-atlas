@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 964 — NEW viz: the maximum-entropy die (visualizations)
+Gave the iter-963 max-entropy deep-dive its visual — the **163rd widget, `it-max-entropy`** in `it-entropy`: six bars showing the max-entropy distribution of a die given a target mean. Slide the mean — the bars take the **Boltzmann tilt** $p_i\propto e^{\lambda i}$
+(λ solved by bisection to hit the mean); at 3.5 the tilt vanishes → uniform, entropy maxed at log₂6=2.585; off-center the bars tilt exponentially and entropy falls (2.137 at mean 4.8). The principle made tangible.
+Verified: λ-solve + entropy re-derived in Node; gate ALL GREEN (now **163 widgets**); **headless** — lab mounts, entropy 2.585 at mean 3.5 vs 1.375 at 5.5 (maxed at center), kErr=0, errs=0; screenshot shows the exponential tilt vs the uniform reference. SW cache `atlas-v895` → `atlas-v896`.
+
 ## iter 963 — Audit (glossary↔lessons) + hard-concept: the maximum entropy principle (content-parity / content)
 Ran a **systematic audit**: which of the 417 glossary terms never appear in any lesson body? 37 flagged, but spot-checks showed all-but-one are hyphen/dash/apostrophe wording mismatches (Vickrey, Pinsker, Jensen-Shannon, propensity, Baum-Welch… all taught). The one genuine teach-gap: the **maximum entropy principle** was only name-dropped, no deep-dive.
 Filled it — added a deep-dive to `it-entropy` (its 4th): choose the highest-entropy distribution consistent with the constraints (least-committal). The payoff is *which* one falls out — range→uniform, mean→exponential, mean+variance→**Gaussian** (the exponential family); the reason those are "default" distributions, plus softmax/max-ent models and uninformative priors. Cross-linked to the normal.

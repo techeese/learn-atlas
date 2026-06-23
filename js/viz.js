@@ -8563,4 +8563,40 @@
     draw();
   });
 
+
+  /* ========================================================
+     163. The maximum-entropy die: constrain the mean, get the Boltzmann shape (information theory)
+     ======================================================== */
+  register({ id: 'it-max-entropy', topic: 'information-theory', title: 'The maximum-entropy die', blurb: 'You are told only the average roll of a six-sided die. Of all distributions with that mean, which should you assume? The maximum-entropy one — the least-committal. It always comes out exponentially tilted, pᵢ ∝ e^{λi} (the Boltzmann / exponential-family form), with λ set to hit the mean. Slide the target mean: at 3.5 the tilt vanishes and you get the uniform die (entropy maxed at log₂6); push the mean off-center and the bars tilt while total entropy falls.' },
+  function (root) {
+    const W = 480, H = 290, padL = 38, padR = 14, padT = 16, padB = 40;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let mean = 3.5;
+    function distMean(lam) { let num = 0, den = 0; for (let i = 1; i <= 6; i++) { const w = Math.exp(lam * i); num += i * w; den += w; } return num / den; }
+    function solve(m) { let lo = -4, hi = 4; for (let k = 0; k < 60; k++) { const mid = (lo + hi) / 2; if (distMean(mid) < m) lo = mid; else hi = mid; } return (lo + hi) / 2; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const lam = solve(mean); let den = 0; for (let i = 1; i <= 6; i++) den += Math.exp(lam * i);
+      const pr = []; for (let i = 1; i <= 6; i++) pr.push(Math.exp(lam * i) / den);
+      let H_ = 0; pr.forEach(q => { if (q > 0) H_ -= q * Math.log2(q); });
+      const yMax = 0.5, plotW = W - padL - padR, plotH = H - padT - padB, baseY = padT + plotH;
+      const Y = v => baseY - (v / yMax) * plotH;
+      ctx.strokeStyle = p.line; ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [0, 0.25, 0.5].forEach(v => { const yy = Y(v); ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR, yy); ctx.stroke(); ctx.fillText(v.toFixed(2), padL - 4, yy + 3); });
+      // uniform reference 1/6
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(padL, Y(1 / 6)); ctx.lineTo(W - padR, Y(1 / 6)); ctx.stroke(); ctx.setLineDash([]);
+      const gap = plotW / 6, bw = gap * 0.6;
+      pr.forEach((q, i) => { const x = padL + i * gap + (gap - bw) / 2; ctx.fillStyle = p.violet; ctx.fillRect(x, Y(q), bw, baseY - Y(q)); ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText(i + 1, x + bw / 2, baseY + 14); });
+      info.innerHTML = 'target mean = <b style="color:' + p.violet + '">' + mean.toFixed(1) + '</b> → tilt λ = <b>' + lam.toFixed(2) + '</b>. ' +
+        'Entropy = <b style="color:' + p.gold + '">' + H_.toFixed(3) + '</b> bits (max = log₂6 = 2.585). ' +
+        (Math.abs(mean - 3.5) < 0.05 ? 'Mean centered → no tilt → the uniform die, entropy maxed.' : 'Off-center mean tilts the bars exponentially and costs entropy.');
+    }
+    slider(ctl, { label: 'target mean', min: 1.5, max: 5.5, step: 0.1, value: mean, fmt: v => v.toFixed(1), onInput: v => { mean = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'The maximum-entropy die. Six bars give the probabilities of faces 1 to 6, against a dashed uniform reference at one-sixth. A slider sets the target mean; the bars take the maximum-entropy shape consistent with it, which is exponentially tilted (p proportional to e to the lambda i). At mean 3.5 the tilt is zero and the bars are uniform with entropy at its maximum log base 2 of 6; moving the mean off-center tilts the bars and lowers the entropy.');
+    draw();
+  });
+
 })();
