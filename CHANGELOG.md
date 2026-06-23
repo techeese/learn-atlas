@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 911 — Glossary: meta-learning terms (reference)
+Completed the iter-909/910 thread with **3 glossary terms** — **Meta-learning**, **MAML (Model-Agnostic Meta-Learning)**, and **Few-shot learning**. Glossary **381 → 384** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v842` → `atlas-v843`.
+
 ## iter 910 — Step-back (clean) + wire Stackelberg → meta-learning: GT → DL (step-back / understandability)
 Step-back **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 900 (validates the GARCH/Stackelberg/correlated-equilibrium/MAML injections of 901–909).
 **Ship:** completed the bilevel-optimization thread — the Stackelberg deep-dive's "parts of meta-learning" mention (906) now links to `dl-transfer-learning`, where MAML lives (909). The leader-follower (bilevel) idea is now a navigable arc: Stackelberg (GT) → meta-learning/MAML (DL) → in-context learning (LLM).
