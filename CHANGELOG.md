@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 968 — Glossary: fictitious play (reference)
+Completed the iter-967 thread with the **Fictitious play** glossary term. Glossary **419 → 420** (0 holes) — crossed 420.
+Verified: glossary parses; gate ALL GREEN; **headless** — renders on `#/glossary`, kErr=0, errs=0. SW cache `atlas-v899` → `atlas-v900`.
+
 ## iter 967 — NEW viz + concept: fictitious play converges to Nash (visualizations)
 Filled a flagged GT gap *as* a viz — the **164th widget, `gt-fictitious-play`** in `gt-mixed-zero-sum`, with a framing paragraph: each player best-responds to the opponent's empirical move frequencies (a pure learning rule, no equilibrium reasoning). In Rock-Paper-Scissors the play cycles, but
 the time-averaged frequencies converge onto the Nash ⅓/⅓/⅓ — slide the rounds and watch the bars flatten onto the dashed ⅓ line (spread 0.20 at 20 rounds → 0.03 at 2000). Learning finds equilibrium.
