@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 933 — Code-parity backlog: token-level F1 for QA (examples / content-parity)
+Backlog, fresh topic (LLM). Added a code exercise to `l-hallucination-and-evaluation` (had none), in its "Evaluating LLMs" section: **token-level F1** (SQuAD-style) giving partial credit for answer overlap →
+**token F1 = 0.91**. The workhorse metric for open-ended QA, now runnable beside the eval discussion. Backlog now 12 lessons.
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 181)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v864` → `atlas-v865`.
+
 ## iter 932 — NEW viz: reservoir sampling is uniform (visualizations)
 First new viz since 905 — gave the iter-923 reservoir-sampling deep-dive its visual: the **157th widget, `a-reservoir-sampling`** in `a-approximation-randomized`. Bars show how often each of 8 stream positions was the
 survivor across many simulated runs, against a dashed 1/n line. Slide the trial count: noisy at 50 trials, but the bars **flatten onto 1/n** by a few thousand — every position equally likely despite the lopsided-looking 1/i rule.
