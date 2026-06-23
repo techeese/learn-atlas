@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1013 — Hard-concept: martingales (content)
+Rotated to probability and filled a genuine gap (concentration inequalities already have a deep-dive). Added a deep-dive to `ps-conditional-expectation` (its 4th, since a martingale *is* a conditional-expectation property): $\mathbb{E}[X_{t+1}\mid\text{past}]=X_t$ — the math of a **fair game**. Covers the **optional stopping theorem** (no betting system beats a fair game, $\mathbb{E}[X_\tau]=X_0$) and the **martingale convergence theorem** (which underpins why SGD settles). Cross-linked to Brownian motion (a martingale).
+Verified: g()-guarded (proseInMath on the conditional-expectation math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, martingale/optional-stopping/fair-game/convergence + cross-link, 102 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v944` → `atlas-v945`.
+
 ## iter 1012 — Glossary: attention-sink & long-context terms (reference)
 Completed the iter-1011 thread with **2 glossary terms** — **Attention sink** and **Sliding-window attention** (the recent-window half of streaming long context). Glossary **455 → 457** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 428 KaTeX, kErr=0, errs=0. SW cache `atlas-v943` → `atlas-v944`.
