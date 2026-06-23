@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1026 — Glossary: neural-ODE terms (reference)
+Completed the iter-1025 thread with **2 glossary terms** — **Neural ODE** and **Adjoint method**. Glossary **471 → 473** (0 holes).
+Verified: glossary parses with `\frac` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 451 KaTeX, kErr=0, errs=0. SW cache `atlas-v957` → `atlas-v958`.
+
 ## iter 1025 — Hard-concept: neural ODEs (content)
 Filled the noted DL gap. Added a deep-dive to `dl-initialization-and-vanishing-gradients` (its 4th): a residual block $h_{t+1}=h_t+f(h_t,\theta)$ is one **Euler step** of $\frac{dh}{dt}=f$ — **neural ODEs** take the continuous limit (adaptive ODE-solver depth), train with the **adjoint method** (O(1) memory via a backward ODE), and the linear case is the **matrix exponential** $e^{At}$ (cross-linked). Enables irregular-time-series modeling and continuous normalizing flows.
 Verified: g()-guarded (proseInMath on the ODE math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, neural-ODE/adjoint/Euler/normalizing-flow + cross-link, 104 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v956` → `atlas-v957`.
