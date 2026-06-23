@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 951 — Hard-concept: Granger causality (content)
+Rotated to a fresh topic (time series) and filled a genuine gap. Added a deep-dive to `ts-arima` (its 5th): **Granger causality** — X Granger-causes Y if X's past improves the forecast of Y beyond Y's own past (tested via a
+vector-autoregression). The crucial caveat: it's **predictive, not interventional** — a common cause or leading indicator gives Granger causality with no real causation (a rooster's crow "Granger-causes" sunrise). Framed as the weakest, data-only rung of the causal ladder, below RCTs/IV/RD.
+Wrote LaTeX-free for push-wrapper safety; function-replacer + enc, entities for apostrophes.
+Verified: parse via `new Function` (no leakage, no control chars); gate ALL GREEN; **headless** — 5 deep-dives, Granger/predictive/interventional present, entities decoded, kErr=0, errs=0. SW cache `atlas-v882` → `atlas-v883`.
+
 ## iter 950 — Step-back (clean) + RD estimator code (step-back / examples)
 **Milestone iter 950.** Step-back **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 940 (validates the causal content 946/948, the 3 new viz 945/949, and the glossary batches).
 **Ship:** completed the RD thread (948 content + 949 viz + **950 code**) with a runnable estimator inside the RD deep-dive in `ps-causal-estimation`: fit a line each side, read the gap at the cutoff → **estimated effect (jump at cutoff) = 1.60**. Now 186 code-exercises.
