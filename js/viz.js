@@ -8754,4 +8754,44 @@
     draw();
   });
 
+
+  /* ========================================================
+     168. SGD noise ball: constant vs decaying learning rate (calculus)
+     ======================================================== */
+  register({ id: 'c-sgd-noise-ball', topic: 'calculus', title: 'SGD: constant vs decaying step size', blurb: 'Minimize f(x)=½x² with noisy gradients (each step sees the true gradient plus random noise — one minibatch’s worth). Two runs from the same start: a constant step size and a decaying one (aₜ = a₀/t). On the log-scale distance-to-optimum plot, the constant rate plunges then flattens onto a noise floor — it rattles forever inside a ball whose radius grows with the step size. The decaying rate keeps descending past it. That is the Robbins-Monro condition Σaₜ²<∞ made visible: only a shrinking step lets the noise average out.' },
+  function (root) {
+    const W = 500, H = 300, padL = 44, padR = 14, padT = 16, padB = 30;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let lr = 0.12, seed = 7;
+    const T = 500, noise = 1.4, LO = -3, HI = 0.6; // log10 range
+    function mk(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    function gauss(r) { return r() + r() + r() + r() - 2; }
+    function trajectory(decay) {
+      const r = mk(seed + (decay ? 999 : 0)); let x = 2.0; const out = [];
+      for (let t = 1; t <= T; t++) { const a = decay ? (0.9 / t) : lr; x = x - a * (x + noise * gauss(r)); out.push(Math.abs(x) + 1e-9); }
+      return out;
+    }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const plotW = W - padL - padR, plotH = H - padT - padB, baseY = padT + plotH;
+      const X = t => padL + t / T * plotW, Y = v => { const l = Math.log(Math.max(v, 1e-9)) / Math.LN10; return baseY - (l - LO) / (HI - LO) * plotH; };
+      ctx.strokeStyle = p.line; ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [-3, -2, -1, 0].forEach(e => { const yy = Y(Math.pow(10, e)); ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR, yy); ctx.stroke(); ctx.fillText('1e' + e, padL - 4, yy + 3); });
+      const cT = trajectory(false), dT = trajectory(true);
+      function plot(arr, col) { ctx.strokeStyle = col; ctx.beginPath(); for (let t = 1; t <= T; t++) { const px = X(t), py = Y(arr[t - 1]); t === 1 ? ctx.moveTo(px, py) : ctx.lineTo(px, py); } ctx.stroke(); }
+      plot(cT, p.gold); plot(dT, p.sage);
+      ctx.textAlign = 'left'; ctx.fillStyle = p.gold; ctx.fillText('constant a = ' + lr.toFixed(2), padL + 6, padT + 10); ctx.fillStyle = p.sage; ctx.fillText('decaying a = 0.9/t', padL + 6, padT + 24);
+      const cf = cT.slice(-30).reduce((a, b) => a + b, 0) / 30, df = dT.slice(-30).reduce((a, b) => a + b, 0) / 30;
+      info.innerHTML = 'final distance (avg last 30): constant <b style="color:' + p.gold + '">' + cf.toFixed(3) + '</b> vs decaying <b style="color:' + p.sage + '">' + df.toFixed(3) + '</b>. ' +
+        'The constant step plateaus on a noise floor ≈ its step size; the decaying step keeps converging.';
+    }
+    slider(ctl, { label: 'constant step a', min: 0.02, max: 0.25, step: 0.01, value: lr, fmt: v => v.toFixed(2), onInput: v => { lr = v; draw(); } });
+    button(controls(root), '🎲 New noise', () => { seed = (seed * 16807 + 3) & 0x7fffffff; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Stochastic gradient descent on a noisy quadratic, distance to the optimum on a logarithmic axis versus iteration. The gold curve uses a constant step size: it drops then flattens onto a noise floor proportional to the step. The sage curve uses a decaying step a-zero over t: it keeps descending below the floor. A slider sets the constant step size, raising or lowering its plateau.');
+    draw();
+  });
+
 })();

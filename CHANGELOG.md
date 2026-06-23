@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1008 — NEW viz: SGD noise ball — constant vs decaying step (visualizations)
+Gave the iter-1002 Robbins-Monro dive its visual — the **168th widget, `c-sgd-noise-ball`** in `c-gradient-descent-convergence`: SGD on a noisy quadratic, distance-to-optimum on a log axis. The **constant** step plunges then rattles forever on a noise floor ≈ its step size; the **decaying** step (0.9/t) keeps descending below it. The Σaₜ²<∞ condition made visible. Slider raises/lowers the constant plateau; reseed button.
+Verified: dynamics re-derived in Node; gate ALL GREEN (now **168 widgets**); **headless** — lab mounts, constant-final tracks the step size (0.193 at a=0.25, 0.036 at a=0.02) and always sits above the decaying run (0.016), kErr=0, errs=0; screenshot shows the gold noise floor vs the sage descent. SW cache `atlas-v939` → `atlas-v940`.
+
 ## iter 1007 — Glossary: mixup & vicinal-risk terms (reference)
 Completed the iter-1006 thread with **2 glossary terms** — **Mixup** and **Vicinal risk minimization** (training over a neighborhood around each point, the principle behind augmentation/mixup). Glossary **451 → 453** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 425 KaTeX, kErr=0, errs=0. SW cache `atlas-v938` → `atlas-v939`.
