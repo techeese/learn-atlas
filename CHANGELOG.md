@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1020 — Step-back (clean) + glossary: online-algorithm terms (step-back / reference)
+Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1010.
+**Ship:** completed the iter-1019 thread with **2 glossary terms** — **Online algorithm** and **Competitive ratio**. Glossary **464 → 466** (0 holes).
+Verified: glossary parses; gate ALL GREEN; full sweep clean; **headless** — both render (2/2), 443 KaTeX, kErr=0, errs=0. SW cache `atlas-v951` → `atlas-v952`.
+
 ## iter 1019 — Hard-concept: online algorithms & competitive ratio (content)
 Rotated to algorithms and filled a genuine gap (skip list also surfaced). Added a deep-dive to `a-greedy` (its 4th): **online algorithms** decide irrevocably without the future, judged by the **competitive ratio** (online cost ÷ optimal offline). **Ski rental** is 2-competitive ($e/(e-1)$ with randomization); caching's LRU is $k$-competitive, randomized marking $O(\log k)$. The recurring lesson — randomization provably beats deterministic against an adversary — links it to **no-regret learning** (cross-linked).
 Verified: g()-guarded (proseInMath on the ratio math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, competitive-ratio/ski-rental/2-competitive/randomization + cross-link, 109 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v950` → `atlas-v951`.
