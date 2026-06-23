@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1080 — Step-back (clean) + NEW viz: consistent-hashing ring (step-back / visualizations)
+Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1070.
+**Ship:** varied the format to a viz (completes the iter-1071/72 consistent-hashing thread) — the **171st widget, `a-consistent-hashing`** in `a-hash-tables`. A ring of server ticks + 240 key-dots colored by their next-clockwise owner; **Add/Remove server** recolors only the affected arc, flashes the moved keys white, and the caption counts them (~K/N, not all K). Reseed button.
+Verified: remap fraction re-derived in Node; gate ALL GREEN (now **171 widgets**); full sweep clean; **headless** — lab mounts, Add server moved 30/240 (cheap, 0<30<240), kErr=0, errs=0; screenshot shows the new server's arc flashed white-outlined while other arcs stayed put. SW cache `atlas-v1011` → `atlas-v1012`.
+
 ## iter 1079 — Glossary: randomized-SVD terms (reference)
 Completed the iter-1078 thread with **3 glossary terms** — **Randomized SVD**, **Johnson-Lindenstrauss lemma**, and **Eckart-Young theorem** (verified taught in la rank lessons). Glossary **531 → 534** (0 holes).
 Verified: glossary parses with `\log`/`\epsilon`/`\pm` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 533 KaTeX, kErr=0, errs=0. SW cache `atlas-v1010` → `atlas-v1011`.

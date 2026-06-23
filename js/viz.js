@@ -8897,4 +8897,59 @@
     draw();
   });
 
+
+  /* ========================================================
+     171. Consistent hashing ring: adding a server remaps only its arc (algorithms)
+     ======================================================== */
+  register({ id: 'a-consistent-hashing', topic: 'algorithms', title: 'The consistent-hashing ring', blurb: 'Servers (big ticks) and keys (dots) hash onto a ring; each key belongs to the next server clockwise, shown by colour. Add a server and only the keys on its new arc change hands — the readout counts them, and they flash white. That "~K/N move, not all K" is the whole point: membership changes stay cheap.' },
+  function (root) {
+    const W = 460, H = 460;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const TAU = Math.PI * 2, K = 240;
+    const PAL = ['#a78bfa', '#86c993', '#e3b341', '#e07a8a', '#cc7a52', '#5fb3c4', '#c084d8', '#9aa0a6'];
+    let seed = 5;
+    function mk(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    let rnd = mk(seed);
+    let keys = [], servers = [], owners = [], justMoved = new Set();
+    function ownerOf(a) { let best = -1, bd = 1e9; for (let i = 0; i < servers.length; i++) { const d = (servers[i] - a + TAU) % TAU; if (d < bd) { bd = d; best = i; } } return best < 0 ? -1 : servers[best]; }
+    function recompute(markMoves) {
+      const before = owners;
+      owners = keys.map(a => ownerOf(a));
+      justMoved = new Set();
+      if (markMoves && before.length === owners.length) for (let i = 0; i < owners.length; i++) if (before[i] !== owners[i]) justMoved.add(i);
+    }
+    function colorFor(srvAngle) { const sorted = servers.slice().sort((x, y) => x - y); const idx = sorted.indexOf(srvAngle); return PAL[((idx % PAL.length) + PAL.length) % PAL.length]; }
+    function reset() { rnd = mk(seed); keys = []; for (let i = 0; i < K; i++) keys.push(rnd() * TAU); servers = []; for (let i = 0; i < 4; i++) servers.push(rnd() * TAU); recompute(false); }
+    function draw(msg) {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const cx = W / 2, cy = H / 2 - 6, R = 150;
+      ctx.strokeStyle = p.line; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.stroke(); ctx.lineWidth = 1;
+      // keys
+      keys.forEach((a, i) => {
+        const x = cx + (R - 14) * Math.cos(a), y = cy + (R - 14) * Math.sin(a);
+        ctx.fillStyle = colorFor(owners[i]);
+        ctx.beginPath(); ctx.arc(x, y, justMoved.has(i) ? 4.5 : 2.6, 0, TAU); ctx.fill();
+        if (justMoved.has(i)) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.4; ctx.stroke(); ctx.lineWidth = 1; }
+      });
+      // servers
+      servers.forEach(a => {
+        const x1 = cx + (R - 4) * Math.cos(a), y1 = cy + (R - 4) * Math.sin(a), x2 = cx + (R + 16) * Math.cos(a), y2 = cy + (R + 16) * Math.sin(a);
+        ctx.strokeStyle = colorFor(a); ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.lineWidth = 1;
+      });
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText(servers.length + ' servers · ' + K + ' keys', cx, cy + 4);
+      info.innerHTML = msg || ('Each of the <b>' + K + '</b> keys is owned by the next server clockwise. Add or remove a server to see how few keys move.');
+    }
+    function addServer() { if (servers.length >= 8) { draw('At the 8-colour limit for this demo — remove one first.'); return; } servers.push(rnd() * TAU); recompute(true); draw('Added a server → <b style="color:#fff">' + justMoved.size + '</b> of ' + K + ' keys moved (' + Math.round(100 * justMoved.size / K) + '% ≈ 1/' + servers.length + '). The rest never budged.'); }
+    function removeServer() { if (servers.length <= 1) { draw('Need at least one server.'); return; } servers.pop(); recompute(true); draw('Removed a server → <b style="color:#fff">' + justMoved.size + '</b> of ' + K + ' keys moved to the next server clockwise. Only its arc was affected.'); }
+    button(ctl, '+ Add server', addServer);
+    button(ctl, '− Remove server', removeServer);
+    button(controls(root), '🎲 Reseed', () => { seed = (seed * 16807 + 7) & 0x7fffffff; reset(); draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'A consistent-hashing ring. Servers are coloured ticks around a circle and keys are dots just inside it, each dot coloured to match the next server clockwise that owns it. Buttons add or remove a server; when you do, only the keys on the affected arc change colour and flash white, and the caption reports how few of the 240 keys moved — roughly one over the number of servers — illustrating that membership changes are cheap.');
+    reset(); draw();
+  });
+
 })();
