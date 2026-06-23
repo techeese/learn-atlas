@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 974 — Glossary: matrix-exponential & phase-portrait terms (reference)
+Completed the iter-972/973 LA continuous-dynamics thread with **2 glossary terms** — **Matrix exponential** and **Phase portrait**. Glossary **422 → 424** (0 holes).
+Verified: glossary parses with `\dot`/`\tfrac` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 380 KaTeX, kErr=0, errs=0. SW cache `atlas-v905` → `atlas-v906`.
+
 ## iter 973 — NEW viz: phase portrait of x′=Ax (visualizations)
 Gave the iter-972 matrix-exponential dive its visual — the **165th widget, `la-phase-portrait`** in `la-diagonalization`: a 2D linear system with eigenvalues α±βi, drawn via the exact $x(t)=e^{At}x_0$ (a log-spiral, radius $e^{\alpha t}$, angle $\beta t$). Drag α through zero and stability flips live: **α<0 spirals in (stable), α=0 closed orbits (center), α>0 spirals out (unstable)**; β sets the spin. The eigenvalue's real part *is* the system's fate.
 Verified: trajectory radius re-derived in Node (e^{αt}); gate ALL GREEN (now **165 widgets**); **headless** — lab mounts, 2 sliders, stable/center/unstable labels flip correctly with α, kErr=0, errs=0; screenshot shows 8 spirals winding into the origin. SW cache `atlas-v904` → `atlas-v905`.
