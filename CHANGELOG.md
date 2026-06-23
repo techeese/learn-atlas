@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1041 — Glossary: entropy-rate & IT-core terms (reference)
+Completed the iter-1040 thread plus two IT-core terms — **3 glossary terms**: **Entropy rate**, **Asymptotic equipartition property (AEP)**, and **Conditional entropy**. Glossary **487 → 490** (0 holes) — crossed 490.
+Verified: glossary parses with `\lim`/`\mathbb` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 469 KaTeX, kErr=0, errs=0. SW cache `atlas-v972` → `atlas-v973`.
+
 ## iter 1040 — Step-back (clean) + hard-concept: entropy rate (step-back / content)
 Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1030.
 **Ship:** filled the noted IT gap — added an **entropy rate** deep-dive to `it-entropy` (its 5th): the per-symbol uncertainty of a process with memory, $H=\lim_n\tfrac1n H(X_1,\dots,X_n)=\lim_n H(X_n\mid\text{past})$ — strictly below the marginal entropy when context predicts (English ≈ **1 bit/char** vs 4.7). The true **compressibility** floor (cross-linked) and the ground truth a language model's **perplexity** ($2^{\text{cross-entropy rate}}$) approaches from above; Markov-chain form $\sum_i\pi_i H(\cdot\mid i)$.
