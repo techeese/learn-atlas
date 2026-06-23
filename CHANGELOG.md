@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1015 — Hard-concept: f-divergences (content)
+Rotated to information theory and filled a genuine gap (entropy rate, MINE, χ² also surfaced). Added a deep-dive to `it-cross-entropy-kl` (its 5th): the **f-divergence** template $D_f(P\Vert Q)=\mathbb{E}_Q[f(p/q)]$ unifying KL, TV, **Hellinger**, χ², and JS (cross-linked) via different convex $f$; convexity gives non-negativity, joint convexity, and the **data-processing inequality** for free.
+The Fenchel-dual form is the **f-GAN** recipe (cross-linked to GANs) — each $f$ → a different generator objective.
+Verified: g()-guarded (proseInMath on the D_f/dual math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, f-divergence/Hellinger/DPI/f-GAN + 2 cross-links, 91 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v946` → `atlas-v947`.
+
 ## iter 1014 — Glossary: martingale terms (reference)
 Completed the iter-1013 thread with **2 glossary terms** — **Martingale** and **Optional stopping theorem**. Glossary **457 → 459** (0 holes) — approaching 460.
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 431 KaTeX, kErr=0, errs=0. SW cache `atlas-v945` → `atlas-v946`.
