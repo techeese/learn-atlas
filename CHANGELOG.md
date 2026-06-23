@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1084 — Glossary: order-statistics terms (reference)
+Completed the iter-1083 thread with **3 glossary terms** — **Order statistic**, **Q-Q plot**, and **Gumbel-max trick**. Glossary **536 → 539** (0 holes).
+Verified: glossary parses with `\mathrm`/`\arg\max` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 543 KaTeX, kErr=0, errs=0. SW cache `atlas-v1015` → `atlas-v1016`.
+
 ## iter 1083 — Hard-concept: order statistics (content)
 Rotated to probability and filled a genuine foundational gap (concentration already has a dive; order statistics & Stein's method surfaced). Added a deep-dive to `ps-sampling-distributions` (its 4th): **order statistics** — the sorted sample $X_{(1)}\le\cdots\le X_{(n)}$; max CDF $F(x)^n$, $k$-th density $n\binom{n-1}{k-1}F^{k-1}(1-F)^{n-k}f$, uniform case $X_{(k)}\sim\mathrm{Beta}(k,n-k+1)$ mean $k/(n+1)$ (hence Q-Q plot positions, cross-linked to uniform). The basis of sample quantiles/median, extreme value theory, rank tests, and the Gumbel-max trick.
 Verified: g()-guarded (proseInMath on the order-stat math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, order-statistic/Gumbel-max/Beta/Q-Q + cross-link, 73 KaTeX, kErr=0, errs=0 (rawDollar=2 is a pre-existing `\$`-money example, not this dive). SW cache `atlas-v1014` → `atlas-v1015`.
