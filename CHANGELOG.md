@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1059 — Glossary: Schur-complement & Kronecker terms (reference)
+Completed the iter-1058 thread with **2 glossary terms** — **Schur complement** and **Kronecker product** (verified taught in la-orthonormal-gram-schmidt). Glossary **508 → 510** (0 holes). Correctly *skipped* SDP — only referenced in the Schur dive, not independently taught (avoids defined-but-untaught).
+Verified: glossary parses with `\begin{bmatrix}`/`\otimes` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 503 KaTeX (bmatrix renders), kErr=0, errs=0. SW cache `atlas-v990` → `atlas-v991`.
+
 ## iter 1058 — Hard-concept: the Schur complement (content)
 Rotated to linear algebra and filled a genuine gap (randomized SVD, tensor decomposition also surfaced). Added a deep-dive to `la-inverse-and-systems` (its 5th): the **Schur complement** $M/D=A-BD^{-1}C$ from block elimination — the engine of block inversion/determinants ($\det M=\det D\det(M/D)$). **Gaussian conditioning** is a Schur complement ($\Sigma_{xx}-\Sigma_{xy}\Sigma_{yy}^{-1}\Sigma_{yx}$, cross-linked to covariance); and $M\succ0\iff D\succ0$ and $M/D\succ0$ — the test behind **semidefinite programming**/LMIs, Kalman updates, graphical-model precision.
 Verified: g()-guarded (proseInMath, bmatrix-aware); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, Schur/conditional-covariance/positive-definite/SDP + cross-link, 215 KaTeX (bmatrix renders), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v989` → `atlas-v990`.
