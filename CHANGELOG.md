@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 966 — Glossary: cooperative-game terms (reference)
+Completed the iter-965 thread with **2 glossary terms** — **Core (cooperative game theory)** and **Coalition**. Glossary **417 → 419** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 375 KaTeX, kErr=0, errs=0. SW cache `atlas-v897` → `atlas-v898`.
+
 ## iter 965 — Hard-concept: the core of a cooperative game (content)
 Rotated to game theory and filled a genuine gap (fictitious play & revenue equivalence also surfaced). Added a deep-dive to `gt-repeated-cooperation` (its 6th, companion to the Shapley dive): **the core** — the set of payoff allocations no coalition can beat by seceding ($\sum_{i\in S}x_i\ge v(S)$ for every coalition).
 Stability where Shapley gives fairness: the Shapley value may lie *outside* the core, and the core can be **empty** (majority-vote games). The cooperative-game analogue of Nash, and the link to competitive-market equilibria.
