@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 902 — Hard-concept: correlated equilibrium (content)
+Rotated to a fresh topic and filled a genuine GT gap (Stackelberg & GARCH also surfaced as gaps — noted for later). Added a deep-dive to `gt-mixed-zero-sum` (its 5th): **correlated equilibrium** generalizes Nash — a trusted
+device privately recommends each player a move, and no one wants to deviate. The game of Chicken + a traffic light makes it vivid (a fair, crash-free outcome no Nash reaches). Three punchlines: every Nash is a correlated equilibrium (a *superset*); the set is LP-computable (unlike PPAD-hard Nash); and **no-regret learning converges to it** — tying learning to equilibrium.
+Wrote it LaTeX-free to stay push-wrapper-safe (game-theory.js is escaped-string form); function-replacer + enc inject, HTML entities for apostrophe/quotes.
+Verified: parse via `new Function` (no leakage, no control chars); gate ALL GREEN; **headless** — 5 deep-dives, CE/Chicken/traffic-light/no-regret/superset present, entities decoded, kErr=0, errs=0. SW cache `atlas-v833` → `atlas-v834`.
+
 ## iter 901 — Wire VQ-VAE → language models: DL → LLM (understandability)
 Threaded the iter-900 VQ-VAE deep-dive into the LLM topic: its closing idea — quantize a signal into tokens, then "model that sequence autoregressively, exactly like text" — now links to `l-what-is-a-language-model`. This makes the
 DALL·E/VQGAN/audio-codec insight navigable: the *same* next-token machinery a learner studies for text powers image and audio generation once VQ turns them into tokens.
