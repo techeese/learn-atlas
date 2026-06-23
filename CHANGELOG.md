@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1065 — Glossary: change-point & sequential-testing terms (reference)
+Completed the iter-1064 thread with **3 glossary terms** — **Change-point detection**, **CUSUM**, and **Sequential probability ratio test (SPRT)** (verified referenced in ts-stationarity + ps-causal-estimation). Glossary **516 → 519** (0 holes).
+Verified: glossary parses with `\max`/`\ell` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 508 KaTeX, kErr=0, errs=0. SW cache `atlas-v996` → `atlas-v997`.
+
 ## iter 1064 — Hard-concept: change-point detection (content)
 Rotated to time series and filled the noted gap. Added a deep-dive to `ts-stationarity` (its 4th): **change-point detection** — online via **CUSUM** ($S_t=\max(0,S_{t-1}+\ell_t)$, Page's test = continuous SPRT, delay-vs-false-alarm) and offline via penalized **DP segmentation** (PELT near-linear, binary segmentation greedy; cross-linked to DP). Structural breaks, genomics copy-number, regime shifts to respect before forecasting.
 Verified: g()-guarded (proseInMath on the CUSUM math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, change-point/CUSUM/binary-segmentation/PELT + DP cross-link, 26 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v995` → `atlas-v996`.
