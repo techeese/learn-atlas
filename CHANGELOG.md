@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 987 — Glossary: distributional-RL terms (reference)
+Completed the iter-986 thread with **2 glossary terms** — **Distributional reinforcement learning** and **Quantile regression** (the pinball-loss method behind QR-DQN and conformalized quantiles). Glossary **431 → 433** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 391 KaTeX, kErr=0, errs=0. SW cache `atlas-v918` → `atlas-v919`.
+
 ## iter 986 — Hard-concept: distributional RL (content)
 Rotated to RL and caught a teach-gap: distributional RL was name-dropped in `rl-dqn`'s Rainbow list but never taught. Added a deep-dive (its 4th): learn the full return distribution $Z(s,a)$, not just $\mathbb{E}[Z]=Q$ — the distributional Bellman equation $Z\stackrel{D}{=}R+\gamma Z'$ (a Wasserstein contraction), **C51** (categorical atoms + cross-entropy) vs **QR-DQN** (quantiles + pinball loss),
 why a richer target sharpens representations (a core Rainbow gain), and risk-sensitive control the mean can't express.
