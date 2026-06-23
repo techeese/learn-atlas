@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 897 — Hard-concept: Gumbel-softmax (content)
+Filled a genuine advanced gap (A*, amortized analysis already covered; this wasn't). Added a deep-dive to `dl-autoencoders-vae` (its 5th, extending the lesson's reparameterization-trick coverage): **Gumbel-softmax** is the
+reparameterization trick for *discrete* latents. The Gumbel-max trick externalizes the randomness ($\arg\max_i(\log\pi_i+g_i)$), then a temperature-τ softmax relaxes the non-differentiable argmax into a smooth one-hot stand-in — so gradients flow through categorical choices. Covers the τ→0 vs large-τ trade-off, annealing, and the straight-through variant; this is what makes discrete VAEs / VQ latents / differentiable NAS trainable.
+Verified: g()-guarded (proseInMath on the Gumbel/softmax math); byte-stable JSON re-serialize; gate ALL GREEN; **headless** — 5 deep-dives, Gumbel-softmax/concrete/temperature/straight-through present, 79 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v828` → `atlas-v829`.
+
 ## iter 896 — NEW code exercise: the Viterbi algorithm (examples / hands-on)
 Capped the HMM thread (894 deep-dive, 895 glossary) with a runnable **Viterbi** decoder, placed *inside* the HMM deep-dive in `ml-naive-bayes` so it sits with the concept. On a tiny health HMM (hidden Healthy/Fever, observing
 normal/cold/dizzy), Viterbi's DP recovers the most likely hidden path → **Most likely path: Healthy then Healthy then Fever**. The deep-dive's "Viterbi = DP with max" is now something you run.
