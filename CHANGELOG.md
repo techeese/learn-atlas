@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 982 — Glossary: GMM / EM terms (reference)
+Completed the iter-978/981 GMM thread with **3 glossary terms** — **Gaussian mixture model (GMM)**, **Expectation-maximization (EM)**, and **Responsibility (soft assignment)**. Glossary **426 → 429** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 389 KaTeX, kErr=0, errs=0. SW cache `atlas-v913` → `atlas-v914`.
+
 ## iter 981 — NEW viz: GMM soft responsibilities vs hard k-means (visualizations)
 Gave the iter-978 GMM dive its visual — the **166th widget, `ml-gmm-responsibility`** in `ml-kmeans`: two Gaussian densities at ±1.5 and the gold responsibility curve $r(x)=N_B/(N_A+N_B)$. Slide the component width σ: wide → a gentle ramp (soft, shared memberships); narrow → the ramp steepens into a hard step at the midpoint — **that limit is exactly k-means**. "k-means is hard GMM," made visible.
 Verified: responsibility re-derived in Node; gate ALL GREEN (now **166 widgets**); **headless** — lab mounts, midpoint slope sharpens 0.12 (σ=2.5) → 6.09 (σ=0.35) with the "k-means" label appearing, kErr=0, errs=0; screenshot shows the sigmoid over the two densities. SW cache `atlas-v912` → `atlas-v913`.
