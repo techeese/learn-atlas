@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 900 — Step-back (clean) + NEW hard-concept: VQ-VAE (step-back / content)
+**Milestone iter 900.** Step-back **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 890 (validates the HMM/Viterbi/Fisher/Gumbel injections of 891–899).
+**Ship:** filled a genuine gap with a **VQ-VAE** deep-dive in `dl-autoencoders-vae` (its 6th), completing the discrete-latent thread: VQ-VAE snaps the encoder output to a learned **codebook** entry (a token), backprops through the non-differentiable $\arg\min$ with the **straight-through estimator** (iter 899), and adds codebook + commitment losses. It's the *other* route to discrete latents vs **Gumbel-softmax** (iter 897) — hard lookup + straight-through vs a soft temperature relaxation — and is the engine behind VQGAN / DALL·E image tokens / neural audio codecs.
+Verified: g()-guarded (proseInMath); byte-stable JSON re-serialize; gate ALL GREEN; full sweep clean; **headless** — 6 deep-dives, VQ-VAE/codebook/commitment/straight-through present, 82 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v831` → `atlas-v832`.
+
 ## iter 899 — Glossary: differentiable-discrete-sampling terms (reference)
 Completed the iter-897/898 thread with **2 glossary terms** — **Gumbel-softmax (concrete distribution)** and **Straight-through estimator**. Glossary **373 → 375** (0 holes).
 Verified: glossary parses with `\tau` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 349 KaTeX, kErr=0, errs=0. SW cache `atlas-v830` → `atlas-v831`.
