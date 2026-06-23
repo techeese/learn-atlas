@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 894 — Hard-concept: Hidden Markov Models (content)
+Filled a genuine gap (Kalman filter & state-space models were covered, but HMMs weren't). Added a deep-dive to `ml-naive-bayes` (its 4th, building on its generative-vs-discriminative dive): an **HMM is naive Bayes unrolled over a
+sequence** — a hidden Markov chain of states, each emitting $P(o_t\mid s_t)$. Its three algorithms: **forward** (likelihood, DP), **Viterbi** (decoding, DP — structurally edit-distance), **Baum–Welch** (learning = EM, cross-linked). The Kalman filter is its continuous-state cousin; add actions+rewards and you get a POMDP.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint confirms the EM link; proseInMath on the math); **headless** — 4 deep-dives, HMM/Viterbi/Baum-Welch/forward + cross-link present, 41 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v825` → `atlas-v826`.
+
 ## iter 893 — Wire SVM dual ↔ Lagrangian duality: ML ↔ calculus (understandability)
 After confirming multiple-comparisons, LP/duality, and the foundational glossary are all covered (gap-hunting exhausted), made a deep unmade bridge: the **SVM's kernel trick comes from its Lagrangian dual**. `ml-svm` (§6 kernel trick)
 and `c-lagrange-multipliers` (§8 why-this-matters-for-ML) both discuss it but never linked — now bidirectional. The constrained-optimization machinery (calc) is literally what produces the SVM's dual problem (ML).
