@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1101 — Hard-concept: convex hull (content)
+Rotated to algorithms and filled a genuine gap (computational geometry was absent). Added a deep-dive to `a-divide-and-conquer` (its 4th): the **convex hull** — smallest convex polygon around a point set. Everything rests on the **orientation** test, the sign of $(b-a)\times(c-a)$ (left/right/collinear, no trig); **Graham scan** (sort by angle, stack, pop right turns) and **Andrew's monotone chain** (sort by $x$, sweep upper+lower) run in $O(n\log n)$ dominated by the **sort** (cross-linked); a D&C hull merges two halves. Bounding volumes, Delaunay, 2-D LP; the orientation primitive recurs in segment-intersection and point-in-polygon.
+Verified: g()-guarded (proseInMath on the cross-product math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, convex-hull/Graham-scan/monotone-chain/orientation + cross-link, 190 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1032` → `atlas-v1033`.
+
 ## iter 1100 — Step-back (clean) + code: LASSO coordinate descent (step-back / examples)
 Milestone iteration. Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1090.
 **Ship:** varied the format to a code exercise (last code iter 1070) completing the iter-1096 coordinate-descent thread — runnable in `c-multivariable-optimization`: LASSO by coordinate descent on an orthogonal design, each update a soft-threshold of the least-squares value → **OLS [8,1,4] becomes LASSO(λ=2) [6,0,2]** (the weak coefficient snaps to exactly 0, the strong ones shrink by λ). Sparsity made concrete.
