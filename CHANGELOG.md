@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1061 — Glossary: attention KV-cache lineage (reference)
+Completed the iter-1060 thread with **3 glossary terms** — **Multi-head latent attention (MLA)**, **Grouped-query attention (GQA)**, and **Multi-query attention (MQA)** — the full KV-cache lineage. Glossary **510 → 513** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v992` → `atlas-v993`.
+
 ## iter 1060 — Step-back (clean) + hard-concept: multi-head latent attention (step-back / content)
 Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1050.
 **Ship:** rotated away from LA (anti-monotony) to LLM after game-theory probed fully covered (correlated-equilibrium & ESS already have dives). Added a deep-dive to `l-inference-efficiency` (its 5th): **multi-head latent attention** (MLA, DeepSeek-V2) — *compress* the KV cache to one low-rank latent $c=W_{\text{DKV}}h$, reconstruct per-head K/V via up-projections that fold into Q/output by associativity (RoPE on a decoupled channel). Full multi-head quality at ~MQA cache size — a better trade than GQA. Completes the MHA→MQA→GQA→MLA lineage; cross-linked to self-attention.
