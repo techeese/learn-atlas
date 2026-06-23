@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 909 — Hard-concept: meta-learning / MAML (content)
+Filled a genuine gap. Added a deep-dive to `dl-transfer-learning` (its 4th): **meta-learning** — "learning to learn" across many tasks so a model adapts to a new one from few examples. **MAML** learns an *initialization*, not a
+solution: an inner loop adapts ($\theta'=\theta-\alpha\nabla\mathcal{L}_{\text{task}}$), an outer loop optimizes the post-adaptation loss ($\theta\leftarrow\theta-\beta\nabla\sum\mathcal{L}_{\text{query}}$) differentiating *through* the inner step. It's the **bilevel** (leader-follower) structure (907) applied to learning itself, the optimization-cousin of transfer learning, and — cross-linked — what LLM few-shot **in-context learning** does implicitly.
+Verified: g()-guarded (proseInMath on the MAML math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint confirms the ICL link); **headless** — 4 deep-dives, meta-learning/MAML/bilevel/few-shot + cross-link present, 56 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v840` → `atlas-v841`.
+
 ## iter 908 — NEW code exercise: Stackelberg vs Cournot duopoly (examples / hands-on)
 Capped the Stackelberg thread (906 deep-dive, 907 glossary) with a runnable exercise inside the deep-dive in `gt-foundations`: a linear-demand duopoly, simultaneous (Cournot) vs leader-commits-first (Stackelberg) → **Cournot each 16 |
 Stackelberg leader 18, follower 9**. The leader's profit *rises* (16 → 18) by committing first while the follower's falls — the first-mover advantage in numbers. Written without `<`/`>` so the push-wrapper inject needs no entity escaping.
