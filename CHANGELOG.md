@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 996 — Glossary: price-of-anarchy terms (reference)
+Completed the iter-995 thread with **2 glossary terms** — **Price of anarchy** and **Braess's paradox**. Glossary **440 → 442** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v927` → `atlas-v928`.
+
 ## iter 995 — Hard-concept: the price of anarchy (content)
 Rotated to game theory and filled a genuine gap: the price of anarchy was absent. Added a deep-dive to `gt-foundations` (its 7th): $\text{PoA}=\frac{\text{worst-Nash social cost}}{\text{optimal social cost}}$ — how much selfish equilibrium costs vs coordination; **Braess's paradox** (adding a road slows everyone), the **4/3** linear-routing bound (Roughgarden-Tardos), and the **price of stability** (best-Nash variant).
 Why it matters: the quantitative case for laissez-faire (PoA≈1) vs tolls/mechanism design (PoA large).
