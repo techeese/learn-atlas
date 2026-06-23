@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 967 — NEW viz + concept: fictitious play converges to Nash (visualizations)
+Filled a flagged GT gap *as* a viz — the **164th widget, `gt-fictitious-play`** in `gt-mixed-zero-sum`, with a framing paragraph: each player best-responds to the opponent's empirical move frequencies (a pure learning rule, no equilibrium reasoning). In Rock-Paper-Scissors the play cycles, but
+the time-averaged frequencies converge onto the Nash ⅓/⅓/⅓ — slide the rounds and watch the bars flatten onto the dashed ⅓ line (spread 0.20 at 20 rounds → 0.03 at 2000). Learning finds equilibrium.
+**Self-caught:** the "8. Summary" anchor recurs across lessons (the section-number trap) — switched to the unique "7. From minimax to AI" heading.
+Verified: dynamics re-derived in Node (→0.32/0.35/0.33); gate ALL GREEN (now **164 widgets**); **headless** — lab mounts, frequencies converge, kErr=0, errs=0; screenshot shows all 3 bars on the ⅓ line. SW cache `atlas-v898` → `atlas-v899`.
+
 ## iter 966 — Glossary: cooperative-game terms (reference)
 Completed the iter-965 thread with **2 glossary terms** — **Core (cooperative game theory)** and **Coalition**. Glossary **417 → 419** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 375 KaTeX, kErr=0, errs=0. SW cache `atlas-v897` → `atlas-v898`.

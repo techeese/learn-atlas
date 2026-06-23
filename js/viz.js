@@ -8599,4 +8599,38 @@
     draw();
   });
 
+
+  /* ========================================================
+     164. Fictitious play converging to Nash in Rock-Paper-Scissors (game theory)
+     ======================================================== */
+  register({ id: 'gt-fictitious-play', topic: 'game-theory', title: 'Fictitious play: learning your way to Nash', blurb: 'Each player repeatedly best-responds to the empirical frequency of the opponent’s past moves — a simple learning rule with no equilibrium reasoning at all. In Rock-Paper-Scissors the actual play cycles forever, yet the time-averaged frequencies settle onto the Nash mixed strategy (⅓, ⅓, ⅓). Slide the round count: with few rounds the bars are lopsided; let it run and they flatten onto the dashed ⅓ line. Learning finds the equilibrium even though no one is solving for it.' },
+  function (root) {
+    const W = 460, H = 280, padL = 36, padR = 14, padT = 18, padB = 40;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const labels = ['Rock', 'Paper', 'Scissors'];
+    let rounds = 1000;
+    function br(cnt) { let best = 0, bv = -1e9; for (let a = 0; a < 3; a++) { let v = 0; for (let o = 0; o < 3; o++) { const pay = (a === (o + 1) % 3) ? 1 : (o === (a + 1) % 3) ? -1 : 0; v += cnt[o] * pay; } if (v > bv) { bv = v; best = a; } } return best; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const cA = [1, 0, 0], cB = [0, 1, 0], fA = [0, 0, 0];
+      for (let t = 0; t < rounds; t++) { const a = br(cB), b = br(cA); cA[a]++; cB[b]++; fA[a]++; }
+      const fr = fA.map(x => x / rounds);
+      const yMax = 0.6, plotW = W - padL - padR, plotH = H - padT - padB, baseY = padT + plotH, Y = v => baseY - (v / yMax) * plotH;
+      ctx.strokeStyle = p.line; ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [0, 0.33, 0.6].forEach(v => { const yy = Y(v); ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR, yy); ctx.stroke(); ctx.fillText(v.toFixed(2), padL - 4, yy + 3); });
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(padL, Y(1 / 3)); ctx.lineTo(W - padR, Y(1 / 3)); ctx.stroke(); ctx.setLineDash([]);
+      const gap = plotW / 3, bw = gap * 0.5;
+      fr.forEach((q, i) => { const x = padL + i * gap + (gap - bw) / 2; ctx.fillStyle = p.violet; ctx.fillRect(x, Y(q), bw, baseY - Y(q)); ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText(labels[i], x + bw / 2, baseY + 14); });
+      const spread = Math.max.apply(null, fr) - Math.min.apply(null, fr);
+      info.innerHTML = 'rounds = <b style="color:' + p.violet + '">' + rounds + '</b>. Frequencies ' + fr.map(q => q.toFixed(2)).join(", ") + '; spread from the Nash ⅓ line = <b style="color:' + p.gold + '">' + spread.toFixed(3) + '</b>. ' +
+        (rounds >= 500 ? 'Converged onto (⅓, ⅓, ⅓) — Nash, found by learning alone.' : 'Still lopsided — give it more rounds.');
+    }
+    slider(ctl, { label: 'rounds', min: 10, max: 2000, step: 10, value: rounds, fmt: v => v.toFixed(0), onInput: v => { rounds = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Fictitious play in Rock-Paper-Scissors. Three bars give the empirical frequencies of Rock, Paper, and Scissors as a player best-responds to the opponent history, against a dashed one-third Nash reference. A rounds slider increases the number of plays; with few rounds the bars are uneven, and as rounds grow they converge onto the one-third line, the Nash mixed strategy.');
+    draw();
+  });
+
 })();
