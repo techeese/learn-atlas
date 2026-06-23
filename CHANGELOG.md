@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 922 — Code-parity backlog: the optimal GAN discriminator (examples / content-parity)
+Backlog continues. Added a code exercise to `dl-gans` (had none), in its §7 "the equilibrium" section: the optimal discriminator $D^*=p_{data}/(p_{data}+p_{gen})$ run early vs at convergence → **early D*=0.90, converged D*=0.50**.
+Crystallizes the GAN equilibrium — when the generator matches the data, the discriminator is reduced to a coin flip. Backlog now 18 lessons.
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 175)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v853` → `atlas-v854`.
+
 ## iter 921 — Code-parity backlog: stack (LIFO) vs queue (FIFO) (examples / content-parity)
 Backlog, fresh topic (algorithms). Added a code exercise to `a-arrays-lists-stacks-queues` (had none), in its "Stacks and Queues: Policies, Not New Structures" section: same pushes, opposite removal policy → **stack(LIFO): 4,3,2,1 | queue(FIFO): 1,2,3,4**.
 Makes the lesson's core point — the *policy* is the difference, not the structure — runnable. Backlog now 19 lessons.
