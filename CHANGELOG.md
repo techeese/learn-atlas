@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 944 — Glossary: uncertainty-quantification terms (reference)
+Completed the iter-943 thread with **4 glossary terms** — **Conformal prediction**, **Exchangeability**, **Calibration**, and **Coverage** (calibration & coverage were taught across topics but never defined). Glossary **403 → 407** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 4 render on `#/glossary` (4/4), 364 KaTeX, kErr=0, errs=0. SW cache `atlas-v875` → `atlas-v876`.
+
 ## iter 943 — Hard-concept: conformal prediction (content)
 Filled a genuine modern gap. Added a deep-dive to `ml-model-selection` (its 6th): **conformal prediction** — distribution-free uncertainty with a *guarantee*. Output a prediction set $\{y: 1-p(y\mid x)\le\hat q\}$, where $\hat q$ is the
 $\lceil(1-\alpha)(n+1)\rceil$-th smallest calibration nonconformity score; it covers the truth with probability ≥ $1-\alpha$ for **any** model and distribution (assuming exchangeability). The magic: it holds even for a bad model (just bigger sets). Turns calibration's approximate promise into a finite-sample one — cross-linked.
