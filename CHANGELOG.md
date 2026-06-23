@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 990 — Step-back (clean) + NEW viz: the periodogram (step-back / visualizations)
+Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE** (confirms the 979/980 literal-`\n` bugfix holds site-wide), mapNodes=883 — zero regressions since iter 970.
+**Ship:** completed the spectral thread (988 content + 989 glossary + **990 viz**) — the **167th widget, `ts-periodogram`** in `ts-arima`: a noisy series (one sinusoid buried in noise) over its periodogram, which shows a single sharp peak at the hidden frequency. Drag the cycle count / reseed noise and the peak tracks the true frequency. Periodicity invisible in time, unmistakable in frequency.
+Verified: DFT peak re-derived in Node (exact match); gate ALL GREEN (now **167 widgets**); full sweep clean; **headless** — lab mounts, peak = hidden cycle at both 5 and 13, reseed button present, kErr=0, errs=0; screenshot shows the lone gold peak above the noise floor. SW cache `atlas-v921` → `atlas-v922`.
+
 ## iter 989 — Glossary: spectral-analysis terms (reference)
 Completed the iter-988 thread with **3 glossary terms** — **Spectral density**, **Periodogram** (TS), and **Fast Fourier Transform (FFT)** (algorithms). Glossary **433 → 436** (0 holes).
 Verified: glossary parses with `\log` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 394 KaTeX, kErr=0, errs=0. SW cache `atlas-v920` → `atlas-v921`.

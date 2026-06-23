@@ -8713,4 +8713,45 @@
     draw();
   });
 
+
+  /* ========================================================
+     167. Periodogram: a hidden cycle, invisible in time, a clear peak in frequency (time series)
+     ======================================================== */
+  register({ id: 'ts-periodogram', topic: 'time-series', title: 'The periodogram: finding a hidden cycle', blurb: 'The top panel is a noisy series — a single sinusoid buried under random noise; good luck reading its period off the wiggle. The bottom panel is its periodogram, the squared magnitude of its Fourier transform: one sharp peak sits exactly at the hidden frequency. Drag the cycle count and watch the peak track it. This is why spectral analysis matters — periodicity that is invisible in the time domain is unmistakable in the frequency domain.' },
+  function (root) {
+    const W = 500, H = 330, padL = 34, padR = 12;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const N = 120; let f0 = 7, seed = 42;
+    function mk(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const r = mk(seed); const x = [];
+      for (let t = 0; t < N; t++) x.push(Math.sin(2 * Math.PI * f0 * t / N) + 0.8 * (r() + r() + r() + r() - 2));
+      // periodogram k=1..N/2
+      const P_ = []; let pk = 1, pv = -1;
+      for (let k = 1; k <= N / 2; k++) { let re = 0, im = 0; for (let t = 0; t < N; t++) { re += x[t] * Math.cos(2 * Math.PI * k * t / N); im += x[t] * Math.sin(2 * Math.PI * k * t / N); } const pw = (re * re + im * im) / N; P_.push(pw); if (pw > pv) { pv = pw; pk = k; } }
+      // top: time series
+      const topH = 120, topY = 14, midX = padL, plotW = W - padL - padR;
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(padL, topY + topH / 2); ctx.lineTo(W - padR, topY + topH / 2); ctx.stroke();
+      let xmax = 0; x.forEach(v => { if (Math.abs(v) > xmax) xmax = Math.abs(v); });
+      ctx.strokeStyle = p.sage; ctx.beginPath(); for (let t = 0; t < N; t++) { const px = padL + t / (N - 1) * plotW, py = topY + topH / 2 - x[t] / xmax * (topH / 2 - 4); t ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke();
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'left'; ctx.fillText('time series (noisy)', padL, topY + 2);
+      // bottom: periodogram
+      const botY = topY + topH + 28, botH = H - botY - 24;
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(padL, botY + botH); ctx.lineTo(W - padR, botY + botH); ctx.stroke();
+      const bw = plotW / P_.length;
+      P_.forEach((pw, idx) => { const k = idx + 1; const h = pw / pv * (botH - 4); const px = padL + idx / (P_.length - 1) * plotW; ctx.strokeStyle = (k === pk) ? p.gold : 'rgba(160,140,210,0.6)'; ctx.lineWidth = (k === pk) ? 2.5 : 1.5; ctx.beginPath(); ctx.moveTo(px, botY + botH); ctx.lineTo(px, botY + botH - h); ctx.stroke(); });
+      ctx.lineWidth = 1; ctx.fillStyle = p.mute; ctx.fillText('periodogram (power vs frequency)', padL, botY - 4);
+      info.innerHTML = 'hidden cycle = <b style="color:' + p.sage + '">' + f0 + '</b> cycles over the window. Periodogram peak at <b style="color:' + p.gold + '">' + pk + '</b> — ' +
+        (pk === f0 ? 'spot on, dug straight out of the noise.' : 'near the true frequency (noise jitter).');
+    }
+    slider(ctl, { label: 'hidden cycles', min: 3, max: 18, step: 1, value: f0, fmt: v => v.toFixed(0), onInput: v => { f0 = v; draw(); } });
+    button(controls(root), '🎲 New noise', () => { seed = (seed * 16807 + 7) & 0x7fffffff; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'A periodogram demo. The top panel shows a noisy time series containing one hidden sinusoid. The bottom panel shows its periodogram, power versus frequency, with a single tall gold peak at the hidden cycle frequency. A slider sets the number of hidden cycles and the peak tracks it, illustrating that periodicity invisible in the time domain is clear in the frequency domain.');
+    draw();
+  });
+
 })();
