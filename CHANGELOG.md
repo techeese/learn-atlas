@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 891 — NEW viz: Fisher information — the likelihood sharpens with data (visualizations)
+Capped the Fisher thread (888 deep-dive, 889 glossary, 890 link) with its visual — the **154th widget, `ps-fisher-information`** in `ps-point-estimation`: the likelihood of a Gaussian mean is a bell whose width *is* the Cramér–Rao std σ/√n.
+Slide n — the peak **spikes sharply** (Fisher info I = n/σ² rises) and the shaded ±1σ band **shrinks like 1/√n** (n=1 → ±2.0, n=100 → ±0.2). "Fisher information is just how pointed this peak is" — made visible.
+Verified: CR std re-derived in Node (2.0 at n=1, 0.2 at n=100); gate ALL GREEN (now **154 widgets**); **headless** — band 2.00 at n=1, 0.20 at n=100, kErr=0, errs=0; screenshot shows the sharp bell + narrow CR band. SW cache `atlas-v822` → `atlas-v823`.
+
 ## iter 890 — Step-back: kErr-aware sweep (clean) + wire Fisher info → natural gradient/TRPO (step-back / understandability)
 Step-back at ~10 iters. **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 880, validating the recent Fisher/info-gain/DQN/decode injections.
 **Ship:** turned the iter-888 Fisher deep-dive's existing "natural-gradient optimization" mention into a live link to `rl-trpo-ppo` — the Fisher information matrix *is* the metric behind TRPO's natural policy gradient (and its KL trust region). A genuinely deep estimation→RL connection, and rl-trpo-ppo already discusses both, so the bridge is exact.

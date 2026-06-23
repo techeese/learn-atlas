@@ -8173,4 +8173,43 @@
     draw();
   });
 
+
+  /* ========================================================
+     154. Fisher information: the likelihood sharpens with more data (probability & statistics)
+     ======================================================== */
+  register({ id: 'ps-fisher-information', topic: 'probability-statistics', title: 'Fisher information: how sharply data pins down a parameter', blurb: 'Estimating a Gaussian’s mean μ from n samples, the likelihood as a function of μ is itself a bell curve centered on the estimate. Its width is exactly the Cramér–Rao standard deviation σ/√n — the best precision any unbiased estimator can reach. Slide n: more data makes the likelihood spike sharply (high Fisher information = high curvature), and the shaded ±1σ band — the uncertainty in the estimate — shrinks like 1/√n. Fisher information is just how pointed this peak is.' },
+  function (root) {
+    const W = 520, H = 300, padL = 20, padR = 20, padT = 16, padB = 28;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const sigma = 2, xbar = 5, LO = 0, HI = 10;
+    let n = 9;
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const crStd = sigma / Math.sqrt(n), I = n / (sigma * sigma);
+      const plotW = W - padL - padR, plotH = H - padT - padB, x0 = padL, baseY = padT + plotH;
+      const X = m => x0 + (m - LO) / (HI - LO) * plotW, Y = v => baseY - v * plotH;
+      // CR ±1σ band around the MLE
+      ctx.fillStyle = 'rgba(224,164,88,0.16)'; ctx.fillRect(X(xbar - crStd), padT, X(xbar + crStd) - X(xbar - crStd), plotH);
+      // normalized likelihood bump L(mu) = exp(-n (mu-xbar)^2 / (2 sigma^2)), peak 1
+      ctx.strokeStyle = p.violet; ctx.lineWidth = 2; ctx.beginPath();
+      for (let px = 0; px <= plotW; px++) { const m = LO + (HI - LO) * px / plotW; const L = Math.exp(-n * (m - xbar) * (m - xbar) / (2 * sigma * sigma)); const xx = x0 + px, yy = Y(L); px ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }
+      ctx.stroke(); ctx.lineWidth = 1;
+      // axes + MLE line
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(x0, baseY); ctx.lineTo(x0 + plotW, baseY); ctx.stroke();
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(X(xbar), padT); ctx.lineTo(X(xbar), baseY); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      [0, 2.5, 5, 7.5, 10].forEach(m => ctx.fillText(m, X(m), baseY + 14));
+      ctx.fillStyle = p.gold; ctx.fillText('μ̂ = ' + xbar, X(xbar), padT - 2);
+      info.innerHTML = 'sample size n = <b style="color:' + p.violet + '">' + n + '</b>. Fisher information I = n/σ² = <b>' + I.toFixed(2) + '</b>; ' +
+        'the likelihood peak is that sharp. Cramér–Rao std = σ/√n = <b style="color:' + p.gold + '">' + crStd.toFixed(2) + '</b> (the shaded band) — ' +
+        'the tightest any unbiased estimate of μ can be. Quadruple n and the peak doubles in sharpness, the band halves.';
+    }
+    slider(ctl, { label: 'sample size n', min: 1, max: 100, step: 1, value: n, fmt: v => v.toFixed(0), onInput: v => { n = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Fisher information: estimating a Gaussian mean. The likelihood as a function of the mean is a bell curve centered on the estimate, with a shaded plus-or-minus one Cramér-Rao standard-deviation band of width sigma over root n. A slider sets the sample size n; as n grows the likelihood peak becomes sharper (higher Fisher information, higher curvature) and the band shrinks like one over root n, showing how more data pins the parameter down more precisely.');
+    draw();
+  });
+
 })();
