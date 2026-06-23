@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1035 — Glossary: calculus-of-variations terms (reference)
+Completed the iter-1034 thread with **2 glossary terms** — **Calculus of variations** and **Euler-Lagrange equation**. Glossary **480 → 482** (0 holes).
+Verified: glossary parses with `\int`/`\frac`/`\partial` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 458 KaTeX, kErr=0, errs=0. SW cache `atlas-v966` → `atlas-v967`.
+
 ## iter 1034 — Hard-concept: calculus of variations (content)
 Rotated to calculus and filled a genuine gap (envelope theorem also surfaced). Added a deep-dive to `c-multivariable-optimization` (its 4th): the **calculus of variations** optimizes over *functions* — minimize a **functional** $J[y]=\int L(x,y,y')\,dx$; the **Euler-Lagrange equation** $\frac{\partial L}{\partial y}-\frac{d}{dx}\frac{\partial L}{\partial y'}=0$ is the function-space "gradient=0." Straight lines, the brachistochrone, least action — and the **max-entropy** distribution is derived this way (cross-linked), the source of the exponential family; also optimal control and neural ODEs.
 Verified: g()-guarded (proseInMath on the functional/E-L math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, CoV/Euler-Lagrange/functional/least-action + cross-link, 171 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v965` → `atlas-v966`.
