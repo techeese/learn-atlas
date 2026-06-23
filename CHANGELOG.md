@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1004 — Hard-concept: mirror descent (content)
+Filled the noted optimization gap. Added a deep-dive to `c-proximal-projected` (its 4th): **mirror descent** — replace gradient descent's hidden Euclidean leash with a **Bregman divergence** $D_\psi$, minimizing $\langle\nabla f,x\rangle+\tfrac1\eta D_\psi(x,x_t)$; step via the mirror map $\nabla\psi$ and back. $\psi=\tfrac12\lVert\cdot\rVert^2$ → plain GD; negative entropy on the simplex → **multiplicative weights / exponentiated gradient**.
+Matching geometry to the domain sharpens convergence; the engine behind **no-regret learning** (cross-linked) and boosting.
+Verified: g()-guarded (proseInMath on the Bregman/mirror math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, mirror-descent/Bregman/multiplicative-weights/simplex + cross-link, 87 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v935` → `atlas-v936`.
+
 ## iter 1003 — Glossary: stochastic-approximation terms (reference)
 Completed the iter-1002 thread with **2 glossary terms** — **Stochastic approximation (Robbins-Monro)** and **Learning rate schedule**. Glossary **446 → 448** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 416 KaTeX, kErr=0, errs=0. SW cache `atlas-v934` → `atlas-v935`.
