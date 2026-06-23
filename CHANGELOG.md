@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 923 — Hard-concept: reservoir sampling (content)
+Varied off the code backlog to fill a genuine algorithms gap. Added a deep-dive to `a-approximation-randomized` (its 4th): **reservoir sampling** — a uniform random sample from a stream of unknown length in one pass with O(1)
+memory. Keep the first item; replace the held item with probability 1/i at step i. The telescoping product (1/i)·(i/(i+1))·…·((n−1)/n) collapses to exactly 1/n; the size-k version (evict with prob k/i) gives k/n. Uses: sampling from huge logs, one-pass DB row sampling, graph-stream edges.
+Wrote LaTeX-free with HTML entities (×, …, −) for push-wrapper safety; **self-caught** an over-strict inject guard (false-positive on `<details class=…>`), relaxed it, re-ran.
+Verified: parse via `new Function` (no leakage, no control chars); gate ALL GREEN; **headless** — 4 deep-dives, reservoir/telescoping/single-pass present, entities rendered (no literals), kErr=0, errs=0. SW cache `atlas-v854` → `atlas-v855`.
+
 ## iter 922 — Code-parity backlog: the optimal GAN discriminator (examples / content-parity)
 Backlog continues. Added a code exercise to `dl-gans` (had none), in its §7 "the equilibrium" section: the optimal discriminator $D^*=p_{data}/(p_{data}+p_{gen})$ run early vs at convergence → **early D*=0.90, converged D*=0.50**.
 Crystallizes the GAN equilibrium — when the generator matches the data, the discriminator is reduced to a coin flip. Backlog now 18 lessons.
