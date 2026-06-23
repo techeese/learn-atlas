@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 915 — Code-parity backlog: p-value from scratch (examples / content-parity)
+Second of the iter-914 backlog (25 lessons lacked code). Added a code exercise to `ps-p-values` (had none) in its §7 worked-example: a **one-sample z-test** computing a **two-tailed p-value from scratch**, including the standard-normal CDF via the Abramowitz–Stegun approximation → **z = 2.00, two-tailed p = 0.0455**. A learner can now *run* the p-value, not just read about it. Backlog now 23 lessons.
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 170)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v846` → `atlas-v847`.
+
 ## iter 914 — Fix code-floor gap + NEW code: the forward diffusion process (examples / content-parity)
 **Caught a real content-parity gap:** `dl-diffusion-models` had **zero code exercises** (below the ≥1 floor). Filled it in §2 with the core mechanism — the forward noising process $x_t=\sqrt{\bar\alpha_t}\,x_0+\sqrt{1-\bar\alpha_t}\,\varepsilon$:
 as $\bar\alpha_t$ falls from ~1 toward 0, signal shrinks and noise grows → **sig 0.99/noise 0.10 | sig 0.77/noise 0.63 | sig 0.32/noise 0.95**. Written arrow-free (no `<`/`>`) for a clean byte-stable inject.
