@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1067 — Hard-concept: hindsight experience replay (content)
+Rotated to RL and filled a genuine gap (inverse RL has its own lesson; POMDP/RND/reward-hacking already present). Added a deep-dive to `rl-exploration` (its 4th): **hindsight experience replay** — after an episode meant for goal $g$ ends at $g'$, *relabel* the transitions as a success for $g'$; since the value function is goal-conditioned ($Q(s,a,g)$), that experience still sharpens behaviour toward $g$. Cracks sparse-reward goal-conditioned tasks without reward shaping; rides on an off-policy replay buffer (cross-linked); an automatic curriculum.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, HER/relabel/goal-conditioned/sparse + cross-link, 109 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v998` → `atlas-v999`.
+
 ## iter 1066 — NEW viz: CUSUM change-point detector (visualizations)
 Varied the format to a viz (completes the iter-1064/65 change-point thread) — the **170th widget, `ts-cusum`** in `ts-stationarity`. Two panels: a series whose mean jumps at t=70, and the CUSUM statistic $S=\max(0,S+x-k)$ that hugs zero, then ramps after the shift and trips an alarm when it crosses threshold $h$. Slider on $h$ makes the **detection-delay vs false-alarm** trade visible; reseed button.
 Verified: CUSUM detection re-derived in Node (delay grows with $h$); gate ALL GREEN (now **170 widgets**); **headless** — lab mounts, alarm fires (delay 4 at h=4, true change t=70), reseed present, kErr=0, errs=0; screenshot shows S flat→ramp crossing the threshold at the detection dot. SW cache `atlas-v997` → `atlas-v998`.
