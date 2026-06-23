@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1060 — Step-back (clean) + hard-concept: multi-head latent attention (step-back / content)
+Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1050.
+**Ship:** rotated away from LA (anti-monotony) to LLM after game-theory probed fully covered (correlated-equilibrium & ESS already have dives). Added a deep-dive to `l-inference-efficiency` (its 5th): **multi-head latent attention** (MLA, DeepSeek-V2) — *compress* the KV cache to one low-rank latent $c=W_{\text{DKV}}h$, reconstruct per-head K/V via up-projections that fold into Q/output by associativity (RoPE on a decoupled channel). Full multi-head quality at ~MQA cache size — a better trade than GQA. Completes the MHA→MQA→GQA→MLA lineage; cross-linked to self-attention.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); full sweep clean; **headless** — 5 deep-dives, MLA/KV-cache/grouped-query/DeepSeek + cross-link, 123 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v991` → `atlas-v992`.
+
 ## iter 1059 — Glossary: Schur-complement & Kronecker terms (reference)
 Completed the iter-1058 thread with **2 glossary terms** — **Schur complement** and **Kronecker product** (verified taught in la-orthonormal-gram-schmidt). Glossary **508 → 510** (0 holes). Correctly *skipped* SDP — only referenced in the Schur dive, not independently taught (avoids defined-but-untaught).
 Verified: glossary parses with `\begin{bmatrix}`/`\otimes` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 503 KaTeX (bmatrix renders), kErr=0, errs=0. SW cache `atlas-v990` → `atlas-v991`.
