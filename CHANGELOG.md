@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1024 — Glossary: energy-based-model terms (reference)
+Completed the iter-1023 thread with **3 glossary terms** — **Energy-based model (EBM)**, **Partition function**, and **Boltzmann distribution** (the Gibbs form unifying EBMs, softmax, and stat-mech). Glossary **468 → 471** (0 holes) — crossed 470.
+Verified: glossary parses with `\int`/`\propto` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 449 KaTeX, kErr=0, errs=0. SW cache `atlas-v955` → `atlas-v956`.
+
 ## iter 1023 — Hard-concept: energy-based models (content)
 Rotated to deep learning and filled a genuine gap (GNNs, contrastive, flows already have homes; neural ODEs also surfaced). Added a deep-dive to `dl-diffusion-models` (its 5th): an **energy-based model** sets $p_\theta(x)=e^{-E_\theta(x)}/Z_\theta$ — the **Gibbs** form (cross-linked to entropy/max-entropy) with total architectural freedom. The intractable **partition function** $Z$ is dodged by **contrastive divergence** (down on data, up on samples) or **score matching** ($\nabla_x\log p=-\nabla_x E$, no $Z$) — the latter being exactly what diffusion models do.
 **Self-caught:** first draft self-linked "diffusion model" within its own lesson → switched to plain text, keeping the it-entropy cross-link.
