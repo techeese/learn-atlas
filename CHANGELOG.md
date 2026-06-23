@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 988 — Hard-concept: spectral analysis of time series (content)
+Rotated to time series and filled a genuine gap (confirmed Fourier was scattered elsewhere but the **frequency-domain view of a series** was absent from TS). Added a deep-dive to `ts-arima` (its 6th): the spectral density $S(f)$ and the **periodogram** that estimates it — peaks reveal hidden cycles invisible in the raw wiggle; the **Wiener-Khinchin theorem** (spectrum = Fourier transform of the autocovariance, tying it to the ACF behind ARIMA); computed in $O(n\log n)$ by the **FFT** (cross-linked to a-divide-and-conquer).
+Verified: g()-guarded (proseInMath on the S(f)/O(n log n) math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 6 deep-dives, spectral-density/periodogram/Wiener-Khinchin/frequency-domain + cross-link, 46 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v919` → `atlas-v920`.
+
 ## iter 987 — Glossary: distributional-RL terms (reference)
 Completed the iter-986 thread with **2 glossary terms** — **Distributional reinforcement learning** and **Quantile regression** (the pinball-loss method behind QR-DQN and conformalized quantiles). Glossary **431 → 433** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 391 KaTeX, kErr=0, errs=0. SW cache `atlas-v918` → `atlas-v919`.
