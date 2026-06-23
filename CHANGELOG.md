@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1096 — Hard-concept: coordinate descent (content)
+Rotated to calculus/optimization and filled a genuine gap (Frank-Wolfe also surfaced). Added a deep-dive to `c-multivariable-optimization` (its 5th): **coordinate descent** — minimize one coordinate at a time, $w_j\leftarrow\arg\min_{w_j} f$, each step often closed-form (no step size). Converges for smooth-convex and for smooth + *separable* nonsmooth ($\ell_1$ → soft-thresholding), which is why it's the standard **LASSO**/glmnet solver (cross-linked); non-separable nonsmooth can strand it. Cyclic/randomized/Gauss-Southwell; block versions = SMO (SVM dual), ALS (matrix factorization).
+Verified: g()-guarded (proseInMath on the argmin/separable math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, coordinate-descent/soft-thresholding/separable/glmnet + cross-link, 180 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1027` → `atlas-v1028`.
+
 ## iter 1095 — Glossary: flow-matching terms (reference)
 Completed the iter-1094 thread with **3 glossary terms** — **Flow matching**, **Rectified flow**, and **Continuous normalizing flow (CNF)** (normalizing flow & Neural ODE already present). Glossary **550 → 553** (0 holes).
 Verified: glossary parses with `\frac` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 552 KaTeX, kErr=0, errs=0. SW cache `atlas-v1026` → `atlas-v1027`.
