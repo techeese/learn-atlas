@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 979 — BUGFIX (owner-reported): literal "\n" rendered in ps-sample-spaces-events prose
+Owner reported "a lot of newline in mobile" on `ps-sample-spaces-events`. Root cause: the lesson's content had **44 literal `\n` (backslash+n)** instead of real newlines (an old over-escaped inject — the iter-839 backslash trap, baked into stored data), which render as visible "\n" text between paragraphs/headings (all devices; spotted on mobile).
+Fix: converted literal `\n` → real newline with a **math-aware** pass that protects `$…$`/`$$…$$` spans and `data-code` blocks — critical, because LaTeX commands like `\neq`/`\nabla` contain `\n` (e.g. c-gradient-directional has 56 `\nabla`); a naive global replace corrupted them (caught via gate FAIL 45 + reverted). Only ps-sample-spaces-events had genuine prose corruption; the other lessons' `\n` were LaTeX, correctly left alone.
+Verified: gate ALL GREEN (190 code-exercises run, no proseInMath failures); **full headless 188-lesson sweep — errs=0, kErrLessons=NONE** (no math broken); **visible** literal-`\n` (excluding hidden KaTeX MathML annotations) now **0** in ps and spot-checked la/calc lessons; mobile screenshot confirms clean prose. SW cache `atlas-v910` → `atlas-v911`.
+
 ## iter 978 — Hard-concept: Gaussian mixture models (content)
 Rotated to machine learning and caught a teach-gap: GMM was name-dropped in `ml-kmeans` but never taught. Added a deep-dive (its 4th): a **Gaussian mixture model** assigns soft *responsibilities* $r_{ik}\propto\pi_k\mathcal{N}(x_i\mid\mu_k,\Sigma_k)$, fit by EM (E-step: responsibilities; M-step: responsibility-weighted means/covariances/weights).
 k-means is the limiting case (spherical equal-variance, hard 0/1 assignments — "hard EM"); GMM captures elliptical/overlapping clusters and is a generative density model (sample, score, flag anomalies).
