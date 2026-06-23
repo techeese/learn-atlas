@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 958 — Hard-concept: Brownian motion / Wiener process (content)
+Filled a genuine foundational gap. Added a deep-dive to `ps-normal-distribution` (its 4th): **Brownian motion** is the continuous-time limit of a random walk — a nowhere-differentiable path with independent **Gaussian increments** $W_t-W_s\sim\mathcal{N}(0,t-s)$,
+so it spreads like $\sqrt t$ (diffusive scaling) and the normal distribution is literally the law of its increments (CLT). It's the canonical noise of an SDE $\mathrm{d}X=\mu\,\mathrm{d}t+\sigma\,\mathrm{d}W$ — driving **diffusion models** (cross-linked), Black–Scholes, and Einstein's pollen.
+Verified: g()-guarded (proseInMath on the SDE/increment math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, Brownian/Wiener/diffusive-scaling/SDE + cross-link, 97 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v889` → `atlas-v890`.
+
 ## iter 957 — Code-parity backlog: masked-language-modeling self-supervision (examples / content-parity)
 Backlog (after confirming the optimization metaheuristics — simulated annealing, genetic algorithms, BFGS — are all already covered). Added a code exercise to `dl-pretraining-and-finetuning-paradigm` (had none), in its "Free Labels From the Data Itself" section:
 **MLM input-masking** → **input: the [MASK] sat on [MASK] mat | predict: cat, the** — self-supervision turning raw text into a labeled task. Pairs with SFT's *loss*-masking (955) to contrast pretraining vs fine-tuning. Backlog now 6 lessons.
