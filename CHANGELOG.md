@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1037 — Glossary: Perron-Frobenius terms (reference)
+Completed the iter-1036 thread with **2 glossary terms** — **Perron-Frobenius theorem** and **Irreducible matrix** (its precondition). Glossary **482 → 484** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 459 KaTeX, kErr=0, errs=0. SW cache `atlas-v968` → `atlas-v969`.
+
 ## iter 1036 — Hard-concept: the Perron-Frobenius theorem (content)
 Rotated to linear algebra and filled a genuine gap. Added a deep-dive to `la-eigenvalues-eigenvectors` (its 4th): **Perron-Frobenius** — an irreducible nonnegative matrix has a strictly-largest, simple real eigenvalue $\lambda^\ast$ whose eigenvector is all-positive. The engine behind **PageRank** and **Markov-chain stationary distributions** (both the $\lambda^\ast=1$ Perron eigenvector), and *why* **power iteration** converges (the dominant eigenvalue washes out the rest).
 Verified: g()-guarded (proseInMath on the λ* math); byte-stable JSON re-serialize; gate ALL GREEN; **headless** — 4 deep-dives, Perron-Frobenius/PageRank/stationary-distribution/power-iteration present, 175 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v967` → `atlas-v968`.
