@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1057 — Glossary: interpretability terms (reference)
+Completed the iter-1056 thread with **3 glossary terms** — **Partial dependence plot (PDP)**, **Permutation importance**, and **LIME** (SHAP/Shapley already present). Glossary **505 → 508** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v988` → `atlas-v989`.
+
 ## iter 1056 — Hard-concept: model interpretability (content)
 Rotated to ML and filled a genuine gap. Added a deep-dive to `ml-model-selection` (its 7th, after its "trustworthy deployment" close): **interpretability** — global (**partial dependence**, **permutation importance**) vs local (**LIME**, **SHAP** = Shapley feature attribution, cross-linked). The correlated-feature caveat (perturbing one feature manufactures unrealistic inputs) and the key disclaimer: these explain the *model*, not causality.
 Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 7 deep-dives, interpretability/partial-dependence/permutation/SHAP/LIME present + Shapley cross-link, kErr=0, errs=0. SW cache `atlas-v987` → `atlas-v988`.
