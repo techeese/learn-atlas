@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1104 — Glossary: reward-model terms (reference)
+Completed the iter-1103 thread with **3 glossary terms** — **Process reward model (PRM)**, **Outcome reward model (ORM)**, and **Reward model** (the RLHF base term, also previously undefined). Glossary **561 → 564** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v1035` → `atlas-v1036`.
+
 ## iter 1103 — Hard-concept: process reward models (content)
 Rotated to LLMs and filled a modern gap (process supervision, the reasoning-model paradigm). Added a deep-dive to `l-rlhf-and-preference-optimization` (its 4th): **process reward models** (PRM) score *each step* of a chain of thought (cross-linked), vs outcome reward models that grade only the final answer. Dense step-level signal enables inference search (best-of-$N$ / beam by min-step-score) and far better RL credit assignment, and refuses lucky-right-from-wrong chains. Labels are costly (PRM800K human; Math-Shepherd derives them by Monte-Carlo rollout — an RL value estimate). The core of modern reasoning models.
 Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, PRM/ORM/Math-Shepherd/credit-assignment + cross-link, 97 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1034` → `atlas-v1035`.
