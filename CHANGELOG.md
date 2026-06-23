@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 924 — Glossary: streaming & randomized-algorithm terms (reference)
+Completed the iter-923 thread (and the lesson's Las-Vegas-vs-Monte-Carlo dive) with **3 glossary terms** — **Reservoir sampling**, **Streaming algorithm**, and **Las Vegas algorithm**. Glossary **388 → 391** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v855` → `atlas-v856`.
+
 ## iter 923 — Hard-concept: reservoir sampling (content)
 Varied off the code backlog to fill a genuine algorithms gap. Added a deep-dive to `a-approximation-randomized` (its 4th): **reservoir sampling** — a uniform random sample from a stream of unknown length in one pass with O(1)
 memory. Keep the first item; replace the held item with probability 1/i at step i. The telescoping product (1/i)·(i/(i+1))·…·((n−1)/n) collapses to exactly 1/n; the size-k version (evict with prob k/i) gives k/n. Uses: sampling from huge logs, one-pass DB row sampling, graph-stream edges.
