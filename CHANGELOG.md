@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 957 — Code-parity backlog: masked-language-modeling self-supervision (examples / content-parity)
+Backlog (after confirming the optimization metaheuristics — simulated annealing, genetic algorithms, BFGS — are all already covered). Added a code exercise to `dl-pretraining-and-finetuning-paradigm` (had none), in its "Free Labels From the Data Itself" section:
+**MLM input-masking** → **input: the [MASK] sat on [MASK] mat | predict: cat, the** — self-supervision turning raw text into a labeled task. Pairs with SFT's *loss*-masking (955) to contrast pretraining vs fine-tuning. Backlog now 6 lessons.
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 188)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v888` → `atlas-v889`.
+
 ## iter 956 — Wire LLM fine-tuning → the pretrain-adapt paradigm: LLM → DL (understandability)
 After confirming the concept space is exhausted (label smoothing, class imbalance, Platt scaling, etc. all already covered) and the daily-review/SRS flow is mature, wired a genuine unmade bridge: `l-finetuning`'s opening "a freshly **pretrained** language model" now links to `dl-pretraining-and-finetuning-paradigm` — the general learn-once-adapt-cheaply framework the LLM-specific SFT instantiates (DL ↔ LLM).
 Verified: byte-stable JSON inject; gate ALL GREEN (internal-links lint); **headless** — link renders as "pretrained", kErr=0, errs=0. SW cache `atlas-v887` → `atlas-v888`.
