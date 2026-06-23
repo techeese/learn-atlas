@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1063 — Glossary: copula terms (reference)
+Completed the iter-1062 thread with **3 glossary terms** — **Copula**, **Tail dependence**, and **Probability integral transform**. Glossary **513 → 516** (0 holes).
+Verified: glossary parses with `\mathrm` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 506 KaTeX, kErr=0, errs=0. SW cache `atlas-v994` → `atlas-v995`.
+
 ## iter 1062 — Hard-concept: copulas (content)
 Rotated to probability and filled the long-noted gap. Added a deep-dive to `ps-joint-distributions` (its 4th): **copulas** — Sklar's theorem $F(x,y)=C(F_X(x),F_Y(y))$ separates dependence (the copula, a uniform-margined CDF) from the marginals, so you model each part independently via the probability integral transform. **Tail dependence**: Gaussian copula has none, the $t$-copula has heavy joint tails — and the Gaussian-copula CDO mispricing (Li formula) understated joint defaults before 2008. Cross-linked to correlation (which it generalizes beyond linear).
 Verified: g()-guarded (proseInMath on Sklar's identity); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, copula/Sklar/tail-dependence/2008 + cross-link, 83 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v993` → `atlas-v994`.
