@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 937 — Code-parity backlog: observation normalization (examples / content-parity)
+Backlog, fresh topic (RL). Added a code exercise to `rl-practical-rl` (had none), in its "Observation and Action Normalization" section: z-score raw observations to zero mean, unit variance → **normalized: -0.5, 0.5, -1.5, 1.5, 0**.
+A core practical-RL technique (unscaled inputs destabilize training), now runnable. Backlog now 10 lessons.
+Verified: re-derived in Node; push-wrapper function-replacer + enc (no leakage, no control chars, no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 183)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v868` → `atlas-v869`.
+
 ## iter 936 — Glossary: distribution-distance terms (reference)
 Completed the iter-935 thread (and the JS/Wasserstein dive) with **4 glossary terms** — **Total variation distance**, **Pinsker's inequality**, **Wasserstein distance**, and **Jensen-Shannon divergence** (the last two taught but never defined). Glossary **393 → 397** (0 holes).
 Verified: glossary parses with `\sqrt`/`\mathrm` intact (JSON-form); gate ALL GREEN; **headless** — all 4 render on `#/glossary` (4/4), 362 KaTeX, kErr=0, errs=0. SW cache `atlas-v867` → `atlas-v868`.
