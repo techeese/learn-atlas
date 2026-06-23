@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 914 — Fix code-floor gap + NEW code: the forward diffusion process (examples / content-parity)
+**Caught a real content-parity gap:** `dl-diffusion-models` had **zero code exercises** (below the ≥1 floor). Filled it in §2 with the core mechanism — the forward noising process $x_t=\sqrt{\bar\alpha_t}\,x_0+\sqrt{1-\bar\alpha_t}\,\varepsilon$:
+as $\bar\alpha_t$ falls from ~1 toward 0, signal shrinks and noise grows → **sig 0.99/noise 0.10 | sig 0.77/noise 0.63 | sig 0.32/noise 0.95**. Written arrow-free (no `<`/`>`) for a clean byte-stable inject.
+Verified: re-derived in Node; byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 169)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v845` → `atlas-v846`.
+**Audit finding (corrects an earlier assumption):** a full sweep shows **25 of 188 lessons still have no code exercise** (I'd wrongly assumed the ≥1 floor was universal after spot-checking 4 topics at iter 902). The codeable ones — e.g. c-optimization, c-antiderivatives, ps-p-values, l-transformer-block, rl-model-based — are a backlog of genuine content-parity work for upcoming iterations (some conceptual lessons like l-safety may stay code-free by nature).
+
 ## iter 913 — Glossary: diffusion generative terms (reference)
 Completed the iter-912 thread (and the diffusion lesson's score-matching dive) with **2 glossary terms** — **Classifier-free guidance** and **Score matching** ($\nabla_x\log p(x)$). Glossary **384 → 386** (0 holes).
 Verified: glossary parses with `\varepsilon`/`\nabla` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 353 KaTeX, kErr=0, errs=0. SW cache `atlas-v844` → `atlas-v845`.
