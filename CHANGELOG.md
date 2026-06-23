@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1075 — OWNER REQUEST: extend the rank ladder past Polymath (feature)
+Owner asked "should we have higher rank than polymath?" — investigated and found the ladder was **mis-scaled**: top rank Polymath = 8,500 XP, but realistic engagement earns far more (188 lessons × 50 = 9,400 XP from lessons alone; quizzes ~13k; +code +daily reviews → 25k–100k+), and the achievements already assume 100k (Luminary badge). Once maxed, the rank carrot died for the entire long tail — against the "want to come back" north star. Owner chose **finite named ranks**.
+Added **4 ranks** to `Store.LEVELS` (10 → 14): **Grandmaster (12,000)**, **Oracle (18,000)**, **Laureate (26,000)**, **Magnum (32,000, final)**. Pinned the "Polymath" achievement to the Polymath *rank* (xp ≥ 8,500) instead of "final level" so it keeps its meaning, and updated its description. Mirrored the fallback rank curve in `index.html`.
+Verified: store.js parses; `Store.LEVELS` = 14 ranks (top Magnum @ 32k) in Node; gate ALL GREEN; **headless `#/stats`** — Ranks ladder renders all **14 rows**, Grandmaster + Magnum present, kErr=0, errs=0. (Stats-page screenshot capture was dark/inconclusive — DOM feature, verified via DOM.) SW cache `atlas-v1006` → `atlas-v1007`.
+
 ## iter 1074 — Glossary: survival-analysis terms (reference)
 Completed the iter-1073 thread with **3 glossary terms** — **Hazard function**, **Censoring**, and **Cox proportional hazards**. Glossary **525 → 528** (0 holes).
 Verified: glossary parses with `\exp`/`\int`/`\beta` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 521 KaTeX, kErr=0, errs=0. SW cache `atlas-v1005` → `atlas-v1006`.

@@ -130,7 +130,7 @@
         }
         // level ring + XP bar (LEVELS mirrors store.js)
         var xp = (s && Number.isFinite(s.xp)) ? s.xp : 0;
-        var L = [[0, "Novice"], [150, "Apprentice"], [400, "Student"], [800, "Scholar"], [1400, "Adept"], [2200, "Savant"], [3200, "Sage"], [4500, "Master"], [6200, "Luminary"], [8500, "Polymath"]];
+        var L = [[0, "Novice"], [150, "Apprentice"], [400, "Student"], [800, "Scholar"], [1400, "Adept"], [2200, "Savant"], [3200, "Sage"], [4500, "Master"], [6200, "Luminary"], [8500, "Polymath"], [12000, "Grandmaster"], [18000, "Oracle"], [26000, "Laureate"], [32000, "Magnum"]];
         var idx = 0; for (var i = 0; i < L.length; i++) if (xp >= L[i][0]) idx = i;
         var level = idx + 1, name = L[idx][1], next = L[idx + 1] || null;
         var span = next ? next[0] - L[idx][0] : 1, pct = next ? Math.min(100, Math.round((xp - L[idx][0]) / span * 100)) : 100;

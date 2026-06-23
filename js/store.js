@@ -23,7 +23,11 @@
     { t: 3200, name: "Sage" },
     { t: 4500, name: "Master" },
     { t: 6200, name: "Luminary" },
-    { t: 8500, name: "Polymath" }
+    { t: 8500, name: "Polymath" },
+    { t: 12000, name: "Grandmaster" },
+    { t: 18000, name: "Oracle" },
+    { t: 26000, name: "Laureate" },
+    { t: 32000, name: "Magnum" }
   ];
 
   const ACHIEVEMENTS = [
@@ -47,7 +51,7 @@
     { id: "all-topics",  icon: "🌍", name: "Renaissance",      desc: "Study a lesson in every subject." },
     { id: "century",     icon: "💯", name: "Centurion",        desc: "Review 100 flashcards." },
     { id: "streak30",    icon: "🗓️", name: "Devoted",          desc: "Reach a 30-day streak." },
-    { id: "polymath",    icon: "👑", name: "Polymath",        desc: "Reach the final level." },
+    { id: "polymath",    icon: "👑", name: "Polymath",        desc: "Reach the Polymath rank." },
     { id: "recaller",    icon: "🧠", name: "Explain It Back",  desc: "Self-score your first free recall." },
     { id: "total-recall",icon: "🎓", name: "Total Recall",     desc: "Recall every key point of a lesson." },
     { id: "deep-diver",  icon: "🧗", name: "Deep Diver",       desc: "Reach 80% mastery on 10 concepts." },
@@ -326,7 +330,7 @@
     if (after > before) for (let lv = before + 1; lv <= after; lv++) levelUps.push({ level: lv, name: (LEVELS[lv - 1] || {}).name || "" });
     const lv = levelInfo();
     if (lv.level >= 4) unlock("scholar");
-    if (lv.level >= LEVELS.length) unlock("polymath");
+    if (state.xp >= 8500) unlock("polymath");
     if (state.xp >= 5000) unlock("erudite");
     if (state.xp >= 25000) unlock("sage");
     if (state.xp >= 100000) unlock("luminary");
