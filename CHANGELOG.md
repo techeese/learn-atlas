@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1039 — Glossary: natural-gradient terms (reference)
+Completed the iter-1038 thread with **3 glossary terms** — **Natural gradient**, **Information geometry**, and **Trust region**. Glossary **484 → 487** (0 holes).
+Verified: glossary parses with `\nabla`/`\tfrac` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 461 KaTeX, kErr=0, errs=0. SW cache `atlas-v970` → `atlas-v971`.
+
 ## iter 1038 — Hard-concept: information geometry & the natural gradient (content)
 Rotated to information theory and filled a genuine gap (entropy rate also surfaced). Added a deep-dive to `it-information-in-ml` (its 5th): **Fisher information is the local metric** on the manifold of distributions — $\mathrm{KL}(p_\theta\Vert p_{\theta+d\theta})\approx\tfrac12 d\theta^\top F d\theta$ — so the **natural gradient** $F^{-1}\nabla L$ is steepest descent per unit KL, reparameterization-invariant. TRPO/natural policy gradients (cross-linked) are a KL-trust-region version; K-FAC approximates $F^{-1}$; cousin of mirror descent. Cross-linked to Fisher information.
 Verified: g()-guarded (proseInMath on the metric/natural-gradient math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, information-geometry/natural-gradient/Fisher/TRPO + 2 cross-links, 75 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v969` → `atlas-v970`.
