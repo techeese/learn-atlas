@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1001 — Glossary: Nash-bargaining terms (reference)
+Completed the iter-1000 thread with **2 glossary terms** — **Nash bargaining solution** and **Disagreement point**. Glossary **444 → 446** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 412 KaTeX, kErr=0, errs=0. SW cache `atlas-v932` → `atlas-v933`.
+
 ## iter 1000 🎯 — Step-back (clean) + hard-concept: Nash bargaining (step-back / content)
 **Milestone iteration.** Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE** (literal-`\n` bugfix still holds site-wide), mapNodes=883 — zero regressions since iter 990.
 **Ship:** filled the last identified GT gap — added a **Nash bargaining** deep-dive to `gt-repeated-cooperation` (its 7th, beside the core & Shapley): split surplus by maximizing the product of gains over the **disagreement point**, $\max(u_1-d_1)(u_2-d_2)$; the four axioms (Pareto, symmetry, scale-invariance, IIA), the disagreement point as the seat of power, weighted/asymmetric bargaining, and Kalai-Smorodinsky as the alternative.
