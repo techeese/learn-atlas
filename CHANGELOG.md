@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1043 — Glossary: empirical-Bayes terms (reference)
+Completed the iter-1042 thread with **3 glossary terms** — **Empirical Bayes**, **James-Stein estimator**, and **Shrinkage**. Glossary **490 → 493** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v974` → `atlas-v975`.
+
 ## iter 1042 — Hard-concept: empirical Bayes & shrinkage (content)
 Rotated to probability and filled a genuine gap (copula also surfaced). Added a deep-dive to `ps-point-estimation` (its 6th): **empirical Bayes** estimates the prior from all the data and shrinks each estimate toward the global mean; the **James-Stein** paradox — in ≥3 dimensions, shrinkage *strictly dominates* the MLE in total squared error. A deliberate bias-variance trade; regularization read off a hierarchical **Bayesian** model (cross-linked), with ridge regression as the Gaussian case.
 Verified: g()-guarded (proseInMath on the shrinkage math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 6 deep-dives, empirical-Bayes/James-Stein/shrink/ridge + cross-link, 95 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v973` → `atlas-v974`.
