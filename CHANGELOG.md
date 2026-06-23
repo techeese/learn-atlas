@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 962 — Hard-concept: the moment generating function (content)
+Fixed a self-introduced gap: MGF was a glossary term (959) but **never actually taught**. Added a deep-dive to `ps-expectation-variance` (its 4th): $M(t)=\mathbb{E}[e^{tX}]$ packs all moments into one function ($M^{(k)}(0)=\mathbb{E}[X^k]$);
+it uniquely determines the distribution, the MGF of a sum of independents is the product (convolution → multiplication), and that's the cleanest CLT proof (standardized sum → $e^{t^2/2}$). Notes the existence caveat → characteristic function.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN; **headless** — 4 deep-dives, MGF/uniquely-determines/CLT/characteristic-function present, 112 KaTeX, kErr=0, errs=0. (Traced the smoke's rawDollar=9 to **pre-existing escaped money signs** like "\$100" in the lesson — present with the dive closed; the MGF dive adds zero.) SW cache `atlas-v893` → `atlas-v894`.
+
 ## iter 961 — Wire random walk → Brownian motion: TS → probability (understandability)
 After confirming the concept space is exhausted (Fano's inequality, control variates, VCG, RL baselines all already covered), wired a clean unmade bridge: the bolded **random walk** in `ts-stationarity`'s random-walk deep-dive now links to `ps-normal-distribution`, where Brownian motion — its continuous-time limit — lives. Discrete (TS) → continuous (probability), completing the random-walk ↔ Brownian arc.
 Verified: push-wrapper function-replacer + enc, unique anchor (no leakage/control chars); gate ALL GREEN (internal-links lint); **headless** — link renders as "random walk", kErr=0, errs=0. SW cache `atlas-v892` → `atlas-v893`.
