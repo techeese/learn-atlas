@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 885 — NEW code exercise: the DQN target & TD loss (examples / hands-on)
+Confirmed references & the placement test already cover all 11 topics (only the playground had lagged), then added a code exercise to `rl-dqn`, which had none, in its "Worked Example: One Gradient Step" section. One DQN step: target $y = r + \gamma\max_a Q_{target}(s',a)$, loss $(Q(s,a)-y)^2$ → **target y = 5.95, TD loss = 2.10**. DQN-specific (the existing Q-learning code is tabular); shows the regression-target framing.
+**Self-caught:** a `node -e '...'` inject broke on an apostrophe in "network's" (closed the shell quote) — re-ran via a `.cjs` file. The failed command never wrote or bumped SW, so state stayed clean.
+Verified: re-derived in Node; function-replacer inject (push-wrapper, no leakage, no control chars); **gate ALL GREEN — code-exercises verified (now 165)**; **headless** — Run executes, output exactly right, kErr=0, errs=0. SW cache `atlas-v816` → `atlas-v817`.
+
 ## iter 884 — Playground now covers all 11 topics (new functionality)
 The ROADMAP freshening surfaced a real functional gap: the Code Playground's example-snippet dropdown covered only 9 topics — the two newest, **Time Series** and **Game Theory**, had no snippets. Added one of each in **both languages**: a **Moving average** (SMA smoothing) and the **Iterated Prisoner's Dilemma** (tit-for-tat vs always-defect → TFT/TFT [15,15], TFT/AllD [4,9]). Playground example coverage now matches the site's 11 topics.
 Verified: JS snippets re-run in Node (SMA + IPD outputs correct); playground.js parses; all 11 topics confirmed present; gate ALL GREEN; **headless** — playground loads, dropdown lists both new snippets (Moving average, Prisoner's Dilemma), errs=0. ROADMAP "playground (all 9 topics)" → "all 11". SW cache `atlas-v815` → `atlas-v816`.
