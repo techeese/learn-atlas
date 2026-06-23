@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 932 — NEW viz: reservoir sampling is uniform (visualizations)
+First new viz since 905 — gave the iter-923 reservoir-sampling deep-dive its visual: the **157th widget, `a-reservoir-sampling`** in `a-approximation-randomized`. Bars show how often each of 8 stream positions was the
+survivor across many simulated runs, against a dashed 1/n line. Slide the trial count: noisy at 50 trials, but the bars **flatten onto 1/n** by a few thousand — every position equally likely despite the lopsided-looking 1/i rule.
+Verified: uniformity re-derived in Node (~0.125 each); gate ALL GREEN (now **157 widgets**); **headless** — lab mounts, spread (max−min freq) falls 0.20 (50 trials) → 0.01 (8000), kErr=0, errs=0; screenshot shows all 8 bars on the 1/n line. SW cache `atlas-v863` → `atlas-v864`.
+
 ## iter 931 — Code-parity backlog: Euclid's GCD as a loop invariant (examples / content-parity)
 Backlog, fresh topic (algorithms). Added a code exercise to `a-correctness-invariants` (had none), in its "loop-invariant method" section: **Euclid's GCD**, whose correctness proof *is* a loop invariant (gcd(a,b) preserved by (a,b)→(b, a mod b)) → **gcd(48, 36) = 12, gcd(1071, 462) = 21**.
 The canonical invariant example, now runnable. Backlog now 13 lessons.

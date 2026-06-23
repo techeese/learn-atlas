@@ -8308,4 +8308,48 @@
     draw();
   });
 
+
+  /* ========================================================
+     157. Reservoir sampling: uniform despite the 1/i rule (algorithms)
+     ======================================================== */
+  register({ id: 'a-reservoir-sampling', topic: 'algorithms', title: 'Reservoir sampling: uniform out of a biased-looking rule', blurb: 'Reservoir sampling keeps one item from a stream of n: hold the first, then replace the held item with probability 1/i as the i-th arrives. The rule looks lopsided — early items face many chances to be evicted, late items almost none — yet every position ends up equally likely. Each bar is how often that position was the survivor across many simulated streams; the dashed line is the ideal 1/n. Slide the trial count: with few trials the bars are noisy, but they flatten onto 1/n as the trials pile up.' },
+  function (root) {
+    const W = 480, H = 290, padL = 40, padR = 16, padT = 20, padB = 40;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const n = 8;
+    let T = 2000;
+    function trial() { let held = 0; for (let i = 1; i < n; i++) { if (Math.random() < 1 / (i + 1)) held = i; } return held; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const cnt = new Array(n).fill(0);
+      for (let t = 0; t < T; t++) cnt[trial()]++;
+      const freq = cnt.map(x => x / T);
+      const uni = 1 / n, yMax = 0.25;
+      const plotW = W - padL - padR, plotH = H - padT - padB, baseY = padT + plotH;
+      const Y = v => baseY - (v / yMax) * plotH;
+      // y gridlines
+      ctx.strokeStyle = p.line; ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [0, 0.125, 0.25].forEach(v => { const yy = Y(v); ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR, yy); ctx.stroke(); ctx.fillText(v.toFixed(3), padL - 4, yy + 3); });
+      // bars
+      const bw = plotW / n * 0.62, gap = plotW / n;
+      freq.forEach((f, i) => {
+        const x = padL + i * gap + (gap - bw) / 2;
+        ctx.fillStyle = p.violet; ctx.fillRect(x, Y(f), bw, baseY - Y(f));
+        ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText(i + 1, x + bw / 2, baseY + 14);
+      });
+      // uniform reference line
+      ctx.strokeStyle = p.gold; ctx.setLineDash([5, 4]); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(padL, Y(uni)); ctx.lineTo(W - padR, Y(uni)); ctx.stroke(); ctx.lineWidth = 1; ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.textAlign = 'left'; ctx.fillText('1/n', W - padR - 22, Y(uni) - 4);
+      const spread = Math.max.apply(null, freq) - Math.min.apply(null, freq);
+      info.innerHTML = 'trials = <b style="color:' + p.violet + '">' + T + '</b>. Spread (max − min frequency) = <b>' + spread.toFixed(3) + '</b>; the ideal is <b style="color:' + p.gold + '">' + uni.toFixed(3) + '</b> for every position. ' +
+        (T >= 3000 ? 'With many trials the bars sit right on 1/n — uniform, exactly as the proof promises.' : 'Noisy so far — raise the trial count and watch the bars level off.');
+    }
+    slider(ctl, { label: 'trials', min: 50, max: 8000, step: 50, value: T, fmt: v => v.toFixed(0), onInput: v => { T = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Reservoir sampling uniformity. Eight bars show how often each stream position was the surviving sample across many simulated runs, against a dashed reference line at one over n. A trials slider increases the number of simulations; with few trials the bars are uneven, and as trials grow they converge onto the 1/n line, showing every position is equally likely despite the 1/i replacement rule.');
+    draw();
+  });
+
 })();
