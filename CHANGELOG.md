@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 993 — Hard-concept: rate-distortion theory (content)
+Rotated to information theory and filled a genuine gap: rate-distortion was name-dropped in `it-information-in-ml` but never taught. Added a deep-dive (its 4th): the **rate-distortion function** $R(D)=\min I(X;\hat X)$ s.t. distortion $\le D$ — convex, decreasing, $R(0)=H$; the Gaussian case $R(D)=\tfrac12\log_2(\sigma^2/D)$ ("6 dB per bit").
+The modern hook: a **VAE's objective *is* a rate-distortion trade-off** — KL-to-prior = rate, reconstruction = distortion, β slides along $R(D)$ (cross-linked to dl-autoencoders-vae).
+Verified: g()-guarded (proseInMath on the R(D)/MI math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, rate-distortion/lossy/6-dB/VAE present + cross-link, 67 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v924` → `atlas-v925`.
+
 ## iter 992 — Glossary: delta-method & asymptotic-normality terms (reference)
 Completed the iter-991 thread with **2 glossary terms** — **Delta method** and **Asymptotic normality** (the property tying together the CLT, MLE standard errors, and the delta method). Glossary **436 → 438** (0 holes).
 Verified: glossary parses with `\sqrt`/`\nabla` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 397 KaTeX, kErr=0, errs=0. SW cache `atlas-v923` → `atlas-v924`.
