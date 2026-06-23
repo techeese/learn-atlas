@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 919 — Code-parity backlog: model-based RL (learn + plan) (examples / content-parity)
+Backlog, fresh topic (RL). Added a code exercise to `rl-model-based` (had none), spanning its "learn the model" + "plan" sections: estimate transition probabilities from observed transitions, then plan a one-step Bellman backup with the
+learned model → **learned P(B)=0.75 P(C)=0.25 gives Q(A)=5.88**. Shows both halves of model-based RL in one run. Backlog now 20 lessons.
+**Self-caught:** first draft had `->` in a comment (a `>`); my no-`<`/`>` guard rejected it pre-write — reworded, no escaping needed.
+Verified: re-derived in Node; push-wrapper function-replacer + enc (no leakage, no control chars); **gate ALL GREEN — code-exercises verified (now 173)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v850` → `atlas-v851`.
+
 ## iter 918 — Code-parity backlog: Newton's method for optimization (examples / content-parity)
 Back to the code backlog (fresh topic — calculus). Added a code exercise to `c-optimization` (had none), in its "set the derivative to zero" section: **Newton's method** minimizing $f(x)=e^x-2x$ by solving $f'(x)=0$ with the
 second derivative → **min at x = 0.6931 (ln 2 = 0.6931)** — quadratic convergence to the true minimum. Backlog now 21 lessons.
