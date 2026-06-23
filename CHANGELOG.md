@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 997 — Hard-concept: conjugate gradient (content)
+Rotated to linear algebra and filled a genuine gap: conjugate gradient was absent. Added a deep-dive to `la-inverse-and-systems` (its 4th): solve $A\mathbf{x}=\mathbf{b}$ (SPD) / minimize $\tfrac12\mathbf{x}^\top A\mathbf{x}-\mathbf{b}^\top\mathbf{x}$ using only matrix-vector products — **$A$-orthogonal (conjugate) directions** that never undo prior progress (unlike steepest descent's zig-zag, cross-linked),
+$\le n$ steps exactly, error rate $((\sqrt\kappa-1)/(\sqrt\kappa+1))^k$ → preconditioning; the workhorse behind PDE solvers, GP inference, and Newton-CG.
+Verified: g()-guarded (proseInMath on the quadratic/rate math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, conjugate-gradient/A-orthogonal/condition-number/precondition + cross-link, 196 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v928` → `atlas-v929`.
+
 ## iter 996 — Glossary: price-of-anarchy terms (reference)
 Completed the iter-995 thread with **2 glossary terms** — **Price of anarchy** and **Braess's paradox**. Glossary **440 → 442** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v927` → `atlas-v928`.
