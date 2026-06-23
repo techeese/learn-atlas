@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1077 — Glossary: line-search & quasi-Newton terms (reference)
+Completed the iter-1076 thread with **3 glossary terms** — **Line search**, **Wolfe conditions**, and **Quasi-Newton method (BFGS)** (verified taught in c-extrema/c-linearization). Glossary **528 → 531** (0 holes) — crossed 530.
+Verified: glossary parses with `\alpha`/`\leftarrow` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 526 KaTeX, kErr=0, errs=0. SW cache `atlas-v1008` → `atlas-v1009`.
+
 ## iter 1076 — Hard-concept: line search & the Wolfe conditions (content)
 Rotated to calculus/optimization and filled a genuine gap (BFGS, interior-point, autodiff, Newton all already present). Added a deep-dive to `c-gradient-descent-convergence` (its 5th): **line search** — having picked a direction $p$, choose the step $\alpha$ in $x\leftarrow x+\alpha p$. The **Wolfe conditions** — Armijo sufficient decrease $f(x+\alpha p)\le f(x)+c_1\alpha\nabla f^\top p$ + curvature $\nabla f(x+\alpha p)^\top p\ge c_2\nabla f^\top p$ — bracket a useful step; **backtracking** (halve until Armijo) is the cheap default; curvature keeps quasi-Newton's Hessian PD. A deep net's **learning rate** (cross-linked) is the cheap per-minibatch stand-in.
 Verified: g()-guarded (proseInMath on the Armijo/Wolfe math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, line-search/Wolfe/Armijo/backtracking + cross-link, 85 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1007` → `atlas-v1008`.
