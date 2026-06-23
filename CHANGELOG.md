@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 977 — Glossary: autodiff terms (reference)
+Completed the iter-975/976 autodiff thread with **2 glossary terms** — **Automatic differentiation (autodiff)** and **Dual number**. Glossary **424 → 426** (0 holes).
+Verified: glossary parses with `\epsilon` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 384 KaTeX, kErr=0, errs=0. SW cache `atlas-v908` → `atlas-v909`.
+
 ## iter 976 — Code: forward-mode autodiff with dual numbers (examples)
 Made the iter-975 autodiff dive runnable — a code exercise in `c-chain-rule`: a **dual number** pairs each value with its derivative, and overloaded `mul`/`add` carry the chain rule automatically. Differentiates f(x)=x²+3x at x=2 → **f(2) = 10, f'(2) = 7** (matches exact 2x+3) with no symbolic math. Completes the thread (content 975 + code 976).
 Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 190)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v907` → `atlas-v908`.
