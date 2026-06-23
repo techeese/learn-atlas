@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 960 — Step-back (clean) + NEW viz: Brownian motion's √t spread (step-back / visualizations)
+**kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 950.
+**Ship:** completed the Brownian thread (958 content + 959 glossary + **960 viz**) — the **162nd widget, `ps-brownian-motion`** in `ps-normal-distribution`: 26 jagged paths fan from 0 inside a dashed ±1σ/±2σ **√t envelope**, with a drift slider μ that tilts the fan along μt and a reseed button. Diffusive spreading, made visible.
+Verified: drift behavior smoked (mean 0 at μ=0, 2 at μ=2); gate ALL GREEN (now **162 widgets**); full sweep clean; **headless** — lab mounts, reseed button present, kErr=0, errs=0; screenshot shows the √t fan + tilted mean. SW cache `atlas-v891` → `atlas-v892`.
+
 ## iter 959 — Glossary: stochastic-process terms (reference)
 Completed the iter-958 thread (plus the flagged MGF gap) with **4 glossary terms** — **Brownian motion (Wiener process)**, **Stochastic process**, **Stochastic differential equation (SDE)**, and **Moment generating function (MGF)**. Glossary **413 → 417** (0 holes).
 Verified: glossary parses with `\sim`/`\mathrm` intact (JSON-form); gate ALL GREEN; **headless** — all 4 render on `#/glossary` (4/4), 371 KaTeX, kErr=0, errs=0. SW cache `atlas-v890` → `atlas-v891`.

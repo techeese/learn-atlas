@@ -8523,4 +8523,44 @@
     draw();
   });
 
+
+  /* ========================================================
+     162. Brownian motion: paths fanning within the √t envelope (probability & statistics)
+     ======================================================== */
+  register({ id: 'ps-brownian-motion', topic: 'probability-statistics', title: 'Brownian motion: the √t spread', blurb: 'Many Brownian paths all start at 0 and wander by independent Gaussian steps. Two things to see: the cloud of paths spreads like √t (the dashed envelope is ±1 and ±2 standard deviations, σ√t), and at any fixed time the paths are normally distributed. Add drift μ and the whole fan tilts along the line μt while still diffusing around it — exactly the SDE dX = μ dt + σ dW.' },
+  function (root) {
+    const W = 500, H = 300, padL = 32, padR = 14, padT = 14, padB = 26;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const M = 26, STEPS = 100, T = 1, dt = T / STEPS, sigma = 1;
+    let mu = 0, seed = 7;
+    function mk(s) { return () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const r = mk(seed); const gauss = () => (r() + r() + r() + r() - 2) * 1.0;
+      const YLO = -3.2, YHI = 3.2, plotW = W - padL - padR, plotH = H - padT - padB, baseY = padT + plotH;
+      const X = t => padL + t / T * plotW, Y = v => baseY - (v - YLO) / (YHI - YLO) * plotH;
+      // zero axis
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(W - padR, Y(0)); ctx.stroke();
+      // +/- 1 and 2 sigma*sqrt(t) envelope around mu*t
+      ctx.strokeStyle = p.gold; ctx.setLineDash([4, 3]);
+      [1, 2, -1, -2].forEach(k => { ctx.beginPath(); for (let s = 0; s <= STEPS; s++) { const t = s * dt; const m = mu * t + k * sigma * Math.sqrt(t); s ? ctx.lineTo(X(t), Y(m)) : ctx.moveTo(X(t), Y(m)); } ctx.stroke(); });
+      ctx.setLineDash([]);
+      // mean line mu*t
+      ctx.strokeStyle = p.sage; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(T), Y(mu * T)); ctx.stroke(); ctx.lineWidth = 1;
+      // paths
+      ctx.strokeStyle = 'rgba(160,140,210,0.55)';
+      let finalSum = 0;
+      for (let m = 0; m < M; m++) { let v = 0; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); for (let s = 1; s <= STEPS; s++) { v += mu * dt + sigma * gauss() * Math.sqrt(dt); ctx.lineTo(X(s * dt), Y(v)); } ctx.stroke(); finalSum += v; }
+      info.innerHTML = 'drift μ = <b style="color:' + p.sage + '">' + mu.toFixed(2) + '</b>. At t=1 the spread is ≈ σ√t = <b style="color:' + p.gold + '">1.00</b> (the envelope), mean ≈ μt = <b>' + (mu * T).toFixed(2) + '</b>. ' +
+        'Every path is continuous yet jagged at every scale — and Gaussian at each fixed time.';
+    }
+    slider(ctl, { label: 'drift μ', min: -2, max: 2, step: 0.25, value: mu, fmt: v => v.toFixed(2), onInput: v => { mu = v; draw(); } });
+    button(controls(root), '🎲 New paths', () => { seed = (seed * 16807 + 1) & 0x7fffffff; draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Brownian motion. Twenty-six random paths start at zero and fan outward over time within a dashed envelope at plus or minus one and two standard deviations, sigma times square-root t. A drift slider mu tilts the whole fan along the line mu times t while it keeps diffusing; a New-paths button reseeds.');
+    draw();
+  });
+
 })();
