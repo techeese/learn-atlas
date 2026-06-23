@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 981 — NEW viz: GMM soft responsibilities vs hard k-means (visualizations)
+Gave the iter-978 GMM dive its visual — the **166th widget, `ml-gmm-responsibility`** in `ml-kmeans`: two Gaussian densities at ±1.5 and the gold responsibility curve $r(x)=N_B/(N_A+N_B)$. Slide the component width σ: wide → a gentle ramp (soft, shared memberships); narrow → the ramp steepens into a hard step at the midpoint — **that limit is exactly k-means**. "k-means is hard GMM," made visible.
+Verified: responsibility re-derived in Node; gate ALL GREEN (now **166 widgets**); **headless** — lab mounts, midpoint slope sharpens 0.12 (σ=2.5) → 6.09 (σ=0.35) with the "k-means" label appearing, kErr=0, errs=0; screenshot shows the sigmoid over the two densities. SW cache `atlas-v912` → `atlas-v913`.
+
 ## iter 980 — BUGFIX follow-up: eradicate literal "\n" site-wide (homework solutions)
 Audited every rendered string field (content/mcq/examples/homework/flashcards/glossary) for the iter-979 corruption, math-aware. Findings: content already clean (979); examples/flashcards/glossary clean; **mcq "hits" were false positives** (`\nabla` inside `\(…\)` math); genuine corruption remained in **homework solutions** — step-by-step traces (e.g. `a-comparison-sorts`: `pivot=3.\nj=0:…`) and `\n\n` paragraph breaks rendering as visible "\n".
 Fix: converted **67 literal `\n` → real newline across 16 homework fields** (rl 47, algorithms 15, llm 5) with a math-aware pass protecting `$…$`, `$$…$$`, `\(…\)`, `\[…\]` — matching the convention of the 24 already-clean step-trace solutions.

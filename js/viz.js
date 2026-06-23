@@ -8674,4 +8674,43 @@
     draw();
   });
 
+
+  /* ========================================================
+     166. GMM soft responsibilities sharpening to a hard k-means step (machine learning)
+     ======================================================== */
+  register({ id: 'ml-gmm-responsibility', topic: 'machine-learning', title: 'GMM responsibilities: soft vs hard (k-means)', blurb: 'Two Gaussian clusters sit at −1.5 and +1.5. A Gaussian mixture model assigns each point x a soft responsibility — the posterior probability it belongs to the right cluster, r(x) = N_B / (N_A + N_B) — shown as the rising curve. Widen the components (σ) and the curve is a gentle ramp: points in the middle are genuinely shared. Shrink σ and the ramp steepens into a hard step at the midpoint — that limit is exactly k-means, which commits every point to its nearest center. "k-means is hard GMM," made visible.' },
+  function (root) {
+    const W = 480, H = 300, padL = 36, padR = 14, padT = 16, padB = 28;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let sigma = 1.2;
+    const muA = -1.5, muB = 1.5, XLO = -5, XHI = 5;
+    function Ngauss(x, mu, s) { return Math.exp(-((x - mu) * (x - mu)) / (2 * s * s)); }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const plotW = W - padL - padR, plotH = H - padT - padB, baseY = padT + plotH;
+      const X = x => padL + (x - XLO) / (XHI - XLO) * plotW, Y = v => baseY - v * plotH;
+      // grid: 0, .5, 1 for responsibility
+      ctx.strokeStyle = p.line; ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [0, 0.5, 1].forEach(v => { const yy = Y(v); ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR, yy); ctx.stroke(); ctx.fillText(v.toFixed(1), padL - 4, yy + 3); });
+      // density curves (scaled to 0.42 height), A=sage, B=violet
+      [[muA, p.sage], [muB, p.violet]].forEach(([mu, col]) => { ctx.strokeStyle = col; ctx.globalAlpha = 0.55; ctx.beginPath(); for (let i = 0; i <= 240; i++) { const x = XLO + i / 240 * (XHI - XLO); const d = Ngauss(x, mu, sigma) * 0.42; i ? ctx.lineTo(X(x), Y(d)) : ctx.moveTo(X(x), Y(d)); } ctx.stroke(); ctx.globalAlpha = 1; });
+      // responsibility curve r_B(x) = N_B/(N_A+N_B)
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (let i = 0; i <= 240; i++) { const x = XLO + i / 240 * (XHI - XLO); const a = Ngauss(x, muA, sigma), b = Ngauss(x, muB, sigma); const r = b / (a + b); i ? ctx.lineTo(X(x), Y(r)) : ctx.moveTo(X(x), Y(r)); }
+      ctx.stroke(); ctx.lineWidth = 1;
+      // slope of r at midpoint = sharpness; compare to hard step
+      const eps = 0.01, r1 = (() => { const a = Ngauss(eps, muA, sigma), b = Ngauss(eps, muB, sigma); return b / (a + b); })();
+      const r0 = 0.5, slope = (r1 - r0) / eps;
+      ctx.fillStyle = p.mute; ctx.textAlign = 'center'; ctx.fillText('A (−1.5)', X(muA), baseY + 16); ctx.fillText('B (+1.5)', X(muB), baseY + 16);
+      info.innerHTML = 'σ = <b style="color:' + p.gold + '">' + sigma.toFixed(2) + '</b>. Midpoint slope of the responsibility curve = <b>' + slope.toFixed(2) + '</b>. ' +
+        (sigma < 0.6 ? 'Steep ramp → a near-hard step: this is <b>k-means</b>.' : 'Gentle ramp → genuinely <b>soft</b> memberships; middle points are shared.');
+    }
+    slider(ctl, { label: 'component width σ', min: 0.35, max: 2.5, step: 0.05, value: sigma, fmt: v => v.toFixed(2), onInput: v => { sigma = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Gaussian mixture responsibilities. Two Gaussian density curves sit at minus 1.5 and plus 1.5, and a gold curve shows the responsibility (posterior probability) of the right cluster, rising from 0 to 1. A width slider sigma controls overlap: large sigma gives a gentle ramp (soft, shared memberships), small sigma steepens it into a hard step at the midpoint, which is k-means.');
+    draw();
+  });
+
 })();
