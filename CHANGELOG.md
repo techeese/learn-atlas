@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1053 — Glossary: convex-conjugate terms (reference)
+Completed the iter-1052 thread with **3 glossary terms** — **Convex conjugate (Fenchel transform)**, **Fenchel-Young inequality**, and **Log-sum-exp**. Glossary **500 → 503** (0 holes).
+Verified: glossary parses with `\sup`/`\langle`/`\nabla` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 488 KaTeX, kErr=0, errs=0. SW cache `atlas-v984` → `atlas-v985`.
+
 ## iter 1052 — Hard-concept: the convex conjugate (Fenchel) (content)
 Rotated to calculus and filled a genuine gap — the convex conjugate was referenced in mirror-descent & f-divergence dives but never *taught* there (envelope theorem also surfaced). Added a deep-dive to `c-duality-kkt` (its 4th): $f^\ast(y)=\sup_x(\langle y,x\rangle-f(x))$ describes a convex function by its slopes; always convex, $f^{\ast\ast}=f$, **Fenchel-Young** $f(x)+f^\ast(y)\ge\langle x,y\rangle$ (so $\nabla f,\nabla f^\ast$ are inverse). Neg-entropy → **log-sum-exp** (softmax); the engine of Lagrangian/Fenchel duality, **mirror descent** (cross-linked), f-GAN, and the Legendre transform.
 Verified: g()-guarded (proseInMath on the conjugate math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, convex-conjugate/Fenchel-Young/log-sum-exp/Legendre + cross-link, 81 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v983` → `atlas-v984`.
