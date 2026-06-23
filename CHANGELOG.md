@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 926 — Code-parity backlog: the discounted return (examples / content-parity)
+Backlog, fresh topic (RL). Added a code exercise to `rl-what-is-rl` (had none), in its "A Tiny Episode" worked example: the **discounted return** $G=\sum_t\gamma^t r_t$ — the quantity an agent actually maximizes →
+**discounted return G = 4.807** (rewards [1,0,2,3], γ=0.9). The most foundational RL number, now runnable in the intro lesson. Backlog now 16 lessons.
+Verified: re-derived in Node; push-wrapper function-replacer + enc (no leakage, no control chars, no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 177)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v857` → `atlas-v858`.
+
 ## iter 925 — Code-parity backlog: RAG retrieval by cosine similarity (examples / content-parity)
 Backlog, fresh topic (LLM). Added a code exercise to `l-rag-and-tools` (had none), after its worked example: retrieval as similarity ranking — score documents by cosine similarity to the query → **D1:1.00 D2:0.00 D3:1.00**
 (D1 identical, D3 a scaled copy → both score 1; D2 orthogonal → 0). Makes the core RAG retrieval step runnable. Backlog now 17 lessons.
