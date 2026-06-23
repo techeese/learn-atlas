@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1033 — Glossary: oligopoly terms (reference)
+Completed the iter-1032 thread with **3 glossary terms** — **Cournot competition**, **Bertrand competition**, and **Oligopoly**. Glossary **477 → 480** (0 holes) — crossed 480.
+Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v964` → `atlas-v965`.
+
 ## iter 1032 — Hard-concept: Cournot vs Bertrand competition (content)
 Rotated to game theory and filled a genuine gap: Cournot was only name-dropped (in the Stackelberg dive). Added a deep-dive to `gt-foundations` (its 8th): **oligopoly** competition — **Cournot** (firms pick quantities → between monopoly and competition, → competitive as n grows) vs **Bertrand** (firms pick prices → the **Bertrand paradox**: two firms suffice to drive price to marginal cost). The strategic variable (quantity vs price) reshapes the outcome; resolved by capacity, differentiation, or repeated play; sequential quantity = Stackelberg.
 Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN; **headless** — 8 deep-dives, Cournot/Bertrand-paradox/marginal-cost/oligopoly present, kErr=0, errs=0. SW cache `atlas-v963` → `atlas-v964`.
