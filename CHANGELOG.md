@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 888 — Hard-concept: Fisher information & the Cramér–Rao bound (content)
+Filled a genuine estimation-theory gap. Added a deep-dive to `ps-point-estimation` (its 4th, extending the existing MLE/variance dives): **Fisher information** $I(\theta)$ is the expected curvature of the log-likelihood (how sharply the data
+pins down θ); the **Cramér–Rao bound** $\mathrm{Var}(\hat\theta)\ge 1/I(\theta)$ is the hard floor on *any* unbiased estimator's variance. Fisher info is additive over samples (→ the √n rule), the **MLE** is asymptotically efficient (achieves the bound — cross-linked), and the same curvature reappears in natural-gradient optimization and the Laplace approximation.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint confirms the MLE link; proseInMath on the Fisher/CR math); **headless** — 4 deep-dives, Fisher/Cramér/efficient + cross-link present, 74 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v819` → `atlas-v820`.
+
 ## iter 887 — NEW viz: information gain at a decision-tree split (visualizations)
 Gave the iter-886 info-gain bridge its visual — the **153rd widget, `ml-information-gain`** in `ml-decision-trees`: 8 points (4 of each class) on a line with a draggable split; a bar shows information gain = parent entropy − weighted child
 entropy. Drag the cut — the gain **peaks at 1.0 bit exactly between the classes** (both children pure, zero entropy) and shrinks for any mixed split. Makes "the tree picks the split that tells you the most about the label" something you see.
