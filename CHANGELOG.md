@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 994 — Glossary: rate-distortion terms (reference)
+Completed the iter-993 thread with **2 glossary terms** — **Rate-distortion function** and **Lossy compression**. Glossary **438 → 440** (0 holes) — crossed 440.
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 402 KaTeX, kErr=0, errs=0. SW cache `atlas-v925` → `atlas-v926`.
+
 ## iter 993 — Hard-concept: rate-distortion theory (content)
 Rotated to information theory and filled a genuine gap: rate-distortion was name-dropped in `it-information-in-ml` but never taught. Added a deep-dive (its 4th): the **rate-distortion function** $R(D)=\min I(X;\hat X)$ s.t. distortion $\le D$ — convex, decreasing, $R(0)=H$; the Gaussian case $R(D)=\tfrac12\log_2(\sigma^2/D)$ ("6 dB per bit").
 The modern hook: a **VAE's objective *is* a rate-distortion trade-off** — KL-to-prior = rate, reconstruction = distortion, β slides along $R(D)$ (cross-linked to dl-autoencoders-vae).
