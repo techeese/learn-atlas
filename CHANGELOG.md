@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 904 — Hard-concept: GARCH / volatility clustering (content)
+Filled the flagged TS gap. Added a deep-dive to `ts-arima` (its 4th): **GARCH** models *time-varying variance* — the counterpart to ARIMA's mean model. Returns show **volatility clustering** (big moves bunch together); GARCH(1,1) is
+$\sigma_t^2 = \omega + \alpha\,\varepsilon_{t-1}^2 + \beta\,\sigma_{t-1}^2$, with persistence $\alpha+\beta$ governing how long volatility shocks linger. ARIMA-GARCH together forecast *where* the series goes and *how uncertain* that is — the basis of honest prediction intervals, Value-at-Risk, and option pricing.
+**Push-wrapper LaTeX (the iter-839 trap):** time-series.js is escaped-string form, so enc escapes backslashes first; verified `\sigma_t^2` survives literally and the critical **headless kErr=0**.
+Verified: g()-guarded; parse via `new Function` (no leakage, no control chars); gate ALL GREEN; headless — 4 deep-dives, GARCH/clustering/heteroskedasticity/persistence present, 39 KaTeX, **kErr=0**, rawDollar=0, errs=0. SW cache `atlas-v835` → `atlas-v836`.
+
 ## iter 903 — Glossary: correlated equilibrium & no-regret learning (reference)
 Completed the iter-902 thread with **2 glossary terms** — **Correlated equilibrium** and **No-regret learning** (both mentioned across the GT topic but undefined). Glossary **375 → 377** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v834` → `atlas-v835`.
