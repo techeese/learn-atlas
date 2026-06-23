@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1000 🎯 — Step-back (clean) + hard-concept: Nash bargaining (step-back / content)
+**Milestone iteration.** Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE** (literal-`\n` bugfix still holds site-wide), mapNodes=883 — zero regressions since iter 990.
+**Ship:** filled the last identified GT gap — added a **Nash bargaining** deep-dive to `gt-repeated-cooperation` (its 7th, beside the core & Shapley): split surplus by maximizing the product of gains over the **disagreement point**, $\max(u_1-d_1)(u_2-d_2)$; the four axioms (Pareto, symmetry, scale-invariance, IIA), the disagreement point as the seat of power, weighted/asymmetric bargaining, and Kalai-Smorodinsky as the alternative.
+Verified: g()-guarded (proseInMath); byte-stable JSON re-serialize; gate ALL GREEN; full sweep clean; **headless** — 7 deep-dives, Nash-bargaining/disagreement-point/product-of-gains/Kalai-Smorodinsky present, 41 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v931` → `atlas-v932`.
+
 ## iter 999 — Code: conjugate gradient in a few lines (examples)
 Made the iter-997 CG dive runnable — a code exercise in `la-inverse-and-systems`: solves $A\mathbf{x}=\mathbf{b}$ for SPD $A=\begin{psmallmatrix}4&1\\1&3\end{psmallmatrix}$ using only `matvec(A,p)` products, exact in n=2 steps → **x = [0.091, 0.636], check Ax = [1.000, 2.000]**. $A$ never appears as a stored inverse. Completes the thread (content 997 + glossary 998 + code 999).
 Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>` — used `[0,1].forEach`, not a `<`-loop); **gate ALL GREEN — code-exercises verified (now 192)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v930` → `atlas-v931`.
