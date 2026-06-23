@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 931 — Code-parity backlog: Euclid's GCD as a loop invariant (examples / content-parity)
+Backlog, fresh topic (algorithms). Added a code exercise to `a-correctness-invariants` (had none), in its "loop-invariant method" section: **Euclid's GCD**, whose correctness proof *is* a loop invariant (gcd(a,b) preserved by (a,b)→(b, a mod b)) → **gcd(48, 36) = 12, gcd(1071, 462) = 21**.
+The canonical invariant example, now runnable. Backlog now 13 lessons.
+Verified: re-derived in Node; push-wrapper function-replacer + enc (no leakage, no control chars, no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 180)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v862` → `atlas-v863`.
+
 ## iter 930 — Step-back (clean) + code-parity: statistical power (step-back / content-parity)
 Step-back **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 920 (validates code injections 921–929 + Kolmogorov/reservoir/NTK content).
 **Ship:** code backlog — added a code exercise to `ps-errors-and-power` (had none), completing the hypothesis-testing trio (p-values 915 + power 930): **power n=20: 0.72, n=50: 0.97** — power rising with sample size (one-sample z-test, d=0.5, α=0.05, normal CDF by Abramowitz–Stegun). Backlog now 14 lessons.
