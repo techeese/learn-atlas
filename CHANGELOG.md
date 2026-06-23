@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1056 — Hard-concept: model interpretability (content)
+Rotated to ML and filled a genuine gap. Added a deep-dive to `ml-model-selection` (its 7th, after its "trustworthy deployment" close): **interpretability** — global (**partial dependence**, **permutation importance**) vs local (**LIME**, **SHAP** = Shapley feature attribution, cross-linked). The correlated-feature caveat (perturbing one feature manufactures unrealistic inputs) and the key disclaimer: these explain the *model*, not causality.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 7 deep-dives, interpretability/partial-dependence/permutation/SHAP/LIME present + Shapley cross-link, kErr=0, errs=0. SW cache `atlas-v987` → `atlas-v988`.
+
 ## iter 1055 — Glossary: envelope-theorem terms (reference)
 Completed the iter-1054 thread with **2 glossary terms** — **Envelope theorem** and **Danskin's theorem** (its max-version, behind adversarial/minimax differentiation). Glossary **503 → 505** (0 holes).
 Verified: glossary parses with `\max`/`\frac` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 493 KaTeX, kErr=0, errs=0. SW cache `atlas-v986` → `atlas-v987`.
