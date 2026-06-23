@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 934 — Code-parity backlog: the Fundamental Theorem of Calculus (examples / content-parity)
+Backlog, fresh topic (calculus). Added a code exercise to `c-antiderivatives` (had none), as a capstone before its takeaways: numerically integrating $f'$ recovers $f(b)-f(a)$ — the **Fundamental Theorem** →
+**integral of 2x on [0,3] = 9.000 (FTC: f(3) - f(0) = 9)** (midpoint rule, exact for the linear integrand). Shows *why* antiderivatives matter — they evaluate definite integrals. Backlog now 11 lessons.
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 182)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v865` → `atlas-v866`.
+
 ## iter 933 — Code-parity backlog: token-level F1 for QA (examples / content-parity)
 Backlog, fresh topic (LLM). Added a code exercise to `l-hallucination-and-evaluation` (had none), in its "Evaluating LLMs" section: **token-level F1** (SQuAD-style) giving partial credit for answer overlap →
 **token F1 = 0.91**. The workhorse metric for open-ended QA, now runnable beside the eval discussion. Backlog now 12 lessons.
