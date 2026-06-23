@@ -8352,4 +8352,47 @@
     draw();
   });
 
+
+  /* ========================================================
+     158. Distribution distances: TV, KL, and Pinsker's bound (information theory)
+     ======================================================== */
+  register({ id: 'it-distances', topic: 'information-theory', title: 'TV, KL, and Pinsker: measuring how far apart two distributions are', blurb: 'Two distributions over four outcomes: a fixed p (gold) and an adjustable q (violet). Total variation is half the summed bar-height gap — the largest probability difference any event can show. KL divergence is the information-theoretic gap. Slide q toward p and both shrink to zero together; Pinsker’s inequality guarantees TV never exceeds √(KL/2), so a small KL always means a small, operational TV.' },
+  function (root) {
+    const W = 500, H = 300, padL = 40, padR = 16, padT = 22, padB = 64;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const p = [0.40, 0.30, 0.20, 0.10], uni = [0.25, 0.25, 0.25, 0.25];
+    let t = 0.0;
+    function draw() {
+      const pal = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, W, H);
+      const q = p.map((pi, i) => (1 - t) * uni[i] + t * pi);
+      const n = p.length, yMax = 0.5;
+      const plotW = W - padL - padR, plotH = H - padT - padB, baseY = padT + plotH;
+      const Y = v => baseY - (v / yMax) * plotH;
+      ctx.strokeStyle = pal.line; ctx.fillStyle = pal.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [0, 0.25, 0.5].forEach(v => { const yy = Y(v); ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR, yy); ctx.stroke(); ctx.fillText(v.toFixed(2), padL - 4, yy + 3); });
+      const grp = plotW / n, bw = grp * 0.34;
+      p.forEach((pi, i) => {
+        const x0 = padL + i * grp + grp * 0.5;
+        ctx.fillStyle = pal.gold; ctx.fillRect(x0 - bw - 2, Y(pi), bw, baseY - Y(pi));
+        ctx.fillStyle = pal.violet; ctx.fillRect(x0 + 2, Y(q[i]), bw, baseY - Y(q[i]));
+        ctx.fillStyle = pal.mute; ctx.textAlign = 'center'; ctx.fillText((i + 1), x0, baseY + 14);
+      });
+      ctx.textAlign = 'left'; ctx.fillStyle = pal.gold; ctx.fillText('p', padL, H - 40); ctx.fillStyle = pal.violet; ctx.fillText('q', padL + 22, H - 40);
+      const tv = 0.5 * p.reduce((s, pi, i) => s + Math.abs(pi - q[i]), 0);
+      const kl = p.reduce((s, pi, i) => s + (pi > 0 && q[i] > 0 ? pi * Math.log(pi / q[i]) : 0), 0);
+      const bound = Math.sqrt(kl / 2);
+      info.innerHTML = 'q→p mix t = <b style="color:' + pal.violet + '">' + t.toFixed(2) + '</b>. ' +
+        'TV = <b>' + tv.toFixed(3) + '</b>, KL(p‖q) = <b>' + kl.toFixed(3) + '</b> nats. ' +
+        'Pinsker: TV ≤ √(KL/2) = <b style="color:' + pal.gold + '">' + bound.toFixed(3) + '</b> — ' +
+        (tv <= bound + 1e-9 ? 'holds ✓' : 'VIOLATED') + '. ' +
+        (t > 0.98 ? 'q equals p: both distances are zero.' : 'Slide q onto p to drive both to zero together.');
+    }
+    slider(ctl, { label: 'q → p (mix t)', min: 0, max: 1, step: 0.02, value: t, fmt: v => v.toFixed(2), onInput: v => { t = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Distribution distances. Paired bars over four outcomes show a fixed distribution p in gold and an adjustable q in violet. A slider mixes q from uniform toward p. A readout gives total variation, KL divergence in nats, and the Pinsker bound square-root of KL over two; total variation always stays at or below that bound, and both distances fall to zero as q reaches p.');
+    draw();
+  });
+
 })();

@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 938 — NEW viz: TV, KL & Pinsker's bound (visualizations)
+Gave the iter-935/936 distance thread its visual — the **158th widget, `it-distances`** in `it-cross-entropy-kl`: paired bars for a fixed p (gold) and adjustable q (violet) over 4 outcomes, with live **TV**, **KL**, and the **Pinsker
+bound √(KL/2)**. Slide q toward p: both distances fall to 0 together, and TV never exceeds the bound (holds ✓ at every t). Makes "small KL ⇒ small TV" something you watch happen.
+Verified: TV/KL/Pinsker re-derived in Node (TV=0.2, bound=0.231 at uniform); gate ALL GREEN (now **158 widgets**); **headless** — lab mounts, TV 0.2→0 as t:0→1, Pinsker holds, kErr=0, errs=0; screenshot shows the paired-bar gap = TV. SW cache `atlas-v869` → `atlas-v870`.
+
 ## iter 937 — Code-parity backlog: observation normalization (examples / content-parity)
 Backlog, fresh topic (RL). Added a code exercise to `rl-practical-rl` (had none), in its "Observation and Action Normalization" section: z-score raw observations to zero mean, unit variance → **normalized: -0.5, 0.5, -1.5, 1.5, 0**.
 A core practical-RL technique (unscaled inputs destabilize training), now runnable. Backlog now 10 lessons.
