@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 955 — Code-parity backlog: SFT loss masking (examples / content-parity)
+Backlog, fresh topic (LLM). Added a code exercise to `l-finetuning-and-instruction-tuning` (had none), in its "Constructing One SFT Training Step" worked example: SFT's defining mechanic — cross-entropy averaged over **response tokens only**, prompt masked →
+**SFT loss (response only) = 0.40 (vs all-token 0.66)**. The one detail that makes it instruction tuning rather than more pretraining, now runnable. Backlog now 7 lessons.
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 187)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v886` → `atlas-v887`.
+
 ## iter 954 — NEW viz: cointegration — random walks on a leash (visualizations)
 Promoted cointegration (953 glossary) into a taught, visual concept — the **161st widget, `ts-cointegration`** in `ts-stationarity`, with a framing paragraph: two non-stationary series wander (top panel) yet their **spread stays bounded** (bottom)
 when they share a common trend — a stationary combination of non-stationary series. Slide link strength λ: at λ=1 the spread hugs zero (range 1.0, cointegrated, the basis of pairs trading); at λ=0 it drifts like a random walk (range 9.8).
