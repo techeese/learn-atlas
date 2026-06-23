@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1058 — Hard-concept: the Schur complement (content)
+Rotated to linear algebra and filled a genuine gap (randomized SVD, tensor decomposition also surfaced). Added a deep-dive to `la-inverse-and-systems` (its 5th): the **Schur complement** $M/D=A-BD^{-1}C$ from block elimination — the engine of block inversion/determinants ($\det M=\det D\det(M/D)$). **Gaussian conditioning** is a Schur complement ($\Sigma_{xx}-\Sigma_{xy}\Sigma_{yy}^{-1}\Sigma_{yx}$, cross-linked to covariance); and $M\succ0\iff D\succ0$ and $M/D\succ0$ — the test behind **semidefinite programming**/LMIs, Kalman updates, graphical-model precision.
+Verified: g()-guarded (proseInMath, bmatrix-aware); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, Schur/conditional-covariance/positive-definite/SDP + cross-link, 215 KaTeX (bmatrix renders), kErr=0, rawDollar=0, errs=0. SW cache `atlas-v989` → `atlas-v990`.
+
 ## iter 1057 — Glossary: interpretability terms (reference)
 Completed the iter-1056 thread with **3 glossary terms** — **Partial dependence plot (PDP)**, **Permutation importance**, and **LIME** (SHAP/Shapley already present). Glossary **505 → 508** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v988` → `atlas-v989`.
