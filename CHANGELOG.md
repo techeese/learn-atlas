@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1054 — Hard-concept: the envelope theorem (content)
+Filled the noted calculus gap. Added a deep-dive to `c-lagrange-multipliers` (its 4th): the **envelope theorem** — $\frac{dV}{d\theta}=\frac{\partial f}{\partial\theta}\big|_{x^\ast}$ for $V(\theta)=\max_x f(x,\theta)$: you ignore how the optimizer moves, because $\partial f/\partial x=0$ there makes its shift second-order. A Lagrange multiplier *is* an envelope derivative (**shadow price**, cross-linked to KKT); Hotelling/Shephard's lemmas, **Danskin's theorem** (adversarial/minimax), and the policy-gradient flavor in RL.
+Verified: g()-guarded (proseInMath on the dV/dθ math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, envelope-theorem/shadow-price/Danskin/first-order-condition + cross-link, 127 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v985` → `atlas-v986`.
+
 ## iter 1053 — Glossary: convex-conjugate terms (reference)
 Completed the iter-1052 thread with **3 glossary terms** — **Convex conjugate (Fenchel transform)**, **Fenchel-Young inequality**, and **Log-sum-exp**. Glossary **500 → 503** (0 holes).
 Verified: glossary parses with `\sup`/`\langle`/`\nabla` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 488 KaTeX, kErr=0, errs=0. SW cache `atlas-v984` → `atlas-v985`.
