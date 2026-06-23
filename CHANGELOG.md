@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1098 — Hard-concept: tensor decompositions (content)
+Rotated to linear algebra and filled the noted gap. Added a deep-dive to `la-low-rank-pca` (its 4th): **tensor decompositions** — low rank beyond matrices. **CP** (CANDECOMP/PARAFAC) sums $R$ rank-one tensors $\mathcal{X}\approx\sum_r a_r\circ b_r\circ c_r$ and is often *essentially unique* (no rotational ambiguity → interpretable factors, unlike PCA); **Tucker** is a core tensor times a per-mode factor ($\mathcal{X}\approx\mathcal{G}\times_1 U\times_2 V\times_3 W$, a higher-order SVD). Fit CP by ALS (block **coordinate descent**, cross-linked) and Tucker by HOSVD. Cross-linked to SVD; multiway data, latent-variable recovery, weight compression.
+Verified: g()-guarded (proseInMath on the CP/Tucker math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, tensor/CANDECOMP/Tucker/essentially-unique + 2 cross-links, 157 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1029` → `atlas-v1030`.
+
 ## iter 1097 — Glossary: coordinate-descent terms (reference)
 Completed the iter-1096 thread with **2 glossary terms** — **Coordinate descent** and **Alternating least squares (ALS)** (soft-thresholding/LASSO/proximal already present). Glossary **553 → 555** (0 holes).
 Verified: glossary parses with `\arg\min`/`\ell` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 554 KaTeX, kErr=0, errs=0. SW cache `atlas-v1028` → `atlas-v1029`.
