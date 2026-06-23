@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 949 — NEW viz: regression discontinuity (visualizations)
+Gave the iter-948 RD deep-dive its visual — the **160th widget**, `ps-regression-discontinuity` in `ps-causal-estimation`: untreated (violet) and treated (green) points around a cutoff at x=5, a fitted line per side, and a **gold bar marking the jump** where they
+meet the cutoff. Slide the true effect τ: the estimated jump tracks it (0.92 at τ=1, 2.92 at τ=3), recovered from the discontinuity alone. The causal effect *is* the gap, made visible.
+Verified: RD least-squares estimation re-derived in Node (0.92/2.42); gate ALL GREEN (now **160 widgets**); **headless** — lab mounts, estimated jump tracks τ, kErr=0, errs=0; screenshot shows the two-line jump at the cutoff. SW cache `atlas-v880` → `atlas-v881`.
+
 ## iter 948 — Hard-concept: regression discontinuity (content)
 Filled the last flagged causal gap. Added a deep-dive to `ps-causal-estimation` (its 5th): **regression discontinuity** — a sharp cutoff rule (scholarship at score ≥ 80, etc.) makes units just-below vs just-above nearly identical except for treatment, so the
 **jump in the outcome at the cutoff** is the causal effect ($\tau=\lim_{x\to c^+}\mathbb{E}[Y]-\lim_{x\to c^-}\mathbb{E}[Y]$). Covers the smoothness/no-manipulation assumptions, locality, and **fuzzy RD** as the IV Wald ratio at the threshold.

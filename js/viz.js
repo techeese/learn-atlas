@@ -8437,4 +8437,47 @@
     draw();
   });
 
+
+  /* ========================================================
+     160. Regression discontinuity: the jump at the cutoff (probability & statistics)
+     ======================================================== */
+  register({ id: 'ps-regression-discontinuity', topic: 'probability-statistics', title: 'Regression discontinuity: reading the effect off the jump', blurb: 'Treatment switches on at a cutoff in the running variable (here x = 5). Units just below get no treatment; units just above do — and are otherwise nearly identical. Fit a line on each side and the vertical gap where they meet the cutoff is the causal effect. Slide the true effect: the estimated jump tracks it, recovered purely from the discontinuity, with no control-vs-treatment matching required.' },
+  function (root) {
+    const W = 500, H = 300, padL = 36, padR = 14, padT = 18, padB = 30;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const cut = 5;
+    let tau = 1.5;
+    function mk(seed) { let s = seed; return () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    function fit(pts) { const n = pts.length; let sx = 0, sy = 0, sxx = 0, sxy = 0; pts.forEach(p => { sx += p[0]; sy += p[1]; sxx += p[0] * p[0]; sxy += p[0] * p[1]; }); const sl = (n * sxy - sx * sy) / (n * sxx - sx * sx); const ic = (sy - sl * sx) / n; return x => sl * x + ic; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const r = mk(7); const pts = [];
+      for (let i = 0; i < 120; i++) { const x = r() * 10; const noise = (r() + r() - 1) * 0.6; const y = 0.4 * x + (x >= cut ? tau : 0) + noise; pts.push([x, y]); }
+      const XLO = 0, XHI = 10, YLO = -1, YHI = 9;
+      const plotW = W - padL - padR, plotH = H - padT - padB, x0 = padL, baseY = padT + plotH;
+      const X = x => x0 + (x - XLO) / (XHI - XLO) * plotW, Y = y => baseY - (y - YLO) / (YHI - YLO) * plotH;
+      const L = fit(pts.filter(q => q[0] < cut)), Rg = fit(pts.filter(q => q[0] >= cut));
+      // points
+      pts.forEach(q => { ctx.fillStyle = q[0] < cut ? p.violet : p.sage; ctx.beginPath(); ctx.arc(X(q[0]), Y(q[1]), 2.8, 0, 7); ctx.fill(); });
+      // cutoff line
+      ctx.strokeStyle = p.line; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(X(cut), padT); ctx.lineTo(X(cut), baseY); ctx.stroke(); ctx.setLineDash([]);
+      // fitted lines
+      ctx.lineWidth = 2; ctx.strokeStyle = p.violet; ctx.beginPath(); ctx.moveTo(X(XLO), Y(L(XLO))); ctx.lineTo(X(cut), Y(L(cut))); ctx.stroke();
+      ctx.strokeStyle = p.sage; ctx.beginPath(); ctx.moveTo(X(cut), Y(Rg(cut))); ctx.lineTo(X(XHI), Y(Rg(XHI))); ctx.stroke(); ctx.lineWidth = 1;
+      // the jump
+      ctx.strokeStyle = p.gold; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(X(cut), Y(L(cut))); ctx.lineTo(X(cut), Y(Rg(cut))); ctx.stroke(); ctx.lineWidth = 1;
+      const est = Rg(cut) - L(cut);
+      ctx.fillStyle = p.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.fillText('cutoff', X(cut), baseY + 14);
+      info.innerHTML = 'true effect τ = <b style="color:' + p.gold + '">' + tau.toFixed(2) + '</b>. ' +
+        'Estimated jump at the cutoff (gold bar) = <b style="color:' + p.gold + '">' + est.toFixed(2) + '</b>. ' +
+        'Recovered from the discontinuity alone — the two sides agree everywhere except the gap.';
+    }
+    slider(ctl, { label: 'true effect τ', min: 0, max: 4, step: 0.25, value: tau, fmt: v => v.toFixed(2), onInput: v => { tau = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Regression discontinuity. Scatter of outcome versus a running variable with a dashed cutoff at x equals 5; points left of the cutoff are violet (untreated), right are green (treated). A line is fitted on each side, and a gold vertical bar marks the gap between them at the cutoff. A slider sets the true treatment effect; the estimated jump (the gold gap) tracks it.');
+    draw();
+  });
+
 })();
