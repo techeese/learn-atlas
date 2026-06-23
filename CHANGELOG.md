@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 928 — Glossary: NTK & feature learning (reference)
+Completed the iter-927 thread with **2 glossary terms** — **Neural tangent kernel (NTK)** ($K=\nabla_\theta f(x)\cdot\nabla_\theta f(x')$) and **Feature learning** (the lazy-vs-feature-learning distinction). Glossary **391 → 393** (0 holes).
+Verified: glossary parses with `\nabla` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 357 KaTeX, kErr=0, errs=0. SW cache `atlas-v859` → `atlas-v860`.
+
 ## iter 927 — Hard-concept: the neural tangent kernel (content)
 Varied off the code backlog to fill a genuine advanced gap (the lone "NTK" hit was "NTK-aware RoPE scaling", unrelated). Added a deep-dive to `dl-overfitting-and-regularization` (its 6th, completing the over-parameterization arc beside
 double descent / grokking / lottery ticket): the **neural tangent kernel** — in the infinite-width limit, GD training becomes **kernel regression** with a fixed kernel ($K=\nabla_\theta f(x)\cdot\nabla_\theta f(x')$), "lazy training" explaining provable convergence + generalization. Honest caveat: real nets do **feature learning** and beat their NTK. Cross-linked to kernels (ml-svm).
