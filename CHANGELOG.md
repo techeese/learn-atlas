@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 969 — Hard-concept: revenue equivalence (content)
+Filled the last flagged GT gap. Added a deep-dive to `gt-foundations` (its 6th, grouped with the mechanism-design/Vickrey dive): **revenue equivalence** — under standard assumptions (independent private values, risk-neutral, item to the highest bidder, zero surplus at the bottom), first-price, second-price/Vickrey, all-pay, Dutch, and English auctions all raise the **same expected revenue**, because a bidder's expected payment is pinned by the allocation, not the format. Covers where it breaks (risk aversion, correlated values → linkage principle, asymmetry).
+Wrote LaTeX-free for push-wrapper safety; function-replacer + enc.
+Verified: parse via `new Function` (no leakage/control chars); gate ALL GREEN; **headless** — 6 deep-dives, revenue-equivalence/all-pay/linkage/risk-averse present, entities decoded, kErr=0, errs=0. SW cache `atlas-v900` → `atlas-v901`.
+
 ## iter 968 — Glossary: fictitious play (reference)
 Completed the iter-967 thread with the **Fictitious play** glossary term. Glossary **419 → 420** (0 holes) — crossed 420.
 Verified: glossary parses; gate ALL GREEN; **headless** — renders on `#/glossary`, kErr=0, errs=0. SW cache `atlas-v899` → `atlas-v900`.
