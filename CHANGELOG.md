@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 972 — Hard-concept: the matrix exponential (content)
+Rotated the compass to linear algebra and caught a teach-gap: the matrix exponential was name-dropped via its formula in `la-diagonalization` but never *taught* (the lesson didn't even mention ODEs). Added a deep-dive (its 4th): $e^{At}=I+At+\frac{(At)^2}{2!}+\cdots = P\,e^{Dt}\,P^{-1}$ — and why it matters: it solves $\dot{x}=Ax$ as $x(t)=e^{At}x(0)$,
+with eigenvalues running stability (decays iff all have negative real part; complex → oscillation). The continuous-time sibling of $A^n$; the engine of continuous-time Markov chains and neural ODEs.
+Verified: g()-guarded (proseInMath on the series/ODE math); byte-stable JSON re-serialize; gate ALL GREEN; **headless** — 4 deep-dives, matrix-exponential/negative-real-part/dynamical-systems/neural-ODEs present, 221 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v903` → `atlas-v904`.
+
 ## iter 971 — Code: revenue equivalence in numbers (examples)
 After confirming the modern LLM-systems space is fully covered (FlashAttention, RoPE, test-time compute, KV-cache, speculative decoding all present), made the surprising revenue-equivalence theorem **runnable** — a code exercise inside the iter-969 dive in `gt-foundations`: two bidders with uniform values, first-price (bid v/2, pay max/2) vs second-price (pay the min) → **first-price = 0.333, second-price = 0.333 (revenue equivalence!)**. Completes the thread (content 969 + glossary 970 + code 971).
 Verified: re-derived in Node; push-wrapper function-replacer + enc (no leakage, no control chars, no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 189)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v902` → `atlas-v903`.
