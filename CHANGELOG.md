@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 956 — Wire LLM fine-tuning → the pretrain-adapt paradigm: LLM → DL (understandability)
+After confirming the concept space is exhausted (label smoothing, class imbalance, Platt scaling, etc. all already covered) and the daily-review/SRS flow is mature, wired a genuine unmade bridge: `l-finetuning`'s opening "a freshly **pretrained** language model" now links to `dl-pretraining-and-finetuning-paradigm` — the general learn-once-adapt-cheaply framework the LLM-specific SFT instantiates (DL ↔ LLM).
+Verified: byte-stable JSON inject; gate ALL GREEN (internal-links lint); **headless** — link renders as "pretrained", kErr=0, errs=0. SW cache `atlas-v887` → `atlas-v888`.
+
 ## iter 955 — Code-parity backlog: SFT loss masking (examples / content-parity)
 Backlog, fresh topic (LLM). Added a code exercise to `l-finetuning-and-instruction-tuning` (had none), in its "Constructing One SFT Training Step" worked example: SFT's defining mechanic — cross-entropy averaged over **response tokens only**, prompt masked →
 **SFT loss (response only) = 0.40 (vs all-token 0.66)**. The one detail that makes it instruction tuning rather than more pretraining, now runnable. Backlog now 7 lessons.
