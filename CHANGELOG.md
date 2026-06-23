@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1038 — Hard-concept: information geometry & the natural gradient (content)
+Rotated to information theory and filled a genuine gap (entropy rate also surfaced). Added a deep-dive to `it-information-in-ml` (its 5th): **Fisher information is the local metric** on the manifold of distributions — $\mathrm{KL}(p_\theta\Vert p_{\theta+d\theta})\approx\tfrac12 d\theta^\top F d\theta$ — so the **natural gradient** $F^{-1}\nabla L$ is steepest descent per unit KL, reparameterization-invariant. TRPO/natural policy gradients (cross-linked) are a KL-trust-region version; K-FAC approximates $F^{-1}$; cousin of mirror descent. Cross-linked to Fisher information.
+Verified: g()-guarded (proseInMath on the metric/natural-gradient math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 5 deep-dives, information-geometry/natural-gradient/Fisher/TRPO + 2 cross-links, 75 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v969` → `atlas-v970`.
+
 ## iter 1037 — Glossary: Perron-Frobenius terms (reference)
 Completed the iter-1036 thread with **2 glossary terms** — **Perron-Frobenius theorem** and **Irreducible matrix** (its precondition). Glossary **482 → 484** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 459 KaTeX, kErr=0, errs=0. SW cache `atlas-v968` → `atlas-v969`.
