@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 940 — Step-back (clean) + wire GAN objective ↔ distribution distances (step-back / understandability)
+Step-back **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 930 (validates code 931–939, TV/Pinsker content 935, and the two new viz 932/938).
+**Ship:** first cross-link since iter 910 — wired the distance-measures dive (`it-cross-entropy-kl`) ↔ `dl-gans` bidirectionally: a GAN's objective *is* minimizing a distribution distance (Jensen–Shannon for the classic GAN, Wasserstein for WGAN). Turns a stated-but-unlinked connection into a navigable one (IT ↔ DL).
+Verified: IT push-wrapper function-replacer + enc, DL byte-stable; gate ALL GREEN (internal-links lint both); full sweep clean; **headless** — both routes render ("GAN objective" / "distance between distributions"), errs=0. SW cache `atlas-v871` → `atlas-v872`.
+
 ## iter 939 — Code-parity backlog: function composition & inverses (examples / content-parity)
 Backlog, fresh topic (calculus). Added a code exercise to `c-functions-and-graphs` (had none), before its wrap-up: composition is order-sensitive and an inverse cancels its function → **f(g(3))=19, g(f(3))=49, f(finv(7))=7**
 (19≠49 shows non-commutativity; the inverse returns 7). Backlog now 9 lessons — and the codeable ones are nearly exhausted (most remaining, e.g. l-safety / rl-connections, are conceptual by nature).
