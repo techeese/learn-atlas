@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 925 — Code-parity backlog: RAG retrieval by cosine similarity (examples / content-parity)
+Backlog, fresh topic (LLM). Added a code exercise to `l-rag-and-tools` (had none), after its worked example: retrieval as similarity ranking — score documents by cosine similarity to the query → **D1:1.00 D2:0.00 D3:1.00**
+(D1 identical, D3 a scaled copy → both score 1; D2 orthogonal → 0). Makes the core RAG retrieval step runnable. Backlog now 17 lessons.
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>`); **gate ALL GREEN — code-exercises verified (now 176)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v856` → `atlas-v857`.
+
 ## iter 924 — Glossary: streaming & randomized-algorithm terms (reference)
 Completed the iter-923 thread (and the lesson's Las-Vegas-vs-Monte-Carlo dive) with **3 glossary terms** — **Reservoir sampling**, **Streaming algorithm**, and **Las Vegas algorithm**. Glossary **388 → 391** (0 holes).
 Verified: glossary parses; gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), kErr=0, errs=0. SW cache `atlas-v855` → `atlas-v856`.
