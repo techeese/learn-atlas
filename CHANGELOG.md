@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1031 — Glossary: multi-task-learning terms (reference)
+Completed the iter-1030 thread with **2 glossary terms** — **Multi-task learning** and **Negative transfer**. Glossary **475 → 477** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v962` → `atlas-v963`.
+
 ## iter 1030 — Step-back (clean) + hard-concept: multi-task learning (step-back / content)
 Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1020.
 **Ship:** filled the noted ML gap — added a **multi-task learning** deep-dive to `dl-pretraining-and-finetuning-paradigm` (its 4th, after its "one shared base, many tasks" close): hard parameter sharing (shared trunk + task heads, $\mathcal{L}=\sum_t w_t\mathcal{L}_t$), why it regularizes/transfers, the **negative-transfer** risk (gradient conflict → task weighting, gradient surgery), and massively-multi-task pretraining → foundation models. Cross-linked to transfer learning (simultaneous vs sequential).
