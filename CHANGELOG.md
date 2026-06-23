@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 887 — NEW viz: information gain at a decision-tree split (visualizations)
+Gave the iter-886 info-gain bridge its visual — the **153rd widget, `ml-information-gain`** in `ml-decision-trees`: 8 points (4 of each class) on a line with a draggable split; a bar shows information gain = parent entropy − weighted child
+entropy. Drag the cut — the gain **peaks at 1.0 bit exactly between the classes** (both children pure, zero entropy) and shrinks for any mixed split. Makes "the tree picks the split that tells you the most about the label" something you see.
+Verified: entropy/gain re-derived in Node (gain 1.0 at the clean split, 0.31 off-split); gate ALL GREEN (now **153 widgets**); **headless** — "perfect split" / gain 1.000 at t=4.5, gain 0.31 at t=2.5, kErr=0, errs=0; screenshot shows the split between classes with a full gain bar. SW cache `atlas-v818` → `atlas-v819`.
+
 ## iter 886 — Wire information gain = mutual information: ML ↔ IT (understandability)
 Made a deep "same idea" bridge that was unmade in both directions: a decision tree's **information gain** *is* **mutual information** (the entropy of the label reduced by knowing a feature). `ml-decision-trees` now links to `it-mutual-information`,
 and the IT lesson's "information gain in decision trees IS mutual information" deep-dive now links back to the algorithm that maximizes it. Another strand of the entropy thread (IT ↔ DL cross-entropy ↔ ML splits).

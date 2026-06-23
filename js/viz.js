@@ -8133,4 +8133,44 @@
     draw();
   });
 
+
+  /* ========================================================
+     153. Information gain at a decision-tree split (machine learning)
+     ======================================================== */
+  register({ id: 'ml-information-gain', topic: 'machine-learning', title: 'Information gain: how a tree picks its split', blurb: 'A decision tree chooses each split to maximize information gain — the parent node’s entropy minus the (size-weighted) entropy of the two children. Equivalently, it picks the question whose answer tells you the most about the label. Slide the split threshold across these eight points (four of each class): the gain is largest exactly where the cut cleanly separates the classes, driving both children to zero entropy. That gain IS the mutual information between the label and the "which side?" test.' },
+  function (root) {
+    const W = 500, H = 280, padL = 30, padR = 30, midY = 120;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const pos = [1, 2, 3, 4, 5, 6, 7, 8], cls = ["A", "A", "A", "A", "B", "B", "B", "B"];
+    let t = 4.5;
+    function ent(items) { const n = items.length; if (!n) return 0; const a = items.filter(x => x === "A").length / n; let h = 0; [a, 1 - a].forEach(p => { if (p > 0) h -= p * Math.log2(p); }); return h; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      const X = v => padL + (v - 0.5) / 8 * (W - padL - padR);
+      // axis line
+      ctx.strokeStyle = p.line; ctx.beginPath(); ctx.moveTo(padL, midY); ctx.lineTo(W - padR, midY); ctx.stroke();
+      // split line
+      ctx.strokeStyle = p.gold; ctx.setLineDash([5, 4]); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(t), 40); ctx.lineTo(X(t), 200); ctx.stroke(); ctx.lineWidth = 1; ctx.setLineDash([]);
+      ctx.fillStyle = p.gold; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center'; ctx.fillText('split', X(t), 32);
+      // points
+      pos.forEach((x, i) => { ctx.fillStyle = cls[i] === "A" ? p.sage : p.violet; ctx.beginPath(); ctx.arc(X(x), midY, 9, 0, 7); ctx.fill(); ctx.fillStyle = p.bg; ctx.fillText(cls[i], X(x), midY + 4); });
+      const L = cls.filter((_, i) => pos[i] < t), R = cls.filter((_, i) => pos[i] >= t);
+      const n = cls.length, parentH = ent(cls), childH = (L.length / n) * ent(L) + (R.length / n) * ent(R), gain = parentH - childH;
+      // gain bar
+      ctx.fillStyle = p.mute; ctx.textAlign = 'left'; ctx.fillText('information gain', padL, 230);
+      ctx.strokeStyle = p.line; ctx.strokeRect(padL, 238, W - padL - padR, 16);
+      ctx.fillStyle = p.gold; ctx.fillRect(padL, 238, (gain / 1) * (W - padL - padR), 16);
+      ctx.fillStyle = p.soft; ctx.textAlign = 'right'; ctx.fillText(gain.toFixed(3) + ' bits', W - padR, 250);
+      info.innerHTML = 'split at <b style="color:' + p.gold + '">' + t.toFixed(1) + '</b> → left ' + L.length + ', right ' + R.length + '. ' +
+        'parent entropy <b>' + parentH.toFixed(2) + '</b> − weighted child entropy <b>' + childH.toFixed(2) + '</b> = gain <b style="color:' + p.gold + '">' + gain.toFixed(3) + '</b> bits. ' +
+        (Math.abs(gain - 1) < 0.001 ? 'A perfect split — both children are pure (zero entropy).' : 'Drag toward the class boundary to raise the gain.');
+    }
+    slider(ctl, { label: 'split threshold', min: 0.5, max: 8.5, step: 0.5, value: t, fmt: v => v.toFixed(1), onInput: v => { t = v; draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Information gain at a decision-tree split. Eight points sit on a line, four of class A then four of class B, with a draggable vertical split threshold. A bar shows the information gain — parent entropy minus size-weighted child entropy — which is maximal (1 bit) when the split falls between the A group and the B group, making both children pure, and smaller for any split that leaves classes mixed.');
+    draw();
+  });
+
 })();
