@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 998 — Glossary: conjugate-gradient & preconditioning (reference)
+Completed the iter-997 thread with **2 glossary terms** — **Conjugate gradient (CG)** and **Preconditioning**. Glossary **442 → 444** (0 holes).
+Verified: glossary parses with `\mathbf` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 410 KaTeX, kErr=0, errs=0. SW cache `atlas-v929` → `atlas-v930`.
+
 ## iter 997 — Hard-concept: conjugate gradient (content)
 Rotated to linear algebra and filled a genuine gap: conjugate gradient was absent. Added a deep-dive to `la-inverse-and-systems` (its 4th): solve $A\mathbf{x}=\mathbf{b}$ (SPD) / minimize $\tfrac12\mathbf{x}^\top A\mathbf{x}-\mathbf{b}^\top\mathbf{x}$ using only matrix-vector products — **$A$-orthogonal (conjugate) directions** that never undo prior progress (unlike steepest descent's zig-zag, cross-linked),
 $\le n$ steps exactly, error rate $((\sqrt\kappa-1)/(\sqrt\kappa+1))^k$ → preconditioning; the workhorse behind PDE solvers, GP inference, and Newton-CG.
