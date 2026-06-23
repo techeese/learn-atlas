@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 886 — Wire information gain = mutual information: ML ↔ IT (understandability)
+Made a deep "same idea" bridge that was unmade in both directions: a decision tree's **information gain** *is* **mutual information** (the entropy of the label reduced by knowing a feature). `ml-decision-trees` now links to `it-mutual-information`,
+and the IT lesson's "information gain in decision trees IS mutual information" deep-dive now links back to the algorithm that maximizes it. Another strand of the entropy thread (IT ↔ DL cross-entropy ↔ ML splits).
+Verified: ML byte-stable inject, IT function-replacer raw-replace (push-wrapper); gate ALL GREEN (internal-links lint confirms both); **headless** — both routes render ("mutual information" / "decision trees"), errs=0. SW cache `atlas-v817` → `atlas-v818`.
+
 ## iter 885 — NEW code exercise: the DQN target & TD loss (examples / hands-on)
 Confirmed references & the placement test already cover all 11 topics (only the playground had lagged), then added a code exercise to `rl-dqn`, which had none, in its "Worked Example: One Gradient Step" section. One DQN step: target $y = r + \gamma\max_a Q_{target}(s',a)$, loss $(Q(s,a)-y)^2$ → **target y = 5.95, TD loss = 2.10**. DQN-specific (the existing Q-learning code is tabular); shows the regression-target framing.
 **Self-caught:** a `node -e '...'` inject broke on an apostrophe in "network's" (closed the shell quote) — re-ran via a `.cjs` file. The failed command never wrote or bumped SW, so state stayed clean.
