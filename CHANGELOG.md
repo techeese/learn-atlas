@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 935 — Hard-concept: total variation distance & Pinsker's inequality (content)
+Varied off the code backlog to fill a genuine IT gap. Added a deep-dive to `it-cross-entropy-kl` (its 4th, beside the JS/Wasserstein dive): **total variation distance** $\mathrm{TV}(p,q)=\tfrac12\sum_x|p(x)-q(x)|$ — the
+simplest, most operational distance (largest probability gap on any event) — and **Pinsker's inequality** $\mathrm{TV}\le\sqrt{\tfrac12\mathrm{KL}}$, the bridge that shows *why* minimizing KL works: small KL forces genuine indistinguishability. Completes the distance family (KL · JS · Wasserstein · TV).
+Push-wrapper LaTeX (incl. `\|`): enc escapes backslashes first — verified `\mathrm` survives and headless **kErr=0**.
+Verified: g()-guarded; parse via `new Function` (no leakage/control chars); gate ALL GREEN; headless — 4 deep-dives, TV/Pinsker/triangle-inequality/indistinguishable, 71 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v866` → `atlas-v867`.
+
 ## iter 934 — Code-parity backlog: the Fundamental Theorem of Calculus (examples / content-parity)
 Backlog, fresh topic (calculus). Added a code exercise to `c-antiderivatives` (had none), as a capstone before its takeaways: numerically integrating $f'$ recovers $f(b)-f(a)$ — the **Fundamental Theorem** →
 **integral of 2x on [0,3] = 9.000 (FTC: f(3) - f(0) = 9)** (midpoint rule, exact for the linear integrand). Shows *why* antiderivatives matter — they evaluate definite integrals. Backlog now 11 lessons.
