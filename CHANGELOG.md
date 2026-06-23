@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 942 — Glossary: RL imitation & practical terms (reference)
+A glossary completeness check found core RL vocabulary taught but undefined. Added **6 terms** — **Behavioral cloning**, **Imitation learning**, **Inverse reinforcement learning (IRL)**, **DAgger**, **Reward shaping**, **Credit assignment**. Glossary **397 → 403** (0 holes) — crossed 400.
+Verified: glossary parses; gate ALL GREEN; **headless** — all 6 render on `#/glossary` (6/6), kErr=0, errs=0. SW cache `atlas-v873` → `atlas-v874`.
+
 ## iter 941 — Code-parity backlog: behavioral cloning's compounding error (examples / content-parity)
 Backlog, fresh topic (RL). Added a code exercise to `rl-imitation` (had none), in its "fatal flaw: compounding errors" section: a per-step error ε over horizon T grows like **εT²**, not εT, because one slip leads to unseen states →
 **supervised bound ~ 5.0, BC compounding ~ 500** (ε=0.05, T=100). Crystallizes *why* naive behavioral cloning fails and DAgger/IRL exist. Backlog now 8 lessons.
