@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1010 — Step-back (clean) + glossary: anomaly-detection terms (step-back / reference)
+Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1000.
+**Ship:** completed the iter-1009 thread with **2 glossary terms** — **Anomaly detection** and **Isolation Forest**. Glossary **453 → 455** (0 holes).
+Verified: glossary parses; gate ALL GREEN; full sweep clean; **headless** — both render (2/2), kErr=0, errs=0. SW cache `atlas-v941` → `atlas-v942`.
+
 ## iter 1009 — Hard-concept: anomaly detection (content)
 Rotated to machine learning and filled a genuine gap: anomaly/outlier detection was absent. Added a deep-dive to `ml-ensembles` (its 4th): model "normal," score the misfit — **Isolation Forest** (short isolation path = outlier), **density-based** (low-likelihood under a GMM/KDE; LOF), **one-class SVM** (tight boundary), and **autoencoder reconstruction error** in high dimensions. Cross-linked to GMM and autoencoders; covers the imbalance / no-labels / threshold challenges.
 Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, anomaly/Isolation-Forest/one-class-SVM/reconstruction + both cross-links, entities decoded, kErr=0, errs=0. SW cache `atlas-v940` → `atlas-v941`.
