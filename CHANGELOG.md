@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1051 — Code: dynamic time warping in a few lines (examples)
+Made the iter-1044 DTW dive runnable — a code exercise in `ts-what-is-a-time-series`: the DP recurrence over a cost grid, run on a series and its **time-stretched** copy → **DTW(a, time-stretched a) = 0** (the warp aligns two different-length series perfectly, where Euclidean distance can't). Completes the thread (content 1044 + glossary 1045 + code 1051). After the DL space came up fully covered (universal approximation, flat minima, loss landscape all present).
+Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>` — Array.from loops, not index comparisons); **gate ALL GREEN — code-exercises verified (now 194)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v982` → `atlas-v983`.
+
 ## iter 1050 — Step-back (clean) + NEW viz: James-Stein shrinkage U-curve (step-back / visualizations)
 Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1040.
 **Ship:** gave the iter-1042 empirical-Bayes dive its visual — the **169th widget, `ps-shrinkage`** in `ps-point-estimation`: total squared error vs shrinkage λ for 12 noisy estimates. The violet curve dips **below** the dashed raw-error (λ=0) line to an interior minimum (λ*≈0.35) before rising to λ=1 — the **James-Stein** effect made visible: a little shrinkage beats both raw estimates and full pooling. Slider + reseed.
