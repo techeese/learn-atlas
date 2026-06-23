@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 961 — Wire random walk → Brownian motion: TS → probability (understandability)
+After confirming the concept space is exhausted (Fano's inequality, control variates, VCG, RL baselines all already covered), wired a clean unmade bridge: the bolded **random walk** in `ts-stationarity`'s random-walk deep-dive now links to `ps-normal-distribution`, where Brownian motion — its continuous-time limit — lives. Discrete (TS) → continuous (probability), completing the random-walk ↔ Brownian arc.
+Verified: push-wrapper function-replacer + enc, unique anchor (no leakage/control chars); gate ALL GREEN (internal-links lint); **headless** — link renders as "random walk", kErr=0, errs=0. SW cache `atlas-v892` → `atlas-v893`.
+
 ## iter 960 — Step-back (clean) + NEW viz: Brownian motion's √t spread (step-back / visualizations)
 **kErr-aware 188-lesson sweep** across all 11 topics: errs=0, **kErrLessons=NONE**, mapNodes=883 — zero regressions since iter 950.
 **Ship:** completed the Brownian thread (958 content + 959 glossary + **960 viz**) — the **162nd widget, `ps-brownian-motion`** in `ps-normal-distribution`: 26 jagged paths fan from 0 inside a dashed ±1σ/±2σ **√t envelope**, with a drift slider μ that tilts the fan along μt and a reseed button. Diffusive spreading, made visible.
