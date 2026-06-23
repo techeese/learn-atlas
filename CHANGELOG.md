@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1079 — Glossary: randomized-SVD terms (reference)
+Completed the iter-1078 thread with **3 glossary terms** — **Randomized SVD**, **Johnson-Lindenstrauss lemma**, and **Eckart-Young theorem** (verified taught in la rank lessons). Glossary **531 → 534** (0 holes).
+Verified: glossary parses with `\log`/`\epsilon`/`\pm` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 533 KaTeX, kErr=0, errs=0. SW cache `atlas-v1010` → `atlas-v1011`.
+
 ## iter 1078 — Hard-concept: randomized SVD (content)
 Rotated to linear algebra and filled the noted gap. Added a deep-dive to `la-svd` (its 4th): **randomized SVD** — full SVD costs $O(mn\min(m,n))$, but the top-$k$ factors come in ~$O(mnk)$ by sketching: $Y=A\Omega$ (random Gaussian $\Omega$) samples the dominant range, QR → $Q$, project $B=Q^\top A$, take its small SVD, lift back ($A\approx QB$); power iteration sharpens slow-decaying spectra. Works by Johnson-Lindenstrauss concentration, near the Eckart-Young bound; the default big-data truncated SVD (scikit-learn). Cross-linked to randomized algorithms.
 Verified: g()-guarded (proseInMath on the sketch math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, randomized-SVD/oversampling/Eckart-Young/power-iteration + cross-link, 237 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v1009` → `atlas-v1010`.
