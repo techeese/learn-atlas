@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 903 — Glossary: correlated equilibrium & no-regret learning (reference)
+Completed the iter-902 thread with **2 glossary terms** — **Correlated equilibrium** and **No-regret learning** (both mentioned across the GT topic but undefined). Glossary **375 → 377** (0 holes).
+Verified: glossary parses; gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), kErr=0, errs=0. SW cache `atlas-v834` → `atlas-v835`.
+
 ## iter 902 — Hard-concept: correlated equilibrium (content)
 Rotated to a fresh topic and filled a genuine GT gap (Stackelberg & GARCH also surfaced as gaps — noted for later). Added a deep-dive to `gt-mixed-zero-sum` (its 5th): **correlated equilibrium** generalizes Nash — a trusted
 device privately recommends each player a move, and no one wants to deviate. The game of Chicken + a traffic light makes it vivid (a fair, crash-free outcome no Nash reaches). Three punchlines: every Nash is a correlated equilibrium (a *superset*); the set is LP-computable (unlike PPAD-hard Nash); and **no-regret learning converges to it** — tying learning to equilibrium.
