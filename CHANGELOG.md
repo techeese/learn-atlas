@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 980 — BUGFIX follow-up: eradicate literal "\n" site-wide (homework solutions)
+Audited every rendered string field (content/mcq/examples/homework/flashcards/glossary) for the iter-979 corruption, math-aware. Findings: content already clean (979); examples/flashcards/glossary clean; **mcq "hits" were false positives** (`\nabla` inside `\(…\)` math); genuine corruption remained in **homework solutions** — step-by-step traces (e.g. `a-comparison-sorts`: `pivot=3.\nj=0:…`) and `\n\n` paragraph breaks rendering as visible "\n".
+Fix: converted **67 literal `\n` → real newline across 16 homework fields** (rl 47, algorithms 15, llm 5) with a math-aware pass protecting `$…$`, `$$…$$`, `\(…\)`, `\[…\]` — matching the convention of the 24 already-clean step-trace solutions.
+Verified: LaTeX `\n`-commands in homework **52 → 52 unchanged** (no `\nabla`/`\neq` broken); gate ALL GREEN; **headless** — revealed homework solutions render with visible literal-`\n` = 0 (excluding KaTeX annotations), kErr=0, errs=0. SW cache `atlas-v911` → `atlas-v912`.
+
 ## iter 979 — BUGFIX (owner-reported): literal "\n" rendered in ps-sample-spaces-events prose
 Owner reported "a lot of newline in mobile" on `ps-sample-spaces-events`. Root cause: the lesson's content had **44 literal `\n` (backslash+n)** instead of real newlines (an old over-escaped inject — the iter-839 backslash trap, baked into stored data), which render as visible "\n" text between paragraphs/headings (all devices; spotted on mobile).
 Fix: converted literal `\n` → real newline with a **math-aware** pass that protects `$…$`/`$$…$$` spans and `data-code` blocks — critical, because LaTeX commands like `\neq`/`\nabla` contain `\n` (e.g. c-gradient-directional has 56 `\nabla`); a naive global replace corrupted them (caught via gate FAIL 45 + reverted). Only ps-sample-spaces-events had genuine prose corruption; the other lessons' `\n` were LaTeX, correctly left alone.
