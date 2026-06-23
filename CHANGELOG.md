@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 907 — Glossary: GARCH & Stackelberg terms (reference)
+Completed the 904–906 threads with **4 glossary terms** — **GARCH** ($\sigma_t^2=\omega+\alpha\,\varepsilon_{t-1}^2+\beta\,\sigma_{t-1}^2$), **Volatility clustering**, **Stackelberg game**, and **Bilevel optimization**. Glossary **377 → 381** (0 holes).
+Verified: glossary parses with `\sigma` intact (JSON-form); gate ALL GREEN; **headless** — all 4 render on `#/glossary` (4/4), 350 KaTeX, kErr=0, errs=0. SW cache `atlas-v838` → `atlas-v839`.
+
 ## iter 906 — Hard-concept: Stackelberg games (content)
 Closed the last flagged gap. Added a deep-dive to `gt-foundations` (its 5th): **Stackelberg games** — sequential play where a *leader* commits first and a *follower* best-responds, solved by backward induction. The
 counter-intuitive payoff: committing first can *raise* your payoff (Stackelberg vs Cournot duopoly), if the commitment is credible. Structurally it's **bilevel optimization** (leader optimizes over the follower's optimization) — the template behind real **security games** (airport/coast-guard patrol scheduling) and ML bilevel problems (hyperparameter optimization, meta-learning).
