@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1052 — Hard-concept: the convex conjugate (Fenchel) (content)
+Rotated to calculus and filled a genuine gap — the convex conjugate was referenced in mirror-descent & f-divergence dives but never *taught* there (envelope theorem also surfaced). Added a deep-dive to `c-duality-kkt` (its 4th): $f^\ast(y)=\sup_x(\langle y,x\rangle-f(x))$ describes a convex function by its slopes; always convex, $f^{\ast\ast}=f$, **Fenchel-Young** $f(x)+f^\ast(y)\ge\langle x,y\rangle$ (so $\nabla f,\nabla f^\ast$ are inverse). Neg-entropy → **log-sum-exp** (softmax); the engine of Lagrangian/Fenchel duality, **mirror descent** (cross-linked), f-GAN, and the Legendre transform.
+Verified: g()-guarded (proseInMath on the conjugate math); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, convex-conjugate/Fenchel-Young/log-sum-exp/Legendre + cross-link, 81 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v983` → `atlas-v984`.
+
 ## iter 1051 — Code: dynamic time warping in a few lines (examples)
 Made the iter-1044 DTW dive runnable — a code exercise in `ts-what-is-a-time-series`: the DP recurrence over a cost grid, run on a series and its **time-stretched** copy → **DTW(a, time-stretched a) = 0** (the warp aligns two different-length series perfectly, where Euclidean distance can't). Completes the thread (content 1044 + glossary 1045 + code 1051). After the DL space came up fully covered (universal approximation, flat minima, loss landscape all present).
 Verified: re-derived in Node; byte-stable JSON inject (no `<`/`>` — Array.from loops, not index comparisons); **gate ALL GREEN — code-exercises verified (now 194)**; **headless** — Run executes, output exactly right, entities decoded, kErr=0, errs=0. SW cache `atlas-v982` → `atlas-v983`.
