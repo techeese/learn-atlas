@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 917 — Hard-concept: Kolmogorov complexity (content)
+Varied off the code backlog (3 iters) to fill a genuine foundational IT gap. Added a deep-dive to `it-source-coding` (its 5th): **Kolmogorov complexity** $K(x)$ — the length of the shortest program that prints $x$ — the
+information in a *single* object, complementing Shannon's average view. Structure = compressibility, so *random means incompressible* ($K\approx$ length); averaged over a source $E[K(x)]\approx H$; it grounds Occam's razor / MDL; and it's **uncomputable** — the ideal yardstick real compressors (gzip, LLMs) only approximate.
+Wrote with LaTeX in a push-wrapper file (the iter-839 trap): enc escapes backslashes first — verified `\approx` survives literally and headless **kErr=0**.
+Verified: g()-checked; parse via `new Function` (no leakage, no control chars); gate ALL GREEN; headless — 5 deep-dives, Kolmogorov/incompressible/uncomputable/MDL present, 60 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v848` → `atlas-v849`.
+
 ## iter 916 — Code-parity backlog: transformer-block parameter count (examples / content-parity)
 Third of the iter-914 backlog (working the biggest-value vein — read-only lessons → hands-on — rotating topics). Added a code exercise to `l-transformer-block` (had none) in its "parameters in one block" worked-example: counts a GPT-2-base pre-LN block →
 **attn 2359296 + ffn 4718592 + ln 3072 = 7080960**, confirming the lesson's own worked numbers and making the "FFN holds ~2× the weights of attention" point runnable. Backlog now 22 lessons.
