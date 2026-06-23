@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1040 — Step-back (clean) + hard-concept: entropy rate (step-back / content)
+Step-back **kErr + visible-newline-aware 188-lesson sweep**: errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, mapNodes=883 — zero regressions since iter 1030.
+**Ship:** filled the noted IT gap — added an **entropy rate** deep-dive to `it-entropy` (its 5th): the per-symbol uncertainty of a process with memory, $H=\lim_n\tfrac1n H(X_1,\dots,X_n)=\lim_n H(X_n\mid\text{past})$ — strictly below the marginal entropy when context predicts (English ≈ **1 bit/char** vs 4.7). The true **compressibility** floor (cross-linked) and the ground truth a language model's **perplexity** ($2^{\text{cross-entropy rate}}$) approaches from above; Markov-chain form $\sum_i\pi_i H(\cdot\mid i)$.
+Verified: g()-guarded; byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); full sweep clean; **headless** — 5 deep-dives, entropy-rate/1-bit-per-char/perplexity/Markov + cross-link, 59 KaTeX, kErr=0, errs=0. SW cache `atlas-v971` → `atlas-v972`.
+
 ## iter 1039 — Glossary: natural-gradient terms (reference)
 Completed the iter-1038 thread with **3 glossary terms** — **Natural gradient**, **Information geometry**, and **Trust region**. Glossary **484 → 487** (0 holes).
 Verified: glossary parses with `\nabla`/`\tfrac` intact (JSON-form); gate ALL GREEN; **headless** — all 3 render on `#/glossary` (3/3), 461 KaTeX, kErr=0, errs=0. SW cache `atlas-v970` → `atlas-v971`.
