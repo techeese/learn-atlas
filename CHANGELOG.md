@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1045 — Glossary: DTW & edit-distance terms (reference)
+Completed the iter-1044 thread with **2 glossary terms** — **Dynamic time warping (DTW)** and **Edit distance** (its discrete cousin, verified taught in a-dynamic-programming). Glossary **493 → 495** (0 holes) — approaching 500.
+Verified: glossary parses with `\min` intact (JSON-form); gate ALL GREEN; **headless** — both render on `#/glossary` (2/2), 471 KaTeX, kErr=0, errs=0. SW cache `atlas-v976` → `atlas-v977`.
+
 ## iter 1044 — Hard-concept: dynamic time warping (content)
 Rotated to time series and filled a genuine gap (change-point, wavelets, STL also surfaced). Added a deep-dive to `ts-what-is-a-time-series` (its 4th): **DTW** aligns series that drift in time (different speeds/phase) where Euclidean distance fails — a textbook **dynamic program** $D(i,j)=d(a_i,b_j)+\min(D(i{-}1,j),D(i,j{-}1),D(i{-}1,j{-}1))$ in $O(nm)$ (cross-linked to DP). 1-NN+DTW is a strong classification baseline; speech/gesture/bio uses; the Sakoe-Chiba band speeds it up.
 Verified: g()-guarded (proseInMath on the DP recurrence); byte-stable JSON re-serialize; gate ALL GREEN (internal-links lint); **headless** — 4 deep-dives, DTW/warping-path/Sakoe-Chiba/nearest-neighbour + cross-link, 34 KaTeX, kErr=0, rawDollar=0, errs=0. SW cache `atlas-v975` → `atlas-v976`.
