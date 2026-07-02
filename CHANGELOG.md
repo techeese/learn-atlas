@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1109 — Hard-concept: Stein's lemma + its glossary, first BUNDLED ship (content)
+First bundled ship under the revised loop — dive **and** glossary in one iteration. Added a deep-dive to `ps-normal-distribution` (its 5th): **Stein's lemma** — $\mathbb{E}[(X-\mu)f(X)]=\sigma^2\mathbb{E}[f'(X)]$, Gaussian integration by parts that *characterizes* the Gaussian. **SURE** turns it into an observable risk formula (no $\mu$, no validation set) — how **James-Stein** dominance is proved (cross-linked) and how thresholds get tuned; **Stein's method** turns the characterization into quantitative CLTs (Berry-Esseen bounds, dependence-tolerant) and modern Stein discrepancies/SVGD. Plus **3 glossary terms** in the same ship: Stein's lemma, SURE, Stein's method — glossary **564 → 567** (0 holes).
+Verified: g()-guarded; byte-stable JSON re-serialize ×2; gate ALL GREEN (internal-links lint); **one combined headless driver** — 5 dives, lemma/SURE/method/SVGD + cross-link, 112 KaTeX, glossary 3/3 render, kErr=0, errs=0. SW cache `atlas-v1040` → `atlas-v1041`.
+
 ## iter 1108 — Code: the Gumbel-max trick, run live (examples)
 Second interactive ship of the block (completes the iter-1083/84 order-statistics thread) — a runnable exercise in `ps-sampling-distributions`: 30,000 draws of $\arg\max_i(\text{logit}_i+G_i)$ with Gumbel noise $G=-\ln(-\ln U)$ reproduce the softmax — **empirical [0.66, 0.24, 0.09] vs softmax [0.67, 0.24, 0.09]**. Sampling a category *is* taking a maximum order statistic; argmax done comparison-free via `indexOf(Math.max…)` (no-`<>` guard).
 Verified: re-derived in Node (deterministic LCG); byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 197)**; **headless** — Run executes, empirical-vs-softmax line shown, entities decoded, kErr=0, errs=0. SW cache `atlas-v1039` → `atlas-v1040`.
