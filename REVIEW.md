@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 52/193 lessons · 32/177 widgets**
+**Progress: 54/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -100,8 +100,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-arrays-lists-stacks-queues — ✔ iter-1188 clean — address 2028/1012, ring-buffer wrap (4 elements, slots 6,7,0,1), growth-factor amortization g/(g−1) with the g→1⁺ blowup, deque index arithmetic, two-stacks trace (3 moves) all verified; no changes
 - [x] a-hash-tables — ✔ iter-1189 clean — h0 probing trace (0-6 cluster), SUH indicator-variable proof h1, the hash-flooding DoS + universal-family defense h2 (superb), tombstone e1, sketches bundle (CMS/HLL/consistent-hashing) all verified; no changes
 - [x] a-trees-heaps — ✔ iter-1189 clean — BST-delete-via-successor h0 (60 replaces 50), min-heap insertion trace h1 ([3,4,6,7,5], hand-verified), two-heap median h2, AVL RR-case e0, heapsort e1, second-largest q9, heap-index q4 (11/12/2) all verified; no changes
-- [ ] a-comparison-sorts — pending
-- [ ] a-linear-sorts-selection — pending
+- [x] a-comparison-sorts — ✔ iter-1191 clean — Lomuto trace h0 ([1,2,3,4,6,8], p=2, hand-verified), stable-chaining h1, decision-tree proof h2 (with (n/2)^{n/2} bound), 3-element decision tree e0, Stirling q9, average-case-bound q10 all verified; no changes
+- [x] a-linear-sorts-selection — ✔ iter-1191 clean — quickselect trace h1 (partition [1,2,8,6,9,3] hand-verified), groups-of-3 median-of-medians failure h2 (1/3+2/3=1), counting-sort placement walk e0 (every index checked), E[n_i²]<2 bucket analysis q5, radix r≈log n balance q9 all verified; no changes
 - [ ] a-binary-search — pending
 - [ ] a-divide-and-conquer — pending
 - [ ] a-greedy — pending

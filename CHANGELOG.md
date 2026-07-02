@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1191 — Review: a-comparison-sorts + a-linear-sorts-selection — both clean (review)
+**`a-comparison-sorts`: clean** — h0's Lomuto partition trace hand-verified to $[1,2,3,4,6,8]$ with $p=2$; the stable-sort chaining homework (secondary-key-first, with the precise failure analysis for both wrong orderings); h2's full decision-tree proof including the $(n/2)^{n/2}$ elementary bound; and the sophisticated q10 (the leaf-count argument bounds the *average* case too, not just the worst) all verified.
+**`a-linear-sorts-selection`: clean** — h1's quickselect trace hand-verified (partition $[1,2,8,6,9,3]$, immediate rank hit); h2's groups-of-3 failure analysis ($\frac13+\frac23=1$, no geometric decay → $\Theta(n\log n)$); e0's counting-sort walk with every placement index checked; q5's $E[n_i^2]<2$ bucket argument; and q9's radix $r\approx\log_2 n$ balancing all verified.
+Third consecutive clean unit — Algorithms is the site's strongest topic (7 clean of 8). Ledger is the ship; no SW bump. **Progress: 54/193 lessons · 32/177 widgets.**
+
 ## iter 1190 — Step-back (clean at 193/905) — review block 3 recap (step-back)
 Full kErr + visible-newline sweep: **n=193, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=905** — all review-phase fixes regression-free.
 **Block 1181–1190 recap:** 15 lessons + 21 widgets reviewed. **Calculus completed** (all 27 lessons + 21 widgets) and **Algorithms opened strongly** (6 lessons, 5 clean). Block defects fixed: 11 — the seven-explain cluster in `c-gradient-descent-convergence` (the site's densest, one bad authoring batch), two more maligning explains (`a-correctness-invariants` q11, `c-fundamental-theorem` q2 area), one same-function example dup (DE lesson), and **the phase's first genuine arithmetic error** (the 210.125 fence check in `c-lagrange-multipliers`, caught after ~1,500 clean computations). One audit flag verified as a false alarm (q9 invariants — references were correct). Widget honesty checks: `calc-riemann`'s 7.3828 re-derived exactly; `la-power-iteration` and `calc-taylor` previously confirmed.
