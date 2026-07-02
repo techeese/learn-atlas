@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 35/193 lessons · 11/177 widgets**
+**Progress: 37/193 lessons · 11/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -58,8 +58,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] c-definite-integral-riemann — ✔ iter-1177 clean — h0 (definition→12, trapezoid check), h1 (net 4 vs total 5), h2 (−3 m, 23/3 m), e1 (definition→14), L/R/M comparison (1/5/2.5 vs 8/3), midpoint-concavity q9 all verified. Noted: ∫₀²x² runs through e0/e2/q8 as a running example — tolerated; no changes
 - [x] c-fundamental-theorem — ✔ iter-1178 — q2 explain maligned its own answer ("choices 0 and 3 are false" with 0 the answer); q0 de-indexed while editing. h0 (1, 19/6), both-limits h1, e0 (10, trapezoid check), e1 (−2√π), avg-value e2 (3) all verified
 - [x] c-integration-techniques — ✔ iter-1178 — THREE defects: q15 explain misattributed "option 3"; h0 exactly duplicated q8 (∫sin·cos=½, same substitution) → replaced with ∫₁⁴ e^√x/√x dx = 2(e²−e)≈9.34 (root inner function, numerically verified); e2 duplicated e0's integrand family (xe^{x²} definite) → replaced with ∫₀^{π/4}tan x = ½ln2 (negative-du wrinkle, numerically verified). h1/h2/e0/e1 verified incl. the by-parts-twice full check
-- [ ] c-area-volume — pending
-- [ ] c-improper-integrals — pending
+- [x] c-area-volume — ✔ iter-1179 — h0 exactly duplicated e0 (y=6−x² vs y=x, identical 125/6 solution; 3rd homework=example case); replaced with the crossing-curves x³-vs-x problem (area ½, split at 3 intersections, exposes the signed-integral-equals-0 trap that card c0 warns about but nothing practiced; Node-verified). q7 already fixed iter-1172; washer-about-y=−1 e1 (104π/15), both-methods h1 (π/2), avg-value h2 (2/π) all verified
+- [x] c-improper-integrals — ✔ iter-1179 clean — Gaussian-substitution h0 (½), right-endpoint singularity h1 (2), the c=1/E[X]=∞ PDF h2, exponential-mean e1 (μ=½), Cauchy q7, comparison-direction q11 all verified. Noted: e2 supersets q10 (∫x^{−1/2}=2) but adds type-II framing — tolerated; no changes
 - [ ] c-intro-differential-equations — pending
 - [ ] c-partial-derivatives — pending
 - [ ] c-gradient-directional — pending

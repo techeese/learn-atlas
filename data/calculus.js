@@ -4151,9 +4151,9 @@
           ],
           "homework": [
             {
-              "prompt": "Find the area of the region enclosed by $y=6-x^2$ and $y=x$.",
-              "hint": "First find the intersection points by setting $6-x^2=x$. Then decide which curve is on top between them.",
-              "solution": "Set $6-x^2=x \\Rightarrow x^2+x-6=0 \\Rightarrow (x+3)(x-2)=0$, so $x=-3$ and $x=2$. Test $x=0$: parabola gives $6$, line gives $0$, so the parabola is on top throughout $(-3,2)$. Then $A=\\int_{-3}^{2}\\big((6-x^2)-x\\big)\\,dx=\\int_{-3}^{2}(6-x-x^2)\\,dx=\\big[6x-\\tfrac{x^2}{2}-\\tfrac{x^3}{3}\\big]_{-3}^{2}$. At $x=2$: $12-2-\\tfrac{8}{3}=\\tfrac{22}{3}$. At $x=-3$: $-18-\\tfrac{9}{2}+9=-\\tfrac{27}{2}$. So $A=\\tfrac{22}{3}-(-\\tfrac{27}{2})=\\tfrac{44}{6}+\\tfrac{81}{6}=\\tfrac{125}{6}.$"
+              "prompt": "Find the total area of the region enclosed by $y=x^3$ and $y=x$. Careful: the curves cross more than twice, and a single integral of one difference gives a misleading answer — explain why.",
+              "hint": "Set $x^3 = x$ to find ALL intersection points, then check which curve is on top on each piece. What does $\\int_{-1}^{1}(x - x^3)\\,dx$ give, and why is that not the area?",
+              "solution": "Intersections: $x^3 = x \\Rightarrow x(x^2-1)=0 \\Rightarrow x = -1, 0, 1$ — three crossings, so the region has two lobes. Which curve is on top: at $x=-\\tfrac12$, $x^3 = -\\tfrac18 > -\\tfrac12 = x$, so $y=x^3$ is on top on $(-1,0)$; at $x=\\tfrac12$, $x = \\tfrac12 > \\tfrac18 = x^3$, so $y=x$ is on top on $(0,1)$. Integrate top-minus-bottom on each piece: $\\int_{-1}^{0}(x^3 - x)\\,dx = \\big[\\tfrac{x^4}{4}-\\tfrac{x^2}{2}\\big]_{-1}^{0} = 0 - (\\tfrac14 - \\tfrac12) = \\tfrac14$, and $\\int_{0}^{1}(x - x^3)\\,dx = \\big[\\tfrac{x^2}{2}-\\tfrac{x^4}{4}\\big]_0^1 = \\tfrac12 - \\tfrac14 = \\tfrac14$. Total area $= \\tfrac14 + \\tfrac14 = \\tfrac12$. The trap: the single integral $\\int_{-1}^{1}(x - x^3)\\,dx = 0$ because the two lobes enter with opposite signs and cancel — by odd symmetry the signed area is zero even though the geometric area is $\\tfrac12$. When curves cross inside the interval, you must split at every crossing and keep each piece's integrand positive."
             },
             {
               "prompt": "The region bounded by $y=x^2$, $y=0$, and $x=1$ is revolved about the $y$-axis. Compute the volume using BOTH the shell method and the washer method, and confirm they agree.",
