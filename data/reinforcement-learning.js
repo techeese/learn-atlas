@@ -71,7 +71,7 @@
                 "Feedback is given only at the very end of training, never during interaction"
               ],
               "answer": 2,
-              "explain": "Evaluative feedback scores the chosen action with a scalar reward, whereas instructive feedback (as in supervised learning) would reveal the correct target action. Choice 0 describes instructive feedback, and choices 2-3 confuse it with gradients and delayed timing."
+              "explain": "Evaluative feedback scores the chosen action with a scalar reward, whereas instructive feedback (as in supervised learning) would reveal the correct target action — that is what the explicit-label option describes. The gradient option confuses evaluative feedback with the dense derivative signal of supervised training, and the end-of-training option confuses it with delayed timing; evaluative feedback can arrive at every step and still never name the best action."
             },
             {
               "q": "Why can't an RL problem be cleanly separated into \"gather the dataset\" then \"fit the model\" the way supervised learning can?",

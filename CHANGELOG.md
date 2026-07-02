@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1216 — HOLISTIC.md bootstrapped from the 13-agent audit + RL review begins (holistic-phase / review)
+**The holistic audit landed** (13 agents · 686k tokens · zero failures) and is synthesized into **HOLISTIC.md**, the phase's prioritized radical-change backlog. Headline findings:
+- **The course order is accretion order, not pedagogy** — literally the index.html script-tag sequence, never revisited; **17 of 107 cross-topic prereq edges point forward** (all of dl/rl/llm's probability edges, 8 information-theory edges). The audit verified an ideal order (`la→calc→ps→algos→it→ml→dl→rl→llm→ts→gt`) under which every edge points backward — achievable by reordering 11 script tags. The map's "ready to learn" gating and the visible grid order currently contradict each other.
+- **~18 weakest lessons named with reasons** (thin outliers at ⅓–½ topic norm: c-duality-kkt, l-mixture-of-experts, dl-generalization-mysteries, gt-auctions…), **genuine redundancies** (Lagrange taught twice with the same example; amortized analysis duplicated wholesale; LA module 7 teaching autodiff 3×), and **real viz bugs** (4 single-quoted embeds losing lab backlinks, gt-shapley stranded in the wrong lesson, raw LaTeX in updated notes, touch-dead widgets) plus an 8-item missing-widget list (MCMC sampler first).
+- Data-shape hazards: ps modules 6–7 missing `id` fields; 5 lessons below MCQ parity.
+Backlog is organized P0 (structure) → P1 (rewrites) → P2 (consolidations) → P3 (viz) → P4 (gap-filling), with sequencing. **Iter 1217 ships the flagship: the course reorder + dashboard tiers.**
+**Review unit (RL begins):** `rl-what-is-rl` — q4's explain maligned its own answer ("choices 2-3 confuse it" with 2 the correct choice); de-indexed. Return recursion (2.375 = 2 + 0.5·0.75) verified. `rl-mdp-formalism`: clean — the bound-saturating 40, effective horizon 20, and backward recursion (3 → 3.5 → 2.75) all verified.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1117` → `atlas-v1118`. **Progress: 97/193 lessons · 53/177 widgets.**
+
 ## iter 1215 — Review: dl-gans + dl-diffusion-models (ALL 26 DL lessons done) + ★★ NEW OWNER PHASE (review / phase-transition)
 **`dl-gans`: clean** — $D^*(x)=\frac{p_{\text{data}}}{p_{\text{data}}+p_g}$, the $-\log 4$ equilibrium value, the mode-collapse mechanism, the sharp-vs-blurry adversarial/likelihood contrast, and the alternating-step walkthrough all verified.
 **`dl-diffusion-models`: clean** — the $\bar\alpha_t$ extremes, the 1-vs-1000 network-evaluation comparison (with DDIM/distillation), the regression-vs-adversarial mode-coverage argument, and the Stable Diffusion assembly (VAE + latent diffusion + cross-attention) all verified.

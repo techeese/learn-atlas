@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 95/193 lessons · 53/177 widgets**
+**Progress: 97/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -202,8 +202,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [ ] dl-double-descent — pending
 
 ## reinforcement-learning — lessons
-- [ ] rl-what-is-rl — pending
-- [ ] rl-mdp-formalism — pending
+- [x] rl-what-is-rl — ✔ iter-1216 — q4 explain maligned its own answer ("choices 2-3 confuse it" with 2 the correct choice); de-indexed. Return recursion h1 (2.375 = 2 + 0.5·0.75), credit-assignment h2, 3-door e0, delayed-consequences e1 all verified
+- [x] rl-mdp-formalism — ✔ iter-1216 clean — full MDP tuple h0, bound/horizon h1 (40, 20, exact 40 saturating the bound), backward return recursion h2 (3, 3.5, 2.75), recycling-robot e0, discounting e2 all verified; L1-h1/L2-h2 are deliberate cross-lesson reinforcement on distinct sequences; no changes
 - [ ] rl-policies-values — pending
 - [ ] rl-policy-iteration — pending
 - [ ] rl-value-iteration — pending
