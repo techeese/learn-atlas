@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1187 — Review: Algorithms begins — a-asymptotic-analysis + a-recurrences-master-theorem, both clean (review)
+**`a-asymptotic-analysis`: clean** — the witness proof ($c=15$, with the alternative $c=4,n_0=7$ noted), the crossover analysis ($n=100$ tie point), the at-scale comparison ($9{,}966$ vs $10^6$, and the $\sim50{,}000\times$ gap at $n=10^6$ re-verified), and h2's three-part $O/\Omega$ logic all check out. h1 reuses e0's witness technique with permuted coefficients but adds the $\Omega/\Theta$ extension — tolerated as scaffolded practice.
+**`a-recurrences-master-theorem`: clean and outstanding** — h1 solves $2T(n/2)+n/\log n$ via the harmonic recursion tree ($n\cdot H_{\log n}=\Theta(n\log\log n)$, verified); h0 does the Case-3 regularity check explicitly ($k=\frac34$); h2's substitution proof shows the constant doesn't grow; e0 triple-checks $\Theta(n^{\log_2 3})$ (Master Theorem + tree sum + leaf count); e1 squeezes the unequal split to $\Theta(n\log n)$. Every case assignment across 16 MCQs verified correct.
+Zero defects — ledger is the ship; no SW bump. **Progress: 48/193 lessons · 32/177 widgets.**
+
 ## iter 1186 — Review: Calc widget batch 2 — ALL Calculus content reviewed (review)
 Drove the remaining 11 Calc widgets headless (buttons double-clicked, sliders slammed): `calc-ivt`, `calc-curve-sketch`, `calc-convex-landscape`, `calc-riemann`, `calc-taylor`, `calc-lagrange`, `calc-ftc-accumulation`, `calc-slope-field`, `calc-duality`, `calc-by-parts`, `c-sgd-noise-ball` — **all clean**, errs=0, notes render (124–362 chars); four render at 560px logical, capped to the container by the shared canvas CSS.
 **Numeric honesty spot-check:** `calc-riemann`'s note claims "left rule, $f=x^2$, 8 rectangles: approx 7.3828 vs exact 9.0000" — Node re-derivation on $[0,3]$: $\Delta x^3\sum_{i=0}^{7} i^2 = 0.375^3\cdot 140 = 7.3828125$. Exact to every displayed digit. `calc-taylor`'s "degree-1 about 0 = the tangent-line linearization" is definitionally true.

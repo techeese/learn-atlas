@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 46/193 lessons · 32/177 widgets — ALL Calculus content reviewed (27 lessons + 21 widgets)**
+**Progress: 48/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -94,8 +94,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] c-sgd-noise-ball — ✔ iter-1186 clean — btn + slider, 500px, errs=0 under drive
 
 ## algorithms — lessons
-- [ ] a-asymptotic-analysis — pending
-- [ ] a-recurrences-master-theorem — pending
+- [x] a-asymptotic-analysis — ✔ iter-1187 clean — witness proof e0 (c=15), crossover e1 (n=100), scale e2 (9,966 vs 10⁶), h2's three-part O/Ω logic, all 16 MCQs verified. Noted: h1 reuses e0's technique with permuted coefficients but adds the Ω/Θ extension — tolerated; no changes
+- [x] a-recurrences-master-theorem — ✔ iter-1187 clean — outstanding lesson: h1's n·H_{log n}=Θ(n loglog n) harmonic recursion tree, h0's Case-3 regularity check (k=3/4), h2's substitution with non-growing constant, e0's triple-checked Θ(n^{log₂3}), e1's unequal-split squeeze all verified; every case assignment correct; no changes
 - [ ] a-correctness-invariants — pending
 - [ ] a-arrays-lists-stacks-queues — pending
 - [ ] a-hash-tables — pending
