@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 66/193 lessons · 32/177 widgets**
+**Progress: 68/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -114,8 +114,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-approximation-randomized — ✔ iter-1196 clean — greedy Set Cover h0 (3 sets, ratio 1 vs H₈≈2.718), Chernoff majority-vote h1 (t≈50·ln(1/δ), 1036 runs for 10⁻⁹), tight-2 matching h2, VC 2-approx trace e0 (6 vs OPT 3), MAX-SAT e1 (all 8 assignments re-checked, mean 3.5 = 7/8·4), MAX-CUT e2 all verified; no changes
 - [x] a-string-algorithms — ✔ iter-1197 — e1's title promised "a Spurious Hit" but its trace contains only a true match (the collision is an aside); retitled to match content. KMP π tables h0/e0 hand-verified ([0,1,0,1,2,0,1,2,3,4,5]; [0,0,1,2,3,0,1]), Rabin-Karp mod-13 windows h1 (10,9,7,12,2), trie h2, 28-vs-14 comparison e2 all verified
 - [x] a-algorithms-for-ml — ✔ iter-1197 clean — κ=25 convergence window h0 (η<0.08, factor −1.5 divergence at 0.1), Viterbi h1 (Rainy-Rainy 0.3402, re-derived), brute-vs-HNSW h2 (2 Pflop/s vs 5.6 Gflop/s, ratio ~360k×), 0.8^t contraction e0, batch-vs-SGD e1, k-means e2 all verified; h0 cross-reinforces the calc convergence lesson — fine
-- [ ] a-amortized-analysis — pending
-- [ ] a-network-flow — pending
+- [x] a-amortized-analysis — ✔ iter-1198 clean — h0 (7<16 copies), potential h1 (ĉ=3), the honest-bound h2, three-methods e0 ($3 accounting), amortized≠average e1, binary counter e2 (15 flips for n=8, re-counted) all verified; overlap with lesson-3's amortized material is deliberate deepening on distinct instances; no changes
+- [x] a-network-flow — ✔ iter-1198 — h2 asked learners to produce the exact worker-job matching reduction that e2 AND card c5 spell out (answers-in-the-example, 5th case); replaced with edge-disjoint paths via unit capacities (flow decomposition + Menger + fault-tolerance min-cut reading — same modeling skill, un-worked problem). q10 (max flow 5, cut-certified), Edmonds-Karp h1, residual-cut e0, backward-edge e1 all verified
 - [ ] a-union-find-range — pending
 
 ## algorithms — widgets

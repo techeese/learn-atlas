@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1198 — Review: a-amortized-analysis + a-network-flow (review)
+**`a-amortized-analysis`: clean** — the first-8-appends copy count ($1{+}2{+}4=7<16$), the potential-method $\hat c=3$, the honest-bound hash-table homework, the \$3 accounting scheme, the amortized≠average-case rebuttal, and the binary counter (15 flips for $n{=}8$, re-counted) all verified. Its overlap with lesson 3's amortized material is deliberate deepening on distinct instances.
+**`a-network-flow`** — q10's max flow (5, certified by two cuts), the Edmonds-Karp reasoning, the residual-min-cut extraction e0, and the backward-edge rescue e1 all verified. One defect: **h2 asked learners to produce the exact worker-job matching reduction that e2 AND card c5 spell out in full** (answers-in-the-example, 5th case sitewide). Replaced with **edge-disjoint paths via unit capacities** — flow decomposition, the Menger's-theorem connection, and the fault-tolerance reading of the min cut — the same modeling skill exercised on a problem nothing else works.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1110` → `atlas-v1111`. **Progress: 68/193 lessons · 32/177 widgets.**
+
 ## iter 1197 — Review: a-string-algorithms + a-algorithms-for-ml (review)
 **`a-string-algorithms`** — both KMP prefix-function tables hand-verified ($[0,1,0,1,2,0,1,2,3,4,5]$ for AABAACAABAA; $[0,0,1,2,3,0,1]$ for ababaca), the Rabin-Karp mod-13 window sequence (10, 9, 7, 12, 2 — every roll re-computed), the trie structure, and the 28-vs-14 comparison count all correct. One cosmetic defect: **e1's title promised "a Spurious Hit" but the trace contains only a true match** (the collision demonstration is an aside using different strings); retitled to "Rabin-Karp rolling hash, and why matches must be verified."
 **`a-algorithms-for-ml`: clean** — the $\kappa{=}25$ convergence window ($\eta<0.08$; divergence factor $-1.5$ at $\eta{=}0.1$), the Viterbi trace (Rainy-Rainy at $0.3402$, re-derived), the brute-force-vs-HNSW estimate (2 Pflop/s vs 5.6 Gflop/s — ratio ≈360,000×, arithmetic checked), the $0.8^t$ contraction, batch-vs-SGD accounting, and the k-means step all verified.
