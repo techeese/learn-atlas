@@ -2,6 +2,14 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1222 — ★ Probability & Statistics verified end-to-end: 14-agent sweep, 847 recomputations, 24 adjudicated edits (holistic-phase / review-sweep)
+**All 28 PS lessons — the site's largest topic — verified in one sweep** (14 paired agents · 847 recomputations · zero failures). **13 lessons fully clean**; 24 edits across 15. Standouts:
+- **Three statistical-setup errors**: the Bayes hook called a 95%-specificity test "99% accurate" (contradicting the lesson's own definition and its q6, where a truly 99%-accurate test gives P(D|+)=0.5, not 17%); a p-values A/B example claimed $p=0.001$ where its own numbers give $z=1.80,\ p=0.072$ (→ n=10M/arm, making the claim true); a causal-estimation CI required double the stated sample size (learner recomputing would reach the *opposite* significance conclusion → n=40,000/arm).
+- **A reversed-conditional in the p-values lesson itself**: "significance tells you an effect is probably real" — the exact P(H₁|data) fallacy the lesson's own deep-dive refutes; now "hard to explain by chance alone" (×2 occurrences).
+- **Maligning/misidentified explain references** fixed in ps-conditional-bayes q8, ps-random-variables q0, ps-poisson q3 (prior flags CONFIRMED); a garbled MCQ stem (σ²/n contrasted with itself) rewritten; swapped distractor attributions in hypothesis-testing q14; the Simpson's-paradox homework asked the *inverse* of what its solution answers (now asks how the subgroup winner could LOSE overall).
+- Also: coupon-collector "~195 draws" corrected to nH₅₀≈225; "correlation is necessary for causation" fixed (canceling paths / Y=X² counterexamples); a spoiled joint-table homework refreshed; and **12 prior audit flags cleared as false alarms** (incl. all of hypothesis-testing q0–q6).
+Verified: all 24 anchors matched pre-edit; guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0 with the corrected hook rendering. SW `atlas-v1122` → `atlas-v1123`. **Progress: 163/193 lessons · 53/177 widgets. PS: 28/28 done — seven topics complete.**
+
 ## iter 1221 — ★ LLM topic verified end-to-end: 10-agent sweep, 715 recomputations, 33 adjudicated edits (holistic-phase / review-sweep)
 **All 20 LLM lessons verified in one workflow sweep** (10 paired agents · 715 recomputations · zero failures); every finding adjudicated against the data before editing. **6 lessons fully clean**; 33 edits across 14. Standouts:
 - **Inverted-premise example** (l-rag-and-tools): the agent-tools trace asked "how many years older is the Eiffel Tower than the Statue of Liberty" — but the Statue (1886) *predates* the tower (1889), and the example's own search results proved it; question and answer corrected (the 3-year/2.22% arithmetic was fine).

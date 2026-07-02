@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 135/193 lessons · 53/177 widgets**
+**Progress: 163/193 lessons · 53/177 widgets**
 
 Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, errs=0 (validates the reorder/tiers/relocations/RL-fix window).
 
@@ -278,34 +278,34 @@ Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, e
 - [ ] dl-superposition — pending
 
 ## probability-statistics — lessons
-- [ ] ps-sample-spaces-events — pending
-- [ ] ps-conditional-independence-bayes — pending
-- [ ] ps-random-variables-distributions — pending
-- [ ] ps-expectation-variance — pending
-- [ ] ps-bernoulli-binomial — pending
-- [ ] ps-poisson — pending
-- [ ] ps-geometric-waiting — pending
-- [ ] ps-uniform-exponential — pending
-- [ ] ps-normal-distribution — pending
-- [ ] ps-joint-distributions — pending
-- [ ] ps-covariance-correlation — pending
-- [ ] ps-conditional-expectation — pending
-- [ ] ps-law-of-large-numbers — pending
-- [ ] ps-sampling-distributions — pending
-- [ ] ps-point-estimation — pending
-- [ ] ps-estimation-theory — pending
-- [ ] ps-confidence-intervals — pending
-- [ ] ps-hypothesis-testing-logic — pending
-- [ ] ps-p-values — pending
-- [ ] ps-errors-and-power — pending
-- [ ] ps-t-tests — pending
-- [ ] ps-bayesian-inference — pending
-- [ ] ps-conjugate-priors — pending
-- [ ] ps-bayesian-decisions — pending
-- [ ] ps-computational-bayes — pending
-- [ ] ps-causation-confounding — pending
-- [ ] ps-causal-graphs — pending
-- [ ] ps-causal-estimation — pending
+- [x] ps-sample-spaces-events — ✔ iter-1222 — sweep-verified (40 recomputations; prior q15 flag false alarm); q15's "forgets to subtract the overlap" named the wrong term (it's P(A∪B) — the overlap IS the unknown); fixed
+- [x] ps-conditional-independence-bayes — ✔ iter-1222 — sweep-verified (55 recomputations; prior q12 flag false alarm); TWO fixes: q8 "(option 1)" read 1-based maligned the correct weighted-sum answer (flag CONFIRMED → choice B); the hook called a 95%-specificity test "99% accurate" — contradicting the lesson's own §7 definition and q6's P(D|+)=0.5 — prose+code comment now say 99%-sensitive/5%-FPR
+- [x] ps-random-variables-distributions — ✔ iter-1222 — sweep-verified (46 recomputations); q0's "(choice 2)/(choice 3)" misidentified options under every convention (3 IS the answer) → letters C/A; "infinitely many values" justification for P(X=x)=0 was invalid (Poisson is a countable counterexample) → zero-width-in-continuum
+- [x] ps-expectation-variance — ✔ iter-1222 clean — sweep-verified
+- [x] ps-bernoulli-binomial — ✔ iter-1222 clean — sweep-verified
+- [x] ps-poisson — ✔ iter-1222 — sweep-verified (42 recomputations; prior q15 flag false alarm); q3's explain said "choice 3 swaps k and λ" — 3 IS the correct 0.224 answer (the swapper is index 1); prior q3 flag CONFIRMED → letters A/B
+- [x] ps-geometric-waiting — ✔ iter-1222 — sweep-verified (34 recomputations); coupon-collector "~195 draws" for n=50 dropped the γn correction (true nH₅₀≈225, 13% off) → exact figure with the asymptotic noted
+- [x] ps-uniform-exponential — ✔ iter-1222 clean — sweep-verified
+- [x] ps-normal-distribution — ✔ iter-1222 clean — sweep-verified
+- [x] ps-joint-distributions — ✔ iter-1222 — sweep-verified (42 recomputations); hw2's table was fully pre-worked by mcq14 + content §7 → fresh table 0.25/0.15/0.15/0.45 (conditionals 0.25/0.75, re-verified)
+- [x] ps-covariance-correlation — ✔ iter-1222 — sweep-verified (38 recomputations); hw2's hint routed via Y=1 while the solution used Y=0 → hint aligned
+- [x] ps-conditional-expectation — ✔ iter-1222 clean — sweep-verified (prior q12/q13 flags false alarms)
+- [x] ps-law-of-large-numbers — ✔ iter-1222 clean — sweep-verified
+- [x] ps-sampling-distributions — ✔ iter-1222 — sweep-verified (26 recomputations, Gumbel snippet reproduced exactly); q7's garbled lead-in (σ²/n contrasted with itself, dangling "cross-terms") rewritten; q8's "square root divided by n" order-of-operations clause fixed
+- [x] ps-point-estimation — ✔ iter-1222 clean — sweep-verified
+- [x] ps-estimation-theory — ✔ iter-1222 clean — sweep-verified (P1 split still queued in HOLISTIC.md)
+- [x] ps-confidence-intervals — ✔ iter-1222 clean — sweep-verified (prior q7/q12 flags false alarms)
+- [x] ps-hypothesis-testing-logic — ✔ iter-1222 — sweep-verified (20 recomputations; prior q0–q6/q11 flags ALL false alarms); q14's distractor attributions were swapped under every numbering (the learner with the correct z=−2.0 was told they forgot √n) → descriptive references; hw2's z=1.8 overlap with e2 noted as deliberate reinforcement (adds the 0.10 derivation)
+- [x] ps-p-values — ✔ iter-1222 — sweep-verified (29 recomputations, code p=0.0455 exact); e1's A/B example claimed p=0.001 but its own numbers give z=1.80/p=0.072 → n=10M/arm (z=5.7, claim true); "significance tells you an effect is probably real" was the reversed conditional the lesson itself refutes → "hard to explain by chance alone" (×2)
+- [x] ps-errors-and-power — ✔ iter-1222 — sweep-verified (13 recomputations, power 0.72/0.97 exact; prior q12 flag false alarm); q12 "Choice 0" → letter A
+- [x] ps-t-tests — ✔ iter-1222 — sweep-verified (34 recomputations, all t/CI exact; prior q12 flag false alarm); q12's "Choice 2's subtraction" pointed at the wrong option under 1-based reading → "the subtraction option"
+- [x] ps-bayesian-inference — ✔ iter-1222 clean — sweep-verified
+- [x] ps-conjugate-priors — ✔ iter-1222 — sweep-verified (20 recomputations); e1 called Gamma(2,1) "one pseudo-event" against the lesson's own α=events convention → two pseudo-events
+- [x] ps-bayesian-decisions — ✔ iter-1222 clean — sweep-verified (P1 widget swap still queued in HOLISTIC.md)
+- [x] ps-computational-bayes — ✔ iter-1222 clean — sweep-verified (MCMC widget still queued in HOLISTIC.md)
+- [x] ps-causation-confounding — ✔ iter-1222 — sweep-verified (8 recomputations, all six Simpson percentages exact); hw1 asked how the per-subgroup winner could "still win overall" (trivial) while the solution answered the Simpson inversion → prompt now asks how it could LOSE overall; "correlation is necessary for causation" fixed (canceling paths / Y=X² are counterexamples)
+- [x] ps-causal-graphs — ✔ iter-1222 clean — sweep-verified
+- [x] ps-causal-estimation — ✔ iter-1222 — sweep-verified (23 recomputations, DiD/RD exact); e0's CI [0.1%,0.7%] required n≈40,000/arm but the body said 20,000 (recomputed: CI would include 0, opposite conclusion) → 40,000
 
 ## probability-statistics — widgets
 - [ ] ps-clt — pending
