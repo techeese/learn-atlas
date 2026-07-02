@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 58/193 lessons · 32/177 widgets**
+**Progress: 60/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -106,8 +106,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-divide-and-conquer — ✔ iter-1192 clean — audit flag q0 verified FALSE ALARM (correct 0-based reference). Strassen h0 (8→7, n^2.807), fixed-point h1 (A[i]−i monotone), inversions-via-merge h2, merge trace e0 (24 moves), Case-3 e1 (with regularity check), Karatsuba e2 (408) all verified; no changes
 - [x] a-greedy — ✔ iter-1193 — q10 handed learners the exact {1,3,4}/6 counterexample h0 asks them to CONSTRUCT (hint even names the set); q10 moved to a fresh instance {1,4,5}/8 (greedy 4 coins vs optimal 2, Node-verified). q9 letter-refs verified correct (false alarm). EDF exchange h1, Huffman h2, activity-selection e0, {25,20,1}/40 e1 (16 vs 2), fractional-knapsack e2 all verified
 - [x] a-dynamic-programming — ✔ iter-1193 — e1 printed h0's exact instance and table ({1,3,4}/6); retargeted to 10 (dp=3 via 3+3+4 vs greedy 4, Node-verified) so h0's hand-fill stays honest work. sunday→saturday=3 h1, LCS=4 BCAB h2, knapsack e2 verified. The {1,3,4} arc from the greedy lesson is deliberate and kept
-- [ ] a-backtracking-branch-bound — pending
-- [ ] a-graph-representations-traversal — pending
+- [x] a-backtracking-branch-bound — ✔ iter-1194 clean — audit flag q4 FALSE ALARM (correct 0-based ref). Knapsack fractional bound h1 (19.667 vs integer 18, all combos checked), prune-vs-incumbent h2, full B&B trace e1 (bounds 85/80/55, L=70, node-H subtree kill), 4-queens e0 all verified; no changes
+- [x] a-graph-representations-traversal — ✔ iter-1194 clean — BFS/DFS h0 (forward edges classified), m=n single-cycle h1, dense/sparse representation h2 (2m/n=1000 vs 16), BFS layers e0, DFS timestamps e1 (0:1/8…4:9/10 with parenthesis-theorem check), gray-vertex cycle e2 all verified; no changes
 - [ ] a-shortest-paths-topo — pending
 - [ ] a-mst-union-find — pending
 - [ ] a-np-completeness — pending

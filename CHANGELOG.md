@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1194 — Review: a-backtracking-branch-bound + a-graph-representations-traversal — both clean (review)
+**`a-backtracking-branch-bound`: clean** — the audit flag on q4 verified a false alarm (correct 0-based reference to the completeness distractor). The knapsack fractional root bound (19.667 vs integer optimum 18, all feasible combinations enumerated), the prune-vs-incumbent test, and the full branch-and-bound trace (bounds 85/80/55, incumbent 70, the node-H one-comparison subtree kill) all verified.
+**`a-graph-representations-traversal`: clean** — the directed BFS/DFS homework with forward-edge classification, the $m=n$ single-cycle identity with its back-edge recovery algorithm, the dense-vs-sparse representation tradeoff ($2m/n = 1000$ vs $16$), and the exemplary DFS-timestamps example ($0{:}1/8 \ldots 4{:}9/10$, every edge classified, cross-checked against the parenthesis theorem) all verified.
+Fifth consecutive clean unit. Ledger is the ship; no SW bump. **Progress: 60/193 lessons · 32/177 widgets.**
+
 ## iter 1193 — Review: a-greedy + a-dynamic-programming (review)
 A new dup subspecies: **answers-in-the-quiz**.
 **`a-greedy`** — q10 handed learners the exact $\{1,3,4\}$/6 counterexample that h0 asks them to *construct* (h0's hint even names the set). Moved q10 to a fresh instance: $\{1,4,5\}$/8, where greedy's $5+1+1+1$ (4 coins) loses to $4+4$ (2) — Node-verified. The q9 letter references verified correct (another audit false alarm). The EDF exchange-argument h1, Huffman h2, activity-selection trace e0, the $\{25,20,1\}$/40 example (16 vs 2 coins), and fractional knapsack e2 all verified.
