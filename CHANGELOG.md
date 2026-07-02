@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1196 — Review: a-np-completeness + a-approximation-randomized — both clean (review)
+**`a-np-completeness`: clean** — the P/NPC boundary classification (2-vs-3 coloring, shortest-vs-longest path), the independent-set↔vertex-cover complement reduction, the superb worst-case-vs-practice homework (what a fast SAT solver does and does not prove), the subset-sum certificate check ($11+7+14=32$), and the concrete 3-SAT→Independent-Set gadget (triangles plus conflict edges, structure verified) all correct.
+**`a-approximation-randomized`: clean** — greedy Set Cover hand-run (3 sets, instance ratio 1 vs the $H_8\approx2.718$ guarantee), the Chernoff majority-vote amplification ($t\approx50\ln(1/\delta)$; ≈1036 runs for $10^{-9}$ error — re-computed), the tight-factor-2 matching lower bound, the vertex-cover trace hitting exactly 2×OPT, and the MAX-SAT $7/8$ analysis with **all 8 assignments brute-force re-checked** (mean exactly 3.5) all verified.
+Seventh consecutive clean unit — 18 of Algorithms' 23 lessons done, still just 2 defective. Ledger is the ship; no SW bump. **Progress: 64/193 lessons · 32/177 widgets.**
+
 ## iter 1195 — Review: a-shortest-paths-topo + a-mst-union-find — both clean (review)
 **`a-shortest-paths-topo`: clean** — Dijkstra h0 ($d[T]=8$ via $S{\to}A{\to}C{\to}B{\to}T$, with the double-improvement of $d[B]$), the minimal 3-edge negative counterexample h1, DAG relaxation h2 (down to $d[E]=-4$), the full Bellman-Ford e0 (every relaxation of all three passes re-checked; the $-5$ cycle correctly caught by the detection pass), and the critical-path e1 (Kahn trace + max-relaxation to 10) all verified. The e2/h1 counterexample-shape overlap is tolerated — h1's own hint reveals the shape; its real work is the explanation.
 **`a-mst-union-find`: clean** — Kruskal h0 (MST weight 8, edge 2-3 rejected), the union-by-rank + path-compression h1 (root 1 at rank 3, the $8{\to}7{\to}5$ chain flattened), the cycle-property proof h2, and e1's combined union-find trace + cut-property verdict (edge 02, unique max on the $2,4,2,9$ cycle → in no MST) all verified. The paired traces (e0/h0, e1/h1) are parallel practice on distinct instances — exactly what homework should be.

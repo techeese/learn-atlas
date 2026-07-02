@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 62/193 lessons · 32/177 widgets**
+**Progress: 64/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -110,8 +110,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-graph-representations-traversal — ✔ iter-1194 clean — BFS/DFS h0 (forward edges classified), m=n single-cycle h1, dense/sparse representation h2 (2m/n=1000 vs 16), BFS layers e0, DFS timestamps e1 (0:1/8…4:9/10 with parenthesis-theorem check), gray-vertex cycle e2 all verified; no changes
 - [x] a-shortest-paths-topo — ✔ iter-1195 clean — Dijkstra h0 (d[T]=8 via S→A→C→B→T), 3-edge negative counterexample h1, DAG relaxation h2 (d[E]=−4), Bellman-Ford e0 (negative cycle −5 caught by detection pass, every relaxation re-checked), critical-path e1 (10 via S→B→D→T), Dijkstra-fails e2 all verified. e2/h1 shape overlap tolerated (h1's hint reveals it anyway; its work is the explanation)
 - [x] a-mst-union-find — ✔ iter-1195 clean — Kruskal h0 (MST 8, 2-3 rejected), union-by-rank+compression h1 (root 1 rank 3, chain 8→7→5 flattened), cycle-property proof h2, Kruskal e0 (MST 11), union-find + cut-property e1 (02 unique-max on 2,4,2,9 cycle → no MST), exchange-argument e2 all verified; e0/h0 and e1/h1 are parallel practice on distinct instances, not dups
-- [ ] a-np-completeness — pending
-- [ ] a-approximation-randomized — pending
+- [x] a-np-completeness — ✔ iter-1196 clean — P/NPC classification h0 (2-vs-3 coloring, shortest-vs-longest), IS↔VC complement reduction h1, worst-case-vs-practice h2 (superb), subset-sum certificate e0 (11+7+14=32), 3-SAT→IS gadget e1 (triangles + conflict edges, verified) all correct. e0/e2 both touch Subset-Sum but complementarily — tolerated
+- [x] a-approximation-randomized — ✔ iter-1196 clean — greedy Set Cover h0 (3 sets, ratio 1 vs H₈≈2.718), Chernoff majority-vote h1 (t≈50·ln(1/δ), 1036 runs for 10⁻⁹), tight-2 matching h2, VC 2-approx trace e0 (6 vs OPT 3), MAX-SAT e1 (all 8 assignments re-checked, mean 3.5 = 7/8·4), MAX-CUT e2 all verified; no changes
 - [ ] a-string-algorithms — pending
 - [ ] a-algorithms-for-ml — pending
 - [ ] a-amortized-analysis — pending
