@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1167 — Review: la-matrix-calculus-backprop (ALL 19 LA lessons done) + first widget batch (review)
+**`la-matrix-calculus-backprop`: clean** — code exercise [3 4 6 8], q11's outer product $[[3,6],[0,0]]$, e0's hand-computed $(\partial L/\partial W, \partial L/\partial x)=([[1,2],[0,0],[2,4]], (7,4))$, e2's two-layer transpose chain $(2,3)$, all 16 MCQs verified. No changes. **That completes all 19 Linear Algebra lessons** — final LA tally: 8 lessons needed fixes (duplicate examples ×5, index-reference explains ×3, 3-choice MCQs ×2, forward refs ×2, muddled explain, trivial code exercise), 11 were clean, and *zero arithmetic errors* were found in ~500 hand-checked computations.
+**Widget batch 1 (4 of 11 LA widgets): all clean** — `la-vector-add`, `la-dot-product`, `la-linear-transform`, `la-determinant` behaviorally driven headless (every button double-clicked, every slider slammed to min/max): canvases exactly 540px logical (mobile-safe), notes render and update, errs=0 throughout. Aria covered by the central fallback (iter 1154).
+No data changes needed — ledger is the ship; no SW bump. **Progress: 19/193 lessons · 4/177 widgets.**
+
 ## iter 1166 — Review: la-gradients-jacobians + la-matrix-derivative-identities (review)
 **`la-gradients-jacobians`: clean** — code gradient $(8,7)$, q6's $J\Delta=(0.1,0.6)$, q9's shape-only refutation, e0's positive-definite Hessian ($\det=7$), all 16 MCQs verified. No changes.
 **`la-matrix-derivative-identities`** — every identity, the ridge derivation, $\nabla\|x\|=x/\|x\|$, the worked minimizers, and the code exercise (6 6) all verify. One defect: **q6's explain misnumbered its choice references** — the *third* occurrence of the index-reference disease this phase. Rewritten content-first ("forgetting the factor of 2 gives $\mathbf a+B\mathbf x$; writing the row $\mathbf a^\top$ instead of the column…").

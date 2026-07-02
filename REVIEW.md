@@ -3,7 +3,7 @@
 Owner-directed (2026-07-02): review and refine all existing content and visualizations.
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 18/193 lessons · 0/177 widgets**
+**Progress: 19/193 lessons · 4/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -24,17 +24,17 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] la-low-rank-pca — ✔ iter-1165 clean — worked PCA (λ=8/3, 80%, reconstruction error 2=σ₂² matching Eckart–Young exactly), h0 energy budget 146.16, h1 diag(6,2/3), pseudoinverse h2, all 17 MCQs verified; no changes
 - [x] la-gradients-jacobians — ✔ iter-1166 clean — code grad (8,7), q6 JΔ, q9 shape reasoning, e0 PD Hessian det=7, all verified; no changes
 - [x] la-matrix-derivative-identities — ✔ iter-1166 — q6 explain had misnumbered choice references (3rd occurrence of the index disease; rewritten content-first); all identities/ridge/norm gradients/code verified
-- [ ] la-matrix-calculus-backprop — pending
+- [x] la-matrix-calculus-backprop — ✔ iter-1167 clean — code [3,4,6,8], q11 outer product, e0 (7,4), e2 two-layer chain (2,3), all 16 MCQs verified; no changes. ALL 19 LA LESSONS DONE.
 
 ## linear-algebra — widgets
-- [ ] la-vector-add — pending
-- [ ] la-linear-transform — pending
+- [x] la-vector-add — ✔ iter-1167 clean — drag widget, 540px, note renders, errs=0 under drive
+- [x] la-linear-transform — ✔ iter-1167 clean — 6 buttons + 4 sliders driven to extremes, errs=0
 - [ ] la-eigen — pending
 - [ ] la-pca — pending
 - [ ] la-svd — pending
 - [ ] la-projection — pending
-- [ ] la-dot-product — pending
-- [ ] la-determinant — pending
+- [x] la-dot-product — ✔ iter-1167 clean — 4 buttons hammered, note 138ch, errs=0
+- [x] la-determinant — ✔ iter-1167 clean — 5 buttons hammered, note 148ch, errs=0
 - [ ] la-gram-schmidt — pending
 - [ ] la-power-iteration — pending
 - [ ] la-phase-portrait — pending
