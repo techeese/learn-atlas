@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1131 — Hard-concept: spectral clustering — full bundle (content)
+Opened block 1131–1140 by probing fresh gaps (optimal transport, FDR, IV/RDD all already have dives) and found **spectral clustering mention-only** across three lessons. Full bundle into `ml-kmeans` (its 5th dive, the "when k-means fails" home): k-means is blind to *shape*; spectral clustering builds a similarity graph and clusters by **connectivity** — the **graph Laplacian** $L=D-W$'s bottom eigenvectors (cross-linked to the spectral theorem) are near-indicators of loosely-connected chunks, so rings/moons become linearly separable in the **spectral embedding**; a relaxation of the NP-hard **normalized cut**, with the eigengap picking $k$ and the **Fiedler vector** bipartitioning graphs. Same ship: **3 glossary terms** (Spectral clustering, Graph Laplacian, Fiedler vector — 580 → **583**), **1 MCQ** (16 → 17), **2 flashcards** (6 → 8).
+Verified: guarded; byte-stable re-serialize ×2; gate ALL GREEN (internal-links); one combined headless driver — 5 dives, spectral/Laplacian/Fiedler/normalized-cut + link, quiz "of 17", glossary 3/3, kErr=0, errs=0. SW cache `atlas-v1062` → `atlas-v1063`.
+
 ## iter 1130 — Step-back (clean at 192/901) + MCQ top-up for the newest lesson (step-back / retention)
 Step-back **kErr + visible-newline sweep**: **n=192 lessons**, errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, **mapNodes=901** — zero regressions since iter 1120; all four split lessons and both new widgets healthy sitewide.
 **Ship:** topped `ml-trustworthy-models` up **+2 MCQs** (→ 6, matching its sibling split lessons): why F1 is a *harmonic* mean (imbalance-punishing — 1.0/0.02 averages to ~0.04, not 0.51), and conformal's coverage-vs-set-size price. Hand-verified.
