@@ -7,6 +7,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
 **Progress: 115/193 lessons · 53/177 widgets**
 
+Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, errs=0 (validates the reorder/tiers/relocations/RL-fix window).
+
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
 - [x] la-dot-product-norms — ✔ iter-1158 clean — every number re-verified (worked example, cosines, 16 MCQs, hw, examples incl. arccos values); no changes needed
