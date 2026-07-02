@@ -2912,6 +2912,18 @@
           ],
           "prereqs": [
             "ml-model-selection"
+          ],
+          "examples": [
+            {
+              "title": "The accuracy trap, with numbers",
+              "body": "A screening test is run on $1000$ patients of whom $10$ have the condition. Classifier A predicts \"healthy\" for everyone. Classifier B produces $TP=8$, $FN=2$, $FP=2$, $TN=988$. Compute accuracy for both, then precision/recall/F1 for B. Which numbers tell the real story?",
+              "solution": "Classifier A: accuracy $=990/1000=99.0$ percent — and it detects <em>no one</em>: recall $0$. Accuracy is inflated by the $99{:}1$ class imbalance.\n\nClassifier B: accuracy $=(8+988)/1000=99.6$ percent — barely different from A. But precision $=8/10=0.8$, recall $=8/10=0.8$, F1 $=0.8$: it catches $80$ percent of true cases and is right $80$ percent of the times it raises an alarm.\n\nThe $0.6$-point accuracy gap hides the entire difference between a useless model and a good one. On imbalanced problems, report precision/recall (or the confusion matrix itself) — accuracy alone answers a question nobody asked."
+            },
+            {
+              "title": "Build a conformal interval by hand",
+              "body": "Your model's absolute residuals on $n=9$ calibration points, sorted: $0.1,\\ 0.2,\\ 0.3,\\ 0.4,\\ 0.5,\\ 0.6,\\ 0.8,\\ 1.0,\\ 1.5$. Construct the split-conformal prediction interval for a new input at miscoverage $\\alpha=0.2$ (80 percent coverage).",
+              "solution": "The half-width is the $\\lceil(1-\\alpha)(n+1)\\rceil$-th smallest residual: $\\lceil 0.8\\times 10\\rceil=8$, so $\\hat q$ is the 8th value $=\\mathbf{1.0}$.\n\nThe interval is $\\hat y_{\\text{new}}\\pm 1.0$. By rank-uniformity — the new point&#x27;s residual is equally likely to fall in any of the $10$ slots among the calibration residuals — it lands at or below the 8th slot with probability $8/10=80$ percent: coverage $\\ge 1-\\alpha$, guaranteed, with <em>no assumptions</em> about the model or the noise.\n\nNote the price knob: at $\\alpha=0.1$ the rank would be $\\lceil 0.9\\times 10\\rceil=9$, widening the band to $\\pm 1.5$ — coverage is bought with width."
+            }
           ]
         }
       ]

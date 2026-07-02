@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1156 — Worked examples: trusting a model — examples debt zeroed sitewide (content/retention)
+Cleared the **last** 0/3-examples parity flag. `ml-trustworthy-models` gets 2 worked examples, arithmetic Node-verified: *The accuracy trap, with numbers* — all-negative classifier scores **99.0%** accuracy with recall 0; a genuinely good classifier ($TP{=}8,FN{=}2,FP{=}2,TN{=}988$) scores 99.6% — the 0.6-point gap hides the entire difference, exposed only by precision/recall/F1 $=0.8$ · *Build a conformal interval by hand* — $n{=}9$ sorted residuals, $\alpha{=}0.2$: rank $\lceil 0.8\times10\rceil=8$ → $\hat q=1.0$, interval $\hat y\pm1.0$, with the rank-uniformity coverage argument and the price knob ($\alpha{=}0.1$ → $\pm1.5$).
+**Every lesson on the site now has ≥2 worked examples, ≥3 homework, ≥1 quiz pool, and flashcards** — the examples backfill arc (iters 1152/1155/1156) is complete.
+Verified: guarded; byte-stable; gate ALL GREEN (**zero 0/3-examples flags**); **headless** — examples tab renders both titles, kErr=0, errs=0. SW cache `atlas-v1086` → `atlas-v1087`.
+
 ## iter 1155 — Worked examples: auctions & the generalization mysteries (content/retention)
 Probe batches 7–8 (MCTS, max-flow, Krylov/CG, MoE, martingales, matrix exponential, Kolmogorov/MDL, IFT) came back **all covered** — coverage is genuinely deep — so the slot went to the remaining 0/3-examples parity flags. Authored 2 worked examples each:
 **`gt-auctions-mechanism-design`:** *Check every deviation* — the $v{=}40$ second-price payoff table worked case-by-case (overbid to 50 → the only changed outcome is a **−5** win at $r{=}45$; dominance by enumeration) · *Revenue equivalence with two uniform bidders* — $\mathbb E[\min]=\tfrac13$ vs $b(v){=}v/2 \Rightarrow \mathbb E[\max]/2=\tfrac13$, **identical** (Monte-Carlo-checked to 4 decimals).
