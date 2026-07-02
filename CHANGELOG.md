@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1161 — Review: la-inverse-and-systems + la-four-subspaces-rank (review)
+**`la-inverse-and-systems`: clean** — the 3×3 Gauss-Jordan inverse re-multiplied out ($AA^{-1}=I$ on all checked entries), h1's inverse spot-checked on three diagonal entries, Cramer + conjugate-gradient code outputs re-derived exactly (x=1/11, 7/11), all 17 MCQs and examples verified. A genuinely excellent lesson; no changes.
+**`la-four-subspaces-rank`** — the full worked example re-verified (RREF, all four subspace bases, the left-null vector's row-dependence reading row₃=row₁+row₂, h0's null vector re-multiplied). One defect: **the code exercise was trivial** — `nullity(5,2)` computes one subtraction and teaches nothing. Replaced with a real computation: **verify the Fundamental Theorem numerically** by dotting the lesson's own worked row-space basis against its null-space basis (4 dot products → `0, 0, 0, 0`).
+Verified: guarded; byte-stable; gate ALL GREEN (203 code exercises — replacement executed); headless — Run shows the four zeros, old exercise gone, kErr=0, errs=0. SW `atlas-v1091` → `atlas-v1092`. **Progress: 8/193 lessons.**
+
 ## iter 1160 — Step-back (clean at 193/905) + review: la lessons 5–6 (step-back / review)
 Step-back sweep: **n=193, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=905** — clean.
 **`la-matrices-as-transformations`** — all matrices/compositions/hw/examples re-verified. One defect: **example e2 was an exact duplicate of the in-content worked example** (same matrices, same vector, same answer — zero added value). Replaced with *"Compose a rotation with a reflection — the order picks the mirror"*: $RF = \begin{bmatrix}0&1\\1&0\end{bmatrix}$ (reflection across $y{=}x$) vs $FR = \begin{bmatrix}0&-1\\-1&0\end{bmatrix}$ (across $y{=}-x$) — both dets $-1$, Node-verified; makes the non-commutativity the old example only teased *visible* (and avoids duplicating lesson 6's stretch-vs-rotate demo).
