@@ -448,6 +448,17 @@
               ],
               "answer": 1,
               "explain": "Where you start only shifts the transient (bias); the rate you settle into is a property of the policy. The Bellman equation subtracts $\\rho$ each step: $\\rho+h(s)=\\max_a[r+\\sum p\\,h(s')]$."
+            },
+            {
+              "q": "As the discount factor $\\gamma\\to 1$, the discounted value $V_\\gamma(s)$ behaves like:",
+              "choices": [
+                "$\\frac{\\rho}{1-\\gamma}+h(s)$ — the gain amplified by the horizon, plus the bias (the Laurent expansion)",
+                "$h(s)$ alone",
+                "$\\rho\\cdot\\gamma$",
+                "It diverges with no structure"
+              ],
+              "answer": 0,
+              "explain": "The blow-up is entirely the gain term; what distinguishes states in the limit is the bias. A policy optimal for all $\\gamma$ near 1 is Blackwell optimal."
             }
           ],
           "flashcards": [

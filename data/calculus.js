@@ -6606,6 +6606,17 @@
               ],
               "answer": 2,
               "explain": "$x\\leftarrow(1-\\gamma)x+\\gamma s$ with $s\\in\\mathcal{C}$: averaging members of a convex set can't leave it. The same structure makes iterates sparse — at most $t{+}1$ atoms after $t$ steps."
+            },
+            {
+              "q": "After $t$ iterations, the Frank-Wolfe iterate is special because it is:",
+              "choices": [
+                "Exactly optimal",
+                "Always a vertex of the constraint set",
+                "Orthogonal to the gradient",
+                "A convex combination of at most $t{+}1$ atoms — sparse or low-rank by construction"
+              ],
+              "answer": 3,
+              "explain": "Each step averages in one oracle answer (a vertex, a signed coordinate, a rank-one matrix), so the solution's complexity grows one atom per iteration — a structural bonus projections don't give."
             }
           ],
           "flashcards": [

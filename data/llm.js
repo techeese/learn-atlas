@@ -3910,6 +3910,17 @@
               ],
               "answer": 1,
               "explain": "Like soft prompts, gist tokens are learned vectors — but trained so a handful of them reproduce the effect of a much longer text segment. Hard pruning (LLMLingua) and context distillation are the lighter and heavier alternatives."
+            },
+            {
+              "q": "LLMLingua-style hard prompt pruning decides which tokens to delete using:",
+              "choices": [
+                "Regular expressions for stop-words",
+                "A small language model's informativeness (surprisal) scores — predictable tokens go first",
+                "The attention weights of the target model",
+                "Random dropout"
+              ],
+              "answer": 1,
+              "explain": "Natural language is redundant; a small LM identifies which tokens the context already implies. Prompts compress severalfold with little quality loss."
             }
           ],
           "flashcards": [

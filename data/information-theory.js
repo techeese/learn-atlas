@@ -216,6 +216,17 @@
               ],
               "answer": 2,
               "explain": "One likely outcome is all an attacker needs, however \"surprising\" the source is on average. Since $H_\\infty\\le H_1$, min-entropy is the conservative rating used for randomness extraction."
+            },
+            {
+              "q": "For a single distribution, how do the Rényi entropies compare across orders?",
+              "choices": [
+                "They are all equal",
+                "They increase with $\\alpha$",
+                "They decrease with $\\alpha$: $H_\\infty\\le H_2\\le H_1\\le H_0$",
+                "They are incomparable"
+              ],
+              "answer": 2,
+              "explain": "Larger $\\alpha$ weights the likely outcomes more, so measured uncertainty falls — which is why min-entropy ($\\alpha=\\infty$) is the conservative choice for security."
             }
           ],
           "flashcards": [

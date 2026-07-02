@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1134 — Retention wave 4: second-angle MCQs for the newest bundles (retention)
+The five newest bundled concepts each had exactly one MCQ — added a **second, different-angle question** each: the **Laurent expansion** $V_\gamma\approx\rho/(1-\gamma)+h$ (avg-reward), the **Rényi ordering** $H_\infty\le H_2\le H_1\le H_0$, **LLMLingua surprisal pruning**, Frank-Wolfe's **$t{+}1$-atom sparsity**, and the **eigengap heuristic** (spectral). All hand-verified, varied positions. These feed straight into the new adaptive test sampler.
+Verified: math-guarded; 5 byte-stable re-serializations; **gate ALL GREEN — 3069 MCQs**; **headless** — quiz "of 18" with the Laurent choices typeset, kErr=0, errs=0. SW cache `atlas-v1065` → `atlas-v1066`.
+
 ## iter 1133 — Adaptive test selection: mastery-weighted question sampling (new functionality)
 Wildcard from the backlog ("per-concept difficulty + adaptive selection"): Spawn-a-Test previously drew questions **uniformly** within scope. Now it samples **without replacement, weighted by $1-0.8\cdot$`effectiveMastery(lesson)`** — weak or *fading* lessons (mastery decays with a half-life) are drawn up to 5× more often, while fully mastered material keeps a 0.2 floor weight so nothing is ever retired from rotation. Works inside every scope (completed / weak / per-topic / all); the page copy now says so. No new state fields.
 Verified: **algorithm unit-tested in Node first** (10 lessons half-mastered: weak share 0.765 ≈ theory 0.78, mastered still appear); app.js parses; gate ALL GREEN; **headless end-to-end** — test page shows the new copy, scope→Start spawns, question + choices render, kErr=0, errs=0. SW cache `atlas-v1064` → `atlas-v1065`.

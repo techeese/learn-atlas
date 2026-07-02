@@ -1942,6 +1942,17 @@
               ],
               "answer": 1,
               "explain": "Points on the same ring are chained together through near neighbours; the bottom Laplacian eigenvectors are nearly indicators of such chunks, so the embedding makes the rings linearly separable — then k-means is easy."
+            },
+            {
+              "q": "The eigengap heuristic in spectral clustering chooses the number of clusters by:",
+              "choices": [
+                "Looking for a jump in the Laplacian's eigenvalue sequence — eigenvalues before the gap count the loosely-connected chunks",
+                "Cross-validation on labels",
+                "Minimizing k-means inertia",
+                "Counting local density peaks"
+              ],
+              "answer": 0,
+              "explain": "A graph with $k$ well-separated clusters has $k$ near-zero Laplacian eigenvalues, then a jump; the gap position estimates $k$ without labels."
             }
           ],
           "flashcards": [
