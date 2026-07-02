@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1153 — Code: build a count-min sketch (examples)
+Second interactive of the block — the sketches thread now has all three surfaces (dive + viz + code). Runnable inside the `a-hash-tables` sketches dive: **4×16 counter grid**, one modulo-hash seed per row (no bit ops — the no-`<>` guard rules out shifts); stream 175 items (50 alpha / 20 beta / 5 gamma / 100 one-offs), query with min-over-rows → **`true/estimate: alpha 50/53, beta 20/24, gamma 5/12, noise0 1/4`** — every estimate at or above the truth, the heavy hitter sharp, the small counts absorbing collision noise. One-sided error, watched happening. (Authored single-line output up front this time — the iter-1143 multi-line-expected lesson applied.)
+Verified: re-derived in Node; byte-stable inject; **gate ALL GREEN — 203 code exercises executed**; **headless** — Run shows the exact line, kErr=0, errs=0. SW cache `atlas-v1083` → `atlas-v1084`.
+
 ## iter 1152 — Retention: worked examples for the two examples-empty split lessons (retention)
 The newest split lessons had **0/3 worked examples** — an entire missing tab. Authored 2 each, all arithmetic Node-verified first:
 **`ps-estimation-theory`:** *Cramér-Rao floor for an exponential lifetime* ($I(\lambda)=1/\lambda^2$ derived from the log-density; floor $\lambda^2/n=0.08$, se ≥ 0.28 at $n{=}50$) · *Delta method: proportion → odds ratio* ($g'(0.8)=25$, so odds $=4\pm 1$ — 5× the relative error of $\hat p$; the nonlinearity warning made concrete).
