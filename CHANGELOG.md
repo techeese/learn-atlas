@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1170 — Step-back (clean at 193/905) — first review block complete (step-back)
+Full kErr + visible-newline sweep: **n=193, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=905** — every fix of the review phase so far is regression-free.
+**Review block 1161–1170 recap (the phase's first full block):** 21 lessons + 11 widgets reviewed. **All of Linear Algebra done** (19 lessons, 11 widgets) plus the first two Calculus lessons. Defect taxonomy so far: duplicate examples ×7 (the dominant early-era flaw — every one replaced with a complementary example), index-based explain references ×3 (all rewritten content-first), 3-choice MCQs ×2 (distractors added), forward references ×2 (inline glosses), muddled explain ×1, trivial code exercise ×1 (upgraded to a Fundamental-Theorem verification). **Zero arithmetic errors in ~700 hand-checked computations**; widgets all behaviorally robust, with `la-power-iteration`'s on-screen numbers re-derived exactly. Roughly half of reviewed units needed no changes at all.
+Ledger current at **21/193 lessons · 11/177 widgets**. No data changes this iteration — the sweep + recap is the ship; no SW bump.
+
 ## iter 1169 — Review: Calculus begins — c-functions-and-graphs + c-limits-intuition (review)
 **`c-functions-and-graphs`** — inverse worked example (with the domain/range-swap asymptote check), composition code (19/49/7), h0–h2 all verified. One defect: **e2 composed to the exact function e0 had already analyzed** ($\sqrt{x-4}$, same $[4,\infty)$ domain reasoning twice in one Examples tab). Replaced with $f{=}1/x,\ g{=}x^2{-}9$: the composite $1/(x^2-9)$ **punches two isolated holes** ($x\neq\pm3$) instead of cutting an interval — now the two examples contrast the two shapes a composite's domain restriction can take.
 **`c-limits-intuition`: clean** — the piecewise worked example (limit 3 vs $g(2){=}7$), both ε-δ proofs ($\delta{=}\varepsilon/2$ in content, $\delta{=}\varepsilon/3$ in h2), the conjugate-rationalization h0 ($=1/4$), the $(1{+}1/n)^n$ code table, and the squeeze example all verified. No changes.
