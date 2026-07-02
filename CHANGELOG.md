@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1202 — Review: Deep Learning begins — dl-ml-recap + dl-the-artificial-neuron-and-mlp (review)
+**`dl-ml-recap-and-the-learning-problem`: clean** — training-risk e0 ($\frac23$), the memorizing-classifier gap e1 ($\hat R=0$ vs $R=0.2$ in the noisy world), the bias-variance U-curve arithmetic ($6$ vs $7.5$), the 200-configs test-set-reuse protocol h1, and the learned-representations h2 all verified.
+**`dl-the-artificial-neuron-and-mlp`** — forward pass h0 ($\hat y=4$ with the ReLU gating), the 115-parameter count, and all three examples verified. One defect: **h1 asked learners to derive the exact linear-collapse formulas that e1's closing paragraph spells out** ($W'=W^{(2)}W^{(1)}$, $\mathbf b'=W^{(2)}\mathbf b^{(1)}+\mathbf b^{(2)}$ — same derivation, renamed symbols; 6th answers-in-the-example case). Extended h1 with a concrete numeric part the example can't spoil: $W'=[2\;3]$, $b'=5$, both forms verified to produce 10 at $(1,1)$.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1111` → `atlas-v1112`. Note: DL has **26 lessons** (the site's largest topic), running through ~iter 1216. **Progress: 71/193 lessons · 53/177 widgets.**
+
 ## iter 1201 — Review: Algo widget batch 2 — ALL Algorithms content reviewed (review)
 Drove the remaining 10 Algo widgets headless: `algo-dp-editdistance`, `algo-dijkstra`, `algo-stack-queue`, `algo-trie`, `algo-maxflow`, `algo-pnp`, `a-reservoir-sampling`, `a-consistent-hashing`, `a-convex-hull`, `a-hll` — **all clean**, errs=0, canvases 414–540px, notes render.
 **Honesty spot-checks:** `algo-dp-editdistance`'s on-screen cell rule ($1+\min(1,1,0)=1$, source shading) is self-consistent; `a-reservoir-sampling`'s "ideal 0.125 per position, spread 0.033 at 2000 trials" checks out ($1/8$ exactly, and the spread is a few binomial standard deviations — appropriately noisy, with the note itself telling the user to raise trials).

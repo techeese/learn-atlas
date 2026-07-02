@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 69/193 lessons · 53/177 widgets — ALL Algorithms content reviewed (23 lessons + 21 widgets)**
+**Progress: 71/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -142,8 +142,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-hll — ✔ iter-1201 clean — slider, note 124ch, errs=0 under drive
 
 ## deep-learning — lessons
-- [ ] dl-ml-recap-and-the-learning-problem — pending
-- [ ] dl-the-artificial-neuron-and-mlp — pending
+- [x] dl-ml-recap-and-the-learning-problem — ✔ iter-1202 clean — training risk e0 (2/3), memorizer 0-vs-0.2 gap e1, bias-variance U-curve e2 (6 vs 7.5), test-set-reuse protocol h1, parametric/representation h2 all verified; no changes
+- [x] dl-the-artificial-neuron-and-mlp — ✔ iter-1202 — h1 asked to derive the exact collapse formulas e1's final paragraph spells out (W′=W⁽²⁾W⁽¹⁾, b′=W⁽²⁾b⁽¹⁾+b⁽²⁾ — 6th answers-in-the-example case); extended h1 with a numeric part (W′=[2,3], b′=5, both forms → 10 at (1,1), Node-verified). Forward pass h0 (ŷ=4), 115-param count h2, all examples verified
 - [ ] dl-activation-functions — pending
 - [ ] dl-loss-functions — pending
 - [ ] dl-backpropagation — pending
