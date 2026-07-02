@@ -1052,6 +1052,18 @@
           ],
           "prereqs": [
             "gt-foundations"
+          ],
+          "examples": [
+            {
+              "title": "Shapley value for a three-founder startup",
+              "body": "Three founders create no value alone: $v(1)=v(2)=v(3)=0$. In pairs, $v(12)=90$, $v(13)=80$, $v(23)=70$; all together $v(123)=120$. Compute each founder's Shapley value.",
+              "solution": "Average each founder's marginal contribution over all $3!=6$ arrival orders. For founder 1: orders $(1,2,3)$ and $(1,3,2)$ give $0$; $(2,1,3)$ gives $v(12)-v(2)=90$; $(3,1,2)$ gives $v(13)-v(3)=80$; $(2,3,1)$ and $(3,2,1)$ give $v(123)-v(23)=50$ each.\n\n$$\\varphi_1=\\frac{0+0+90+80+50+50}{6}=45,\\qquad \\varphi_2=\\frac{240}{6}=40,\\qquad \\varphi_3=\\frac{210}{6}=35.$$\n\nThe split $(45,40,35)$ adds up to $v(123)=120$ (efficiency), and founder 1 earns the most because they are the most valuable partner in every pairing."
+            },
+            {
+              "title": "Fair is not stable: is the Shapley split in the core?",
+              "body": "For the same startup game, check whether the Shapley allocation $(45,40,35)$ is in the core — and find the core if not.",
+              "solution": "Core conditions: $x_1+x_2\\ge 90$, $x_1+x_3\\ge 80$, $x_2+x_3\\ge 70$, with $x_1+x_2+x_3=120$.\n\nThe Shapley split gives founders 1 and 2 only $45+40=85\\lt 90$: coalition $\\{1,2\\}$ can walk out, earn $90$ on their own, and both do better. <b>The fair split is blocked.</b>\n\nAdding the three pair constraints gives $2(x_1+x_2+x_3)\\ge 240$, i.e. $120\\ge 120$ — every inequality must bind. Solving the three equalities: $$x=(50,40,30).$$ The core is this <em>single point</em>: the only stable division pays founder 1 a premium ($50$ vs the \"fair\" $45$) precisely because their outside options are strongest. Fairness (Shapley) and stability (core) are different answers to the same question — and here they disagree."
+            }
           ]
         }
       ]

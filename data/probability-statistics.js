@@ -3857,6 +3857,18 @@
           ],
           "prereqs": [
             "ps-point-estimation"
+          ],
+          "examples": [
+            {
+              "title": "Cramér-Rao floor for an exponential lifetime",
+              "body": "Component lifetimes are modeled as Exponential with rate $\\lambda$ (density $f(x)=\\lambda e^{-\\lambda x}$). You will observe $n=50$ lifetimes and estimate $\\lambda$, whose true value is near $2$. Derive the Fisher information per observation and the Cramér-Rao variance floor for unbiased estimators of $\\lambda$.",
+              "solution": "$\\log f(x)=\\log\\lambda-\\lambda x$, so $\\frac{\\partial}{\\partial\\lambda}\\log f=\\frac{1}{\\lambda}-x$ and $\\frac{\\partial^2}{\\partial\\lambda^2}\\log f=-\\frac{1}{\\lambda^2}$.\n\nThe Fisher information is $I(\\lambda)=-\\mathbb{E}\\!\\left[\\partial^2_\\lambda\\log f\\right]=\\frac{1}{\\lambda^2}$ — no expectation needed, it is constant in $x$.\n\nThe Cramér-Rao floor is $$\\operatorname{Var}(\\hat\\lambda)\\ \\ge\\ \\frac{1}{n\\,I(\\lambda)}=\\frac{\\lambda^2}{n}=\\frac{4}{50}=0.08,$$ a standard error of at least $\\sqrt{0.08}\\approx 0.28$. The MLE $\\hat\\lambda=1/\\bar X$ attains this floor asymptotically — no clever estimator will beat $\\pm 0.28$ at $n=50$; the only way down is more data."
+            },
+            {
+              "title": "Delta method: from a proportion to an odds ratio",
+              "body": "A classifier is correct on $\\hat p=0.8$ of $n=100$ held-out cases, so $\\operatorname{se}(\\hat p)=\\sqrt{0.8\\cdot 0.2/100}=0.04$. Your report quotes the <em>odds</em> $g(p)=p/(1-p)$. Attach a standard error to the estimated odds.",
+              "solution": "The estimated odds are $g(0.8)=0.8/0.2=4$. The delta method needs $g&#x27;(p)=\\frac{1}{(1-p)^2}$, so $g&#x27;(0.8)=\\frac{1}{0.04}=25$.\n\n$$\\operatorname{se}(\\text{odds})\\approx |g&#x27;(\\hat p)|\\cdot\\operatorname{se}(\\hat p)=25\\times 0.04=1.0.$$\n\nSo the odds are $4\\pm 1$ — a relative error of 25 percent, five times the 5 percent relative error of $\\hat p$ itself. The steep nonlinearity of $p/(1-p)$ near $p=1$ is exactly what the derivative factor warns you about."
+            }
           ]
         },
         {

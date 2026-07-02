@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1152 — Retention: worked examples for the two examples-empty split lessons (retention)
+The newest split lessons had **0/3 worked examples** — an entire missing tab. Authored 2 each, all arithmetic Node-verified first:
+**`ps-estimation-theory`:** *Cramér-Rao floor for an exponential lifetime* ($I(\lambda)=1/\lambda^2$ derived from the log-density; floor $\lambda^2/n=0.08$, se ≥ 0.28 at $n{=}50$) · *Delta method: proportion → odds ratio* ($g'(0.8)=25$, so odds $=4\pm 1$ — 5× the relative error of $\hat p$; the nonlinearity warning made concrete).
+**`gt-cooperative-games`:** *Shapley for a three-founder startup* (all 6 arrival orders worked → $(45,40,35)$) · ***Fair is not stable*** — the Shapley split is **blocked by coalition {1,2}** ($85<90$), and the core turns out to be the **single point $(50,40,30)$** (the three pair constraints bind exactly): fairness and stability are different answers, and here they disagree. Best example on the lesson.
+Verified: guarded; byte-stable ×2; **gate ALL GREEN — 569 examples**; **headless** — both examples tabs render the new titles, kErr=0, errs=0. SW cache `atlas-v1082` → `atlas-v1083`.
+
 ## iter 1151 — NEW viz: HyperLogLog, live (visualizations)
 Opened block 1151–1160 with an interactive completing the iter-1145 sketches bundle — the **177th widget, `a-hll`** in `a-hash-tables`: a real HyperLogLog (FNV-1a + murmur finalizer, 64 six-bit registers = **384 bytes**) shown as an 8×8 heat grid of leading-zero records; drag n from 2 to 50,000 and the harmonic-mean estimate tracks the true count within the theoretical ±13%.
 **Self-caught in Node before shipping:** plain FNV-1a underestimated by up to −82% — its high bits (used for register routing) have poor avalanche; fixed with a murmur-style finalizer (errors then +2%/−9%/−1%/−4%/−6% across 100→50k).
