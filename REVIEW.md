@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 68/193 lessons · 32/177 widgets**
+**Progress: 69/193 lessons · 43/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -116,20 +116,20 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-algorithms-for-ml — ✔ iter-1197 clean — κ=25 convergence window h0 (η<0.08, factor −1.5 divergence at 0.1), Viterbi h1 (Rainy-Rainy 0.3402, re-derived), brute-vs-HNSW h2 (2 Pflop/s vs 5.6 Gflop/s, ratio ~360k×), 0.8^t contraction e0, batch-vs-SGD e1, k-means e2 all verified; h0 cross-reinforces the calc convergence lesson — fine
 - [x] a-amortized-analysis — ✔ iter-1198 clean — h0 (7<16 copies), potential h1 (ĉ=3), the honest-bound h2, three-methods e0 ($3 accounting), amortized≠average e1, binary counter e2 (15 flips for n=8, re-counted) all verified; overlap with lesson-3's amortized material is deliberate deepening on distinct instances; no changes
 - [x] a-network-flow — ✔ iter-1198 — h2 asked learners to produce the exact worker-job matching reduction that e2 AND card c5 spell out (answers-in-the-example, 5th case); replaced with edge-disjoint paths via unit capacities (flow decomposition + Menger + fault-tolerance min-cut reading — same modeling skill, un-worked problem). q10 (max flow 5, cut-certified), Edmonds-Karp h1, residual-cut e0, backward-edge e1 all verified
-- [ ] a-union-find-range — pending
+- [x] a-union-find-range — ✔ iter-1199 clean — connectivity h0, Fenwick 2×10⁷-vs-10¹² h1, structure-selection h2 (lazy segtree/UF/sparse table), Kruskal-complexity e0, Fenwick-vs-prefix e1, inverse-Ackermann e2 all verified; overlaps with a-mst-union-find are deliberate deepening; no changes. ALL 23 ALGORITHMS LESSONS DONE.
 
 ## algorithms — widgets
-- [ ] algo-sorting — pending
-- [ ] algo-bigo — pending
-- [ ] algo-master-theorem — pending
-- [ ] algo-kmeans — pending
-- [ ] algo-heap — pending
-- [ ] algo-kruskal — pending
-- [ ] algo-greedy — pending
-- [ ] algo-recursion-tree — pending
-- [ ] algo-graph-traversal — pending
-- [ ] algo-hashing — pending
-- [ ] algo-binary-search — pending
+- [x] algo-sorting — ✔ iter-1199 clean — 3 btns + slider, errs=0 under drive
+- [x] algo-bigo — ✔ iter-1199 clean — btn + slider, errs=0 under drive
+- [x] algo-master-theorem — ✔ iter-1199 clean — 3 btns + 3 sliders, note 146ch, errs=0 under drive
+- [x] algo-kmeans — ✔ iter-1199 clean — 3 btns, errs=0 under drive
+- [x] algo-heap — ✔ iter-1199 clean — 3 btns, note 203ch, errs=0 under drive
+- [x] algo-kruskal — ✔ iter-1199 clean — 3 btns, errs=0 under drive
+- [x] algo-greedy — ✔ iter-1199 clean — 3 btns, note 324ch, errs=0 under drive
+- [x] algo-recursion-tree — ✔ iter-1199 clean — slider, note 310ch, errs=0 under drive
+- [x] algo-graph-traversal — ✔ iter-1199 clean — 3 btns, 560px, errs=0 under drive
+- [x] algo-hashing — ✔ iter-1199 clean — 4 btns + slider, note 347ch, errs=0 under drive
+- [x] algo-binary-search — ✔ iter-1199 clean — 4 btns, note 251ch, errs=0 under drive
 - [ ] algo-dp-editdistance — pending
 - [ ] algo-dijkstra — pending
 - [ ] algo-stack-queue — pending

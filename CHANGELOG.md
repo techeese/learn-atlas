@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1199 — Review: a-union-find-range (ALL 23 Algorithms lessons done) + first Algo widget batch (review)
+**`a-union-find-range`: clean** — the connectivity trace, the Fenwick $2\times10^7$-vs-$10^{12}$ operation comparison, the three-way structure-selection homework (lazy segment tree / union-find / sparse table), the Kruskal complexity breakdown, and the inverse-Ackermann explanation all verified. **That completes all 23 Algorithms lessons** — final tally: 20 clean, 3 with minor defects (one maligning explain, two answers-in-the-quiz/example dups, one cosmetic title). The site's strongest topic by a wide margin.
+**Algo widget batch 1 (11 of 21): all clean** — `algo-sorting`, `algo-bigo`, `algo-master-theorem`, `algo-kmeans`, `algo-heap`, `algo-kruskal`, `algo-greedy`, `algo-recursion-tree`, `algo-graph-traversal`, `algo-hashing`, `algo-binary-search` driven headless: errs=0, canvases 540–560px (container-capped), notes render (43–347 chars).
+No data changes — ledger is the ship; no SW bump. **Progress: 69/193 lessons · 43/177 widgets.**
+
 ## iter 1198 — Review: a-amortized-analysis + a-network-flow (review)
 **`a-amortized-analysis`: clean** — the first-8-appends copy count ($1{+}2{+}4=7<16$), the potential-method $\hat c=3$, the honest-bound hash-table homework, the \$3 accounting scheme, the amortized≠average-case rebuttal, and the binary counter (15 flips for $n{=}8$, re-counted) all verified. Its overlap with lesson 3's amortized material is deliberate deepening on distinct instances.
 **`a-network-flow`** — q10's max flow (5, certified by two cuts), the Edmonds-Karp reasoning, the residual-min-cut extraction e0, and the backward-edge rescue e1 all verified. One defect: **h2 asked learners to produce the exact worker-job matching reduction that e2 AND card c5 spell out in full** (answers-in-the-example, 5th case sitewide). Replaced with **edge-disjoint paths via unit capacities** — flow decomposition, the Menger's-theorem connection, and the fault-tolerance reading of the min cut — the same modeling skill exercised on a problem nothing else works.
