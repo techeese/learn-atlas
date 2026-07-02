@@ -15,13 +15,13 @@ GREEN, SW bump on served-asset changes, headless smoke, explicit staging, push.
 
 ## P0 — Structural (site-level, highest leverage)
 
-- [ ] **S1 · Reorder the canonical course sequence** to `la → calc → ps → algos → it → ml → dl →
+- [x] **S1 (iter 1217) · Reorder the canonical course sequence** to `la → calc → ps → algos → it → ml → dl →
   rl → llm → ts → gt`. Current order is script-tag accretion order (index.html:146–156, never
   revisited as a curriculum decision); 17 of 107 cross-topic prereq edges point FORWARD under it
   (all 9 dl/rl/llm→ps edges, 8 →it edges). The ideal order flips every edge backward (verified by
   the auditor against data/prereqs.js). Zero content cost: reorder the `<script defer>` tags + SW
   bump. Grid order, map gating, and path banners then agree instead of contradicting.
-- [ ] **S2 · Tier the dashboard Topics grid** into a visible numbered path — Foundations (la,
+- [x] **S2 (iter 1217) · Tier the dashboard Topics grid** into a visible numbered path — Foundations (la,
   calc, ps, algos, it) · Core ML (ml, dl) · Frontier & applications (rl, llm, ts, gt) — surfacing
   at topic level the order signal PREREQS already encodes at lesson level. Today no "start here"
   signal exists anywhere.

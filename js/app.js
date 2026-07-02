@@ -633,7 +633,7 @@
           <span class="btn primary" style="pointer-events:none">Explore it ↗</span>
         </div>
       </div>` : "";
-    const cards = C().map(c => {
+    const courseCard = (c) => {
       const p = Store.courseProgress(c.id);
       const fl = flatLessons(c), lc = fl.length;
       const totalMin = fl.reduce((a, l) => a + (l.minutes || 10), 0);
@@ -654,6 +654,28 @@
           </div>
         </div>
       </div>`;
+    };
+    // curriculum tiers (holistic reorder, iter 1217) — surfaces at topic level the order the
+    // lesson-level PREREQS graph already encodes; unknown/future topic ids fall into the last tier
+    const TIERS = [
+      ["Foundations", "The math and CS bedrock everything else builds on — start here.",
+        ["linear-algebra", "calculus", "probability-statistics", "algorithms", "information-theory"]],
+      ["Core machine learning", "The learning problem, classical models, and deep networks.",
+        ["machine-learning", "deep-learning"]],
+      ["Frontier & applications", "Agents, language models, and applied domains.",
+        ["reinforcement-learning", "llm", "time-series", "game-theory"]],
+    ];
+    const tieredIds = new Set(TIERS.flatMap(t => t[2]));
+    C().forEach(c => { if (!tieredIds.has(c.id)) TIERS[TIERS.length - 1][2].push(c.id); });
+    const byId = {}; C().forEach(c => { byId[c.id] = c; });
+    const tiersHtml = TIERS.map(([label, sub, ids], i) => {
+      const tcards = ids.map(id => byId[id]).filter(Boolean).map(courseCard).join("");
+      return tcards ? `
+      <div class="reveal" style="margin:${i === 0 ? "0" : "26px"} 0 12px">
+        <h3 style="font-size:17px;letter-spacing:.02em">${i + 1} · ${label}</h3>
+        <p style="margin:3px 0 0;font-size:13px;color:var(--ink-mute)">${sub}</p>
+      </div>
+      <div class="grid">${tcards}</div>` : "";
     }).join("");
 
     // bookmarked lessons (saved for later) — only shown if any exist
@@ -739,8 +761,9 @@
       ${fadeHtml}
       ${nearHtml}
       ${bmHtml}
-      <div class="page-head reveal" style="margin-bottom:18px"><h2 style="font-size:26px">Topics</h2></div>
-      <div class="grid">${cards}</div>
+      <div class="page-head reveal" style="margin-bottom:8px"><h2 style="font-size:26px">Topics</h2>
+        <p style="margin:6px 0 0;font-size:13.5px;color:var(--ink-mute)">A recommended path — the prerequisites flow foundations → core ML → frontier. Every topic is open; the numbers are the suggested order.</p></div>
+      ${tiersHtml}
     </div>`;
     bindGo();
     document.querySelectorAll(".stat-strip .v:not([data-nocount])").forEach(el => countUp(el));   // count-up the hero stats on landing (the streak is a status, not a score — it shows its true value at once, matching the header, instead of flashing 0)

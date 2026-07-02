@@ -143,15 +143,17 @@
   </script>
 
   <!-- data + logic — `defer`: fetched in parallel, executed in document order after parse, before DOMContentLoaded -->
+  <!-- curriculum order (holistic reorder, iter 1217): foundations → core ML → frontier.
+       Under this order every cross-topic edge in data/prereqs.js points backward. -->
   <script defer src="data/linear-algebra.js"></script>
   <script defer src="data/calculus.js"></script>
+  <script defer src="data/probability-statistics.js"></script>
   <script defer src="data/algorithms.js"></script>
+  <script defer src="data/information-theory.js"></script>
+  <script defer src="data/machine-learning.js"></script>
   <script defer src="data/deep-learning.js"></script>
   <script defer src="data/reinforcement-learning.js"></script>
   <script defer src="data/llm.js"></script>
-  <script defer src="data/probability-statistics.js"></script>
-  <script defer src="data/machine-learning.js"></script>
-  <script defer src="data/information-theory.js"></script>
   <script defer src="data/time-series.js"></script>
   <script defer src="data/game-theory.js"></script>
   <script defer src="data/prereqs.js"></script>
