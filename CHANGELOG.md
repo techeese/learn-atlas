@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1106 — NEW viz: rectified-flow transport (visualizations)
+Interactive ship per the revised cadence (completes the iter-1094/95 flow-matching thread) — the **172nd widget, `dl-rectified-flow`** in `dl-diffusion-models`: a violet noise cloud and sage data ring joined by faint **straight trajectories** $x(t)=(1{-}t)x_0+t\,x_1$; dragging the **time slider** carries every point along its line from noise (t=0) to data (t=1), recoloring en route. Straight lines = few-step sampling — the rectified-flow speed win, made draggable. Reseed button; KaTeX note.
+Verified: gate ALL GREEN (now **172 widgets**); **headless** — lab mounts, slider drives t=0.00→1.00 (note updates at both ends), kErr=0, errs=0; screenshot READ shows mid-transport (t=0.55) with trajectory lines and dispersing cloud. SW cache `atlas-v1037` → `atlas-v1038`.
+
 ## iter 1105 — LOOP REVISION + retention: MCQ backfill for recent dives, wave 1 (retention)
 **Owner asked for a loop review.** Audit of iters ~1040–1104: 85% of ships were the content→glossary two-beat (each concept split across TWO iterations), while the ~70 hard-concept dives added since ~iter 960 had **zero quiz coverage** — "remember longer" wasn't being served for the newest material. Revised the playbook (SKILL.md): **(1)** a hard-concept ship now bundles the dive + its glossary terms in ONE iteration; **(2)** per-10-block lane quotas (≤5 prose, ≥2 interactive, ≥1 retention, ≥1 wildcard); **(3)** new first-class **retention lane** (MCQ/flashcard backfill for dive concepts); **(4)** split-watch: lessons at ≥7 dives are split candidates before adding more.
 **Ship (retention wave 1):** +8 MCQs, one per recent dive, across all 8 touched topics — Kelly stake ($f^\ast{=}0.2$), Schur-complement conditional covariance, Gaussian-copula tail dependence (2008), CUSUM threshold trade, rectified-flow velocity target ($x_1{-}x_0$), consistent-hashing ~$K/N$ remap, HER relabeling, MLA latent cache. Each home lesson 16 → **17 MCQs**; answers hand-verified; varied answer positions.

@@ -8952,4 +8952,61 @@
     reset(); draw();
   });
 
+
+  /* ========================================================
+     172. Rectified flow: straight-line transport from noise to data (deep learning)
+     ======================================================== */
+  register({ id: 'dl-rectified-flow', topic: 'deep-learning', title: 'Rectified flow: noise → data on straight lines', blurb: 'Flow matching learns a velocity field that carries noise to data; rectified flow uses straight paths x(t) = (1−t)·x₀ + t·x₁. Drag t: the violet noise cloud slides along its (faint) straight trajectories and lands as the sage data ring at t = 1. Because every trajectory is a straight line, a sampler can jump far along it in one step — that is why rectified-flow models need so few sampling steps.' },
+  function (root) {
+    const W = 460, H = 380;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    const N = 150; let t = 0.35, seed = 9;
+    function mk(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    let noisePts = [], dataPts = [];
+    function build() {
+      const r = mk(seed); noisePts = []; dataPts = [];
+      const cx = W / 2, cy = H / 2 - 6;
+      for (let i = 0; i < N; i++) {
+        const gx = (r() + r() + r() + r() - 2) * 38, gy = (r() + r() + r() + r() - 2) * 38;
+        noisePts.push([cx + gx, cy + gy]);
+        const th = r() * Math.PI * 2, rad = 128 + (r() + r() - 1) * 14;
+        dataPts.push([cx + rad * Math.cos(th), cy + rad * Math.sin(th) * 0.82]);
+      }
+      // random pairing: shuffle data indices
+      for (let i = N - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); const tmp = dataPts[i]; dataPts[i] = dataPts[j]; dataPts[j] = tmp; }
+    }
+    function lerp(a, b, u) { return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]; }
+    function draw() {
+      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
+      // faint straight trajectories for a subset
+      ctx.strokeStyle = p.line; ctx.globalAlpha = 0.5;
+      for (let i = 0; i < N; i += 5) { ctx.beginPath(); ctx.moveTo(noisePts[i][0], noisePts[i][1]); ctx.lineTo(dataPts[i][0], dataPts[i][1]); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+      // ghost endpoints
+      ctx.fillStyle = p.violet; ctx.globalAlpha = 0.25;
+      noisePts.forEach(q => { ctx.beginPath(); ctx.arc(q[0], q[1], 2, 0, 2 * Math.PI); ctx.fill(); });
+      ctx.fillStyle = p.sage;
+      dataPts.forEach(q => { ctx.beginPath(); ctx.arc(q[0], q[1], 2, 0, 2 * Math.PI); ctx.fill(); });
+      ctx.globalAlpha = 1;
+      // moving points, colour interpolates violet -> sage
+      const mix = t;
+      for (let i = 0; i < N; i++) {
+        const q = lerp(noisePts[i], dataPts[i], t);
+        ctx.fillStyle = mix < 0.5 ? p.violet : p.sage;
+        ctx.beginPath(); ctx.arc(q[0], q[1], 3.1, 0, 2 * Math.PI); ctx.fill();
+      }
+      ctx.fillStyle = p.mute; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('t = ' + t.toFixed(2) + '   ·   x(t) = (1−t)·x₀ + t·x₁', W / 2, H - 8);
+      info.innerHTML = 't = <b>' + t.toFixed(2) + '</b> — each point sits at $(1-t)x_0 + t\\,x_1$ on its own straight line. The velocity a rectified-flow net regresses onto is the constant $x_1 - x_0$, so trajectories never curve — few (even one) sampler steps suffice.';
+      if (window.typeset) window.typeset(info);
+    }
+    slider(ctl, { label: 'time t', min: 0, max: 1, step: 0.01, value: t, fmt: v => v.toFixed(2), onInput: v => { t = v; draw(); } });
+    button(controls(root), '🎲 Reseed', () => { seed = (seed * 16807 + 3) & 0x7fffffff; build(); draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Rectified-flow transport. A violet Gaussian noise cloud in the centre and a sage data ring around it, joined by faint straight trajectory lines. A time slider moves every point along its straight line from noise at t equals 0 to the ring at t equals 1, the moving cloud recoloring from violet to sage; a reseed button redraws the random pairing.');
+    build(); draw();
+  });
+
 })();
