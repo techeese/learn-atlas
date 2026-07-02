@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 81/193 lessons · 53/177 widgets**
+**Progress: 83/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -154,8 +154,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] dl-dropout-and-normalization — ✔ iter-1206 clean — inverted-dropout h0 ([2,0,6,0]) and e0 ([4,0,12,16,0] with expectation check) are parallel practice; BN forward h1 ([2.55,5.0,7.45]), batch-size-1 LayerNorm h2, full BN trap e1 (μ_B=4, σ²_B=5, running-stat update) all verified. e2's train/eval overlap with e1/h2 tolerated — its determinism/batch-mates argument is unique; no changes
 - [x] dl-initialization-and-vanishing-gradients — ✔ iter-1207 clean — Xavier/He h0 (0.0395/0.0442), gain-compounding h1 (0.6¹⁹≈6.1×10⁻⁵, 1.3¹⁹≈146, both re-computed), clip-by-global-norm h2 (direction-preservation argument), Xavier derivation e0 (κ=nσ²) all verified; no changes
 - [x] dl-convolution-operation — ✔ iter-1207 clean — ResNet-stem h0 ((64,64,64), 9472 params), dense-vs-conv h1 (584 vs 4.2M, ~7185×), receptive-field chain h2 (RF=11), VGG two-3×3s e2 (18 vs 25 weights + the nonlinearity point) all verified; h2/e2 receptive-field treatments are complementary; no changes
-- [ ] dl-pooling-and-cnn-architectures — pending
-- [ ] dl-transfer-learning — pending
+- [x] dl-pooling-and-cnn-architectures — ✔ iter-1208 clean — shape pipeline h0 (224→112→56), VGG param comparison h1 (409,600 vs 294,912 — deepens the conv lesson's e2 with full C=128 counts, cross-lesson deepening), residual-gradient h2 (∂y/∂x=∂F/∂x+I sum-of-paths), pooling grids e0 (max/avg re-computed) all verified; no changes
+- [x] dl-transfer-learning — ✔ iter-1208 clean — head count 10,245, examples-per-parameter contrast (0.06 vs ~38,000 per), discriminative LR table (10⁻³ halving to 6.25×10⁻⁵), two-mistakes diagnosis h2 all verified. h0(a) repeats e0's head count but (b,c) are fresh analysis — tolerated as extension; no changes
 - [ ] dl-rnn-lstm-gru — pending
 - [ ] dl-embeddings-and-tokenization — pending
 - [ ] dl-attention-mechanism — pending

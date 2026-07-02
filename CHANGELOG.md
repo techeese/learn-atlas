@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1208 — Review: dl-pooling-and-cnn-architectures + dl-transfer-learning — both clean (review)
+**`dl-pooling-and-cnn-architectures`: clean** — the four-step shape pipeline ($224\to112\to56$), the VGG parameter comparison at $C{=}128$ (409,600 vs 294,912 — deepening the conv lesson's per-channel version, good cross-lesson design), the residual-gradient argument ($\partial y/\partial x=\partial F/\partial x+I$ turning a product of Jacobians into a sum over paths), and both pooling grids (max and average re-computed cell by cell) all verified.
+**`dl-transfer-learning`: clean** — the 10,245-parameter head, the striking examples-per-parameter contrast (0.06 per param frozen vs ~38,000 params per example fine-tuned), the discriminative learning-rate table ($10^{-3}$ halving down to $6.25\times10^{-5}$), and the two-mistakes fine-tuning diagnosis all verified. h0(a) repeats e0's head count but its (b)/(c) parts are fresh analysis — extension, not spoiler.
+Ledger is the ship; no SW bump. **Progress: 83/193 lessons · 53/177 widgets.**
+
 ## iter 1207 — Review: dl-initialization-and-vanishing-gradients + dl-convolution-operation — both clean (review)
 **`dl-initialization-and-vanishing-gradients`: clean** — Xavier/He variance arithmetic ($\text{std}\approx0.0395$ vs $0.0442$ with the ReLU-compensation reason), the gain-compounding homework ($0.6^{19}\approx6.1\times10^{-5}$, $1.3^{19}\approx146$ — both re-computed), the clip-by-global-norm remedy with its direction-preservation argument, and the Xavier derivation ($\kappa=n\sigma^2$) all verified.
 **`dl-convolution-operation`: clean** — the ResNet-stem shape homework ($(64,64,64)$, 9,472 params), the dense-vs-conv comparison (584 vs 4.2M — a ~7,185× ratio), the receptive-field chain ($RF=11$), and the VGG two-3×3s-beat-one-5×5 example (18 vs 25 weights plus the interposed nonlinearity) all verified.
