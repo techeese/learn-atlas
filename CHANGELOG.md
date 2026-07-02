@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1127 — Hard-concept: Gale-Shapley stable matching — full bundle (content)
+Probed new territory (A*, HMM/Viterbi, t-SNE all already have dives) and found **Gale-Shapley entirely untaught**. Full bundle into `gt-cooperative-games` (its first dive): **stability** = no blocking pair; **deferred acceptance** — propose / tentatively hold / reject, always stable in ≤ $n^2$ proposals (a blocking pair would already have proposed); **proposer-optimal** across all stable matchings (receiver-pessimal — who proposes matters) and **strategy-proof for proposers**. The stable matchings are exactly the *core* of the market — closing the loop with this lesson's core section; NRMP residency match, school choice, 2012 Nobel (Roth & Shapley). Same ship: **2 glossary terms** (578 → **580**), **1 MCQ** (6 → 7), **2 flashcards** (5 → 7).
+Verified: guarded; byte-stable re-serialize ×2; gate ALL GREEN; one combined headless driver — dive renders (GS/blocking-pair/DA/proposer-optimal), quiz "of 7", glossary 2/2, kErr=0, errs=0. SW cache `atlas-v1058` → `atlas-v1059`.
+
 ## iter 1126 — Hard-concept: STL decomposition — full bundle (content)
 Filled the last long-noted TS gap, full-bundled. Deep-dive in `ts-exponential-smoothing` (its 4th): **STL** — $y_t=T_t+S_t+R_t$ by iterated **loess**: smooth each *cycle-subseries* for an **evolving seasonal**, loess the deseasonalized series for the trend, and an outer robustness loop downweights outliers (classical moving-average decomposition can do neither). Multiplicative → logs; the **remainder is where anomalies live** (decompose first, alarm on $R_t$ — cross-linked to change-point detection); X-13ARIMA-SEATS as the official-statistics cousin. Same ship: **2 glossary terms** (STL, Loess — 576 → **578**), **1 MCQ** (16 → 17), **2 flashcards** (6 → 8).
 Verified: guarded; byte-stable re-serialize ×2; gate ALL GREEN (internal-links); one combined headless driver — 4 dives, STL/loess/cycle-subseries/remainder + link, quiz "of 17", glossary 2/2, kErr=0, errs=0. SW cache `atlas-v1057` → `atlas-v1058`.
