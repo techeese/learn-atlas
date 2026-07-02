@@ -3461,7 +3461,7 @@
                 "$\\dfrac{2x^3}{x^6+1}\\cdot 3x^2$"
               ],
               "answer": 2,
-              "explain": "By FTC Part 1 with the chain rule, plug the upper limit $u=x^3$ into the integrand and multiply by $u'=3x^2$: $\\ln((x^3)^2+1)\\cdot 3x^2 = \\ln(x^6+1)\\cdot 3x^2$. Choice 0 forgets the chain-rule factor."
+              "explain": "By FTC Part 1 with the chain rule, plug the upper limit $u=x^3$ into the integrand and multiply by $u'=3x^2$: $\\ln((x^3)^2+1)\\cdot 3x^2 = \\ln(x^6+1)\\cdot 3x^2$. The bare $\\ln(x^6+1)$ forgets the chain-rule factor, and substituting $x$ instead of $x^3$ into the integrand misses the composition."
             },
             {
               "q": "A student evaluates $\\displaystyle\\int_{-1}^{1}\\frac{1}{x^2}\\,dx$ as $\\left[-\\frac1x\\right]_{-1}^{1} = -1-(1) = -2$. What is wrong?",
@@ -3483,7 +3483,7 @@
                 "Because $f$ is continuous, all its antiderivatives are equal"
               ],
               "answer": 0,
-              "explain": "If $F'=H'=f$, then $(F-H)'=0$ so $F-H$ is constant; that constant appears in both $F(b)$ and $F(a)$ and cancels on subtraction. Antiderivatives are not unique, so choices 0 and 3 are false."
+              "explain": "If $F'=H'=f$, then $(F-H)'=0$ so $F-H$ is constant; that constant appears in both $F(b)$ and $F(a)$ and cancels on subtraction. Antiderivatives are NOT unique, and continuity of $f$ does not make them all equal — the uniqueness and all-equal claims are both false; the family differs by constants, which is exactly what the subtraction removes."
             },
             {
               "q": "Interpreting $\\int_a^b F'(x)\\,dx = F(b)-F(a)$: if $v(t)$ is the velocity of an object, what does $\\int_0^{10} v(t)\\,dt$ represent?",
@@ -3870,7 +3870,7 @@
                 "single power of $x$"
               ],
               "answer": 2,
-              "explain": "Integration by parts shines on products like $x e^x$, $x\\ln x$, or $x\\sin x$ — pick the factor that gets simpler when differentiated as $u$. A composition with its inner derivative present (option 3) calls for $u$-substitution instead; a single power uses the power rule."
+              "explain": "Integration by parts shines on products like $x e^x$, $x\\ln x$, or $x\\sin x$ — pick the factor that gets simpler when differentiated as $u$. A composition with its inner derivative present calls for $u$-substitution instead; a ratio of polynomials is a partial-fractions job; and a single power of $x$ needs only the power rule."
             }
           ],
           "flashcards": [
@@ -3901,9 +3901,9 @@
           ],
           "homework": [
             {
-              "prompt": "Evaluate $\\int_{0}^{\\pi/2} \\sin(x)\\cos(x)\\,dx$ using substitution, and change the limits correctly.",
-              "hint": "Let $u = \\sin x$. Then $du = \\cos x\\,dx$, and the $\\cos x\\,dx$ in the integrand is exactly $du$. Re-map both limits through $u=\\sin x$.",
-              "solution": "Let $u=\\sin x$, so $du=\\cos x\\,dx$. Limits: $x=0\\Rightarrow u=\\sin 0=0$; $x=\\pi/2\\Rightarrow u=\\sin(\\pi/2)=1$. Then $\\int_0^{\\pi/2}\\sin x\\cos x\\,dx = \\int_0^1 u\\,du = \\big[\\tfrac{u^2}{2}\\big]_0^1 = \\tfrac12 - 0 = \\tfrac12.$"
+              "prompt": "Evaluate $\\int_{1}^{4} \\dfrac{e^{\\sqrt{x}}}{\\sqrt{x}}\\,dx$ using substitution, and change the limits correctly.",
+              "hint": "Let $u = \\sqrt{x}$. Then $du = \\dfrac{1}{2\\sqrt{x}}\\,dx$, so $\\dfrac{dx}{\\sqrt{x}} = 2\\,du$ — the entire non-exponential part converts at once. Re-map both limits through $u=\\sqrt{x}$.",
+              "solution": "Let $u=\\sqrt{x}$, so $du = \\frac{1}{2\\sqrt{x}}\\,dx$ and therefore $\\frac{dx}{\\sqrt{x}} = 2\\,du$. Limits: $x=1\\Rightarrow u=1$; $x=4\\Rightarrow u=2$. Then $\\int_1^4 \\frac{e^{\\sqrt{x}}}{\\sqrt{x}}\\,dx = 2\\int_1^2 e^u\\,du = 2\\big[e^u\\big]_1^2 = 2(e^2 - e) \\approx 9.34.$ The inner function here is a root rather than a power — the same chain-rule fingerprint (a function and a multiple of its derivative both present), just wearing different clothes."
             },
             {
               "prompt": "Evaluate $\\int x^2 e^{x}\\,dx$.",
@@ -3928,9 +3928,9 @@
               "solution": "Integration by parts reverses the product rule. The formula is\n$$\\int u\\,dv = uv - \\int v\\,du.$$\nThe art is choosing $u$ and $dv$. Differentiating the polynomial $x^2$ lowers its degree, so we pick $u = x^2$ to make the remaining integral simpler — the LIATE heuristic (Logs, Inverse trig, Algebraic, Trig, Exponential) also flags the algebraic factor for $u$.\n\n<strong>Step 1 — First application.</strong> Let\n$$u = x^2,\\quad dv = \\sin x\\,dx \\;\\Longrightarrow\\; du = 2x\\,dx,\\quad v = -\\cos x.$$\nThen\n$$\\int x^2 \\sin x\\,dx = -x^2\\cos x - \\int (-\\cos x)(2x)\\,dx = -x^2\\cos x + 2\\int x\\cos x\\,dx.$$\nThe new integral $\\int x\\cos x\\,dx$ has a lower-degree polynomial — progress.\n\n<strong>Step 2 — Second application</strong> on $\\int x\\cos x\\,dx$. Let\n$$u = x,\\quad dv = \\cos x\\,dx \\;\\Longrightarrow\\; du = dx,\\quad v = \\sin x.$$\nThen\n$$\\int x\\cos x\\,dx = x\\sin x - \\int \\sin x\\,dx = x\\sin x - (-\\cos x) = x\\sin x + \\cos x.$$\n\n<strong>Step 3 — Combine.</strong> Substitute this result back into Step 1:\n$$\\int x^2 \\sin x\\,dx = -x^2\\cos x + 2\\big(x\\sin x + \\cos x\\big) + C.$$\n$$= -x^2\\cos x + 2x\\sin x + 2\\cos x + C.$$\n\n<strong>Answer:</strong>\n$$\\int x^2 \\sin x \\, dx = -x^2\\cos x + 2x\\sin x + 2\\cos x + C.$$\n\n*Sanity check:* differentiate the result. By the product rule,\n$$\\frac{d}{dx}\\big[-x^2\\cos x\\big] = -2x\\cos x + x^2\\sin x,$$\n$$\\frac{d}{dx}\\big[2x\\sin x\\big] = 2\\sin x + 2x\\cos x,$$\n$$\\frac{d}{dx}\\big[2\\cos x\\big] = -2\\sin x.$$\nAdding these, the $-2x\\cos x$ and $+2x\\cos x$ cancel and $+2\\sin x$ and $-2\\sin x$ cancel, leaving exactly $x^2\\sin x$. The two-step by-parts unwound the product rule correctly."
             },
             {
-              "title": "Definite integrals by substitution: change the limits",
-              "body": "Evaluate $\\int_0^1 2x\\,e^{x^2}\\,dx$ using the substitution $u = x^2$.",
-              "solution": "<strong>Substitute, and transform the limits too.</strong> Let $u = x^2$, so $du = 2x\\,dx$ — the integrand's $2x\\,dx$ becomes $du$. Convert the bounds: $x = 0 \\Rightarrow u = 0$ and $x = 1 \\Rightarrow u = 1$. The integral becomes\n$$\\int_{x=0}^{x=1} 2x\\,e^{x^2}\\,dx = \\int_{u=0}^{u=1} e^u\\,du.$$\n<strong>Integrate in $u$.</strong> $\\int_0^1 e^u\\,du = e^u\\big|_0^1 = e^1 - e^0 = e - 1 \\approx 1.718$.\n<strong>Why change the limits.</strong> For a <em>definite</em> integral, once the bounds are rewritten in terms of $u$ you never back-substitute to $x$ — you evaluate directly in $u$. (For an <em>indefinite</em> integral you would substitute back, since there are no bounds.)\n<strong>The aha.</strong> Substitution is the chain rule run backward: it recognizes $2x\\,e^{x^2}$ as $\\tfrac{d}{dx}e^{x^2}$ in disguise. Spotting \"an inner function and a multiple of its derivative\" is the whole trick — then the integral collapses to an elementary one in $u$."
+              "title": "Substitution with a sign flip: integrating tan x",
+              "body": "Evaluate $\\int_0^{\\pi/4} \\tan x\\,dx$ by writing $\\tan x = \\dfrac{\\sin x}{\\cos x}$ and substituting $u = \\cos x$.",
+              "solution": "<strong>Spot the structure.</strong> $\\tan x = \\dfrac{\\sin x}{\\cos x}$ has the derivative of the denominator sitting in the numerator — almost: $\\frac{d}{dx}\\cos x = -\\sin x$, so the match is off by a sign.\n<strong>Substitute, tracking the minus.</strong> Let $u = \\cos x$, so $du = -\\sin x\\,dx$, i.e. $\\sin x\\,dx = -du$. Convert the limits: $x=0 \\Rightarrow u = \\cos 0 = 1$; $x = \\pi/4 \\Rightarrow u = \\cos\\frac{\\pi}{4} = \\frac{\\sqrt2}{2}$. Then\n$$\\int_0^{\\pi/4} \\frac{\\sin x}{\\cos x}\\,dx = -\\int_{1}^{\\sqrt2/2} \\frac{du}{u} = \\int_{\\sqrt2/2}^{1} \\frac{du}{u} = \\Big[\\ln u\\Big]_{\\sqrt2/2}^{1} = 0 - \\ln\\tfrac{\\sqrt2}{2} = \\tfrac12\\ln 2.$$\n<strong>Check.</strong> $\\frac12\\ln 2 \\approx 0.3466$, and a numeric midpoint sum of $\\tan x$ over $[0,\\pi/4]$ gives the same. Equivalently the antiderivative is $-\\ln|\\cos x| = \\ln|\\sec x|$, the standard table entry — evaluated at the endpoints it gives $\\ln\\sqrt2 = \\frac12\\ln 2$.\n<strong>The aha.</strong> Two habits pay off here: carry the minus sign from $du=-\\sin x\\,dx$ carefully (flipping the limits absorbs it cleanly), and notice that \"derivative of the denominator in the numerator\" is the $\\ln$ pattern — the same recognition as $\\int \\frac{2x}{x^2+1}dx$, now with a trig disguise."
             }
           ]
         }

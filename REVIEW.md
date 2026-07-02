@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 33/193 lessons · 11/177 widgets**
+**Progress: 35/193 lessons · 11/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -56,8 +56,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] c-linearization-lhopital — ✔ iter-1176 clean — tan46°≈1.0349 underestimate (concave-up justification), pendulum 1%, ∞−∞→0 with Taylor cross-check, ∛8.12≈2.01, x^x→1, √4.1≈2.025 all verified; q2 (L'Hôpital inconclusive on oscillation) is a standout question. Noted: e1(a) near-dups q10 (sphere dV, different dr) — tolerated; no changes
 - [x] c-antiderivatives — ✔ iter-1177 clean — two-stage IVP s(t)=t³+4t+1, disconnected-domain q10 (per-piece constants), sec²−tan²=1 constancy check, all integrals verified; e2 (n=−1 exception) reinforces q1/q15/c2 — intentional emphasis on the lesson's central subtlety; no changes
 - [x] c-definite-integral-riemann — ✔ iter-1177 clean — h0 (definition→12, trapezoid check), h1 (net 4 vs total 5), h2 (−3 m, 23/3 m), e1 (definition→14), L/R/M comparison (1/5/2.5 vs 8/3), midpoint-concavity q9 all verified. Noted: ∫₀²x² runs through e0/e2/q8 as a running example — tolerated; no changes
-- [ ] c-fundamental-theorem — pending
-- [ ] c-integration-techniques — pending
+- [x] c-fundamental-theorem — ✔ iter-1178 — q2 explain maligned its own answer ("choices 0 and 3 are false" with 0 the answer); q0 de-indexed while editing. h0 (1, 19/6), both-limits h1, e0 (10, trapezoid check), e1 (−2√π), avg-value e2 (3) all verified
+- [x] c-integration-techniques — ✔ iter-1178 — THREE defects: q15 explain misattributed "option 3"; h0 exactly duplicated q8 (∫sin·cos=½, same substitution) → replaced with ∫₁⁴ e^√x/√x dx = 2(e²−e)≈9.34 (root inner function, numerically verified); e2 duplicated e0's integrand family (xe^{x²} definite) → replaced with ∫₀^{π/4}tan x = ½ln2 (negative-du wrinkle, numerically verified). h1/h2/e0/e1 verified incl. the by-parts-twice full check
 - [ ] c-area-volume — pending
 - [ ] c-improper-integrals — pending
 - [ ] c-intro-differential-equations — pending

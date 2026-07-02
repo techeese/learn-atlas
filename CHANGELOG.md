@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1178 — Review: c-fundamental-theorem + c-integration-techniques (review)
+**`c-fundamental-theorem`** — q2's explain maligned its own correct answer ("choices 0 and 3 are false" — choice 0 IS the constant-cancels answer; the false ones are the uniqueness claims). Fixed content-first; q0 de-indexed while editing. Everything else verified: h0 ($1$ and $\frac{19}{6}$), the both-limits h1 with its double-negative subtlety, e0 (10, trapezoid-checked), e1 ($-2\sqrt\pi$), the average-value e2.
+**`c-integration-techniques` — three defects:** q15's explain misattributed "option 3" (wrong under every convention); **h0 exactly duplicated q8** ($\int_0^{\pi/2}\sin x\cos x\,dx=\frac12$, same substitution) → replaced with $\int_1^4 \frac{e^{\sqrt x}}{\sqrt x}dx = 2(e^2-e)\approx9.34$ (a root inner function — numerically verified); **e2 duplicated e0's integrand family** ($xe^{x^2}$, definite, change-limits, same aha) → replaced with $\int_0^{\pi/4}\tan x\,dx = \frac12\ln 2$ (the negative-$du$ sign-flip wrinkle neither existing example covers — numerically verified to 6 decimals). h1's by-parts-twice with full differentiation check, h2, e0, e1 all verified.
+Verified: guarded; byte-stable; gate ALL GREEN; headless — new example renders, kErr=0/errs=0. SW `atlas-v1102` → `atlas-v1103`. **Progress: 35/193 lessons · 11/177 widgets.**
+
 ## iter 1177 — Review: c-antiderivatives + c-definite-integral-riemann — both clean (review)
 **`c-antiderivatives`: clean** — the two-stage IVP ($s(t)=t^3+4t+1$ with all conditions re-checked), the disconnected-domain subtlety (q10: per-piece constants on $\mathbb{R}\setminus\{0\}$, correctly resolving apparently-contradictory conditions), and the $\sec^2-\tan^2=1$ constant-difference check all verified. The $n=-1$ exception is deliberately emphasized across q1/q15/c2/e2 — intentional, not duplication.
 **`c-definite-integral-riemann`: clean** — both from-the-definition evaluations (h0 → 12, e1 → 14, each with an independent trapezoid check), displacement-vs-distance ($-3$ m net, $\frac{23}{3}$ m total), the L/R/M comparison ($1/5/2.5$ vs $\frac83$), and the subtle midpoint-under-concave-up q9 all verified. $\int_0^2 x^2\,dx$ threads e0/e2/q8 as a running example — tolerated by design.
