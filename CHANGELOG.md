@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1130 — Step-back (clean at 192/901) + MCQ top-up for the newest lesson (step-back / retention)
+Step-back **kErr + visible-newline sweep**: **n=192 lessons**, errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, **mapNodes=901** — zero regressions since iter 1120; all four split lessons and both new widgets healthy sitewide.
+**Ship:** topped `ml-trustworthy-models` up **+2 MCQs** (→ 6, matching its sibling split lessons): why F1 is a *harmonic* mean (imbalance-punishing — 1.0/0.02 averages to ~0.04, not 0.51), and conformal's coverage-vs-set-size price. Hand-verified.
+Verified: guarded; byte-stable re-serialize; **gate ALL GREEN — 3063 MCQs**; full sweep clean; **headless** — quiz "of 6", kErr=0, errs=0. SW cache `atlas-v1061` → `atlas-v1062`.
+**Block 1121–1130 recap:** 2 signature live viz (**double descent computed in-browser**, **conformal coverage you can watch hold**) · 2 runnables (deferred acceptance; Pólya urn = **200th code exercise**) · 1 new lesson (Trusting a Model, 4th split) · 1 flashcard-backfill retention ship · 4 full-bundle concepts (de Finetti, STL, Gale-Shapley, + top-ups) — quotas exceeded, all green.
+
 ## iter 1129 — Code: the Pólya urn — 200th code exercise 🎯 (examples)
 Milestone runnable, completing the iter-1125 de Finetti thread in `ps-bayesian-inference`: three seeded **Pólya urns** (1 red + 1 blue; draw, return + copy) each run 3,000 draws → **limits 0.37, 0.60, 0.17** — every run converges to its *own* limiting fraction, the latent $\theta$ drawn once from the uniform mixing prior. De Finetti's mixture, watched happening. **Code exercises hit 200.**
 Verified: re-derived in Node; byte-stable JSON inject; **gate ALL GREEN — all 200 code exercises executed**; **headless** — Run executes, three distinct limits shown, kErr=0, errs=0. SW cache `atlas-v1060` → `atlas-v1061`.

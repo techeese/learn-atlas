@@ -2787,6 +2787,28 @@
               ],
               "answer": 0,
               "explain": "Local explains \"why THIS prediction\"; global explains \"what the model relies on overall.\" Both mislead when features are strongly correlated — perturbing one at a time makes impossible inputs."
+            },
+            {
+              "q": "F1 combines precision and recall with the harmonic mean (not the arithmetic mean) because:",
+              "choices": [
+                "It is easier to compute",
+                "It equals accuracy on balanced data",
+                "The harmonic mean punishes imbalance — F1 is high only when BOTH are high, so you cannot buy it by sacrificing one entirely",
+                "It is differentiable"
+              ],
+              "answer": 2,
+              "explain": "With an arithmetic mean, precision 1.0 and recall 0.02 would average to 0.51; the harmonic mean drops to $\\approx 0.04$ — reflecting that such a classifier is nearly useless."
+            },
+            {
+              "q": "In conformal prediction, demanding higher coverage (smaller $\\alpha$) makes the prediction sets:",
+              "choices": [
+                "Smaller — the model becomes more confident",
+                "Larger — the guarantee is paid for in set size (a wider residual quantile)",
+                "Unchanged — coverage is free",
+                "Empty for hard examples"
+              ],
+              "answer": 1,
+              "explain": "Coverage is bought with width: the band's half-width is a higher calibration-residual quantile. At $\\alpha\\to 0$ the sets grow toward everything — honest uncertainty has a price."
             }
           ],
           "flashcards": [
