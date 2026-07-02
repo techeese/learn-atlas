@@ -8396,46 +8396,6 @@
   });
 
 
-  /* ========================================================
-     159. Conformal prediction: coverage you can trust (machine learning)
-     ======================================================== */
-  register({ id: 'ml-conformal', topic: 'machine-learning', title: 'Conformal prediction: the band that keeps its promise', blurb: 'A model predicts ŷ = 0.5x; conformal prediction wraps it in a band ŷ ± q̂, where q̂ is the (1−α) quantile of the calibration residuals. The remarkable part is the guarantee: whatever α you pick, the band covers about 1−α of fresh points — no distribution assumptions needed. Slide α and watch the empirical coverage track the target while the band tightens or widens to keep its word.' },
-  function (root) {
-    const W = 500, H = 300, padL = 36, padR = 14, padT = 18, padB = 30;
-    const { c, ctx } = canvas(root, W, H);
-    const ctl = controls(root);
-    const info = note(root);
-    let alpha = 0.1;
-    function mk(seed) { let s = seed; return () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
-    function gauss(r) { return (r() + r() + r() + r() - 2); }
-    function draw() {
-      const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
-      // calibration residuals -> qhat
-      const rc = mk(7); const cal = []; for (let i = 0; i < 200; i++) cal.push(Math.abs(gauss(rc))); cal.sort((a, b) => a - b);
-      const k = Math.min(Math.ceil((1 - alpha) * (cal.length + 1)) - 1, cal.length - 1);
-      const qhat = cal[k];
-      // test points
-      const rt = mk(99); const pts = []; for (let i = 0; i < 60; i++) { const x = rt() * 10; const y = 0.5 * x + gauss(rt); pts.push([x, y]); }
-      const XLO = 0, XHI = 10, YLO = -2.5, YHI = 7.5;
-      const plotW = W - padL - padR, plotH = H - padT - padB, x0 = padL, baseY = padT + plotH;
-      const X = x => x0 + (x - XLO) / (XHI - XLO) * plotW, Y = y => baseY - (y - YLO) / (YHI - YLO) * plotH;
-      // band yhat = 0.5x +/- qhat
-      ctx.fillStyle = 'rgba(224,164,88,0.16)'; ctx.beginPath();
-      ctx.moveTo(X(XLO), Y(0.5 * XLO + qhat)); ctx.lineTo(X(XHI), Y(0.5 * XHI + qhat)); ctx.lineTo(X(XHI), Y(0.5 * XHI - qhat)); ctx.lineTo(X(XLO), Y(0.5 * XLO - qhat)); ctx.closePath(); ctx.fill();
-      ctx.strokeStyle = p.gold; ctx.beginPath(); ctx.moveTo(X(XLO), Y(0.5 * XLO)); ctx.lineTo(X(XHI), Y(0.5 * XHI)); ctx.stroke();
-      // points colored by coverage
-      let cov = 0;
-      pts.forEach(pt => { const inside = Math.abs(pt[1] - 0.5 * pt[0]) <= qhat; if (inside) cov++; ctx.fillStyle = inside ? p.sage : p.rust; ctx.beginPath(); ctx.arc(X(pt[0]), Y(pt[1]), 3.2, 0, 7); ctx.fill(); });
-      const emp = cov / pts.length;
-      info.innerHTML = 'target coverage 1−α = <b style="color:' + p.gold + '">' + (1 - alpha).toFixed(2) + '</b>. ' +
-        'Empirical (green points inside the band) = <b style="color:' + p.sage + '">' + emp.toFixed(2) + '</b>; band half-width q̂ = <b>' + qhat.toFixed(2) + '</b>. ' +
-        'Tighten α and the band widens to keep the promise.';
-    }
-    slider(ctl, { label: 'miscoverage α', min: 0.05, max: 0.5, step: 0.05, value: alpha, fmt: v => v.toFixed(2), onInput: v => { alpha = v; draw(); } });
-    c.setAttribute('role', 'img');
-    c.setAttribute('aria-label', 'Conformal prediction. Scatter of test points around the line y = 0.5x, wrapped in a shaded band of half-width q-hat. Points inside the band are green, points outside red. A slider sets the miscoverage alpha; the band half-width is the one-minus-alpha quantile of calibration residuals, and the empirical fraction of green points stays near the target one minus alpha as alpha changes, with the band widening as alpha shrinks.');
-    draw();
-  });
 
 
   /* ========================================================
