@@ -60,7 +60,7 @@ First-load path is optimized: all data/logic scripts are `defer`; fonts via `<li
 - **(big but risky) Lazy-load topic data.** The 11 `data/*.js` files (~7MB) all load eagerly via `<script defer>`. The dashboard/search/glossary/prereqs only need course+lesson *metadata* (id/title/icon/color/blurb/minutes/module structure), not the heavy per-lesson `content`/`mcq`/etc. A real first-load win would split each topic into a tiny manifest (eager) + heavy content (lazy per-topic on first lesson open). Sizable architecture change — the app assumes `window.COURSES` is fully populated synchronously everywhere (gate.js, search, prereqs, glossary, map, daily picks) — so do it as a carefully-staged phase with its own gate, NOT a casual iteration. LOW urgency (SW caches for the repeat user); owner-steer.
 - AI tutor / infinite practice (opt-in, bring-your-own Claude API key). [owner deferred]
 - ~~Per-concept difficulty rating + adaptive question selection in tests~~ → SHIPPED iter 1133 (mastery-weighted sampling in Spawn-a-Test; difficulty ratings still open).
-- Recency/mastery-weighted search ranking in ⌘K (fuzzy already done).
+- ~~Recency/mastery-weighted search ranking in ⌘K~~ → SHIPPED iter 1142 (within-tier mastery bias; decay = recency for free).
 - Onboarding tour for first visit; richer empty states.
 - Audio: optional ambient focus soundscape (generative WebAudio, mute by default).
 - Candidate 10th-topic / module ideas IF owner wants more breadth: Graph ML/GNNs (note: a GNN *lesson* now exists in DL); Time-Series/forecasting; a deeper Numerical-Methods/conditioning thread. (Generative models, optimization, causal inference, self-supervised learning are already covered.)

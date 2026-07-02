@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1142 — ⌘K search: weak/fading lessons rank first (UI/UX)
+Second backlog wildcard shipped ("recency/mastery-weighted search ranking"): within a textual-relevance tier, lesson results now carry a **$+0.4\cdot$`effectiveMastery` bias** — weak or *fading* lessons float to the top of their tier while mastered ones drift down; a tier gap is 1.0, so **relevance always wins across tiers**. Since `effectiveMastery` decays with a half-life, this is recency-weighting for free: material you haven't touched in weeks resurfaces. Palette footer copy updated ("weak/fading topics rank first"). Pairs with iter-1133's adaptive tests — search and testing now share the same "what needs you" signal.
+Verified: reordering unit-tested standalone (tier-1 stays first; weak beats mastered within tier-2); app.js parses; gate ALL GREEN; **headless** — ⌘K opens, new footer shown, "entropy" returns results, errs=0. SW cache `atlas-v1073` → `atlas-v1074`. Backlog item marked shipped.
+
 ## iter 1141 — NEW viz: KDE bandwidth, the bias-variance dial (visualizations)
 Opened block 1141–1150 with an interactive completing iter-1136 — the **177th widget, `ml-kde`** in `ml-knn`: 60 samples from a two-bump density (dashed truth, gold rug); drag **bandwidth h** and the violet KDE goes spiky comb → twin bumps → merged blob, while the lower panel plots the **true ISE vs h** — the bias-variance **U-curve** with your h as the marker and regime captions (undersmoothed / sweet spot / oversmoothed). Resample button.
 Verified: ISE U-shape re-derived in Node (0.175 → **0.007 @ h≈0.1** → 0.44); gate ALL GREEN (now **177 widgets**); **headless slider drive** — ISE at h=0.04 and h=0.9 both >3× the sweet-spot value, regime labels fire, errs=0; screenshot READ shows the spiky comb + U-curve marker. (Embed anchor initially missed on a straight-vs-curly apostrophe — re-derived the anchor from parsed content.) SW cache `atlas-v1072` → `atlas-v1073`.

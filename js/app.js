@@ -2730,7 +2730,7 @@
     if (paletteEl) return;
     const idx = searchIndex().concat(commandActions());   // commands are searchable too
     paletteEl = document.createElement("div"); paletteEl.className = "palette-scrim";
-    paletteEl.innerHTML = `<div class="palette"><input class="palette-in" placeholder="Search lessons, concepts, visualizations · or run a command…"><div class="palette-list"></div><div class="palette-foot">🔎 also searches inside lessons · ⚡ run commands (theme, text size…) · ↑↓ navigate · ↵ open · esc close</div></div>`;
+    paletteEl.innerHTML = `<div class="palette"><input class="palette-in" placeholder="Search lessons, concepts, visualizations · or run a command…"><div class="palette-list"></div><div class="palette-foot">🔎 searches inside lessons · weak/fading topics rank first · ⚡ run commands (theme, text size…) · ↑↓ navigate · ↵ open · esc close</div></div>`;
     document.body.appendChild(paletteEl);
     const inp = paletteEl.querySelector(".palette-in"), list = paletteEl.querySelector(".palette-list");
     let sel = 0, results = [];
@@ -2757,7 +2757,10 @@
           if (q.length >= 2) { const f = subseq(q, t); if (f >= 0) return 4 + Math.min(f, 40) / 100; } // fuzzy/typo tolerance
           return 9;
         };
-        results = idx.map((x, i) => ({ x, s: score(x), i })).filter(o => o.s < 9).sort((a, b) => a.s - b.s || a.i - b.i).map(o => o.x).slice(0, 50);
+        // within a textual tier, weak/fading lessons rank first: add up to +0.4 for mastered
+        // material (a tier gap is 1.0, so relevance always wins across tiers)
+        const masteryBias = x => (x.hash && x.hash.indexOf("#/lesson/") === 0) ? 0.4 * Store.effectiveMastery(x.hash.split("/").pop()) : 0;
+        results = idx.map((x, i) => { const s0 = score(x); return { x, s: s0 < 9 ? s0 + masteryBias(x) : 9, i }; }).filter(o => o.s < 9).sort((a, b) => a.s - b.s || a.i - b.i).map(o => o.x).slice(0, 50);
         // full-text: surface lessons whose BODY contains every query word (skip ones already matched by title)
         if (q.length >= 3) {
           const toks = q.split(/\s+/).filter(Boolean);
