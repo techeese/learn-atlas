@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1200 — Step-back (clean at 193/905) — review block 4 recap (step-back)
+Full kErr + visible-newline sweep: **n=193, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=905** — all phase fixes regression-free.
+**Block 1191–1200 recap:** 17 lessons + 11 widgets reviewed — **all 23 Algorithms lessons completed** (20 clean) plus the first 11 Algo widgets. Block defects: just 4 — one maligning explain (invariants q11), two **answers-in-the-quiz/example** dups (the newly-identified subspecies: coin-change q10 spoiling h0's construction; the worker-job reduction spelled out by e2+c5 before h2 asked for it — both replaced with fresh instances teaching un-worked skills), one cosmetic title. Three audit flags verified as false alarms — the Algorithms authoring batch used correct references throughout.
+**Cumulative: 69/193 lessons · 43/177 widgets (~40% of units at 43 iterations).** Hand-verified computations now ~2,600 with still exactly **one** arithmetic error found. Next block: remaining 10 Algo widgets, then **Deep Learning** (early-era, 18 lessons) where defect density should rise again. No data changes — sweep + recap is the ship; no SW bump.
+
 ## iter 1199 — Review: a-union-find-range (ALL 23 Algorithms lessons done) + first Algo widget batch (review)
 **`a-union-find-range`: clean** — the connectivity trace, the Fenwick $2\times10^7$-vs-$10^{12}$ operation comparison, the three-way structure-selection homework (lazy segment tree / union-find / sparse table), the Kruskal complexity breakdown, and the inverse-Ackermann explanation all verified. **That completes all 23 Algorithms lessons** — final tally: 20 clean, 3 with minor defects (one maligning explain, two answers-in-the-quiz/example dups, one cosmetic title). The site's strongest topic by a wide margin.
 **Algo widget batch 1 (11 of 21): all clean** — `algo-sorting`, `algo-bigo`, `algo-master-theorem`, `algo-kmeans`, `algo-heap`, `algo-kruskal`, `algo-greedy`, `algo-recursion-tree`, `algo-graph-traversal`, `algo-hashing`, `algo-binary-search` driven headless: errs=0, canvases 540–560px (container-capped), notes render (43–347 chars).
