@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1190 — Step-back (clean at 193/905) — review block 3 recap (step-back)
+Full kErr + visible-newline sweep: **n=193, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=905** — all review-phase fixes regression-free.
+**Block 1181–1190 recap:** 15 lessons + 21 widgets reviewed. **Calculus completed** (all 27 lessons + 21 widgets) and **Algorithms opened strongly** (6 lessons, 5 clean). Block defects fixed: 11 — the seven-explain cluster in `c-gradient-descent-convergence` (the site's densest, one bad authoring batch), two more maligning explains (`a-correctness-invariants` q11, `c-fundamental-theorem` q2 area), one same-function example dup (DE lesson), and **the phase's first genuine arithmetic error** (the 210.125 fence check in `c-lagrange-multipliers`, caught after ~1,500 clean computations). One audit flag verified as a false alarm (q9 invariants — references were correct). Widget honesty checks: `calc-riemann`'s 7.3828 re-derived exactly; `la-power-iteration` and `calc-taylor` previously confirmed.
+**Cumulative: 52/193 lessons · 32/177 widgets (~31% of units at 33 iterations — on pace).** Quality gradient confirmed again: Algorithms (recent authoring) runs ~83% clean vs ~50% for early-era LA/Calc. No data changes this iteration — sweep + recap is the ship; no SW bump.
+
 ## iter 1189 — Review: a-hash-tables + a-trees-heaps — both clean (review)
 **`a-hash-tables`: clean** — h0's full linear-probing trace (the 0–6 primary cluster), h1's indicator-variable proof of $\Theta(1+\alpha)$, and h2 — a genuinely superb homework walking the hash-flooding DoS attack from precomputed collisions through the $\Theta(n^2)$ blowup to the universal-family/SipHash defense — all verified. The tombstone deletion example and the iter-1153 sketches bundle (count-min, HyperLogLog, consistent hashing) also check out.
 **`a-trees-heaps`: clean** — the BST delete-via-successor h0 (60 replaces 50, successor was a leaf), the min-heap insertion trace h1 (hand-re-verified to $[3,4,6,7,5]$), the two-heap streaming-median h2, the AVL RR-case rotation e0 (with the in-order-preservation check), the heapsort trace e1, and the subtle second-largest-in-a-heap q9 all verified.
