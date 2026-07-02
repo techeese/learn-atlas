@@ -205,6 +205,17 @@
               ],
               "answer": 1,
               "explain": "Kernel shape has a second-order effect; bandwidth IS the bias-variance dial. Silverman's rule or cross-validation set it in practice."
+            },
+            {
+              "q": "Kernel density estimation converges at rate $n^{-4/5}$ rather than a parametric model's $n^{-1}$, and fails badly in high dimensions, because:",
+              "choices": [
+                "The kernel integral cannot be computed numerically",
+                "It assumes nothing about the density's form — flexibility costs data, and high-dimensional space is too sparse to smooth locally",
+                "Gaussian kernels are biased",
+                "The bandwidth must equal the sample size"
+              ],
+              "answer": 1,
+              "explain": "Nonparametric freedom is paid for in sample efficiency, and the curse of dimensionality hits local smoothing hardest — the neighbourhood around any point is empty in high dimensions."
             }
           ],
           "flashcards": [

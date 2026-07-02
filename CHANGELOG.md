@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1140 — Step-back (clean at 192/901) + retention wave 5 (step-back / retention)
+Step-back **kErr + visible-newline sweep**: **n=192, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=901** — zero regressions since iter 1130.
+**Ship (wave 5):** second-angle MCQs for the block's four bundles — KDE's **nonparametric price** ($n^{-4/5}$ + curse of dimensionality), **Sanov's** $e^{-n\mathrm{KL}}$ rate, **what μTransfer carries** (LR/init/multipliers, not data-tied knobs), **Bradley-Terry** leaderboard aggregation. Home lessons → 18 MCQs; hand-verified.
+Verified: math-guarded; 3 byte-stable re-serializations; **gate ALL GREEN — 3077 MCQs**; full sweep clean; **headless** — quiz "of 18", kErr=0, errs=0. SW cache `atlas-v1071` → `atlas-v1072`.
+**Block 1131–1140 recap:** 5 full-bundle concepts (spectral clustering, KDE, large deviations, μP, LLM-as-judge — each with glossary + MCQ + cards day-one) · 2 interactive (spectral-vs-kmeans live demo with real Fiedler power iteration; exact seasonal-decomposition runnable) · **1 backlog feature** (adaptive mastery-weighted test sampling) · 2 retention waves — quotas met, all green.
+
 ## iter 1139 — Hard-concept: LLM-as-judge — full bundle (content)
 Filled the second batch-5 gap. Deep-dive in `l-hallucination-and-evaluation` (its 4th): **LLM-as-judge** — pairwise or rubric grading as scalable evaluation, aggregated to leaderboards via the **Bradley-Terry model** ($\Pr(A\text{ beats }B)=\sigma(r_A-r_B)$, the Elo idea); the judge's *measured* biases — **position** (swap orders and average), **verbosity** (length control), **self-preference** — and the structural point: a judge is a **reward model at eval time** (cross-linked), so **Goodhart** applies — rotate/ensemble judges, sanity-check against humans, prefer process-style grading. Same ship: **2 glossary terms** (LLM-as-judge, Bradley-Terry — 589 → **591**), **1 MCQ** (16 → 17), **2 flashcards** (6 → 8).
 Verified: guarded; byte-stable re-serialize ×2; gate ALL GREEN (internal-links); combined headless driver — 4 dives, judge/verbosity/self-preference/Goodhart + RM link, quiz "of 17", glossary 2/2, kErr=0, errs=0. SW cache `atlas-v1070` → `atlas-v1071`.

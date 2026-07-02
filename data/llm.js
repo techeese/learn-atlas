@@ -2656,6 +2656,17 @@
               ],
               "answer": 2,
               "explain": "Under standard parametrization, per-layer update sizes drift apart with width, moving the LR optimum; μP pins them, aligning the curves — that alignment is μTransfer."
+            },
+            {
+              "q": "Under μTransfer, which hyperparameters tuned on a small proxy carry over to the full-width model?",
+              "choices": [
+                "All of them, including regularization and data mixture",
+                "None — μP only stabilizes training",
+                "Only the batch size",
+                "Learning rate, initialization scale, and multipliers — but not knobs tied to dataset size or regularization strength"
+              ],
+              "answer": 3,
+              "explain": "μP pins width-dependence, so width-sensitive knobs align across scales; anything coupled to the data regime still needs its own treatment."
             }
           ],
           "flashcards": [
@@ -4708,6 +4719,17 @@
               ],
               "answer": 0,
               "explain": "Both are measured and repeatable; add self-preference for the judge's own model family. Judging both orders and averaging, plus length-controlled scoring, are the standard fixes."
+            },
+            {
+              "q": "Chatbot-arena leaderboards turn millions of pairwise judgments into scores using:",
+              "choices": [
+                "Simple win-rate averaging",
+                "Accuracy on a fixed benchmark",
+                "The Bradley-Terry model: latent ratings $r$ with $\\Pr(A\\text{ beats }B)=\\sigma(r_A-r_B)$",
+                "The judges' confidence scores"
+              ],
+              "answer": 2,
+              "explain": "Bradley-Terry (Elo's generalization) makes ratings comparable even when models face different opponents — the same model used to fit reward models on preference pairs."
             }
           ],
           "flashcards": [

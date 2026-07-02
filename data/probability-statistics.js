@@ -3173,6 +3173,17 @@
               ],
               "answer": 1,
               "explain": "$I(a)=\\sup_\\lambda[\\lambda a-\\log M(\\lambda)]$ — optimize the Chernoff bound's tilt. For coin flips it evaluates to a KL divergence, and Sanov generalizes that to whole empirical distributions."
+            },
+            {
+              "q": "Sanov's theorem says the probability that $n$ iid samples from $P$ produce an empirical distribution near $Q$ decays like:",
+              "choices": [
+                "$e^{-n\\,\\mathrm{KL}(Q\\Vert P)}$ — KL divergence is the exponential decay rate",
+                "$1/n$",
+                "$e^{-n\\,\\mathrm{Var}(Q)}$",
+                "It does not decay"
+              ],
+              "answer": 0,
+              "explain": "KL is the exchange rate between distributional difference and improbability — the root of hypothesis-testing error exponents (Chernoff-Stein)."
             }
           ],
           "flashcards": [
