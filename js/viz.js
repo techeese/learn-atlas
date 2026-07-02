@@ -9274,4 +9274,59 @@
     build(); draw();
   });
 
+
+  /* ========================================================
+     177. KDE bandwidth: the bias-variance dial, live (machine learning)
+     ======================================================== */
+  register({ id: 'ml-kde', topic: 'machine-learning', title: 'KDE: drag the bandwidth', blurb: 'Sixty samples from a two-bump density (dashed). The violet curve is the kernel density estimate — a Gaussian bump on every sample, summed. Drag the bandwidth h: tiny h gives a spiky comb that memorizes the sample, huge h melts both bumps into one blob, and in between sits the sweet spot. The lower panel plots the true error (ISE) against h — the bias-variance U-curve, with your h as the marker.' },
+  function (root) {
+    const W = 500, H = 400, N = 60;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let seed = 23, h = 0.35;
+    let xs, iseGrid, hGrid, iseMin, hBest;
+    function mk(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    function tf(x) { const g = (x, m, s) => Math.exp(-(x - m) * (x - m) / (2 * s * s)) / (s * Math.sqrt(2 * Math.PI));
+      return 0.5 * g(x, -1, 0.202) + 0.5 * g(x, 1, 0.202); }
+    function kde(x, hh) { let s = 0; for (let i = 0; i < N; i++) { const u = (x - xs[i]) / hh; s += Math.exp(-u * u / 2); } return s / (N * hh * Math.sqrt(2 * Math.PI)); }
+    function ise(hh) { let s = 0; const m = 140; for (let i = 0; i < m; i++) { const x = -2.5 + 5 * i / (m - 1); const d = kde(x, hh) - tf(x); s += d * d; } return s * 5 / m; }
+    function build() {
+      const r = mk(seed); const gauss = () => r() + r() + r() + r() - 2;
+      xs = []; for (let i = 0; i < N; i++) { const mode = (r() < 0.5) ? -1 : 1; xs.push(mode + 0.35 * gauss()); }
+      hGrid = []; iseGrid = []; iseMin = 1e9; hBest = 0.1;
+      for (let k = 0; k <= 60; k++) { const hh = 0.02 + k * (1.0 - 0.02) / 60; hGrid.push(hh);
+        const e = ise(hh); iseGrid.push(e); if (e < iseMin) { iseMin = e; hBest = hh; } }
+    }
+    function draw() {
+      const pal = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, W, H);
+      const topY = 8, topH = 218, botY = topH + 44, botH = H - botY - 30;
+      const X = x => 16 + (x + 2.5) / 5 * (W - 30);
+      const ymax = 1.25, TY = v => topY + topH - Math.min(v / ymax, 1) * topH;
+      // true density (dashed)
+      ctx.strokeStyle = pal.line; ctx.setLineDash([4, 3]); ctx.beginPath();
+      for (let i = 0; i <= 160; i++) { const x = -2.5 + 5 * i / 160, px = X(x), py = TY(tf(x)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.setLineDash([]);
+      // kde
+      ctx.strokeStyle = pal.violet; ctx.lineWidth = 2.2; ctx.beginPath();
+      for (let i = 0; i <= 240; i++) { const x = -2.5 + 5 * i / 240, px = X(x), py = TY(kde(x, h)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.lineWidth = 1;
+      // rug
+      ctx.strokeStyle = pal.gold; xs.forEach(x => { ctx.beginPath(); ctx.moveTo(X(x), topY + topH); ctx.lineTo(X(x), topY + topH - 8); ctx.stroke(); });
+      // ISE curve
+      const lmin = Math.log10(Math.max(iseMin * 0.7, 1e-4)), lmax = Math.log10(Math.max.apply(null, iseGrid));
+      const BX = hh => 16 + (hh - 0.02) / 0.98 * (W - 30), BY = e => botY + botH - (Math.log10(e) - lmin) / (lmax - lmin) * botH;
+      ctx.strokeStyle = pal.sage; ctx.lineWidth = 2; ctx.beginPath();
+      hGrid.forEach((hh, k) => { const px = BX(hh), py = BY(iseGrid[k]); k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.stroke(); ctx.lineWidth = 1;
+      ctx.fillStyle = pal.ink; ctx.beginPath(); ctx.arc(BX(h), BY(ise(h)), 4.5, 0, 2 * Math.PI); ctx.fill();
+      ctx.fillStyle = pal.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('true error (ISE, log scale) vs bandwidth h — the bias-variance U', W / 2, H - 6);
+      const regime = h < hBest * 0.55 ? 'undersmoothed — a spiky comb chasing individual samples (variance)' : (h > hBest * 2.4 ? 'oversmoothed — the two bumps melt together (bias)' : 'near the sweet spot');
+      info.innerHTML = 'h = <b>' + h.toFixed(2) + '</b> · ISE <b style="color:' + pal.sage + '">' + ise(h).toFixed(3) + '</b> (best ≈ ' + iseMin.toFixed(3) + ' at h ≈ ' + hBest.toFixed(2) + ') — ' + regime + '.';
+    }
+    slider(ctl, { label: 'bandwidth h', min: 0.02, max: 1.0, step: 0.01, value: h, fmt: v => v.toFixed(2), onInput: v => { h = v; draw(); } });
+    button(controls(root), '🎲 Resample', () => { seed = (seed * 16807 + 17) & 0x7fffffff; build(); draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Kernel density estimation demo. Top: sixty gold rug marks from a two-bump density (dashed), with the violet kernel density estimate — spiky at tiny bandwidth, smooth twin bumps near the optimum, a single merged blob at large bandwidth. Bottom: the true integrated squared error versus bandwidth traces a U on a log scale, with a marker at the slider value. A resample button redraws the data.');
+    build(); draw();
+  });
+
 })();

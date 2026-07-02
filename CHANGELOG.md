@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1141 — NEW viz: KDE bandwidth, the bias-variance dial (visualizations)
+Opened block 1141–1150 with an interactive completing iter-1136 — the **177th widget, `ml-kde`** in `ml-knn`: 60 samples from a two-bump density (dashed truth, gold rug); drag **bandwidth h** and the violet KDE goes spiky comb → twin bumps → merged blob, while the lower panel plots the **true ISE vs h** — the bias-variance **U-curve** with your h as the marker and regime captions (undersmoothed / sweet spot / oversmoothed). Resample button.
+Verified: ISE U-shape re-derived in Node (0.175 → **0.007 @ h≈0.1** → 0.44); gate ALL GREEN (now **177 widgets**); **headless slider drive** — ISE at h=0.04 and h=0.9 both >3× the sweet-spot value, regime labels fire, errs=0; screenshot READ shows the spiky comb + U-curve marker. (Embed anchor initially missed on a straight-vs-curly apostrophe — re-derived the anchor from parsed content.) SW cache `atlas-v1072` → `atlas-v1073`.
+
 ## iter 1140 — Step-back (clean at 192/901) + retention wave 5 (step-back / retention)
 Step-back **kErr + visible-newline sweep**: **n=192, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=901** — zero regressions since iter 1130.
 **Ship (wave 5):** second-angle MCQs for the block's four bundles — KDE's **nonparametric price** ($n^{-4/5}$ + curse of dimensionality), **Sanov's** $e^{-n\mathrm{KL}}$ rate, **what μTransfer carries** (LR/init/multipliers, not data-tied knobs), **Bradley-Terry** leaderboard aggregation. Home lessons → 18 MCQs; hand-verified.
