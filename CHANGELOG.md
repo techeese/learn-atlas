@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1169 — Review: Calculus begins — c-functions-and-graphs + c-limits-intuition (review)
+**`c-functions-and-graphs`** — inverse worked example (with the domain/range-swap asymptote check), composition code (19/49/7), h0–h2 all verified. One defect: **e2 composed to the exact function e0 had already analyzed** ($\sqrt{x-4}$, same $[4,\infty)$ domain reasoning twice in one Examples tab). Replaced with $f{=}1/x,\ g{=}x^2{-}9$: the composite $1/(x^2-9)$ **punches two isolated holes** ($x\neq\pm3$) instead of cutting an interval — now the two examples contrast the two shapes a composite's domain restriction can take.
+**`c-limits-intuition`: clean** — the piecewise worked example (limit 3 vs $g(2){=}7$), both ε-δ proofs ($\delta{=}\varepsilon/2$ in content, $\delta{=}\varepsilon/3$ in h2), the conjugate-rationalization h0 ($=1/4$), the $(1{+}1/n)^n$ code table, and the squeeze example all verified. No changes.
+Verified: guarded; byte-stable; gate ALL GREEN; headless — new example renders, kErr=0, errs=0. SW `atlas-v1096` → `atlas-v1097`. **Progress: 21/193 lessons · 11/177 widgets.**
+
 ## iter 1168 — Review: LA widget batch 2 — ALL Linear Algebra content reviewed (review)
 Drove the remaining 7 LA widgets headless (every button double-clicked, sliders slammed to extremes): `la-eigen`, `la-pca`, `la-svd`, `la-projection`, `la-gram-schmidt`, `la-power-iteration`, `la-phase-portrait` — **all clean**, errs=0, canvases 360–540px (mobile-safe), notes render.
 **Numeric honesty spot-checks:** `la-power-iteration`'s note claims "after 3 iterations the vector points at 43.9°, swinging toward the 45° dominant eigendirection" — re-derived in Node from the widget's actual $v_0=(\cos 0.3,\sin 0.3)$: 35.03° → 41.64° → **43.88°**. Exact. `la-svd` is constructive (the user builds $A$ from the $\sigma$/angle sliders), so its ellipse-semi-axes claim is true by construction.
