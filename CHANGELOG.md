@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1188 — Review: a-correctness-invariants + a-arrays-lists-stacks-queues (review)
+**`a-correctness-invariants`** — q11's explain maligned its own correct answer ("the claim they are unrelated (choice 3)" — choice 3 IS the right induction-on-size answer; the unrelated-claim is a different option); de-indexed. The other audit flag (q9) verified *correct* — its references are consistent 0-based. Everything else verified: the exact 1023-copy count for 1000 appends, the Multipop potential-method proof, the sum-of-squares induction (factoring $2k^2{+}7k{+}6$), and both traces.
+**`a-arrays-lists-stacks-queues`: clean** — address computations (2028, 1012), the ring-buffer wraparound (4 elements in slots 6,7,0,1), h0's growth-factor amortization $\frac{g}{g-1}$ with the $g\to1^+$ blowup analysis, the deque's negative-modulo guard, and the two-stacks trace (exactly 3 transfer moves) all verified. No changes.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1107` → `atlas-v1108`. **Progress: 50/193 lessons · 32/177 widgets — halfway through the lesson count at 31 iterations.**
+
 ## iter 1187 — Review: Algorithms begins — a-asymptotic-analysis + a-recurrences-master-theorem, both clean (review)
 **`a-asymptotic-analysis`: clean** — the witness proof ($c=15$, with the alternative $c=4,n_0=7$ noted), the crossover analysis ($n=100$ tie point), the at-scale comparison ($9{,}966$ vs $10^6$, and the $\sim50{,}000\times$ gap at $n=10^6$ re-verified), and h2's three-part $O/\Omega$ logic all check out. h1 reuses e0's witness technique with permuted coefficients but adds the $\Omega/\Theta$ extension — tolerated as scaffolded practice.
 **`a-recurrences-master-theorem`: clean and outstanding** — h1 solves $2T(n/2)+n/\log n$ via the harmonic recursion tree ($n\cdot H_{\log n}=\Theta(n\log\log n)$, verified); h0 does the Case-3 regularity check explicitly ($k=\frac34$); h2's substitution proof shows the constant doesn't grow; e0 triple-checks $\Theta(n^{\log_2 3})$ (Master Theorem + tree sum + leaf count); e1 squeezes the unequal split to $\Theta(n\log n)$. Every case assignment across 16 MCQs verified correct.

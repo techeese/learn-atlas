@@ -636,7 +636,7 @@
                 "Recursion has no explicit loop variable; the natural quantity that decreases toward a base case is the subproblem size, so the inductive hypothesis is best stated over smaller instances"
               ],
               "answer": 3,
-              "explain": "A recursive call's correctness rests on assuming correctness for smaller inputs, so induction on subproblem size is the natural framing — there is no loop counter to track. The lesson stresses that invariants and induction are the same idea, so the claim they are unrelated (choice 3) is wrong, and choice 2 wrongly assumes exact halving."
+              "explain": "A recursive call's correctness rests on assuming correctness for smaller inputs, so induction on subproblem size is the natural framing — there is no loop counter to track. The lesson stresses that invariants and induction are the same idea, so the claim that they are unrelated is wrong; and recursion need not halve exactly, so the exact-halving assumption is also false."
             },
             {
               "q": "A correctness proof by loop invariant has three parts. What are they?",

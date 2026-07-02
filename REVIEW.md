@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 48/193 lessons · 32/177 widgets**
+**Progress: 50/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -96,8 +96,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 ## algorithms — lessons
 - [x] a-asymptotic-analysis — ✔ iter-1187 clean — witness proof e0 (c=15), crossover e1 (n=100), scale e2 (9,966 vs 10⁶), h2's three-part O/Ω logic, all 16 MCQs verified. Noted: h1 reuses e0's technique with permuted coefficients but adds the Ω/Θ extension — tolerated; no changes
 - [x] a-recurrences-master-theorem — ✔ iter-1187 clean — outstanding lesson: h1's n·H_{log n}=Θ(n loglog n) harmonic recursion tree, h0's Case-3 regularity check (k=3/4), h2's substitution with non-growing constant, e0's triple-checked Θ(n^{log₂3}), e1's unequal-split squeeze all verified; every case assignment correct; no changes
-- [ ] a-correctness-invariants — pending
-- [ ] a-arrays-lists-stacks-queues — pending
+- [x] a-correctness-invariants — ✔ iter-1188 — q11 explain maligned its own answer ("the claim they are unrelated (choice 3)" with 3 the correct choice); de-indexed. q9's references verified correct. h1 (1023 copies, 1.02/append), Multipop potential h2, sum-of-squares induction e1 (14 at n=3), insertion-sort trace e0, binary-search invariant e2 all verified
+- [x] a-arrays-lists-stacks-queues — ✔ iter-1188 clean — address 2028/1012, ring-buffer wrap (4 elements, slots 6,7,0,1), growth-factor amortization g/(g−1) with the g→1⁺ blowup, deque index arithmetic, two-stacks trace (3 moves) all verified; no changes
 - [ ] a-hash-tables — pending
 - [ ] a-trees-heaps — pending
 - [ ] a-comparison-sorts — pending
