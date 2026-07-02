@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1165 — Review: la-svd + la-low-rank-pca — first fully-clean unit (review)
+**`la-svd`: clean.** The worked 2×2 SVD fully re-derived by hand ($u_1=(1,3)/\sqrt{10}$ from $Av_1/\sigma_1$; the $\sigma_1\sigma_2=|\det|=15$ identity), h0's sign-absorption into $U$ ($\sigma_i=|\lambda_i|$ for symmetric matrices, shown concretely), h2's proof that $A^\top A$ and $AA^\top$ share nonzero eigenvalues, e0/e1/e2, and all 17 MCQs verified. No changes.
+**`la-low-rank-pca`: clean.** The worked PCA is a gem — its per-point reconstruction error sums to exactly $\sigma_2^2 = 2$, matching Eckart–Young numerically in the same example. h0's 95%-energy budget (146.16, k=3, 8.9% relative error), h1's diag(6, 2/3)/90%, the pseudoinverse h2 with the minimum-norm argument, and all 17 MCQs verified. No changes.
+**First unit of the phase where both lessons needed nothing** — the SVD pair is the strongest material reviewed so far. Ledger updated (the ship for a clean unit). No served assets touched — no SW bump. **Progress: 16/193 lessons.**
+
 ## iter 1164 — Review: la-orthonormal-gram-schmidt + la-projection-least-squares (review)
 Both lessons mathematically flawless on deep re-verification — the worked QR ($q_2=\frac{1}{\sqrt6}(1,-1,2)$), q8's Gram-Schmidt step ($0.64/-0.48$), h1's rotation-vs-reflection determinant ($-27/27=-1$), h2's least-squares $(\tfrac23,\tfrac13)$ **cross-checked via the normal equations**, the worked $y=\tfrac76+\tfrac t2$ fit with both orthogonality checks, e1's four-point fit ($\det=20$, $C=D=\tfrac9{10}$), and the full 3×3 QR in e1 (all three columns reconstructed).
 Two defects, same species: **MCQ explains that reference answer choices by index — wrongly** (`la-orthonormal…` q1 cited a nonexistent "choice 4"; `la-projection…` q9's "choice 3/choice 4" pointed at the wrong options). Both rewritten to describe the distractors by *content* ("the tempting $5/3$ divides by $\|a\|$ instead of $a^\top a$…") — robust to any future reordering and clearer to read. Defect noted for the remaining sweep: index-based explain references are fragile and already wrong twice.

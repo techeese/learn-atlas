@@ -3,7 +3,7 @@
 Owner-directed (2026-07-02): review and refine all existing content and visualizations.
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 14/193 lessons · 0/177 widgets**
+**Progress: 16/193 lessons · 0/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -20,8 +20,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] la-symmetric-spectral — ✔ iter-1163 clean — spectral proofs, worked example, rank-1 reconstruction, h2 Gram product, all MCQs (incl. Rayleigh, 1/√λ axes) re-verified; no changes
 - [x] la-orthonormal-gram-schmidt — ✔ iter-1164 — q1 explain referenced a nonexistent "choice 4" (rewritten content-first); worked QR, q8 (0.64/−0.48), h1 det=−27, h2 least-squares cross-checked via normal equations — all verified
 - [x] la-projection-least-squares — ✔ iter-1164 — q9 explain misnumbered its choice references (rewritten content-first); worked 7/6+t/2 fit, e1 4-point fit (det=20, C=D=9/10), projections, h2 projector proof — all verified
-- [ ] la-svd — pending
-- [ ] la-low-rank-pca — pending
+- [x] la-svd — ✔ iter-1165 clean — worked 2×2 SVD fully re-derived (u₁=(1,3)/√10, σ₁σ₂=|det|=15), h0 sign-absorption, h2 eigenvalue-sharing proof, e0/e1/e2, all 17 MCQs verified; no changes
+- [x] la-low-rank-pca — ✔ iter-1165 clean — worked PCA (λ=8/3, 80%, reconstruction error 2=σ₂² matching Eckart–Young exactly), h0 energy budget 146.16, h1 diag(6,2/3), pseudoinverse h2, all 17 MCQs verified; no changes
 - [ ] la-gradients-jacobians — pending
 - [ ] la-matrix-derivative-identities — pending
 - [ ] la-matrix-calculus-backprop — pending
