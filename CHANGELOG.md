@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1164 — Review: la-orthonormal-gram-schmidt + la-projection-least-squares (review)
+Both lessons mathematically flawless on deep re-verification — the worked QR ($q_2=\frac{1}{\sqrt6}(1,-1,2)$), q8's Gram-Schmidt step ($0.64/-0.48$), h1's rotation-vs-reflection determinant ($-27/27=-1$), h2's least-squares $(\tfrac23,\tfrac13)$ **cross-checked via the normal equations**, the worked $y=\tfrac76+\tfrac t2$ fit with both orthogonality checks, e1's four-point fit ($\det=20$, $C=D=\tfrac9{10}$), and the full 3×3 QR in e1 (all three columns reconstructed).
+Two defects, same species: **MCQ explains that reference answer choices by index — wrongly** (`la-orthonormal…` q1 cited a nonexistent "choice 4"; `la-projection…` q9's "choice 3/choice 4" pointed at the wrong options). Both rewritten to describe the distractors by *content* ("the tempting $5/3$ divides by $\|a\|$ instead of $a^\top a$…") — robust to any future reordering and clearer to read. Defect noted for the remaining sweep: index-based explain references are fragile and already wrong twice.
+Verified: guarded; byte-stable; gate ALL GREEN; headless — kErr=0, errs=0. SW `atlas-v1094` → `atlas-v1095`. **Progress: 14/193 lessons.**
+
 ## iter 1163 — Review: la-diagonalization + la-symmetric-spectral (review)
 **`la-diagonalization`** — $A^5$, h0's $A^3$ (re-multiplied directly: $[[46,-38],[19,-11]]$), e0/e1 power checks all verify. Two duplication defects: **e2 was the content's defective-shear example verbatim** (same matrix, and h1 already does the $[[3,1],[0,3]]$ variant) — replaced with *"Solve a differential equation with the matrix exponential"* ($\dot x=Ax$, symmetric $A$, modes $e^{-2t},e^{-4t}$, stability read off the spectrum — giving the lesson's $e^{At}$ dive worked numbers). And **my own iter-1162 Markov example collided with this lesson's h2** (same $0.9/0.2$ matrix) — the la-eigen example now uses $P=[[0.7,0.4],[0.3,0.6]]$ (stationary $(4/7,3/7)$, mixing $0.3^k$), both Node-verified.
 **`la-symmetric-spectral`: clean** — both spectral-theorem proofs, the worked $Q\Lambda Q^\top$, the rank-1 reconstruction, h2's Gram product $[[2,2],[2,5]]$, and all 16 MCQs (Rayleigh quotient, $1/\sqrt\lambda$ ellipse axes, spectral shift) re-verified. No changes.

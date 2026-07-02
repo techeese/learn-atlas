@@ -3,7 +3,7 @@
 Owner-directed (2026-07-02): review and refine all existing content and visualizations.
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 12/193 lessons · 0/177 widgets**
+**Progress: 14/193 lessons · 0/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -18,8 +18,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] la-eigenvalues-eigenvectors — ✔ iter-1162 — all 3 examples were duplicates (e0+e1 redid the in-content worked example on the same matrix; e2 shear appears in content+h2+q2); replaced with fresh complementary trio: non-symmetric full analysis, Markov λ=1 + mixing rate, complex 1±i rotation-scale — all hand-verified
 - [x] la-diagonalization — ✔ iter-1163 — e2 duplicated the in-content defective-shear example (same matrix; h1 already does the variant); replaced with a matrix-exponential stability example (decoupled modes, e^{λt}, x(t)→0) that gives the e^{At} dive worked numbers; A⁵/h0-A³/e0/e1 all re-multiplied
 - [x] la-symmetric-spectral — ✔ iter-1163 clean — spectral proofs, worked example, rank-1 reconstruction, h2 Gram product, all MCQs (incl. Rayleigh, 1/√λ axes) re-verified; no changes
-- [ ] la-orthonormal-gram-schmidt — pending
-- [ ] la-projection-least-squares — pending
+- [x] la-orthonormal-gram-schmidt — ✔ iter-1164 — q1 explain referenced a nonexistent "choice 4" (rewritten content-first); worked QR, q8 (0.64/−0.48), h1 det=−27, h2 least-squares cross-checked via normal equations — all verified
+- [x] la-projection-least-squares — ✔ iter-1164 — q9 explain misnumbered its choice references (rewritten content-first); worked 7/6+t/2 fit, e1 4-point fit (det=20, C=D=9/10), projections, h2 projector proof — all verified
 - [ ] la-svd — pending
 - [ ] la-low-rank-pca — pending
 - [ ] la-gradients-jacobians — pending

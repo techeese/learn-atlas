@@ -2997,7 +2997,7 @@
                 "obtained by solving the linear system $Qc = x$ with Gaussian elimination"
               ],
               "answer": 1,
-              "explain": "Orthonormality makes coordinates equal to plain dot products: $c_i = \\langle q_i, x\\rangle$. Choice 2 divides by $\\|q_i\\|^2$, which is the formula for a merely orthogonal (not normalized) set and is wrong when $\\|q_i\\|=1$ is needed only as an extra step. Choices 0 and 4 describe the general-basis 'solve a system' procedure that orthonormality lets you skip entirely (note choice 0 uses a different basis $B$, not the $q_i$ themselves)."
+              "explain": "Orthonormality makes coordinates equal to plain dot products: $c_i = \\langle q_i, x\\rangle$. Dividing by $\\|q_i\\|^2$ is the formula for a merely orthogonal (unnormalized) set — redundant here since $\\|q_i\\|=1$. The other two options describe the general-basis \"solve a linear system\" procedure that orthonormality lets you skip entirely."
             },
             {
               "q": "In the QR factorization $A = QR$ produced by Gram-Schmidt, why is $R$ upper triangular?",
@@ -3329,7 +3329,7 @@
                 "$\\dfrac{5}{9}\\begin{bmatrix}1\\\\2\\\\2\\end{bmatrix}$"
               ],
               "answer": 3,
-              "explain": "Here $a^{\\top}b = 1+2+2 = 5$ and $a^{\\top}a = 1+4+4 = 9$, so the scalar is $5/9$ and $\\hat{p}=\\frac{5}{9}a$. Choice 3 wrongly divides by $\\|a\\|=3$ instead of $a^{\\top}a=9$, giving $5/3$, and choice 4 mistakes the projection for $a$ itself."
+              "explain": "Here $a^{\\top}b = 1+2+2 = 5$ and $a^{\\top}a = 1+4+4 = 9$, so the scalar is $5/9$ and $\\hat{p}=\\frac{5}{9}a$. The tempting $\\frac{5}{3}a$ divides by $\\|a\\|=3$ instead of $a^{\\top}a=9$; and $a$ itself would only be the answer if $b$ already lay on the line."
             },
             {
               "q": "A student claims that the least-squares solution $\\hat{x}$ to $Ax=b$ is the orthogonal projection of $b$ onto the column space of $A$. What is wrong with this statement?",
