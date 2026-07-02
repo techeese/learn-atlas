@@ -2903,6 +2903,11 @@
               "prompt": "Explain why split-conformal coverage holds with no distributional assumptions: why does ranking the test point's nonconformity score among $n$ calibration scores give coverage $\\ge 1-\\alpha$?",
               "hint": "Under exchangeability, the test score is equally likely to land at any rank among the $n{+}1$ scores.",
               "solution": "If calibration and test points are exchangeable, the test score's rank among all $n{+}1$ scores is uniform over positions $1..n{+}1$. The set includes the true label unless the test score lands above the $\\lceil (1-\\alpha)(n{+}1)\\rceil$-th calibration score — which happens with probability at most $\\alpha$. Nothing about the model or the data distribution was used, only the symmetry of ranks."
+            },
+            {
+              "prompt": "You hold out $n=99$ calibration points and want conformal prediction intervals at $\\alpha=0.1$ (90 percent coverage). Which order statistic of the calibration residuals is the band half-width $\\hat q$?",
+              "hint": "$\\hat q$ is the $\\lceil(1-\\alpha)(n+1)\\rceil$-th smallest residual.",
+              "solution": "$\\lceil 0.9\\times 100\\rceil=90$ — the 90th smallest of the 99 residuals. The $n+1$ (not $n$) is what makes coverage $\\ge 90$ percent exactly, by the rank-uniformity argument: the fresh point's residual is equally likely to land in any of the $n+1$ slots among the calibration residuals."
             }
           ],
           "prereqs": [

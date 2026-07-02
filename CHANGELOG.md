@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1150 — Step-back (clean at 193/905) + homework debt cleared sitewide (step-back / retention)
+Step-back **kErr + visible-newline sweep at the new baselines**: **n=193 lessons**, errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, **mapNodes=905** — the Estimation Theory split and all block changes are regression-free.
+**Ship:** +1 hand-worked homework each for the last two hw-2/3 lessons — `dl-generalization-mysteries` (describe the three regimes of the test-error curve as $p$ passes $n$; danger zone at the interpolation threshold) and `ml-trustworthy-models` (which order statistic is the conformal $\hat q$ at $n=99,\alpha=0.1$ → the **90th smallest**, and why $n+1$ makes coverage exact). **Every lesson on the site now has ≥3 homework.**
+Verified: guarded; byte-stable ×2; gate ALL GREEN (no hw flags remain); full sweep clean; **headless** — homework tab renders the new problem, kErr=0, errs=0. SW `atlas-v1080` → `atlas-v1081`.
+**Block 1141–1150 recap:** 1 new lesson (**Estimation Theory**, 5th split — 193 lessons, with 2 viz embeds migrating) · 2 interactive (KDE bandwidth U-curve viz; Bradley-Terry runnable) · 2 wildcards (**adaptive ⌘K search** from the backlog; gate hardening) · 1 bugfix (ml-conformal dup — count corrected to 176) · 2 retention ships (gt parity, hw debt zeroed) · 3 full bundles (sketches CMS/HLL, MoM/GMM, + top-ups) — quotas exceeded, all green.
+
 ## iter 1149 — Gate hardening: quote-agnostic viz validation + duplicate-registration check (workflow)
 Closed the two gate blind spots behind the iter-1148 bug: (1) the **data-viz validator now matches single- OR double-quoted embeds** — previously `data-viz='id'` (used by older lessons) skipped validation entirely, so a typo'd single-quoted id would ship silently; (2) gate now **fails hard on duplicate widget registrations** (a dup silently shadows the earlier widget and double-lists it in the Lab — exactly the `ml-conformal` case).
 Verified with **negative tests, both directions**: a planted single-quoted `data-viz='no-such-widget'` → `FAIL: unknown data-viz id` ✓; a planted second `register({id:'ml-kde'…})` → `FAIL: duplicate viz registration(s): ml-kde` ✓; real data restored byte-identical → ALL GREEN ✓. (First negative-test attempt was itself a bad test — shell single-quoting stripped the inner quotes; documented in ROADMAP notes along with the quote-style landmine.) gate.js is not a served asset — no SW bump.

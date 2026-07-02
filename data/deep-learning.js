@@ -2086,6 +2086,11 @@
               "prompt": "Write out the lottery-ticket procedure step by step, and say why the \"rewind\" step matters — what fails if you re-initialize the pruned subnetwork randomly instead?",
               "hint": "The claim is about initialization, not just sparsity.",
               "solution": "(1) Initialize dense network, save the initial weights. (2) Train fully. (3) Prune the smallest-magnitude weights (say 80–90 percent). (4) Rewind surviving weights to their SAVED initial values. (5) Retrain the sparse net alone — it reaches comparable accuracy. With random re-initialization the sparse net trains much worse: the winning ticket is the pair (mask, original init) — those particular starting values were poised to learn — so sparsity alone is not the discovery, the initialization lottery is."
+            },
+            {
+              "prompt": "A model family is fit to $n=1000$ training points with increasing parameter count $p$. Describe the expected test-error curve as $p$ grows from $100$ to $100{,}000$, naming the three regimes and the location of the danger zone.",
+              "hint": "What happens exactly where the model can first interpolate the training set?",
+              "solution": "Classical U-shape while $p\\lt n$ (bias falls, variance rises); a spike near the <b>interpolation threshold</b> $p\\approx n=1000$, where the model barely fits and amplifies noise; then <b>double descent</b> — error falls again for $p\\gg n$ because among the many interpolating solutions, training dynamics pick minimum-norm ones that are implicitly regularized. The danger zone is $p\\approx n$: either stay under-parameterized or go far past it."
             }
           ],
           "prereqs": [
