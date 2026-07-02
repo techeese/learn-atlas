@@ -474,6 +474,14 @@
             {
               "front": "Episodic vs. continuing tasks?",
               "back": "Episodic: interaction ends at a terminal state after random step $T$; return is a finite sum and $\\gamma=1$ is allowed. Continuing: $T=\\infty$, no natural end; $\\gamma<1$ needed to keep returns bounded. Effective horizon $\\approx 1/(1-\\gamma)$."
+            },
+            {
+              "front": "Gain vs bias (average-reward RL)",
+              "back": "Gain $\\rho$ = long-run reward per step (start-state-independent in unichain MDPs); bias $h(s)$ = the transient bonus of starting at $s$. Bellman with the gain subtracted: $\\rho+h(s)=\\max_a[r+\\sum p\\,h(s')]$."
+            },
+            {
+              "front": "Blackwell optimality",
+              "back": "A policy optimal for <em>every</em> discount factor close enough to 1 — simultaneously gain-optimal and discounted-optimal, via $V_\\gamma\\approx\\rho/(1-\\gamma)+h$."
             }
           ],
           "homework": [

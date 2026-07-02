@@ -242,6 +242,14 @@
             {
               "front": "What does entropy say about compression?",
               "back": "Shannon's source-coding theorem: $H(X)$ bits per symbol is the minimum average length for lossless compression — you can approach it but never beat it. Entropy is the hard floor on how small the data can get."
+            },
+            {
+              "front": "The Rényi entropy family",
+              "back": "$H_\\alpha=\\tfrac{1}{1-\\alpha}\\log\\sum p_i^\\alpha$, decreasing in $\\alpha$: Shannon at $\\alpha\\to1$, collision entropy at 2, min-entropy at $\\infty$."
+            },
+            {
+              "front": "Why cryptography uses min-entropy",
+              "back": "Key strength is the adversary's single best guess: $H_\\infty=-\\log\\max_i p_i$. High Shannon entropy with one likely outcome is still a weak key."
             }
           ],
           "examples": [

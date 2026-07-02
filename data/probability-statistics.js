@@ -2181,6 +2181,14 @@
             {
               "front": "Why does the normal distribution appear so often in nature (the CLT teaser)?",
               "back": "The Central Limit Theorem: when you sum or average many independent small effects, the result is approximately normal regardless of each effect's individual distribution. Heights, measurement errors, and sample means all arise this way."
+            },
+            {
+              "front": "Stein's lemma",
+              "back": "For Gaussian $X$: $\\mathbb{E}[(X-\\mu)f(X)]=\\sigma^2\\,\\mathbb{E}[f'(X)]$ — integration by parts, and it holds for all smooth $f$ <em>only</em> for the Gaussian."
+            },
+            {
+              "front": "SURE (Stein's unbiased risk estimate)",
+              "back": "Via Stein's lemma, an estimator's squared-error risk becomes an expression with no unknown $\\mu$ — so you can tune shrinkage or thresholds from the data alone, no validation set."
             }
           ],
           "homework": [

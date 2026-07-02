@@ -6632,6 +6632,14 @@
             {
               "front": "A subgradient",
               "back": "Any slope of a line that stays below a convex function. At a kink (e.g. $|x|$ at $0$) there is an interval of them ($[-1,1]$)."
+            },
+            {
+              "front": "The Frank-Wolfe step",
+              "back": "$s=\\arg\\min_{v\\in\\mathcal{C}}\\langle\\nabla f,v\\rangle$ from a linear minimization oracle, then $x\\leftarrow(1-\\gamma)x+\\gamma s$ — feasibility by convex averaging, no projection ever."
+            },
+            {
+              "front": "Cheap linear minimization oracles",
+              "back": "Polytope → a vertex (LP); $\\ell_1$ ball → one signed coordinate; nuclear-norm ball → the top singular pair. Cheap LMOs are when Frank-Wolfe beats projected methods."
             }
           ],
           "homework": [

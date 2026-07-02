@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1123 — Retention: flashcard backfill for the newest bundles (retention)
+The five newest bundled concepts had MCQs but no **flashcards** — the unit the spaced-repetition deck actually drills. Added **+2 cards each** (10 total): gain-vs-bias & Blackwell optimality (avg-reward RL), the Rényi family & why crypto uses min-entropy, the three compression levels & gist tokens, the Frank-Wolfe step & cheap LMOs, Stein's lemma & SURE. Decks 6 → 8 (ps-normal → 9).
+Verified: math-guarded; 5 byte-stable re-serializations; **gate ALL GREEN — 1159 flashcards**; **headless** — cards tab renders the grown deck ("/ 8"), kErr=0, errs=0. SW cache `atlas-v1054` → `atlas-v1055`.
+
 ## iter 1122 — NEW LESSON: Trusting a Model — fourth dive split (new functionality)
 Wildcard: split-watch on `ml-model-selection` (7 dives). Promoted its three trust dives (**accuracy-trap/ROC, conformal prediction, interpretability**) into **`ml-trustworthy-models`** — "Trusting a Model: Metrics, Uncertainty, Explanations" (13 min, prereq ml-model-selection), framed by a leaderboard-vs-deployable intro and a **deployment checklist** close. Authored **4 MCQs** (imbalance, AUC = ranking probability, conformal's exchangeability-only guarantee, SHAP-local vs permutation-global), **5 flashcards**, **2 homework** (confusion matrix → P=0.80/R=0.667/F1≈0.727 — accuracy 0.94 hides a third of cases missed; the rank-uniformity proof of conformal coverage). Source slims 7 → 4 dives + pointer; **retargeted the DL "calibration" link** (calibration lived only in the moving conformal dive; the double-descent links correctly stay); prereqs.js edge. **Lessons 191 → 192.**
 Verified: guarded; byte-stable re-serialize ×3; **gate ALL GREEN — 192 lessons**, internal-links; **headless** — new lesson renders all three sections, quiz "of 4", source 4 dives + pointer, map **901 nodes**, kErr=0, errs=0. SW cache `atlas-v1053` → `atlas-v1054`.

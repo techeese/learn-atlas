@@ -3936,6 +3936,14 @@
             {
               "front": "Zero-shot CoT trigger phrase and why it works?",
               "back": "'Let's think step by step.' It works because in pretraining such phrasing was associated with detailed, step-by-step explanations, so it conditions the model to produce intermediate reasoning before the answer."
+            },
+            {
+              "front": "Three levels of prompt compression",
+              "back": "<b>Prune</b> low-surprisal tokens (LLMLingua) → <b>gist tokens</b> (learned stand-ins for whole blocks) → <b>context distillation</b> (move the prompt into the weights)."
+            },
+            {
+              "front": "Gist tokens",
+              "back": "A few trained virtual tokens whose activations reproduce the effect of a much longer instruction segment — the compressive cousin of soft prompts."
             }
           ],
           "homework": [
