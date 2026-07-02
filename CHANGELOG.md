@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1114 — Hard-concept: average-reward RL — dive + glossary + MCQ in one bundle (content)
+Filled the twice-noted RL gap with the loop's first **triple-bundled** ship. Deep-dive in `rl-mdp-formalism` (its 5th): **average-reward RL** — for continuing tasks, $\gamma$ is a knob with teeth; judge policies by the **gain** $\rho(\pi)=\lim\tfrac1T\mathbb{E}[\sum r_t]$ instead. **Bias** $h(s)$ = transient bonus; Bellman with the gain subtracted, $\rho+h(s)=\max_a[r+\sum p\,h(s')]$ (R-learning / differential Q-learning); the **Laurent bridge** $V_\gamma\approx\rho/(1-\gamma)+h$ and **Blackwell optimality** (optimal for all $\gamma$ near 1). Cross-linked to discounted values. Same ship: **2 glossary terms** (Average-reward RL, Blackwell optimality — 567 → **569**, 0 holes) + **1 MCQ** (gain is start-state-independent; 16 → 17).
+Verified: g()-guarded; byte-stable re-serialize ×2; gate ALL GREEN (**3041 MCQs**, internal-links); **one combined headless driver** — 5 dives, avg-reward/Blackwell/R-learning/Laurent + link, quiz "of 17", glossary 2/2, kErr=0, errs=0. SW cache `atlas-v1045` → `atlas-v1046`.
+
 ## iter 1113 — Retention wave 3: MCQs for the remaining unquizzed dives (retention)
 +8 MCQs across 8 topics — entropy rate (context gap: 4.7 vs ~1 bit/char), **James-Stein** uniform dominance, **skip-list** express lanes, **successor representation** ($V=Mr$ revaluation), **DTW** warping-path alignment, **Armijo** sufficient decrease, **randomized-SVD** sketching, **PRM vs ORM** step-level scoring. Home lessons → 17 MCQs (ts-what-is-a-time-series → 18, its second). With waves 1–2, all ~24 recent hard-concept dives now feed the quiz/spaced-repetition loop.
 Verified: math-guarded; 8 byte-stable JSON re-serializations; all parse; **gate ALL GREEN — 3040 MCQs**; **headless** — quiz renders with pool "of 18", kErr=0, errs=0. SW cache `atlas-v1044` → `atlas-v1045`.
