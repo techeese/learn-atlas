@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1184 — Review: c-lagrange-multipliers + c-duality-kkt (review)
+**`c-lagrange-multipliers`** — the **first genuine arithmetic error of the review phase** (after ~1,500 verified computations): e0's shadow-price sanity check claimed re-solving with 41 m of fence gives $A\approx210.25$; actually $\lambda=\frac{41}{4}=10.25$ and $A=2\lambda^2=210.125$ (increase $10.125$, matching $\lambda=10$ to first order). Corrected with the computation shown. Everything else verified: h0 (min 5 at $(1,2)$), h1 ($f=13$, $\lambda=\frac12$ with budget interpretation), the SVM/KKT support-vector example, and the envelope-theorem e2. Noted (tolerated): e2 deepens lesson 22's $xy$ problem — spaced deepening with the envelope theorem added, not duplication.
+**`c-duality-kkt`: clean** — the dual derivation h1 ($g(\lambda)=2\lambda-\lambda^2/4$, $d^\star=4=p^\star$), the worked dual with its zero-gap code exercise, the any-problem weak-duality proof h0, the KKT-verification e0, and the convex-conjugate dive all verified. Later-authored and tight throughout.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1106` → `atlas-v1107`. **Progress: 45/193 lessons · 11/177 widgets.**
+
 ## iter 1183 — Review: c-convexity + c-gradient-descent-convergence (review)
 **`c-convexity`: clean** — the chord-definition proof of $x^2$ (via the $-\lambda(1-\lambda)(x-y)^2$ identity), MSE-convexity from convexity-preserving operations, Jensen's inequality with the gap-equals-variance observation, $E[1/X]\ge1/E[X]$, and the two-random-starts diagnostic homework all verified. No changes.
 **`c-gradient-descent-convergence`** — the site's densest broken-explain cluster, all fixed: **seven MCQ explains de-indexed** — q0, q1, q5, q6, q7, and q9 each *maligned their own correct answer* under scrambled numbering ("Choice 1 flips the sign" where choice 1 IS the right 0.4; "Choices 0 and 1 wrongly subtract" where 0 IS the right κ=25; …), and q3 self-referenced. Clearly one bad authoring batch. All arithmetic verified: κ=25, both one-step computations (0.4, 3.2), the $(0, 2/a)$ convergence window with the η=2/a oscillation boundary, e0's $0.8^k$ contraction, e1's three-learning-rate sweep, and all homework.
