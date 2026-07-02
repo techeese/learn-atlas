@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 37/193 lessons · 11/177 widgets**
+**Progress: 39/193 lessons · 11/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -60,8 +60,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] c-integration-techniques — ✔ iter-1178 — THREE defects: q15 explain misattributed "option 3"; h0 exactly duplicated q8 (∫sin·cos=½, same substitution) → replaced with ∫₁⁴ e^√x/√x dx = 2(e²−e)≈9.34 (root inner function, numerically verified); e2 duplicated e0's integrand family (xe^{x²} definite) → replaced with ∫₀^{π/4}tan x = ½ln2 (negative-du wrinkle, numerically verified). h1/h2/e0/e1 verified incl. the by-parts-twice full check
 - [x] c-area-volume — ✔ iter-1179 — h0 exactly duplicated e0 (y=6−x² vs y=x, identical 125/6 solution; 3rd homework=example case); replaced with the crossing-curves x³-vs-x problem (area ½, split at 3 intersections, exposes the signed-integral-equals-0 trap that card c0 warns about but nothing practiced; Node-verified). q7 already fixed iter-1172; washer-about-y=−1 e1 (104π/15), both-methods h1 (π/2), avg-value h2 (2/π) all verified
 - [x] c-improper-integrals — ✔ iter-1179 clean — Gaussian-substitution h0 (½), right-endpoint singularity h1 (2), the c=1/E[X]=∞ PDF h2, exponential-mean e1 (μ=½), Cauchy q7, comparison-direction q11 all verified. Noted: e2 supersets q10 (∫x^{−1/2}=2) but adds type-II framing — tolerated; no changes
-- [ ] c-intro-differential-equations — pending
-- [ ] c-partial-derivatives — pending
+- [x] c-intro-differential-equations — ✔ iter-1181 — e2 solved the exact function q8 verifies (y=3e^{2t}) in a lesson saturated with y′=ky (q10/q13/c2/e0); replaced with a derivation of Newton's cooling by separation (the formula card c5 records and h1 uses but nothing derived; teaches the shifted-variable trick + reclaims the excluded equilibrium). h0 (√(2t²+9)), h1 (k≈0.0673, 45.5°C), h2 (22.9 yr) all verified
+- [x] c-partial-derivatives — ✔ iter-1181 clean — h0 Clairaut, h1 (0.2 vs ln1.22≈0.1989), Laplace h2, e0 (7/24), e1 (tangent plane L=y, 0.2196), e2 (D_u=4.4, |∇f|=√20) all verified. Watch: e2 teaches directional derivatives (next lesson's topic) — check for collision when reviewing c-gradient-directional
 - [ ] c-gradient-directional — pending
 - [ ] c-multivariable-optimization — pending
 - [ ] c-convexity — pending
