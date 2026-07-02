@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1129 — Code: the Pólya urn — 200th code exercise 🎯 (examples)
+Milestone runnable, completing the iter-1125 de Finetti thread in `ps-bayesian-inference`: three seeded **Pólya urns** (1 red + 1 blue; draw, return + copy) each run 3,000 draws → **limits 0.37, 0.60, 0.17** — every run converges to its *own* limiting fraction, the latent $\theta$ drawn once from the uniform mixing prior. De Finetti's mixture, watched happening. **Code exercises hit 200.**
+Verified: re-derived in Node; byte-stable JSON inject; **gate ALL GREEN — all 200 code exercises executed**; **headless** — Run executes, three distinct limits shown, kErr=0, errs=0. SW cache `atlas-v1060` → `atlas-v1061`.
+
 ## iter 1128 — Code: run deferred acceptance (examples)
 Completed the iter-1127 thread with a runnable in `gt-cooperative-games`: **deferred acceptance on a 3×3 market** — proposers work down their lists, receivers tentatively hold the best offer (rank comparison done comparison-free via `Math.min` on rank indices for the no-`<>` guard), losers rejoin the queue → **stable match: m2-w1, m3-w2, m1-w3 (5 proposals)** with two visible rejections along the way. Stability of the output hand-verified (no blocking pair).
 Verified: re-derived in Node (matches the hand-trace); byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 199)**; **headless** — Run executes, exact matching shown, entities decoded, kErr=0, errs=0. SW cache `atlas-v1059` → `atlas-v1060`.
