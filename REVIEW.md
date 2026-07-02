@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 25/193 lessons · 11/177 widgets**
+**Progress: 27/193 lessons · 11/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -48,8 +48,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] c-continuity — ✔ iter-1171 clean — three-part continuity contract, IVT examples (Dottie number h1, bisection e1 with g(1.5)=−0.125), jump classifications (h2, e2), q9 Darboux counterexample all verified; no changes
 - [x] c-derivative-definition — ✔ iter-1173 — e2 duplicated the content's |x| corner analysis (4th appearance incl. q2 + card); replaced with the x^{1/3} vertical-tangent mode (sides agree on +∞ — a different failure), Node-verified; worked example, code, h0-h2, all 16 MCQs verified
 - [x] c-differentiation-rules — ✔ iter-1173 — e2 used x²sin x, forward-referencing cos (taught 2 lessons later) AND duplicating that lesson's q8; replaced with √x(x²−4) differentiated two ways (product rule vs expand-first, agreeing at (5x²−4)/(2√x), spot-checked at x=4→19); h1 re-expanded, all MCQs verified
-- [ ] c-chain-rule — pending
-- [ ] c-derivatives-special-functions — pending
+- [x] c-chain-rule — ✔ iter-1174 — q8 explain maligned its own correct answer ("Choice 0 forgets the inner derivative" — choice 0 IS 6x·e^{3x²}); de-indexed. Code exercises (54 54; dual numbers 10/7), h0-h2 (incl. (7x³+3x²)/√(2x+1)), gradient-flow arithmetic (0.7³⁰≈2e−5) all verified
+- [x] c-derivatives-special-functions — ✔ iter-1174 — q8 explain blamed "choices 0 and 3" with 3 its own answer (should be the product-of-derivatives and dropped-term distractors); de-indexed. Softplus→sigmoid h2, x^x e2 (4(ln2+1)≈6.77), P′(1)=120ln2≈83.2, sec²(π/4)=2 all verified. Note: e2 overlaps lesson-6 log-diff dive (same x^x) — tolerated, the h1 x^{sin x} complement differs
 - [ ] c-implicit-related-rates — pending
 - [ ] c-extrema-curve-sketching — pending
 - [ ] c-optimization — pending

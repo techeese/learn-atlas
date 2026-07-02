@@ -2,6 +2,12 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1174 — Review: c-chain-rule + c-derivatives-special-functions (review)
+Both lessons carried flagged cases from the iter-1172 audit, both confirmed and fixed:
+**`c-chain-rule`** — q8's explain maligned its own correct answer ("Choice 0 forgets the inner derivative" — choice 0 *is* the correct $6x\,e^{3x^2}$); de-indexed. Everything else verified: both code exercises (chain-rule check `54 54`; the dual-number forward-mode autodiff `f(2)=10, f'(2)=7`), h1's $(7x^3+3x^2)/\sqrt{2x+1}$, and the gradient-flow arithmetic ($0.7^{30}\approx2\times10^{-5}$).
+**`c-derivatives-special-functions`** — q8's explain blamed "choices 0 and 3" with 3 its own answer (the real distractors: product-of-derivatives and dropped-term); de-indexed. Verified: the softplus→sigmoid derivation h2, $x^x$ log-differentiation ($4(\ln 2+1)\approx6.77$), the bacterial-growth $P'(1)=120\ln 2\approx83.2$, and $\sec^2(\pi/4)=2$. Noted (tolerated): e2 overlaps lesson 6's log-diff dive on the same $x^x$; the lesson's own $x^{\sin x}$ homework differentiates the pair.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1100` → `atlas-v1101`. **Progress: 27/193 lessons · 11/177 widgets.**
+
 ## iter 1173 — Review: c-derivative-definition + c-differentiation-rules (review)
 **`c-derivative-definition`** — worked example ($f'=2x-3$, tangent $y=x-4$ with the $(0.1)^2$ error check), code (6.00), velocity MCQ, h0–h2 all verified. One defect: **e2 duplicated the content's $|x|$ corner analysis** — the same function/computation appears in the content, q2, AND card c4. Replaced with the **vertical-tangent failure mode**: $x^{1/3}$ at 0, where the one-sided difference quotients *agree* but on $+\infty$ (Node-checked: $h=\pm0.001$ both give quotient 100) — a genuinely different way differentiability dies.
 **`c-differentiation-rules`** — both-method worked example, h1's expansion cross-check ($10x^4-27x^2-5$), e1's $-3/2$ slope all verified. One defect: **e2 used $x^2\sin x$, forward-referencing $\cos$** (trig derivatives arrive two lessons later) **and duplicating that later lesson's q8 exactly**. Replaced with $\sqrt{x}(x^2-4)$ differentiated two ways — product rule vs expand-first, agreeing at $(5x^2-4)/(2\sqrt x)$, spot-checked at $x{=}4\to19$ — which also reinforces the lesson's own "simplify first" strategy.

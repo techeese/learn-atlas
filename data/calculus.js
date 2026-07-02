@@ -1585,7 +1585,7 @@
                 "$3x^2\\,e^{3x^2 - 1}$"
               ],
               "answer": 0,
-              "explain": "Outer $f(u)=e^u$ gives $f'(u)=e^u$ evaluated at $u=3x^2$, times inner derivative $\\frac{d}{dx}(3x^2)=6x$, yielding $6x\\,e^{3x^2}$. Choice 0 forgets the inner derivative entirely; the exponent does not change under differentiation of $e^u$."
+              "explain": "Outer $f(u)=e^u$ gives $f'(u)=e^u$ evaluated at $u=3x^2$, times inner derivative $\\frac{d}{dx}(3x^2)=6x$, yielding $6x\\,e^{3x^2}$. The bare $e^{3x^2}$ forgets the inner derivative entirely; the exponent does not change under differentiation of $e^u$, so the power-rule-style $3x^2 e^{3x^2-1}$ is also wrong."
             },
             {
               "q": "Suppose $y = f(g(x))$ with $g(2) = 5$, $g'(2) = 3$, and $f'(5) = 4$. What is $\\left.\\frac{dy}{dx}\\right|_{x=2}$?",
@@ -1829,7 +1829,7 @@
                 "$2x\\sin x + x^2\\cos x$"
               ],
               "answer": 3,
-              "explain": "This needs the product rule: $(uv)' = u'v + uv'$ with $u=x^2,\\ v=\\sin x$, giving $2x\\sin x + x^2\\cos x$. Choices 0 and 3 are the classic error of differentiating the factors separately and multiplying or dropping a term; choice 2 has the wrong sign on the second term."
+              "explain": "This needs the product rule: $(uv)' = u'v + uv'$ with $u=x^2,\\ v=\\sin x$, giving $2x\\sin x + x^2\\cos x$. The classic errors: $2x\\cos x$ multiplies the two derivatives together instead of using the two-term rule, $x^2\\cos x$ drops the first term, and the minus-sign version confuses the product rule with the quotient rule's subtraction."
             },
             {
               "q": "A radioactive sample decays as $N(t) = N_0\\,e^{-kt}$ with $k>0$. What is the instantaneous rate of change $N'(t)$?",
