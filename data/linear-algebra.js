@@ -2461,19 +2461,19 @@
           ],
           "examples": [
             {
-              "title": "Eigenvalues of a 2×2",
-              "body": "Find the eigenvalues of $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$.",
-              "solution": "Solve the characteristic equation $\\det(A-\\lambda I)=(2-\\lambda)^2-1=0$. So $(2-\\lambda)^2=1\\Rightarrow 2-\\lambda=\\pm1\\Rightarrow \\lambda=1$ and $\\lambda=3$."
+              "title": "A full eigen-analysis from scratch",
+              "body": "Find both eigenvalues and an eigenvector for each, for $A=\\begin{bmatrix}4&2\\\\1&3\\end{bmatrix}$, and verify against the trace and determinant.",
+              "solution": "<strong>Eigenvalues.</strong> $\\operatorname{tr}(A)=7$ and $\\det(A)=12-2=10$, so the characteristic polynomial is $\\lambda^2-7\\lambda+10=(\\lambda-2)(\\lambda-5)$, giving $\\lambda_1=2$, $\\lambda_2=5$. Check: $2+5=7=\\operatorname{tr}$, $2\\cdot 5=10=\\det$. ✓\n<strong>Eigenvector for $\\lambda=5$.</strong> $(A-5I)v=\\begin{bmatrix}-1&2\\\\1&-2\\end{bmatrix}v=0$ gives $x=2y$, so $v_2=\\begin{bmatrix}2\\\\1\\end{bmatrix}$. Check: $Av_2=\\begin{bmatrix}10\\\\5\\end{bmatrix}=5v_2$. ✓\n<strong>Eigenvector for $\\lambda=2$.</strong> $(A-2I)v=\\begin{bmatrix}2&2\\\\1&1\\end{bmatrix}v=0$ gives $x=-y$, so $v_1=\\begin{bmatrix}1\\\\-1\\end{bmatrix}$. Check: $Av_1=\\begin{bmatrix}2\\\\-2\\end{bmatrix}=2v_1$. ✓\nNote $A$ is <em>not</em> symmetric, and indeed the eigenvectors $(2,1)$ and $(1,-1)$ are not orthogonal — orthogonal eigenvectors are a privilege of symmetric matrices, not a general rule."
             },
             {
-              "title": "Finding an eigenvector",
-              "body": "For the same $A=\\begin{bmatrix}2&1\\\\1&2\\end{bmatrix}$, find an eigenvector for $\\lambda=3$.",
-              "solution": "Solve $(A-3I)\\mathbf{v}=\\begin{bmatrix}-1&1\\\\1&-1\\end{bmatrix}\\mathbf{v}=\\mathbf{0}$. Both rows give $-v_1+v_2=0$, i.e. $v_1=v_2$. So $\\mathbf{v}=\\begin{bmatrix}1\\\\1\\end{bmatrix}$ (or any nonzero multiple)."
+              "title": "The eigenvalue $\\lambda=1$ of a Markov chain",
+              "body": "A system hops between two states with column-stochastic transition matrix $P=\\begin{bmatrix}0.9&0.2\\\\0.1&0.8\\end{bmatrix}$ (columns sum to $1$). Find both eigenvalues and the stationary distribution, and explain the long-run behavior of $v_{k+1}=Pv_k$.",
+              "solution": "<strong>Eigenvalues.</strong> Every column-stochastic matrix has $\\lambda_1=1$ (the all-ones row vector is a left eigenvector). The second follows for free from the trace: $\\lambda_2=\\operatorname{tr}(P)-1=1.7-1=0.7$. Check: $\\lambda_1\\lambda_2=0.7=\\det(P)=0.72-0.02$. ✓\n<strong>Stationary distribution.</strong> Solve $(P-I)v=0$: $\\begin{bmatrix}-0.1&0.2\\\\0.1&-0.2\\end{bmatrix}v=0$ gives $x=2y$, so $v\\propto\\begin{bmatrix}2\\\\1\\end{bmatrix}$; normalizing to sum $1$: $\\pi=\\begin{bmatrix}2/3\\\\1/3\\end{bmatrix}$. Check: $P\\pi=\\pi$. ✓\n<strong>Long run.</strong> Decompose any start as $v_0=\\pi+c\\,w$ (with $w$ the $\\lambda_2$-eigenvector). Then $v_k=\\pi+c\\,(0.7)^k w\\to\\pi$: the $|\\lambda_2|\\lt 1$ component dies geometrically, and the chain forgets its start at rate $0.7^k$. The eigenvalue $1$ <em>is</em> the equilibrium; the second eigenvalue sets the mixing speed — exactly the dynamics story from the lesson, made concrete."
             },
             {
-              "title": "A shear: repeated eigenvalue",
-              "body": "What are the eigenvalues of the shear $\\begin{bmatrix}1&1\\\\0&1\\end{bmatrix}$, and is it diagonalizable?",
-              "solution": "$\\det(A-\\lambda I)=(1-\\lambda)^2=0\\Rightarrow \\lambda=1$ (repeated). The eigenvectors solve $\\begin{bmatrix}0&1\\\\0&0\\end{bmatrix}\\mathbf{v}=0\\Rightarrow v_2=0$, so they are only multiples of $\\begin{bmatrix}1\\\\0\\end{bmatrix}$. With just one independent eigenvector, it is NOT diagonalizable."
+              "title": "Complex eigenvalues: when nothing stays on its line",
+              "body": "Show that $A=\\begin{bmatrix}1&-1\\\\1&1\\end{bmatrix}$ has no real eigenvectors, find its complex eigenvalues, and describe what the map does geometrically.",
+              "solution": "<strong>Characteristic equation.</strong> $\\operatorname{tr}(A)=2$, $\\det(A)=1-(-1)=2$, so $\\lambda^2-2\\lambda+2=0$ and the discriminant is $4-8=-4\\lt 0$: <em>no real roots</em>, hence no real eigenvectors — every real direction gets turned.\n<strong>The complex pair.</strong> $\\lambda=\\dfrac{2\\pm\\sqrt{-4}}{2}=1\\pm i$, a conjugate pair with magnitude $|\\lambda|=\\sqrt{1^2+1^2}=\\sqrt{2}$ and angle $45^\\circ$.\n<strong>Geometry.</strong> $A$ is a rotation by $45^\\circ$ composed with a uniform scaling by $\\sqrt 2$ (indeed $A=\\sqrt2\\,R(45^\\circ)$). Iterating it spirals every point outward: each step turns by $45^\\circ$ and grows by $\\sqrt2$, so $\\|A^k v\\|=(\\sqrt2)^k\\|v\\|$ and after $8$ steps the direction returns having grown $16$-fold. Magnitude governs growth, the imaginary part governs rotation — read straight off $1\\pm i$."
             }
           ]
         },

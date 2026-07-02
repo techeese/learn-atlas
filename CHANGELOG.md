@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1162 — Review: la-determinants + la-eigenvalues-eigenvectors (review)
+**`la-determinants`: clean** — worked $\det=60$ double-checked via the column-2 expansion, h2's cubic $t^3-3t+2=(t-1)^2(t+2)$ re-factored, h1's identities, all 16 MCQs and the code exercise verified. No changes.
+**`la-eigenvalues-eigenvectors`** — content/MCQs/homework all verify, but **all three worked examples were duplicates**: e0+e1 redid the in-content worked example on the *same matrix* $\begin{bmatrix}2&1\\1&2\end{bmatrix}$, and e2's shear already appears in the content, h2, AND q2. Replaced with a fresh complementary trio (all hand-verified): (1) **full eigen-analysis of a non-symmetric matrix** ($\lambda=2,5$; eigenvectors checked; closes with "non-orthogonal eigenvectors — orthogonality is a privilege of symmetric matrices"); (2) **the Markov eigenvalue $\lambda=1$** — stationary distribution $(2/3,1/3)$ via $(P-I)v=0$, second eigenvalue $0.7$ from the trace, mixing at $0.7^k$; (3) **complex eigenvalues $1\pm i$** — negative discriminant → no real eigenvector, the map is rotate-45°-and-scale-$\sqrt2$, spiral dynamics read off magnitude and angle.
+Verified: guarded; byte-stable; gate ALL GREEN; headless — all three new titles render, kErr=0, errs=0. SW `atlas-v1092` → `atlas-v1093`. **Progress: 10/193 lessons.**
+
 ## iter 1161 — Review: la-inverse-and-systems + la-four-subspaces-rank (review)
 **`la-inverse-and-systems`: clean** — the 3×3 Gauss-Jordan inverse re-multiplied out ($AA^{-1}=I$ on all checked entries), h1's inverse spot-checked on three diagonal entries, Cramer + conjugate-gradient code outputs re-derived exactly (x=1/11, 7/11), all 17 MCQs and examples verified. A genuinely excellent lesson; no changes.
 **`la-four-subspaces-rank`** — the full worked example re-verified (RREF, all four subspace bases, the left-null vector's row-dependence reading row₃=row₁+row₂, h0's null vector re-multiplied). One defect: **the code exercise was trivial** — `nullity(5,2)` computes one subtraction and teaches nothing. Replaced with a real computation: **verify the Fundamental Theorem numerically** by dotting the lesson's own worked row-space basis against its null-space basis (4 dot products → `0, 0, 0, 0`).

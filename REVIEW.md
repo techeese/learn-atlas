@@ -3,7 +3,7 @@
 Owner-directed (2026-07-02): review and refine all existing content and visualizations.
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 8/193 lessons · 0/177 widgets**
+**Progress: 10/193 lessons · 0/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -14,8 +14,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] la-matrix-multiplication — ✔ iter-1160 clean — all products/powers/examples re-verified (AB/BA worked example, R^2=−I ladder, non-square e1, matmul code 19 22 43 50); no changes
 - [x] la-inverse-and-systems — ✔ iter-1161 clean — 3×3 Gauss-Jordan inverse re-multiplied, h1 inverse spot-checked on 3 entries, Cramer + CG code outputs re-derived, all 17 MCQs verified; no changes
 - [x] la-four-subspaces-rank — ✔ iter-1161 — code exercise was trivial (nullity = n − rank, one subtraction); replaced with a real computation verifying row-space ⊥ null-space on the lesson's own worked bases (4 dot products → 0,0,0,0); all subspace computations re-verified
-- [ ] la-determinants — pending
-- [ ] la-eigenvalues-eigenvectors — pending
+- [x] la-determinants — ✔ iter-1162 clean — worked det=60 double-checked via column expansion, h2 cubic factored correctly, all MCQs/code verified; no changes
+- [x] la-eigenvalues-eigenvectors — ✔ iter-1162 — all 3 examples were duplicates (e0+e1 redid the in-content worked example on the same matrix; e2 shear appears in content+h2+q2); replaced with fresh complementary trio: non-symmetric full analysis, Markov λ=1 + mixing rate, complex 1±i rotation-scale — all hand-verified
 - [ ] la-diagonalization — pending
 - [ ] la-symmetric-spectral — pending
 - [ ] la-orthonormal-gram-schmidt — pending
