@@ -2869,6 +2869,28 @@
               ],
               "answer": 1,
               "explain": "Coverage is bought with width: the band's half-width is a higher calibration-residual quantile. At $\\alpha\\to 0$ the sets grow toward everything — honest uncertainty has a price."
+            },
+            {
+              "q": "The conformal coverage guarantee can FAIL in deployment when:",
+              "choices": [
+                "The model is a neural network",
+                "$\\alpha$ is set below 0.5",
+                "The calibration set has more than 1000 points",
+                "The data distribution shifts — the guarantee needs new points exchangeable with the calibration set"
+              ],
+              "answer": 3,
+              "explain": "Exchangeability is the only assumption conformal makes, and distribution shift is exactly how it breaks; recalibrate on fresh data when the world moves."
+            },
+            {
+              "q": "For a cancer screening model, you should usually prioritize:",
+              "choices": [
+                "Recall — a missed case (false negative) costs far more than a follow-up test (false positive)",
+                "Precision — false alarms are the worst outcome",
+                "Accuracy — it balances everything",
+                "AUC only"
+              ],
+              "answer": 0,
+              "explain": "The right metric follows the cost structure: screening tolerates false alarms to avoid missed cases (recall-first); spam filtering is the reverse (precision-first)."
             }
           ],
           "flashcards": [

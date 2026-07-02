@@ -3814,6 +3814,28 @@
               ],
               "answer": 3,
               "explain": "No $\\theta$ can zero every condition in-sample, so GMM gets as close as possible under the optimal weighting; how far it remains is evidence about the model itself."
+            },
+            {
+              "q": "An estimator is called (asymptotically) efficient when:",
+              "choices": [
+                "It is unbiased in finite samples",
+                "Its variance attains the Cramér-Rao floor as $n\\to\\infty$ — the MLE's signature property",
+                "It has zero variance",
+                "It equals the sample mean"
+              ],
+              "answer": 1,
+              "explain": "Efficiency is measured against the information-theoretic floor: the MLE's asymptotic variance is exactly $1/(nI(\\theta))$, so nothing consistent-and-unbiased can beat it in the limit."
+            },
+            {
+              "q": "Data give $\\bar x=4$ and $s^2=2$. Fitting a Gamma$(\\alpha,\\beta)$ by the method of moments (mean $\\alpha\\beta$, variance $\\alpha\\beta^2$) yields:",
+              "choices": [
+                "$\\hat\\alpha=2,\\ \\hat\\beta=2$",
+                "$\\hat\\alpha=4,\\ \\hat\\beta=1$",
+                "$\\hat\\alpha=8,\\ \\hat\\beta=0.5$ — from $\\hat\\beta=s^2/\\bar x$ and $\\hat\\alpha=\\bar x^2/s^2$",
+                "It cannot be done without the likelihood"
+              ],
+              "answer": 2,
+              "explain": "$\\hat\\beta=2/4=0.5$, $\\hat\\alpha=16/2=8$; check: mean $=8\\times 0.5=4$, variance $=8\\times 0.25=2$. Two moments, two parameters, no likelihood needed."
             }
           ],
           "flashcards": [

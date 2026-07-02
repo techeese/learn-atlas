@@ -2052,6 +2052,28 @@
               ],
               "answer": 3,
               "explain": "In the NTK limit the network is a linear model in fixed tangent features (\"lazy training\"). Real training adapts the features to the data — the ingredient the kernel picture lacks."
+            },
+            {
+              "q": "The MECHANISM behind the second descent (test error falling again for $p\\gg n$) is:",
+              "choices": [
+                "The model memorizes the test set",
+                "Among the many interpolating solutions, training picks the minimum-norm one — implicit regularization smooths the fit",
+                "Batch normalization",
+                "The learning rate decaying to zero"
+              ],
+              "answer": 1,
+              "explain": "Past the interpolation threshold the solution set is huge; gradient-based fitting lands on the smallest-norm member, which behaves like a regularized model despite fitting every training point."
+            },
+            {
+              "q": "Which ingredient typically makes the grokking jump POSSIBLE (rather than just delayed)?",
+              "choices": [
+                "A larger test set",
+                "Early stopping",
+                "Weight decay (or another simplicity pressure) — the general circuit has smaller norm than the memorizing solution, so regularization slowly trades one for the other",
+                "A higher learning rate at the end"
+              ],
+              "answer": 2,
+              "explain": "During the long flat stretch, regularization is the force moving weights from the sprawling memorizer toward the compact general circuit; remove it and the snap-up usually never comes."
             }
           ],
           "flashcards": [

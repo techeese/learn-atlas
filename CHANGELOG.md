@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1157 — MCQ wave: mechanisms, not curve shapes (retention)
++2 MCQs each for the three newest lessons (6 → 8 each, 3093 total), targeting *mechanisms* their existing stems don't cover: **efficiency** = attaining the Cramér-Rao floor asymptotically, and **MoM Gamma mechanics** ($\bar x{=}4, s^2{=}2 \Rightarrow \hat\alpha{=}8, \hat\beta{=}0.5$, check shown) · conformal's one assumption — **exchangeability, broken by distribution shift** — and **recall-vs-precision by cost structure** (screening vs spam) · the second descent's mechanism — **minimum-norm implicit regularization** — and grokking's enabling ingredient — **weight decay trading the sprawling memorizer for the small-norm circuit**. Hand-verified, varied positions.
+Verified: guarded; byte-stable ×3; gate ALL GREEN — **3093 MCQs**; headless — quiz "of 8", kErr=0, errs=0. SW cache `atlas-v1087` → `atlas-v1088`.
+**OWNER STEER received this iteration:** spend ~100 iterations reviewing and refining existing content and visualizations → REVIEW & REFINE phase begins iter 1158 (plan in SKILL.md; ledger to be bootstrapped).
+
 ## iter 1156 — Worked examples: trusting a model — examples debt zeroed sitewide (content/retention)
 Cleared the **last** 0/3-examples parity flag. `ml-trustworthy-models` gets 2 worked examples, arithmetic Node-verified: *The accuracy trap, with numbers* — all-negative classifier scores **99.0%** accuracy with recall 0; a genuinely good classifier ($TP{=}8,FN{=}2,FP{=}2,TN{=}988$) scores 99.6% — the 0.6-point gap hides the entire difference, exposed only by precision/recall/F1 $=0.8$ · *Build a conformal interval by hand* — $n{=}9$ sorted residuals, $\alpha{=}0.2$: rank $\lceil 0.8\times10\rceil=8$ → $\hat q=1.0$, interval $\hat y\pm1.0$, with the rank-uniformity coverage argument and the price knob ($\alpha{=}0.1$ → $\pm1.5$).
 **Every lesson on the site now has ≥2 worked examples, ≥3 homework, ≥1 quiz pool, and flashcards** — the examples backfill arc (iters 1152/1155/1156) is complete.
