@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 50/193 lessons · 32/177 widgets**
+**Progress: 52/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -98,8 +98,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-recurrences-master-theorem — ✔ iter-1187 clean — outstanding lesson: h1's n·H_{log n}=Θ(n loglog n) harmonic recursion tree, h0's Case-3 regularity check (k=3/4), h2's substitution with non-growing constant, e0's triple-checked Θ(n^{log₂3}), e1's unequal-split squeeze all verified; every case assignment correct; no changes
 - [x] a-correctness-invariants — ✔ iter-1188 — q11 explain maligned its own answer ("the claim they are unrelated (choice 3)" with 3 the correct choice); de-indexed. q9's references verified correct. h1 (1023 copies, 1.02/append), Multipop potential h2, sum-of-squares induction e1 (14 at n=3), insertion-sort trace e0, binary-search invariant e2 all verified
 - [x] a-arrays-lists-stacks-queues — ✔ iter-1188 clean — address 2028/1012, ring-buffer wrap (4 elements, slots 6,7,0,1), growth-factor amortization g/(g−1) with the g→1⁺ blowup, deque index arithmetic, two-stacks trace (3 moves) all verified; no changes
-- [ ] a-hash-tables — pending
-- [ ] a-trees-heaps — pending
+- [x] a-hash-tables — ✔ iter-1189 clean — h0 probing trace (0-6 cluster), SUH indicator-variable proof h1, the hash-flooding DoS + universal-family defense h2 (superb), tombstone e1, sketches bundle (CMS/HLL/consistent-hashing) all verified; no changes
+- [x] a-trees-heaps — ✔ iter-1189 clean — BST-delete-via-successor h0 (60 replaces 50), min-heap insertion trace h1 ([3,4,6,7,5], hand-verified), two-heap median h2, AVL RR-case e0, heapsort e1, second-largest q9, heap-index q4 (11/12/2) all verified; no changes
 - [ ] a-comparison-sorts — pending
 - [ ] a-linear-sorts-selection — pending
 - [ ] a-binary-search — pending

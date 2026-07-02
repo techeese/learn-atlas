@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1189 — Review: a-hash-tables + a-trees-heaps — both clean (review)
+**`a-hash-tables`: clean** — h0's full linear-probing trace (the 0–6 primary cluster), h1's indicator-variable proof of $\Theta(1+\alpha)$, and h2 — a genuinely superb homework walking the hash-flooding DoS attack from precomputed collisions through the $\Theta(n^2)$ blowup to the universal-family/SipHash defense — all verified. The tombstone deletion example and the iter-1153 sketches bundle (count-min, HyperLogLog, consistent hashing) also check out.
+**`a-trees-heaps`: clean** — the BST delete-via-successor h0 (60 replaces 50, successor was a leaf), the min-heap insertion trace h1 (hand-re-verified to $[3,4,6,7,5]$), the two-heap streaming-median h2, the AVL RR-case rotation e0 (with the in-order-preservation check), the heapsort trace e1, and the subtle second-largest-in-a-heap q9 all verified.
+Zero defects this unit — the ledger update is the ship; no SW bump. **Progress: 52/193 lessons · 32/177 widgets.**
+
 ## iter 1188 — Review: a-correctness-invariants + a-arrays-lists-stacks-queues (review)
 **`a-correctness-invariants`** — q11's explain maligned its own correct answer ("the claim they are unrelated (choice 3)" — choice 3 IS the right induction-on-size answer; the unrelated-claim is a different option); de-indexed. The other audit flag (q9) verified *correct* — its references are consistent 0-based. Everything else verified: the exact 1023-copy count for 1000 appends, the Multipop potential-method proof, the sum-of-squares induction (factoring $2k^2{+}7k{+}6$), and both traces.
 **`a-arrays-lists-stacks-queues`: clean** — address computations (2028, 1012), the ring-buffer wraparound (4 elements in slots 6,7,0,1), h0's growth-factor amortization $\frac{g}{g-1}$ with the $g\to1^+$ blowup analysis, the deque's negative-modulo guard, and the two-stacks trace (exactly 3 transfer moves) all verified. No changes.
