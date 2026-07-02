@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 115/193 lessons · 53/177 widgets**
+**Progress: 135/193 lessons · 53/177 widgets**
 
 Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, errs=0 (validates the reorder/tiers/relocations/RL-fix window).
 
@@ -238,26 +238,26 @@ Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, e
 - [ ] rl-bc-compounding — pending
 
 ## llm — lessons
-- [ ] l-what-is-a-language-model — pending
-- [ ] l-tokenization-bpe — pending
-- [ ] l-embeddings-and-prediction-head — pending
-- [ ] l-self-attention — pending
-- [ ] l-multihead-and-causal-masking — pending
-- [ ] l-transformer-block — pending
-- [ ] l-positional-encoding — pending
-- [ ] l-mixture-of-experts — pending
-- [ ] l-pretraining-objective-data — pending
-- [ ] l-optimization-and-stability — pending
-- [ ] l-scaling-laws — pending
-- [ ] l-finetuning-and-instruction-tuning — pending
-- [ ] l-rlhf-and-preference-optimization — pending
-- [ ] l-peft-lora — pending
-- [ ] l-decoding-strategies — pending
-- [ ] l-prompting-and-in-context-learning — pending
-- [ ] l-inference-efficiency — pending
-- [ ] l-rag-and-tools — pending
-- [ ] l-hallucination-and-evaluation — pending
-- [ ] l-safety-and-frontier — pending
+- [x] l-what-is-a-language-model — ✔ iter-1221 — sweep-verified (40 recomputations, PPL traces exact); q0's explain called the correct chain-rule answer "the independent-product (option 0)" — prior flag CONFIRMED; now letters (choice B/C)
+- [x] l-tokenization-bpe — ✔ iter-1221 — sweep-verified (55 recomputations — every BPE pair tally re-counted); q12 explain maligned correct answer D ("A and D swap"→A and B, flag CONFIRMED); "unseen word newest" was a corpus word (→re-encoding); Round-4 merge contradicted the declared tie-break rule (rule reworded); q8/q11 ambiguous numeric refs → letters
+- [x] l-embeddings-and-prediction-head — ✔ iter-1221 — sweep-verified (59 recomputations, param counts + softmax traces exact); hw2 (shift-invariance proof) was fully worked by the same lesson's example; extended with fresh parts (c) scale-non-invariance counterexample = the temperature dial, (d) float64 overflow at e^709.8 + exact [0.731, 0.269]
+- [x] l-self-attention — ✔ iter-1221 clean — sweep-verified
+- [x] l-multihead-and-causal-masking — ✔ iter-1221 — sweep-verified (34 recomputations, KV 1.074 GB + 4 GiB cases); "each head shrinks by h²"→factor h (h² would contradict the example's own parameter-neutrality proof); per-family param-count sentence disambiguated; q8 distractor description now matches all three distractors
+- [x] l-transformer-block — ✔ iter-1221 — sweep-verified (31 recomputations; prior q0 flag false alarm); hw0 (d=512) was verbatim-worked by the FFN-vs-attention example → refreshed to d=1536 (18,874,368 / 9,437,184 = 2:1, re-verified); GPT-2 vocab 50256→50257; SwiGLU W₂ moved to typecheck under the lesson's column-vector convention
+- [x] l-positional-encoding — ✔ iter-1221 — sweep-verified (30 recomputations, RoPE rotation traces exact; prior q6/q7 flags false alarms); deep-dive bolded "permutation-invariant" contradicting the lesson body and mcq4 ("equivariance, not invariance") → equivariant
+- [x] l-mixture-of-experts — ✔ iter-1221 clean — sweep-verified (P1 rewrite for depth still queued in HOLISTIC.md)
+- [x] l-pretraining-objective-data — ✔ iter-1221 — sweep-verified (35 recomputations, Chinchilla algebra exact); hw0 used the identical probability multiset as the worked example (answers copyable) → fresh set 0.6/0.3/0.9/0.2 → 0.857 nats, PPL 2.36 (re-verified)
+- [x] l-optimization-and-stability — ✔ iter-1221 clean — sweep-verified
+- [x] l-scaling-laws — ✔ iter-1221 clean — sweep-verified (prior q0/q12 flags false alarms)
+- [x] l-finetuning-and-instruction-tuning — ✔ iter-1221 — sweep-verified (24 recomputations, masked-loss traces exact; prior q8 flag false alarm); q9 "(options 2 and 3)" labeled the correct answer wrong (→2 and 1); q10 "(option 0)" maligned the correct 60-token answer (→option 2) — both prior flags CONFIRMED
+- [x] l-rlhf-and-preference-optimization — ✔ iter-1221 — sweep-verified (37 recomputations, DPO/BT arithmetic exact); e1 retitled — promised per-token log-probs, provides sequence log-probs
+- [x] l-peft-lora — ✔ iter-1221 — sweep-verified (31 recomputations; prior q10 flag false alarm); e2's A/B shapes were swapped vs the lesson's ΔW=BA convention (would give r×r); QLoRA 65B "consumer GPU"→48 GB GPU (the paper's actual claim; body already said so)
+- [x] l-decoding-strategies — ✔ iter-1221 clean — sweep-verified
+- [x] l-prompting-and-in-context-learning — ✔ iter-1221 — sweep-verified (12 recomputations); the "typical failure" direct answer was actually CORRECT (2.20) — now fails realistically (3.80 = the anchoring error the prose describes) and the patch-parenthetical is gone
+- [x] l-inference-efficiency — ✔ iter-1221 — sweep-verified (32 recomputations, spec-decode E=3.3616 exact); "size in elements"→bytes (formula includes the bytes factor); "halving cache halves decode latency"→scoped to cache-dominant regimes (weights dominate in the example's own 7B case: 7ms vs 67μs); O(1)-per-token claim→O(1) new compute + linear cache sweep (matches the lesson's own §4)
+- [x] l-rag-and-tools — ✔ iter-1221 — sweep-verified (24 recomputations, cosine traces exact); e1's premise was INVERTED — the Statue of Liberty (1886) predates the Eiffel Tower (1889), yet the example asked/answered "how much older is the Eiffel Tower" — question + answer corrected; hw1's part-A was verbatim-worked by e0 (same q, A=2q) → A=(9,12)=3q (75/(5·15)=1.0, re-verified)
+- [x] l-hallucination-and-evaluation — ✔ iter-1221 — sweep-verified (18 recomputations, Bradley-Terry code output exact); flashcards 5/6 were near-duplicate judge-bias cards → merged (Goodhart point folded in), deck 8→7
+- [x] l-safety-and-frontier — ✔ iter-1221 clean — sweep-verified
 
 ## llm — widgets
 - [ ] llm-scaling — pending
