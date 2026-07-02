@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1108 — Code: the Gumbel-max trick, run live (examples)
+Second interactive ship of the block (completes the iter-1083/84 order-statistics thread) — a runnable exercise in `ps-sampling-distributions`: 30,000 draws of $\arg\max_i(\text{logit}_i+G_i)$ with Gumbel noise $G=-\ln(-\ln U)$ reproduce the softmax — **empirical [0.66, 0.24, 0.09] vs softmax [0.67, 0.24, 0.09]**. Sampling a category *is* taking a maximum order statistic; argmax done comparison-free via `indexOf(Math.max…)` (no-`<>` guard).
+Verified: re-derived in Node (deterministic LCG); byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 197)**; **headless** — Run executes, empirical-vs-softmax line shown, entities decoded, kErr=0, errs=0. SW cache `atlas-v1039` → `atlas-v1040`.
+
 ## iter 1107 — NEW LESSON: Auctions & Mechanism Design — first dive split (new functionality)
 Wildcard ship per the revised cadence: **split-watch fired** on `gt-foundations` (8 dives — the bloat ceiling). Promoted its three market-design dives (second-price auction, revenue equivalence, price of anarchy) into a **new lesson `gt-auctions-mechanism-design`** ("Auctions & Mechanism Design", 12 min, prereq gt-foundations, inserted between gt-foundations and gt-mixed-zero-sum). The dive bodies became numbered sections wrapped in a fresh inverse-game-theory intro + real-world close (spectrum/ad auctions, kidney exchange); authored **4 MCQs, 5 flashcards, 2 homework** (Vickrey dominance case-split; Pigou routing — eq cost 1, optimum 3/4, PoA **4/3**, hand-verified). `gt-foundations` slims to 5 dives (16→13 min) with a *Gone deeper* pointer link. **Lessons 188 → 189.**
 Verified: authored strings g()-guarded; byte-stable JSON re-serialize; **gate ALL GREEN — 189 lessons**, internal-links lint validates the pointer; **headless** — new lesson renders all three sections, quiz pool "of 4", gt-foundations shows 5 dives + pointer, **map re-derived to 888 nodes** (was 883), kErr=0, errs=0. SW cache `atlas-v1038` → `atlas-v1039`.
