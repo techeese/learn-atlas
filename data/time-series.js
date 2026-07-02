@@ -400,7 +400,7 @@
             {
               "q": "The Augmented Dickey–Fuller (ADF) test checks for:",
               "choices": [
-                "The number of MCQ",
+                "The seasonal period of the series",
                 "Seasonality only",
                 "A unit root (the signature of a non-stationary, random-walk-like series)",
                 "The forecast horizon"
@@ -1122,7 +1122,7 @@
               "explain": "Multiple time-respecting folds."
             },
             {
-              "q": "Reporting \"RMSE = 120\" alone is insufficient because RMSE is:",
+              "q": "Reporting \"RMSE = 38\" alone is insufficient because RMSE is:",
               "choices": [
                 "Unit-free",
                 "Always between 0 and 1",

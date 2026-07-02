@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 163/193 lessons · 53/177 widgets**
+**Progress: 193/193 lessons · 53/177 widgets — ALL LESSONS VERIFIED**
 
 Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, errs=0 (validates the reorder/tiers/relocations/RL-fix window).
 
@@ -336,18 +336,18 @@ Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, e
 - [ ] ps-shrinkage — pending
 
 ## machine-learning — lessons
-- [ ] ml-knn — pending
-- [ ] ml-decision-trees — pending
-- [ ] ml-linear-regression — pending
-- [ ] ml-logistic-regression — pending
-- [ ] ml-regularization — pending
-- [ ] ml-svm — pending
-- [ ] ml-naive-bayes — pending
-- [ ] ml-kmeans — pending
-- [ ] ml-dimensionality-reduction — pending
-- [ ] ml-ensembles — pending
-- [ ] ml-model-selection — pending
-- [ ] ml-trustworthy-models — pending
+- [x] ml-knn — ✔ iter-1223 — sweep-verified (30 recomputations); e1's standardization-flip claim was FALSE for the shown data (agent tested four scalings, R stays nearest Q in all); solution now anchors to dataset-level spreads (0.12 vs 1.9, re-verified)
+- [x] ml-decision-trees — ✔ iter-1223 — sweep-verified (29 recomputations); hw2's 6/2-node Gini was worked THREE times in-lesson before the homework → fresh 5/3 node (0.4688)
+- [x] ml-linear-regression — ✔ iter-1223 clean — sweep-verified
+- [x] ml-logistic-regression — ✔ iter-1223 clean — sweep-verified
+- [x] ml-regularization — ✔ iter-1223 clean — sweep-verified
+- [x] ml-svm — ✔ iter-1223 clean — sweep-verified
+- [x] ml-naive-bayes — ✔ iter-1223 — sweep-verified (24 recomputations, Viterbi output exact); the blockchain zero-probability homework was answered nearly verbatim by the Laplace example → fresh crypto instance (1/29≈0.034)
+- [x] ml-kmeans — ✔ iter-1223 — sweep-verified (26 recomputations); the lesson carried TWO near-identical GMM deep-dives (a deepening-pass artifact) → merged into one with the Lloyd's-is-EM aha preserved
+- [x] ml-dimensionality-reduction — ✔ iter-1223 — sweep-verified (9 recomputations); Σ did double duty as covariance AND SVD singular-value matrix in one paragraph (literally X=U·covariance·Vᵀ) → covariance renamed C (P1 depth rewrite still queued)
+- [x] ml-ensembles — ✔ iter-1223 — sweep-verified (14 recomputations, AdaBoost α=0.42 exact); q12's explain used "Stacking" for sequential boosting while the lesson defines stacking as a distinct technique → "Chaining"
+- [x] ml-model-selection — ✔ iter-1223 — sweep-verified (16 recomputations, F1 traces exact); q10's truncated "how many are." completed
+- [x] ml-trustworthy-models — ✔ iter-1223 clean — sweep-verified (P1 rebuild still queued)
 
 ## machine-learning — widgets
 - [ ] ml-kmeans-viz — pending
@@ -371,13 +371,13 @@ Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, e
 - [ ] ml-kde — pending
 
 ## information-theory — lessons
-- [ ] it-entropy — pending
-- [ ] it-differential-entropy — pending
-- [ ] it-cross-entropy-kl — pending
-- [ ] it-mutual-information — pending
-- [ ] it-source-coding — pending
-- [ ] it-channel-capacity — pending
-- [ ] it-information-in-ml — pending
+- [x] it-entropy — ✔ iter-1223 — sweep-verified (15 recomputations); hw0's [0.5,0.25,0.25] entropy was displayed twice in-lesson → fresh 4-outcome instance (1.75 bits)
+- [x] it-differential-entropy — ✔ iter-1223 — sweep-verified (14 recomputations, VAE KL verified against numeric integral); two forward references written as BACK-references ("the capstone quoted…", "you computed earlier") — lesson 2 pointing at the final lesson → reworded as forward refs (P1 reorder still queued)
+- [x] it-cross-entropy-kl — ✔ iter-1223 clean — sweep-verified
+- [x] it-mutual-information — ✔ iter-1223 — sweep-verified (14 recomputations, Kelly f*=0.20 exact); "the converse holds only loosely" — independence⇒ρ=0 holds EXACTLY → fixed
+- [x] it-source-coding — ✔ iter-1223 clean — sweep-verified
+- [x] it-channel-capacity — ✔ iter-1223 — sweep-verified (16 recomputations); hw0's p=0.2 BSC capacity was verbatim-worked by mcq9 → mcq9 moved to p=0.3 (C=0.12, re-verified H(0.3)=0.8813)
+- [x] it-information-in-ml — ✔ iter-1223 — sweep-verified (18 recomputations); "every extra bit halves the distortion, the familiar 6 dB" — it's ÷4 (that IS 6.02 dB; halving would be 3 dB) → fixed; garbled "Halve nothing else" → "Change nothing else" (P1 synthesis rewrite still queued)
 
 ## information-theory — widgets
 - [ ] it-entropy-viz — pending
@@ -389,12 +389,12 @@ Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, e
 - [ ] it-max-entropy — pending
 
 ## time-series — lessons
-- [ ] ts-what-is-a-time-series — pending
-- [ ] ts-stationarity — pending
-- [ ] ts-exponential-smoothing — pending
-- [ ] ts-arima — pending
-- [ ] ts-forecast-evaluation — pending
-- [ ] ts-deep-forecasting — pending
+- [x] ts-what-is-a-time-series — ✔ iter-1223 clean — sweep-verified
+- [x] ts-stationarity — ✔ iter-1223 — sweep-verified (12 recomputations); ADF question carried the garbled placeholder distractor "The number of MCQ" → domain-plausible distractor
+- [x] ts-exponential-smoothing — ✔ iter-1223 clean — sweep-verified
+- [x] ts-arima — ✔ iter-1223 clean — sweep-verified
+- [x] ts-forecast-evaluation — ✔ iter-1223 — sweep-verified (9 recomputations); mcq6 used the identical RMSE=120 instance as hw2 (spoiler) → RMSE=38 (P1 depth work still queued)
+- [x] ts-deep-forecasting — ✔ iter-1223 clean — sweep-verified (missing-widget item still queued)
 
 ## time-series — widgets
 - [ ] ts-decomposition — pending
@@ -409,11 +409,11 @@ Step-back iter-1220: full sweep CLEAN — 193 lessons kErr=0, visN=0, map=905, e
 - [ ] ts-cusum — pending
 
 ## game-theory — lessons
-- [ ] gt-foundations — pending
-- [ ] gt-auctions-mechanism-design — pending
-- [ ] gt-mixed-zero-sum — pending
-- [ ] gt-repeated-cooperation — pending
-- [ ] gt-cooperative-games — pending
+- [x] gt-foundations — ✔ iter-1223 clean — sweep-verified
+- [x] gt-auctions-mechanism-design — ✔ iter-1223 clean — sweep-verified (P1 rewrite + MCQ parity still queued)
+- [x] gt-mixed-zero-sum — ✔ iter-1223 — sweep-verified (12 recomputations, p=1/3 exact both ways); q16 conflated minimax-Q (Littman 1994) with Shapley's 1953 algorithm → attribution untangled
+- [x] gt-repeated-cooperation — ✔ iter-1223 clean — sweep-verified
+- [x] gt-cooperative-games — ✔ iter-1223 — sweep-verified (32 recomputations, all Shapley/core/DA traces exact); §1 restated the intro's framing verbatim → deduped; "(previous dive)" artifact → "(previous section)" (MCQ parity still queued)
 
 ## game-theory — widgets
 - [ ] gt-nash-2x2 — pending

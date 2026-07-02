@@ -2,6 +2,16 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1223 — ★★ ALL 193 LESSONS VERIFIED — final sweep (ML+IT+TS+GT): 16 agents, 489 recomputations, 23 edits (holistic-phase / review-sweep)
+**The lesson-verification backlog is CLEARED.** The final 30 lessons across four topics verified in one sweep (16 paired agents · 489 recomputations · zero failures); 14 fully clean, 23 adjudicated edits across 16. Standouts:
+- **A false pedagogical claim** (ml-knn): the feature-scaling example asserted that standardizing flips R's nearest neighbor from Q to P — false under every reasonable scaling of the shown two-point data (agent tested four; R stays nearest Q in all). The solution now anchors to dataset-level spreads where the flip genuinely happens (0.12 vs 1.9).
+- **A units error in rate–distortion** (it-information-in-ml): "every extra bit *halves* the distortion, the familiar 6 dB per bit" — one bit cuts $D$ by 4× (that IS 6.02 dB; halving would be 3 dB).
+- **Four same-lesson spoilers repaired with fresh instances** (decision-trees' thrice-worked 6/2 Gini node → 5/3; naive-bayes' blockchain zero-probability → crypto 1/29; it-entropy's twice-displayed 1.5 bits → 4-outcome 1.75; channel-capacity's MCQ moved to p=0.3 so the homework stays fresh; forecast-evaluation's RMSE=120 MCQ → 38).
+- **Structural artifacts**: ml-kmeans carried two near-identical GMM deep-dives (deepening-pass artifact) — merged; Σ served as covariance AND singular-value matrix in one ml-dimensionality-reduction paragraph (literally $X=U\cdot\text{cov}\cdot V^\top$) — covariance renamed $C$; it-differential-entropy's dives referenced the capstone in past tense ("you computed earlier") from lesson 2 — reworded as forward refs; a garbled ADF distractor ("The number of MCQ"); the minimax-Q/Shapley-1953 attribution untangled.
+Guard note: gt content's benign `&#39;` entities tripped the injector's strict entity allowlist — allowlist extended to numeric entities (gate has always accepted them).
+Verified: all anchors matched pre-edit; guarded; byte-stable ×4 files; gate ALL GREEN; headless kErr=0/errs=0 with the merged dive + corrected claims rendering. SW `atlas-v1123` → `atlas-v1124`.
+**Progress: 193/193 lessons · 53/177 widgets. Every lesson on the site has now been verified — cumulative: ~6,300 recomputations across 11 topics, 99 sweep-agent findings adjudicated, ~120 fixes, 22 prior-audit flags resolved (7 confirmed, 15 false alarms).**
+
 ## iter 1222 — ★ Probability & Statistics verified end-to-end: 14-agent sweep, 847 recomputations, 24 adjudicated edits (holistic-phase / review-sweep)
 **All 28 PS lessons — the site's largest topic — verified in one sweep** (14 paired agents · 847 recomputations · zero failures). **13 lessons fully clean**; 24 edits across 15. Standouts:
 - **Three statistical-setup errors**: the Bayes hook called a 95%-specificity test "99% accurate" (contradicting the lesson's own definition and its q6, where a truly 99%-accurate test gives P(D|+)=0.5, not 17%); a p-values A/B example claimed $p=0.001$ where its own numbers give $z=1.80,\ p=0.072$ (→ n=10M/arm, making the claim true); a causal-estimation CI required double the stated sample size (learner recomputing would reach the *opposite* significance conclusion → n=40,000/arm).
