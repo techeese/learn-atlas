@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1135 — Code: seasonal decomposition, recovered exactly (examples)
+Second interactive of the block, completing the iter-1126 STL thread — a runnable in `ts-exponential-smoothing`: plant a quarterly seasonal $[5,-2,-4,1]$ on a linear trend, then recover it by classical decomposition (centered MA-4 → detrend → average by quarter) → **recovered [5.00, −2.00, −4.00, 1.00] exactly** (centered MA nulls a linear trend and zero-mean seasonal precisely; real noisy data gives estimates, which STL's loess makes robust/evolvable). **Self-caught:** `->` arrows in a comment tripped the no-`<>` guard before writing — rephrased.
+Verified: re-derived in Node (exact recovery); byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 201)**; **headless** — Run executes, exact recovery shown, kErr=0, errs=0. SW cache `atlas-v1066` → `atlas-v1067`.
+
 ## iter 1134 — Retention wave 4: second-angle MCQs for the newest bundles (retention)
 The five newest bundled concepts each had exactly one MCQ — added a **second, different-angle question** each: the **Laurent expansion** $V_\gamma\approx\rho/(1-\gamma)+h$ (avg-reward), the **Rényi ordering** $H_\infty\le H_2\le H_1\le H_0$, **LLMLingua surprisal pruning**, Frank-Wolfe's **$t{+}1$-atom sparsity**, and the **eigengap heuristic** (spectral). All hand-verified, varied positions. These feed straight into the new adaptive test sampler.
 Verified: math-guarded; 5 byte-stable re-serializations; **gate ALL GREEN — 3069 MCQs**; **headless** — quiz "of 18" with the Laurent choices typeset, kErr=0, errs=0. SW cache `atlas-v1065` → `atlas-v1066`.
