@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 23/193 lessons · 11/177 widgets**
+**Progress: 25/193 lessons · 11/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -46,8 +46,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] c-limits-intuition — ✔ iter-1169 clean — piecewise worked example (3 vs g(2)=7), δ=ε/2 and δ=ε/3 proofs, conjugate h0=1/4, (1+1/n)^n code table, squeeze e2 all verified; no changes
 - [x] c-computing-limits — ✔ iter-1171 — q5 explain had its option numbering shifted by one (called the correct answer "option 0" and mislabeled the rest — the 4th and worst index-disease case, actively misleading); rewritten content-first; all limits/hw/examples verified (worked 6, 1/4, 2; h1=1/2; q9=3; q11=−2)
 - [x] c-continuity — ✔ iter-1171 clean — three-part continuity contract, IVT examples (Dottie number h1, bisection e1 with g(1.5)=−0.125), jump classifications (h2, e2), q9 Darboux counterexample all verified; no changes
-- [ ] c-derivative-definition — pending
-- [ ] c-differentiation-rules — pending
+- [x] c-derivative-definition — ✔ iter-1173 — e2 duplicated the content's |x| corner analysis (4th appearance incl. q2 + card); replaced with the x^{1/3} vertical-tangent mode (sides agree on +∞ — a different failure), Node-verified; worked example, code, h0-h2, all 16 MCQs verified
+- [x] c-differentiation-rules — ✔ iter-1173 — e2 used x²sin x, forward-referencing cos (taught 2 lessons later) AND duplicating that lesson's q8; replaced with √x(x²−4) differentiated two ways (product rule vs expand-first, agreeing at (5x²−4)/(2√x), spot-checked at x=4→19); h1 re-expanded, all MCQs verified
 - [ ] c-chain-rule — pending
 - [ ] c-derivatives-special-functions — pending
 - [ ] c-implicit-related-rates — pending
