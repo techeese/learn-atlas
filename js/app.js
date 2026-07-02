@@ -1582,6 +1582,21 @@
   }
 
   // ---------- custom test / exam spawner ----------
+  // Adaptive selection: mastery-weighted sampling without replacement. Weak or fading
+  // lessons (low effectiveMastery) are drawn up to 5x more often; fully mastered material
+  // keeps a floor weight of 0.2 so nothing is ever retired from rotation.
+  function weightedTestPick(pool, len) {
+    const items = pool.map(q => ({ q, w: 1 - 0.8 * Store.effectiveMastery(q.lessonId) }));
+    const out = [];
+    while (out.length < len && items.length) {
+      let tot = 0; for (const it of items) tot += it.w;
+      let r = Math.random() * tot, idx = 0;
+      for (; idx < items.length - 1; idx++) { r -= items[idx].w; if (r <= 0) break; }
+      out.push(items[idx].q); items.splice(idx, 1);
+    }
+    return out;
+  }
+
   function viewTest() {
     const courses = C();
     const completed = courses.flatMap(c => c.modules.flatMap(m => m.lessons)).filter(l => Store.isLessonDone(l.id));
@@ -1589,7 +1604,7 @@
     <div class="view">
       <div class="crumbs"><a href="#/" data-route>Codex</a> &nbsp;›&nbsp; Test</div>
       <div class="page-head reveal"><div class="eyebrow">Question bank · ${allQuestions().length} questions</div><h2>Spawn a <em>Test</em></h2>
-      <p>Build a fresh test on demand. Choose the scope and length — by default it draws <strong>only from what you've already learned</strong>, so you're never tested on what you haven't seen.</p></div>
+      <p>Build a fresh test on demand. Choose the scope and length — by default it draws <strong>only from what you've already learned</strong>, so you're never tested on what you haven't seen — and it leans toward lessons your mastery says are weak or fading, while mastered material still rotates through.</p></div>
       ${(() => { const n = Store.missedCount(); return n ? `<div class="miss-cta reveal" data-go="#/mistakes">
         <div class="miss-ico">🎯</div>
         <div class="miss-body"><h3>Redeem your mistakes</h3><p><b>${n}</b> question${n === 1 ? "" : "s"} you've gotten wrong ${n === 1 ? "is" : "are"} waiting. Drill them in mastery mode until every one sticks.</p></div>
@@ -1646,7 +1661,7 @@
     startBtn.addEventListener("click", () => {
       const { pool, label } = scopedPool(scopeSel.value), len = parseInt(lenSel.value, 10);
       if (pool.length < 3) { warn.textContent = "Not enough questions in that scope yet — complete a few more lessons, or widen the scope."; return; }
-      const picked = shuffle(pool).slice(0, Math.min(len, pool.length));
+      const picked = shuffle(weightedTestPick(pool, Math.min(len, pool.length)));
       if (document.getElementById("t-mastery").checked) runMasteryDrill(picked, label);
       else runTest(picked, label);
     });

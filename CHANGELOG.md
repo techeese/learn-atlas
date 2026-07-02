@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1133 — Adaptive test selection: mastery-weighted question sampling (new functionality)
+Wildcard from the backlog ("per-concept difficulty + adaptive selection"): Spawn-a-Test previously drew questions **uniformly** within scope. Now it samples **without replacement, weighted by $1-0.8\cdot$`effectiveMastery(lesson)`** — weak or *fading* lessons (mastery decays with a half-life) are drawn up to 5× more often, while fully mastered material keeps a 0.2 floor weight so nothing is ever retired from rotation. Works inside every scope (completed / weak / per-topic / all); the page copy now says so. No new state fields.
+Verified: **algorithm unit-tested in Node first** (10 lessons half-mastered: weak share 0.765 ≈ theory 0.78, mastered still appear); app.js parses; gate ALL GREEN; **headless end-to-end** — test page shows the new copy, scope→Start spawns, question + choices render, kErr=0, errs=0. SW cache `atlas-v1064` → `atlas-v1065`.
+
 ## iter 1132 — NEW viz: spectral clustering vs k-means (visualizations)
 First interactive of the block, completing iter-1131 — the **176th widget, `ml-spectral`** in `ml-kmeans`: two concentric rings, toggle the method. **K-means slices straight through both rings (50% agreement)**; **spectral** builds the kNN graph (drawn faintly), power-iterates the normalized Laplacian's **Fiedler direction** (deflated against $D^{1/2}\mathbf{1}$), and colors by sign — **100% agreement**, connectivity beating proximity before your eyes. Reseed button.
 **Self-caught ×2 in Node before shipping:** (1) random ring angles left gaps → 19 cross-ring kNN edges → spectral failed (fixed: even angles + jitter, 0 cross edges); (2) 300 power iterations ≪ the ring graph's tiny spectral gap → unconverged Fiedler (fixed: symmetric-normalized $A$, deflation, 1500 iters). Final: purity 0.50 vs **1.00 across seeds**.
