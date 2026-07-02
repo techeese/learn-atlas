@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1124 — NEW viz: conformal prediction, live (visualizations)
+Second interactive of the block, giving the new Trusting-a-Model lesson its widget — the **175th, `ml-conformal`**: a deliberately imperfect cubic fit wrapped in a **conformal band** whose half-width is the ⌈(1−α)(n+1)⌉-th smallest calibration residual. Drag **α**: the band tightens/relaxes and the fraction of 300 fresh test points caught inside (misses in rust) **tracks the promised 1−α** — a distribution-free guarantee you can watch holding. Resample button.
+Verified: machinery re-derived in Node (coverage 0.917/0.813/0.683 at α=0.1/0.2/0.3); gate ALL GREEN (now **175 widgets**); **headless slider drive** — coverage **91.7% @ α=0.1** and **68.3% @ α=0.3**, band half-width shrinks with α, errs=0; screenshot READ shows band + rust misses (~8% at α=0.1). SW cache `atlas-v1055` → `atlas-v1056`.
+
 ## iter 1123 — Retention: flashcard backfill for the newest bundles (retention)
 The five newest bundled concepts had MCQs but no **flashcards** — the unit the spaced-repetition deck actually drills. Added **+2 cards each** (10 total): gain-vs-bias & Blackwell optimality (avg-reward RL), the Rényi family & why crypto uses min-entropy, the three compression levels & gist tokens, the Frank-Wolfe step & cheap LMOs, Stein's lemma & SURE. Decks 6 → 8 (ps-normal → 9).
 Verified: math-guarded; 5 byte-stable re-serializations; **gate ALL GREEN — 1159 flashcards**; **headless** — cards tab renders the grown deck ("/ 8"), kErr=0, errs=0. SW cache `atlas-v1054` → `atlas-v1055`.

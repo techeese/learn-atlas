@@ -9138,4 +9138,72 @@
     build(); draw();
   });
 
+
+  /* ========================================================
+     175. Conformal prediction band: drag alpha, coverage obeys (machine learning)
+     ======================================================== */
+  register({ id: 'ml-conformal', topic: 'machine-learning', title: 'Conformal prediction, live', blurb: 'A deliberately imperfect cubic fit (violet) wrapped in a conformal band (sage): the band half-width is the ⌈(1−α)(n+1)⌉-th smallest calibration residual — nothing about the model or the noise is assumed. Drag α: the band tightens or relaxes and the fraction of 300 fresh test points caught inside (misses in rust) tracks the promised 1−α. A guarantee you can watch holding.' },
+  function (root) {
+    const W = 500, H = 360;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let seed = 17, alpha = 0.1;
+    let w, calX, calY, res, teX, teY;
+    const f = x => Math.sin(2 * x) + 0.4 * x;
+    function mk(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    function solve(A, b) { const m = A.length; A = A.map((r, i) => r.slice().concat([b[i]]));
+      for (let col = 0; col < m; col++) { let piv = col;
+        for (let r2 = col + 1; r2 < m; r2++) if (Math.abs(A[r2][col]) > Math.abs(A[piv][col])) piv = r2;
+        const t = A[col]; A[col] = A[piv]; A[piv] = t;
+        for (let r2 = col + 1; r2 < m; r2++) { const k = A[r2][col] / A[col][col]; for (let cc = col; cc <= m; cc++) A[r2][cc] -= k * A[col][cc]; } }
+      const sol = new Array(m);
+      for (let r2 = m - 1; r2 >= 0; r2--) { let s2 = A[r2][m]; for (let cc = r2 + 1; cc < m; cc++) s2 -= A[r2][cc] * sol[cc]; sol[r2] = s2 / A[r2][r2]; }
+      return sol; }
+    function feats(x) { return [1, x, x * x, x * x * x]; }
+    function yhat(x) { const p = feats(x); let s = 0; for (let k = 0; k < 4; k++) s += p[k] * w[k]; return s; }
+    function build() {
+      const r = mk(seed); const gauss = () => r() + r() + r() + r() - 2;
+      const samp = n => { const xs = [], ys = []; for (let i = 0; i < n; i++) { const x = -2 + 4 * r(); xs.push(x); ys.push(f(x) + 0.3 * gauss()); } return [xs, ys]; };
+      const [tx, ty] = samp(30);
+      const G = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], g = [0,0,0,0];
+      tx.forEach((x, i) => { const p = feats(x); for (let a = 0; a < 4; a++) { g[a] += p[a] * ty[i]; for (let b2 = 0; b2 < 4; b2++) G[a][b2] += p[a] * p[b2]; } });
+      w = solve(G, g);
+      [calX, calY] = samp(40);
+      res = calX.map((x, i) => Math.abs(calY[i] - yhat(x))).sort((a, b) => a - b);
+      [teX, teY] = samp(300);
+    }
+    function qFor(al) { const k = Math.ceil((1 - al) * (res.length + 1)); return res[Math.min(k, res.length) - 1]; }
+    function draw() {
+      const pal = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, W, H);
+      const X = x => 18 + (x + 2) / 4 * (W - 32), Y = v => H / 2 - 22 - v * 52;
+      const q = qFor(alpha);
+      // band
+      ctx.fillStyle = pal.sage; ctx.globalAlpha = 0.16; ctx.beginPath();
+      for (let i = 0; i <= 120; i++) { const x = -2 + 4 * i / 120; const px = X(x), py = Y(yhat(x) + q); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+      for (let i = 120; i >= 0; i--) { const x = -2 + 4 * i / 120; ctx.lineTo(X(x), Y(yhat(x) - q)); }
+      ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
+      // fit
+      ctx.strokeStyle = pal.violet; ctx.lineWidth = 2; ctx.beginPath();
+      for (let i = 0; i <= 120; i++) { const x = -2 + 4 * i / 120, px = X(x), py = Y(yhat(x)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.lineWidth = 1;
+      // test points: inside mute, outside rust
+      let cov = 0;
+      for (let i = 0; i < teX.length; i++) { const inside = Math.abs(teY[i] - yhat(teX[i])) <= q; if (inside) cov++;
+        ctx.fillStyle = inside ? pal.mute : (pal.rust || pal.rose); ctx.globalAlpha = inside ? 0.4 : 0.95;
+        ctx.beginPath(); ctx.arc(X(teX[i]), Y(teY[i]), inside ? 1.8 : 2.6, 0, 2 * Math.PI); ctx.fill(); }
+      ctx.globalAlpha = 1;
+      // calibration points
+      ctx.fillStyle = pal.gold; calX.forEach((x, i) => { ctx.beginPath(); ctx.arc(X(x), Y(calY[i]), 2.6, 0, 2 * Math.PI); ctx.fill(); });
+      const emp = cov / teX.length;
+      ctx.fillStyle = pal.mute; ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      ctx.fillText('gold = calibration · grey = test inside band · rust = misses', W / 2, H - 8);
+      info.innerHTML = 'α = <b>' + alpha.toFixed(2) + '</b> → band half-width q = <b style="color:' + pal.sage + '">' + q.toFixed(2) + '</b> (the ⌈(1−α)·41⌉-th smallest calibration residual) · empirical coverage <b>' + (100 * emp).toFixed(1) + '%</b> vs promised <b>' + (100 * (1 - alpha)).toFixed(0) + '%</b> — no model or noise assumptions used.';
+    }
+    slider(ctl, { label: 'miscoverage α', min: 0.02, max: 0.4, step: 0.01, value: alpha, fmt: v => v.toFixed(2), onInput: v => { alpha = v; draw(); } });
+    button(controls(root), '🎲 Resample', () => { seed = (seed * 16807 + 9) & 0x7fffffff; build(); draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Conformal prediction band. A violet cubic fit through scattered points, wrapped in a translucent sage band whose half-width is a calibration-residual quantile. Three hundred faint test points lie mostly inside the band; the few outside are highlighted in rust. A slider changes the miscoverage level alpha, tightening or widening the band, and the caption reports empirical coverage tracking the promised one-minus-alpha; a resample button redraws all data.');
+    build(); draw();
+  });
+
 })();
