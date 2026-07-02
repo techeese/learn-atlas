@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1121 — NEW viz: double descent, computed live (visualizations)
+Opened block 1121–1130 with the site's most ambitious widget — the **174th, `dl-double-descent`** in the new Four Mysteries lesson: **real double descent computed in-browser**. 20 noisy points; least-squares Chebyshev fits (primal OLS below $n$, **min-norm dual** above); drag capacity $p$ and watch the fit go smooth → berserk at the interpolation threshold → smooth again, while the log-scale test-error curve climbs a **million-fold mountain at $p=n=20$** and descends on both sides (train error → 0). Regime captions; reseed. Getting the spike required the right estimator — ridge/kernel smoothing hides it (two flat attempts), primal-OLS-then-min-norm reveals it.
+Verified: phenomenon reproduced in Node first (0.03 → ~10⁷ → 0.5 across seeds); gate ALL GREEN (now **174 widgets**); **headless slider drive** — test MSE 7e-2 (p=6) → **5e+6** (p=20) → 5e-1 (p=70), regime labels fire, errs=0; screenshot READ shows the wild interpolant + the mountain peaking exactly at the dashed threshold. SW cache `atlas-v1052` → `atlas-v1053`.
+
 ## iter 1120 — Step-back (clean at 191/897) + retention top-up for the split lessons (step-back / retention)
 Step-back **kErr + visible-newline sweep at the new baselines**: **n=191 lessons**, errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, **mapNodes=897** — all three split lessons healthy sitewide; zero regressions since iter 1110. (Also verified the four mysteries already have glossary terms — no gap.)
 **Ship:** the three new split lessons had 4 MCQs vs 16+ elsewhere — topped each up **+2** (→ 6): Pigou **PoA = 4/3**, Vickrey over-bidding wins only losses; glove-game **4-of-6 orderings**, Shapley efficiency axiom; double-descent **peak at the interpolation threshold**, finite nets beat NTK via **feature learning**. All hand-verified.

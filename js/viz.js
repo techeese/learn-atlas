@@ -9056,4 +9056,86 @@
     reset(); draw();
   });
 
+
+  /* ========================================================
+     174. Double descent, computed live: min-norm polynomial regression (deep learning)
+     ======================================================== */
+  register({ id: 'dl-double-descent', topic: 'deep-learning', title: 'Double descent, live', blurb: 'Real double descent computed in your browser: 20 noisy points, least-squares polynomial fits (min-norm past the interpolation threshold). Drag capacity p: at small p the fit underfits, at p ≈ 20 it must thread every noisy point and goes berserk — test error explodes by a factor of a million — and past the threshold the minimum-norm solution calms down and test error descends AGAIN. The bottom curve is the whole story on a log scale.' },
+  function (root) {
+    const W = 500, H = 430, N = 20, PMAX = 70;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let seed = 9, p = 6;
+    let xs, ys, fits, errs, trains;
+    const f = x => Math.sin(3 * x);
+    function mk(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+    function cheb(x, k) { const v = [1]; if (k > 1) v.push(x); for (let i = 2; i < k; i++) v.push(2 * x * v[i - 1] - v[i - 2]); return v.slice(0, k); }
+    function solve(A, b) { const m = A.length; A = A.map((r, i) => r.slice().concat([b[i]]));
+      for (let col = 0; col < m; col++) { let piv = col;
+        for (let r2 = col + 1; r2 < m; r2++) if (Math.abs(A[r2][col]) > Math.abs(A[piv][col])) piv = r2;
+        const t = A[col]; A[col] = A[piv]; A[piv] = t;
+        for (let r2 = col + 1; r2 < m; r2++) { const k = A[r2][col] / A[col][col]; for (let cc = col; cc <= m; cc++) A[r2][cc] -= k * A[col][cc]; } }
+      const sol = new Array(m);
+      for (let r2 = m - 1; r2 >= 0; r2--) { let s2 = A[r2][m]; for (let cc = r2 + 1; cc < m; cc++) s2 -= A[r2][cc] * sol[cc]; sol[r2] = s2 / A[r2][r2]; }
+      return sol; }
+    function fitP(k) {
+      const Phi = xs.map(x => cheb(x, k));
+      if (k <= N) {
+        const G = [], g = [];
+        for (let a = 0; a < k; a++) { G.push([]); let s2 = 0; for (let i = 0; i < N; i++) s2 += Phi[i][a] * ys[i]; g.push(s2);
+          for (let b = 0; b < k; b++) { let s3 = 0; for (let i = 0; i < N; i++) s3 += Phi[i][a] * Phi[i][b]; G[a].push(s3 + (a === b ? 1e-10 : 0)); } }
+        const w = solve(G, g);
+        return x => { const px = cheb(x, k); let s2 = 0; for (let j = 0; j < k; j++) s2 += px[j] * w[j]; return s2; };
+      }
+      const K = [];
+      for (let i = 0; i < N; i++) { K.push([]); for (let j = 0; j < N; j++) { let s2 = 0; for (let m2 = 0; m2 < k; m2++) s2 += Phi[i][m2] * Phi[j][m2]; K[i].push(s2 + (i === j ? 1e-10 : 0)); } }
+      const cc = solve(K, ys);
+      return x => { const px = cheb(x, k); let s2 = 0; for (let i = 0; i < N; i++) { let dot = 0; for (let m2 = 0; m2 < k; m2++) dot += px[m2] * Phi[i][m2]; s2 += dot * cc[i]; } return s2; };
+    }
+    function build() {
+      const r = mk(seed); const gauss = () => r() + r() + r() + r() - 2;
+      xs = []; for (let i = 0; i < N; i++) xs.push(2 * r() - 1); xs.sort((a, b) => a - b);
+      ys = xs.map(x => f(x) + 0.3 * gauss());
+      fits = []; errs = []; trains = [];
+      for (let k = 1; k <= PMAX; k++) {
+        const g = fitP(k); fits[k] = g;
+        let te = 0; for (let i = 0; i < 160; i++) { const x = -0.95 + 1.9 * i / 159; const d = g(x) - f(x); te += d * d; } errs[k] = te / 160;
+        let tr = 0; for (let i = 0; i < N; i++) { const d = g(xs[i]) - ys[i]; tr += d * d; } trains[k] = tr / N;
+      }
+    }
+    function draw() {
+      const pal = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, W, H);
+      const topY = 10, topH = 195, botY = topH + 46, botH = H - botY - 34;
+      const TX = x => 30 + (x + 1) / 2 * (W - 44), TY = v => topY + topH / 2 - v * (topH / 6.2);
+      // top: true fn, fit, data
+      ctx.strokeStyle = pal.line; ctx.setLineDash([4, 3]); ctx.beginPath();
+      for (let i = 0; i <= 160; i++) { const x = -1 + 2 * i / 160, px = TX(x), py = TY(f(x)); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.setLineDash([]);
+      ctx.strokeStyle = pal.violet; ctx.lineWidth = 2; ctx.beginPath(); let started = false;
+      for (let i = 0; i <= 320; i++) { const x = -1 + 2 * i / 320; let v = fits[p](x); if (!isFinite(v)) continue; v = Math.max(-3.05, Math.min(3.05, v));
+        const px = TX(x), py = TY(v); started ? ctx.lineTo(px, py) : ctx.moveTo(px, py); started = true; } ctx.stroke(); ctx.lineWidth = 1;
+      ctx.fillStyle = pal.gold; xs.forEach((x, i) => { ctx.beginPath(); ctx.arc(TX(x), TY(Math.max(-3.05, Math.min(3.05, ys[i]))), 3.4, 0, 2 * Math.PI); ctx.fill(); });
+      // bottom: log10 test + train curves
+      const L = v => Math.log10(Math.max(v, 1e-4)), lmin = -4, lmax = 8;
+      const BX = k => 30 + (k - 1) / (PMAX - 1) * (W - 44), BY = lv => botY + botH - (lv - lmin) / (lmax - lmin) * botH;
+      ctx.strokeStyle = pal.line; [ -4, 0, 4, 8 ].forEach(lv => { ctx.beginPath(); ctx.moveTo(30, BY(lv)); ctx.lineTo(W - 14, BY(lv)); ctx.stroke(); });
+      ctx.fillStyle = pal.mute; ctx.font = '10px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'right';
+      [ -4, 0, 4, 8 ].forEach(lv => ctx.fillText('1e' + lv, 27, BY(lv) + 3));
+      // interpolation threshold
+      ctx.strokeStyle = pal.gold; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(BX(N), botY); ctx.lineTo(BX(N), botY + botH); ctx.stroke(); ctx.setLineDash([]);
+      ctx.textAlign = 'center'; ctx.fillStyle = pal.gold; ctx.fillText('p = n = 20', BX(N), botY - 4);
+      ctx.strokeStyle = pal.rose || pal.rust; ctx.beginPath(); for (let k = 1; k <= PMAX; k++) { const px = BX(k), py = BY(L(trains[k])); k > 1 ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke();
+      ctx.strokeStyle = pal.sage; ctx.lineWidth = 2.2; ctx.beginPath(); for (let k = 1; k <= PMAX; k++) { const px = BX(k), py = BY(L(errs[k])); k > 1 ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.lineWidth = 1;
+      ctx.fillStyle = pal.ink; ctx.beginPath(); ctx.arc(BX(p), BY(L(errs[p])), 4.5, 0, 2 * Math.PI); ctx.fill();
+      ctx.fillStyle = pal.mute; ctx.textAlign = 'center'; ctx.fillText('capacity p (polynomial features)   ·   sage = test error, rust = train error (log scale)', W / 2, H - 6);
+      const regime = p < N - 3 ? 'classical regime — bias-variance as usual' : (p <= N + 3 ? 'INTERPOLATION THRESHOLD — the fit threads every noisy point and goes wild' : 'second descent — min-norm smooths the interpolant back out');
+      info.innerHTML = 'p = <b>' + p + '</b> · train MSE <b style="color:' + (pal.rose || pal.rust) + '">' + trains[p].toExponential(1) + '</b> · test MSE <b style="color:' + pal.sage + '">' + errs[p].toExponential(1) + '</b><br>' + regime + '.';
+    }
+    slider(ctl, { label: 'capacity p', min: 1, max: PMAX, step: 1, value: p, fmt: v => String(v), onInput: v => { p = Math.round(v); draw(); } });
+    button(controls(root), '🎲 New noise', () => { seed = (seed * 16807 + 11) & 0x7fffffff; build(); draw(); });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'Live double descent. Top panel: 20 noisy gold data points around a dashed sine curve, with the current polynomial fit in violet — smooth at low capacity, violently oscillating at capacity 20 where it interpolates every point, smooth again at high capacity under the minimum-norm solution. Bottom panel: test error versus capacity on a log scale climbs a mountain at the interpolation threshold p equals 20 and descends on both sides, while train error falls to zero; a slider moves a marker along the curve and a button resamples the noise.');
+    build(); draw();
+  });
+
 })();
