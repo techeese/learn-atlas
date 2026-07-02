@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1176 — Review: c-optimization + c-linearization-lhopital — both clean (review)
+**`c-optimization`: clean** — the river-fence problem (5000 m² at 50×100), the AM-GM-confirmed minimum ($x+4/x\ge4$), and the standout h2 (gradient descent on $\frac12 kw^2$ reduced to a geometric recursion, deriving the $\eta<2/k$ stability bound — curvature capping step size) all verified. h0's 3-sided fence vs e2's 4-sided perimeter are distinct constraint structures, not duplicates.
+**`c-linearization-lhopital`: clean** — $\tan46°\approx1.0349$ with the concave-up underestimate justification, the pendulum's halved relative error, the double-L'Hôpital $\infty-\infty\to0$ with a Taylor cross-check, $\sqrt[3]{8.12}\approx2.01$, $x^x\to1$, and $\sqrt{4.1}\approx2.025$ all verified. q2 — where L'Hôpital is *eligible but inconclusive* because $1-\sin x$ oscillates — is one of the best questions on the site. Noted (tolerated): e1(a) near-dups q10 with a different $dr$.
+Zero defects this unit — the ledger update is the ship; no SW bump. **Progress: 31/193 lessons · 11/177 widgets.**
+
 ## iter 1175 — Review: c-implicit-related-rates + c-extrema-curve-sketching (review)
 **`c-implicit-related-rates`: clean** — every number verified: the sliding ladder ($-1.5$ ft/s), the conical tank ($\frac{9}{4\pi}\approx0.716$ ft/min), the two-cars problem (50 mph), the folium $y'$, the $\sin(xy)=x+y$ origin slope ($-1$), the circle-slope example with its radius-perpendicularity sanity check, and the code exercise ($-0.75$). No changes.
 **`c-extrema-curve-sketching`** — h1 (global max $\frac32$, min $-3$ on $[0,2\pi]$), the MVT-Lipschitz proof h2, and both derivative-test examples verified. One defect: **h0 assigned the exact function e1 already fully works** ($x^4-4x^3$ — a learner would redo the same analysis with the answers one tab away). Replaced with $x^4-8x^2$: three critical points (mins at $\pm2\to-16$, max at $0$), inflections at $\pm\frac{2}{\sqrt3}\to-\frac{80}{9}$, all Node-verified, plus an even-symmetry cross-check the old function couldn't teach. Noted (tolerated): e2 supersets q8.
