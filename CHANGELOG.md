@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1116 — Hard-concept: Rényi entropy — bundled dive + glossary + MCQ (content)
+Filled the noted IT gap, triple-bundled. Deep-dive in `it-entropy` (its 6th): the **Rényi family** $H_\alpha=\tfrac{1}{1-\alpha}\log\sum p_i^\alpha$ — Shannon at $\alpha\to1$, Hartley at 0, **collision entropy** at 2 (birthday/hash-collision bounds, cross-linked to hash tables), **min-entropy** at $\infty$ (the adversary's best guess). The ordering $H_\infty\le H_1$ explains why crypto rates keys by min-entropy, not Shannon; Rényi-DP composition; Hill diversity numbers. Same ship: **2 glossary terms** (Rényi entropy, Min-entropy — 569 → **571**) + **1 MCQ** (high Shannon ≠ strong key; 17 → 18).
+Verified: g()-guarded; byte-stable re-serialize ×2; gate ALL GREEN (**3042 MCQs**, internal-links); one combined headless driver — 6 dives, Rényi/min-entropy/collision/Hill + link, quiz "of 18", glossary 2/2, kErr=0, errs=0. SW cache `atlas-v1047` → `atlas-v1048`.
+
 ## iter 1115 — Code: compute a Shapley value — the glove game (examples)
 Second interactive of the block, giving the brand-new `gt-cooperative-games` lesson its runnable: the **glove game** (player 1 holds the only left glove; 2 and 3 hold right gloves; a coalition is worth 1 iff it can pair). Enumerate all six joining orders, average marginal contributions → **Shapley [0.67, 0.17, 0.17]** — scarcity earns a 4× premium, computed before the learner's eyes.
 Verified: re-derived in Node ($\phi_1=\tfrac23,\phi_2=\phi_3=\tfrac16$, sums to 1); byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 198)**; **headless** — Run executes, exact split shown, entities decoded, kErr=0, errs=0. SW cache `atlas-v1046` → `atlas-v1047`.
