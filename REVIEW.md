@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 91/193 lessons · 53/177 widgets**
+**Progress: 93/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -164,8 +164,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] dl-practical-training-and-debugging — ✔ iter-1212 — q9's explain contained the garbled reference "(option D/A)" (letter-consistent but noise); de-indexed. NaN-debugging plan h0, broadcasting-bug h1, Adam-memory h2 (16 B/param → 20.8 GB, lower-bound reasoning), dead-ReLU e1, gradient-check e2 all verified
 - [x] dl-vision-transformers — ✔ iter-1213 clean — patch counts h0 (64+1=65) and e0 (196+1=197, patch dim 768), global-context h1, CLIP zero-shot h2, CNN-vs-ViT data-regime e1, multimodal pipeline e2 all verified; no changes
 - [x] dl-graph-neural-networks — ✔ iter-1213 clean — mean-aggregation h0 (A=3,B=4,C=5), permutation-invariance h1, over-smoothing h2, molecule e0, GCN-vs-GAT e1, transformer-as-complete-graph-GNN e2 all verified; no changes
-- [ ] dl-self-supervised-contrastive — pending
-- [ ] dl-autoencoders-vae — pending
+- [x] dl-self-supervised-contrastive — ✔ iter-1214 clean — collapse-without-negatives h1, CLIP zero-shot h2, SimCLR design e0, temperature e1 (hard-negative concentration), MAE-vs-contrastive e2 all verified; no changes
+- [x] dl-autoencoders-vae — ✔ iter-1214 — h2 was the reparameterization trick, fully worked by e2 with the identical ∂z/∂μ=1, ∂z/∂σ=ε formulas (8th answers-in-example case); replaced with a concrete KL computation (μ=(1,0.5), σ=(1,0.5) → 0.5+0.443≈0.943 nats, Node-verified, with the rent-per-dimension reading). 24.5× h0, KL-balance h1, interpolation e0, loss-trajectory e1 verified
 - [ ] dl-gans — pending
 - [ ] dl-diffusion-models — pending
 

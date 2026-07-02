@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1214 — Review: dl-self-supervised-contrastive + dl-autoencoders-vae (review)
+**`dl-self-supervised-contrastive`: clean** — the collapse-without-negatives argument, CLIP zero-shot mechanics, the SimCLR pretext design, the temperature analysis ($\tau=0.05$ concentrating on hard negatives), and the MAE-vs-contrastive selection all verified.
+**`dl-autoencoders-vae`** — the 24.5× bottleneck h0, the drop-the-KL/KL-dominates failure pair, the latent-interpolation and loss-trajectory examples all verified. One defect: **h2 asked for the reparameterization trick that e2 works in full** — identical $\partial z/\partial\mu=1,\ \partial z/\partial\sigma=\varepsilon$ formulas in both (8th answers-in-the-example case). Replaced with a **concrete KL computation**: $\mu=(1,0.5)$, $\sigma=(1,0.5)$ → $0.5 + 0.443 \approx 0.943$ nats (Node-verified), with the per-dimension "rent" reading — the ELBO's KL formula was stated in content but never exercised.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1116` → `atlas-v1117`. **Progress: 93/193 lessons · 53/177 widgets.**
+
 ## iter 1213 — Review: dl-vision-transformers + dl-graph-neural-networks — both clean (review)
 **`dl-vision-transformers`: clean** — the patch-count arithmetic (h0's $8\times8+1=65$; e0's $14\times14+1=197$ with patch dimension $16\times16\times3=768$), the first-layer-global-context contrast with CNNs, the CLIP zero-shot mechanism, the data-regime CNN-vs-ViT decision, and the multimodal chart-reading pipeline all verified.
 **`dl-graph-neural-networks`: clean** — the mean-aggregation step ($A{=}3, B{=}4, C{=}5$), the permutation-invariance argument against flattened adjacency matrices, the over-smoothing depth limit, the molecule representation, GCN-vs-GAT selection, and the transformer-as-complete-graph-GNN framing all verified.
