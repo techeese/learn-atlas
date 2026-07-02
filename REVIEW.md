@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 73/193 lessons · 53/177 widgets**
+**Progress: 75/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -146,8 +146,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] dl-the-artificial-neuron-and-mlp — ✔ iter-1202 — h1 asked to derive the exact collapse formulas e1's final paragraph spells out (W′=W⁽²⁾W⁽¹⁾, b′=W⁽²⁾b⁽¹⁾+b⁽²⁾ — 6th answers-in-the-example case); extended h1 with a numeric part (W′=[2,3], b′=5, both forms → 10 at (1,1), Node-verified). Forward pass h0 (ŷ=4), 115-param count h2, all examples verified
 - [x] dl-activation-functions — ✔ iter-1203 — h0 was fully spoiled: its collapse proof is e0 (numeric) + the previous lesson's h1, and its XOR-impossibility part is e1's Step 1 verbatim (7th answers-in-example case). Replaced with the tanh=2σ(2z)−1 identity + max-slope-1 exercise (4× sigmoid; nothing else works tanh; Node-verified). h1 (σ′ max ¼ at 0), h2 (0.25¹⁰≈9.5×10⁻⁷), XOR tent-trace e1, saturation e2 (38×) all verified
 - [x] dl-loss-functions — ✔ iter-1203 clean — h0 softmax (0.114/0.844/0.042, loss 2.17, gradient ŷ−y), BCE-gradient cancellation h1, Gaussian/Laplace MLE h2, e0 (0.705/0.259/0.035 with first-principles check), MSE-as-NLL e1 (2.0, step to 2.933), confident-mistakes e2 (0.105/0.693/2.303) all verified; h0/e0 are parallel practice (h0 adds max-subtraction) — good design; no changes
-- [ ] dl-backpropagation — pending
-- [ ] dl-gradient-descent-and-optimizers — pending
+- [x] dl-backpropagation — ✔ iter-1204 clean — h0's closed-gate mirror instance (all gradients 0 except b̄₂=−1 — excellent variation design), h1's index-calculus W̄=XᵀȲ proof, h2's cached-sigmoid (0.3932/0.1966), e3's Lab-matched full pass (4/24) all verified; no changes
+- [x] dl-gradient-descent-and-optimizers — ✔ iter-1204 clean — h0 (0<η<2, diverges at 2.5), momentum fixed point h1 (v*=g/(1−β)=10g), Adam first step h2 (θ₁=+0.01, sign handled), e2 (ratio exactly 1) all verified. Noted: h2/e2 share the scale-cancellation punchline (computation differs — tolerated); e0 repeats the (w−3)² instance from a-algorithms-for-ml e0 cross-topic (canonical, shallower here — tolerated); no changes
 - [ ] dl-learning-rate-schedules-and-tuning — pending
 - [ ] dl-overfitting-and-regularization — pending
 - [ ] dl-generalization-mysteries — pending

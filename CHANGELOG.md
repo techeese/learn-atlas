@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1204 — Review: dl-backpropagation + dl-gradient-descent-and-optimizers — both clean (review)
+**`dl-backpropagation`: clean** — h0 is variation design at its best: same network as the content's worked example but with $x=-3$ closing the ReLU gate, so every gradient dies except $\bar b_2=-1$ (each step re-verified). h1's index-calculus derivation of $\bar W=X^\top\bar Y$, h2's cached-sigmoid gradients ($0.3932/0.1966$), and e3's Lab-matched full pass ($\bar w_2=4$, $\bar w_1=24$) all verified.
+**`dl-gradient-descent-and-optimizers`: clean** — the $(0,2)$ stability window with divergence at $\eta=2.5$, momentum's fixed point $v^*=g/(1-\beta)=10g$, and both Adam first-steps (ratio exactly $\pm1$, $\theta_1=+0.01$ with the sign handled) all verified. Two tolerated notes: h2/e2 share the scale-cancellation punchline (the computations differ, sign-handling is fresh); e0 repeats the canonical $(w-3)^2$ instance from `a-algorithms-for-ml` cross-topic (shallower here).
+Ledger is the ship; no SW bump. **Progress: 75/193 lessons · 53/177 widgets.**
+
 ## iter 1203 — Review: dl-activation-functions + dl-loss-functions (review)
 **`dl-activation-functions`** — h1 ($\sigma'$ derivation, max $\frac14$ at 0), h2 ($0.25^{10}\approx9.5\times10^{-7}$ attenuation), the XOR tent-network trace, and the saturation comparison (38× at $z{=}5$) all verified. One defect: **h0 was fully spoiled** — its affine-collapse proof is e0 (numerically) *and* the previous lesson's h1, while its XOR-impossibility part is e1's Step 1 verbatim (7th answers-in-example case, this one doubly covered). Replaced with the **tanh exercise**: prove $\tanh(z)=2\sigma(2z)-1$, derive max slope 1 (4× sigmoid's), connect to the pre-ReLU "prefer tanh" advice — nothing else on the site works tanh; identity Node-verified at three points.
 **`dl-loss-functions`: clean** — h0's softmax with max-subtraction ($0.114/0.844/0.042$, loss 2.17), the BCE-gradient cancellation proof ($p-y$, with the why-not-MSE punchline), the Gaussian/Laplace MLE argument, e0's first-principles gradient check, the MSE-as-NLL derivation, and the confident-mistakes triple ($0.105/0.693/2.303$) all verified. h0/e0 are parallel practice with a new wrinkle — exactly right.
