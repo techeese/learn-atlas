@@ -106,8 +106,15 @@ C.forEach((c, ci) => { noHoles(c.modules, (c.id || ci) + ".modules"); (c.modules
 }); });
 Object.entries(global.window.REFERENCES || {}).forEach(([k, v]) => noHoles(v, "REFERENCES." + k));
 Object.entries(global.window.PREREQS || {}).forEach(([k, v]) => noHoles(v, "PREREQS." + k));
+// structural-shape enforcement (holistic S3, iter 1218): every module must carry an id — the ps
+// modules 6-7 omission was the only shape deviation sitewide and a latent breakage risk.
+C.forEach(c => c.modules.forEach((m, mi) => { if (!m.id || !String(m.id).trim()) errors.push("module missing id: " + c.id + " module#" + mi + " ('" + (m.title || "?") + "')"); }));
+// MCQ-parity enforcement: hard-fail below 16 MCQs except the audit's known backlog (each entry is
+// removed from this list when its P1 rewrite lands — see HOLISTIC.md; do NOT add new entries).
+const MCQ_PARITY_BACKLOG = new Set(["dl-generalization-mysteries", "ps-estimation-theory", "ml-trustworthy-models", "gt-auctions-mechanism-design", "gt-cooperative-games"]);
 C.forEach(c => c.modules.forEach(m => m.lessons.forEach(l => {
   lessons++; if (ids.has(l.id)) errors.push("duplicate lesson id: " + l.id); ids.add(l.id); topicOf[l.id] = c.id;
+  if ((l.mcq || []).length < 16 && !MCQ_PARITY_BACKLOG.has(l.id)) errors.push("below MCQ parity (16) and not on the known backlog: " + l.id + " has " + (l.mcq || []).length);
   const ansPos = {}, stems = {};
   // Strip <div data-code …>…</div> blocks before the render/tag lints: the code and its expected-output
   // legitimately contain `$` (template literals), `<`, `%` etc. that are NOT KaTeX/HTML and must not trip

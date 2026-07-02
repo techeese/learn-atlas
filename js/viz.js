@@ -695,6 +695,8 @@
     function hit(ev) { const m = pointer(c, W, H, ev), col = Math.floor((m.x - pad) / cell), row = Math.floor((m.y - pad) / cell); return (row >= 0 && row < n && col >= 0 && col < n) ? { row, col } : null; }
     c.addEventListener('mousemove', e => { hover = hit(e); draw(); });
     c.addEventListener('mouseleave', () => { hover = null; draw(); });
+    // touch: tap a cell to inspect it, tap the same cell (or outside the grid) to clear — hover-only left the widget inert on touch devices
+    c.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') return; const h = hit(e); hover = (h && hover && h.row === hover.row && h.col === hover.col) ? null : h; draw(); e.preventDefault(); });
     function draw() {
       const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
       ctx.font = '12px Spectral, serif';
@@ -938,7 +940,7 @@
     const info = note(root);
     function reset() { if (runH) { runH.stop(); runH = null; } path = [start.slice()]; draw(); }
     function step() { const p = path[path.length - 1], nx = p[0] - lr * gx(p[0]), ny = p[1] - lr * gy(p[1]); if (Math.abs(nx) > 30 || Math.abs(ny) > 30) { draw(true); if (runH) { runH.stop(); runH = null; } return; } path.push([nx, ny]); if (path.length > 220) path.shift(); draw(); }
-    c.addEventListener('mousedown', e => { const m = pointer(c, W, H, e); start = [invX(m.x), invY(m.y)]; reset(); e.preventDefault(); });
+    c.addEventListener('pointerdown', e => { const m = pointer(c, W, H, e); start = [invX(m.x), invY(m.y)]; reset(); e.preventDefault(); });   // pointerdown: works for mouse AND touch (was mousedown — touch users couldn't drop a start point)
     function draw(diverged) {
       const p = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = p.bg; ctx.fillRect(0, 0, W, H);
       ctx.strokeStyle = p.line; ctx.lineWidth = 1;
@@ -949,7 +951,8 @@
       const cur = path[path.length - 1]; ctx.fillStyle = p.violet; ctx.beginPath(); ctx.arc(X(cur[0]), Y(cur[1]), 6, 0, 7); ctx.fill();
       info.innerHTML = diverged
         ? `<span style="color:${p.rust}"><b>Diverged!</b> lr=${lr.toFixed(2)} overshoots the steep (y) axis — for $f=ax^2+by^2$, descent needs lr &lt; 2/(largest curvature).</span>`
-        : `step ${path.length - 1} · f=${f(cur[0], cur[1]).toFixed(3)} · the elongated bowl makes descent <b>zig-zag</b> across the steep axis. Click anywhere to drop a new start point.`;
+        : `step ${path.length - 1} · f=${f(cur[0], cur[1]).toFixed(3)} · the elongated bowl makes descent <b>zig-zag</b> across the steep axis. Click or tap anywhere to drop a new start point.`;
+      if (window.typeset) window.typeset(info);
     }
     reset();
   });
@@ -3244,6 +3247,7 @@
         ? `An <b>ill-conditioned</b> loss valley ($f=${a}x^2+${b}y^2$, condition number ${(b / a).toFixed(0)}): steep across, shallow along. Press <b>Race</b> to drop all four optimizers from the same start. Watch <span style="color:${P().rust}">SGD</span> zig-zag across the steep walls while it crawls along the floor.`
         : `Step <b>${steps}</b>${winner ? ` &nbsp;·&nbsp; first to the minimum: <b style="color:${P()[winner.o.col]}">${winner.o.name}</b> (${winner.conv} steps)` : ''}.<br>` +
           `<span style="color:${P().rust}">SGD</span> is bounded by the <em>steep</em> direction — a step big enough to make progress along the valley overshoots across it, so it <b>zig-zags</b>. <span style="color:${P().gold}">Momentum</span> builds velocity along the consistent direction and cancels the oscillation; <span style="color:${P().violet}">RMSProp</span> and <span style="color:${P().sage}">Adam</span> rescale each coordinate by its own gradient history, so they step almost straight toward the minimum.`;
+      if (window.typeset) window.typeset(info);
     }
     const ctl = controls(root);
     slider(ctl, { label: 'learning rate ×', min: 0.4, max: 1.6, step: 0.1, value: mult, fmt: v => '×' + v.toFixed(1), onInput: v => { mult = v; reset(); } });

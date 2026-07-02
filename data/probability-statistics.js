@@ -5122,6 +5122,7 @@
       ]
     },
     {
+      "id": "ps-bayesian",
       "title": "Bayesian Inference",
       "lessons": [
         {
@@ -6122,6 +6123,7 @@
       ]
     },
     {
+      "id": "ps-causal",
       "title": "Causal Inference",
       "lessons": [
         {

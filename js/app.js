@@ -80,6 +80,21 @@
       setTimeout(() => typeset((retries || 0) + 1), 120);
     }
   }
+  // Scoped re-typeset for widgets (js/viz.js) whose notes update with $…$ after interaction —
+  // the whole-app pass above only runs on view renders, so dynamic note updates need this.
+  window.typeset = function (el) {
+    if (window.renderMathInElement) {
+      try {
+        window.renderMathInElement(el || app, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false }
+          ],
+          throwOnError: false
+        });
+      } catch (e) {}
+    }
+  };
 
   // ---------- lookups ----------
   function findCourse(id) { return C().find(c => c.id === id); }
@@ -184,7 +199,7 @@
     const rng = mulberry(dayNumber() + 211);   // offset apart from concept(+7) and dive(+101)
     const v = cat[Math.floor(rng() * cat.length)];
     let ctx = null;
-    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (!ctx && String(l.content || "").indexOf('data-viz="' + v.id + '"') >= 0) ctx = { course: c, lesson: l }; })));
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { const s = String(l.content || ""); if (!ctx && (s.indexOf('data-viz="' + v.id + '"') >= 0 || s.indexOf("data-viz='" + v.id + "'") >= 0)) ctx = { course: c, lesson: l }; })));
     return { v, ctx };
   }
 
@@ -1910,7 +1925,7 @@
   // first lesson that embeds a given widget
   function vizLesson(vizId) {
     let found = null;
-    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { if (!found && (l.content || "").indexOf('data-viz="' + vizId + '"') >= 0) found = { course: c, lesson: l }; })));
+    C().forEach(c => c.modules.forEach(m => m.lessons.forEach(l => { const s = (l.content || ""); if (!found && (s.indexOf('data-viz="' + vizId + '"') >= 0 || s.indexOf("data-viz='" + vizId + "'") >= 0)) found = { course: c, lesson: l }; })));
     return found;
   }
   function viewLab() {
@@ -2029,7 +2044,7 @@
       const course = findCourse(e.topic); if (!course) return null;
       const tl = e.term.toLowerCase(); let vid = null;
       course.modules.forEach(m => m.lessons.forEach(l => {
-        if (!vid && (l.title || "").toLowerCase().includes(tl)) { const mm = (l.content || "").match(/data-viz="([^"]+)"/); if (mm) vid = mm[1]; }
+        if (!vid && (l.title || "").toLowerCase().includes(tl)) { const mm = (l.content || "").match(/data-viz=["']([^"']+)["']/); if (mm) vid = mm[1]; }
       }));
       return vid;
     }
