@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 97/193 lessons · 53/177 widgets**
+**Progress: 115/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -204,24 +204,24 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 ## reinforcement-learning — lessons
 - [x] rl-what-is-rl — ✔ iter-1216 — q4 explain maligned its own answer ("choices 2-3 confuse it" with 2 the correct choice); de-indexed. Return recursion h1 (2.375 = 2 + 0.5·0.75), credit-assignment h2, 3-door e0, delayed-consequences e1 all verified
 - [x] rl-mdp-formalism — ✔ iter-1216 clean — full MDP tuple h0, bound/horizon h1 (40, 20, exact 40 saturating the bound), backward return recursion h2 (3, 3.5, 2.75), recycling-robot e0, discounting e2 all verified; L1-h1/L2-h2 are deliberate cross-lesson reinforcement on distinct sequences; no changes
-- [ ] rl-policies-values — pending
-- [ ] rl-policy-iteration — pending
-- [ ] rl-value-iteration — pending
-- [ ] rl-monte-carlo — pending
-- [ ] rl-td-learning — pending
-- [ ] rl-sarsa-qlearning — pending
-- [ ] rl-eligibility-traces — pending
-- [ ] rl-value-approximation — pending
-- [ ] rl-dqn — pending
-- [ ] rl-policy-gradient-theorem — pending
-- [ ] rl-actor-critic — pending
-- [ ] rl-trpo-ppo — pending
-- [ ] rl-exploration — pending
-- [ ] rl-practical-rl — pending
-- [ ] rl-connections-frontiers — pending
-- [ ] rl-model-based — pending
-- [ ] rl-offline — pending
-- [ ] rl-imitation — pending
+- [x] rl-policies-values — ✔ iter-1219 — sweep-verified (34 recomputations: v_π=(7.25,7.75), v_*=(18,20), G=3.8593); explain referenced the model-needing v*-extraction as "(option 3)" — the correct answer's index; fixed to (option 2)
+- [x] rl-policy-iteration — ✔ iter-1219 — sweep-verified (38 recomputations; prior flags q0/q11 false alarms); TWO maligning explains fixed ((choice 3)→(choice 2) stochasticity ref; "choice 2 is false"→choice 1 on the shared-value-function q)
+- [x] rl-value-iteration — ✔ iter-1219 clean — sweep-verified: corridor sweeps, in-place claim checked programmatically over all 6 orders, contraction iterates 1/1.9/2.71 with errors ×0.9
+- [x] rl-monte-carlo — ✔ iter-1219 clean — sweep-verified: FV(A)=2 vs EV(A)=7/3, G-chain 4→4.6→4.14→5.726, hw3/MCQ6 share numbers but hw adds part (b) — extension, kept
+- [x] rl-td-learning — ✔ iter-1219 — sweep-verified (28 recomputations, δ_A=2.3→V=0.73); q4 was a verbatim-numbers duplicate of q1 (same 1+0.9·10−4=6); replaced with fresh instance (γ=0.5 → δ=2.0, distractors diagnose forgot-V/no-γ/sign-flip)
+- [x] rl-sarsa-qlearning — ✔ iter-1219 — sweep-verified (35 recomputations, cliff −17.5 vs +1; prior q0 flag false alarm); hw0 claimed Q-learning's update "larger" but |ΔQ|=0.3 for BOTH (only signs differ); prompt+solution now compare sign, not size
+- [x] rl-eligibility-traces — ✔ iter-1219 — sweep-verified (45 recomputations, λ-return 5.718125 exact, forward=backward at 0.10/0.20/0.30); one explain had a dangling half-formula "$0.5·1·0.5+...$" and literal *asterisks*; cleaned
+- [x] rl-value-approximation — ✔ iter-1219 — sweep-verified (35 recomputations); CONCEPTUAL ERROR fixed: content claimed semi-gradient TD(0) would "converge to a blend w≈0.5" — simulated: TD's fixed point is w=0 (α-scale); 0.5 is the VE minimizer that gradient MC finds; rewritten to teach exactly that distinction
+- [x] rl-dqn — ✔ iter-1219 — sweep-verified (38 recomputations, y=10.91/δ=5.91, DDQN 8.2/4.2 vs 5.5/1.5); explain said "(a) is wrong" where (a) IS the answer (soft-update tracking); fixed to (b)
+- [x] rl-policy-gradient-theorem — ✔ iter-1219 — sweep-verified (32 recomputations, b=2.14, A=(0.48,−0.34,−0.14)); e1 called the trajectory-mean baseline "action-independent" (it isn't — it contains the sampled actions' returns, contradicting hw1's crux); reworded: exact for state-only baselines, approximate here
+- [x] rl-actor-critic — ✔ iter-1219 — sweep-verified (38 recomputations, GAE(0.5)=(1.75,−0.5,3); prior flags q4/q8 clean); TWO maligning explains fixed (q6 "Choice 0 reverses the roles", q7 "Choice 0 is wrong" — answer IS 0 in both; → Choice 1)
+- [x] rl-trpo-ppo — ✔ iter-1219 — sweep-verified (37 recomputations, clip arithmetic exact); FIVE fixes: q5 stem said r=0.7 makes the action "more likely" (0.7<1 = less); q5 explain described the clip backwards (it removes the incentive to keep DECREASING past 1−ε); the A<0 ASCII panel had a spurious flat tail after 1+ε (L(r) falls forever — recomputed) + backwards caption; the TRPO bound was missing its J(π) term (as written it asserted J(π)≥0 at π′=π); "matches J in value"→matches the improvement J(π′)−J(π)
+- [x] rl-exploration — ✔ iter-1219 clean — sweep-verified: UCB t=11 scores 1.374/2.690/2.098, Thompson Beta means 0.667/0.400, P(θ₁>θ₂)=0.8333
+- [x] rl-practical-rl — ✔ iter-1219 clean — sweep-verified: Welford trace incl. post-spike μ=1080/var=3.84e6, telescoping identity, 1/(1−γ) horizons
+- [x] rl-connections-frontiers — ✔ iter-1219 clean — sweep-verified (prior q5 flag false alarm): PPO toy 0.5e²=3.695, π*=0.881/0.119, ratio 1.42→clip 1.2, β-sweep via e⁵=148.41
+- [x] rl-model-based — ✔ iter-1219 clean — sweep-verified: code P(B)=0.75→Q=5.875 matches expected string, Dyna 51×/6× ratios, index-referencing explains accurate
+- [x] rl-offline — ✔ iter-1219 clean — sweep-verified: all 17 answer-index/explain pairs consistent, OPE formulas correct, ps-causal link resolves
+- [x] rl-imitation — ✔ iter-1219 clean — sweep-verified: code 5.0/500 exact, 0.99¹⁰⁰=0.366 confirmed, all 16 indices aligned
 
 ## reinforcement-learning — widgets
 - [ ] rl-gridworld — pending

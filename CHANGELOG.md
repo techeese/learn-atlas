@@ -2,6 +2,15 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1219 — ★ RL topic verified end-to-end: 9-agent sweep, 586 recomputations, 15 adjudicated fixes (holistic-phase / review-sweep)
+**All 18 remaining RL lessons verified in one workflow-accelerated sweep** (9 paired verifier agents · 586 individual recomputations · zero agent failures), every finding independently adjudicated against the data before fixing. **8 lessons fully clean**; 15 fixes across 10:
+- **One genuine conceptual error** (rl-value-approximation): content claimed semi-gradient TD(0) on unequal-value states "would converge to a blend $w \approx 0.5$" — simulation (agent's and mine) shows TD's fixed point is $w=0$; $0.5$ is the $\overline{\text{VE}}$ minimizer that gradient MC finds. Rewritten to teach exactly that distinction (it foreshadows the lesson's own TD-fixed-point-≠-VE-minimizer point).
+- **Five fixes in rl-trpo-ppo**: q5's stem said $r_t=0.7$ means "more likely" (backwards); its explain described the clip protecting against *increasing* a bad action (it removes the incentive to keep *decreasing* past $1-\epsilon$); the A<0 ASCII panel drew a spurious flat tail after $1+\epsilon$ (the objective falls forever — recomputed) with a backwards caption; the TRPO bound was missing its $J(\pi)$ term (as written it asserted $J(\pi)\ge0$ at $\pi'=\pi$); the surrogate "matches $J$ in value" → matches the improvement.
+- **Six maligning/mislabeled explain references** de-scrambled (policies-values, policy-iteration ×2, dqn, actor-critic ×2 — each blamed the correct answer's own index); q4 TD-error duplicate replaced with a fresh instance; sarsa hw0's "which update is larger" corrected (equal magnitudes, opposite signs); eligibility-traces' dangling half-formula cleaned; pgt's trajectory-mean baseline no longer called "action-independent" (it isn't — reworded exact-vs-approximate).
+- Prior audit flags at rl-policy-iteration q0/q11, rl-sarsa-qlearning q0, rl-connections-frontiers q5 all **cleared as false alarms** with reasons.
+Injector note: a `$$`-leading replacement tripped the g() guard via String.replace's `$$`→`$` escape — the function-replacer rule exists for exactly this; guard caught it pre-write.
+Verified: all 16 anchors matched pre-edit; guarded; byte-stable; gate ALL GREEN; headless — redrawn figure + rewritten passage render, kErr=0, errs=0. SW `atlas-v1120` → `atlas-v1121`. **Progress: 115/193 lessons · 53/177 widgets. RL: 20/20 done.**
+
 ## iter 1218 — Shape hygiene + viz bug batch (HOLISTIC S3 + P3 bugs) (holistic-phase / structure+viz)
 Six audit-found defects fixed in one sweep:
 1. **ps modules 6–7 got their missing `id` fields** (`ps-bayesian`, `ps-causal`) — the only data-shape deviation sitewide; **gate.js now hard-fails any module without an id** and any lesson below 16 MCQs (the audit's 5 known sub-parity lessons ride a shrinking allowlist that their P1 rewrites will empty — no new regressions possible).
