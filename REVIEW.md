@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 93/193 lessons · 53/177 widgets**
+**Progress: 95/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -166,8 +166,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] dl-graph-neural-networks — ✔ iter-1213 clean — mean-aggregation h0 (A=3,B=4,C=5), permutation-invariance h1, over-smoothing h2, molecule e0, GCN-vs-GAT e1, transformer-as-complete-graph-GNN e2 all verified; no changes
 - [x] dl-self-supervised-contrastive — ✔ iter-1214 clean — collapse-without-negatives h1, CLIP zero-shot h2, SimCLR design e0, temperature e1 (hard-negative concentration), MAE-vs-contrastive e2 all verified; no changes
 - [x] dl-autoencoders-vae — ✔ iter-1214 — h2 was the reparameterization trick, fully worked by e2 with the identical ∂z/∂μ=1, ∂z/∂σ=ε formulas (8th answers-in-example case); replaced with a concrete KL computation (μ=(1,0.5), σ=(1,0.5) → 0.5+0.443≈0.943 nats, Node-verified, with the rent-per-dimension reading). 24.5× h0, KL-balance h1, interpolation e0, loss-trajectory e1 verified
-- [ ] dl-gans — pending
-- [ ] dl-diffusion-models — pending
+- [x] dl-gans — ✔ iter-1215 clean — D*=p/(p+p_g), V=−log4 at optimum, mode-collapse mechanism h1, GAN-sharp-vs-VAE-blurry h2, alternating-step e0 all verified; no changes
+- [x] dl-diffusion-models — ✔ iter-1215 clean — ᾱ_t extremes h0, 1-vs-1000 evaluations h1 (DDIM/distillation), regression-vs-adversarial mode-coverage h2, reverse-step e0, Stable-Diffusion assembly e1 all verified; no changes. ALL 26 DL LESSONS DONE (20 fully clean).
 
 ## deep-learning — widgets
 - [ ] dl-activation — pending
