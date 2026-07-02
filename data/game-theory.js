@@ -325,6 +325,28 @@
               ],
               "answer": 1,
               "explain": "Your bid never sets your price — it only decides whether you win. The extra wins you pick up are precisely those where the second-highest bid (your price) is above your value."
+            },
+            {
+              "q": "In a first-price auction you should bid below your true value because:",
+              "choices": [
+                "Your bid sets your price when you win — you trade a lower chance of winning for a positive margin (bid shading)",
+                "Bidding truthfully is illegal",
+                "The seller adds a fee",
+                "It guarantees you win more often"
+              ],
+              "answer": 0,
+              "explain": "With $n$ symmetric bidders and uniform values the equilibrium bid is $v\\cdot\\frac{n-1}{n}$ — shading vanishes as competition grows. In a second-price auction the price is set by others, so truth-telling is dominant instead."
+            },
+            {
+              "q": "Which change breaks the revenue equivalence theorem?",
+              "choices": [
+                "Using a different tie-breaking rule",
+                "Risk-averse bidders — they shade less in a first-price auction to lock in winning, raising its revenue above second-price",
+                "Renaming the auction format",
+                "Having more than two bidders"
+              ],
+              "answer": 1,
+              "explain": "Revenue equivalence needs risk-neutral bidders with independent private values; risk aversion (or correlated values) tilts the ranking between formats."
             }
           ],
           "flashcards": [
@@ -359,6 +381,11 @@
               "prompt": "Two roads run from A to B. Road 1 always takes 1 hour. Road 2 takes $x$ hours when a fraction $x$ of all drivers use it. Find the Nash equilibrium, the social optimum, and the price of anarchy.",
               "hint": "At equilibrium no driver can switch and gain; the optimum minimizes average travel time $x\\cdot x+(1-x)\\cdot 1$.",
               "solution": "Equilibrium: if $x \\lt 1$, road 2 costs $x \\lt 1$ — cheaper than road 1, so drivers keep switching until $x=1$. Everyone takes road 2; average cost $1$. Optimum: minimize $x^2+(1-x)$; derivative $2x-1=0$ gives $x=\\tfrac12$, average cost $\\tfrac14+\\tfrac12=\\tfrac34$. Price of anarchy $=1/\\tfrac34=\\tfrac43$ — the Pigou bound."
+            },
+            {
+              "prompt": "Two bidders have values drawn independently from Uniform$[0,1]$ in a first-price auction. Guess-and-verify that bidding $b(v)=v/2$ is a symmetric equilibrium.",
+              "hint": "If your rival bids $w/2$, your bid $b$ wins when $w\\lt 2b$ (probability $2b$ for $b\\le 1/2$). Maximize expected profit $(v-b)\\cdot 2b$ over $b$.",
+              "solution": "Expected profit $=(v-b)\\,2b$; the first-order condition gives $2v-4b=0$, so $b=v/2$ — exactly the conjectured strategy, hence an equilibrium. Each bidder shades to half their value: the classic trade between margin $(v-b)$ and win probability $2b$."
             }
           ],
           "prereqs": [
@@ -952,6 +979,28 @@
               ],
               "answer": 0,
               "explain": "Stability rules out blocking pairs; proposer-optimality is the deeper structure — which side proposes decides who the mechanism favours, and proposers can't gain by misreporting."
+            },
+            {
+              "q": "In proposer-proposing deferred acceptance, who can profitably misreport their preferences?",
+              "choices": [
+                "Proposers — they should exaggerate",
+                "Everyone",
+                "No one — the mechanism is fully strategy-proof",
+                "Only receivers — proposers have truth-telling as a dominant strategy, but receivers can sometimes gain by rejecting strategically"
+              ],
+              "answer": 3,
+              "explain": "Strategy-proofness holds for the proposing side only (and no stable mechanism is strategy-proof for both sides) — one reason the designer's choice of who proposes matters."
+            },
+            {
+              "q": "The set of stable matchings in a two-sided market coincides with:",
+              "choices": [
+                "The Nash equilibria of the proposal game",
+                "The welfare-maximizing matchings",
+                "The core of the cooperative matching game — no coalition (in particular no blocking pair) can improve by re-matching among themselves",
+                "The Shapley value allocations"
+              ],
+              "answer": 2,
+              "explain": "Stability IS coalition-proofness here: a blocking pair is exactly a two-person coalition that deviates profitably. That is why deferred acceptance's output inherits the core's no-unraveling property."
             }
           ],
           "flashcards": [
@@ -994,6 +1043,11 @@
               "prompt": "Two parties split 100. Party 1's outside option is 20, party 2's is 0. Find the Nash bargaining split.",
               "hint": "Maximize $(x-20)\\,y$ subject to $x+y=100$.",
               "solution": "Maximize $(x-20)(100-x)$: the derivative $120-2x$ vanishes at $x=60$, so the split is $(60,40)$. The 20-point outside option moved party 1 from the symmetric 50 up to 60 — exactly half the threat advantage... in general the solution gives each party their disagreement payoff plus half the remaining surplus: $20+\\tfrac{80}{2}=60$ and $0+\\tfrac{80}{2}=40$."
+            },
+            {
+              "prompt": "Run deferred acceptance by hand: proposers $m_1,m_2$ both prefer $w_1$ to $w_2$; receiver $w_1$ prefers $m_2$, receiver $w_2$ prefers $m_1$. Trace the rounds and give the final matching.",
+              "hint": "Round 1: both propose to $w_1$. Who does she hold? Where does the rejected proposer go next?",
+              "solution": "Round 1: $m_1,m_2$ both propose to $w_1$; she holds her favourite $m_2$ and rejects $m_1$. Round 2: $m_1$ proposes to $w_2$, who accepts. Final: $\\{m_2\\!-\\!w_1,\\ m_1\\!-\\!w_2\\}$. Stability check: $m_1$ prefers $w_1$ but she prefers her partner $m_2$; no blocking pair."
             }
           ],
           "prereqs": [

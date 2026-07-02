@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1144 — Retention: parity top-up for the gt split lessons (retention)
+Took aim at the gate's own ⚠ content-parity flags. `gt-auctions-mechanism-design`: **+2 MCQs** (first-price **bid shading** — margin vs win-probability, $b=v\frac{n-1}{n}$; **what breaks revenue equivalence** — risk aversion favours first-price) **+1 homework** (guess-and-verify $b(v)=v/2$ for two uniform bidders; FOC worked in the solution). `gt-cooperative-games`: **+2 MCQs** (DA strategy-proofness is **one-sided** — proposers truthful, receivers can game; **stable matchings = the core**) **+1 homework** (trace DA by hand on a 2×2, stability-checked). Homework now 3/3 in both; MCQs 8 & 9 and climbing.
+Verified: all answers/solutions hand-worked; guarded; byte-stable re-serialize; **gate ALL GREEN — 3081 MCQs**; **headless** — both quiz pools live ("of 8" / "of 9"), kErr=0, errs=0. SW cache `atlas-v1075` → `atlas-v1076`. Noted for future waves: `dl-generalization-mysteries` and `ml-trustworthy-models` are the remaining hw-2/3 lessons.
+
 ## iter 1143 — Code: fit a Bradley-Terry leaderboard (examples)
 Second interactive of the block, completing the iter-1139 judge thread — a runnable in `l-hallucination-and-evaluation`: three models, ten judged games per pair with **slightly intransitive** win rates (0.80/0.70/0.60); the **Zermelo MM algorithm** fits ratings → **A=1.76 B=0.87 C=0.65, fitted A-B 0.67 / B-C 0.57 / A-C 0.73** — Bradley-Terry reconciles inconsistent head-to-heads onto ONE transitive scale. Structural MLE check done: each model's expected total wins exactly equals its observed total (14/9/7).
 **Self-caught ×2:** an unescaped apostrophe in the injector string, then a multi-line `data-expected` (gate compares the attribute literally — `&#10;` doesn't decode); restored from HEAD and re-injected with single-line output.
