@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1212 — Review: dl-pretraining-and-finetuning-paradigm + dl-practical-training-and-debugging (review)
+**`dl-pretraining-and-finetuning-paradigm`: clean** — the BERT-vs-GPT task mapping, the LoRA arithmetic ($131{,}072$ vs $16{,}777{,}216 = 0.78\%$, with the low-intrinsic-rank justification), and the Chinchilla budget homework ($D=5\times10^{11}$ tokens; the colleague's plan requiring $3\times10^{22}$ FLOPs — 10× over) all verified.
+**`dl-practical-training-and-debugging`** — q9's explain contained the garbled reference "(option D/A)" — letter-consistent but pure noise; de-indexed to name the summing mistake directly. The NaN-debugging priority plan, the $(B,1)$-vs-$(B,)$ broadcasting-bug homework, the Adam memory estimate (16 bytes/param → 20.8 GB with the lower-bound reasoning and ZeRO/checkpointing reductions), the dead-ReLU counter, and the finite-difference gradient check all verified.
+Verified: guarded; byte-stable; gate ALL GREEN; headless kErr=0/errs=0. SW `atlas-v1115` → `atlas-v1116`. **Progress: 89/193 lessons · 53/177 widgets.**
+
 ## iter 1211 — Review: dl-attention-mechanism + dl-transformer-architecture (review)
 **`dl-attention-mechanism`: clean** — the full attention hand-trace (weights $0.768/0.187/0.045$ → output $(0.813, 0.232)$, every exponential re-computed), the softmax-saturation h1, the elegant convex-hull h2 (attention interpolates, never extrapolates — extrapolation lives in the projections), and the numeric $\sqrt{d_k}$ demo all verified.
 **`dl-transformer-architecture`** — both audit flags (q8, q9) verified **false alarms** (correct letter references; q9's $e^0=1$ masking trap is a well-made distractor). The $d_k{=}4$ trace ($Z=11.107$, weights $0.665/0.090/0.245$), the multi-head cost check, and the residual-connection h2 all verified. The lesson's three examples deliberately revisit the attention lesson's trio with new instances/angles — spaced repetition, kept — but e0 shared an *identical title* with its counterpart; **retitled** for palette/search clarity.

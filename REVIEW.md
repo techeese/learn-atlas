@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 87/193 lessons · 53/177 widgets**
+**Progress: 89/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -160,8 +160,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] dl-embeddings-and-tokenization — ✔ iter-1209 clean — cosine h0 (0.96 vs 0.80), embedding≡one-hot-linear h1 (15M=15M with the 49,999-wasted-multiplies point), COVID-19 OOV h2, analogy e2 (king−man+woman=(2,4)=queen) all verified; no changes
 - [x] dl-attention-mechanism — ✔ iter-1211 clean — h0 trace (weights 0.768/0.187/0.045 → output (0.813, 0.232), re-computed), softmax-saturation h1, convex-hull h2 (interpolate-never-extrapolate), e0 ([6.70, 3.30]), numeric √d_k demo e2 all verified; no changes
 - [x] dl-transformer-architecture — ✔ iter-1211 — both audit flags (q8/q9) FALSE ALARMS (correct letter refs). e0 shared an identical title with the attention lesson's e0 (different instance — spaced repetition, kept); retitled for search clarity. d_k=4 trace (Z=11.107, weights 0.665/0.090/0.245), −∞ masking q9, multi-head h0, residual h2 all verified
-- [ ] dl-pretraining-and-finetuning-paradigm — pending
-- [ ] dl-practical-training-and-debugging — pending
+- [x] dl-pretraining-and-finetuning-paradigm — ✔ iter-1212 clean — BERT-vs-GPT task mapping h0, LoRA h1 (131,072 vs 16,777,216 = 0.78%), Chinchilla h2 (D=5×10¹¹, the 10× overshoot to 3×10²²), all examples verified; no changes
+- [x] dl-practical-training-and-debugging — ✔ iter-1212 — q9's explain contained the garbled reference "(option D/A)" (letter-consistent but noise); de-indexed. NaN-debugging plan h0, broadcasting-bug h1, Adam-memory h2 (16 B/param → 20.8 GB, lower-bound reasoning), dead-ReLU e1, gradient-check e2 all verified
 - [ ] dl-vision-transformers — pending
 - [ ] dl-graph-neural-networks — pending
 - [ ] dl-self-supervised-contrastive — pending

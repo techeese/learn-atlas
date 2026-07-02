@@ -4703,7 +4703,7 @@
                 "Nothing special — accumulating $8$ mean-losses and stepping gives exactly the batch-128 gradient with no scaling."
               ],
               "answer": 1,
-              "explain": "Each micro-batch loss is already a mean over 16 examples, so summing 8 of their gradients gives 8x the desired mean-over-128 gradient; you must divide by 8 (the accumulation count) to recover the true batch-128 mean gradient. Just summing (option D/A) over-scales the gradient by the number of micro-batches."
+              "explain": "Each micro-batch loss is already a mean over 16 examples, so summing 8 of their gradients gives 8x the desired mean-over-128 gradient; you must divide by 8 (the accumulation count) to recover the true batch-128 mean gradient. Just summing and stepping — whether framed as \"step normally\" or \"nothing special needed\" — over-scales the gradient by the number of micro-batches."
             },
             {
               "q": "On a single run you see the training loss steadily decreasing while the validation loss decreases for a while and then starts climbing back up, even though training loss keeps falling. According to the lesson's guidance on reading curves, what is the most likely situation and the appropriate response?",
