@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 46/193 lessons · 21/177 widgets**
+**Progress: 46/193 lessons · 32/177 widgets — ALL Calculus content reviewed (27 lessons + 21 widgets)**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -81,17 +81,17 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] calc-saddle — ✔ iter-1185 clean — 3 btns, 380px, note 366ch, errs=0 under drive
 - [x] calc-gd — ✔ iter-1185 clean — slider, note 379ch, errs=0 under drive
 - [x] calc-chain — ✔ iter-1185 clean — slider, note 319ch, errs=0 under drive
-- [ ] calc-ivt — pending
-- [ ] calc-curve-sketch — pending
-- [ ] calc-convex-landscape — pending
-- [ ] calc-riemann — pending
-- [ ] calc-taylor — pending
-- [ ] calc-lagrange — pending
-- [ ] calc-ftc-accumulation — pending
-- [ ] calc-slope-field — pending
-- [ ] calc-duality — pending
-- [ ] calc-by-parts — pending
-- [ ] c-sgd-noise-ball — pending
+- [x] calc-ivt — ✔ iter-1186 clean — btn+slider, note 218ch, errs=0 under drive
+- [x] calc-curve-sketch — ✔ iter-1186 clean — slider, note 274ch, errs=0 under drive
+- [x] calc-convex-landscape — ✔ iter-1186 clean — 2 btns + 2 sliders, 560px (container-capped), errs=0 under drive
+- [x] calc-riemann — ✔ iter-1186 clean — numeric honesty verified — left rule on [0,3] n=8: note claims 7.3828 vs exact 9; Node re-derivation 0.375³·140=7.3828125 exact, errs=0 under drive
+- [x] calc-taylor — ✔ iter-1186 clean — degree-1-equals-tangent claim definitionally true, note 261ch, errs=0 under drive
+- [x] calc-lagrange — ✔ iter-1186 clean — 2 btns + slider, errs=0 under drive
+- [x] calc-ftc-accumulation — ✔ iter-1186 clean — btn + slider, note 362ch, errs=0 under drive
+- [x] calc-slope-field — ✔ iter-1186 clean — 2 sliders, errs=0 under drive
+- [x] calc-duality — ✔ iter-1186 clean — slider, note 138ch, errs=0 under drive
+- [x] calc-by-parts — ✔ iter-1186 clean — slider, note 124ch, errs=0 under drive
+- [x] c-sgd-noise-ball — ✔ iter-1186 clean — btn + slider, 500px, errs=0 under drive
 
 ## algorithms — lessons
 - [ ] a-asymptotic-analysis — pending

@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1186 — Review: Calc widget batch 2 — ALL Calculus content reviewed (review)
+Drove the remaining 11 Calc widgets headless (buttons double-clicked, sliders slammed): `calc-ivt`, `calc-curve-sketch`, `calc-convex-landscape`, `calc-riemann`, `calc-taylor`, `calc-lagrange`, `calc-ftc-accumulation`, `calc-slope-field`, `calc-duality`, `calc-by-parts`, `c-sgd-noise-ball` — **all clean**, errs=0, notes render (124–362 chars); four render at 560px logical, capped to the container by the shared canvas CSS.
+**Numeric honesty spot-check:** `calc-riemann`'s note claims "left rule, $f=x^2$, 8 rectangles: approx 7.3828 vs exact 9.0000" — Node re-derivation on $[0,3]$: $\Delta x^3\sum_{i=0}^{7} i^2 = 0.375^3\cdot 140 = 7.3828125$. Exact to every displayed digit. `calc-taylor`'s "degree-1 about 0 = the tangent-line linearization" is definitionally true.
+**Calculus is now fully reviewed: 27/27 lessons + 21/21 widgets** — the site's two largest topics (LA + Calc) are done. No data changes — ledger is the ship; no SW bump. **Progress: 46/193 lessons · 32/177 widgets.**
+
 ## iter 1185 — Review: c-proximal-projected (ALL 27 Calculus lessons done) + first Calc widget batch (review)
 **`c-proximal-projected`: clean** — the soft-thresholding code exercise ($[1.5,0,0,-0.8,0]$, 3 of 5 zeroed), the ISTA step e1, h1's $(0.7,0,0)$, the $\ell_1$-vs-$\ell_2$ dead-zone h2, and the Frank-Wolfe/mirror-descent dives all verified. No changes. **That completes all 27 Calculus lessons** — final tally: 12 needed fixes, 15 clean, one arithmetic error (the 210.125 fence check) in ~1,600 verified computations.
 **Calc widget batch 1 (10 of 21): all clean** — `calc-derivative`, `calc-gradient-descent`, `calc-bayes`, `calc-gd2d`, `calc-limit-epsilon`, `calc-newton`, `calc-area`, `calc-saddle`, `calc-gd`, `calc-chain` driven headless (buttons double-clicked, sliders slammed): canvases 380–540px, notes render (79–379 chars), errs=0 throughout.
