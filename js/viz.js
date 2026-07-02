@@ -9289,4 +9289,57 @@
     build(); draw();
   });
 
+
+  /* ========================================================
+     177. HyperLogLog: count millions in bytes (algorithms)
+     ======================================================== */
+  register({ id: 'a-hll', topic: 'algorithms', title: 'HyperLogLog: distinct counts from leading zeros', blurb: 'Stream n distinct items through 64 six-bit registers (the 8×8 grid — 384 bytes total). Each item is hashed; its first 6 bits pick a register, and the register remembers the longest run of leading zeros it has ever seen (brighter = longer run). A run of k zeros is a once-in-2ᵏ event, so the records track log₂ of the count; a harmonic mean over registers turns them into an estimate within ~13% (1.04/√64). Drag the slider and watch 384 bytes keep up with fifty thousand uniques.' },
+  function (root) {
+    const W = 460, H = 400, m = 64, bits = 6;
+    const { c, ctx } = canvas(root, W, H);
+    const ctl = controls(root);
+    const info = note(root);
+    let N = 5000;
+    function h32(x) {
+      let s = 'item-' + x, h = 2166136261;
+      for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+      h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b); h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35); h ^= h >>> 16;
+      return h >>> 0;
+    }
+    function compute() {
+      const M = new Array(m).fill(0);
+      for (let x = 0; x < N; x++) { const h = h32(x);
+        const j = h >>> (32 - bits);
+        let rest = (h << bits) >>> 0, rank = 1;
+        while (rank <= 32 - bits && !(rest & 0x80000000)) { rank++; rest = (rest << 1) >>> 0; }
+        if (rank > M[j]) M[j] = rank;
+      }
+      let Z = 0, V = 0; M.forEach(r => { Z += Math.pow(2, -r); if (r === 0) V++; });
+      let E = 0.709 * m * m / Z;
+      if (E < 2.5 * m && V > 0) E = m * Math.log(m / V);
+      return { M, est: Math.round(E) };
+    }
+    function draw() {
+      const pal = P(); ctx.clearRect(0, 0, W, H); ctx.fillStyle = pal.bg; ctx.fillRect(0, 0, W, H);
+      const { M, est } = compute();
+      const maxR = Math.max.apply(null, M.concat([1]));
+      const cs = 40, gap = 5, ox = (W - 8 * cs - 7 * gap) / 2, oy = 24;
+      ctx.font = '11px ' + (cssVar('--font-mono') || 'monospace'); ctx.textAlign = 'center';
+      for (let j = 0; j < m; j++) {
+        const r = j >> 3, col = j & 7, x = ox + col * (cs + gap), y = oy + r * (cs + gap);
+        const t = M[j] / maxR;
+        ctx.fillStyle = pal.violet; ctx.globalAlpha = 0.12 + 0.88 * t; ctx.fillRect(x, y, cs, cs); ctx.globalAlpha = 1;
+        ctx.fillStyle = t > 0.55 ? pal.bg : pal.mute; ctx.fillText(String(M[j]), x + cs / 2, y + cs / 2 + 4);
+      }
+      ctx.fillStyle = pal.mute; ctx.textAlign = 'center';
+      ctx.fillText('64 registers · each = longest leading-zero run seen (6 bits) · 384 bytes total', W / 2, H - 10);
+      const err = (100 * (est - N) / N);
+      info.innerHTML = 'true distinct: <b>' + N.toLocaleString() + '</b> · HLL estimate: <b style="color:' + pal.sage + '">' + est.toLocaleString() + '</b> · error <b>' + (err > 0 ? '+' : '') + err.toFixed(1) + '%</b> (theory: ±13% for 64 registers — more registers, tighter counts).';
+    }
+    slider(ctl, { label: 'distinct items n', min: 2, max: 50000, step: 1, value: N, fmt: v => Math.round(v).toLocaleString(), onInput: v => { N = Math.round(v); draw(); } });
+    c.setAttribute('role', 'img');
+    c.setAttribute('aria-label', 'HyperLogLog demo. An eight by eight grid of sixty-four registers, each showing the longest leading-zero run of hashes routed to it, brighter cells for longer runs. Below, the true distinct count, the HyperLogLog estimate from the harmonic mean of the registers, and the percentage error, which stays within about thirteen percent as a slider sweeps the count from two to fifty thousand.');
+    draw();
+  });
+
 })();

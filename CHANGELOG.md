@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1151 — NEW viz: HyperLogLog, live (visualizations)
+Opened block 1151–1160 with an interactive completing the iter-1145 sketches bundle — the **177th widget, `a-hll`** in `a-hash-tables`: a real HyperLogLog (FNV-1a + murmur finalizer, 64 six-bit registers = **384 bytes**) shown as an 8×8 heat grid of leading-zero records; drag n from 2 to 50,000 and the harmonic-mean estimate tracks the true count within the theoretical ±13%.
+**Self-caught in Node before shipping:** plain FNV-1a underestimated by up to −82% — its high bits (used for register routing) have poor avalanche; fixed with a murmur-style finalizer (errors then +2%/−9%/−1%/−4%/−6% across 100→50k).
+Verified: algorithm Node-verified across 5 counts incl. the small-range correction; gate ALL GREEN (**177 widgets, 177 unique** — the new dup check watching); **headless slider sweep** — live estimates exactly match Node (102 / 4,955 / 46,785), errs=0; screenshot READ shows the register heat grid with ranks 5–13 (expected ≈ log₂(n/64)). SW cache `atlas-v1081` → `atlas-v1082`.
+
 ## iter 1150 — Step-back (clean at 193/905) + homework debt cleared sitewide (step-back / retention)
 Step-back **kErr + visible-newline sweep at the new baselines**: **n=193 lessons**, errs=0, **kErrLessons=NONE**, **visNlessons=NONE**, **mapNodes=905** — the Estimation Theory split and all block changes are regression-free.
 **Ship:** +1 hand-worked homework each for the last two hw-2/3 lessons — `dl-generalization-mysteries` (describe the three regimes of the test-error curve as $p$ passes $n$; danger zone at the interpolation threshold) and `ml-trustworthy-models` (which order statistic is the conformal $\hat q$ at $n=99,\alpha=0.1$ → the **90th smallest**, and why $n+1$ makes coverage exact). **Every lesson on the site now has ≥3 homework.**
