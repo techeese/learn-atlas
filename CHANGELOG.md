@@ -2,6 +2,10 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1136 — Hard-concept: kernel density estimation — full bundle (content)
+Probe batch 4 (distillation, rate-distortion, boosting all have real coverage) found **KDE mention-only**. Full bundle into `ml-knn` (its 4th dive, the local-methods home): a **histogram without the bins** — $\hat f(x)=\tfrac{1}{nh}\sum K(\tfrac{x-x_i}{h})$; everything hinges on the **bandwidth** (bias-variance dial; Silverman's $h\approx1.06\hat\sigma n^{-1/5}$, kernel shape secondary); rate $n^{-4/5}$ — the price of no assumptions — and the curse of dimensionality. Framed as the density member of the **local-methods family**: kNN classifies, **loess** regresses (cross-linked to STL's engine), KDE densities; feeds **naive Bayes** (cross-linked), violin plots, anomaly detection. Same ship: **2 glossary terms** (583 → **585**), **1 MCQ** (16 → 17), **2 flashcards** (6 → 8).
+Verified: guarded; byte-stable re-serialize ×2; gate ALL GREEN (internal-links); one combined headless driver — 4 dives, KDE/bandwidth/Silverman/Epanechnikov + both links, quiz "of 17", glossary 2/2, kErr=0, errs=0. SW cache `atlas-v1067` → `atlas-v1068`.
+
 ## iter 1135 — Code: seasonal decomposition, recovered exactly (examples)
 Second interactive of the block, completing the iter-1126 STL thread — a runnable in `ts-exponential-smoothing`: plant a quarterly seasonal $[5,-2,-4,1]$ on a linear trend, then recover it by classical decomposition (centered MA-4 → detrend → average by quarter) → **recovered [5.00, −2.00, −4.00, 1.00] exactly** (centered MA nulls a linear trend and zero-mean seasonal precisely; real noisy data gives estimates, which STL's loess makes robust/evolvable). **Self-caught:** `->` arrows in a comment tripped the no-`<>` guard before writing — rephrased.
 Verified: re-derived in Node (exact recovery); byte-stable JSON inject; **gate ALL GREEN — code-exercises verified (now 201)**; **headless** — Run executes, exact recovery shown, kErr=0, errs=0. SW cache `atlas-v1066` → `atlas-v1067`.
