@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 54/193 lessons · 32/177 widgets**
+**Progress: 56/193 lessons · 32/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -102,8 +102,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] a-trees-heaps — ✔ iter-1189 clean — BST-delete-via-successor h0 (60 replaces 50), min-heap insertion trace h1 ([3,4,6,7,5], hand-verified), two-heap median h2, AVL RR-case e0, heapsort e1, second-largest q9, heap-index q4 (11/12/2) all verified; no changes
 - [x] a-comparison-sorts — ✔ iter-1191 clean — Lomuto trace h0 ([1,2,3,4,6,8], p=2, hand-verified), stable-chaining h1, decision-tree proof h2 (with (n/2)^{n/2} bound), 3-element decision tree e0, Stirling q9, average-case-bound q10 all verified; no changes
 - [x] a-linear-sorts-selection — ✔ iter-1191 clean — quickselect trace h1 (partition [1,2,8,6,9,3] hand-verified), groups-of-3 median-of-medians failure h2 (1/3+2/3=1), counting-sort placement walk e0 (every index checked), E[n_i²]<2 bucket analysis q5, radix r≈log n balance q9 all verified; no changes
-- [ ] a-binary-search — pending
-- [ ] a-divide-and-conquer — pending
+- [x] a-binary-search — ✔ iter-1192 clean — upper_bound + range-count h0, Koko feasibility-predicate h1 (monotonicity proof + bounds), the three-bug lower_bound debugging h2 (infinite loop/overflow/convention mix), lower_bound trace e2 (index 1) all verified; no changes
+- [x] a-divide-and-conquer — ✔ iter-1192 clean — audit flag q0 verified FALSE ALARM (correct 0-based reference). Strassen h0 (8→7, n^2.807), fixed-point h1 (A[i]−i monotone), inversions-via-merge h2, merge trace e0 (24 moves), Case-3 e1 (with regularity check), Karatsuba e2 (408) all verified; no changes
 - [ ] a-greedy — pending
 - [ ] a-dynamic-programming — pending
 - [ ] a-backtracking-branch-bound — pending

@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1192 — Review: a-binary-search + a-divide-and-conquer — both clean (review)
+**`a-binary-search`: clean** — the upper_bound/range-count h0, the Koko-eats-bananas feasibility-predicate h1 (with monotonicity proof and bound justification), the excellent three-bug lower_bound debugging h2 (infinite loop from `lo = mid`, midpoint overflow, closed/half-open convention mix), and the lower_bound trace all verified.
+**`a-divide-and-conquer`: clean** — the audit flag on q0 verified a **false alarm** (its "choice 0 is false" is a correct 0-based reference). Strassen's 8→7 recurrences ($\Theta(n^3)$ vs $\Theta(n^{2.807})$), the sorted-array fixed-point search ($A[i]-i$ monotone → $\Theta(\log n)$), inversions-via-mergesort, the full merge-sort trace (24 element-moves matching $n\log n$), the Case-3 recursion tree with regularity check, and Karatsuba's $12\times34=408$ all verified.
+Fourth consecutive clean unit — Algorithms runs 9 clean of 10. Ledger is the ship; no SW bump. **Progress: 56/193 lessons · 32/177 widgets.**
+
 ## iter 1191 — Review: a-comparison-sorts + a-linear-sorts-selection — both clean (review)
 **`a-comparison-sorts`: clean** — h0's Lomuto partition trace hand-verified to $[1,2,3,4,6,8]$ with $p=2$; the stable-sort chaining homework (secondary-key-first, with the precise failure analysis for both wrong orderings); h2's full decision-tree proof including the $(n/2)^{n/2}$ elementary bound; and the sophisticated q10 (the leaf-count argument bounds the *average* case too, not just the worst) all verified.
 **`a-linear-sorts-selection`: clean** — h1's quickselect trace hand-verified (partition $[1,2,8,6,9,3]$, immediate rank hit); h2's groups-of-3 failure analysis ($\frac13+\frac23=1$, no geometric decay → $\Theta(n\log n)$); e0's counting-sort walk with every placement index checked; q5's $E[n_i^2]<2$ bucket argument; and q9's radix $r\approx\log_2 n$ balancing all verified.
