@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1159 — Review: la-span-independence + la-basis-dimension (review)
+**`la-span-independence`** — all row-reductions, dependence relations, code exercise, 16 MCQs, hw, examples re-verified. One defect: **q10's explain used a muddled counterexample** ($v_1{=}v_2{=}v_3$ — a set that IS all-multiples — offered to refute "all multiples"); rewritten with $(1,0,0),(0,1,0),(1,1,0)$, which actually refutes both wrong claims at once.
+**`la-basis-dimension`** — worked example ($\det=-2$, coords $(3,2)$), Cramer code (5.5/−0.5), h0 ($\det=1$), e1 (full back-substitution) all re-verified. Three defects: **q5 and q7 had only 3 choices** (site standard 4 — added "depends on the basis" and "undefined without the standard basis" distractors, the first with an explain extension); and the **determinant is used throughout but not defined until lesson 9** — added an inline gloss at first use ("a single number… nonzero exactly when the columns are independent; a later lesson builds it properly").
+Verified: guarded; byte-stable; gate ALL GREEN; headless — gloss renders, quiz pool intact, kErr=0, errs=0. SW `atlas-v1089` → `atlas-v1090`. **Progress: 4/193 lessons.**
+
 ## iter 1158 — REVIEW PHASE begins: la lessons 1–2 + ledger bootstrap (review)
 **Review & Refine phase (owner-directed, ~100 iters) starts here.** Bootstrapped **REVIEW.md** (193 lessons + 177 widgets, per-item status; the phase's progress bar).
 **Reviewed `la-vectors-operations`** (deep-read: content, 16 MCQs, 6 cards, 3 hw, 3 examples — all arithmetic re-verified by hand): one real defect — **all three worked examples use magnitude/norm/unit vectors, which the lesson never defined** (forward reference to lesson 2). Fixed with a short "A first look at length" section (Pythagoras on components, distance = norm of difference, unit vector) placed before the takeaways, flagged as a preview of the next lesson. Also aligned q11's explain to the lesson's own term (tip-to-tail).

@@ -3,13 +3,13 @@
 Owner-directed (2026-07-02): review and refine all existing content and visualizations.
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 2/193 lessons · 0/177 widgets**
+**Progress: 4/193 lessons · 0/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
 - [x] la-dot-product-norms — ✔ iter-1158 clean — every number re-verified (worked example, cosines, 16 MCQs, hw, examples incl. arccos values); no changes needed
-- [ ] la-span-independence — pending
-- [ ] la-basis-dimension — pending
+- [x] la-span-independence — ✔ iter-1159 — rewrote q10 muddled explain (counterexample now actually refutes the claims); all row-reductions/relations/code re-verified
+- [x] la-basis-dimension — ✔ iter-1159 — q5+q7 had only 3 choices (added 4th distractors); inline determinant gloss at first use (was an unexplained forward ref to lesson 9); all coord/det computations re-verified
 - [ ] la-matrices-as-transformations — pending
 - [ ] la-matrix-multiplication — pending
 - [ ] la-inverse-and-systems — pending
