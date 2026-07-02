@@ -3,15 +3,15 @@
 Owner-directed (2026-07-02): review and refine all existing content and visualizations.
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 4/193 lessons · 0/177 widgets**
+**Progress: 6/193 lessons · 0/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
 - [x] la-dot-product-norms — ✔ iter-1158 clean — every number re-verified (worked example, cosines, 16 MCQs, hw, examples incl. arccos values); no changes needed
 - [x] la-span-independence — ✔ iter-1159 — rewrote q10 muddled explain (counterexample now actually refutes the claims); all row-reductions/relations/code re-verified
 - [x] la-basis-dimension — ✔ iter-1159 — q5+q7 had only 3 choices (added 4th distractors); inline determinant gloss at first use (was an unexplained forward ref to lesson 9); all coord/det computations re-verified
-- [ ] la-matrices-as-transformations — pending
-- [ ] la-matrix-multiplication — pending
+- [x] la-matrices-as-transformations — ✔ iter-1160 — e2 was an exact duplicate of the in-content worked example (same matrices, vector, answer); replaced with a rotation×reflection composition showing order picks the mirror (RF = y=x, FR = y=−x, Node-verified); everything else re-verified clean
+- [x] la-matrix-multiplication — ✔ iter-1160 clean — all products/powers/examples re-verified (AB/BA worked example, R^2=−I ladder, non-square e1, matmul code 19 22 43 50); no changes
 - [ ] la-inverse-and-systems — pending
 - [ ] la-four-subspaces-rank — pending
 - [ ] la-determinants — pending

@@ -2,6 +2,13 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1160 — Step-back (clean at 193/905) + review: la lessons 5–6 (step-back / review)
+Step-back sweep: **n=193, errs=0, kErrLessons=NONE, visNlessons=NONE, mapNodes=905** — clean.
+**`la-matrices-as-transformations`** — all matrices/compositions/hw/examples re-verified. One defect: **example e2 was an exact duplicate of the in-content worked example** (same matrices, same vector, same answer — zero added value). Replaced with *"Compose a rotation with a reflection — the order picks the mirror"*: $RF = \begin{bmatrix}0&1\\1&0\end{bmatrix}$ (reflection across $y{=}x$) vs $FR = \begin{bmatrix}0&-1\\-1&0\end{bmatrix}$ (across $y{=}-x$) — both dets $-1$, Node-verified; makes the non-commutativity the old example only teased *visible* (and avoids duplicating lesson 6's stretch-vs-rotate demo).
+**`la-matrix-multiplication`: clean** — AB/BA worked example, $R^2{=}-I$ power ladder, non-square $2{\times}2$ vs $3{\times}3$ example, matmul code (19 22 43 50), transpose/zero-divisor MCQs all re-verified. No changes.
+Self-caught: my authoring guard false-positived on `&` inside `$$…$$` matrices (it only stripped inline math before checking entities) — guard template extended to strip display math too.
+Verified: gate ALL GREEN; headless — new example renders, old title gone, kErr=0, errs=0. SW `atlas-v1090` → `atlas-v1091`. **Progress: 6/193 lessons.**
+
 ## iter 1159 — Review: la-span-independence + la-basis-dimension (review)
 **`la-span-independence`** — all row-reductions, dependence relations, code exercise, 16 MCQs, hw, examples re-verified. One defect: **q10's explain used a muddled counterexample** ($v_1{=}v_2{=}v_3$ — a set that IS all-multiples — offered to refute "all multiples"); rewritten with $(1,0,0),(0,1,0),(1,1,0)$, which actually refutes both wrong claims at once.
 **`la-basis-dimension`** — worked example ($\det=-2$, coords $(3,2)$), Cramer code (5.5/−0.5), h0 ($\det=1$), e1 (full back-substitution) all re-verified. Three defects: **q5 and q7 had only 3 choices** (site standard 4 — added "depends on the basis" and "undefined without the standard basis" distractors, the first with an explain extension); and the **determinant is used throughout but not defined until lesson 9** — added an inline gloss at first use ("a single number… nonzero exactly when the columns are independent; a later lesson builds it properly").
