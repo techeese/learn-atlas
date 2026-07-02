@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 39/193 lessons · 11/177 widgets**
+**Progress: 41/193 lessons · 11/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -62,8 +62,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] c-improper-integrals — ✔ iter-1179 clean — Gaussian-substitution h0 (½), right-endpoint singularity h1 (2), the c=1/E[X]=∞ PDF h2, exponential-mean e1 (μ=½), Cauchy q7, comparison-direction q11 all verified. Noted: e2 supersets q10 (∫x^{−1/2}=2) but adds type-II framing — tolerated; no changes
 - [x] c-intro-differential-equations — ✔ iter-1181 — e2 solved the exact function q8 verifies (y=3e^{2t}) in a lesson saturated with y′=ky (q10/q13/c2/e0); replaced with a derivation of Newton's cooling by separation (the formula card c5 records and h1 uses but nothing derived; teaches the shifted-variable trick + reclaims the excluded equilibrium). h0 (√(2t²+9)), h1 (k≈0.0673, 45.5°C), h2 (22.9 yr) all verified
 - [x] c-partial-derivatives — ✔ iter-1181 clean — h0 Clairaut, h1 (0.2 vs ln1.22≈0.1989), Laplace h2, e0 (7/24), e1 (tangent plane L=y, 0.2196), e2 (D_u=4.4, |∇f|=√20) all verified. Watch: e2 teaches directional derivatives (next lesson's topic) — check for collision when reviewing c-gradient-directional
-- [ ] c-gradient-directional — pending
-- [ ] c-multivariable-optimization — pending
+- [x] c-gradient-directional — ✔ iter-1182 clean — e0 (52/5), e1 (steepest descent −2√58, step (0.4,0.6) with loss 17→1.72 check), zero-direction e2, h0 (5√2/2), h1 (2√5), q8 (36/5) all verified. Collision check vs lesson-20 e2: that example previews this material on the canonical bowl — tolerated as motivation (q13 here is a 5-second sanity check, not a duplicate lesson); no changes
+- [x] c-multivariable-optimization — ✔ iter-1182 clean — e0 ((0,3) min −9), e1 (cubic: (0,0) saddle, (1,1) min −1, det H=36xy−9), e2 (Lagrange xy→25), h0 (saddle w/ eigenvalues 6,−2), h1 (√5 on the circle), h2 (quartic: inconclusive Hessian, direct-reasoning min) all verified; e2/h1 are complementary Lagrange problems, not dups; no changes
 - [ ] c-convexity — pending
 - [ ] c-gradient-descent-convergence — pending
 - [ ] c-lagrange-multipliers — pending
