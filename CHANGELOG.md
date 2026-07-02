@@ -2,6 +2,11 @@
 
 Prepend new entries under this header. Include the loop-iteration number in the heading.
 
+## iter 1206 — Review: dl-generalization-mysteries + dl-dropout-and-normalization — both clean (review)
+**`dl-generalization-mysteries`: clean** — the double-descent three-regime reading (with the $\sim10^6$ spike at $p{=}n$ matching the site's own widget), the grokking diagnosis (weight decay as the mechanism, not just the delay), the label-noise-sharpens-the-peak homework, the lottery-ticket rewind-step analysis, and the NTK/lazy-training questions all verified. Later-authored and tight.
+**`dl-dropout-and-normalization`: clean** — inverted-dropout computations verified on both instances (homework $[2,0,6,0]$; example $[4,0,12,16,0]$ with the expectation check — parallel practice, correctly designed); the full BatchNorm pass ($\mu_B{=}4$, $\sigma_B^2{=}5$, running-stat update, and the left-in-train-mode trap simulated on a single test point); and the batch-size-1 LayerNorm recommendation h2. e2's train/eval overlap with e1/h2 is tolerated — its determinism/batch-mates argument is the one framing the others lack.
+Ledger is the ship; no SW bump. **Progress: 79/193 lessons · 53/177 widgets.**
+
 ## iter 1205 — Review: dl-learning-rate-schedules-and-tuning + dl-overfitting-and-regularization (review)
 **`dl-learning-rate-schedules-and-tuning`** — q11's explain maligned its own correct answer ("option 0 is the tempting but wrong diagnosis" — option 0 IS the correct exploding-gradient choice); de-indexed. q9's flag verified a false alarm. The warmup-cosine schedule homework (6,000 steps, $W=300$, cosine midpoint exactly $0.001$), the linear-scaling-rule scenario, and the LR-range-test all verified.
 **`dl-overfitting-and-regularization`: clean** — the $(1-\eta\lambda)$ multiplicative-shrinkage proof (with the $\eta\lambda>1$ instability analysis), the two-model diagnosis, the early-stopping$\approx$L2 argument ($\lambda\approx1/(\eta t)$ with the capacity-dial prediction), e0's learning-curve reading (including the sharp deploy-B-anyway nuance), $w^\star=5/(1+\lambda)$, and the L1-vs-L2 gradient comparison ($0.1$ constant vs $0.02$ vanishing) all verified.

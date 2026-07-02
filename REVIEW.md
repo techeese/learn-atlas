@@ -5,7 +5,7 @@ Owner-directed (2026-07-02): review and refine all existing content and visualiz
 
 Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 
-**Progress: 77/193 lessons · 53/177 widgets**
+**Progress: 79/193 lessons · 53/177 widgets**
 
 ## linear-algebra — lessons
 - [x] la-vectors-operations — ✔ iter-1158 — added magnitude/norm preview section (examples used it before it was defined); aligned q11 terminology (tip-to-tail); all 16 MCQs + 3 hw + 3 examples arithmetic re-verified
@@ -150,8 +150,8 @@ Status legend: `pending` · `✔ iter-N — what changed` · `✔ iter-N clean`
 - [x] dl-gradient-descent-and-optimizers — ✔ iter-1204 clean — h0 (0<η<2, diverges at 2.5), momentum fixed point h1 (v*=g/(1−β)=10g), Adam first step h2 (θ₁=+0.01, sign handled), e2 (ratio exactly 1) all verified. Noted: h2/e2 share the scale-cancellation punchline (computation differs — tolerated); e0 repeats the (w−3)² instance from a-algorithms-for-ml e0 cross-topic (canonical, shallower here — tolerated); no changes
 - [x] dl-learning-rate-schedules-and-tuning — ✔ iter-1205 — q11 explain maligned its own answer ("option 0 is the tempting but wrong diagnosis" — 0 IS the correct exploding-gradient choice); de-indexed. q9's reference verified correct (false alarm). Warmup-cosine h0 (6000 steps, W=300, midpoint 0.001), linear-scaling h1, LR-range-test h2, all examples verified
 - [x] dl-overfitting-and-regularization — ✔ iter-1205 clean — (1−ηλ) shrinkage proof h0 (with the ηλ>1 instability), two-model diagnosis h1, early-stopping≈L2 h2 (λ≈1/(ηt)), learning-curve e0 (gaps 0.03/0.44 + the deploy-B-anyway nuance), w*=5/(1+λ) e1, L1-vs-L2 gradient e2 (0.1 vs 0.02) all verified; no changes
-- [ ] dl-generalization-mysteries — pending
-- [ ] dl-dropout-and-normalization — pending
+- [x] dl-generalization-mysteries — ✔ iter-1206 clean — double-descent regions e0 (spike ~10⁶ at p=n), grokking e1 (weight-decay mechanism), label-noise-sharpens-peak h0, lottery-ticket rewind h1, three-regimes h2, NTK/lazy-training MCQs all verified; later-authored and tight; no changes
+- [x] dl-dropout-and-normalization — ✔ iter-1206 clean — inverted-dropout h0 ([2,0,6,0]) and e0 ([4,0,12,16,0] with expectation check) are parallel practice; BN forward h1 ([2.55,5.0,7.45]), batch-size-1 LayerNorm h2, full BN trap e1 (μ_B=4, σ²_B=5, running-stat update) all verified. e2's train/eval overlap with e1/h2 tolerated — its determinism/batch-mates argument is unique; no changes
 - [ ] dl-initialization-and-vanishing-gradients — pending
 - [ ] dl-convolution-operation — pending
 - [ ] dl-pooling-and-cnn-architectures — pending
