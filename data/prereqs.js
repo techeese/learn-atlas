@@ -248,5 +248,11 @@ window.PREREQS = {
   ],
   "ps-computational-bayes": [
     "c-definite-integral-riemann"
+  ],
+  "gt-cooperative-games": [
+    "gt-foundations"
+  ],
+  "gt-auctions-mechanism-design": [
+    "gt-foundations"
   ]
 };
